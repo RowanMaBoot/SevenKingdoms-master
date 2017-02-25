@@ -4,6 +4,15 @@ Seven Kingdoms for Crusader Kings 2 Master
 Current State: Alpha, Prototype
 Status: Functional
 
+###############
+
+NOTE:
+ZeroFighterR, using Excel, ran into an issue where the (C) symbol would be autocorrtected into the copyright symbol. This is bad, because it won't be recognised and will throw up errors when we compile the map. A quick fix can be found here: http://www.journalofaccountancy.com/issues/2008/nov/stopexcelfromdisplayingthecopyrightsymbolwhenyouwantc.html
+
+OpenOffice Calc does the same, but you can navigate to Tools -> AutoCorrectOptions (at the bottom) and delete the (C) to copyright symbol.
+
+###############
+
 Welcome!
 
 The Seven Kingdoms is a mod for Crusader Kings 2, built for large multiplayer games in a sandbox environment, generally with a predefined setting. It will feature bookmarks from the years 7400-8000, the last dates stopping before the 'Doom of Valyria'.
