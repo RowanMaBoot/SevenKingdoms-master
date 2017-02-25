@@ -5,14 +5,20 @@ Current State: Alpha, Prototype
 
 Status: Functional
 
-###############
+-------------
+
+NEWS:
+
+I've (Rowan) added a video (.mp4) showing how to rename provinces. Very much a basic video, but it does the job. 12 Minutes long because I ramble, will probably make a new one some other time.
+
+-------------
 
 NOTE:
 ZeroFighterR, using Excel, ran into an issue where the (C) symbol would be autocorrected into the copyright symbol ©. This is bad, because it won't be recognised and will throw up errors when we compile the map. A quick fix can be found here: http://www.journalofaccountancy.com/issues/2008/nov/stopexcelfromdisplayingthecopyrightsymbolwhenyouwantc.html
 
 OpenOffice Calc does the same, but you can navigate to Tools -> AutoCorrectOptions (at the bottom) and delete the (C) to copyright symbol.
 
-###############
+-------------
 
 Welcome!
 
