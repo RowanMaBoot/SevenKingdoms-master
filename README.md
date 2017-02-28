@@ -46,6 +46,32 @@ I personally use OpenOffice to edit this file.
 
 If you have Excel, that will be fine. If you edit the file, when you save it you will generally be prompted as to whether or not you want to save it in it's existing format, or convert it to a new format. This message will be different for each tool, so make sure that whatever option is selected, it is one that preserves the format being used, otherwise there may be issues.
 
+_ So what to do with Baronies?
+
+The column, titled numH, contains everything related to the number of holdings. For example, you'll see in that column values such as 1_1 (by default) or in some cases 1_7, 7_7 and so on.
+
+The first number (x) x_1 is the number of prebuilt holdings. The second number (x) 1_x is the maximum number of holdings that can be built. With a value of 1_7, we will have a prebuilt capital holding (you cannot have any less) with 6 possible sub-baronies.
+
+With a value of 2_3, you will have the capital barony, one sub barony and one barony that can be built.
+
+By default, if you do not specify a name for the barony in the following cells to the right of 1_1, they will have a name generated for them based on the name of the province. Examples would be Temple of Winterfell, Castle of Winterfell, Town of Winterfell 1, Town of Winterfell 2.
+
+If you can, please try naming all of the slots!
+
+_ How many baronies should be assigned to a province?
+
+Generally major provinces, such as blackwater bay, the capitals of the free cities and places of major economic significance may have a maximum of 1+6 holdings.
+
+The capitals of Kingdoms/Paramounts should have 1+4or5, unless there is good reason to have a higher number.
+
+Duchy capitals should have 1+3or4, whilst most provinces should have 1+2or3.
+
+Small islands or unusually small provinces should just have 1_1, in other words; just their capital. If we feel there is good reason to increase the maximum number of holdings to say 1_2, that can be done but generally we want to avoid it.
+
+Beyond the wall should average at 1_3 at minimum, whilst 1_6 at most, unless we decided to allow building of holdings and feudalism for Wildlings.
+
+Iron Isles, Pirate Isles should be limited. Pirate isles should probably have no possible buildable holdings, regardless of island size.
+
 # Land Titles and History
 
 You can edit files within:
