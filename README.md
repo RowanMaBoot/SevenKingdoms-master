@@ -46,7 +46,7 @@ I personally use OpenOffice to edit this file.
 
 If you have Excel, that will be fine. If you edit the file, when you save it you will generally be prompted as to whether or not you want to save it in it's existing format, or convert it to a new format. This message will be different for each tool, so make sure that whatever option is selected, it is one that preserves the format being used, otherwise there may be issues.
 
-_ So what to do with Baronies?
+_So what to do with Baronies?
 
 The column, titled numH, contains everything related to the number of holdings. For example, you'll see in that column values such as 1_1 (by default) or in some cases 1_7, 7_7 and so on.
 
@@ -58,7 +58,7 @@ By default, if you do not specify a name for the barony in the following cells t
 
 If you can, please try naming all of the slots!
 
-_ How many baronies should be assigned to a province?
+_How many baronies should be assigned to a province?
 
 Generally major provinces, such as blackwater bay, the capitals of the free cities and places of major economic significance may have a maximum of 1+6 holdings.
 
