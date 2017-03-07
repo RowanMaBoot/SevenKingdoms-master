@@ -5,6 +5,8 @@ Current State: Alpha, Prototype
 
 Status: Functional
 
+Paradox Forum Link: https://forum.paradoxplaza.com/forum/index.php?threads/wip-the-seven-kingdoms.1003243/
+
 -------------
 
 NEWS:
