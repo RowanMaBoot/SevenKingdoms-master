@@ -9,12 +9,6 @@ Paradox Forum Link: https://forum.paradoxplaza.com/forum/index.php?threads/wip-t
 
 -------------
 
-NEWS:
-
-I've (Rowan) added a video (.mp4) showing how to rename provinces. Very much a basic video, but it does the job. 12 Minutes long because I ramble, will probably make a new one some other time.
-
--------------
-
 NOTE:
 ZeroFighterR, using Excel, ran into an issue where the (C) symbol would be autocorrected into the copyright symbol ©. This is bad, because it won't be recognised and will throw up errors when we compile the map. A quick fix can be found here: http://www.journalofaccountancy.com/issues/2008/nov/stopexcelfromdisplayingthecopyrightsymbolwhenyouwantc.html
 
@@ -28,7 +22,7 @@ The Seven Kingdoms is a mod for Crusader Kings 2, built for large multiplayer ga
 
 With over 1400 Provinces, the mod rivals the Vanilla game and exceeds the 'Game of Thrones Mod' in regards to the number of provinces. However, it will likely feature far fewer events and simplified mechanics for the purpose of stable and engaging multiplayer.
 
-Intensity wise, it will likely rival the Vanilla game, though we intend for it to be just as stable if not more so. Good practice with how we create our events and decisions, and how we write our triggers will be of great importance. Avoiding events, although great for singleplayer, such as the Winter event and slavery chains seen in Game of Thrones, will be but a small way we hope to boost our performance.
+Intensity wise, it will likely be on par with the Vanilla game, though we intend for it to be just as stable as what most users would have come to expect from the official developers. Good practice with how we create our events and decisions, and how we write our triggers will be of great importance. Avoiding intensive events and mechanics, although great for singleplayer, such as the Winter event and Slavery Chains seen in the excellent Game of Thrones mod, will be but a small way we hope to boost our performance.
 
 We intend to make all of this mod's mechanics from scratch, if possible. It will be updated on a very much long-term process, and early playable versions will likely be used for our weeklies.
 
