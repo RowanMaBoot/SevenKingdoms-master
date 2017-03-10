@@ -14,6 +14,9 @@ ZeroFighterR, using Excel, ran into an issue where the (C) symbol would be autoc
 
 OpenOffice Calc does the same, but you can navigate to Tools -> AutoCorrectOptions (at the bottom) and delete the (C) to copyright symbol.
 
+NEW:
+I've also recently added a section concerning barony counts for provinces. It is an extension of the already existing group 'How many baronies should be assigned to a province?'. It is a fairly straightforward list.
+
 -------------
 
 Welcome!
@@ -53,6 +56,21 @@ With a value of 2_3, you will have the capital barony, one sub barony and one ba
 By default, if you do not specify a name for the barony in the following cells to the right of 1_1, they will have a name generated for them based on the name of the province. Examples would be Temple of Winterfell, Castle of Winterfell, Town of Winterfell 1, Town of Winterfell 2.
 
 If you can, please try naming all of the slots!
+
+NEW:
+
+Quick overview (needs to be adjusted):
+
+x_7 'City of the World's Desire'
+-- Examples: King's Landing, Braavos, Pentos
+x_6 'Major City or Region'
+-- Examples: Highgarden, Lannisport
+x_5 'Regional Capital'
+-- Examples: Casterly Rock
+x_4 'Duchy'
+x_3 'Minor Region
+x_2 'Insignificant Region'
+x_1 'Small Island'
 
 ###### How many baronies should be assigned to a province?
 
