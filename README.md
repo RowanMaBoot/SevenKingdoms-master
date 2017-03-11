@@ -57,7 +57,7 @@ By default, if you do not specify a name for the barony in the following cells t
 
 If you can, please try naming all of the slots!
 
-NEW:
+**NEW**:
 
 Quick overview (needs to be adjusted):
 
