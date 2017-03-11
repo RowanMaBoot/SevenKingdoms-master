@@ -61,16 +61,22 @@ NEW:
 
 Quick overview (needs to be adjusted):
 
-x_7 'City of the World's Desire'
--- Examples: King's Landing, Braavos, Pentos
-x_6 'Major City or Region'
--- Examples: Highgarden, Lannisport
-x_5 'Regional Capital'
--- Examples: Casterly Rock
-x_4 'Duchy'
-x_3 'Minor Region
-x_2 'Insignificant Region'
-x_1 'Small Island'
+x_7 = City of the World's Desire
+Examples: King's Landing, Braavos, Pentos
+
+x_6 = Major City or Region
+Examples: Highgarden, Lannisport
+
+x_5 = Regional Capital, or Duchy Capital of unusually small duchy
+Examples: Casterly Rock
+
+x_4 = Duchy Capital
+
+x_3 = Minor Province
+
+x_2 = Insignificant Region
+
+x_1 = Small Island
 
 ###### How many baronies should be assigned to a province?
 
