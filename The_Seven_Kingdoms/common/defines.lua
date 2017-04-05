@@ -1,4 +1,4 @@
-﻿NDefines = {
+NDefines = {
 
 NDiplomacy = {
 	BREAK_TRUCE_PRESTIGE_PERC_COST = 0.5,		-- Percent of current prestige lost before the base prestige cost (below)
@@ -1784,9 +1784,9 @@ NRulerDesigner =
 
 NLearningScenario = 
 {
-	START_YEAR = 6566,
-	START_MONTH = 1,
-	START_DAY = 3,
+	START_YEAR = 1066,
+	START_MONTH = 8,
+	START_DAY = 14,
 	START_CHARACTER = 108500,
 	FIRST_EVENT = 107000,
 	HAS_WIFE_EVENT = 107100,
