@@ -1,1 +1,482 @@
-# Ports, Barracks
+###########################################################################################
+######################################### REMEMBER ########################################
+# THE BONUS GRANTED IS ADDITIVE. ALL PREVIOUS UPGRADES ARE INCLUDED IN THE OVERALL VALUE! #
+###########################################################################################
+
+# Settlements have a number of levels. Levels are improved simply through building, but however require a high standard of development in that province.
+# We could rename holdings to: Urban regions, Rural Regions, Tribal Regions and Religious Districts.
+# OK. Those are kinda bad, but it gets the point across.
+
+# To prevent snowballing, settlement core upgrades will require both gold and prestige. Or just prestige.
+
+#########################
+####### REFERENCE #######
+#########################
+#########################
+
+#<tag> = {
+#	desc = description used in the tooltip of the building
+#	trigger = used for tech requirement of the building, set to 0 if no requirement so it can be build automatically on new games
+#	gold_cost = cost to build the building
+#	build_time = time to build, in days
+#	
+#	ai_creation_factor = weight that the AI uses to determine what building to build
+#	extra_tech_building_start = when starting a new game this building will be pre-built if the province has higher tech than the requirement + this + random 0-1
+#}
+
+##################################################################
+####################### BARRACKS BUILDDING #######################
+##################################################################
+##################################################################
+
+# Barracks provided professional / heavy infantry, pikemen
+# but reduces the amount of levy infantry produced by the settlement
+# by an inefficient 10:12 rate
+
+########################################
+#### ca_core_level_1	|	Outpost ####
+########################################
+
+# ca_barracks_1		|	Tiny Infantry Barracks
+
+###########################################
+#### ca_core_level_2	|	Small Fort ####
+###########################################
+
+# ca_barracks_2		|	Small Infantry Barracks
+# ca_port_1			|	Tiny Dock
+
+# ca_recruitment_post_1		|	Primitive Local Recruitment Post
+
+#####################################
+#### ca_core_level_3	|	Fort ####
+#####################################
+
+# ca_barracks_3		|	Medium Infantry Barracks
+# ca_port_2			|	Small Dock
+
+# ca_recruitment_post_2		|	Inefficient Local Recruitment Post
+
+#############################################
+#### ca_core_level_4	|	Small Castle ####
+#############################################
+
+# ca_barracks_4		|	Large Infantry Barracks
+# ca_port_3			|	Small Castle Dock
+
+# ca_recruitment_post_3		|	Poor Local Recruitment Post
+
+#######################################
+#### ca_core_level_5	|	Castle ####
+#######################################
+
+# ca_barracks_5		|	Sizeable Infantry Quarters
+# ca_port_4			|	Castle Dock
+
+# ca_recruitment_post_3		|	Average Local Recruitment Post
+
+#########################################
+#### ca_core_level_8	|	Fortress ####
+#########################################
+
+# ca_barracks_6		|	Extensive Infantry Quarters
+# ca_port_5			|	Dockyard
+
+# ca_recruitment_post_5		|	Well Established Local Recruitment Post
+
+########################################
+#### ca_core_level_10	|	Citadel ####
+########################################
+
+# ca_barracks_7		|	Huge Infantry Quarters
+# ca_port_6			|	Huge Dockyard
+
+# ca_recruitment_post_6		|	Extensive Local Recruitment Post
+
+####################################################
+####### CASTLE MILITARY SETTLEMENT BUILDINGS #######
+####################################################
+####################################################
+
+castle = {
+	ca_barracks_1 = {
+		desc = ca_barracks_1_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_1 }
+		
+		ai_creation_factor = 80
+		
+		gold_cost = 125
+		#prestige_cost = 50
+		build_time = 60
+		
+		heavy_infantry = 100
+		light_infantry = -120
+	}
+	ca_barracks_2 = {
+		desc = ca_barracks_2_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_2 }
+		
+		ai_creation_factor = 79
+		
+		upgrades_from = ca_barracks_1
+		
+		gold_cost = 125
+		#prestige_cost = 50
+		build_time = 60
+		
+		heavy_infantry = 100
+		light_infantry = -120
+	}
+	ca_barracks_3 = {
+		desc = ca_barracks_3_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_3 }
+		
+		ai_creation_factor = 78
+		
+		upgrades_from = ca_barracks_2
+		
+		gold_cost = 125
+		#prestige_cost = 50
+		build_time = 60
+		
+		heavy_infantry = 100
+		light_infantry = -120
+	}
+	ca_barracks_4 = {
+		desc = ca_barracks_4_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_4 }
+		
+		ai_creation_factor = 77
+		
+		upgrades_from = ca_barracks_3
+		
+		gold_cost = 125
+		#prestige_cost = 50
+		build_time = 60
+		
+		heavy_infantry = 100
+		light_infantry = -120
+	}
+	ca_barracks_5 = {
+		desc = ca_barracks_5_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_5 }
+		
+		ai_creation_factor = 76
+		
+		upgrades_from = ca_barracks_4
+		
+		gold_cost = 125
+		#prestige_cost = 50
+		build_time = 60
+		
+		heavy_infantry = 100
+		light_infantry = -120
+	}
+	ca_barracks_6 = {
+		desc = ca_barracks_6_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_8 }
+		
+		ai_creation_factor = 75
+		
+		upgrades_from = ca_barracks_5
+		
+		gold_cost = 125
+		#prestige_cost = 50
+		build_time = 60
+		
+		heavy_infantry = 100
+		light_infantry = -120
+	}
+	ca_barracks_7 = {
+		desc = ca_barracks_7_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_10 }
+		
+		ai_creation_factor = 74
+		
+		upgrades_from = ca_barracks_6
+		
+		gold_cost = 125
+		build_time = 60
+		
+		heavy_infantry = 100
+		light_infantry = -120
+	}
+	
+	##################################
+	########################## PORTS
+	##################################
+	
+	ca_port_1 = {
+		desc = ca_port_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_administration_basic_2 }
+		
+		ai_creation_factor = 79
+		
+		gold_cost = 75
+		build_time = 365
+		
+		tax_income = 0.2
+		galleys = 5
+	}
+	
+	ca_port_2 = {
+		desc = ca_port_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_administration_basic_5 }
+		
+		ai_creation_factor = 78
+		
+		upgrades_from = ca_port_1
+		
+		gold_cost = 75
+		build_time = 365
+		
+		tax_income = 0.2
+		galleys = 5
+	}
+	
+	ca_port_3 = {
+		desc = ca_port_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_administration_basic_6 }
+		
+		ai_creation_factor = 77
+		
+		upgrades_from = ca_port_2
+		
+		gold_cost = 75
+		build_time = 365
+		
+		tax_income = 0.2
+		galleys = 5
+	}
+	
+	ca_port_4 = {
+		desc = ca_port_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_administration_basic_8 }
+		
+		ai_creation_factor = 76
+		
+		upgrades_from = ca_port_3
+		
+		gold_cost = 75
+		build_time = 365
+		
+		tax_income = 0.2
+		galleys = 5
+	}
+	
+	ca_port_5 = {
+		desc = ca_port_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_administration_basic_9 }
+		
+		ai_creation_factor = 79
+		
+		upgrades_from = ca_port_4
+		
+		gold_cost = 75
+		build_time = 365
+		
+		tax_income = 0.2
+		galleys = 5
+	}
+	
+	ca_port_6 = {
+		desc = ca_port_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_administration_basic_10 }
+		
+		ai_creation_factor = 78
+		
+		upgrades_from = ca_port_5
+		
+		gold_cost = 75
+		build_time = 365
+		
+		tax_income = 0.2
+		galleys = 5
+	}
+	
+	################################
+	########################## POSTS
+	################################
+	
+	ca_recruitment_post_1 = {
+		desc = ca_recruitment_post_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_castle_town_1 }
+		
+		ai_creation_factor = 79
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 45
+	}
+	
+	ca_recruitment_post_2 = {
+		desc = ca_recruitment_post_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_castle_town_3 }
+		
+		ai_creation_factor = 78
+		
+		upgrades_from = ca_recruitment_post_1
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 45
+	}
+	
+	ca_recruitment_post_3 = {
+		desc = ca_recruitment_post_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_castle_town_4 }
+		
+		ai_creation_factor = 77
+		
+		upgrades_from = ca_recruitment_post_2
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 45
+	}
+	
+	ca_recruitment_post_4 = {
+		desc = ca_recruitment_post_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+
+		prerequisites = { ca_castle_town_5 }
+		
+		ai_creation_factor = 76
+		
+		upgrades_from = ca_recruitment_post_3
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 45
+	}
+	
+	ca_recruitment_post_5 = {
+		desc = ca_recruitment_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_castle_town_7 }
+		
+		ai_creation_factor = 79
+		
+		upgrades_from = ca_recruitment_post_4
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 45
+	}
+	
+	ca_recruitment_post_6 = {
+		desc = ca_recruitment_post_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+
+		
+		prerequisites = { ca_castle_town_9 }
+		
+		ai_creation_factor = 78
+		
+		upgrades_from = ca_recruitment_post_5
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 45
+	}
+}

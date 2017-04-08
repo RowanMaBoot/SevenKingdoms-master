@@ -33,49 +33,910 @@
 # Orchards - hills - provide small tax
 # Pastures - plains, hills, mountains - Provides good tax income, small levy bonus
 
-# ca_farming_f_1	|	Trivial Sustenance Farming
-# ca_farming_f_2	|	Insignificant Sustenance Farming
-# ca_farming_f_3	|	Noteworthy Sustenance Farming
-# ca_farming_f_4	|	Significant Sustenance Farming
-# ca_farming_f_5	|	Established Sustenance Farming
-# ca_farming_f_6	|	Widespread Sustenance Farming
+# Universal
 
+# ca_farming_f_1	|	Trivial Sustenance Farming			|	ca_core_level_1
+# ca_farming_f_2	|	Insignificant Sustenance Farming	|	ca_core_level_2
+# ca_farming_f_3	|	Meagre Sustenance Farming			|	ca_core_level_4
+# ca_farming_f_4	|	Noteworthy Sustenance Farming		|	ca_core_level_6
+# ca_farming_f_5	|	Significant Sustenance Farming		|	ca_core_level_8
+# ca_farming_f_6	|	Widespread Sustenance Farming		|	ca_core_level_10
+
+# Kingdom / Terrain Specific
+
+# - Reach, Dorne (NOT NORTHMARCHER OR SHIELDISLANDER)
 # ca_farming_v_1	|	Trivial Smallhold Vineyards
 # ca_farming_v_2	|	Insignificant Smallhold Vineyards
-# ca_farming_v_3	|	Noteworthy Smallhold Vineyards
-# ca_farming_v_4	|	Significant Smallhold Vineyards
-# ca_farming_v_5	|	Established Smallhold Vineyards
-# ca_farming_v_6	|	Extensive Smallhold Vineyards
+# ca_farming_v_3	|	Meagre Smallhold Vineyards
+# ca_farming_v_4	|	Noteworthy Smallhold Vineyards
+# ca_farming_v_5	|	Significant Smallhold Vineyards
+# ca_farming_v_6	|	Sprawling Smallhold Vineyards
 
+# - Stormlands, Wendwater, Blackwaterman
 # ca_farming_o_1	|	Trivial Smallhold Orchards
 # ca_farming_o_2	|	Insignificant Smallhold Orchards
-# ca_farming_o_3	|	Noteworthy Smallhold Orchards
-# ca_farming_o_4	|	Significant Smallhold Orchards
-# ca_farming_o_5	|	Established Smallhold Orchards
-# ca_farming_o_6	|	Extensive Smallhold Orchards
+# ca_farming_o_3	|	Meagre Smallhold Orchards
+# ca_farming_o_4	|	Noteworthy Smallhold Orchards
+# ca_farming_o_5	|	Significant Smallhold Orchards
+# ca_farming_o_6	|	Sprawling Smallhold Orchards
 
+# - Crownlander, Riverlands, Northmarcher
 # ca_pastures_c_1	|	Trivial Cattle Pastures
 # ca_pastures_c_2	|	Insignificant Cattle Pastures
-# ca_pastures_c_3	|	Noteworthy Cattle Pastures
-# ca_pastures_c_4	|	Significant Cattle Pastures
-# ca_pastures_c_5	|	Established Cattle Pastures
-# ca_pastures_c_6	|	Extensive Cattle Pastures
+# ca_pastures_c_3	|	Meagre Cattle Pastures
+# ca_pastures_c_4	|	Noteworthy Cattle Pastures
+# ca_pastures_c_5	|	Significant Cattle Pastures
+# ca_pastures_c_6	|	Sprawling Cattle Pastures
 
+# - lowland valemen, northmen, tribes
 # ca_pastures_s_1	|	Trivial Sheep Pastures
 # ca_pastures_s_2	|	Insignificant Sheep Pastures
-# ca_pastures_s_3	|	Noteworthy Sheep Pastures
-# ca_pastures_s_4	|	Significant Sheep Pastures
-# ca_pastures_s_5	|	Established Sheep Pastures
-# ca_pastures_s_6	|	Extensive Sheep Pastures
+# ca_pastures_s_3	|	Meagre Sheep Pastures
+# ca_pastures_s_4	|	Noteworthy Sheep Pastures
+# ca_pastures_s_5	|	Significant Sheep Pastures
+# ca_pastures_s_6	|	Sprawling Sheep Pastures
 
+# - beyond the wall, valemen, mountain clansmen
 # ca_pastures_g_1	|	Trivial Goat Pastures
 # ca_pastures_g_2	|	Insignificant Sheep Pastures
-# ca_pastures_g_3	|	Noteworthy Sheep Pastures
-# ca_pastures_g_4	|	Significant Sheep Pastures
-# ca_pastures_g_5	|	Established Sheep Pastures
-# ca_pastures_g_6	|	Extensive Sheep Pastures
+# ca_pastures_g_3	|	Meagre Sheep Pastures
+# ca_pastures_g_4	|	Noteworthy Sheep Pastures
+# ca_pastures_g_5	|	Significant Sheep Pastures
+# ca_pastures_g_6	|	Sprawling Sheep Pastures
 
 ################################################################
 ######################## BLAH BLAH BLA #########################
 ################################################################
 ################################################################
+
+#	potential = {
+#			duchy = {
+#				OR = {
+#					title = d_title
+#				}	
+#			}
+#			location = {
+#				NOT = {
+#					terrain = plains
+#					terrain = steppe
+#					terrain = marsh
+#					terrain = woods
+#					terrain = forest
+#					terrain = farmlands
+#				}
+#			}
+#		}
+
+castle = {
+	#############################################
+	########################## SUSTENANCE FARMING
+	#############################################
+	
+	ca_farming_f_1 = {
+		desc = ca_farming_f_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_1 }
+		
+		ai_creation_factor = 88
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 25
+		tax_income = 0.5
+	}
+	
+	ca_farming_f_2 = {
+		desc = ca_farming_f_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_2 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_f_1
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 25
+		tax_income = 0.5
+	}
+	
+	ca_farming_f_3 = {
+		desc = ca_farming_f_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_4 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_f_2
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 25
+		tax_income = 0.5
+	}
+	
+	ca_farming_f_4 = {
+		desc = ca_farming_f_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_f_3
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 25
+		tax_income = 0.5
+	}
+	
+	ca_farming_f_5 = {
+		desc = ca_farming_f_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_8 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_f_4
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 25
+		tax_income = 0.5
+	}
+	
+	ca_farming_f_6 = {
+		desc = ca_farming_f_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_10 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_f_5
+		
+		gold_cost = 75
+		build_time = 365
+		
+		light_infantry = 100
+		archers = 25
+		tax_income = 0.5
+	}
+	####################################
+	########################## VINEYARDS
+	####################################
+	
+	ca_farming_v_1 = {
+		desc = ca_farming_v_1_desc
+		
+		potential = {
+			location = {
+				AND = {
+					OR = {
+						terrain = plains
+						terrain = farmlands
+					}
+					OR = {
+						culture = dornish
+						culture = salt_dornish
+						culture = sand_dornish
+						culture = stone_dornish
+						culture = scorched_dornish
+						culture = orphans_of_the_greenblood
+						culture = north_marcher
+						culture = reachman
+						culture = manderish
+						culture = wynelander
+						culture = evenstar
+					}
+				}
+			}
+		}
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_1 }
+		
+		ai_creation_factor = 88
+		
+		gold_cost = 75
+		build_time = 365
+		
+		garrison_size = 0.025
+		tax_income = 2.0
+	}
+	
+	ca_farming_v_2 = {
+		desc = ca_farming_v_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_2 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_v_1
+		
+		gold_cost = 75
+		build_time = 365
+		
+		garrison_size = 0.025
+		tax_income = 2.0
+	}
+	
+	ca_farming_v_3 = {
+		desc = ca_farming_v_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_4 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_v_2
+		
+		gold_cost = 75
+		build_time = 365
+		
+		garrison_size = 0.025
+		tax_income = 2.0
+	}
+	
+	ca_farming_v_4 = {
+		desc = ca_farming_v_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_v_3
+		
+		gold_cost = 75
+		build_time = 365
+		
+		garrison_size = 0.025
+		tax_income = 2.0
+	}
+	
+	ca_farming_v_5 = {
+		desc = ca_farming_v_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_8 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_v_4
+		
+		gold_cost = 75
+		build_time = 365
+		
+		garrison_size = 0.025
+		tax_income = 2.0
+	}
+	
+	ca_farming_v_6 = {
+		desc = ca_farming_v_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_10 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_v_5
+		
+		gold_cost = 75
+		build_time = 365
+		
+		garrison_size = 0.025
+		tax_income = 2.0
+	}
+	
+	###################################
+	########################## ORCHARDS
+	###################################
+	
+	ca_farming_o_1 = {
+		desc = ca_farming_o_1_desc
+		
+		potential = {
+			location = {
+				AND = {
+					OR = {
+						terrain = plains
+						terrain = farmlands
+						terrain = hills
+					}
+					OR = {
+						culture = blackwaterman
+						culture = stormlander
+						culture = marcher
+						culture = waterman
+						culture = wrathman
+						culture = rainlander
+					}
+				}
+			}
+		}
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_1 }
+		
+		ai_creation_factor = 88
+		
+		gold_cost = 250
+		build_time = 365
+		
+		tax_income = 1.25
+		levy_size = 0.015
+	}
+	
+	ca_farming_o_2 = {
+		desc = ca_farming_o_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_2 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_o_1
+		
+		gold_cost = 375
+		build_time = 365
+		
+		tax_income = 1.25
+		levy_size = 0.015
+	}
+	
+	ca_farming_o_3 = {
+		desc = ca_farming_o_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_4 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_o_2
+		
+		gold_cost = 500
+		build_time = 365
+		
+		tax_income = 1.25
+		levy_size = 0.015
+	}
+	
+	ca_farming_o_4 = {
+		desc = ca_farming_o_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_o_3
+		
+		gold_cost = 625
+		build_time = 365
+		
+		tax_income = 1.25
+		levy_size = 0.015
+	}
+	
+	ca_farming_o_5 = {
+		desc = ca_farming_o_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_8 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_o_4
+		
+		gold_cost = 750
+		build_time = 365
+		
+		tax_income = 1.25
+		levy_size = 0.015
+	}
+	
+	ca_farming_o_6 = {
+		desc = ca_farming_o_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_10 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_o_5
+		
+		gold_cost = 875
+		build_time = 365
+		
+		tax_income = 1.25
+		levy_size = 0.015
+	}
+	
+	##########################################
+	########################## CATTLE PASTURES
+	##########################################
+	
+	ca_farming_c_1 = {
+		desc = ca_farming_c_1_desc
+		
+		potential = {
+			location = {
+				AND = {
+					OR = {
+						terrain = plains
+						terrain = farmlands
+						terrain = hills
+					}
+					OR = {
+						culture = north_marcher
+						
+						culture = crownlander
+						
+						culture = riverlander
+						
+						culture = muddish
+						culture = crackclawmen
+						culture = dusklander
+						
+						culture = sisterman
+					}
+				}
+			}
+		}
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_1 }
+		
+		ai_creation_factor = 88
+		
+		gold_cost = 250
+		build_time = 365
+		
+		tax_income = 1.00
+		levy_size = 0.035
+	}
+	
+	ca_farming_c_2 = {
+		desc = ca_farming_c_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_2 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_c_1
+		
+		gold_cost = 375
+		build_time = 365
+		
+		tax_income = 1.00
+		levy_size = 0.035
+	}
+	
+	ca_farming_c_3 = {
+		desc = ca_farming_c_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_4 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_c_2
+		
+		gold_cost = 500
+		build_time = 365
+		
+		tax_income = 1.00
+		levy_size = 0.035
+	}
+	
+	ca_farming_c_4 = {
+		desc = ca_farming_c_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_c_3
+		
+		gold_cost = 625
+		build_time = 365
+		
+		tax_income = 1.00
+		levy_size = 0.035
+	}
+	
+	ca_farming_c_5 = {
+		desc = ca_farming_c_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_8 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_c_4
+		
+		gold_cost = 750
+		build_time = 365
+		
+		tax_income = 1.00
+		levy_size = 0.035
+	}
+	
+	ca_farming_c_6 = {
+		desc = ca_farming_c_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_10 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_c_5
+		
+		gold_cost = 875
+		build_time = 365
+		
+		tax_income = 1.00
+		levy_size = 0.035
+	}
+	
+	#########################################
+	########################## SHEEP PASTURES
+	#########################################
+	
+	ca_farming_s_1 = {
+		desc = ca_farming_s_1_desc
+		
+		potential = {
+			location = {
+				AND = {
+					OR = {
+						terrain = plains
+						terrain = farmlands
+						terrain = hills
+						#terrain = mountain
+					}
+					OR = {
+						culture = flint_clansmen
+						culture = northmen
+						culture = barrowmen
+						culture = clansmen
+						culture = crabmen
+						culture = craggon
+						
+						culture = bronzeman
+						culture = lowland_valeman
+						
+						culture = andal
+						
+						#culture = valeman
+						#culture = mountain_clansmen
+					}
+				}
+			}
+		}
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_1 }
+		
+		ai_creation_factor = 88
+		
+		gold_cost = 250
+		build_time = 365
+		
+		tax_income = 1.30
+		levy_size = 0.020
+	}
+	
+	ca_farming_s_2 = {
+		desc = ca_farming_s_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_2 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_s_1
+		
+		gold_cost = 375
+		build_time = 365
+		
+		tax_income = 1.30
+		levy_size = 0.020
+	}
+	
+	ca_farming_s_3 = {
+		desc = ca_farming_s_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_4 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_s_2
+		
+		gold_cost = 500
+		build_time = 365
+		
+		tax_income = 1.30
+		levy_size = 0.020
+	}
+	
+	ca_farming_s_4 = {
+		desc = ca_farming_s_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_s_3
+		
+		gold_cost = 625
+		build_time = 365
+		
+		tax_income = 1.30
+		levy_size = 0.020
+	}
+	
+	ca_farming_s_5 = {
+		desc = ca_farming_s_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_8 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_s_4
+		
+		gold_cost = 750
+		build_time = 365
+		
+		tax_income = 1.30
+		levy_size = 0.020
+	}
+	
+	ca_farming_s_6 = {
+		desc = ca_farming_s_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_10 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_s_5
+		
+		gold_cost = 875
+		build_time = 365
+		
+		tax_income = 1.30
+		levy_size = 0.020
+	}
+	
+	#########################################
+	########################## SHEEP PASTURES
+	#########################################
+	
+	ca_farming_g_1 = {
+		desc = ca_farming_g_1_desc
+		
+		potential = {
+			location = {
+				AND = {
+					OR = {
+						terrain = plains
+						terrain = farmlands
+						terrain = hills
+						terrain = mountain
+					}
+					OR = {
+						culture = hill_clansmen
+						
+						culture = valeman
+						culture = mountain_clansmen
+						
+						culture = thenn
+						culture = nightrunners
+						culture = frozen_shore
+						culture = ice_rivermen
+						culture = hornfoots
+						culture = cavemen
+						culture = gildlic
+						culture = dumhic
+						culture = hartenn
+						culture = saliosi
+						culture = harishic
+						culture = skagosi
+						culture = wildling
+					}
+				}
+			}
+		}
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_1 }
+		
+		ai_creation_factor = 88
+		
+		gold_cost = 250
+		build_time = 365
+		
+		tax_income = 1.15
+		levy_size = 0.035
+	}
+	
+	ca_farming_g_2 = {
+		desc = ca_farming_g_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_2 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_g_1
+		
+		gold_cost = 375
+		build_time = 365
+		
+		tax_income = 1.15
+		levy_size = 0.035
+	}
+	
+	ca_farming_g_3 = {
+		desc = ca_farming_g_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_4 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_g_2
+		
+		gold_cost = 500
+		build_time = 365
+		
+		tax_income = 1.15
+		levy_size = 0.035
+	}
+	
+	ca_farming_g_4 = {
+		desc = ca_farming_g_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_g_3
+		
+		gold_cost = 625
+		build_time = 365
+		
+		tax_income = 1.15
+		levy_size = 0.035
+	}
+	
+	ca_farming_g_5 = {
+		desc = ca_farming_g_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_8 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_g_4
+		
+		gold_cost = 750
+		build_time = 365
+		
+		tax_income = 1.15
+		levy_size = 0.035
+	}
+	
+	ca_farming_g_6 = {
+		desc = ca_farming_g_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_core_level_10 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = ca_farming_g_5
+		
+		gold_cost = 875
+		build_time = 365
+		
+		tax_income = 1.15
+		levy_size = 0.035
+	}
+}
