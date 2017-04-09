@@ -33,65 +33,48 @@
 # but reduces the amount of levy infantry produced by the settlement
 # by an inefficient 10:12 rate
 
-########################################
-#### ca_core_level_1	|	Outpost ####
-########################################
+# ca_barracks_1				|	Tiny Infantry Barracks					|	ca_core_level_1
+# ca_barracks_2				|	Small Infantry Barracks					|	ca_core_level_2
+# ca_barracks_3				|	Medium Infantry Barracks				|	ca_core_level_3
+# ca_barracks_4				|	Large Infantry Barracks					|	ca_core_level_4
+# ca_barracks_5				|	Sizeable Infantry Quarters				|	ca_core_level_5
+# ca_barracks_6				|	Extensive Infantry Quarters				|	ca_core_level_8
+# ca_barracks_7				|	Huge Infantry Quarters					|	ca_core_level_10
 
-# ca_barracks_1		|	Tiny Infantry Barracks
+# ca_stables_1				|	Tiny Light Cavalry Stables				|	ca_barracks_1
+# ca_stables_2				|	Meagre Light Cavalry Stables			|	ca_barracks_2
+# ca_stables_3				|	Small Light Cavalry Stables				|	ca_barracks_3
+# ca_stables_4				|	Average Light Cavalry Stables			|	ca_barracks_4
+# ca_stables_5				|	Sizeable Light Cavalry Stables			|	ca_barracks_5
+# ca_stables_6				|	Large Light Cavalry Stables				|	ca_barracks_6
+# ca_stables_7				|	Huge Light Cavalry Stables				|	ca_barracks_7
 
-###########################################
-#### ca_core_level_2	|	Small Fort ####
-###########################################
+# ca_k_stable_1				|	Tiny Knight's Quarters					|	ca_stables_5	ca_blacksmith_4
+# ca_k_stable_2				|	Subpar Knight's Quarters				|	ca_stables_6	ca_blacksmith_5
+# ca_k_stable_3				|	Reasonable Knight's Quarters			|	ca_stables_7	ca_blacksmith_6
+# ca_k_stable_4				|	Large Knight's Quarters					|	ca_stables_7	ca_blacksmith_7
 
-# ca_barracks_2		|	Small Infantry Barracks
-# ca_port_1			|	Tiny Dock
+# ca_blacksmith_1			|	Tiny Castle Blacksmithy					|	ca_core_level_2
+# ca_blacksmith_2			|	Meagre Castle Blacksmithy				|	ca_core_level_3
+# ca_blacksmith_3			|	Small Castle Blacksmithy				|	ca_core_level_4
+# ca_blacksmith_4			|	Average Castle Blacksmithy				|	ca_core_level_5
+# ca_blacksmith_5			|	Sizeable Castle Blacksmithy				|	ca_core_level_8
+# ca_blacksmith_6			|	Noteworthy Castle Blacksmithy			|	ca_core_level_10
+# ca_blacksmith_7			|	Prestigious Castle Blacksmithy			|	ca_core_level_11
 
-# ca_recruitment_post_1		|	Primitive Local Recruitment Post
+# ca_port_1					|	Tiny Dock								|	ca_core_level_2
+# ca_port_2					|	Small Dock								|	ca_core_level_3
+# ca_port_3					|	Small Castle Dock						|	ca_core_level_4
+# ca_port_4					|	Castle Dock								|	ca_core_level_5
+# ca_port_5					|	Dockyard								|	ca_core_level_8
+# ca_port_6					|	Huge Dockyard							|	ca_core_level_10
 
-#####################################
-#### ca_core_level_3	|	Fort ####
-#####################################
-
-# ca_barracks_3		|	Medium Infantry Barracks
-# ca_port_2			|	Small Dock
-
-# ca_recruitment_post_2		|	Inefficient Local Recruitment Post
-
-#############################################
-#### ca_core_level_4	|	Small Castle ####
-#############################################
-
-# ca_barracks_4		|	Large Infantry Barracks
-# ca_port_3			|	Small Castle Dock
-
-# ca_recruitment_post_3		|	Poor Local Recruitment Post
-
-#######################################
-#### ca_core_level_5	|	Castle ####
-#######################################
-
-# ca_barracks_5		|	Sizeable Infantry Quarters
-# ca_port_4			|	Castle Dock
-
-# ca_recruitment_post_3		|	Average Local Recruitment Post
-
-#########################################
-#### ca_core_level_8	|	Fortress ####
-#########################################
-
-# ca_barracks_6		|	Extensive Infantry Quarters
-# ca_port_5			|	Dockyard
-
-# ca_recruitment_post_5		|	Well Established Local Recruitment Post
-
-########################################
-#### ca_core_level_10	|	Citadel ####
-########################################
-
-# ca_barracks_7		|	Huge Infantry Quarters
-# ca_port_6			|	Huge Dockyard
-
-# ca_recruitment_post_6		|	Extensive Local Recruitment Post
+# ca_recruitment_post_1		|	Primitive Local Recruitment Post		|	ca_core_level_2
+# ca_recruitment_post_2		|	Inefficient Local Recruitment Post		|	ca_core_level_3
+# ca_recruitment_post_3		|	Poor Local Recruitment Post				|	ca_core_level_4
+# ca_recruitment_post_4		|	Average Local Recruitment Post			|	ca_core_level_5
+# ca_recruitment_post_5		|	Well Established Local Recruitment Post	|	ca_core_level_8
+# ca_recruitment_post_6		|	Extensive Local Recruitment Post		|	ca_core_level_10
 
 ####################################################
 ####### CASTLE MILITARY SETTLEMENT BUILDINGS #######
@@ -345,6 +328,317 @@ castle = {
 		light_infantry = -60
 	}
 	
+	############################################
+	########################## KNIGHT'S QUARTERS
+	############################################
+	
+	ca_k_stable_1 = {
+		desc = ca_k_stable_1_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_stables_5 ca_blacksmith_4 }
+		
+		ai_creation_factor = 80
+		
+		gold_cost = 150
+		build_time = 60
+		
+		knights = 15
+		light_cavalry = -10
+	}
+	ca_k_stable_2 = {
+		desc = ca_k_stable_2_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_stables_6 ca_blacksmith_5 }
+		
+		ai_creation_factor = 79
+		
+		upgrades_from = ca_k_stable_1
+		
+		gold_cost = 225
+		build_time = 120
+		
+		knights = 15
+		light_cavalry = -10
+	}
+	ca_k_stable_3 = {
+		desc = ca_k_stable_3_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_stables_7 ca_blacksmith_6 }
+		
+		ai_creation_factor = 78
+		
+		upgrades_from = ca_k_stable_2
+		
+		gold_cost = 300
+		build_time = 240
+		
+		knights = 15
+		light_cavalry = -10
+	}
+	ca_k_stable_4 = {
+		desc = ca_k_stable_4_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		prerequisites = { ca_stables_7 ca_blacksmith_7 }
+		
+		ai_creation_factor = 77
+		
+		upgrades_from = ca_k_stable_3
+		
+		gold_cost = 375
+		build_time = 360
+		
+		knights = 15
+		light_cavalry = -10
+	}
+	
+	#####################################
+	########################## BLACKSMITH
+	#####################################
+	
+	ca_blacksmith_1 = {
+		desc = ca_blacksmith_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_core_level_2 }
+		
+		ai_creation_factor = 79
+		
+		gold_cost = 75
+		build_time = 365
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02 # Morale is a mix of how effective troops are armed and how long they may fight
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.03
+	}
+	
+	ca_blacksmith_2 = {
+		desc = ca_blacksmith_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_core_level_3 }
+		
+		ai_creation_factor = 78
+		
+		upgrades_from = ca_blacksmith_1
+		
+		gold_cost = 75
+		build_time = 365
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02 # Morale is a mix of how effective troops are armed and how long they may fight
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.03
+	}
+	
+	ca_blacksmith_3 = {
+		desc = ca_blacksmith_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_core_level_4 }
+		
+		ai_creation_factor = 77
+		
+		upgrades_from = ca_blacksmith_2
+		
+		gold_cost = 75
+		build_time = 365
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02 # Morale is a mix of how effective troops are armed and how long they may fight
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.03
+	}
+	
+	ca_blacksmith_4 = {
+		desc = ca_blacksmith_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_core_level_5 }
+		
+		ai_creation_factor = 76
+		
+		upgrades_from = ca_blacksmith_3
+		
+		gold_cost = 75
+		build_time = 365
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02 # Morale is a mix of how effective troops are armed and how long they may fight
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.03
+	}
+	
+	ca_blacksmith_5 = {
+		desc = ca_blacksmith_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_core_level_8 }
+		
+		ai_creation_factor = 79
+		
+		upgrades_from = ca_blacksmith_4
+		
+		gold_cost = 75
+		build_time = 365
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02 # Morale is a mix of how effective troops are armed and how long they may fight
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.03
+	}
+	
+	ca_blacksmith_6 = {
+		desc = ca_blacksmith_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_core_level_10 }
+		
+		ai_creation_factor = 78
+		
+		upgrades_from = ca_blacksmith_5
+		
+		gold_cost = 75
+		build_time = 365
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02 # Morale is a mix of how effective troops are armed and how long they may fight
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.03
+	}
+	
+	ca_blacksmith_7 = {
+		desc = ca_blacksmith_7_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0 # We don't want the game to automatically assign this building.
+		
+		potential = {
+			port = yes
+		}
+		
+		prerequisites = { ca_core_level_11 }
+		
+		ai_creation_factor = 78
+		
+		upgrades_from = ca_blacksmith_6
+		
+		gold_cost = 75
+		build_time = 365
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02 # Morale is a mix of how effective troops are armed and how long they may fight
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.03
+	}
+	
 	##################################
 	########################## PORTS
 	##################################
@@ -504,6 +798,7 @@ castle = {
 		
 		light_infantry = 60
 		archers = 20
+		levy_reinforce_rate = 0.05
 	}
 	
 	ca_recruitment_post_2 = {
@@ -523,6 +818,7 @@ castle = {
 		
 		light_infantry = 60
 		archers = 20
+		levy_reinforce_rate = 0.05
 	}
 	
 	ca_recruitment_post_3 = {
@@ -542,6 +838,7 @@ castle = {
 		
 		light_infantry = 60
 		archers = 20
+		levy_reinforce_rate = 0.05
 	}
 	
 	ca_recruitment_post_4 = {
@@ -561,6 +858,7 @@ castle = {
 		
 		light_infantry = 60
 		archers = 20
+		levy_reinforce_rate = 0.05
 	}
 	
 	ca_recruitment_post_5 = {
@@ -580,6 +878,7 @@ castle = {
 		
 		light_infantry = 60
 		archers = 20
+		levy_reinforce_rate = 0.05
 	}
 	
 	ca_recruitment_post_6 = {
@@ -600,5 +899,6 @@ castle = {
 		
 		light_infantry = 60
 		archers = 20
+		levy_reinforce_rate = 0.05
 	}
 }
