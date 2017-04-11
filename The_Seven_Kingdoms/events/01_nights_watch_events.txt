@@ -1,0 +1,70 @@
+namespace = nights_watch
+
+# These events are dedicated to the Black Brothers.
+# It will move any under thirteen characters out of the NW
+
+
+# Relatively low impact.
+character_event = {
+	id = nights_watch.1
+	desc = nights_watch_desc.1
+	# picture = 
+	
+	is_triggered_only = yes
+	
+	# Check that our character is in the court of the night's watch.
+	# Make sure they are not already a black brother.
+	
+	trigger = {
+		OR = {
+			primary_title = {
+				title = d_the_wall
+			}
+			primary_title = {
+				k_the_nights_watch
+			}
+			any_liege = {
+				primary_title = d_the_wall
+			}
+		}
+		NOT = {
+			trait = black_brother
+		}
+	}
+	
+	# If they are male and above the age of 13, give them the night's watch trait.
+	# if not, remove them from the night's watch.
+	
+	option = {
+		# If the character is either a woman or under the age of 13, send them away.
+		if = {
+			limit = {
+				OR = {
+					is_female = yes
+					NOT = {
+						age = 13
+					}
+				}
+			}
+			random_independent_ruler = {
+				limit = {
+					NOR = {
+						has_landed_title = d_the_wall
+						has_landed_title = k_the_nights_watch
+					} 
+				}
+				random_realm_lord = {
+					ROOT = { move_character = PREV }
+				}
+			}
+		}
+		# If the character is above the age of 13 and not a female, give them the trait.
+		if = {
+			limit = {
+				age = 13
+				is_female = no
+			}
+			add_trait = black_brother
+		}
+	}
+}
