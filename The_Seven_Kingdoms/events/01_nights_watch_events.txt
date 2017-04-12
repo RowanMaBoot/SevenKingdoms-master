@@ -10,7 +10,7 @@ character_event = {
 	desc = nights_watch_desc.1
 	# picture = 
 	
-	# is_triggered_only = yes
+	is_triggered_only = yes
 	# consider setting it up as a pulse event in on_actions
 	# if so, is_triggered_only = yes should be enabled.
 	
@@ -47,8 +47,28 @@ character_event = {
 	# If they are male and above the age of 13, give them the night's watch trait.
 	# if not, remove them from the night's watch.
 	
+	# Improvement:
+	# If you hit the criteria, do what is wanted.
+	# if do not (included married), remove.
+	
 	option = {
 		# If the character is either a woman or under the age of 13, send them away.
+		# If the character is above the age of 13 and not a female, give them the trait.
+		if = {
+			limit = {
+				age = 13
+				is_female = no
+			}
+			add_trait = black_brother
+		}
+		if = {
+			limit = {
+				spouse = {
+					trait = black_brother
+				} 
+			}
+			remove_spouse = spouse
+		}
 		if = {
 			limit = {
 				OR = {
@@ -70,13 +90,6 @@ character_event = {
 				}
 			}
 		}
-		# If the character is above the age of 13 and not a female, give them the trait.
-		if = {
-			limit = {
-				age = 13
-				is_female = no
-			}
-			add_trait = black_brother
-		}
+		
 	}
 }
