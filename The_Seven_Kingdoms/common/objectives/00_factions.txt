@@ -12,6 +12,839 @@
 # FACTIONS
 ###############
 
+faction_loyalist = {
+	type = character
+	exclusive = yes
+	cancel_on_leader_death = no 
+	
+	warning_level = 0 # At this level of faction power we give player an alert. Set to 0 for no alerts.
+	
+	potential = {
+		is_ruler = yes
+		independent = no
+		is_landed = yes
+		is_adult = yes
+		
+		NOR = {
+			trait = incapable
+			trait = black_brother
+		}
+		OR = {
+			is_patrician = yes
+			higher_tier_than = BARON
+		}
+	}
+	
+	# Requirements to create the faction (checks the title holder/ruler)
+	allow = {
+		OR = {
+			is_primary_holder_title = yes
+			higher_tier_than = DUKE
+		}
+		
+		# prisoner = no
+		
+		# NOT = {
+			# liege = {
+				# any_vassal = {
+					# leads_faction = yes
+					# in_faction = faction_loyalist
+				# }
+			# }
+		# }
+	}
+	
+	# Requirements to be able to join (ROOT is the character wanting to join)
+	# ROOT = JOINER, FROM = TARGET
+	allow_join = {
+		ROOT = {
+			is_ruler = yes
+			independent = no
+			is_landed = yes
+			is_adult = yes
+			
+			NOR = {
+				trait = incapable
+				trait = black_brother
+			}
+			
+			# NOT = {
+				# liege = {
+					# any_vassal = {
+						# leads_faction = yes
+						# in_faction = faction_loyalist
+					# }
+				# }
+			# }
+		}
+	}
+	
+	# Chance they will consider creating the faction.
+	chance = {
+		factor = 10.0
+		
+		# Will not form or join if our character is neither Just or Content and has
+		# no personal relationship with the liege or regent in question.
+		modifier = {
+			factor = 0
+			
+			NOR = {
+				trait = just
+				trait = content
+			}
+			liege = {
+				NOR = {
+					is_friend = ROOT
+					is_allied_with = ROOT
+					has_non_aggression_pact_with = ROOT
+					is_lover = ROOT
+				}
+				OR = {
+					has_regent = yes
+					NOT = { reverse_opinion = { who = ROOT value = 30 } }
+				}	
+				NAND = {
+					has_regent = yes
+					regent = { reverse_opinion = { who = ROOT value = 30 } }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 2.5
+			liege = {
+				OR = {
+					is_allied_with = ROOT
+					has_non_aggression_pact_with = ROOT
+					is_friend = ROOT
+				}
+			}
+		}
+		
+		# If our character is just or kind, they will be far more loyal than if they were not
+		# basically, closer friends are less likely to betray one another
+		# Does not apply to arbitrary characters, even if kind and/or just - fallback to previous modifier
+		modifier = {
+			factor = 3.5
+			liege = { 
+				OR = {
+					is_allied_with = ROOT
+					has_non_aggression_pact_with = ROOT
+					is_friend = ROOT
+				} 
+			} 
+			OR = {
+				trait = just
+				trait = kind
+			}
+			NOT = {
+				trait = arbitrary
+			}
+		}
+		
+		modifier = {
+			factor = 0
+			NOT = {
+				liege = { reverse_opinion = { who = ROOT value = 0 } }
+			}
+			OR = {
+				NOT = { liege = { is_allied_with = ROOT } }
+				NOT = { liege = { has_non_aggression_pact_with = ROOT } }
+			}		
+		}
+		
+		modifier = { 
+			factor = 0.1
+			
+			NOT = {
+				trait = content
+			}
+			OR = {
+				trait = ambitious
+				trait = cruel
+				trait = impaler
+			}
+		}
+		
+		modifier = {
+			factor = 2.0
+			
+			liege = {
+				culture = ROOT
+			}
+		}
+		
+		modifier = {
+			factor = 1.5
+			
+			liege = {
+				culture_group = ROOT
+			}
+		}
+		
+		modifier = {
+			factor = 0.5
+			
+			liege = {
+				NOT = {
+					culture = ROOT
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.35
+			
+			liege = {
+				NOT = {
+					culture_group = ROOT
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 5.0
+			
+			liege = {
+				religion = ROOT
+				trait = zealous
+			}
+			trait = zealous
+		}
+		
+		modifier = {
+			factor = 3.5
+			
+			liege = {
+				religion = ROOT
+			}
+			trait = zealous
+		}
+		
+		modifier = {
+			factor = 2.5
+			
+			liege = {
+				religion = ROOT
+			}
+			NOT = {
+				trait = cynical
+			}
+		}
+		
+		modifier = {
+			factor = 0.9
+			
+			NOT = {
+				liege = {
+					religion = ROOT
+				}
+			}
+			trait = cynical
+		}
+		
+		modifier = {
+			factor = 0.5
+			
+			NAND = {
+				liege = {
+					religion = ROOT
+				}
+				trait = cynical
+			}
+		}
+		
+		modifier = {
+			factor = 0.0
+			
+			NOT = {
+				liege = {
+					religion = ROOT
+				}
+			}
+			trait = zealous
+		}
+		
+		modifier = {
+			factor = 2
+			liege = {
+				reverse_opinion = { who = ROOT value = 100 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.8
+			liege = {
+				reverse_opinion = { who = ROOT value = 85 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.6
+			liege = {
+				reverse_opinion = { who = ROOT value = 70 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.4
+			liege = {
+				reverse_opinion = { who = ROOT value = 55 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.3
+			liege = {
+				reverse_opinion = { who = ROOT value = 40 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.2
+			liege = {
+				reverse_opinion = { who = ROOT value = 25 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.1
+			liege = {
+				reverse_opinion = { who = ROOT value = 5 }
+			}
+		}
+		
+		modifier = {
+			factor = 0.9
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -5 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.8
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -25 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.7
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -40 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.6
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -55 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.4
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -70 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.2
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -85 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.0
+			
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -99 }
+				}
+			}
+		}
+		
+		# Less likely to join the faction just because of irrational reasons
+		modifier = {
+			factor = 0.6
+			trait = arbitrary
+		}
+		
+		modifier = {
+			factor = 1.1
+			
+			trait = honest
+		}
+		
+		modifier = {
+			factor = 3.0
+			trait = content
+		}
+		
+		modifier = {
+			factor = 0.5
+			trait = decietful
+		}
+		
+		modifier = {
+			factor = 0.4
+			
+			NOR = {
+				trait = just
+				trait = kind
+			}
+			
+			liege = {
+				OR = {
+					trait = bastard
+					trait = legit_bastard
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.7
+			
+			OR = {
+				trait = just
+				trait = kind
+			}
+			
+			liege = {
+				OR = {
+					trait = bastard
+					trait = legit_bastard
+				}
+			}
+		}
+		
+		# Heir will always be loyal as long as relations are positive.
+		modifier = {
+			factor = 10.0
+			FROMFROM = {
+				current_heir = {
+					character = ROOT
+				}
+			}
+			liege = {
+				reverse_opinion = { who = ROOT value = 10 }
+			}
+		}
+	}
+	
+	# The chance that the AI will join (given the faction exists.
+	# AI membership weight: ROOT is the prospective member. FROM is the faction leader. FROMFROM is the target title or character. 
+	
+	membership = {
+		factor = 10.0
+		modifier = {
+			factor = 0
+				
+			in_faction = faction_succ_primogeniture
+			in_faction = faction_succ_feudal_elective
+			in_faction = faction_succ_seniority
+			in_faction = faction_succ_gavelkind
+			in_faction = faction_independence
+			in_faction = faction_lower_crown_authority
+			in_faction = faction_claimant
+			in_faction = faction_depose_liege
+			in_faction = faction_republic
+			in_faction = faction_increase_council_power
+		}
+		
+		# Will not form or join if our character is neither Just or Content and has
+		# no personal relationship with the liege or regent in question.
+		modifier = {
+			factor = 0
+			
+			NOR = {
+				trait = just
+				trait = content
+			}
+			liege = {
+				NOR = {
+					is_friend = ROOT
+					is_allied_with = ROOT
+					has_non_aggression_pact_with = ROOT
+					is_lover = ROOT
+				}
+				OR = {
+					has_regent = yes
+					NOT = { reverse_opinion = { who = ROOT value = 30 } }
+				}	
+				NAND = {
+					has_regent = yes
+					regent = { reverse_opinion = { who = ROOT value = 30 } }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 2.5
+			liege = {
+				OR = {
+					is_allied_with = ROOT
+					has_non_aggression_pact_with = ROOT
+					is_friend = ROOT
+				}
+			}
+		}
+		
+		# If our character is just or kind, they will be far more loyal than if they were not
+		# basically, closer friends are less likely to betray one another
+		# Does not apply to arbitrary characters, even if kind and/or just - fallback to previous modifier
+		modifier = {
+			factor = 3.5
+			liege = { 
+				OR = {
+					is_allied_with = ROOT
+					has_non_aggression_pact_with = ROOT
+					is_friend = ROOT
+				} 
+			} 
+			OR = {
+				trait = just
+				trait = kind
+			}
+			NOT = {
+				trait = arbitrary
+			}
+		}
+		
+		modifier = {
+			factor = 0
+			NOT = {
+				liege = { reverse_opinion = { who = ROOT value = 0 } }
+			}
+			OR = {
+				NOT = { liege = { is_allied_with = ROOT } }
+				NOT = { liege = { has_non_aggression_pact_with = ROOT } }
+			}		
+		}
+		
+		modifier = { 
+			factor = 0.1
+			
+			NOT = {
+				trait = content
+			}
+			OR = {
+				trait = ambitious
+				trait = cruel
+				trait = impaler
+			}
+		}
+		
+		modifier = {
+			factor = 2.0
+			
+			liege = {
+				culture = ROOT
+			}
+		}
+		
+		modifier = {
+			factor = 1.5
+			
+			liege = {
+				culture_group = ROOT
+			}
+		}
+		
+		modifier = {
+			factor = 0.5
+			
+			liege = {
+				NOT = {
+					culture = ROOT
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.35
+			
+			liege = {
+				NOT = {
+					culture_group = ROOT
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 5.0
+			
+			liege = {
+				religion = ROOT
+				trait = zealous
+			}
+			trait = zealous
+		}
+		
+		modifier = {
+			factor = 3.5
+			
+			liege = {
+				religion = ROOT
+			}
+			trait = zealous
+		}
+		
+		modifier = {
+			factor = 2.5
+			
+			liege = {
+				religion = ROOT
+			}
+			NOT = {
+				trait = cynical
+			}
+		}
+		
+		modifier = {
+			factor = 0.9
+			
+			NOT = {
+				liege = {
+					religion = ROOT
+				}
+			}
+			trait = cynical
+		}
+		
+		modifier = {
+			factor = 0.5
+			
+			NAND = {
+				liege = {
+					religion = ROOT
+				}
+				trait = cynical
+			}
+		}
+		
+		modifier = {
+			factor = 0.0
+			
+			NOT = {
+				liege = {
+					religion = ROOT
+				}
+			}
+			trait = zealous
+		}
+		
+		modifier = {
+			factor = 2
+			liege = {
+				reverse_opinion = { who = ROOT value = 100 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.8
+			liege = {
+				reverse_opinion = { who = ROOT value = 85 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.6
+			liege = {
+				reverse_opinion = { who = ROOT value = 70 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.4
+			liege = {
+				reverse_opinion = { who = ROOT value = 55 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.3
+			liege = {
+				reverse_opinion = { who = ROOT value = 40 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.2
+			liege = {
+				reverse_opinion = { who = ROOT value = 25 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.1
+			liege = {
+				reverse_opinion = { who = ROOT value = 5 }
+			}
+		}
+		
+		modifier = {
+			factor = 0.9
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -5 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.8
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -25 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.7
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -40 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.6
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -55 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.4
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -70 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.2
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -85 }
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.0
+			
+			NOT = {
+				liege = {
+					reverse_opinion = { who = ROOT value = -99 }
+				}
+			}
+		}
+		
+		# Less likely to join the faction just because of irrational reasons
+		modifier = {
+			factor = 0.6
+			trait = arbitrary
+		}
+		
+		modifier = {
+			factor = 1.1
+			
+			trait = honest
+		}
+		
+		modifier = {
+			factor = 3.0
+			trait = content
+		}
+		
+		modifier = {
+			factor = 0.5
+			trait = decietful
+		}
+		
+		modifier = {
+			factor = 0.4
+			
+			NOR = {
+				trait = just
+				trait = kind
+			}
+			
+			liege = {
+				OR = {
+					trait = bastard
+					trait = legit_bastard
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.7
+			
+			OR = {
+				trait = just
+				trait = kind
+			}
+			
+			liege = {
+				OR = {
+					trait = bastard
+					trait = legit_bastard
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 10.0
+			FROMFROM = {
+				current_heir = {
+					character = ROOT
+				}
+			}
+			liege = {
+				reverse_opinion = { who = ROOT value = 10 }
+			}
+		}
+		
+		# Consider having membership be influenced by the faction leader.
+		# Having negative opinion of the leader won't have a big impact, but liking the leader
+		# more than the ruler could encourage some to join the faction out of desire to support say,
+		# a friend.
+	}
+	
+	success = {
+		always = no
+	}
+	abort = {
+		always = no
+	}
+	abort_effect = {
+	}
+	effect = {
+	}
+}
+
 # Institute Succession by Seniority in Liege Title
 faction_succ_seniority = {
 	type = liege_titles
@@ -8941,820 +9774,5 @@ faction_powerful_vassal_takeover = {
 				}
 			}
 		}
-	}
-}
-
-faction_loyalist = {
-	type = character
-	exclusive = yes
-	
-	warning_level = 0 # At this level of faction power we give player an alert. Set to 0 for no alerts.
-	
-	potential = {
-		is_ruler = yes
-		independent = no
-		is_landed = yes
-		is_adult = yes
-		
-		NOR = {
-			trait = incapable
-			trait = black_brother
-		}
-		OR = {
-			is_patrician = yes
-			higher_tier_than = BARON
-		}
-	}
-	
-	allow = {
-		prisoner = no
-		
-		# NOT = {
-			# liege = {
-				# any_vassal = {
-					# leads_faction = yes
-					# in_faction = faction_loyalist
-				# }
-			# }
-		# }
-	}
-	
-	allow_join = {
-		ROOT = {
-			is_ruler = yes
-			independent = no
-			is_landed = yes
-			is_adult = yes
-			
-			NOR = {
-				trait = incapable
-				trait = black_brother
-			}
-			
-			# NOT = {
-				# liege = {
-					# any_vassal = {
-						# leads_faction = yes
-						# in_faction = faction_loyalist
-					# }
-				# }
-			# }
-		}
-	}
-	
-	chance = {
-		factor = 10.0
-		
-		# Will not form or join if our character is neither Just or Content and has
-		# no personal relationship with the liege or regent in question.
-		modifier = {
-			factor = 0
-			
-			NOR = {
-				trait = just
-				trait = content
-			}
-			liege = {
-				NOR = {
-					is_friend = ROOT
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_lover = ROOT
-				}
-				OR = {
-					has_regent = yes
-					NOT = { reverse_opinion = { who = ROOT value = 30 } }
-				}	
-				NAND = {
-					has_regent = yes
-					regent = { reverse_opinion = { who = ROOT value = 30 } }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 2.5
-			liege = {
-				OR = {
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_friend = ROOT
-				}
-			}
-		}
-		
-		# If our character is just or kind, they will be far more loyal than if they were not
-		# basically, closer friends are less likely to betray one another
-		# Does not apply to arbitrary characters, even if kind and/or just - fallback to previous modifier
-		modifier = {
-			factor = 3.5
-			liege = { 
-				OR = {
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_friend = ROOT
-				} 
-			} 
-			OR = {
-				trait = just
-				trait = kind
-			}
-			NOT = {
-				trait = arbitrary
-			}
-		}
-		
-		modifier = {
-			factor = 0
-			NOT = {
-				liege = { reverse_opinion = { who = ROOT value = 0 } }
-			}
-			OR = {
-				NOT = { liege = { is_allied_with = ROOT } }
-				NOT = { liege = { has_non_aggression_pact_with = ROOT } }
-			}		
-		}
-		
-		modifier = { 
-			factor = 0.1
-			
-			NOT = {
-				trait = content
-			}
-			OR = {
-				trait = ambitious
-				trait = cruel
-				trait = impaler
-			}
-		}
-		
-		modifier = {
-			factor = 2.0
-			
-			liege = {
-				culture = ROOT
-			}
-		}
-		
-		modifier = {
-			factor = 1.5
-			
-			liege = {
-				culture_group = ROOT
-			}
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			liege = {
-				NOT = {
-					culture = ROOT
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.35
-			
-			liege = {
-				NOT = {
-					culture_group = ROOT
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 5.0
-			
-			liege = {
-				religion = ROOT
-				trait = zealous
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 3.5
-			
-			liege = {
-				religion = ROOT
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 2.5
-			
-			liege = {
-				religion = ROOT
-			}
-			NOT = {
-				trait = cynical
-			}
-		}
-		
-		modifier = {
-			factor = 0.9
-			
-			NOT = {
-				liege = {
-					religion = ROOT
-				}
-			}
-			trait = cynical
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			NAND = {
-				liege = {
-					religion = ROOT
-				}
-				trait = cynical
-			}
-		}
-		
-		modifier = {
-			factor = 0.0
-			
-			NOT = {
-				liege = {
-					religion = ROOT
-				}
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 2
-			liege = {
-				reverse_opinion = { who = ROOT value = 100 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.8
-			liege = {
-				reverse_opinion = { who = ROOT value = 85 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.6
-			liege = {
-				reverse_opinion = { who = ROOT value = 70 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.4
-			liege = {
-				reverse_opinion = { who = ROOT value = 55 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.3
-			liege = {
-				reverse_opinion = { who = ROOT value = 40 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.2
-			liege = {
-				reverse_opinion = { who = ROOT value = 25 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.1
-			liege = {
-				reverse_opinion = { who = ROOT value = 5 }
-			}
-		}
-		
-		modifier = {
-			factor = 0.9
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -5 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.8
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -25 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.7
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -40 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.6
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -55 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.4
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -70 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.2
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -85 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.0
-			
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -99 }
-				}
-			}
-		}
-		
-		# Less likely to join the faction just because of irrational reasons
-		modifier = {
-			factor = 0.6
-			trait = arbitrary
-		}
-		
-		modifier = {
-			factor = 1.1
-			
-			trait = honest
-		}
-		
-		modifier = {
-			factor = 3.0
-			trait = content
-		}
-		
-		modifier = {
-			factor = 0.5
-			trait = decietful
-		}
-		
-		modifier = {
-			factor = 0.4
-			
-			NOR = {
-				trait = just
-				trait = kind
-			}
-			
-			liege = {
-				OR = {
-					trait = bastard
-					trait = legit_bastard
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.7
-			
-			OR = {
-				trait = just
-				trait = kind
-			}
-			
-			liege = {
-				OR = {
-					trait = bastard
-					trait = legit_bastard
-				}
-			}
-		}
-		
-		# Heir will always be loyal as long as relations are positive.
-		modifier = {
-			factor = 10.0
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-			liege = {
-				reverse_opinion = { who = ROOT value = 10 }
-			}
-		}
-	}
-		
-	membership = {
-		factor = 10.0
-		modifier = {
-			factor = 0
-				
-			in_faction = faction_succ_primogeniture
-			in_faction = faction_succ_feudal_elective
-			in_faction = faction_succ_seniority
-			in_faction = faction_succ_gavelkind
-			in_faction = faction_independence
-			in_faction = faction_lower_crown_authority
-			in_faction = faction_claimant
-			in_faction = faction_depose_liege
-			in_faction = faction_republic
-			in_faction = faction_increase_council_power
-		}
-		
-		# Will not form or join if our character is neither Just or Content and has
-		# no personal relationship with the liege or regent in question.
-		modifier = {
-			factor = 0
-			
-			NOR = {
-				trait = just
-				trait = content
-			}
-			liege = {
-				NOR = {
-					is_friend = ROOT
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_lover = ROOT
-				}
-				OR = {
-					has_regent = yes
-					NOT = { reverse_opinion = { who = ROOT value = 30 } }
-				}	
-				NAND = {
-					has_regent = yes
-					regent = { reverse_opinion = { who = ROOT value = 30 } }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 2.5
-			liege = {
-				OR = {
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_friend = ROOT
-				}
-			}
-		}
-		
-		# If our character is just or kind, they will be far more loyal than if they were not
-		# basically, closer friends are less likely to betray one another
-		# Does not apply to arbitrary characters, even if kind and/or just - fallback to previous modifier
-		modifier = {
-			factor = 3.5
-			liege = { 
-				OR = {
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_friend = ROOT
-				} 
-			} 
-			OR = {
-				trait = just
-				trait = kind
-			}
-			NOT = {
-				trait = arbitrary
-			}
-		}
-		
-		modifier = {
-			factor = 0
-			NOT = {
-				liege = { reverse_opinion = { who = ROOT value = 0 } }
-			}
-			OR = {
-				NOT = { liege = { is_allied_with = ROOT } }
-				NOT = { liege = { has_non_aggression_pact_with = ROOT } }
-			}		
-		}
-		
-		modifier = { 
-			factor = 0.1
-			
-			NOT = {
-				trait = content
-			}
-			OR = {
-				trait = ambitious
-				trait = cruel
-				trait = impaler
-			}
-		}
-		
-		modifier = {
-			factor = 2.0
-			
-			liege = {
-				culture = ROOT
-			}
-		}
-		
-		modifier = {
-			factor = 1.5
-			
-			liege = {
-				culture_group = ROOT
-			}
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			liege = {
-				NOT = {
-					culture = ROOT
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.35
-			
-			liege = {
-				NOT = {
-					culture_group = ROOT
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 5.0
-			
-			liege = {
-				religion = ROOT
-				trait = zealous
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 3.5
-			
-			liege = {
-				religion = ROOT
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 2.5
-			
-			liege = {
-				religion = ROOT
-			}
-			NOT = {
-				trait = cynical
-			}
-		}
-		
-		modifier = {
-			factor = 0.9
-			
-			NOT = {
-				liege = {
-					religion = ROOT
-				}
-			}
-			trait = cynical
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			NAND = {
-				liege = {
-					religion = ROOT
-				}
-				trait = cynical
-			}
-		}
-		
-		modifier = {
-			factor = 0.0
-			
-			NOT = {
-				liege = {
-					religion = ROOT
-				}
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 2
-			liege = {
-				reverse_opinion = { who = ROOT value = 100 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.8
-			liege = {
-				reverse_opinion = { who = ROOT value = 85 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.6
-			liege = {
-				reverse_opinion = { who = ROOT value = 70 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.4
-			liege = {
-				reverse_opinion = { who = ROOT value = 55 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.3
-			liege = {
-				reverse_opinion = { who = ROOT value = 40 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.2
-			liege = {
-				reverse_opinion = { who = ROOT value = 25 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.1
-			liege = {
-				reverse_opinion = { who = ROOT value = 5 }
-			}
-		}
-		
-		modifier = {
-			factor = 0.9
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -5 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.8
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -25 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.7
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -40 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.6
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -55 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.4
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -70 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.2
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -85 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.0
-			
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -99 }
-				}
-			}
-		}
-		
-		# Less likely to join the faction just because of irrational reasons
-		modifier = {
-			factor = 0.6
-			trait = arbitrary
-		}
-		
-		modifier = {
-			factor = 1.1
-			
-			trait = honest
-		}
-		
-		modifier = {
-			factor = 3.0
-			trait = content
-		}
-		
-		modifier = {
-			factor = 0.5
-			trait = decietful
-		}
-		
-		modifier = {
-			factor = 0.4
-			
-			NOR = {
-				trait = just
-				trait = kind
-			}
-			
-			liege = {
-				OR = {
-					trait = bastard
-					trait = legit_bastard
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.7
-			
-			OR = {
-				trait = just
-				trait = kind
-			}
-			
-			liege = {
-				OR = {
-					trait = bastard
-					trait = legit_bastard
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 10.0
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-			liege = {
-				reverse_opinion = { who = ROOT value = 10 }
-			}
-		}
-	}
-	
-	success = {
-		always = no
-	}
-	abort = {
-		always = no
-	}
-	abort_effect = {
-	}
-	effect = {
 	}
 }
