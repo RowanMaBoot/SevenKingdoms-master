@@ -441,6 +441,18 @@ faction_loyalist = {
 				}
 			}
 			liege = {
+				reverse_opinion = { who = ROOT value = 30 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.5
+			FROMFROM = {
+				current_heir = {
+					character = ROOT
+				}
+			}
+			liege = {
 				reverse_opinion = { who = ROOT value = 10 }
 			}
 		}
@@ -451,19 +463,22 @@ faction_loyalist = {
 	
 	membership = {
 		factor = 10.0
+		
 		modifier = {
 			factor = 0
-				
-			in_faction = faction_succ_primogeniture
-			in_faction = faction_succ_feudal_elective
-			in_faction = faction_succ_seniority
-			in_faction = faction_succ_gavelkind
-			in_faction = faction_independence
-			in_faction = faction_lower_crown_authority
-			in_faction = faction_claimant
-			in_faction = faction_depose_liege
-			in_faction = faction_republic
-			in_faction = faction_increase_council_power
+			
+			OR = {
+				in_faction = faction_succ_primogeniture
+				in_faction = faction_succ_feudal_elective
+				in_faction = faction_succ_seniority
+				in_faction = faction_succ_gavelkind
+				in_faction = faction_independence
+				in_faction = faction_lower_crown_authority
+				in_faction = faction_claimant
+				in_faction = faction_depose_liege
+				in_faction = faction_republic
+				in_faction = faction_increase_council_power
+			}
 		}
 		
 		# Will not form or join if our character is neither Just or Content and has
@@ -815,8 +830,28 @@ faction_loyalist = {
 			}
 		}
 		
+		# If you heir likes you and is of the same religion, then they will be loyal.
+		
 		modifier = {
 			factor = 10.0
+			
+			religion = FROMROM
+			culture_group = FROMROM
+			FROMFROM = {
+				current_heir = {
+					character = ROOT
+				}
+			}
+			liege = {
+				reverse_opinion = { who = ROOT value = 30 }
+			}
+		}
+		
+		modifier = {
+			factor = 1.5
+			
+			religion = FROMROM
+			culture_group = FROMROM
 			FROMFROM = {
 				current_heir = {
 					character = ROOT
@@ -824,6 +859,46 @@ faction_loyalist = {
 			}
 			liege = {
 				reverse_opinion = { who = ROOT value = 10 }
+			}
+		}
+		
+		# If you heir is of a foreign religion or culture, they will be unlikely to be loyal.
+		
+		modifier = {
+			factor = 0.8
+			
+			NOT = { culture_group = FROMROM }
+			FROMFROM = {
+				current_heir = {
+					character = ROOT
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.5
+			
+			NOT = { religion = FROMROM }
+			FROMFROM = {
+				current_heir = {
+					character = ROOT
+				}
+			}
+		}
+		
+		# If they are not of your culture group or religion, then have fun.
+		
+		modifier = {
+			factor = 0
+			
+			NOR = {
+				religion = FROMROM
+				culture_group = FROMROM
+			}
+			FROMFROM = {
+				current_heir = {
+					character = ROOT
+				}
 			}
 		}
 		
