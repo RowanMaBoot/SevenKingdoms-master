@@ -1,0 +1,316 @@
+# This file introduces new childhood events such as Strong, Fit and Weak (which are now assigned when growing up)
+
+namespace = NCE
+
+######################
+### ID 16000-17000 ###
+######################
+######################
+
+# on_action event
+# child is strong
+character_event = {
+	id = NCE.16000
+	desc = "EVTDESC16000"
+	picture = "GFX_evt_child_play"
+	
+	is_triggered_only = yes
+	
+	only_capable = yes
+	min_age = 12
+	max_age = 16
+	
+	trigger = {
+		has_guardian = yes
+		NOT = { has_character_modifier = the_oubliette }
+		NOT = { has_character_modifier = the_dungeon }
+		
+		NOR = {
+			trait = strong
+			trait = fit
+			trait = weak
+		}
+	}
+	
+	weight_multiplier = {
+		days = 1
+		
+		modifier = {
+			trait = strong_physique
+			factor = 1.2
+		}
+		modifier = {
+			trait = poor_physique
+			factor = 0.6
+		}
+		
+		modifier = {
+			trait = fair
+			factor = 1.1
+		}
+		modifier = {
+			trait = ugly
+			factor = 1.1
+		}
+		
+		modifier = {
+			trait = lisp
+			factor = 0.8
+		}
+		modifier = {
+			trait = stutter
+			factor = 0.8
+		}
+		modifier = {
+			trait = harelip
+			factor = 0.6
+		}
+		modifier = {
+			trait = hunchback
+			factor = 0.3
+		}
+		modifier = {
+			trait = clubfooted
+			factor = 0.2
+		}
+		modifier = {
+			trait = inbred
+			factor = 0.1
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA16000"
+		
+		add_trait = strong
+		
+		hidden_tooltip = {
+			guardian = {
+				character_event = {
+					id = NCE.16001
+					days = 3
+				}
+			}
+		}
+	}
+}
+
+# Guardian is notified about the child being strong
+character_event = {
+	id = NCE.16001
+	desc = "EVTDESC16001"
+	picture = "GFX_evt_guardian"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA16001"
+	}
+}
+
+# on_action event
+# child is fit
+character_event = {
+	id = NCE.16002
+	desc = "EVTDESC16002"
+	picture = "GFX_evt_child_play"
+	
+	is_triggered_only = yes
+	
+	only_capable = yes
+	min_age = 12
+	max_age = 16
+	
+	trigger = {
+		has_guardian = yes
+		NOT = { has_character_modifier = the_oubliette }
+		NOT = { has_character_modifier = the_dungeon }
+		
+		NOR = {
+			trait = strong
+			trait = fit
+			trait = weak
+		}
+	}
+	
+	weight_multiplier = {
+		days = 1
+		
+		modifier = {
+			trait = strong_physique
+			factor = 1.1
+		}
+		modifier = {
+			trait = poor_physique
+			factor = 0.7
+		}
+		
+		modifier = {
+			trait = fair
+			factor = 1.1
+		}
+		modifier = {
+			trait = ugly
+			factor = 1.1
+		}
+		
+		modifier = {
+			trait = lisp
+			factor = 0.8
+		}
+		modifier = {
+			trait = stutter
+			factor = 0.8
+		}
+		modifier = {
+			trait = harelip
+			factor = 0.6
+		}
+		modifier = {
+			trait = hunchback
+			factor = 0.3
+		}
+		modifier = {
+			trait = clubfooted
+			factor = 0.2
+		}
+		modifier = {
+			trait = inbred
+			factor = 0.1
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA16002"
+		
+		add_trait = fit
+		
+		hidden_tooltip = {
+			guardian = {
+				character_event = {
+					id = NCE.16003
+					days = 3
+				}
+			}
+		}
+	}
+}
+
+# Guardian is notified about the child being fit
+character_event = {
+	id = NCE.16003
+	desc = "EVTDESC16003"
+	picture = "GFX_evt_guardian"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA16003"
+	}
+}
+
+# on_action event
+# child is weak
+character_event = {
+	id = NCE.16004
+	desc = "EVTDESC16004"
+	picture = "GFX_evt_child_play"
+	
+	is_triggered_only = yes
+	
+	only_capable = yes
+	min_age = 8
+	max_age = 16
+	
+	trigger = {
+		
+		NOR = {
+			trait = strong
+			trait = fit
+			trait = weak
+		}
+	}
+	
+	weight_multiplier = {
+		days = 1
+		
+		modifier = {
+			OR = {
+				has_character_modifier = the_oubliette
+				has_character_modifier = the_dungeon
+			}
+			factor = 1.4
+		}
+		
+		modifier = {
+			trait = strong_physique
+			factor = 0.6
+		}
+		modifier = {
+			trait = poor_physique
+			factor = 1.4
+		}
+		
+		modifier = {
+			trait = fair
+			factor = 0.9
+		}
+		modifier = {
+			trait = ugly
+			factor = 0.9
+		}
+		
+		modifier = {
+			trait = lisp
+			factor = 1.1
+		}
+		modifier = {
+			trait = stutter
+			factor = 1.1
+		}
+		modifier = {
+			trait = harelip
+			factor = 1.2
+		}
+		modifier = {
+			trait = hunchback
+			factor = 1.3
+		}
+		modifier = {
+			trait = clubfooted
+			factor = 1.3
+		}
+		modifier = {
+			trait = inbred
+			factor = 1.5
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA16004"
+		
+		add_trait = weak
+		
+		hidden_tooltip = {
+			guardian = {
+				character_event = {
+					id = NCE.16005
+					days = 3
+				}
+			}
+		}
+	}
+}
+
+# Guardian is notified about the child being weak
+character_event = {
+	id = NCE.16005
+	desc = "EVTDESC16005"
+	picture = "GFX_evt_guardian"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA16005"
+	}
+}
