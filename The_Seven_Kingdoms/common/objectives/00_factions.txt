@@ -42,16 +42,7 @@ faction_loyalist = {
 			higher_tier_than = DUKE
 		}
 		
-		# prisoner = no
-		
-		# NOT = {
-			# liege = {
-				# any_vassal = {
-					# leads_faction = yes
-					# in_faction = faction_loyalist
-				# }
-			# }
-		# }
+		prisoner = no
 	}
 	
 	# Requirements to be able to join (ROOT is the character wanting to join)
@@ -67,15 +58,6 @@ faction_loyalist = {
 				trait = incapable
 				trait = black_brother
 			}
-			
-			# NOT = {
-				# liege = {
-					# any_vassal = {
-						# leads_faction = yes
-						# in_faction = faction_loyalist
-					# }
-				# }
-			# }
 		}
 	}
 	
@@ -90,6 +72,7 @@ faction_loyalist = {
 			
 			NOR = {
 				trait = just
+				trait = bleeding_heart
 				trait = content
 			}
 			liege = {
@@ -135,10 +118,13 @@ faction_loyalist = {
 			} 
 			OR = {
 				trait = just
+				trait = bleeding_heart
 				trait = kind
+				trait = honourable
 			}
 			NOT = {
 				trait = arbitrary
+				trait = dishonourable
 			}
 		}
 		
@@ -163,6 +149,9 @@ faction_loyalist = {
 				trait = ambitious
 				trait = cruel
 				trait = impaler
+				trait = heartless
+				trait = sociopath
+				trait = dishonourable
 			}
 		}
 		
@@ -381,7 +370,11 @@ faction_loyalist = {
 		# Less likely to join the faction just because of irrational reasons
 		modifier = {
 			factor = 0.6
-			trait = arbitrary
+			
+			OR = {
+				trait = arbitrary
+				trait = irrational
+			}
 		}
 		
 		modifier = {
@@ -392,20 +385,24 @@ faction_loyalist = {
 		
 		modifier = {
 			factor = 3.0
+			
 			trait = content
 		}
 		
 		modifier = {
 			factor = 0.5
+			
 			trait = decietful
 		}
 		
 		modifier = {
-			factor = 0.4
+			factor = 0.6
 			
 			NOR = {
 				trait = just
+				trait = bleeding_heart
 				trait = kind
+				trait = honourable
 			}
 			
 			liege = {
@@ -417,10 +414,11 @@ faction_loyalist = {
 		}
 		
 		modifier = {
-			factor = 0.7
+			factor = 0.9
 			
 			OR = {
 				trait = just
+				trait = bleeding_heart
 				trait = kind
 			}
 			
@@ -435,6 +433,9 @@ faction_loyalist = {
 		# Heir will always be loyal as long as relations are positive.
 		modifier = {
 			factor = 10.0
+			NOT = {
+				trait = sociopath
+			}
 			FROMFROM = {
 				current_heir = {
 					character = ROOT
@@ -447,6 +448,9 @@ faction_loyalist = {
 		
 		modifier = {
 			factor = 1.5
+			NOT = {
+				trait = sociopath
+			}
 			FROMFROM = {
 				current_heir = {
 					character = ROOT
@@ -454,6 +458,46 @@ faction_loyalist = {
 			}
 			liege = {
 				reverse_opinion = { who = ROOT value = 10 }
+			}
+		}
+		
+		# If you heir is of a foreign religion or culture, they will be unlikely to be loyal.
+		
+		modifier = {
+			factor = 0.8
+			
+			NOT = { culture_group = FROMROM }
+			FROMFROM = {
+				current_heir = {
+					character = ROOT
+				}
+			}
+		}
+		
+		modifier = {
+			factor = 0.5
+			
+			NOT = { religion = FROMROM }
+			FROMFROM = {
+				current_heir = {
+					character = ROOT
+				}
+			}
+		}
+		
+		# If they are not of your culture group or religion, then have fun.
+		
+		modifier = {
+			factor = 0
+			
+			NOR = {
+				religion = FROMROM
+				culture_group = FROMROM
+			}
+			FROMFROM = {
+				current_heir = {
+					character = ROOT
+				}
 			}
 		}
 	}
@@ -488,6 +532,7 @@ faction_loyalist = {
 			
 			NOR = {
 				trait = just
+				trait = bleeding_heart
 				trait = content
 			}
 			liege = {
@@ -533,10 +578,13 @@ faction_loyalist = {
 			} 
 			OR = {
 				trait = just
+				trait = bleeding_heart
 				trait = kind
+				trait = honourable
 			}
 			NOT = {
 				trait = arbitrary
+				trait = dishonourable
 			}
 		}
 		
@@ -561,6 +609,9 @@ faction_loyalist = {
 				trait = ambitious
 				trait = cruel
 				trait = impaler
+				trait = heartless
+				trait = sociopath
+				trait = dishonourable
 			}
 		}
 		
@@ -779,7 +830,11 @@ faction_loyalist = {
 		# Less likely to join the faction just because of irrational reasons
 		modifier = {
 			factor = 0.6
-			trait = arbitrary
+			
+			OR = {
+				trait = arbitrary
+				trait = irrational
+			}
 		}
 		
 		modifier = {
@@ -790,20 +845,24 @@ faction_loyalist = {
 		
 		modifier = {
 			factor = 3.0
+			
 			trait = content
 		}
 		
 		modifier = {
 			factor = 0.5
+			
 			trait = decietful
 		}
 		
 		modifier = {
-			factor = 0.4
+			factor = 0.6
 			
 			NOR = {
 				trait = just
+				trait = bleeding_heart
 				trait = kind
+				trait = honourable
 			}
 			
 			liege = {
@@ -815,10 +874,11 @@ faction_loyalist = {
 		}
 		
 		modifier = {
-			factor = 0.7
+			factor = 0.9
 			
 			OR = {
 				trait = just
+				trait = bleeding_heart
 				trait = kind
 			}
 			
@@ -830,13 +890,12 @@ faction_loyalist = {
 			}
 		}
 		
-		# If you heir likes you and is of the same religion, then they will be loyal.
-		
+		# Heir will always be loyal as long as relations are positive.
 		modifier = {
 			factor = 10.0
-			
-			religion = FROMROM
-			culture_group = FROMROM
+			NOT = {
+				trait = sociopath
+			}
 			FROMFROM = {
 				current_heir = {
 					character = ROOT
@@ -849,9 +908,9 @@ faction_loyalist = {
 		
 		modifier = {
 			factor = 1.5
-			
-			religion = FROMROM
-			culture_group = FROMROM
+			NOT = {
+				trait = sociopath
+			}
 			FROMFROM = {
 				current_heir = {
 					character = ROOT
@@ -8890,6 +8949,11 @@ faction_increase_council_power = {
 		}
 		
 		modifier = {
+			factor = 0.5
+			FROM = { opinion = { who = LIEGE value = 25 } }
+		}
+		
+		modifier = {
 			factor = 1.5
 			NOT = { FROM = { opinion = { who = LIEGE value = -10 } } }
 		}
@@ -9125,6 +9189,11 @@ faction_increase_council_power = {
 				who = FROM
 				modifier = opinion_coerced_into_joining_faction
 			}
+		}
+		
+		modifier = {
+			factor = 0.5
+			FROM = { opinion = { who = LIEGE value = 25 } }
 		}
 		
 		modifier = {
