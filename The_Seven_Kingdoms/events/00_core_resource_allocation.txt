@@ -5,11 +5,9 @@ namespace = resource_dist
 ###################
 ###################
 
-# This file uses a single, on startup, province event to assign modifiers to every province.
-# The trigger is used to fire it for those provinces. If the province is not listed, it will not fire for it.
+# This file uses a single, on startup, event to assign modifiers to every province.
 
-# Alternatively we could fire it globally for every province, but that could result in instablity,
-# as it will have to fire for every existing province.
+# The immediate applies all modifier by directly scoping to the provinces and then adding them.
 
 # This allows use to quick and easily change what provinces can have what resource structures built.
 # although we could handle the requirements in our resource structures themselves, it can get messy
@@ -47,68 +45,19 @@ namespace = resource_dist
 #################
 #################
 
-province_event = { 
+character_event = { 
 	id = resource_dist.1
-	desc = "NOSTRING"
 	hide_window = yes
+	is_triggered_only = yes #triggered from on_startup
 	
-	fire_only_once = yes
-	
-	# This block is used to fire the  event. It will fire for provinces listed in this block.
-	
-	trigger = {
-		OR = {
-			province_id = 157 # Pentos, Precious Fabrics
-			province_id = 160 # Spice Towers, Spice
-			province_id = 175 # Prince's Shore, Spice
-			province_id = 190 # Velvet Hill, Precious Fabrics
-			
-			province_id = 241 # Myrish Harbour, Jewellery
-			province_id = 242 # Myr, Spices
-			province_id = 247 # Lace Tower, Precious Fabrics
-			
-			province_id = 297 # Tyrosh, Spices
-			province_id = 298 # Eastern Tyrosh, Salt
-			
-			province_id = 466 # Lemonwood , Lemonwood
-			province_id = 467 # Sourton, Lemonwood
-			province_id = 468 # Old Lord's Manor, Lemonwood
-			province_id = 469 # Miller's Town, Lemonwood
-			
-			province_id = 478 # Salt Shore, Salt
-			
-			province_id = 493 # Saltmines, Salt
-			
-			province_id = 733 # Blackwater Harbour, Jewellery
-			
-			province_id = 797 # Dragonstone, Obsidian
-			province_id = 798 # Smouldering isle, Obsidian
-			province_id = 799 # Isle of Embmer, Diamonds
-			province_id = 800 # Obsidian Isle, Obsidian (Obviously)
-			
-			province_id = 858 # Lannisport, Jewellery
-			
-			# Iron Islands. Probably not actually rich in iron, but who cares?
-			province_id = 1156 # Pyke, Iron
-			province_id = 1157 # Iron Holt, Iron
-			province_id = 1165 # Hammerhorn, Copper
-			province_id = 1166 # Hardstone Hill, Granite
-			province_id = 1175 # Grey Garden, Granite
-			province_id = 1176 # Old Wyk, Iron
-			province_id = 1178 # Nagga's Hill, Silver
-			province_id = 1190 # Orkmont, Iron
-			
-			province_id = 1229 # Arrendell, Northern Gemstones
-			province_id = 1231 # Flint Keep, Northern Gemstones
-			province_id = 1232 # Shadowmoor, Northern Gemstones
-			province_id = 1233 # Cold Cove, Northern Gemstones
-		}
+	trigger = { 
+		NOT = { has_global_flag = resource_setup_complete }
+		is_multiplayer_host_character = yes
 	}
 	
-	# This block is what assigns the resource, based on what province it fires in.
-	
-	option - {
-		name = "OK"
+	# This block scopes directly to the provinces and assigns the resources.
+	immediate = {
+		set_global_flag = resource_setup_complete
 		# Pentos
 		157 = { add_province_modifier = { name = precious_fabrics duration = -1 } }
 		160 = { add_province_modifier = { name = spice duration = -1 } }
@@ -164,3 +113,4 @@ province_event = {
 		1232 = { add_province_modifier = { name = northern_gems duration = -1 } }
 		1233 = { add_province_modifier = { name = northern_gems duration = -1 } }
 	}
+}
