@@ -1,226 +1,320 @@
+###########################################################################################
+######################################### REMEMBER ########################################
+# THE BONUS GRANTED IS ADDITIVE. ALL PREVIOUS UPGRADES ARE INCLUDED IN THE OVERALL VALUE! #
+###########################################################################################
+
+#######################
+### potential usage ###
+#######################
+#######################
+
+# What you put straight into the potential looks at the province as a whole.
+# If you want to check the barony itself or character who holds the barony,
+# you need to use the following scopes and conditions.
+
+# FROMFROM is the barony you are trying to build in. So you can check that the barony is a specific one, if you wish to lock to it.
+
+# FROMFROM = {
+# 	title = b_winterfell
+# }
+
+# The above would check the barony, and if it is the barony of winterfell the building will show and can be built.
+
+# FROM is the holder of the barony you are building in.
+
+# FROM = {
+# 	culture = northman
+# }
+
+# The above would lock a building to baronies held by a character of that culture.
+# I'd avoid using FROM, as it generally causes loss of building on ruler change if their culture is different.
+
+# A normal potential checks the potential 
+
+########################
+### is_capital usage ###
+########################
+########################
+
+# is_capital can be used to check if a building can be built only in the province capital or capital of the title holder.
+
+# potential = {
+# 	is_capital = yes
+# }
+
+# I'd not use the above. It locks it to whatever the current capital of the liege is.
+
+# potential = {
+# 	FROMFROM = {
+#		is_capital = yes
+#	}
+# }
+
+# The above checks if the barony is the capital barony. This gives you the ability to lock a semi-powerful or semi-unique building to the capital holdings of say, a culture, only.
+
+#####################
+### example usage ###
+#####################
+#####################
+
+#		potential = {
+#			culture = craggon # This checks that our PROVINCE is CRAGGON culture
+#			FROMFROM = {
+#				is_capital = yes # This checks that the barony is the CAPITAL HOLDING of the local PROVINCE.
+#			}
+#		}
+
+###############################################
+###################################################
+########################################################
+
 # Unique buildings should go in this file
 # Such buildings have been built or will be built some time during the time line, and may require a wide number of criteria to build.
 # For example, it might be possible to build the Red Keep if you have the correct culture AND/OR if the province has developed far enough and his the seat of a Kingdom or Empire.
 
 castle = {
 	ca_pirateshipyard = {
-		desc = ca_pirateshipyard_desc	
+		desc = ca_pirateshipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 10.0 # Never get at start of game
+		ai_creation_factor = 110
+		
 		potential = {
 			port = yes
-			FROM = { 
-				OR = {
-					culture = pirate
-				}	
+			culture = pirate
+			FROMFROM = {
+				is_capital = yes
 			}
 		}
+		
 		gold_cost = 35
 		build_time = 75
+		
 		galleys = 10
 		archers = 30
 		light_infantry = 90
 		heavy_infantry = 30
-		ai_creation_factor = 110
 		tax_income = 0.25
 		fort_level = 0.5
-		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
-		extra_tech_building_start = 10.0 # Never get at start of game
 	}
 	ca_pirateshipyard_2 = {
 		desc = ca_pirateshipyard_desc		
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 10.0 # Never get at start of game
+		ai_creation_factor = 110
+		
 		potential = {
 			port = yes
-			FROM = { 
-				OR = {
-					culture = pirate
-				}	
+			culture = pirate
+			FROMFROM = {
+				is_capital = yes
 			}
 		}
+		
 		upgrades_from = ca_pirateshipyard
+		
 		gold_cost = 150
 		build_time = 180
+		
 		galleys = 10
 		archers = 60
 		light_infantry = 180
 		heavy_infantry = 60
-		ai_creation_factor = 110
+		
 		tax_income = 0.4	
 		fort_level = 0.5
-		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
-		extra_tech_building_start = 10.0 # Never get at start of game
+		
 	}
 	ca_pirateshipyard_3 = {
-		desc = ca_pirateshipyard_desc		
+		desc = ca_pirateshipyard_desc	
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 10.0 # Never get at start of game
+		ai_creation_factor = 110
+		
 		potential = {
 			port = yes
-			FROM = { 
-				OR = {
-					culture = pirate
-				}	
+			culture = pirate
+			FROMFROM = {
+				is_capital = yes
 			}
 		}
 		upgrades_from = ca_pirateshipyard_2
+		
 		gold_cost = 200
 		build_time = 180
+		
 		galleys = 10
 		archers = 90
 		light_infantry = 270
 		heavy_infantry = 90
-		ai_creation_factor = 110
 		tax_income = 0.6
 		fort_level = 0.5
-		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
-		extra_tech_building_start = 10.0 # Never get at start of game
 	}
 	ca_pirateshipyard_4 = {
 		desc = ca_pirateshipyard_desc	
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 10.0 # Never get at start of game
+		ai_creation_factor = 110
+		
 		potential = {
 			port = yes
-			FROM = { 
-				OR = {
-					culture = pirate
-				}	
+			culture = pirate
+			FROMFROM = {
+				is_capital = yes
 			}
 		}
 		upgrades_from = ca_pirateshipyard_3
+		
 		gold_cost = 250
 		build_time = 180
+		
 		galleys = 10
 		archers = 120
 		light_infantry = 360
 		heavy_infantry = 120
-		ai_creation_factor = 110
 		tax_income = 0.6
 		fort_level = 1
-		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
-		extra_tech_building_start = 10.0 # Never get at start of game
 	}
 	ca_pirateshipyard_5 = {
-		desc = ca_pirateshipyard_desc	
+		desc = ca_pirateshipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 10.0 # Never get at start of game
+		ai_creation_factor = 110
+
 		potential = {
 			port = yes
-			FROM = { 
-				OR = {
-					culture = pirate
-				}	
+			culture = pirate
+			FROMFROM = {
+				is_capital = yes
 			}
 		}
 		upgrades_from = ca_pirateshipyard_4
+		
 		gold_cost = 400
 		build_time = 180
+		
 		galleys = 15
 		archers = 180
 		light_infantry = 540
 		heavy_infantry = 180
-		ai_creation_factor = 110
 		tax_income = 0.75
 		fort_level = 1
-		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
-		extra_tech_building_start = 10.0 # Never get at start of game
 	}
 
 	ca_asoiaf_ironshipyard = {
 		desc = ca_asoiaf_ironshipyard_desc
-	
-	
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 10.0 # Never get at start of game
+		
+		ai_creation_factor = 100
+
 		potential = {
-		        OR = {
-   			province_id = 1156
-			province_id = 1157
-			province_id = 1161
-			province_id = 1164
-			province_id = 1169
-			province_id = 1171
-			province_id = 1176
-			province_id = 1178
-			province_id = 1181
-			province_id = 1185
-			province_id = 1187
-			province_id = 1190
-			province_id = 1192
+			culture_group = iron_islander
+			FROMFROM = {
+				is_capital = yes
+			}
 		}
-	}
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		galleys = 30
-		ai_creation_factor = 100
-	
-		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
-		extra_tech_building_start = 10.0 # Never get at start of game
 	}
 	ca_asoiaf_redwyneshipyard = {
 		desc = ca_asoiaf_redwyneshipyard_desc
-	
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Get at start of game
+		
+		ai_creation_factor = 100
+		
 		potential = {
-			province_id = 541
+			FROMFROM = {
+				title = b_arbor_keep
+			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
-		galleys = 30
-		ai_creation_factor = 100
-		extra_tech_building_start = 10.0 # Never get at start of game
+		
+		galleys = 45
+		
 	}
 	ca_asoiaf_driftmarkshipyard = {
 		desc = ca_asoiaf_driftmarkshipyard_desc
-	
-		potential = {
-			province_id = 801
-		}
-
 		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Get at start of game
+		
+		ai_creation_factor = 100
+		
+		potential = {
+			FROMFROM = {
+				title = b_driftmark
+			}
+		}
 	
 		gold_cost = 200
 		build_time = 730
-		galleys = 30
-		ai_creation_factor = 100
 		
-		extra_tech_building_start = 10.0 # Never get at start of game
+		galleys = 30
 	}
 	ca_asoiaf_lannshipyard = {
 		desc = ca_asoiaf_lannshipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Get at start of game
+		
+		ai_creation_factor = 100
 	
 		potential = {
-			province_id = 858
+			FROMFROM = {
+				title = b_lannisport
+			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 250
 		build_time = 730
+		
 		galleys = 40
-		ai_creation_factor = 100
-		extra_tech_building_start = 10.0 # Never get at start of game
 	}
 	ca_asoiaf_oldtownshipyard = {
 		desc = ca_asoiaf_oldtownshipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Get at start of game
+		
+		ai_creation_factor = 100
 	
 		potential = {
-			province_id = 544		
+			FROMFROM = {
+				title = b_oldtown
+			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 150
 		build_time = 730
+		
 		galleys = 25
-		ai_creation_factor = 100	
-		extra_tech_building_start = 10.0 # Never get at start of game
 	}
+	# unlike ca_shield_island, this building can be built in any castle in a province, not just capital.
 	ca_asoiaf_shieldshipyard = {
 		desc = ca_asoiaf_shieldshipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Starts with
+		
+		ai_creation_factor = 100
 	
 		potential = {
-			OR = {
-				province_id = 629
-				province_id = 631
-				province_id = 632
-				province_id = 636
-				province_id = 637
-				province_id = 640				
+			FROM = {
+				culture = shieldislander
 			}
 		}
 
@@ -228,26 +322,37 @@ castle = {
 	
 		gold_cost = 200
 		build_time = 730
-		galleys = 20
-		ai_creation_factor = 100	
 		
-		extra_tech_building_start = 10.0 # Never get at start of game
+		galleys = 10
 	}
 	ca_moat_cailin = {
 		desc = ca_moat_cailin_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Starts with
+		
+		ai_creation_factor = 110
+		
 		potential = {
-			province_id = 1263
-			
+			FROMFROM = {
+				title = b_moat_cailin
+			}
 		}
-		#trigger = { always = no }
+		
 		gold_cost = 100
 		build_time = 1825
+		
 		archers = 500
 		fort_level = 12
-		ai_creation_factor = 110
 	}
 	ca_wallportion = {
 		desc = ca_wallportion_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Start with
+		
+		ai_creation_factor = 110
+		
 		potential = {
 			FROMFROM = {
 				OR = {
@@ -261,118 +366,156 @@ castle = {
 				}
 			}
 		}
-		#trigger = { always = no }
-		fort_level = 7
-		knights = 100
-		tax_income = 0
 		gold_cost = 200
 		build_time = 180
+
+		fort_level = 7
+		
+		archers = 80
+		knights = 12
+		heavy_infantry = 24
+		pikemen = 36
+
 		ai_creation_factor = 110
 	}
 	ca_casterly_rock = {
 		desc = ca_casterly_rock_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Start with
+		
+		ai_creation_factor = 110
+		
 		potential = {
 			FROMFROM = {
 				title = b_casterly_rock
 			}
 		}
-		#trigger = { always = no }
+		
 		gold_cost = 350
 		build_time = 1825
+		
 		tax_income = 10 
 		heavy_infantry = 500
 		knights = 300
 		archers = 200
 		fort_level = 10
-		ai_creation_factor = 110
 	}
 	ca_ironwood = {
 		desc = ca_ironwood_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Start with
+		
+		ai_creation_factor = 110
+		
 		potential = {
 			FROMFROM = {
 				title = b_ironrath
 			}
 		}
-		#trigger = { always = no }
+		
 		gold_cost = 150
 		build_time = 1825
+		
 		fort_level = 2.0
 		tax_income = 3
 		build_time_modifier = -0.20
-		ai_creation_factor = 110
 	}
 	ca_storms_end = {
-			desc = ca_storms_end_desc
+		desc = ca_storms_end_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Start with
+		
+		ai_creation_factor = 110
+		
 		potential = {
 			FROMFROM = {
 				title = b_storms_end
 			}
 		}
-		#trigger = { always = no }
+		
 		gold_cost = 200
 		build_time = 3650
+		
 		heavy_infantry = 250
 		fort_level = 8
 		garrison_size = 0.6
-		ai_creation_factor = 110
 	}
 	ca_starfall = {
 		desc = ca_starfall_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Start with
+		
+		ai_creation_factor = 110
+		
 		potential = {
 			FROMFROM = {
 				title = b_starfall
 			}
 		}
-		#trigger = { always = no }
-		fort_level = 3.0
+		
 		gold_cost = 150
 		build_time = 730
-		ai_creation_factor = 110
+		
+		fort_level = 3.0
 	}
 	ca_wildling_barracks = {
 		desc = ca_wildling_barracks_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Start with
+		
+		ai_creation_factor = 110
+		
 		potential = {
 			FROM = {
-				OR = {
-					culture_group = free_folk
-				}
+				culture_group = free_folk
 			}
 		}
-		trigger = { 
-			TECH_CASTLE_CONSTRUCTION = 0 
-		}
+		
+		prestige_cost = 75
+		build_time = 225
+		
 		archers = 65
 		light_infantry = 185
 		tax_income = 1.5
 		levy_reinforce_rate = 0.20
-		prestige_cost = 75
-		build_time = 225
-		ai_creation_factor = 250
 	}
 	ca_wildling_barracks2 = {
 		desc = ca_wildling_barracks2_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 1.6 # Good chance of starting with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROM = {
-				OR = {
-					culture_group = free_folk
-				}
+				culture_group = free_folk
 			}
 		}
-		trigger = { 
-			TECH_CASTLE_CONSTRUCTION = 0 
-		}
-		#trigger = { FROM = { prestige = 125 } }
+		
 		upgrades_from = ca_wildling_barracks
+		
+		prestige_cost = 155
+		build_time = 225
+		
 		archers = 125
 		light_infantry = 375
 		tax_income = 1.5
 		levy_reinforce_rate = 0.20
-		prestige_cost = 155
-		build_time = 225
-		ai_creation_factor = 250
 	}
 	ca_wildling_barracks3 = {
 		desc = ca_wildling_barracks3_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 1.9 # Can start with, pretty darn rare
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROM = {
 				OR = {
@@ -380,51 +523,58 @@ castle = {
 				}
 			}
 		}	
-		trigger = { 
-			TECH_CASTLE_CONSTRUCTION = 0 
-		}
-		#trigger = { FROM = { prestige = 250 } }
+		
 		upgrades_from = ca_wildling_barracks2
+		
+		prestige_cost = 310
+		build_time = 365
+		
 		archers = 250
 		light_infantry = 750
 		tax_income = 3
 		levy_reinforce_rate = 0.20
-		prestige_cost = 310
-		build_time = 365
-		ai_creation_factor = 250
 	}
 	ca_wildling_barracks4 = {
 		desc = ca_wildling_barracks4_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 2.0 # Can start with, very rare (any higher will not show)
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROM = {
-				OR = {
-					culture_group = free_folk
-				}
+				culture_group = free_folk
 			}
 		}
-		trigger = { 
-			TECH_CASTLE_CONSTRUCTION = 0 
-		}
-		#trigger = { FROM = { prestige = 500 } }
+		
 		upgrades_from = ca_wildling_barracks3
+		
+		prestige_cost = 625
+		build_time = 455
+		
 		archers = 500
 		light_infantry = 1000
 		tax_income = 5
 		levy_reinforce_rate = 0.20
-		prestige_cost = 625
-		build_time = 455
-		ai_creation_factor = 250
 	}
 	ca_winterfell = {
-			desc = ca_winterfell_desc
+		desc = ca_winterfell_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM = {
 				title = b_winterfell
 			}
 		}
-		#trigger = { always = no }
+		
 		build_cost = 2000
 		build_time = 365
+		
 		levy_reinforce_rate = 0.05	
 		tax_income = 5
 		heavy_infantry = 500
@@ -434,69 +584,76 @@ castle = {
 		monthly_character_prestige = 1.0
 	}
 	ca_winterfell_crypt = {
-			desc = ca_winterfell_crypt_desc
+		desc = ca_winterfell_crypt_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM = {
 				title = b_winterfell
 			}
 		}
-		#trigger = { always = no }
+		
 		build_cost = 2000
 		build_time = 365
+		
 		monthly_character_piety = 0.5
 		fort_level = 2
 		monthly_character_prestige = 1.0
 	}	
 	ca_dreadfort = {
-			desc = ca_dreadfort_desc
+		desc = ca_dreadfort_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM = {
 				title = b_dreadfort
 			}
 		}
-		#trigger = { always = no }
+		
 		build_cost = 2000
-		build_time = 365		
+		build_time = 365	
+		
 		fort_level = 5
 		light_infantry = 500
  		light_cavalry = 250
 		monthly_character_piety = -0.5
 		monthly_character_prestige = 1.0
 	}
-	ca_wolfswood = {
-		desc = ca_wolfswood_desc
-		potential = {
-			FROMFROM = {
-				OR = {
-					title = b_ashwood
-					title = b_greenwood
-					title = b_eastedge_barrens
-					title = b_blackgrove
-					title = b_frosty_point
-					title = b_deepwood_motte
-				}
-			}
-		}
-		trigger = { always = no }
-		build_cost = 2000
-		build_time = 365
-		tax_income = 2.0
-		monthly_character_prestige = 0.25
-	}
 	ca_greatbarrow = {
 		desc = ca_greatbarrow_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM = {
 				title = b_barrowton
 			}
 		}
-		trigger = { always = no }
-		build_cost = 2000
+		
+		build_cost = 200
 		build_time = 365
+		
 		monthly_character_piety = 0.1
 	}
 	ca_smallbarrow = {
 		desc = ca_smallbarrow_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM = {
 				OR = {
@@ -508,36 +665,50 @@ castle = {
 				}
 			}
 		}
-		trigger = { always = no }
-		build_cost = 2000
+		
+		build_cost = 200
 		build_time = 365
-		#martial = 1
+		
 		monthly_character_piety = 0.05
 	}
 	ca_castamere = {
-			desc = ca_castamere_desc
+		desc = ca_castamere_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM = {
 				title = b_castamere
 			}
 		}
-		#trigger = { always = no }
-		build_cost = 2000
+		
+		build_cost = 200
 		build_time = 365
+		
 		tax_income = 8
 		fort_level = 6.0
 		monthly_character_prestige = 0.5
 	}
 	ca_riverrun = {
-			desc = ca_riverrun_desc
+		desc = ca_riverrun_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM = {
 				title = b_riverrun
 			}
 		}
-		#trigger = { always = no }
-		build_cost = 2000
+		
+		build_cost = 200
 		build_time = 365
+		
 		fort_level = 7.0
 		tax_income = 4.0
 		archers = 500
@@ -545,90 +716,63 @@ castle = {
 		monthly_character_prestige = 0.75
 	}
 	ca_hightower = {
-			desc = ca_hightower_desc
+		desc = ca_hightower_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM = {
 				title = b_oldtown
 			}
 		}
-		#trigger = { always = no }
-		build_cost = 2000
+		
+		build_cost = 200
 		build_time = 365
+		
 		knights = 150
 		archers = 250
 		light_infantry = 400
+		
 		fort_level = 6.0
 		tax_income = 4.0
+		
 		monthly_character_prestige = 1.0
-	}
-	ca_kingswood = {
-		desc = ca_kingswood_desc
-		potential = {
-			FROMFROM = {
-				OR = {
-					title = b_belland
-					title = b_clewswood
-					title = b_nolwood
-					title = b_oldhouse
-					title = b_shaftbury
-				}
-			}
-		}
-		#trigger = { always = no }
-		build_cost = 2000
-		build_time = 365
-		tax_income = 1.0
-		monthly_character_prestige = 0.25
-	}
-	ca_rainwood = {
-		desc = ca_rainwood_desc
-		potential = {
-			FROMFROM = {
-				OR = {
-					title = b_rainwood
-					title = b_rain_keep
-					title = b_durranburg
-					title = b_broadwood
-					title = b_rainclyff
-					title = b_broad_arch
-					title = b_kielswamp
-					title = b_karfeld
-					title = b_mistwood
-					title = b_hazebaur
-					title = b_bonnwood
-					title = b_blue_grove
-					title = b_rain_house
-					title = b_rain_cove
-				}
-			}
-		}
-		#trigger = { always = no }
-		build_cost = 2000
-		build_time = 365
-		tax_income = 0.5
-		monthly_character_prestige = 0.1
 	}
 	ca_hammerhorn_mine = {
 		desc = ca_hammerhorn_mine_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM = {
 				title = b_hammerhorn
 			}
 		}
-		#trigger = { always = no }
-		build_cost = 2000
+		
+		build_cost = 200
 		build_time = 365
+		
 		tax_income = 3
 		monthly_character_prestige = 0.25
 		build_time_modifier = -0.10
-		ai_creation_factor = 100
 	}
 	ca_marchercastle = {
-			desc = ca_marchercastle_desc
+		desc = ca_marchercastle_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
-				FROMFROM = {
-					OR = {
-
+			FROMFROM = {
+				OR = {
 					title = b_blackhaven
 					title = b_blackheart
 					title = b_stonehelm
@@ -638,142 +782,160 @@ castle = {
 				}
 			}
 		}
-		#trigger = { always = no }
-		build_cost = 1
+		build_cost = 100
 		build_time = 365
+		
 		fort_level = 6
 		garrison_size = 0.25
 		archers = 250
 		monthly_character_prestige = 0.10
-		ai_creation_factor = 100
 	}
 	ca_duskendale = {
 		desc = ca_duskendale_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM {
 				title = b_dun_port
 			}
 		}
-		#trigger = { always = no }
-		build_cost = 2000
+		
+		build_cost = 200
 		build_time = 365
+		
 		galleys = 30
 		tax_income = 5
 		monthly_character_prestige = 0.25
 	}
 
 	ca_the_arbor = {
-			desc = ca_the_arbor_desc
+		desc = ca_the_arbor_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_arbor_keep
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		knights = 150
 		archers = 250
-		heavy_infantry = 250
+		heavy_infantry = 125
+		pikemen = 125
 		light_infantry = 250
- 		tax_income = 5
+		
+ 		tax_income = 5.0
   		fort_level = 2
+		
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
 	}
 	
 	ca_oldstones = {
-			desc = ca_oldstones_desc
+		desc = ca_oldstones_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_oldstones
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		tax_income = 5
   		fort_level = 10
+		
 		heavy_infantry = 700
 		light_infantry = 500
 		archers = 300
+		
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
 	}
 	
 	
 	ca_gates_of_the_moon = {
-			desc = ca_gates_of_the_moon_desc
+		desc = ca_gates_of_the_moon_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_gates_of_the_moon
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
 		
-		heavy_infantry = 500
-		archers = 250
-  		fort_level = 10
+		heavy_infantry = 375
+		archers = 375
+  		fort_level = 4
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
+		
+		tax_income = -0.75
 	}
 	
-	
 	ca_runestone = {
-			desc = ca_runestone_desc
+		desc = ca_runestone_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_runestone
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
 		
-		light_infantry = 500
-		archers = 250
   		fort_level = 4
 		tax_income = 2
+		
 		heavy_infantry = 500
+		light_infantry = 500
+		archers = 250
+		
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
 	}
 	
 	
 	ca_sisterman_keep = {
-			desc = ca_sisterman_keep_desc
-	
+		desc = ca_sisterman_keep_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 		
 		potential = {
+			culture = sisterman
 			FROMFROM = {
-					OR = {
-						title = b_sisterton
-						title = b_sweetsister
-						title = b_longsister
-						title = b_littlesister
-				}
+				is_capital = yes
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
@@ -783,44 +945,52 @@ castle = {
 		galleys = 15
   		fort_level = 3
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
+		
+		tax_income = -0.25
 	}
 	
 	
 	ca_bloody_gate = {
-			desc = ca_bloody_gate_desc
+		desc = ca_bloody_gate_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_bloody_gate
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
-		knights = 150
-		archers = 500
-		heavy_infantry = 150
+		
+		knights = 75
+		archers = 350
+		heavy_infantry = 175
+		pikemen = 150
 		
   		fort_level = 10
-		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
+		monthly_character_prestige = 0.33
+		
+		tax_income = -1.0
 	}
 	
 	ca_gulltown = {
-			desc = ca_gulltown_desc
+		desc = ca_gulltown_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {			
 				title = b_gulltown
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
@@ -830,21 +1000,22 @@ castle = {
 		tax_income = 5
 		
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
 	}
 	
 	
 	ca_hearthome = {
-			desc = ca_hearthome_desc
+		desc = ca_hearthome_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_hearthome
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
@@ -855,13 +1026,16 @@ castle = {
 		tax_income = 3
 		
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
 	}
 	
 	
 	ca_dun_fort = {
-			desc = ca_dun_fort_desc
+		desc = ca_dun_fort_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
@@ -879,21 +1053,24 @@ castle = {
 		fort_level = 5
 	
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
+		
+		tax_income = -0.25
 	}
 	
 	
 	ca_highgarden = {
-			desc = ca_highgarden_desc
+		desc = ca_highgarden_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_highgarden
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
@@ -908,51 +1085,54 @@ castle = {
 		fort_level = 5
 	
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
 	}
 	
 	
 	ca_craggon_keep = {
-			desc = ca_craggon_keep_desc
+		desc = ca_craggon_keep_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
+			culture = craggon
 			FROMFROM = {
-					OR = {
-						title = b_banefort
-						title = b_the_crag
-						title = b_kanet	
-				}
+				is_capital = yes
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		archers = 450
 	
 		fort_level = 6
 	
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
+		
+		tax_income = -0.40
 	}
 	
 	
 	ca_raventree_hall = {
-			desc = ca_raventree_hall_desc
+		desc = ca_raventree_hall_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 					title = b_raventree_hall
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		archers = 450
 		light_cavalry = 450
 		tax_income = 2
@@ -960,73 +1140,78 @@ castle = {
 		fort_level = 3
 	
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
 	}
 	
 	
 	ca_stone_hedge = {
-			desc = ca_stone_hedge_desc
+		desc = ca_stone_hedge_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 					title = b_stone_hedge
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		light_infantry = 250
 		tax_income = 3
 	
 		fort_level = 2
 	
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
 	}
 	
 	
 	ca_seagard = {
-			desc = ca_seagard_desc
+		desc = ca_seagard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_seagard
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		archers = 250
 		heavy_infantry = 450
 		
-	
 		fort_level = 6
 	
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
 	}
 	
 	
 	ca_maidenpool = {
-			desc = ca_maidenpool_desc
+		desc = ca_maidenpool_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_maidenpool
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		light_cavalry = 450
 		galleys = 25
 		
@@ -1034,76 +1219,50 @@ castle = {
 		tax_income = 4
 	
 		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
 	}
 
 	ca_viceroy_palace = {
-			desc = ca_viceroy_palace_desc
+		desc = ca_viceroy_palace_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_the_silver_palace
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
-		light_cavalry = 400
+		
 		galleys = 50
+		heavy_infantry = 1500
 		light_infantry = 1000
 		archers = 1200
-		heavy_infantry = 1500
 		light_cavalry = 900
+		knights = 200
 		fort_level = 10
 		tax_income = 15
 	
-		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
+		monthly_character_prestige = 0.50
 	}
-
-
-	ca_sunspear = {
-			desc = ca_sunspear_desc
-	
-		potential = {
-			FROMFROM = {
-				title = b_sunspear
-			}
-		}
-
-		#trigger = { always = no }
-	
-		gold_cost = 200
-		build_time = 730
-		
-		galleys = 15
-		light_infantry = 300
-		archers = 250
-		
-		light_cavalry = 300
-		fort_level = 4
-		tax_income = 3
-	
-		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
-	}
-
 
 	ca_pyke = {
-			desc = ca_pyke_desc
+		desc = ca_pyke_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_pyke
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
@@ -1113,23 +1272,24 @@ castle = {
 		
 		fort_level = 7
 		
-	
-		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
+		tax_income = -0.5
+		
+		monthly_character_prestige = 0.35
 	}
 	
-	
 	ca_water_gardens = {
-			desc = ca_water_gardens_desc
+		desc = ca_water_gardens_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_water_gardens
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
@@ -1138,14 +1298,17 @@ castle = {
 		light_infantry = 300
 		archers = 300
 		fort_level = 2
-		monthly_character_prestige = 0.25
-		ai_creation_factor = 100
-	
+		monthly_character_prestige = 0.33
 	}
 	
 	
 	ca_boneway_keep = {
-			desc = ca_boneway_keep_desc
+		desc = ca_boneway_keep_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
@@ -1156,8 +1319,6 @@ castle = {
 				}
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
@@ -1166,19 +1327,24 @@ castle = {
 		light_cavalry = 100		
 		light_infantry = 200
 		archers = 200
+		
 		monthly_character_prestige 0.25
-	
+		
+		tax_income = -0.35
 	}
 	ca_brightwater_keep = {
-			desc = ca_brightwater_keep_desc
+		desc = ca_brightwater_keep_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_brightwater_keep
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
@@ -1188,53 +1354,51 @@ castle = {
 		heavy_infantry = 200
 		archers = 200
 		monthly_character_prestige 0.25
-		}
+		
+		tax_income = -0.30
+	}
 	
 	ca_shield_island = {
-			desc = ca_shield_island_desc
+		desc = ca_shield_island_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
+			culture = shieldislander
 			FROMFROM = {
-				OR = {
-					title = b_oldshield
-					title = b_brokenshield
-					title = b_southshield
-					title = b_stormshield
-					title = b_greenshield
-					title = b_grassield
-					title = b_rockshield
-					title = b_oakenshield
-					title = b_grimmshield
-					title = b_serryshield
-					title = b_stoneshield
-					title = b_chestershield
-				}
+				is_capital = yes
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
 		
 		fort_level = 6
-		galleys = 10
+		#galleys = 10 # As we have the ca_asoiaf_shieldshipyard building, I'm removing galleys for the time being
 		archers = 300
 		heavy_infantry = 200
 		monthly_character_prestige 0.25
-		}
+		
+		tax_income = -0.5
+	}
 		
 		
 	ca_coldmoat = {
-			desc = ca_coldmoat_desc
+		desc = ca_coldmoat_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_coldmoat
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
@@ -1249,15 +1413,18 @@ castle = {
 		
 		
 	ca_horn_hill = {
-			desc = ca_horn_hill_desc
+		desc = ca_horn_hill_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 					title = b_horn_hill
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
@@ -1271,110 +1438,141 @@ castle = {
 	}
 		
 	ca_mander_keep = {
-			desc = ca_mander_keep_desc
+		desc = ca_mander_keep_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_mander_keep
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
 		
 		fort_level = 6
 		tax_income = 3
+		
 		knights = 50
 		archers = 150
 		heavy_infantry = 300
+		
 		monthly_character_prestige = 0.25
 	}
 		
 	ca_lannisport = {
 		desc = ca_lannisport_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_lannisport
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
 		
-		
 		tax_income = 6
+		
 		light_infantry = 250
 		archers = 250
 		light_cavalry = 100
+		
 		monthly_character_prestige = 0.25
 	}
 		
 	ca_lannisgate = {
 		desc = ca_lannisgate_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_lannisgate
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
 		
 		fort_level = 6
 		archers = 350
+		
 		monthly_character_prestige = 0.25
 	}
 	
 	ca_lannisfield = {
 		desc = ca_lannisfield_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_lannisfield
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		tax_income = 5
+		
 		light_infantry = 300
 		light_cavalry = 150
+		
 		monthly_character_prestige = 0.25
 	}
 	
 	ca_crakehall = {
 		desc = ca_crakehall_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_crakehall_keep
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		fort_level = 5
+		
 		tax_income = 5
+		
 		light_infantry = 600
 		light_cavalry = 150
 		archers = 200
+		
 		monthly_character_prestige = 0.25
 	}
 		
 	ca_fair_isle_shipyard = {
 		desc = ca_fair_isle_shipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
@@ -1383,173 +1581,211 @@ castle = {
 					title = b_fair_keep
 					title = b_south_fair_isle
 					title = b_fairtower
-				
 				}
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		galleys = 15
-		extra_tech_building_start = 10.0 # Never get at start of game
+		tax_income = 0.5
 	}
 		
 	ca_fair_keep = {
 		desc = ca_fair_keep_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_fair_keep
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		fort_level = 5
 		tax_income = 5
+		
 		archers = 500
 	}
 		
 	ca_bear_hall = {
 		desc = ca_bear_hall_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_bear_hall
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		fort_level = 2
-		monthly_character_prestige = 0.5
+		
 		heavy_infantry = 500
+		
+		monthly_character_prestige = 0.5
 	}
 	
 	ca_deepwood_motte = {
 		desc = ca_deepwood_motte_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_deepwood_motte
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		fort_level = 4
-		monthly_character_prestige = 0.25
+		
 		heavy_infantry = 350
 		archers = 150
+		
+		monthly_character_prestige = 0.25
 	}
 		
 	ca_barrowton = {
 		desc = ca_barrowton_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_barrowton
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		light_infantry = 350
 		archers = 100
+		
 		tax_income = 4
+		
 		monthly_character_prestige = 0.25
 	}
 		
 	ca_last_hearth = {
 		desc = ca_last_hearth_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_last_hearth
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		heavy_infantry = 450
 		light_cavalry = 150
+		
 		fort_level = 3
+		
 		monthly_character_prestige = 0.25
 	}
 	
 	ca_karhold = {
 		desc = ca_karhold_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_karhold
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		heavy_infantry = 400
+		
 		fort_level = 4
+		
 		monthly_character_prestige = 0.25
 	}
 		
 	ca_greywater_watch = {
 		desc = ca_greywater_watch_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			FROMFROM = {
 				title = b_greywater_watch
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		light_infantry = 250
 		archers = 250
+		
 		fort_level = 5
+		
 		monthly_character_prestige = 0.25
 	}
 		
 	ca_skagosi_keep = {
 		desc = ca_skagosi_keep_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
+			culture = skagosi
 			FROMFROM = {
-				OR = {
-					title = b_kings_house
-					title = b_the_rills
-					title = b_driftwood_hall
-					title = b_snowrow
-					title = b_deepdown
-					title = b_weirrocks
-					title = b_blizzard_barrow
-				}
+				is_capital = yes
 			}
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
+		
 		light_infantry = 250
 		heavy_infantry = 150
+		
 		galleys = 10
+		
 		monthly_character_prestige = 0.25
 	}
 }
@@ -1557,50 +1793,66 @@ castle = {
 city = {
 	ct_asoiaf_driftmarkshipyard = {
 		desc = ca_asoiaf_driftmarkshipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			province_id = 801
 		}
-
-		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
 	
 		gold_cost = 200
 		build_time = 730
-		galleys = 30
-		ai_creation_factor = 100
 		
-		extra_tech_building_start = 10.0 # Never get at start of game
+		galleys = 30
 	}
 	ct_asoiaf_redwyneshipyard = {
 		desc = ct_asoiaf_redwyneshipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			province_id = 541
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 200
 		build_time = 730
-		galleys = 30
-		ai_creation_factor = 100
+		
+		tax_income = 0.75
+		
+		galleys = 27
 	}
 	ct_asoiaf_oldtownshipyard = {
 		desc = ct_asoiaf_oldtownshipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			province_id = 544		
 		}
-
-		#trigger = { always = no }
 	
 		gold_cost = 150
 		build_time = 730
-		galleys = 25
-		ai_creation_factor = 100	
+		
+		tax_income = 0.75
+		
+		galleys = 24
 	}
 	ct_asoiaf_freecitiesshipyard = {
 		desc = ca_asoiaf_freecitiesshipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			OR = {
@@ -1612,18 +1864,19 @@ city = {
 				province_id = 65 #Lorath
 			}
 		}
-
-		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
 	
 		gold_cost = 200
 		build_time = 365
-		galleys = 45
-		ai_creation_factor = 100	
 		
-		extra_tech_building_start = 10.0 # Never get at start of game
+		galleys = 45
 	}
 	ct_asoiaf_smallshipyard = {
 		desc = ct_asoiaf_smallshipyard_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
 	
 		potential = {
 			OR = {
@@ -1635,32 +1888,35 @@ city = {
 				province_id = 295 #Little Tyrosh	
 			}
 		}
-		
-		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
 	
 		gold_cost = 100
+		
 		build_time = 365
 		galleys = 15
-		ai_creation_factor = 100
-		
-		extra_tech_building_start = 10.0 # Never get at start of game
 	}
 	ct_titan = {
 		desc = ct_titan_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
 			FROMFROM = {
 				title = b_titan_di_braavos
 			}
 		}
-		#trigger = { always = no }
-		fort_level = 10
-		knights = 60
-		archers = 60
-		tax_income = 2
+		
 		gold_cost = 400
 		build_time = 1825
 		
-		ai_creation_factor = 100
+		fort_level = 10
+		tax_income = 4
+		
+		knights = 60
+		archers = 60
+		pikemen = 120
 	}
 }
 
@@ -1668,86 +1924,119 @@ temple = {
 	#Weirwoods (little prestige and piety to owner)
 	tp_weirwood_tree = {
 		desc = tp_weirwood_tree_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		trigger = { 
-			FROM = {
-				OR = {
-					religion = old_gods
-					religion = old_gods_beyond
-					religion = old_gods_beyond_white
-				}
+			OR = {
+				religion = old_gods
+				religion = old_gods_beyond
+				religion = old_gods_beyond_white
 			}
 		}
+		
 		liege_prestige = 0.25
 		liege_piety = 0.25
-		ai_creation_factor = 95
+		
 		gold_cost = 10
 		build_time = 365
 	}
 	tp_small_godswood = {
 		desc = tp_small_godswood_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = { 
-			FROM = {
-				OR = {
-					religion = old_gods
-					religion = old_gods_beyond
-					religion = old_gods_beyond_white
-				}
+			OR = {
+				religion = old_gods
+				religion = old_gods_beyond
+				religion = old_gods_beyond_white
 			}
 		}
+		
 		upgrades_from = tp_weirwood_tree
+		
 		liege_prestige = 0.25
 		liege_piety = 0.25
+		
 		gold_cost = 50
 		build_time = 260
 	}
 	tp_godswood = {
 		desc = tp_godswood_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = { 
-			FROM = {
-				OR = {
-					religion = old_gods
-					religion = old_gods_beyond
-					religion = old_gods_beyond_white
-				}
+			OR = {
+				religion = old_gods
+				religion = old_gods_beyond
+				religion = old_gods_beyond_white
 			}
 		}
+		
 		upgrades_from = tp_small_godswood
+		
 		liege_prestige = 0.25
 		liege_piety = 0.25
+		
 		gold_cost = 100
 		build_time = 260
 	}
 	tp_large_godswood = {
 		desc = tp_large_godswood_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = { 
-			FROM = {
-				OR = {
-					religion = old_gods
-					religion = old_gods_beyond
-					religion = old_gods_beyond_white
-				}
+			OR = {
+				religion = old_gods
+				religion = old_gods_beyond
+				religion = old_gods_beyond_white
 			}
 		}
+		
 		upgrades_from = tp_godswood
+		
 		liege_prestige = 0.25
 		liege_piety = 0.25
+		
 		gold_cost = 200
 		build_time = 260
 	}
 	tp_godswood_forest = {
 		desc = tp_godswood_forest_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 0.0 # Will start with
+		
+		ai_creation_factor = 105
+		
 		potential = { 
-			FROM = {
-				OR = {
-					religion = old_gods
-					religion = old_gods_beyond
-					religion = old_gods_beyond_white
-				}
+			OR = {
+				religion = old_gods
+				religion = old_gods_beyond
+				religion = old_gods_beyond_white
 			}
 		}
+		
 		upgrades_from = tp_large_godswood
+		
 		liege_prestige = 0.25
 		liege_piety = 0.25
+		
 		gold_cost = 400
 		build_time = 260
 	}
@@ -1756,96 +2045,97 @@ temple = {
 tribal = {
 	tb_wildling_barracks = {
 		desc = ca_wildling_barracks_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 1.6 # Common to start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
-			FROM = {
-				OR = {
-					culture_group = free_folk
-				}
-			}
+			culture_group = free_folk
 		}
-		trigger = { 
-			TECH_CASTLE_CONSTRUCTION = 0 
-		}
+		
 		archers = 65
 		light_infantry = 185
-		tax_income = 1.5
+		
+		tax_income = 0.5
+		
 		levy_reinforce_rate = 0.10
+		
 		prestige_cost = 75
 		build_time = 225
-		ai_creation_factor = 100
-
-		extra_tech_building_start = 1.6
 	}
 	tb_wildling_barracks2 = {
 		desc = ca_wildling_barracks2_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 1.7 # Can start with, uncommon
+		
+		ai_creation_factor = 105
+		
 		potential = {
-			FROM = {
-				OR = {
-					culture_group = free_folk
-				}
-			}
+			culture_group = free_folk
 		}
-		trigger = { 
-			TECH_CASTLE_CONSTRUCTION = 0 
-		}
-		#trigger = { FROM = { prestige = 125 } }
+		
 		upgrades_from = tb_wildling_barracks
-		archers = 125
-		light_infantry = 375
-		tax_income = 1.5
+		
+		archers = 65
+		light_infantry = 185
+		
+		tax_income = 1.0
+		
 		levy_reinforce_rate = 0.10
+		
 		prestige_cost = 155
 		build_time = 225
-		ai_creation_factor = 99
-
-		extra_tech_building_start = 1.9
 	}
 	tb_wildling_barracks3 = {
 		desc = ca_wildling_barracks3_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 1.9 # Rarely start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
-			FROM = {
-				OR = {
-					culture_group = free_folk
-				}
-			}
-		}	
-		trigger = { 
-			TECH_CASTLE_CONSTRUCTION = 0 
+			culture_group = free_folk
 		}
-		#trigger = { FROM = { prestige = 250 } }
+		
 		upgrades_from = tb_wildling_barracks2
-		archers = 189
-		light_infantry = 451
-		tax_income = 2.0
+		
+		archers = 70
+		light_infantry = 190
+		
+		tax_income = 1.0
+		
 		levy_reinforce_rate = 0.10
+		
 		prestige_cost = 310
 		build_time = 365
-		ai_creation_factor = 98
-
-		extra_tech_building_start = 2.5
 	}
 	tb_wildling_barracks4 = {
 		desc = ca_wildling_barracks4_desc
+		trigger = { TECH_CASTLE_CONSTRUCTION = 0 }
+		
+		extra_tech_building_start = 2.0 # Very rarely start with
+		
+		ai_creation_factor = 105
+		
 		potential = {
-			FROM = {
-				OR = {
-					culture_group = free_folk
-				}
-			}
+			culture_group = free_folk
 		}
-		trigger = { 
-			TECH_CASTLE_CONSTRUCTION = 0 
-		}
-		#trigger = { FROM = { prestige = 500 } }
+		
 		upgrades_from = tb_wildling_barracks3
-		archers = 243
-		light_infantry = 712
-		tax_income = 2.5
+		
+		archers = 80
+		light_infantry = 200
+		
+		tax_income = 1.5
+		
 		levy_reinforce_rate = 0.10
+		
 		prestige_cost = 625
 		build_time = 455
-		ai_creation_factor = 97
-		extra_tech_building_start = 5.0
 	}		
 }
 	
