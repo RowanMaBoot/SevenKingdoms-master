@@ -1,6 +1,6 @@
 feudal_governments = {
 
-	freehold_government = {
+	feudal_government = {
 		preferred_holdings = { CASTLE }
 		allowed_holdings = { 
 			CASTLE 
@@ -10,22 +10,30 @@ feudal_governments = {
 		allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
 			TRIBAL
 		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			
+		}
 		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
 			tribal_government
 		}
 		potential = {
-			AND = {
-				culture_group = valyrian
-				has_landed_title = e_valyrian_freehold
+			NOR = {
+				culture_group = free_folk
+				has_landed_title = k_the_nights_watch
+				has_landed_title = d_the_wall
+				AND = {
+					culture_group = valyrian
+					has_landed_title = e_valyrian_freehold
+				}
 			}
 			is_patrician = no
 		}
 		
-		color = { 107 46 130 }
+		color = { 73 90 160 }
 		
-		frame_suffix = "_freehold"
+		frame_suffix = "_feudal"
 		
-		dukes_called_kings = no
+		dukes_called_kings = yes
 		barons_need_dynasty = yes
 
 		can_build_tribal = no
@@ -33,9 +41,6 @@ feudal_governments = {
 		ignore_in_vassal_limit_calculation = {
 			tribal_government
 		}
-		
-		aggression = 0.25
-		
 		capital_move_delay = 600
 	}
 }
