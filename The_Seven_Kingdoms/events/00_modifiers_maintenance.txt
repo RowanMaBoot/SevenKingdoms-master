@@ -1,0 +1,36 @@
+namespace = modifiers_maintenance
+
+# blackninja9939:
+# 	Avoid using triggered modifiers like the plageue!!!
+# 	Instead make them normal character modifiers and have them added here, the event is checked on startup, each year, and upon gaining a title.
+
+#Apply triggered modifiers
+character_event = {
+	id = modifiers_maintenance.1
+	hide_window = yes
+	is_triggered_only = yes
+	only_playable = yes
+	
+	immediate = {
+		#Remove all modifiers
+		remove_character_modifier = the_viceroy
+		#Check which to readd
+		if = {
+			limit = { 
+				culture = high_valyrian
+				has_landed_title = e_valyrian_freehold
+			}
+			add_character_modifier = { name = the_viceroy duration = -1 }
+		}
+	}
+}
+#Unlanded, remove modifiers
+character_event = {
+	id = modifiers_maintenance.2
+	hide_window = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		remove_character_modifier = the_viceroy
+	}
+}
