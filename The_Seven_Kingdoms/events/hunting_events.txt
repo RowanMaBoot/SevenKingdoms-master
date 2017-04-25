@@ -107,7 +107,7 @@ character_event = {
 			NOT = { trait = arbitrary }
 			NOT = { trait = envious }
 			NOT = { trait = craven }
-			NOT = { trait = cruel }
+			NOR = { trait = cruel trait = heartless}
 		}
 		add_trait = kind
 	}
@@ -469,7 +469,7 @@ character_event = {
 		name = "EVTOPTA36010"
 		trigger = {
 			NOT = { trait = greedy }
-			NOT = { trait = cruel }
+			NOR = { trait = cruel trait = heartless }
 		}
 		random_courtier = {
 			limit = {
@@ -968,7 +968,19 @@ character_event = {
 	option = {
 		name = "EVTOPTB36026"
 		piety = -50
-		add_trait = cruel
+		if = {
+			limit = {
+				NOT = { trait = cruel }
+			}
+			add_trait = cruel
+		}
+		if = {
+			limit = {
+				trait = cruel
+			}
+			remove_trait = cruel
+			add_trait = heartless
+		}
 	}
 }
 

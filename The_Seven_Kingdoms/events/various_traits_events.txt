@@ -445,6 +445,10 @@ character_event = {
 			factor = 2
 			trait = cruel
 		}
+		modifier = {
+			factor = 2
+			trait = heartless
+		}
 	}
 	
 	option = {
@@ -662,7 +666,10 @@ character_event = {
 	is_triggered_only = yes
 	
 	trigger = {
-		trait = cruel
+		OR = {
+			trait = cruel
+			trait = heartless
+		}
 		any_courtier = {
 			prisoner = yes
 			host = {
@@ -745,7 +752,10 @@ character_event = {
 	
 	trigger = {
 		trait = lunatic
-		trait = cruel
+		OR = {
+			trait = cruel
+			trait = heartless
+		}
 		in_command = no
 		any_courtier = {
 			prisoner = no
@@ -2209,7 +2219,7 @@ character_event = {
 			}
 			modifier = {
 				factor = 10
-				NOT = { trait = cruel }
+				NOT = { trait = cruel trait = heartless }
 			}
 			modifier = {
 				factor = 10
@@ -2560,6 +2570,10 @@ character_event = {
 		modifier = {
 			factor = 2
 			trait = cruel
+		}
+		modifier = {
+			factor = 2
+			trait = heartless
 		}
 	}
 	
@@ -3381,6 +3395,14 @@ character_event = {
 		}
 		if = {
 			limit = {
+				trait = wroth
+				trait = cruel
+			}
+			remove_trait = cruel
+			add_trait = heartless
+		}
+		if = {
+			limit = {
 				is_ruler = yes
 			}
 			create_character = {
@@ -3486,8 +3508,9 @@ character_event = {
 						NOT = {
 							trait = wroth
 						}
-						NOT = {
+						NOR = {
 							trait = cruel
+							trait = heartless
 						}
 					}
 					opinion = {

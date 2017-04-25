@@ -189,6 +189,7 @@ character_event = {
 					OR = {
 						trait = kind
 						trait = cruel
+						trait = heartless
 					}
 				}
 			}
@@ -207,6 +208,7 @@ character_event = {
 					OR = {
 						trait = kind
 						trait = cruel
+						trait = heartless
 					}
 				}
 			}
@@ -437,6 +439,7 @@ character_event = {
 					OR = {
 						trait = kind
 						trait = cruel
+						trait = heartless
 						trait = envious
 					}
 				}
@@ -468,6 +471,7 @@ character_event = {
 					OR = {
 						trait = kind
 						trait = cruel
+						trait = heartless
 						trait = envious
 					}
 					OR = {
@@ -1066,7 +1070,15 @@ character_event = {
 				has_character_flag = rowdy_to_imbecile
 				trait = genius
 			}
-			set_character_flag = rowdy_genius_to_quick
+			set_character_flag = rowdy_genius_to_intelligent
+			break = yes
+		}
+		if = {
+			limit = {
+				has_character_flag = rowdy_to_imbecile
+				trait = genius
+			}
+			set_character_flag = rowdy_intelligent_to_quick
 			break = yes
 		}
 		if = {
@@ -1118,9 +1130,16 @@ character_event = {
 		}
 		clr_character_flag = rowdy_to_imbecile
 		if = {
-			limit = { has_character_flag = rowdy_genius_to_quick }
+			limit = { has_character_flag = rowdy_genius_to_intelligent }
 			remove_trait = rowdy
 			remove_trait = genius
+			add_trait = intelligent
+			clr_character_flag = rowdy_genius_to_intelligent
+		}
+		if = {
+			limit = { has_character_flag = rowdy_intelligent_to_quick }
+			remove_trait = rowdy
+			remove_trait = intelligent
 			add_trait = quick
 			clr_character_flag = rowdy_genius_to_quick
 		}
@@ -1203,6 +1222,21 @@ character_event = {
 				FROM = {
 					remove_trait = rowdy
 					remove_trait = genius
+					add_trait = intelligent
+				}
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					has_character_flag = rowdy_to_imbecile
+					trait = intelligent
+				}
+			}
+			tooltip = {
+				FROM = {
+					remove_trait = rowdy
+					remove_trait = intelligent
 					add_trait = quick
 				}
 			}
@@ -1289,7 +1323,15 @@ character_event = {
 				has_character_flag = rowdy_to_imbecile
 				trait = genius
 			}
-			set_character_flag = rowdy_genius_to_quick
+			set_character_flag = rowdy_genius_to_intelligent
+			break = yes
+		}
+		if = {
+			limit = {
+				has_character_flag = rowdy_to_imbecile
+				trait = intelligent
+			}
+			set_character_flag = rowdy_intelligent_to_quick
 			break = yes
 		}
 		if = {
@@ -1355,11 +1397,18 @@ character_event = {
 		}
 		clr_character_flag = rowdy_to_imbecile
 		if = {
-			limit = { has_character_flag = rowdy_genius_to_quick }
+			limit = { has_character_flag = rowdy_genius_to_intelligent }
 			remove_trait = rowdy
 			remove_trait = genius
+			add_trait = intelligent
+			clr_character_flag = rowdy_genius_to_intelligent
+		}
+		if = {
+			limit = { has_character_flag = rowdy_intelligent_to_quick }
+			remove_trait = rowdy
+			remove_trait = intelligent
 			add_trait = quick
-			clr_character_flag = rowdy_genius_to_quick
+			clr_character_flag = rowdy_intelligent_to_quick
 		}
 		if = {
 			limit = { has_character_flag = rowdy_quick_to_normal }
