@@ -131,8 +131,8 @@ VS_OUTPUT main( const VS_INPUT_INSTANCE v )
 	float vSummedRandom = v.vTexCoord1.x + vRandom;
 	vSummedRandom = vSummedRandom >= 1.0f ? vSummedRandom - 1.0f : vSummedRandom;
 	
-	float vHeightScaleFactor = 0.75f + vSummedRandom * 0.5f;
-	Out.vPosition = float4( v.vPosition.xyz, 1.0 );
+	float vHeightScaleFactor = 0.85f + vSummedRandom * 0.5f;
+	Out.vPosition = float4( v.vPosition.xyz*0.7, 1.0 );
 	Out.vPosition.y *= vHeightScaleFactor;
 
 	float randSin = sin( v.vPos_YRot.w );
