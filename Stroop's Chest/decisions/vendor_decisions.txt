@@ -1,13 +1,147 @@
+#Visitin the Marketplace
+#By Stroopwaffel
+
 visit_market = {
-	potential = { 
+	from_potential = { 
 		is_playable = yes
 #		ai = no
+
+		#IMPORTANT!
+		#Don't forget to add any additional vendors you have added to this!
+		
+		NOT = { 
+			has_character_flag = visited_armorsmith
+			has_character_flag = visited_generalgoods
+			has_character_flag = visited_jeweler
+			has_character_flag = visited_weaponsmith
+		}
 	}
+	
 	allow = { 
 		min_age = 16
 	}
+	
 	effect = {
-		character_event = { id = weapon_events.11 tooltip = "weapon_decision_tooltip11" }
+		set_character_flag = visited_market
+	}
+}
+
+	visit_weaponsmith = {
+		from_potential = {
+			has_character_flag = visited_market
+		
+		#IMPORTANT!
+		#Don't forget to add any additional vendors you have added to this!
+		
+			NOT =  { 
+				has_character_flag = visited_armorsmith
+				has_character_flag = visited_generalgoods
+				has_character_flag = visited_jeweler
+			}
+		}
+	
+		allow = {
+			min_age = 16
+		}
+	
+		effect = { 
+			set_character_flag = visited_weaponsmith
+		}
+	}
+
+	visit_armorsmith = {
+		from_potential = {
+			has_character_flag = visited_market
+		
+		#IMPORTANT!
+		#Don't forget to add any additional vendors you have added to this!
+		
+			NOT =  { 
+				has_character_flag = visited_jeweler
+				has_character_flag = visited_generalgoods
+				has_character_flag = visited_weaponsmith
+			}
+		}
+	
+		allow = {
+			min_age = 16
+		}
+	
+		effect = { 
+			set_character_flag = visited_armorsmith
+		}
+	}
+
+	visit_jeweler = {
+		from_potential = {
+			has_character_flag = visited_market
+		
+		#IMPORTANT!
+		#Don't forget to add any additional vendors you have added to this!
+		
+			NOT =  { 
+				has_character_flag = visited_armorsmith
+				has_character_flag = visited_generalgoods
+				has_character_flag = visited_weaponsmith
+			}
+		}
+	
+		allow = {
+			min_age = 16
+		}
+	
+		effect = {
+			set_character_flag = visited_jeweler
+		}
+	}
+
+	visit_generalgoods = {
+		from_potential = {
+			has_character_flag = visited_market
+		
+		#IMPORTANT!
+		#Don't forget to add any additional vendors you have added to this!
+		
+			NOT =  { 
+				has_character_flag = visited_armorsmith
+				has_character_flag = visited_jeweler
+				has_character_flag = visited_weaponsmith
+			}
+		}
+	
+		allow = {
+			min_age = 16
+		}
+	
+		effect = {
+			set_character_flag = visited_generalgoods
+		}
+	}
+
+
+leave_market = {
+	from_potential = {
+		has_character_flag = visited_market
+		
+		#IMPORTANT!
+		#Don't forget to add any additional vendors you have added to this!
+		
+		NOT =  { 
+			has_character_flag = visited_armorsmith
+			has_character_flag = visited_jeweler
+			has_character_flag = visited_weaponsmith
+			has_character_flag = visited_generalgoods
+		}
+	
+	allow = {
+		min_age = 16
+	}
+	
+	#IMPORTANT!
+	#This scripted trigger can be found inside of the common\scripted triggers\00_scripted_triggers.txt file, make sure to add additional flags to it.
+	
+	effect = {
+		vendor_clearvendorsflags = yes
 	}
 }
 
