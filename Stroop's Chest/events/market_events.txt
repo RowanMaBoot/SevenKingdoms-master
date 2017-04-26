@@ -1,0 +1,66 @@
+namespace = TSK_MARKET
+
+# Marketplace Events
+# Written by Stroopwaffel
+
+character_event = {
+	id = TSK_MARKET.1
+	desc = {
+		trigger { NOT = has_character_flag = looped_market }
+		text = EVTDESCA_TSK_MARKET1
+	}
+	desc = { 
+		trigger { has_character_flag = looped_market }
+		text = EVTDESCB_TSK_MARKET1
+		}
+	# picture =
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_TSK_MARKET1 #Takes you to the Weaponsmith (ID 10-19)
+		character_event = { id = TSK_MARKET.10 days = 3 tooltip = EVTTOOLTIP_TSK_MARKET1A }
+	}
+	option = {
+		name = EVTOPTB_TSK_MARKET1 #Takes you to the Armorsmith (ID 20-29)
+		character_event = { id = TSK_MARKET.20 days = 3 tooltip = EVTTOOLTIP_TSK_MARKET1B }
+		
+	}	# Go to the weaponsmith
+	option = {
+		name = EVTOPTC_TSK_MARKET1 #Takes you to the Jeweler (ID 30-39)
+		character_event = { id = TSK_MARKET.30 days = 3 tooltip = EVTTOOLTIP_TSK_MARKET1C }
+		
+	}	
+	option = {
+		name = EVTOPTD_TSK_MARKET1 #Cycle through the options
+		character_event = { id = TSK_MARKET.2 days = 3 tooltip = EVTTOOLTIP_TSK_MARKET1D }
+	}
+}
+
+character_event = {
+	id = TSK_MARKET.2
+	desc = EVTDESC_TSK_MARKET2
+	# picture =
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_TSK_MARKET2 #Takes you to the Blacksmith (ID 40-49)
+		character_event = { id = TSK_MARKET.40 days = 3 tooltip = EVTTOOLTIP_TSK_MARKET2A }		
+	}
+	option = {
+		name = EVTOPTB_TSK_MARKET2 #Takes you to the General Goods peddler (ID 50-59)
+		character_event = { id = TSK_MARKET.50 days = 3 tooltip = EVTTOOLTIP_TSK_MARKET2B }
+	}
+	option = {
+		name = EVTOPTC_TSK_MARKET2 #Goes back to the last page
+		character_event = { id = TSK_MARKET.1 days = 3 tooltip = EVTTOOLTIP_TSK_MARKET2C }
+		set_character_flag = looped_market
+	}
+	option = {
+		name = EVTOPTD_TSK_MARKET2 #Exits the market
+		clr_character_flag = looped_market
+		clr_character_flag = visiting_market
+	}
+}
+	
