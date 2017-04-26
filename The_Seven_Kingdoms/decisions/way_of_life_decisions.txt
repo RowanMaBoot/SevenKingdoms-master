@@ -107,12 +107,8 @@ targetted_decisions = {
 					}
 				}
 				AND = {
-					religion_group = zoroastrian_group
-					FROM = { religion_group = zoroastrian_group }
-				}
-				AND = {
-					religion = messalian
-					FROM = { religion = messalian }
+					religion_group = valyrian_group
+					FROM = { religion_group = valyrian_group }
 				}
 			}
 			
@@ -156,8 +152,8 @@ targetted_decisions = {
 					if = {
 						limit = {
 							is_close_relative = ROOT
-							NOT = { religion = messalian }
-							NOT = { religion = zoroastrian }
+							NOT = { religion = valyrian }
+							NOT = { religion = the_dragon_gods }
 						}
 						character_event = { id = WoL.102 days = 1 } # Warning - Incest scandal risk
 						break = yes
@@ -173,7 +169,7 @@ targetted_decisions = {
 					
 					if = {
 						limit = {
-							religion_group = christian
+							religion_group = the_seven_group
 							OR = {
 								is_priest = yes
 								is_ascetic_trigger = yes
@@ -780,10 +776,12 @@ targetted_decisions = {
 					is_female = yes
 					OR = {
 						trait = brave
-						religion_group = pagan_group
+						religion_group = westerosi_pagan_group
+						religion_group = eastern_pagan_group
+						religion_group = drowned_god_group
 						is_nomadic = yes
-						religion = buddhist
-						religion = bogomilist
+						religion = boashi
+						religion = valyrian
 						gender_equality_trigger = yes
 					}
 				}
@@ -803,15 +801,9 @@ targetted_decisions = {
 						is_foe = FROM
 						AND = {
 							FROM = { trait = zealous }
-							OR = {	
-								AND = {
-									religion = FROM
-									trait = excommunicated
-								}
-								AND = {
-									FROM = { religion_group = muslim }
-									trait = decadent
-								}
+							AND = {
+								religion = FROM
+								trait = excommunicated
 							}
 						}
 						has_game_rule = {
@@ -826,19 +818,23 @@ targetted_decisions = {
 						AND = {
 							OR = {
 								trait = brave
-								gender_equality_trigger = yes
-								religion_group = pagan_group
+								religion_group = westerosi_pagan_group
+								religion_group = eastern_pagan_group
+								religion_group = drowned_god_group
 								is_nomadic = yes
-								religion = buddhist
-								religion = bogomilist
+								religion = boashi
+								religion = valyrian
+								gender_equality_trigger = yes
 							}
 							FROM = {
 								OR = {
-									gender_equality_trigger = yes
-									religion_group = pagan_group
+									religion_group = westerosi_pagan_group
+									religion_group = eastern_pagan_group
+									religion_group = drowned_god_group
 									is_nomadic = yes
-									religion = buddhist
-									religion = bogomilist
+									religion = boashi
+									religion = valyrian
+									gender_equality_trigger = yes
 								}
 							}
 						}
@@ -869,12 +865,6 @@ targetted_decisions = {
 							religion = FROM
 							FROM = { trait = zealous }
 							trait = excommunicated
-						}
-						custom_tooltip = {
-							text = duel_tooltip_decadent
-							FROM = { religion_group = muslim }
-							FROM = { trait = zealous }
-							trait = decadent
 						}
 						has_game_rule = {
 							name = dueling
@@ -930,18 +920,22 @@ targetted_decisions = {
 									OR = {
 										trait = brave
 										gender_equality_trigger = yes
-										religion_group = pagan_group
+										religion_group = westerosi_pagan_group
+										religion_group = eastern_pagan_group
+										religion_group = drowned_god_group
 										is_nomadic = yes
-										religion = buddhist
-										religion = bogomilist
+										religion = boashi
+										religion = valyrian
 									}
 									FROM = {
 										OR = {
 											gender_equality_trigger = yes
-											religion_group = pagan_group
+											religion_group = westerosi_pagan_group
+											religion_group = eastern_pagan_group
+											religion_group = drowned_god_group
 											is_nomadic = yes
-											religion = buddhist
-											religion = bogomilist
+											religion = boashi
+											religion = valyrian
 										}
 									}
 								}
@@ -949,7 +943,13 @@ targetted_decisions = {
 							### Not priest or challenger religion is pagan
 							OR = {
 								is_priest = no
-								FROM = { religion_group = pagan_group }
+								FROM = {
+									OR = {
+										religion_group = westerosi_pagan_group
+										religion_group = eastern_pagan_group
+										religion_group = drowned_god_group
+									}
+								}
 							}
 							
 						}
@@ -1026,11 +1026,6 @@ targetted_decisions = {
 				}
 			}
 			FROM = {
-				if = {
-					limit = { religion = jain }
-					piety = -20
-					custom_tooltip = { text = jain_ahimsa_tooltip }
-				}
 				add_character_modifier = {
 					modifier = recent_duel_timer
 					duration = 365
