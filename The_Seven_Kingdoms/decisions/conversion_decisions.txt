@@ -402,28 +402,10 @@ targetted_decisions = {
 				}
 			}
 			
-			# The Indian religions can convert to each other anyway
-			OR = {
-				NOT = { religion_group = indian_group }
-				capital_scope = {
-					NOT = { religion_group = indian_group }
-				}
-			}
-			
 			controls_religion = no
 			holy_order = no
 			
-			has_dlc = "Rajas of India"
-			
-			NOT = {
-				AND = {
-					has_dlc = "Charlemagne"
-					has_landed_title = e_byzantium  # May instead renounce iconoclasm
-					has_landed_title = c_byzantion
-					religion = iconoclast
-					capital_scope = { religion = orthodox }
-				}
-			}
+			# has_dlc = "Rajas of India"
 		}
 		allow = {
 			NOT = { trait = zealous }
@@ -465,80 +447,80 @@ targetted_decisions = {
 			}
 			if = {
 				limit = {
-					religion_group = christian
-					NOT = { trait = sympathy_christendom }
+					religion_group = the_seven_group
+					NOT = { trait = sympathy_the_seven }
 					capital_scope = {
 						NOT = { religion_group = ROOT }
 					}
 				}
 				random = {
 					chance = 60
-					add_trait = sympathy_christendom
+					add_trait = sympathy_the_seven
 				}
 			}
 			if = {
 				limit = {
-					religion_group = muslim
-					NOT = { trait = sympathy_islam }
+					religion_group = westerosi_pagan_group
+					NOT = { trait = sympathy_westerosi_pagan }
 					capital_scope = {
 						NOT = { religion_group = ROOT }
 					}
 				}
 				random = {
 					chance = 60
-					add_trait = sympathy_islam
+					add_trait = sympathy_westerosi_pagan
 				}
 			}
 			if = {
 				limit = {
-					religion_group = pagan_group
-					NOT = { trait = sympathy_pagans }
+					religion_group = drowned_god_group
+					NOT = { trait = sympathy_drowned_god }
 					capital_scope = {
 						NOT = { religion_group = ROOT }
 					}
 				}
 				random = {
 					chance = 60
-					add_trait = sympathy_pagans
+					add_trait = sympathy_drowned_god
 				}
 			}
 			if = {
 				limit = {
-					religion_group = zoroastrian_group
-					NOT = { trait = sympathy_zoroastrianism }
+					religion_group = eastern_group
+					NOT = { trait = sympathy_eastern }
 					capital_scope = {
 						NOT = { religion_group = ROOT }
 					}
 				}
 				random = {
 					chance = 60
-					add_trait = sympathy_zoroastrianism
+					add_trait = sympathy_eastern
 				}
 			}
 			if = {
 				limit = {
-					religion_group = jewish_group
-					NOT = { trait = sympathy_judaism }
+					religion_group = valyrian_group
+					NOT = { trait = sympathy_valyrian }
 					capital_scope = {
 						NOT = { religion_group = ROOT }
 					}
 				}
 				random = {
 					chance = 60
-					add_trait = sympathy_judaism
+					add_trait = sympathy_valyrian
 				}
 			}
 			if = {
 				limit = {
-					religion_group = indian_group
-					NOT = { trait = sympathy_indian }
+					religion_group = eastern_pagan_group
+					NOT = { trait = sympathy_eastern_pagan }
 					capital_scope = {
 						NOT = { religion_group = ROOT }
 					}
 				}
 				random = {
 					chance = 60
-					add_trait = sympathy_indian
+					add_trait = sympathy_eastern_pagan
 				}
 			}
 			capital_scope = {
@@ -570,15 +552,6 @@ targetted_decisions = {
 			independent = yes
 			controls_religion = no
 			is_heretic = yes
-			NOT = {
-				AND = {
-					has_dlc = "Charlemagne"
-					has_landed_title = e_byzantium  # May instead renounce iconoclasm
-					has_landed_title = c_byzantion
-					religion = iconoclast
-					is_heresy_of = orthodox
-				}
-			}
 		}
 		allow = {
 			NOT = { trait = zealous }
@@ -611,114 +584,6 @@ targetted_decisions = {
 			factor = 0
 		}
 	}
-	
-	convert_to_swedish = {
-		only_playable = yes
-		
-		filter = self
-		ai_target_filter = self
-		
-		potential = {
-			is_playable = yes
-			culture = norse
-			capital_scope = {
-				region = custom_swedish
-			}
-			any_realm_province = {
-				culture = swedish
-			}
-		}
-		allow = {
-			culture = norse
-		}
-		effect = {
-			culture = swedish
-			any_courtier = {
-				limit = {
-					culture = norse
-					employer = { character = ROOT }
-					dynasty = ROOT
-				}
-				culture = swedish
-			}
-		}
-		revoke_allowed = {
-			always = no
-		}
-		ai_will_do = {
-			factor = 1
-			
-			modifier = {
-				factor = 0.2 # Slow it down a bit
-			}
-			
-			modifier = { # Do not flip if we're in a huge Norse empire
-				factor = 0
-				top_liege = { culture = norse }
-				290 = { # Uppland
-					owner = {
-						same_realm = ROOT
-					}
-				}
-				272 = { # Akershus
-					owner = {
-						same_realm = ROOT
-					}
-				}
-				266 = { # Sjaelland
-					owner = {
-						same_realm = ROOT
-					}
-				}
-			}
-			
-			modifier = {
-				factor = 0.01
-				capital_scope = {
-					NOT = { culture = swedish }
-				}
-			}
-			modifier = {
-				factor = 2.0
-				liege = { culture = swedish }
-			}
-			modifier = {
-				factor = 1.1
-				num_culture_realm_provs = {
-					value = 2
-					culture = swedish
-				}
-			}
-			modifier = {
-				factor = 1.1
-				num_culture_realm_provs = {
-					value = 4
-					culture = swedish
-				}
-			}
-			modifier = {
-				factor = 1.1
-				num_culture_realm_provs = {
-					value = 6
-					culture = swedish
-				}
-			}
-			modifier = {
-				factor = 1.1
-				num_culture_realm_provs = {
-					value = 8
-					culture = swedish
-				}
-			}
-			modifier = {
-				factor = 1.1
-				num_culture_realm_provs = {
-					value = 10
-					culture = swedish
-				}
-			}
-		}
-	}
 
 	convert_to_spouse_religion= {
 		only_playable = yes
@@ -728,7 +593,6 @@ targetted_decisions = {
 		from_potential = {
 			ai = no
 			is_playable = yes
-			religion_group = pagan_group
 			controls_religion = no
 		}
 		
@@ -740,13 +604,6 @@ targetted_decisions = {
 				consort = {
 					character = FROM
 				}
-			}
-			OR = {
-				religion_group = christian
-				religion_group = muslim
-				religion_group = zoroastrian_group
-				religion_group = jewish_group
-				religion_group = indian_group
 			}
 			is_alive = yes
 		}
@@ -762,6 +619,68 @@ targetted_decisions = {
 					modifier = ruler_converted_from
 				}
 			
+				if = {
+					limit = {
+						religion_group = the_seven_group
+						NOT = { trait = sympathy_the_seven }
+					}
+					random = {
+						chance = 60
+						add_trait = sympathy_the_seven
+					}
+				}
+				
+				if = {
+					limit = {
+						religion_group = westerosi_pagan_group
+						NOT = { trait = sympathy_westerosi_pagan }
+					}
+					random = {
+						chance = 60
+						add_trait = sympathy_westerosi_pagan
+					}
+				}
+				if = {
+					limit = {
+						religion_group = drowned_god_group
+						NOT = { trait = sympathy_drowned_god }
+					}
+					random = {
+						chance = 60
+						add_trait = sympathy_drowned_god
+					}
+				}
+				if = {
+					limit = {
+						religion_group = eastern_group
+						NOT = { trait = sympathy_eastern }
+					}
+					random = {
+						chance = 60
+						add_trait = sympathy_eastern
+					}
+				}
+				if = {
+					limit = {
+						religion_group = valyrian_group
+						NOT = { trait = sympathy_valyrian }
+					}
+					random = {
+						chance = 60
+						add_trait = sympathy_valyrian
+					}
+				}
+				if = {
+					limit = {
+						religion_group = eastern_pagan_group
+						NOT = { trait = sympathy_eastern_pagan }
+					}
+					random = {
+						chance = 60
+						add_trait = sympathy_eastern_pagan
+					}
+				}
+				
 				if = {
 					limit = {
 						trait = cynical
@@ -782,84 +701,6 @@ targetted_decisions = {
 				}		
 			
 				religion = ROOT
-				
-				#When spouse is Hindu
-				if = {
-					limit = {
-						ROOT = {
-							trait = shaivist_hindu
-						}
-					}
-					add_trait = shaivist_hindu
-				}
-				if = {
-					limit = {
-						ROOT = {
-							trait = vaishnavist_hindu
-						}
-					}
-					add_trait = vaishnavist_hindu
-				}
-				if = {
-					limit = {
-						ROOT = {
-							trait = shaktist_hindu
-						}
-					}
-					add_trait = shaktist_hindu
-				}
-				if = {
-					limit = {
-						ROOT = {
-							trait = smartist_hindu
-						}
-					}
-					add_trait = smartist_hindu
-				}
-				
-				#When spouse is Buddhist
-				if = {
-					limit = {
-						ROOT = {
-							trait = mahayana_buddhist
-						}
-					}
-					add_trait = mahayana_buddhist
-				}
-				if = {
-					limit = {
-						ROOT = {
-							trait = vajrayana_buddhist
-						}
-					}
-					add_trait = vajrayana_buddhist
-				}
-				if = {
-					limit = {
-						ROOT = {
-							trait = theravada_buddhist
-						}
-					}
-					add_trait = theravada_buddhist
-				}
-				
-				#When spouse is Jain
-				if = {
-					limit = {
-						ROOT = {
-							trait = digambara_jain
-						}
-					}
-					add_trait = digambara_jain
-				}
-				if = {
-					limit = {
-						ROOT = {
-							trait = svetambara_jain
-						}
-					}
-					add_trait = svetambara_jain
-				}
 				
 				hidden_tooltip = {
 					religion_authority = {
@@ -892,7 +733,7 @@ decisions = {
 			is_playable = yes
 			OR = {
 				AND = {
-					religion_group = pagan_group
+					religion_group = sympathy_westerosi_pagan
 					is_reformed_religion = no
 					NOT = { religion_authority = 0.4 }
 				}
@@ -907,16 +748,14 @@ decisions = {
 					NOT = { religion = ROOT }
 					religion_authority = 0.5
 					OR = {
-						NOT = { religion_group = pagan_group }
+						NOT = { religion_group = sympathy_westerosi_pagan }
 						is_reformed_religion = yes
 					}
 				}
 				OR = {
-					using_cb = crusade
-					using_cb = religious
-					using_cb = muslim_invasion
-					using_cb = buddhist_holy_war
-					using_cb = pagan_holy_war
+					using_cb = tsk_county_conquest
+					using_cb = tsk_duchy_conquest
+					using_cb = tsk_subjugation
 				}
 			}
 		}
@@ -940,16 +779,17 @@ decisions = {
 							NOT = { religion = ROOT }
 							religion_authority = 0.5
 							OR = {
-								NOT = { religion_group = pagan_group }
+								NOR = {
+									religion_group = sympathy_westerosi_pagan
+									
+								}
 								is_reformed_religion = yes
 							}
 						}
 						OR = {
-							using_cb = crusade
-							using_cb = religious
-							using_cb = muslim_invasion
-							using_cb = buddhist_holy_war
-							using_cb = pagan_holy_war
+							using_cb = tsk_county_conquest
+							using_cb = tsk_duchy_conquest
+							using_cb = tsk_subjugation
 						}
 					}
 					attacker = {
@@ -961,33 +801,13 @@ decisions = {
 			if = {
 				limit = { event_target:enemy_attacker = { NOT = { religion_group = ROOT } } }
 				if = {
-					limit = { religion_group = pagan_group }
-					add_trait = sympathy_pagans
+					limit = { religion_group = westerosi_pagan_group }
+					add_trait = sympathy_westerosi_pagan
 				}
 				
 				if = {
-					limit = { religion_group = zoroastrian_group }
-					add_trait = sympathy_zoroastrianism
-				}
-				
-				if = {
-					limit = { religion_group = christian }
-					add_trait = sympathy_christendom
-				}
-				
-				if = {
-					limit = { religion_group = muslim }
-					add_trait = sympathy_islam
-				}
-				
-				if = {
-					limit = { religion_group = jewish_group }
-					add_trait = sympathy_judaism
-				}
-				
-				if = {
-					limit = { religion_group = indian_group }
-					add_trait = sympathy_indian
+					limit = { religion_group = eastern_pagan_group }
+					add_trait = sympathy_eastern_pagan
 				}
 			}
 			
@@ -1049,16 +869,17 @@ decisions = {
 							NOT = { religion = ROOT }
 							religion_authority = 0.45
 							OR = {
-								NOT = { religion_group = pagan_group }
+								NOR = {
+									religion_group = westerosi_pagan_group
+									religion_group = eastern_pagan_group
+								}
 								is_reformed_religion = yes
 							}
 						}
 						OR = {
-							using_cb = crusade
-							using_cb = religious
-							using_cb = muslim_invasion
-							using_cb = buddhist_holy_war
-							using_cb = pagan_holy_war
+							using_cb = tsk_county_conquest
+							using_cb = tsk_duchy_conquest
+							using_cb = tsk_subjugation
 						}
 						war_score = 50
 						thirdparty_title_scope = {
@@ -1079,16 +900,17 @@ decisions = {
 						NOT = { religion = ROOT }
 						religion_authority = 0.45
 						OR = {
-							NOT = { religion_group = pagan_group }
+							NOR = {
+								religion_group = westerosi_pagan_group
+								religion_group = eastern_pagan_group
+							}
 							is_reformed_religion = yes
 						}
 					}
 					OR = {
-						using_cb = crusade
-						using_cb = religious
-						using_cb = muslim_invasion
-						using_cb = buddhist_holy_war
-						using_cb = pagan_holy_war
+						using_cb = tsk_county_conquest
+						using_cb = tsk_duchy_conquest
+						using_cb = tsk_subjugation
 					}
 					war_score = 75
 					thirdparty_title_scope = {
