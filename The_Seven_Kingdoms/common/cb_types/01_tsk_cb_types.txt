@@ -26,6 +26,9 @@ tsk_county_conquest = {
 	can_use_gui = {
 		ROOT = {
 			prestige = 200
+			NOT = {
+				trait = content
+			}
 		}
 	}
 	
@@ -35,13 +38,10 @@ tsk_county_conquest = {
 	
 	can_use = {
 		ROOT = {
-			mercenary = no
-		}
-		ROOT = {
+			ai = no
 			NOT = { same_realm = FROM }
-		}
-		ROOT = {
-			 	primary_title = { higher_tier_than = COUNT }
+			primary_title = { higher_tier_than = COUNT } 
+			mercenary = no
 		}
 	}
 
@@ -60,14 +60,12 @@ tsk_county_conquest = {
 			}
 		}
 
-		NOT = {
-			OR = {
-				ROOT = {
-					has_landed_title = PREV
-				}
-				holder_scope = {
-					is_liege_or_above = ROOT
-				}
+		NOR = {
+			ROOT = {
+				has_landed_title = PREV
+			}
+			holder_scope = {
+				is_liege_or_above = ROOT
 			}
 		}
 		
@@ -216,6 +214,9 @@ tsk_duchy_conquest = {
 	can_use_gui = {
 		ROOT = {
 			prestige = 800
+			NOT = {
+				trait = content
+			}
 		}
 	}
 	
@@ -225,18 +226,16 @@ tsk_duchy_conquest = {
 	
 	can_use = {
 		ROOT = {
-			mercenary = no
-		}
-		ROOT = {
+			ai = no
 			NOT = { same_realm = FROM }
-		}
-		ROOT = {
-			 	primary_title = { higher_tier_than = DUKE } 
+			primary_title = { higher_tier_than = DUKE } 
+			mercenary = no
 		}
 	}
 
 	can_use_title = {
 		tier = duchy
+		
 		OR = {
 			FROM = {
 				has_landed_title = PREV
@@ -249,24 +248,24 @@ tsk_duchy_conquest = {
 				}
 			}
 		}
-
-		NOT = {
-			OR = {
-				ROOT = {
-					has_landed_title = PREV
-				}
-				holder_scope = {
-					is_liege_or_above = ROOT
-				}
-			}
-		}
 		
-		location = {
-			any_neighbor_province = {
-				owner = {
+		any_direct_de_jure_vassal_title = {
+			OR = {
+				holder_scope = {
 					OR = {
 						character = ROOT
 						is_liege_or_above = ROOT
+					}
+				}
+				location = {
+					any_neighbor_province = {
+						has_owner = yes
+						owner = {
+							OR = {
+								character = ROOT
+								is_liege_or_above = ROOT
+							}
+						}
 					}
 				}
 			}
