@@ -1,0 +1,1015 @@
+
+Global = {
+(Type CharTriggerWithCount) = {
+	Inherits = CharTrigger
+	Optional = { Left = "count" Right = PInt }
+}
+(Type TitleTriggerWithCount) = {
+	Inherits = TitleTrigger
+	Optional = { Left = "count" Right = PInt }
+}
+(Type ProvTriggerWithCount) = {
+	Inherits = ProvTrigger
+	Optional = { Left = "count" Right = PInt }
+}
+(Type ArtifactTriggerWithCount) = {
+	Inherits = ArtifactTrigger
+	Optional = { Left = "count" Right = PInt }
+}
+}
+
+(ContextValidator Trigger) = { Members = {
+	(N Y) = { Left = "has_dlc" Right = Dlc }
+	(Y  ) = { Left = "supported_checksum" Right = Bool }
+	(Y  ) = { Left = "is_save_game" Right = Bool }
+	
+	(N N) = { Left = { Type = PrefixedCharId } Right = CharTrigger }
+	
+	(N N) = { Left = "any_title" Right = TitleTriggerWithCount }
+	(N N) = { Left = "any_character" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_province" Right = ProvTriggerWithCount }
+	(N N) = { Left = "any_landed_title" Right = TitleTriggerWithCount }
+	(N N) = { Left = "any_player" Right = CharTriggerWithCount }
+	
+	(Y  ) = { Left = "multiplayer" Right = Bool }
+	(Y  ) = { Left = "is_ironman" Right = Bool }
+	(Y  ) = { Left = "has_game_started" Right = Bool }
+	(N Y) = { Left = "start_date" Right = Date }
+
+	(N Y) = { Left = "has_game_rule" Right = {
+		Single = { Left = "name" Right = GameRuleKey }
+		Single = { Left = "value" Right = { DicEnumValueFor = { Enum = GameRule KeySelector = "^\name\[R]" } } }
+	} }
+	(Y  ) = { Left = "total_years_played" Right = PInt }
+} }
+
+(Type DistanceDef) = {
+	Optional = { Left = "where" Right = { Province MaybeEventTargetProv } }
+	Optional = { Left = "value" Right = NnDbl }
+	
+	Optional = { Left = "who" Right = { MaybeEventTargetChar } }
+	Optional = { Left = "distance" Right = NnDbl }
+	
+	#AllOrNone = { where value }
+	#AllOrNone = { who distance }
+	AtMostOne = { where who }
+	AtMostOne = { distance value }
+	OneOf = { where who }
+	OneOf = { distance value }
+}
+
+(ContextValidator ProvTrigger) = { Members = {
+	(N N If = Debug) = { Left = "location" Right = ProvTrigger }
+
+	(N N) = { Left = "any_province_holding" Right = TitleTriggerWithCount }
+	(N N) = { Left = "sea_zone" Right = ProvTrigger }
+	(N N) = { Left = "any_trade_route_province" Right = ProvTriggerWithCount }
+	(N N) = { Left = "capital_holding" Right = TitleTrigger }
+	
+	(N N) = { Left = "trade_post_owner" Right = CharTrigger }
+	(N N) = { Left = "parent_religion_head" Right = CharTrigger }
+	(N N) = { Left = "religion_head" Right = CharTrigger }
+	
+	(Y  ) = { Left = "is_occupied" Right = Bool }
+	(Y  ) = { Left = "num_of_max_settlements" Right = PInt }
+
+	(N Y) = { Left = "distance" Right = { DistanceDef } }
+	(Y  ) = { Left = "has_trade_post" Right = Bool }
+	(A Y) = { Left = "continent" Right = Continent }
+	(Y  ) = { Left = "has_empty_holding" Right = Bool }
+	(Y  ) = { Left = "is_winter" Right = Bool }
+	(Y  ) = { Left = "num_of_empty_holdings" Right = PInt }
+	
+	(If If = V110) = {
+		(Y  ) = { Left = "has_owner" Right = Bool }
+		# province_id works: https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-99#post-20211840
+		(N Y) = { Left = "province" Right = { MaybeEventTargetProv Province } }
+		(Y  ) = { Left = "is_reformed_religion" Right = { Bool } }
+	}
+	
+	(Y  ) = { Left = "has_heresies" Right = Bool }
+	(N Y) = { Left = "is_within_diplo_range" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "borders_major_river" Right = Bool }
+	(Y  ) = { Left = "borders_lake" Right = Bool }
+	(N Y) = { Left = "region" Right = GeographicalRegion }
+	(Y  ) = { Left = "is_nomadic" Right = Bool }
+	(N Y) = { Left = "trade_route" Right = TradeRoute }
+	(N Y) = { Left = "trade_post_has_building" Right = ImprovementValue }
+	(Y  ) = { Left = "technology_can_spread" Right = Bool }
+	(Y  ) = { Left = "has_capital" Right = Bool }
+	(Y  ) = { Left = "has_settlement_construction" Right = Bool }
+	(N Y) = { Left = "owned_by" Right = MaybeEventTargetChar }
+
+} }
+
+(Type OpinionDiff) = {
+	Single = { Left = "first" Right = { MaybeEventTargetChar OpinionClauseDefinedTypes } }
+	Single = { Left = "second" Right = { MaybeEventTargetChar OpinionClauseDefinedTypes } }
+	Single = { Left = "value" Right = Double }
+	Optional = { Left = "as_if_liege" Right = Bool }
+}
+
+(ContextValidator CharTrigger) = { Members = {
+	(N N) = { Left = "quest_target" Right = CharTrigger }
+	# (N N) = { Left = "quest_target" Right = Untyped } # Will be checked by EventTargetManager
+	(N N) = { Left = "society" Right = SocietyTrigger }
+	(N N) = { Left = "any_society_member" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_artifact" Right = ArtifactTriggerWithCount }
+	(N N) = { Left = "any_host_courtier" Right = CharTriggerWithCount }
+	(N Y) = { Left = "de_facto_liege_title" Right = { AnyTitle CharacterId MaybeEventTargetCharTitle } }
+	(N Y) = { Left = "same_regnal_name" Right = { CharacterId MaybeEventTargetChar } }
+	(Y  ) = { Left = "dynastic_prestige" Right = Double }
+	(Y  ) = { Left = "is_society_discovered" Right = Bool }
+	(N Y) = { Left = "regional_percentage" Right = {
+		Single = { Left = "region" Right = GeographicalRegion }
+		Single = { Left = "percentage" Right = Double }
+		Inherits = ProvTrigger
+	} }
+	(N Y) = { Left = "is_society_rank_full" Right = {
+		Single = { Left = "society" Right = Society }
+		Single = { Left = "rank" Right = PInt }
+	} }
+	(N Y) = { Left = "is_quest_target_of" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "has_assigned_minor_title" Right = MinorTitle }
+	(N Y) = { Left = "has_assigned_minor_title" Right = {
+		Single = { Left = "title" Right = MinorTitle }
+		Single = { Left = "count" Right = PInt }
+	} }
+	(N Y) = { Left = "faction_exists" Right = {
+		Single = { Left = "faction" Right = Faction }
+		Single = { Left = "title" Right = { AnyTitle MaybeEventTargetTitle } }
+		Optional = { Left = "thirdparty" Right = MaybeEventTargetChar }
+	} }
+	(N Y) = { Left = "realm_character_percent" Right = {
+		Single = { Left = "target" Right = PDbl }
+		Inherits = CharTrigger
+	} }
+	(Y  ) = { Left = "society_influence" Right = PInt }
+	(Y  ) = { Left = "month_of_birth" Right = PInt }
+	(Y  ) = { Left = "day_of_birth" Right = PInt }
+	(N Y) = { Left = "obedient" Right = MaybeEventTargetCharTitle }
+	(N Y) = { Left = "non_interference" Right = MaybeEventTargetCharTitle }
+	(Y  ) = { Left = "is_quest_target" Right = Bool }
+	(Y  ) = { Left = "days_in_society" Right = PInt }
+	(Y  ) = { Left = "num_of_artifacts" Right = PInt }
+	(Y  ) = { Left = "days_at_current_society_rank" Right = PInt }
+	(Y  ) = { Left = "society_can_rank_up" Right = Bool }
+	(A Y) = { Left = "society_member_of" Right = Society }
+	(N Y) = { Left = "has_terrain_specialization" Right = { Terrain Any Bool } }
+	(N Y) = { Left = "is_landed_title_allowed" Right = { AnyTitle MaybeEventTargetTitle } }
+	(Y  ) = { Left = "society_rank" Right = PInt }
+	(N Y) = { Left = "society_rank" Right = {
+		Single = { Left = "society" Right = Society }
+		Single = { Left = "rank" Right = PInt }
+	} }
+	(N Y) = { Left = "interested_in_society" Right = { Society } }
+	(N Y) = { Left = "can_join_society" Right = { MaybeEventTargetSociety Society } }
+	(Y  ) = { Left = "society_currency" Right = Double }
+	(A Y) = { Left = "is_in_society" Right = Society }
+	(Y  ) = { Left = "is_in_society" Right = Bool }
+	(N Y) = { Left = "same_society_as" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "has_artifact" Right = Artifact }
+	(Y  ) = { Left = "is_society_grandmaster" Right = Bool }
+	(Y  ) = { Left = "has_inheritance_blocker" Right = Bool }
+	(Y  ) = { Left = "is_incapable" Right = Bool }
+	(Y  ) = { Left = "is_virtous" Right = Bool }
+	(Y  ) = { Left = "is_wicked" Right = Bool }
+	(Y  ) = { Left = "is_pilgrim" Right = Bool }
+	(Y  ) = { Left = "has_any_symptom" Right = Bool }
+	(Y  ) = { Left = "has_any_quest" Right = Bool }
+	(Y  ) = { Left = "num_of_symptoms" Right = PInt }
+	(Y  ) = { Left = "immortal" Right = Bool }
+	(Y  ) = { Left = "has_children" Right = Bool }
+	(Y  ) = { Left = "has_living_children" Right = Bool }
+	(Y  ) = { Left = "over_vassal_limit" Right = Int }
+	(Y  ) = { Left = "over_max_demesne_size" Right = Int }
+	(N N) = { Left = "any_faction_backer" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_consort" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_allied_character" Right = CharTriggerWithCount }
+	(N N) = { Left = "highest_ranked_relative" Right = CharTrigger }
+	(N N) = { Left = "biggest_realm_size_relative" Right = CharTrigger }
+	(N N) = { Left = "supported_claimant" Right = CharTrigger }
+	(N N) = { Left = "killer" Right = CharTrigger }
+	(N N) = { Left = "reincarnation_scope" Right = CharTrigger }
+	(N N) = { Left = "dynasty_head" Right = CharTrigger }
+	(N N) = { Left = "consort" Right = CharTrigger }
+	(N N) = { Left = "any_opinion_modifier_target" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_close_relative" Right = CharTriggerWithCount }
+	(N N) = { Left = "suzerain" Right = CharTrigger }
+	(N N) = { Left = "any_suzerain" Right = CharTriggerWithCount }
+	(N N) = { Left = "mercenary_employer" Right = CharTrigger }
+	(N N) = { Left = "blood_brother" Right = TitleTrigger }
+	(N N) = { Left = "most_prestigious_clan_vassal" Right = CharTrigger }
+	(N N) = { Left = "strongest_clan_vassal" Right = CharTrigger }
+	(N N) = { Left = "succ_law_title" Right = TitleTrigger }
+	(N N) = { Left = "educator" Right = CharTrigger }
+	(N N) = { Left = "center_flank_leader" Right = CharTrigger }
+	(N N) = { Left = "any_non_aggression_pact_character" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_voter" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_favor_ower" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_favor_holder" Right = CharTriggerWithCount }
+	
+	(N N) = { Left = "title_to_get_rid_of" Right = TitleTrigger }
+	(N N) = { Left = "capital_holding" Right = TitleTrigger }
+	(N N) = { Left = "family_palace" Right = TitleTrigger }
+	(N N) = { Left = { Type = Faction } Right = TitleTrigger }
+	(N N) = { Left = "clan_title" Right = TitleTrigger }
+	(N N) = { Left = "any_mercenary_band" Right = TitleTriggerWithCount }
+	
+	(N N) = { Left = "any_trade_post" Right = ProvTriggerWithCount }
+	
+	(Y  ) = { Left = "dislike_tribal_organization" Right = Bool }
+	(Y  ) = { Left = "is_dying" Right = Bool }
+	(Y  ) = { Left = "is_vice_royalty" Right = Bool }
+	(Y  ) = { Left = "over_max_demesne_size" Right = Int }
+	(Y  ) = { Left = "has_newly_acquired_titles" Right = Bool }
+
+	(N Y) = { Left = "num_of_realm_counties" Right = {
+		Single = { Left = "value" Right = PInt }
+		Single = { Left = "title" Right = MaybeEventTargetTitle }
+	} }
+	
+	(A Y) = { Left = "in_faction" Right = { Faction Bool } }
+	(A Y) = { Left = "leads_faction" Right = { Faction Yes } }
+	(N Y) = { Left = "faction_power" Right = {
+		Single = { Left = "faction" Right = Faction }
+		Single = { Left = "power" Right = NnDbl
+	} } }
+	
+	(Y  ) = { Left = "has_overseas_holdings" Right = Bool }
+	(Y  ) = { Left = "num_of_dynasty_members" Right = PInt }
+	(Y  ) = { Left = "has_heresies" Right = Bool }
+	(Y  ) = { Left = "is_lowborn" Right = Bool }
+	(Y  ) = { Left = "is_looting" Right = Bool }
+	
+	(N N) = { Left = "opinion_diff" Right = OpinionDiff }
+	(N N) = { Left = "personal_opinion_diff" Right = OpinionDiff }
+	
+	(N Y) = { Left = "defending_against_claimant" Right = {
+		Single = { Left = "character" Right = { CharacterId MaybeEventTargetChar } }
+		Single = { Left = "title" Right = MaybeEventTargetTitle }
+	} }
+	(N Y) = { Left = "distance" Right = { DistanceDef } }
+	(N Y) = { Left = "has_earmarked_regiments" Right = String (LocalOp "set" "[R]" AddSetter Earmarks If = TraceFlags) }
+	(N Y) = { Left = "has_earmarked_regiments_not_raiding" Right = String (LocalOp "set" "[R]" AddSetter Earmarks If = TraceFlags) }
+	(Y  ) = { Left = "has_embargo" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "diplomatic_immunity" Right = Bool }
+	(Y  ) = { Left = "is_reincarnated" Right = Bool }
+
+	(N Y) = { Left = "num_of_trade_post_diff" Right = {
+		Single = { Left = "character" Right = { CharacterId MaybeEventTargetChar } }
+		Single = { Left = "value" Right = Int }
+	} }
+	(Y  ) = { Left = "num_of_trade_posts" Right = PInt }
+	
+	(Y  ) = { Left = "at_sea" Right = Bool }
+	(Y  ) = { Left = "has_autocephaly" Right = Bool }
+	(N Y) = { Left = "graphical_culture" Right = { GraphicalCultureType MaybeEventTargetChar } }
+	(N Y) = { Left = "is_within_diplo_range" Right = MaybeEventTargetChar }
+	
+	(A Y) = { Left = "death_reason" Right = DeathReason }
+	
+	(If If = V110) = {
+		(N N) = {
+			Left = "num_culture_realm_provs"
+			Right = {
+				Single = { Left = "value" Right = PInt }
+				Single = { Left = "culture" Right = Culture }
+			}
+			FancyUniqueId = {
+				Local = True
+				Key = {
+					culture = "culture\[R]"
+				}
+			}
+		}
+		(N N) = {
+			Left = "relative_power"
+			Right = {
+				Single = { Left = "who" Right = MaybeEventTargetChar }
+				Single = { Left = "power" Right = Double }
+			}
+			FancyUniqueId = {
+				Local = True
+				Key = {
+					who = "who\[R]"
+				}
+			}
+		}
+		(N N) = {
+			Left = "relative_power_including_allies_attacker"
+			Right = {
+				Single = { Left = "who" Right = MaybeEventTargetChar }
+				Single = { Left = "power" Right = Double }
+			}
+			FancyUniqueId = {
+				Local = True
+				Key = {
+					who = "who\[R]"
+				}
+			}
+		}
+		(N N) = {
+			Left = "relative_power_including_allies_defender"
+			Right = {
+				Single = { Left = "who" Right = MaybeEventTargetChar }
+				Single = { Left = "power" Right = Double }
+			}
+			FancyUniqueId = {
+				Local = True
+				Key = {
+					who = "who\[R]"
+				}
+			}
+		}
+		(N N) = {
+			Left = "attribute_diff"
+			Right = {
+				Single = { Left = "character" Right = { MaybeEventTargetChar CharacterId } }
+				Single = { Left = "attribute" Right = Attribute }
+				Single = { Left = "value" Right = Double }
+			}
+			FancyUniqueId = {
+				Local = True
+				Key = {
+					character = "character\[R]"
+				}
+			}
+		}
+		(N N) = {
+			Left = "age_diff"
+			Right = {
+				Single = { Left = "who" Right = { MaybeEventTargetChar CharacterId } }
+				Single = { Left = "years" Right = Int }
+			}
+			FancyUniqueId = {
+				Local = True
+				Key = {
+					character = "who\[R]"
+				}
+			}
+		}
+		(N N) = {
+			Left = "realm_levy_diff"
+			Right = {
+				Single = { Left = "who" Right = { MaybeEventTargetChar CharacterId } }
+				Single = { Left = "value" Right = Int }
+			}
+			FancyUniqueId = {
+				Local = True
+				Key = {
+					character = "who\[R]"
+				}
+			}
+		}
+		(N N) = {
+			Left = "reverse_realm_levy_diff"
+			Right = {
+				Single = { Left = "who" Right = { MaybeEventTargetChar CharacterId } }
+				Single = { Left = "value" Right = Int }
+			}
+			FancyUniqueId = {
+				Local = True
+				Key = {
+					character = "who\[R]"
+				}
+			}
+		}
+		(Y  ) = { Left = "combat_rating" Right = Double }
+		(N N) = {
+			Left = "combat_rating_diff"
+			Right = {
+				Single = { Left = { "character" "who" } Right = { MaybeEventTargetChar CharacterId } }
+				Single = { Left = "value" Right = Double }
+			}
+		}
+		(N N) = {
+			Left = "holding_diff"
+			Right = {
+				Single = { Left = "first_type" Right = { None HoldingType } }
+				Optional = { Left = "first_count_vassals" Right = Bool }
+				Single = { Left = "second_type" Right = { None HoldingType } }
+				Optional = { Left = "second_count_vassals" Right = Bool }
+				Single = { Left = "value" Right = Double }
+			}
+		}
+		
+		(Y  ) = { Left = "is_consort" Right = Bool }
+		(Y  ) = { Left = "num_of_consorts" Right = PInt }
+		(N Y) = { Left = "is_consort" Right = MaybeEventTargetChar }
+		(Y  ) = { Left = "preparing_invasion" Right = Bool }
+		(Y  ) = { Left = "is_reformed_religion" Right = { Bool } }
+		(Y  ) = { Left = "is_reformed_religion" Right = { MaybeEventTargetCharReligion } }
+		(Y  ) = { Left = "num_of_holy_sites" Right = Int }
+		(Y  ) = { Left = "rebel" Right = Bool }
+		(Y  ) = { Left = "dynasty_realm_power" Right = Double }
+	}
+	
+	(N Y) = { Left = "likes_better_than" Right = {
+		Single = { Left = "who" Right = MaybeEventTargetChar }
+		Single = { Left = "than" Right = MaybeEventTargetChar }
+	} }
+	(Y  ) = { Left = "holy_order" Right = Bool }
+	(Y  ) = { Left = "is_at_sea" Right = Bool }
+	(N Y) = { Left = "is_older_than" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "has_regiments" Right = Bool }
+	(Y  ) = { Left = "is_married_matrilineally" Right = Bool }
+	(N Y) = { Left = "is_allied_with" Right = MaybeEventTargetChar }
+	
+	(A Y) = { Left = "has_focus" Right = Focus }
+	(N Y) = { Left = "is_foe" Right = { MaybeEventTargetChar } }
+	(N Y) = { Left = "has_any_opinion_modifier" Right = OpinionModifier }
+	(N Y) = { Left = "same_sex" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "has_concubinage" Right = Bool }
+	
+	(N Y) = { Left = "pays_tribute_to" Right = { MaybeEventTargetChar } }
+	(N Y) = { Left = "has_feud_with" Right = { MaybeEventTargetChar } }
+	(N Y) = { Left = "has_blood_oath_with" Right = { MaybeEventTargetChar } }
+	(N Y) = { Left = "is_opposite_sex" Right = { MaybeEventTargetChar } }
+	(Y  ) = { Left = "is_nomadic" Right = Bool }
+	(Y  ) = { Left = "is_tributary" Right = Bool }
+	(Y  ) = { Left = "uses_decadence" Right = Bool }
+	(Y  ) = { Left = "num_of_feuds" Right = PInt }
+	(Y  ) = { Left = "realm_levies" Right = PInt }
+	
+	(N Y) = { Left = "distance_from_realm" Right = {
+		Single = { Left = "who" Right = MaybeEventTargetChar }
+		Single = { Left = "value" Right = PInt }
+	} }
+	(A Y) = { Left = "government" Right = Government }
+	(Y  ) = { Left = "num_of_count_titles_in_realm" Right = PInt }
+	(N Y) = { Left = "can_hold_title" Right = { JobTitle MinorTitle } }
+	(Y  ) = { Left = "is_allowed_to_loot" Right = Bool }
+	(Y  ) = { Left = "religion_allows_female_temple_holders" Right = Bool }
+	(N Y) = { Left = "region" Right = GeographicalRegion }
+	(N Y) = { Left = "completely_controls_region" Right = GeographicalRegion }
+	(Y  ) = { Left = "is_seafarer" Right = Bool }
+	(Y  ) = { Left = "population_factor" Right = Double }
+	(Y  ) = { Left = "population_and_manpower" Right = PInt }
+	(Y  ) = { Left = "population" Right = PInt }
+	(Y  ) = { Left = "is_concubine" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "unused_manpower" Right = PInt }
+	(Y  ) = { Left = "clan" Right = Bool }
+	(Y N) = { Left = { Type = AiModifier } Right = Int }
+	(Y  ) = { Left = "max_manpower" Right = PInt }
+	(Y  ) = { Left = "demesne_garrison_size" Right = PInt }
+	(Y  ) = { Left = "num_of_subrealm_cities" Right = PInt }
+	(Y  ) = { Left = "num_of_subrealm_castles" Right = PInt }
+	(N Y) = { Left = "is_government_potential" Right= Government }
+	(Y  ) = { Left = "risks_minor_clan_rising" Right = Bool }
+	(N Y) = { Left = "num_of_government_vassals" Right = {
+		Single = { Left = "government" Right = Government }
+		Single = { Left = "value" Right = PInt }
+	} }
+	(Y  ) = { Left = "score" Right = Int }
+	(Y  ) = { Left = "republic_total_num_of_trade_posts" Right = PInt }
+	
+	(N Y) = { Left = "is_law_allowed" Right = Law }
+	(N Y) = { Left = "is_law_potential" Right = Law }
+	(N Y) = { Left = "is_government_allowed" Right = Government }
+	(N Y) = { Left = "is_government_potential" Right = Government }
+	(N Y) = { Left = "is_decision_allowed" Right = PureDecision }
+	(N Y) = { Left = "is_decision_potential" Right = PureDecision }
+	(N Y) = { Left = "is_targetted_decision_allowed" Right = TargettedDecision }
+	(N Y) = { Left = "is_targetted_decision_potential" Right = TargettedDecision }
+	(N Y) = { Left = "is_targeted_decision_allowed" Right = TargettedDecision }
+	(N Y) = { Left = "is_targeted_decision_potential" Right = TargettedDecision }
+	(N Y) = { Left = "is_title_decision_allowed" Right = TitleDecision }
+	(N Y) = { Left = "is_title_decision_potential" Right = TitleDecision }
+	(N Y) = { Left = "is_settlement_decision_allowed" Right = SettlementDecision }
+	(N Y) = { Left = "is_settlement_decision_potential" Right = SettlementDecision }
+	(N Y) = { Left = "is_trade_post_decision_allowed" Right = TradePostDecision }
+	(N Y) = { Left = "is_trade_post_decision_potential" Right = TradePostDecision }
+	(N Y) = { Left = "is_fort_decision_allowed" Right = FortDecision }
+	(N Y) = { Left = "is_fort_decision_potential" Right = FortDecision }
+	(N Y) = { Left = "is_hospital_decision_allowed" Right = HospitalDecision }
+	(N Y) = { Left = "is_hospital_decision_potential" Right = HospitalDecision }
+	
+	(Y  ) = { Left = "will_liege_enforce_peace" Right = Bool }
+	(Y  ) = { Left = "has_liege_enforced_peace" Right = Bool }
+	(Y  ) = { Left = "is_heir" Right = { MaybeEventTargetChar Bool } }
+	(Y  ) = { Left = "has_mercenary_band" Right = Bool }
+	(Y  ) = { Left = "owns_mercenary_units" Right = Bool }
+	(Y  ) = { Left = "is_voter" Right = Bool }
+	(N Y) = { Left = "can_swap_job_title" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "owes_favor_to" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "holds_favor_on" Right = { MaybeEventTargetChar Liege } }
+	(N Y) = { Left = "has_non_aggression_pact_with" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "among_most_powerful_vassals" Right = PInt }
+	(N Y) = { Left = "is_valid_romance_target" Right = MaybeEventTargetChar }
+
+	(N Y) = { Left = "race" Right = {
+		Type = MaybeEventTargetChar
+		Type = Race
+	} }
+	(Y  ) = { Left = "has_council" Right = Bool }
+	(Y  ) = { Left = "is_council_content" Right = Bool }
+	(Y  ) = { Left = "relative_income_to_liege" Right = Double }
+	(A Y) = { Left = "has_position" Right = CouncilPosition }
+	(N Y) = { Left = "num_of_faction_backers" Right = {
+		Single = { Left = "faction" Right = Faction }
+		# Shouldn't be PInt: https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-108#post-20767850
+		Single = { Left = "value" Right = NnInt }
+	} }
+
+	# Should these only be for wardecl?
+	(A Y) = { Left = "stored_token_trigger" Right = CasusBelli }
+	(N N) = { Left = "preferred_war_target" Right = CharTrigger }
+	
+	(Y  ) = { Left = "is_powerful_vassal" Right = Bool }
+	(Y  ) = { Left = "is_multiplayer_host_character" Right = Bool }
+	
+} }
+
+(ContextValidator TitleTrigger) = { Members = {
+	(N Y) = { Left = "de_facto_liege_title" Right = { AnyTitle CharacterId MaybeEventTargetCharTitle } }
+	(Y  ) = { Left = "adventurer" Right = Bool }
+	(N N) = { Left = "band_creator" Right = CharTrigger }
+	(N N) = { Left = "any_claimant" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_previous_holder" Right = CharTriggerWithCount }
+	(N N) = { Left = "heir_under_seniority_law" Right = CharTrigger }
+	(N N) = { Left = "heir_under_primogeniture_law" Right = CharTrigger }
+	(N N) = { Left = "trade_post_owner" Right = CharTrigger }
+	(N N) = { Left = "best_crusade_claimant" Right = CharTrigger }
+	
+	(N N) = { Left = "defacto_liege_title" Right = TitleTrigger }
+	(N N) = { Left = "succ_law_title" Right = TitleTrigger }
+
+	(N Y) = { Left = "is_quest_target_of" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "over_vassal_limit" Right = Int }
+	(Y  ) = { Left = "over_max_demesne_size" Right = Int }
+	(Y  ) = { Left = "is_crown_law_title" Right = Bool }
+	(Y  ) = { Left = "dislike_tribal_organization" Right = Bool }
+	(Y  ) = { Left = "is_contested" Right = Bool }
+	(Y  ) = { Left = "is_conquered" Right = Bool }
+	(Y  ) = { Left = "has_trade_post" Right = Bool } # May not work, who knows
+	(Y  ) = { Left = "is_recent_grant" Right = Bool }
+	(Y  ) = { Left = "is_vice_royalty" Right = Bool }
+	
+	(If If = V110) = {
+		(Y  ) = { Left = "temporary" Right = Bool }
+		(Y  ) = { Left = "holy_order" Right = Bool }
+		(N Y) = { Left = "is_valid_viking_invasion_target" Right = MaybeEventTargetChar }
+		(Y  ) = { Left = "ruled_years" Right = Int }
+		(N Y) = { Left = "num_title_realm_provs" Right = {
+			Single = { Left = "who" Right = MaybeEventTargetChar }
+			Single = { Left = "value" Right = Int }
+		} }
+		(Y  ) = { Left = "rebel" Right = Bool }
+		(Y  ) = { Left = "num_fitting_characters_for_title" Right = PInt }
+	}
+	(N Y) = { Left = "region" Right = GeographicalRegion }
+	(Y  ) = { Left = "is_nomadic" Right = Bool }
+	
+	(N Y) = { Left = "is_law_allowed" Right = Law }
+	(N Y) = { Left = "is_law_potential" Right = Law }
+	(N Y) = { Left = "is_government_allowed" Right = Government }
+	(N Y) = { Left = "is_government_potential" Right = Government }
+	(N Y) = { Left = "is_decision_allowed" Right = PureDecision }
+	(N Y) = { Left = "is_decision_potential" Right = PureDecision }
+	(N Y) = { Left = "is_targetted_decision_allowed" Right = TargettedDecision }
+	(N Y) = { Left = "is_targetted_decision_potential" Right = TargettedDecision }
+	(N Y) = { Left = "is_targeted_decision_allowed" Right = TargettedDecision }
+	(N Y) = { Left = "is_targeted_decision_potential" Right = TargettedDecision }
+	(N Y) = { Left = "is_title_decision_allowed" Right = TitleDecision }
+	(N Y) = { Left = "is_title_decision_potential" Right = TitleDecision }
+	(N Y) = { Left = "is_settlement_decision_allowed" Right = SettlementDecision }
+	(N Y) = { Left = "is_settlement_decision_potential" Right = SettlementDecision }
+	(N Y) = { Left = "is_trade_post_decision_allowed" Right = TradePostDecision }
+	(N Y) = { Left = "is_trade_post_decision_potential" Right = TradePostDecision }
+	(N Y) = { Left = "is_fort_decision_allowed" Right = FortDecision }
+	(N Y) = { Left = "is_fort_decision_potential" Right = FortDecision }
+	(N Y) = { Left = "is_hospital_decision_allowed" Right = HospitalDecision }
+	(N Y) = { Left = "is_hospital_decision_potential" Right = HospitalDecision }
+	
+	
+	(Y  ) = { Left = "has_siege" Right = Bool }
+	(Y  ) = { Left = "clan" Right = Bool }
+	(Y  ) = { Left = "has_raised_standing_troops" Right = Bool }
+	(N Y) = { Left = "is_allowed_holding_type" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "is_preferred_holding_type" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "mercenary_siphon_factor" Right = Double }
+	(A Y) = { Left = "has_mercenary_maintenance_modifier" Right = NormalModifier }
+} }
+
+(ContextValidator Command) = { Members = {
+	(N N) = { Left = { Type = PrefixedCharId } Right = CharCommand }
+
+	(N N) = { Left = "any_title" Right = TitleMaybeLimitCommand }
+	(N N) = { Left = "any_character" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_player" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_province" Right = ProvMaybeLimitCommand }
+	(N N) = { Left = "any_landed_title" Right = TitleMaybeLimitCommand }
+	(N N) = { Left = "random_character" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_player" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_province" Right = ProvMaybeLimitCommand }
+	(N N) = { Left = "random_landed_title" Right = TitleMaybeLimitCommand }
+
+	(N Y) = { Left = "set_parent_religion" Right = {
+		Single = { Left = "religion" Right = { Religion MaybeEventTargetCharProvReligion } }
+		Single = { Left = "parent" Right = { Type = Religion Literal = "0" Type = MaybeEventTargetCharProvReligion } }
+	} }
+	(N Y) = { Left = "enable_prepared_invasion" Right = Religion }
+	(N Y) = { Left = "disable_prepared_invasion" Right = Religion }
+	(N Y) = { Left = "log" Right = String }
+	(Y  ) = { Left = "break" Right = Yes CheckNoFollowingBreak }
+	
+	(N N) = { Left = "sound_effect" Right = Sound }
+} }
+
+(ContextValidator ProvCommand) = { Members = {
+	(N N If = Debug) = { Left = "location" Right = ProvCommand }
+	(N N) = { Left = "any_province_holding" Right = TitleMaybeLimitCommand }
+	(N N) = { Left = "random_province_holding" Right = TitleMaybeLimitCommand }
+	(N N) = { Left = "sea_zone" Right = ProvCommand }
+	(N N) = { Left = "capital_holding" Right = TitleCommand }
+	(N N) = { Left = "any_trade_route_province" Right = ProvMaybeLimitCommand }
+	
+	(N N) = { Left = "trade_post_owner" Right = CharCommand }
+	(N N) = { Left = "parent_religion_head" Right = CharCommand }
+	(N N) = { Left = "religion_head" Right = CharCommand }
+
+	(N Y) = { Left = "seize_trade_post" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "set_name" Right = String }
+	(Y  ) = { Left = "add_holding_slot" Right = { Literal = 1 } }
+	
+	# The right side does not have to be unique
+	# See https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-81#post-19485971
+	(N N) = { Left = "change_tech" Right = {
+		Single = { Left = "technology" Right = Tech }
+		Single = { Left = "value" Right = Double }
+	} }
+	(Y  ) = { Left = "refill_holding_levy" Right = Bool }
+	
+	# These probably don't work in prov scope?
+	#(Y  ) = { Left = "convert_to_city" Right = Bool }
+	#(Y  ) = { Left = "convert_to_castle" Right = Bool }
+	#(Y  ) = { Left = "convert_to_temple" Right = Bool }
+} }
+
+(Type SiezeThing) = {
+	Single = { Left = "title" Right = MaybeEventTargetTitle }
+	Single = { Left = "enemy" Right = MaybeEventTargetChar }
+	Optional = { Left = "is_crusade" Right = Bool }
+	Optional = { Left = "is_religious" Right = Bool }
+	Optional = { Left = "is_revolt" Right = Bool }
+	Optional = { Left = "same_religion" Right = Bool }
+	Optional = { Left = "anti_nomad" Right = Bool }
+	Optional = { Left = "type" Right = UsurpType }
+}
+
+(ContextValidator CharCommand) = { Members = {
+	(N N) = { Left = "new_artifact" Right = ArtifactCommand }
+	(N N) = { Left = "society" Right = SocietyCommand }
+	(N N) = { Left = { Type = Faction } Right = TitleCommand }
+	(N N) = { Left = "any_title_under" Right = TitleMaybeLimitCommand }
+	(N N) = { Left = "family_palace" Right = TitleCommand }
+	(N N) = { Left = "capital_holding" Right = TitleCommand }
+	(N N) = { Left = "clan_title" Right = TitleCommand }
+	(N N) = { Left = "any_mercenary_band" Right = TitleMaybeLimitCommand }
+	(N N) = { Left = "succ_law_title" Right = TitleCommand }
+	(N N) = { Left = "any_host_courtier" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_host_courtier" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_society_member" Right = CharMaybeLimitCommand }
+	
+	(N N) = { Left = "any_faction_backer" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_unique_dynasty_vassal" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "reincarnation_scope" Right = CharCommand }
+	(N N) = { Left = "consort" Right = CharCommand }
+	(N N) = { Left = "any_consort" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_consort" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "killer" Right = CharCommand }
+	(N N) = { Left = "dynasty_head" Right = CharCommand }
+	(N N) = { Left = "any_opinion_modifier_target" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_opinion_modifier_target" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_close_relative" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "suzerain" Right = CharCommand }
+	(N N) = { Left = "any_suzerain" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "most_prestigious_clan_vassal" Right = CharCommand }
+	(N N) = { Left = "strongest_clan_vassal" Right = CharCommand }
+	(N N) = { Left = "educator" Right = CharCommand }
+	(N N) = { Left = "any_allied_character" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_allied_character" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_non_aggression_pact_character" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "center_flank_leader" Right = CharCommand }
+	(N N) = { Left = "most_popular_vassal" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_voter" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_voter" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_favor_ower" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_favor_holder" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_artifact" Right = ArtifactMaybeLimitCommand }
+	(N N) = { Left = "any_artifact" Right = ArtifactMaybeLimitCommand }
+	
+	(N N) = { Left = "any_army" Right = UnitMaybeLimitCommand }
+	
+	(N N) = { Left = "clear_education_trait" Right = Yes }
+	(Y  ) = { Left = "copy_name" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "show_portrait" Right = Yes }
+	(Y  ) = { Left = "set_quest" Right = String (LocalOp "set" "[R]" AddSetter CharQuest If = TraceFlags) }
+	(N N) = { Left = "destroy_artifact" Right = Artifact }
+	(Y  ) = { Left = "set_society_grandmaster" Right = Yes }
+	(Y  ) = { Left = "join_society" Right = Society }
+	(Y  ) = { Left = "society_rank_up" Right = PInt }
+	(Y  ) = { Left = "society_rank_up" Right = {
+		Single = { Left = "rank" Right = PInt }
+		Single = { Left = "society" Right = Society }
+	} }
+	(Y  ) = { Left = "set_quest_target" Right = {
+		Single = { Left = "id" Right = String (LocalOp "chk" "[R]" AddChecker CharQuest If = TraceFlags) EventTargetSet } # Quest event target, hopefully no collisions
+		Optional = { Left = "society" Right = Society }
+		Single = { Left = "holder" Right = MaybeEventTargetChar }
+	} }
+	(Y  ) = { Left = "leave_society" Right = Yes }
+	(Y  ) = { Left = "change_society_currency" Right = Double }
+	(Y  ) = { Left = "set_divine_blood" Right = Bool }
+	(Y  ) = { Left = "set_pacified" Right = {
+		Single = { Left = "years" Right = PInt }
+	} }
+	(N Y) = { Left = "add_artifact" Right = Artifact }
+	(N Y) = { Left = "set_truce" Right = {
+		Single = { Left = "who" Right = MaybeEventTargetChar }
+		Single = { Left = "years" Right = PInt }
+	} }
+	
+	(Y  ) = { Left = "create_family_palace" Right = Yes }
+	(Y  ) = { Left = "force_host" Right = MaybeEventTargetChar }
+
+	(Y  ) = { Left = "objective_succeeds" Right = Yes }
+	(N N) = { Left = "title_to_get_rid_of" Right = TitleCommand }
+	
+	(N Y) = { Left = "vassalize_or_take_under_title" Right = SiezeThing }
+	
+	(N Y) = { Left = "join_faction" Right = {
+		Single = { Left = "faction" Right = Faction }
+		Single = { Left = "faction_leader" Right = MaybeEventTargetChar }
+		Optional = { Left = "ignore_requirements" Right = Bool }
+	} }
+	(N Y) = { Left = "leave_faction" Right = { Faction All } }
+	(N Y) = { Left = "start_faction" Right = {
+		Single = { Left = "faction" Right = Faction }
+		Single = { Left = "title" Right = { MaybeEventTargetTitle AnyTitle } }
+		Optional = { Left = "thirdparty" Right = MaybeEventTargetChar }
+		Optional = { Left = "can_join_existing" Right = Bool }
+		Optional = { Left = "ignore_requirements" Right = Bool }
+	} }
+	
+	(N Y) = { Left = "disband_event_forces" Right = String (LocalOp "chk" "[R]" AddChecker Earmarks If = TraceFlags) }
+	(Y  ) = { Left = "faction" Right = Faction }
+	(Y  ) = { Left = "capital" Right = { MaybeEventTargetProvTitle } } # Might be supposed to be Title only
+	(Y  ) = { Left = "diplomatic_immunity" Right = Bool }
+	(Y  ) = { Left = "embargo" Right = MaybeEventTargetChar }
+	
+	(N Y) = { Left = "chronicle" Right = {
+		Single = { Left = "entry" Right = Key }
+		#OneOf = { picture portrait type }
+		#AtMostOne = { picture portrait type }
+		Optional = { Left = "picture" Right = String }
+		Optional = { Left = "portrait" Right = String }
+		Optional = { Left = "type" Right = {
+			Literal = FREAK_NATURAL_EVENT
+			Literal = MONSTER_SIGHTED
+			Literal = POPULATION_EVENT
+			Literal = NATURAL_DISASTER
+		} }
+	} }
+	
+	(If If = V110) = {
+		(N Y) = { Left = "vassalize_or_take_under_title_destroy_duchies" Right = SiezeThing }
+		(N Y) = { Left = "subjugate_or_take_under_title" Right = SiezeThing }
+		(N Y) = { Left = "create_title" Right = CreateTitle }
+	
+		(N N) = { Left = "spawn_fleet" Right = {
+			#AddContextValidatorStackFrame = None
+			
+			Single = { Left = "province" Right = { Literal = "closest" Type = MaybeEventTargetCharProv Type = Province } }
+			Single = { Left = "owner" Right = MaybeEventTargetChar }
+			Optional = { Left = "earmark" Right = String (LocalOp "set" "[R]" AddSetter Earmarks If = TraceFlags) }
+			Optional = { Left = "troops" Right = {
+				(Ch Y N) = { Left = { Type = Unit Type = SpecialUnit } Right = { (PdoList N 2 2) = { Type = NnInt } } }
+			} }
+			Optional = { Left = "match_character" Right = MaybeEventTargetChar }
+			Optional = { Left = "match_mult" Right = Double }
+			Optional = { Left = "match_min" Right = Double }
+			Optional = { Left = "disband_on_peace" Right = Bool }
+			Optional = { Left = "cannot_inherit" Right = Bool }
+			
+		} }
+		
+		(Y  ) = { Left = "culture_techpoints" Right = Double }
+		(Y  ) = { Left = "military_techpoints" Right = Double }
+		(Y  ) = { Left = "economy_techpoints" Right = Double }
+		(Y  ) = { Left = "move_character" Right = MaybeEventTargetChar }
+		(Y  ) = { Left = "cancel_job_action" Right = { Yes JobAction } }
+	}
+	
+	(N Y) = { Left = "banish_religion" Right = Religion }
+	(Y  ) = { Left = "set_name" Right = String }
+	(Y  ) = { Left = "set_reincarnation" Right = { MaybeEventTargetChar 0 } }
+	(Y  ) = { Left = "hold_election" Right = Yes }
+	
+	(N Y) = { Left = "set_graphical_culture" Right = { Culture MaybeEventTargetCharCultureProv } }
+	
+	# http://forum.paradoxplaza.com/forum/showthread.php?597480-The-Validator-Find-errors-quickly-and-with-minimal-pain!&p=18094719&viewfull=1#post18094719
+	(Y  ) = { Left = "remove_nickname" Right = { MaybeEventTargetChar Nickname Yes } }
+	(Y  ) = { Left = "set_government_type" Right = Government }
+	(N Y) = { Left = "remove_tributary" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "make_tributary" Right = {
+		Single = { Left = "who" Right = MaybeEventTargetChar }
+		Single = { Left = "percentage" Right = NnDbl }
+	} }
+	(N Y) = { Left = "set_special_character_title" Right = Key }
+	(N Y) = { Left = "remove_special_character_title" Right = Key }
+	(Y  ) = { Left = "manpower" Right = Int }
+	(Y  ) = { Left = "population" Right = Int }
+	(Y  ) = { Left = "add_population_scaled" Right = Double }
+	(N Y) = { Left = "steal_population_scaled" Right = {
+		Single = { Left = "target" Right = MaybeEventTargetChar }
+		Single = { Left = "percentage" Right = Double }
+	} }
+	
+	(Y  ) = { Left = "clear_focus" Right = Yes }
+	(Y  ) = { Left = "set_focus" Right = Focus }
+	(N Y) = { Left = "add_favor" Right = { Type = MaybeEventTargetChar Type = Liege } }
+	(N Y) = { Left = "reverse_add_favor" Right = { Type = MaybeEventTargetChar Type = Liege } }
+	(N Y) = { Left = "remove_favor" Right = { Type = MaybeEventTargetChar Type = Liege } }
+	(N Y) = { Left = "reverse_remove_favor" Right = { Type = MaybeEventTargetChar Type = Liege } }
+	(N Y) = { Left = "decline_law" Right = MaybeEventTargetTitle }
+	(N Y) = { Left = "break_alliance" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "add_alliance" Right = {
+		Single = { Left = "who" Right = MaybeEventTargetChar }
+		Single = { Left = "years" Right = PInt }
+	} }
+	(Y  ) = { Left = "set_job_action" Right = {
+		Single = { Left = "action" Right = JobAction }
+		Single = { Left = "where" Right = MaybeEventTargetProv }
+	} }
+	
+	(Y  ) = { Left = "change_infamy" Right = {
+		Single = { Left = "value" Right = Double }
+		Single = { Left = "localisation" Right = Key }
+	} }
+} }
+
+(ContextValidator TitleCommand) = { Members = {
+	(N N) = { Left = "band_creator" Right = CharCommand }
+	(N N) = { Left = "best_crusade_claimant" Right = CharCommand }
+	(N N) = { Left = "any_claimant" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "defacto_liege_title" Right = TitleCommand }
+	(N N) = { Left = "most_participating_crusader" Right = CharCommand }
+	(N N) = { Left = "succ_law_title" Right = TitleCommand }
+
+	(Y  ) = { Left = "set_pentarch_title" Right = { AnyTitle None } }
+	(N Y) = { Left = "create_title" Right = CreateTitle }
+	(Y  ) = { Left = "set_allow_vice_royalties" Right = { Tier No } }
+	(Y  ) = { Left = "set_name" Right = String }
+	(Y  ) = { Left = "reset_coa" Right = MaybeEventTargetTitle }
+	(Y  ) = { Left = "set_coa" Right = { MaybeEventTargetTitle AnyTitle } }
+	(Y  ) = { Left = "province_capital" Right = Yes }
+	(Y  ) = { Left = "copy_title_laws" Right = { AnyTitle MaybeEventTargetTitle } }
+	(Y  ) = { Left = "copy_title_history" Right = { AnyTitle MaybeEventTargetTitle } }
+	(Y  ) = { Left = "seize_trade_post" Right = MaybeEventTargetChar }
+	(If If = V110) = {
+		(Y  ) = { Left = "refill_holding_levy" Right = Yes }
+		(Y  ) = { Left = "make_primary_title" Right = Yes }
+		(Y  ) = { Left = "adjective" Right = String }
+	}
+	
+	(N Y) = { Left = "best_fit_character_for_title" Right = {
+		Inherits = CharCommand
+		# Needs to be separate, otherwise the AddContextValidatorStackFrame will affect the CharCommand inheritance as well
+		Inherits = BestFitStuff
+		
+	} }
+	
+	(Y  )  = { Left = "convert_to" Right = HoldingType }
+	# Outdated
+	#(Y  ) = { Left = "convert_to_city" Right = Yes }
+	#(Y  ) = { Left = "convert_to_castle" Right = Yes }
+	#(Y  ) = { Left = "convert_to_temple" Right = Yes }
+	#(Y  ) = { Left = "convert_to_tribal" Right = Yes }
+	
+	(N Y) = { Left = "set_title_landless" Right = SetTitle }
+	(N Y) = { Left = "set_title_nomad" Right = SetTitle }
+	(N Y) = { Left = "set_title_adventurer" Right = SetTitle }
+	(N Y) = { Left = "create_oath" Right = MaybeEventTargetTitle }
+	(N Y) = { Left = "end_oath" Right = MaybeEventTargetTitle }
+	(N Y) = { Left = "create_feud" Right = MaybeEventTargetTitle }
+	(Y  ) = { Left = "change_title_army_size" Right = Double }
+	(Y  ) = { Left = "make_capital_holding" Right = Yes }
+	(N Y) = { Left = "destroy_settlement" Right = MaybeEventTargetTitle }
+	(Y  ) = { Left = "revoke_capital_holding" Right = Yes }
+	(Y  ) = { Left = "make_capital_holding" Right = Yes }
+	
+	(N Y) = { Left = "disable_council_voting_on_issue" Right = CouncilVotingTopic }
+	(N Y) = { Left = "enable_council_voting_on_issue" Right = CouncilVotingTopic }
+	(Y  ) = { Left = "adjust_siphon_factor" Right = Double }
+	(Y  ) = { Left = "set_mercenary_maintenance_modifier" Right = NormalModifier }
+	
+	(N Y) = { Left = "change_mercenary_composition" Right = {
+		Optional = { Left = "from" Right = { Unit SpecialUnit } }
+		Single = { Left = "type" Right = { Unit SpecialUnit } }
+		Single = { Left = "change" Right = Int }
+	} }
+	(Y  ) = { Left = "cut_mercenary_creator_relation" Right = Yes }
+	
+} }
+
+(ContextValidator UnitCommand) = { Members = {
+	(N N) = { Left = "location" Right = ProvCommand }
+
+	# Is not (Y  ) because you may want to 1) turn on can_toggle_looting 2) set looting to something 3) turn off can_toggle_looting. Is this actually needed to do? Dunno
+	(N Y) = { Left = "set_can_toggle_looting" Right = Bool }
+	(Y  ) = { Left = "set_looting" Right = Bool }
+	(Y  ) = { Left = "morale" Right = Double }
+	(Y  ) = { Left = "troops" Right = Double }
+} }
+
+(ContextValidator UnitTrigger) = { Members = {
+	(N N) = { Left = "location" Right = ProvTrigger }
+
+	(Y N) = { Left = "loot" Right = Double }
+} }
+
+(Type SetTitle) = {
+	# TODO: can it take other than THIS? If so can it be used anywhere not just title scope?
+	Single = { Left = "title" Right = { Literal = "THIS" } }
+	Single = { Left = "status" Right = Bool }
+}
+
+(Type BestFitStuff) = {
+	# Need this because CharCommand inheritance won't add stack when evaluating "title" field or other fields
+	AddContextValidatorStackFrame = Char
+	Single = { Left = "title" Right = MaybeEventTargetTitle }
+	Single = { Left = "perspective" Right = MaybeEventTargetChar }
+	Single = { Left = "index" Right = PInt }
+}
+
+(Type CreateTitle If = V110) = {
+	Single = { Left = "tier" Right = Tier }
+	Optional = { Left = "landless" Right = Bool }
+	Optional = { Left = "temporary" Right = Bool }
+	Optional = { Left = "rebel" Right = Bool }
+	Single = { Left = "culture" Right = { Culture MaybeEventTargetCharCultureProv } }
+	Optional = { Left = "name" Right = Key }
+	Single = { Left = "holder" Right = { MaybeEventTargetChar } }
+	Optional = { Left = "custom_created" Right = Bool }
+	Optional = { Left = "copy_title_laws" Right = Bool }
+	Optional = { Left = "mercenary" Right = Bool }
+	Optional = { Left = "adventurer" Right = Bool }
+	Optional = { Left = "ruler" Right = Key }
+	Optional = { Left = "ruler_female" Right = Key }
+	Optional = { Left = "base_title" Right = MaybeEventTargetTitle }
+	Optional = { Left = "foa" Right = Key }
+	Optional = { Left = "nomad" Right = Bool }
+	Optional = { Left = "replace_captain_on_death" Right = Bool }
+	Optional = { Left = "siphons_income_to_creator" Right = Double }
+	Optional = { Left = "army_template" Right = MercenaryType }
+	
+}
+
+(ContextValidator ArtifactTrigger) = { Members = {
+	(A Y) = { Left = "artifact_type" Right = Artifact }
+	(Y  ) = { Left = "quality" Right = PInt }
+	(N Y) = { Left = "artifact_type_owned_by" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "is_artifact_active" Right = Bool }
+} }
+
+(ContextValidator ArtifactCommand) = { Members = {
+	(Y  ) = { Left = "set_creation_date" Right = Date }
+	(Y  ) = { Left = "destroy_artifact" Right = Yes }
+	(Y  ) = { Left = "transfer_artifact" Right = {
+		Single = { Left = "from" Right = MaybeEventTargetChar }
+		Single = { Left = "to" Right = MaybeEventTargetChar }
+	} }
+} }
+
+(ContextValidator SocietyTrigger) = { Members = {
+	(N N) = { Left = "any_society_member" Right = CharTriggerWithCount }
+
+	(A Y) = { Left = "society_type" Right = MaybeEventTargetSociety }
+} }
+
+(ContextValidator SocietyCommand) = { Members = {
+	(N N) = { Left = "random_society_member" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_society_member" Right = CharMaybeLimitCommand }
+} }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

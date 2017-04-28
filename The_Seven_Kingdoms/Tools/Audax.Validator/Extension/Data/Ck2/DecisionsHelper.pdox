@@ -1,0 +1,264 @@
+(Type NormalDecisionGroup If = normal) = { Inherits = DecisionGroup }
+(Type DeJureDecisionGroup If = dejure) = { Inherits = DecisionGroup }
+(Type SuccessionLawsDecisionGroup If = succ) = { Inherits = DecisionGroup }
+(Type TargetDecisionGroup If = target) = { Inherits = DecisionGroup }
+(Type VassalDecisionGroup If = v) = { Inherits = DecisionGroup }
+(Type TitleDecisionGroup If = title) = { Inherits = DecisionGroup }
+(Type TradePostDecisionGroup If = tp) = { Inherits = DecisionGroup }
+(Type FortDecisionGroup If = fort) = { Inherits = DecisionGroup }
+(Type SettlementDecisionGroup If = settle) = { Inherits = DecisionGroup }
+(Type HospitalDecisionGroup If = hospital) = { Inherits = DecisionGroup }
+(Type SocietyDecisionGroup If = society) = { Inherits = DecisionGroup }
+
+(Type DecisionGroup) = {
+	Child = {
+		Left = { Type = String }
+		Right = DecisionDef
+		(LocalOp Validate ID If = Decisions.NoUniqueIdCheck)
+		(UniqueId IfNot = Decisions.NoUniqueIdCheck) = Left
+		(CheckKey "*" Left IfNot = NoCheckKey)
+		(CheckKey "*_desc" Left IfNot = NoCheckKey)
+	}
+}
+
+(Type DecisionDef) = {
+	
+	NodeSwitcher = {
+		Node = "is_high_prio"
+		MarkChecked = False
+		Default = {}
+		
+		Switch = {
+			"yes" = {
+				# Targeted decisions that are high prio need a _named localization
+				(If If = target) = {
+					# However, those with a filter of "self" don't need it: https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-99#post-20211840
+					NodeSwitcher = {
+						Node = "filter"
+						MarkChecked = False
+						Default = {
+							Child = {
+								Left = "is_high_prio"
+								Right = String
+								(CheckKey "*_named" "^\[L]" IfNot = NoCheckKey)
+							}
+						}
+						
+						Switch = {
+							"self" = {}
+						}
+					}
+				}
+			}
+		}
+	}
+	Optional = { Left = "only_rulers" Right = Bool }
+	Optional = { Left = "only_playable" Right = Bool }
+	Optional = { Left = "only_independent" Right = Bool }
+	Optional = { Left = "is_high_prio" Right = Bool }
+	Optional = { Left = "is_mercenary" Right = Bool }
+	# https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-89#post-19664325
+	# targetted_decisions, settlement_decisions and title_decisions are, so far, the only decision types that can have a from_potential. FROM for the decision is the decision taker, and there is no FROMFROM for the decision (at least so far, who knows what they will add in the future); the scope of from_potential is the FROM of the decision, so FROM shouldn't be valid in it.
+	# https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-93#post-19730278 vassal also has from_potential
+	# Also trading posts: https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-95#post-19790450
+	(Optional If = "target;settle;title;v;tp") = { Left = "from_potential" Right = FromPotentialDecisionTrigger }
+	Optional = { Left = "potential" Right = DecisionTrigger }
+	Optional = { Left = "allow" Right = DecisionTrigger }
+	Optional = { Left = "effect" Right = DecisionCommand }
+	Optional = { Left = "revoke_allowed" Right = DecisionTrigger }
+	Optional = { Left = "ai_will_do" Right = AiWillDo }
+	Optional = { Left = "ai_will_revoke" Right = AiWillDo }
+	Optional = { Left = "pass_effect" Right = DecisionCommand }
+	Optional = { Left = "hide_in_decisions_list" Right = Bool }
+	Optional = { Left = "icon_religion" Right = Religion }
+	Optional = { Left = "is_in_society" Right = Bool }
+	
+	(If If = "dejure;succ;normal") = {
+		Optional = { Left = "default" Right = Bool }
+		Optional = { Left = "default_selection" Right = LawDefaultSelection }
+	}
+	
+	(If If = "dejure;succ") = {
+		Optional = { Left = "group" Right = String (CheckKey "*" Right IfNot = NoCheckKey) }
+			#{ Literal = "centralization" Literal = "temple_tax" 
+			#Literal = "investiture_law" Literal = "feudal_tax" Literal = "temple_contract"
+			#Literal = "city_tax" Literal = "city_contract" Literal = "feudal_contract" }
+			
+		Optional = { Left = "default" Right = Bool }
+		Optional = { Left = "show_as_title" Right = Bool }
+		
+		Inherits = CharModifier
+	}
+	
+	(If If = "dejure") = {
+		Optional = { Left = "vassal_limit" Right = Int }
+		Optional = { Left = "demesne_size" Right = Int }
+	}
+	
+	(If If = "target") = {
+		Optional = { Left = "ai_target_filter" Right = FilterTarget }
+		Optional = { Left = "filter" Right = FilterTarget }
+	}
+	
+	(If If = "title") = {
+		Single = { Left = "filter" Right = TitleFilterTarget }
+		Optional = { Left = "ai_target_filter" Right = TitleFilterTarget }
+	}
+	
+	(If If = "tp;fort;hospital") = {
+		Single = { Left = "filter" Right = TradePostFilterTarget }
+		Optional = { Left = "ai_target_filter" Right = TradePostFilterTarget }
+	}
+	
+	(If If = "settle") = {
+		Single = { Left = "filter" Right = SettlementFilterTarget }
+		Optional = { Left = "ai_target_filter" Right = SettlementFilterTarget }
+	}
+}
+
+(If If = "dejure;succ;normal") = {
+	(Type LawDefaultSelection) = {
+		Single = { Left = "factor" Right = Double }
+		(Ch N Y) = { Left = "modifier" Right = {
+			Single = { Left = "factor" Right = Double }
+			Inherits = TitleTrigger
+		} }
+		(Ch N Y) = { Left = "additive_modifier" Right = LawDefaultSelectionModifier }
+	}
+	
+	(Type LawDefaultSelectionModifier) = {
+		Single = { Left = "value" Right = Double }
+		Inherits = TitleTrigger
+	}
+}
+
+(Type.Enum FilterTarget) = { Values = { self court home_court vassals sub_realm realm dynasty all spouse rivals vassal_wars liege } }
+(Type.Enum TitleFilterTarget) = { Values = { capital primary_title owned vassal_owned sub_realm_owned realm_owned dynasty_owned all } }
+(Type.Enum TradePostFilterTarget) = { Values = { capital owned vassal_owned sub_realm_owned realm_owned dynasty_owned } }
+(Type.Enum SettlementFilterTarget) = { Values = { capital owned vassal_owned sub_realm_owned realm_owned dynasty_owned all } }
+
+(Type AiWillDo) = {
+	Single = { Left = "factor" Right = NnDbl }
+	(Ch N Y) = { Left = "modifier" Right = AiWillDoModifier }
+}
+
+(Type AiWillDoModifier) = {
+	Single = { Left = "factor" Right = NnDbl }
+	Inherits = FactorModifier
+	Inherits = DecisionTrigger
+	
+}
+
+(Type DecisionTrigger) = {
+	(ContextValidator If = normal) = NormalDecisionTrigger
+	(ContextValidator If = dejure) = DeJureDecisionTrigger
+	(NodeSwitcher If = "target") = {
+		Node = "^\filter"
+		MarkChecked = False
+		Default = { ContextValidator = TargetDecisionTrigger }
+		Switch = {
+			"vassal_wars" = { ContextValidator = TargetDecisionTriggerFromFromWar }
+		}
+	}
+	(ContextValidator If = "v") = TargetDecisionTrigger
+	(ContextValidator If = "succ;title;tp") = TitleDecisionTrigger
+	(ContextValidator If = "fort;settle;hospital") = FortDecisionTrigger
+	(ContextValidator If = "society") = SocietyDecisionTrigger
+}
+
+(ContextValidator TargetDecisionTriggerFromFromWar If = "target") = {
+	Inherits = CharTrigger
+	FromTarget = Char
+	FromFromTarget = War
+}
+
+# https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-97#post-19886919
+(Type FromPotentialDecisionTrigger) = {
+	(ContextValidator IfNot="target") = CharTrigger
+	(ContextValidator If="target") = TargetDecisionTrigger
+}
+
+(ContextValidator NormalDecisionTrigger If = normal) = {
+	Inherits = CharTrigger
+}
+
+(ContextValidator DeJureDecisionTrigger If = dejure) = {
+	Inherits = TitleTrigger
+}
+
+(ContextValidator TargetDecisionTrigger If = "target;v") = {
+	Inherits = CharTrigger
+	FromTarget = Char
+}
+
+(ContextValidator TitleDecisionTrigger If = "succ;title;tp") = {
+	Inherits = TitleTrigger
+	FromTarget = Char
+}
+
+(ContextValidator FortDecisionTrigger If = "fort;settle;hospital") = {
+	Inherits = TitleTrigger
+	FromTarget = Char
+}
+
+(ContextValidator SocietyDecisionTrigger If = "society") = {
+	Inherits = CharTrigger
+}
+
+(Type DecisionCommand) = {
+	(ContextValidator If = normal) = NormalDecisionCommand
+	(ContextValidator If = dejure) = DeJureDecisionCommand
+	(NodeSwitcher If = "target") = {
+		Node = "^\filter"
+		MarkChecked = False
+		Default = { ContextValidator = TargetDecisionCommand }
+		Switch = {
+			"vassal_wars" = { ContextValidator = TargetDecisionCommandFromFromWar }
+		}
+	}
+	(ContextValidator If = "v") = TargetDecisionCommand
+	(ContextValidator If = "succ;title;tp") = TitleDecisionCommand
+	(ContextValidator If = "fort;settle;hospital") = FortDecisionCommand
+	(ContextValidator If = "society") = SocietyDecisionCommand
+}
+
+(ContextValidator NormalDecisionCommand If = normal) = {
+	Inherits = CharCommand
+}
+
+(ContextValidator DeJureDecisionCommand If = dejure) = {
+	Inherits = TitleCommand
+}
+
+(ContextValidator TargetDecisionCommand If = "target;v") = {
+	Inherits = CharCommand
+	FromTarget = Char
+}
+
+(ContextValidator TargetDecisionCommandFromFromWar If = "target") = {
+	Inherits = CharCommand
+	FromTarget = Char
+	FromFromTarget = War
+}
+
+(ContextValidator TitleDecisionCommand If = "succ;title;tp") = {
+	Inherits = TitleCommand
+	FromTarget = Char
+}
+
+(ContextValidator FortDecisionCommand If = "fort;settle;hospital") = {
+	Inherits = TitleCommand
+	FromTarget = Char
+}
+
+(ContextValidator SocietyDecisionCommand If = "society") = {
+	Inherits = CharCommand
+}
+
+
+
+
+
+
+
+

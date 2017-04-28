@@ -1,0 +1,89 @@
+(Validator Artifacts) = {
+	Type = GroupValidator
+	FriendlyName = "Artifacts"
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\artifact_spawns" "*.txt")
+		ValidatorName = ArtifactSpawnFile
+	}
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\artifacts" "*.txt")
+		ValidatorName = ArtifactFile
+	}
+}
+
+(Type ArtifactSpawnFile) = {
+	Child = {
+		Left = { Type = String }
+		Right = ArtifactSpawnDef
+		UniqueId = Left
+	}
+}
+
+(Type ArtifactSpawnDef) = {
+	Single = { Left = "max_amount" Right = PInt }
+	Single = { Left = "spawn_date" Right = { Type = Date Literal = "-1.1.1" } }
+	
+	Single = { Left = "spawn_chance" Right = {
+		Single = { Left = "value" Right = Double }
+		(Ch N Y) = { Left = "modifier" Right = {
+			Single = { Left = "factor" Right = Double }
+			Inherits = CharTrigger
+		} }
+	} }
+	Single = { Left = "weight" Right = {
+		Single = { Left = "value" Right = Double }
+		(Ch N Y) = { Left = "additive_modifier" Right = {
+			Single = { Left = "value" Right = Double }
+			Inherits = CharTrigger
+		} }
+	} }
+	Single = { Left = "artifacts" Right = {
+		(Ch Y N) = { Left = { Type = Artifact } Right = {
+			Single = { Left = "value" Right = Double }
+		} }
+	} }
+}
+
+(Type ArtifactFile) = {
+	Optional = { Left = "slots" Right = {
+		Child = {
+			Left = { Type = String }
+			Right = PInt
+			UniqueId = Left
+			(CheckKey "*" Left IfNot = NoCheckKey)
+		}
+	} }
+
+	Child = {
+		Left = { Type = String }
+		Right = ArtifactDef
+		UniqueId = Left
+		(CheckKey "*" Left IfNot = NoCheckKey)
+		(CheckKey "*_desc" Left IfNot = NoCheckKey)
+	}
+}
+
+(Type ArtifactDef) = {
+	Single = { Left = "picture" Right = String }
+	Optional = { Left = "quality" Right = PInt }
+	Optional = {
+		Left = "flags"
+		Right = {
+			(PdoList Y) = {
+				Type = String
+				(LocalOp "set" "[R]" AddSetter ArtifactFlag If = TraceFlags)
+			}
+		}
+	}
+	Optional = { Left = "stacking" Right = Bool }
+	Optional = { Left = "slot" Right = ArtifactSlot }
+	Optional = { Left = "command_modifier" Right = CommandModifierDef }
+	Optional = { Left = "active" Right = CharTrigger }
+	Optional = { Left = "indestructible" Right = Bool }
+	
+	Inherits = CharModifier
+}

@@ -1,0 +1,48 @@
+(Validator AdvisorTypes) = {
+	Type = Default
+	FriendlyName = "Advisor types"
+	(FileGroup "common\advisortypes" "*.txt")
+	ValidatorName = AdvisorTypes
+}
+
+(Type AdvisorTypes) = {
+	(Ch Y N) = { Left = { Type = String } Right = AdvisorTypeDef }
+}
+
+(Type AdvisorTypeDef) = {
+	Single = { Left = "monarch_power" Right = Trait }
+	Single = { Left = "chance" Right = AdvisorTypeChance }
+	Optional = { Left = "ai_will_do" Right = AiWillDo }
+	
+	Single = { Left = "skill_scaled_modifier" Right = CountryModifierDef }
+	
+	Inherits = CountryModifierDef
+}
+
+(Type AdvisorTypeChance) = {
+	Optional = { Left = "factor" Right = NnDbl }
+	(Ch N Y) = { Left = "modifier" Right = Modifier }
+}
+
+(Type Modifier) = {
+	Inherits = FactorModifier
+	Single = { Left = "factor" Right = NnDbl }
+	
+	Inherits = ProvinceTrigger
+	
+}
+
+(Type AiWillDo) = {
+	Optional = { Left = "factor" Right = NnDbl }
+	(Ch N Y) = { Left = "modifier" Right = AiWillDoModifier }
+}
+
+(Type AiWillDoModifier) = {
+	Inherits = FactorModifier
+	Optional = { Left = "factor" Right = NnDbl }
+	
+	Inherits = CountryTrigger
+	
+}
+
+

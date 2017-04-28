@@ -1,0 +1,63 @@
+
+(ContextValidator CharTrigger) = { Members = {
+	(N N) = { Left = "any_claim" Right = TitleTriggerWithCount }
+	
+	(Y  ) = { Left = "num_of_claims" Right = NnInt }
+	(N Y) = { Left = "has_strong_claim" Right = { MaybeEventTargetTitle AnyTitle } }
+	(N Y) = { Left = "has_weak_claim" Right = { MaybeEventTargetTitle AnyTitle } }
+	(N Y) = { Left = "has_claim" Right = { MaybeEventTargetTitle AnyTitle } }
+	(N Y) = { Left = "total_claims" Right = {
+		Single = { Left = "who" Right = MaybeEventTargetChar }
+		Optional = { Left = "strong" Right = Bool }
+		Single = { Left = "value" Right = NnInt }
+	} }
+
+} }
+
+(ContextValidator TitleTrigger) = { Members = {
+	(N Y) = { Left = "claimed_by" Right = MaybeEventTargetChar }
+
+} }
+
+(ContextValidator CharCommand) = { Members = {
+	(N N) = { Left = "random_claim" Right = TitleMaybeLimitCommand }
+	(N N) = { Left = "any_claim" Right = TitleMaybeLimitCommand }
+	
+	# NOTE: The following have MaybeEventTargetTitle removed because of https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-96#post-19867947
+	(N Y) = { Left = "add_claim" Right = {  AnyTitle } }
+	(N Y) = { Left = "add_pressed_claim" Right = {  AnyTitle } }
+	(N Y) = { Left = "add_weak_pressed_claim" Right = {  AnyTitle } }
+	(N Y) = { Left = "add_weak_claim" Right = {  AnyTitle } }
+	(N Y) = { Left = "remove_claim" Right = {  AnyTitle } }
+
+} }
+
+(ContextValidator TitleCommand) = { Members = {
+	(N Y) = { Left = "add_claim" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "add_pressed_claim" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "add_weak_pressed_claim" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "add_weak_claim" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "remove_claim" Right = MaybeEventTargetChar }
+
+} }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

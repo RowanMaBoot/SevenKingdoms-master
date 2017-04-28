@@ -1,0 +1,102 @@
+(Validator Buildings) = {
+	Type = Default
+	FriendlyName = "Buildings"
+	(FileGroup "common\buildings" "*.txt")
+	ValidatorName = Buildings
+}
+
+(Type Buildings) = {
+	Optional = { Left = "nomad" Right = NomadBuildingGroup }
+	(Ch Y N) = { Left = { Type = String } Right = NormalBuildingGroup }
+}
+
+(Type NomadBuildingGroup) = {
+	Child = { Left = { Type = String } Right = NomadBuildingDef }
+}
+
+(Type NormalBuildingGroup) = {
+	Child = { Left = { Type = String } Right = NormalBuildingDef }
+}
+
+(Type NomadBuildingDef) = {
+	# This may apply to other triggers as well, no idea until someone tests
+	Optional = { Left = "trigger" Right = NomadBuildProvTrigger }
+	Optional = { Left = "is_active_trigger" Right = NomadBuildProvTrigger }
+	Inherits = BuildingDef
+}
+
+(Type NormalBuildingDef) = {
+	Optional = { Left = "trigger" Right = BuildProvTrigger }
+	Optional = { Left = "is_active_trigger" Right = BuildProvTrigger }
+	Inherits = BuildingDef
+}
+
+(Type BuildingDef) = {
+	UniqueId = Left
+	(CheckKey "*" Left IfNot = NoCheckKey)
+	Optional = { Left = "desc" Right = Key }
+	Single = { Left = { "gold_cost" "prestige_cost" } Right = NnDbl }
+	Single = { Left = "build_time" Right = NonNegInt }
+	
+	Optional = { Left = "prerequisites" Right = { (PdoList Y) = { Type = ImprovementValue } } }
+	Optional = { Left = "not_if_x_exists" Right = { (PdoList Y) = { Type = ImprovementValue } } }
+	Optional = { Left = "upgrades_from" Right = ImprovementValue }
+	Optional = { Left = "ai_creation_factor" Right = NonNegInt }
+	Optional = { Left = "auto_add_at_year" Right = NonNegInt }
+	
+	(If If = V110) = {
+		Optional = { Left = "max_tradeposts" Right = NonNegInt }
+		Optional = { Left = "add_number_to_name" Right = Bool }
+		# This is required according to
+		# http://forum.paradoxplaza.com/forum/showthread.php?597480-The-Validator-Find-errors-quickly-and-with-minimal-pain!&p=18042012&viewfull=1#post18042012
+		# http://forum.paradoxplaza.com/forum/showthread.php?800610-Problem-with-custom-building-trees.&p=18041430&viewfull=1#post18041430
+		# But apparently it is not required
+		# http://forum.paradoxplaza.com/forum/showthread.php?597480-The-Validator-Find-errors-quickly-and-with-minimal-pain!&p=18432144&viewfull=1#post18432144
+		Optional = { Left = "extra_tech_building_start" Right = Double }
+		Optional = { Left = "replaces" Right = Improvement }
+		Optional = { Left = "port" Right = Bool }
+	}
+	
+	Optional = { Left = "start" Right = StartProvTrigger }
+	Optional = { Left = "potential" Right = BuildProvTrigger }
+	
+	(Ch Y N) = { Left = { Type = Unit Type = SpecialUnit } Right = Int }
+	
+	Optional = { Left = "retinuesize" Right = Double }
+	Optional = { Left = "tradevalue" Right = Double }
+	Optional = { Left = "scouting" Right = Bool }
+	
+	# Possibly only for tribal	
+	Optional = { Left = "convert_to_city" Right = ImprovementValue }
+	Optional = { Left = "convert_to_castle" Right = ImprovementValue }
+	Optional = { Left = "convert_to_temple" Right = ImprovementValue }
+	Optional = { Left = "convert_to_tribal" Right = ImprovementValue }
+	
+	Optional = { Left = "ai_republic_modifier" Right = Double }
+	Optional = { Left = "ai_feudal_modifier" Right = Double }
+
+	Inherits = Modifier
+}
+
+(Type StartProvTrigger) = { ContextValidator = StartProvTrigger }
+
+(ContextValidator StartProvTrigger) = {
+	Inherits = TitleTrigger
+	FromTarget = Char
+}
+
+(Type BuildProvTrigger) = { ContextValidator = BuildProvTrigger }
+
+(ContextValidator BuildProvTrigger) = {
+	Inherits = ProvTrigger
+	FromTarget = Char
+	FromFromTarget = Title
+}
+
+(Type NomadBuildProvTrigger) = { ContextValidator = NomadBuildProvTrigger }
+
+(ContextValidator NomadBuildProvTrigger) = {
+	Inherits = TitleTrigger
+	FromTarget = Char
+}
+

@@ -1,0 +1,659 @@
+Includes = {
+	AllMisc
+	Calls
+	CharActions
+	CharBasic
+	CharCreation
+	Claims
+	Control
+	Culture
+	Family
+	FriendsRivals
+	Government
+	Guardianship
+	Health
+	Holdings
+	LiegeVassal
+	LoversMarriage
+	Modifiers
+	Money
+	Opinions
+	Plots
+	Province
+	Religion
+	Rulers
+	Tech
+	Tiers
+	TitleBasic
+	TitleTransfer
+	Tooltips
+	Traits
+	Tribal
+	Wars
+}
+
+ContextValidatorInfo = {
+	AllowThis = False # True by default
+	AllowRoot = True # False by default; when enabled allows ROOT as a synonym for THIS
+	AllowFromFrom = True # False by default; when enabled allows arbitrary chaining of FROM
+	AllowPrev = True # False by default; when enabled allows arbitrary chaining of PREV
+	EnableNamespaces = True
+	EnableEventTargets = True
+	AllowNAND = True
+	AllowScripted = True
+	PossibleEventTargets = {
+		(TargetGroup Char)
+		(TargetGroup Prov)
+		(TargetGroup Title)
+		(TargetGroup Char Prov)
+		(TargetGroup Char Title)
+		(TargetGroup Prov Title)
+		(TargetGroup Char Prov Title)
+		
+		(TargetGroup Char Prov Religion Title)
+		(TargetGroup Char Prov Religion)
+		(TargetGroup Char Religion Title)
+		(TargetGroup Char Religion)
+		
+		(TargetGroup Char Culture Prov Title)
+		(TargetGroup Char Culture Prov)
+		
+		(TargetGroup Society)
+	}
+	
+	NoPush = {
+		"if" "IF" "limit" "not" "NOT" "and" "AND" "or" "OR" "nor" "NOR" "nand" "NAND"
+		# Per richvh, post 1060: https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-53#post-17234153
+		"war"
+		# http://forum.paradoxplaza.com/forum/showthread.php?597480-The-Validator-Find-errors-quickly-and-with-minimal-pain!&p=18197862&viewfull=1#post18197862
+		"hidden_tooltip"
+		"custom_tooltip"
+		"hidden_effect"
+		"hidden_trigger"
+		# https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-93#post-19729345
+		# It mentions spawn_unit but the issue is actually random_list
+		"random_list"
+		# https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-97#post-19994471
+		"random"
+		
+		# Is right??
+		"tooltip"
+	}
+	
+	AssumesParentScope = {
+		# Originally this was in NoPush per richvh, post 1036: https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-52#post-17205226
+		# However it seems this actually assumes the scope of its parent, as per
+		#	https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-103#post-20545920
+		#	https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-104#post-20554106
+		"any_war"
+	}
+	
+	ParentNoPush = {
+		"random_list"
+		"trigger_switch"
+	}
+
+	IdSearch = {
+		(FileGroup "events" "*.txt") = {
+			Char = "character_event\id"
+			LongChar = "long_character_event\id"
+			Letter = "letter_event\id"
+			Prov = "province_event\id"
+			Narrative = "narrative_event\id"
+			DiploResp = "diploresponse_event\id"
+			Unit = "unit_event\id"
+			SocietyQuest = "society_quest_event\id"
+		}
+		
+		EventTypes = {
+			Char LongChar Prov Letter Narrative DiploResp Title Battle SocietyQuest Unit
+			
+			Culture Religion War
+			Artifact Society
+		}
+	}
+	
+	CallSearch = {
+		(FileGroup "events" "*.txt") = {
+			Char = { SearchRoot = "character_event\option" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "long_character_event\option" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "letter_event\option" Type = Event Id = "^\id\[R]" }
+			Prov = { SearchRoot = "province_event\option" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "narrative_event\option" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "diploresponse_event\option" Type = Event Id = "^\id\[R]" }
+			Unit = { SearchRoot = "unit_event\option" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "society_quest_event\option" Type = Event Id = "^\id\[R]" }
+			
+			Char = { SearchRoot = "character_event\immediate" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "long_character_event\immediate" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "letter_event\immediate" Type = Event Id = "^\id\[R]" }
+			Prov = { SearchRoot = "province_event\immediate" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "narrative_event\immediate" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "diploresponse_event\immediate" Type = Event Id = "^\id\[R]" }
+			Unit = { SearchRoot = "unit_event\immediate" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "society_quest_event\immediate" Type = Event Id = "^\id\[R]" }
+			
+			Char = { SearchRoot = "character_event\after" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "long_character_event\after" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "letter_event\after" Type = Event Id = "^\id\[R]" }
+			Prov = { SearchRoot = "province_event\after" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "narrative_event\after" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "diploresponse_event\after" Type = Event Id = "^\id\[R]" }
+			Unit = { SearchRoot = "unit_event\after" Type = Event Id = "^\id\[R]" }
+			Char = { SearchRoot = "society_quest_event\after" Type = Event Id = "^\id\[R]" }
+			
+			SearchMethod = 2
+		}
+		
+		(FileGroup "history\characters" "*.txt") = {
+			Char = { SearchRoot = "*\*\effect" Type = CharacterHistory Id = "^\^\[L]" }
+			SearchMethod = 2
+		}
+		
+		(FileGroup "common\landed_titles" "*.txt") = {
+			Char = { SearchRoot = "*\*" Type = LandedTitleCall Id = "^\^\[L]" }
+			SearchMethod = 2
+		}
+
+		(FileGroup "common\objectives" "*.txt") = {
+			None = "*"
+			SearchMethod = 2
+		}
+		
+		(FileGroup "common\minor_titles" "*.txt") = {
+			Char = { SearchRoot = "*\gain_effect" Type = MinorTitle Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\lose_effect" Type = MinorTitle Id = "^\[L]" FromScope = Char }
+			SearchMethod = 2
+		}
+		
+		(FileGroup "common\religious_titles" "*.txt") = {
+			Char = { SearchRoot = "*\gain_effect" Type = ReligiousTitle Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\lose_effect" Type = ReligiousTitle Id = "^\[L]" FromScope = Char }
+			SearchMethod = 2
+		}
+		
+		(FileGroup "common\job_titles" "*.txt") = {
+			Char = { SearchRoot = "*\gain_effect" Type = JobTitle Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\lose_effect" Type = JobTitle Id = "^\[L]" FromScope = Char }
+			SearchMethod = 2
+		}
+		
+		(FileGroup "common\cb_types" "*.txt") = {
+			Char = { SearchRoot = "*\on_add" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_add_title" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_add_posttitle" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_success" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_success_title" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_success_posttitle" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_fail" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_fail_title" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_fail_posttitle" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_reverse_demand" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_reverse_demand_title" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_reverse_demand_posttitle" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_attacker_leader_death" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_defender_leader_death" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			None = { SearchRoot = "*\on_thirdparty_death" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "*\on_invalidation" Type = CasusBelli Id = "^\[L]" FromScope = Char }
+			
+			SearchMethod = 2
+		}
+		
+		(FileGroup "decisions" "*.txt") = {
+			Char = "decisions\*\effect"
+			Char = { SearchRoot = "targetted_decisions\*\effect" Type = Decision Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "targeted_decisions\*\effect" Type = Decision Id = "^\[L]" FromScope = Char }
+			Char = "plot_decisions\*\effect"
+			Char = "vassal_decisions\*\effect"
+			Char = { SearchRoot = "title_decisions\*\effect" Type = Decision Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "trade_post_decisions\*\effect" Type = Decision Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "fort_decisions\*\effect" Type = Decision Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "settlement_decisions\*\effect" Type = Decision Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "society_decisions\*\effect" Type = Decision Id = "^\[L]" }
+			Title = { SearchRoot = "hospital_decisions\*\effect" Type = Decision Id = "^\[L]" FromScope = Char }
+			
+			SearchMethod = 2
+		}
+		
+		(FileGroup "common\disease" "*.txt") = {
+			None = "*\on_province_infection"
+			None = "*\yearly_province_pulse"
+			None = "*\on_character_infection"
+			
+			SearchMethod = 2
+		}
+		
+		(FileGroup "common\laws" "*.txt") = {
+			None = "de_jure_laws\*\effect"
+			None = "laws\*\effect"
+			None = "gender_laws\*\effect"
+			Title = "succession_laws\*\effect"
+			
+			SearchMethod = 2
+		}
+		
+		(FileGroup "tutorial" "*.txt") = {
+			None = "tutorial\page\effect"
+			
+			SearchMethod = 2
+		}
+				None = { SearchRoot = "*\on_thirdparty_death" Type = CasusBelli Id = "^\[L]" }
+	
+		(FileGroup "common\on_actions" "*.txt") = {
+			Title = { SearchRoot = "on_siege_over\*" Type = OnAction Id = "^\[L]" }
+			Title = { SearchRoot = "on_approve_de_jure_law\*" Type = OnAction Id = "^\[L]" }
+			Title = { SearchRoot = "on_approve_law\*" Type = OnAction Id = "^\[L]" }
+			
+			Char = { SearchRoot = "on_entering_port\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_entering_port\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_law_vote_passed\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_law_vote_failed\*" Type = OnAction Id = "^\[L]" }
+			
+			Char = { SearchRoot = "DECLARE_WAR_INTERACTION_ACCEPT_EVENT\*" Type = OnAction Id = "^\[L]" }
+			# http://forum.paradoxplaza.com/forum/showthread.php?597480-The-Validator-Find-errors-quickly-and-with-minimal-pain!&p=18247155&viewfull=1#post18247155
+			Char = { SearchRoot = "CALL_ALLY_INTERACTION_ACCEPT_EVENT\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "CALL_ALLY_INTERACTION_DECLINE_EVENT\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "OFFER_PEACE_INTERACTION_ACCEPT_EVENT\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "GRANT_LANDED_TITLE_INTERACTION_ACCEPT_EVENT\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_marriage\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_divorce\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "ASK_FOR_DIVORCE_INTERACTION_ACCEPT_EVENT\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "ASK_FOR_DIVORCE_INTERACTION_DECLINE_EVENT\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_feud_started\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_feud_ended\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "SETTLE_ADVENTURER_INTERACTION_ACCEPT_EVENT\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_battle_won_owner\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_battle_lost_owner\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_become_imprisoned_any_reason\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_crusade_invalid\*" Type = OnAction Id = "^\[L]" }
+			
+			Char = { SearchRoot = "on_battle_lost_leader\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_major_battle_lost_leader\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_battle_won_leader\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_major_battle_won_leader\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_battle_lost\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_major_battle_lost\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_battle_won\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_major_battle_won\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_combat_pulse\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_siege_pulse\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_vassal_accepts_religious_conversion\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_heresy_takeover\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Char = { SearchRoot = "on_mercenary_captain_replacement\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			
+			Char = { SearchRoot = "on_character_convert_culture\*" Type = OnAction Id = "^\[L]" FromScope = Culture }
+			Char = { SearchRoot = "on_character_convert_religion\*" Type = OnAction Id = "^\[L]" FromScope = Religion }
+			
+			Title = { SearchRoot = "on_siege_over_winner\*" Type = OnAction Id = "^\[L]" }
+			Title = { SearchRoot = "on_siege_over_loc_chars\*" Type = OnAction Id = "^\[L]" }
+			Title = { SearchRoot = "on_siege_won_leader\*" Type = OnAction Id = "^\[L]" }
+			Title = { SearchRoot = "on_siege_lost_leader\*" Type = OnAction Id = "^\[L]" }
+			Title = { SearchRoot = "on_settlement_construction_start\*" Type = OnAction Id = "^\[L]" }
+			Title = { SearchRoot = "on_settlement_construction_completed\*" Type = OnAction Id = "^\[L]" }
+			Title = { SearchRoot = "on_holding_building_start\*" Type = OnAction Id = "^\[L]" }
+			
+			Char = { SearchRoot = "on_prepared_invasion_expires\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_prepared_invasion_aborts\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_forced_consort\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_chronicle_owner_change\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_elective_gavelkind_succession\*" Type = OnAction Id = "^\[L]" }
+			
+			# http://forum.paradoxplaza.com/forum/showthread.php?597480-The-Validator-Find-errors-quickly-and-with-minimal-pain!&p=18094785&viewfull=1#post18094785
+			Title = { SearchRoot = "on_new_holder\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Title = { SearchRoot = "on_new_holder_inheritance\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Title = { SearchRoot = "on_new_holder_usurpation\*" Type = OnAction Id = "^\[L]" FromScope = Char }
+			Title = { SearchRoot = "on_settlement_looted\*" Type = OnAction Id = "^\[L]" }
+			Prov = { SearchRoot = "on_navy_returns_with_loot\*" Type = OnAction Id = "^\[L]" }
+			Title = { SearchRoot = "on_create_title\*" Type = OnAction Id = "^\[L]" }
+			Prov = { SearchRoot = "on_defect_from_rebels\*" Type = OnAction Id = "^\[L]" }
+			Title = { SearchRoot = "on_loot_settlement\*" Type = OnAction Id = "^\[L]" }
+			Prov = { SearchRoot = "on_loot_province\*" Type = OnAction Id = "^\[L]" }
+			
+			Char = { SearchRoot = "on_war_ended_defeat\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_war_ended_whitepeace\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_war_ended_victory\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_war_started\*" Type = OnAction Id = "^\[L]" }
+			
+			Char = { SearchRoot = "on_failed_assassination\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_failed_assassination_disc\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_assassination\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_assassination_disc\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_bastard_birth\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_pregnancy\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_bastard_pregnancy\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_avoided_imprison_started_war\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_became_imprisoned\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_avoided_imprison_fled_country\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_released_from_prison\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_executed\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_exiled\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_crusade_failure\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_crusade_success\*" Type = OnAction Id = "^\[L]" }
+			Char = { SearchRoot = "on_prepared_invasion_monthly\*" Type = OnAction Id = "^\[L]" }
+
+			None = { SearchRoot = "*\*" Type = OnAction Id = "^\[L]" }
+			None = { SearchRoot = "*\*" Type = OnAction Id = "^\[L]" }
+			
+			SearchMethod = 3
+		}
+		
+		Search = {
+			character_event
+			long_character_event
+			letter_event
+			province_event
+			narrative_event
+			diploresponse_event
+			unit_event
+			repeat_event
+			society_quest_event
+		}
+	}
+}
+
+(ContextValidator None) = { }
+(ContextValidator Char) = { }
+(ContextValidator Letter) = { }
+(ContextValidator Prov) = { }
+(ContextValidator Global) = { }
+(ContextValidator Narrative) = { }
+(ContextValidator DiploResp) = { }
+(ContextValidator Title) = { }
+(ContextValidator Unit) = { }
+(ContextValidator Battle) = { }
+(ContextValidator Artifact) = { }
+(ContextValidator Society) = { }
+(ContextValidator SocietyQuest) = { }
+
+# Used for FROM=culture or religion
+(ContextValidator Culture) = { }
+(ContextValidator Religion) = { }
+
+(ContextValidator Trigger) = {
+	Abstract = True
+	#Conditional = Trigger
+	
+	Set = {
+		CharTrigger = CharTrigger
+		ProvTrigger = ProvTrigger
+		TitleTrigger = TitleTrigger
+		UnitTrigger = UnitTrigger
+		BattleTrigger = BattleTrigger
+		GlobalTrigger = GlobalTrigger
+		ArtifactTrigger = ArtifactTrigger
+		SocietyTrigger = SocietyTrigger
+		
+		None = None
+		Char = Char
+		Letter = Letter
+		Prov = Prov
+		Global = Global
+		Narrative = Narrative
+		DiploResp = DiploResp
+		Title = Title
+		Unit = Unit
+		Battle = Battle
+		Culture = Culture
+		Religion = Religion
+		Artifact = Artifact
+		Society = Society
+		#Trigger = Trigger
+	}
+}
+
+Global = {
+#(Type Trigger) = {
+#	ContextValidator = Trigger
+#}
+(Type CharTrigger) = {
+	ContextValidator = CharTrigger
+}
+}
+
+(ContextValidator CharTrigger) = {
+	Inherits = Trigger
+	
+	ThisTarget = CharTrigger
+	Conditional = CharTrigger
+	BaseType = Char
+}
+
+Global = {
+(Type ProvTrigger) = {
+	ContextValidator = ProvTrigger
+}
+}
+
+(ContextValidator ProvTrigger) = {
+	Inherits = Trigger
+	
+	ThisTarget = ProvTrigger
+	Conditional = ProvTrigger
+	BaseType = Prov
+}
+
+Global = {
+(Type TitleTrigger) = {
+	ContextValidator = TitleTrigger
+}
+}
+
+(ContextValidator TitleTrigger) = {
+	Inherits = Trigger
+	
+	ThisTarget = TitleTrigger
+	Conditional = TitleTrigger
+	BaseType = Title
+}
+
+Global = {
+(Type GlobalTrigger) = {
+	ContextValidator = GlobalTrigger
+}
+}
+
+(ContextValidator GlobalTrigger) = {
+	Inherits = Trigger
+	
+	ThisTarget = GlobalTrigger
+	Conditional = GlobalTrigger
+	BaseType = Global
+}
+
+Global = {
+(Type ArtifactTrigger) = {
+	ContextValidator = ArtifactTrigger
+}
+}
+
+(ContextValidator ArtifactTrigger) = {
+	Inherits = Trigger
+	
+	ThisTarget = ArtifactTrigger
+	Conditional = ArtifactTrigger
+	BaseType = Artifact
+}
+
+Global = {
+(Type SocietyTrigger) = {
+	ContextValidator = SocietyTrigger
+}
+}
+
+(ContextValidator SocietyTrigger) = {
+	Inherits = Trigger
+	
+	ThisTarget = SocietyTrigger
+	Conditional = SocietyTrigger
+	BaseType = Society
+}
+
+Global = {
+(Type UnitTrigger) = {
+	ContextValidator = UnitTrigger
+}
+}
+
+(ContextValidator UnitTrigger) = {
+	Inherits = Trigger
+	
+	ThisTarget = UnitTrigger
+	Conditional = UnitTrigger
+	BaseType = Unit
+}
+
+
+
+
+(ContextValidator Command) = {
+	Abstract = True
+	
+	Set = {
+		CharCommand = CharCommand
+		CharTrigger = CharTrigger
+		ProvCommand = ProvCommand
+		ProvTrigger = ProvTrigger
+		TitleTrigger = TitleTrigger
+		TitleCommand = TitleCommand
+		UnitTrigger = UnitTrigger
+		UnitCommand = UnitCommand
+		BattleTrigger = BattleTrigger
+		#BattleCommand = BattleCommand
+		GlobalCommand = GlobalCommand
+		GlobalTrigger = GlobalTrigger
+		ArtifactCommand = ArtifactCommand
+		ArtifactTrigger = ArtifactTrigger
+		SocietyCommand = SocietyCommand
+		SocietyTrigger = SocietyTrigger
+	
+		None = None
+		Char = Char
+		Letter = Letter
+		Prov = Prov
+		Global = Global
+		Narrative = Narrative
+		DiploResp = DiploResp
+		Title = Title
+		Unit = Unit
+		Battle = Battle
+		Culture = Culture
+		Religion = Religion
+		Artifact = Artifact
+		Society = Society
+	}
+}
+
+Global = {
+(Type CharCommand) = {
+	ContextValidator = CharCommand
+}
+}
+
+(ContextValidator CharCommand) = {
+	Inherits = Command
+	
+	ThisTarget = CharCommand
+	BaseType = Char
+}
+
+Global = {
+(Type ProvCommand) = {
+	ContextValidator = ProvCommand
+}
+}
+
+(ContextValidator ProvCommand) = {
+	Inherits = Command
+	
+	ThisTarget = ProvCommand
+	BaseType = Prov
+}
+
+Global = {
+(Type TitleCommand) = {
+	ContextValidator = TitleCommand
+}
+}
+
+(ContextValidator TitleCommand) = {
+	Inherits = Command
+	
+	ThisTarget = TitleCommand
+	BaseType = Title
+}
+
+Global = {
+(Type GlobalCommand) = {
+	ContextValidator = GlobalCommand
+}
+}
+
+(ContextValidator GlobalCommand) = {
+	Inherits = Command
+	
+	ThisTarget = GlobalCommand
+	BaseType = Global
+}
+
+Global = {
+(Type UnitCommand) = {
+	ContextValidator = UnitCommand
+}
+}
+
+(ContextValidator UnitCommand) = {
+	Inherits = Command
+	
+	ThisTarget = UnitCommand
+	BaseType = Unit
+}
+
+Global = {
+(Type ArtifactCommand) = {
+	ContextValidator = ArtifactCommand
+}
+}
+
+(ContextValidator ArtifactCommand) = {
+	Inherits = Command
+	
+	ThisTarget = ArtifactCommand
+	BaseType = Artifact
+}
+
+Global = {
+(Type SocietyCommand) = {
+	ContextValidator = SocietyCommand
+}
+}
+
+(ContextValidator SocietyCommand) = {
+	Inherits = Command
+	
+	ThisTarget = SocietyCommand
+	BaseType = Society
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

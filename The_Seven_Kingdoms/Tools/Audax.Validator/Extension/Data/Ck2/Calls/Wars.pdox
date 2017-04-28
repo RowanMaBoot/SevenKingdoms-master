@@ -1,0 +1,308 @@
+
+(ContextValidator CharTrigger) = { Members = {
+	(N N) = { Left = "any_war" Right = WarTrigger }
+	(N N) = { Left = "siege" Right = SiegeTrigger }
+	(N N) = { Left = "enemy" Right = CharTrigger }
+	(N N) = { Left = "any_current_enemy" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_attacker" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_defender" Right = CharTriggerWithCount }
+
+	(Y  ) = { Left = "is_primary_war_attacker" Right = Bool }
+	(Y  ) = { Left = "is_primary_war_defender" Right = Bool }
+	
+	(Y  ) = { Left = "war" Right = Bool }
+	(N Y) = { Left = "war_with" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "in_siege" Right = Bool }
+	(N Y) = { Left = "has_truce" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "reverse_has_truce" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "has_raised_levies" Right = MaybeEventTargetChar }
+
+} }
+
+(ContextValidator ProvTrigger) = { Members = {
+	(Y  ) = { Left = "has_siege" Right = Bool }
+} }
+
+(ContextValidator TitleTrigger) = { Members = {
+	(N N) = { Left = "any_war" Right = WarTrigger }
+	(N N) = { Left = "any_attacker" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_defender" Right = CharTriggerWithCount }
+} }
+
+(ContextValidator CharCommand) = { Members = {
+	(N N) = { Left = "siege" Right = SiegeCommand }
+	
+	(N N) = { Left = "any_attacker" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_defender" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_current_enemy" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_current_enemy" Right = CharMaybeLimitCommand }
+	
+	(N N) = { Left = "any_war" Right = WarCommand }
+
+	(N Y) = { Left = "join_attacker_wars" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "join_defender_wars" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "end_war" Right = WarEnd }
+	(Y  ) = { Left = "participation_scaled_piety" Right = Double }
+	(Y  ) = { Left = "participation_scaled_prestige" Right = Double }
+	(Y  ) = { Left = "participation_scaled_decadence" Right = Double }
+	(N N) = { Left = "spawn_unit" Right = {
+		#AddContextValidatorStackFrame = None
+		
+		# https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-92#post-19717214
+		# Says that using char target may not work
+		Single = { Left = "province" Right = { MaybeEventTargetProv Province } }
+		Optional = { Left = "scaled_by_biggest_garrison" Right = NnDbl }
+		Optional = { Left = "home" Right = { MaybeEventTargetCharProv LandProvince } }
+		Optional = { Left = "troops" Right = {
+			(Ch Y N) = { Left = { Type = Unit Type = SpecialUnit } Right = { (PdoList N 2 2) = { Type = NnInt } } }
+		} }
+		
+		Optional = { Left = "match_mult" Right = NnDbl }
+		Optional = { Left = "match_max" Right = NnDbl }
+		Optional = { Left = "match_min" Right = NnDbl }
+		Optional = { Left = "match_character" Right = MaybeEventTargetChar }
+		Optional = { Left = "owner" Right = MaybeEventTargetChar }
+		Optional = { Left = "cannot_inherit" Right = Bool }
+		Optional = { Left = "leader" Right = { MaybeEventTargetChar CharacterId None } }
+		Optional = { Left = "earmark" Right = String (LocalOp "set" "[R]" AddSetter Earmarks If = TraceFlags) }
+		Optional = { Left = "attrition" Right = Double }
+		Optional = { Left = "maintenance_multiplier" Right = Double }
+		Optional = { Left = "reinforce_rate_multiplier" Right = Double }
+		Optional = { Left = "merge" Right = Bool }
+		Optional = { Left = "can_toggle_looting" Right = Bool }
+		Optional = { Left = "is_looter" Right = Bool }
+		Optional = { Left = "reinforces" Right = Bool }
+		Optional = { Left = "maintenance" Right = Bool }
+		
+		OneOf = { "match_mult" "troops" }
+		AllOrNone = { "match_mult" "match_character" }
+		
+		Optional = { Left = "disband_on_peace" Right = Bool }
+		Optional = { Left = "cannot_inherit" Right = Bool }
+		
+		Optional = { Left = "for_population" Right = PInt }
+		# https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-108#post-20752444
+		Optional = { Left = "scaled_with_population_of" Right = MaybeEventTargetChar }
+	} }
+	
+	(N Y) = { Left = "war" Right = WarClause }
+	(N Y) = { Left = "reverse_war" Right = WarClause }
+	(N Y) = { Left = "unsafe_war" Right = WarClause }
+
+} }
+
+(ContextValidator TitleCommand) = { Members = {
+	(N N) = { Left = "any_attacker" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_defender" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "most_participating_attacker" Right = CharCommand }
+	(N N) = { Left = "most_participating_defender" Right = CharCommand }
+	
+	(N N) = { Left = "any_war" Right = WarCommand }
+
+	(N Y) = { Left = "reverse_war" Right = WarClause }
+
+} }
+
+(Type WarClause) = {
+	Single = { Left = "target" Right = { AnyTitle MaybeEventTargetCharProvTitle } }
+	Single = { Left = "casus_belli" Right = CasusBelli }
+	Optional = { Left = "thirdparty_title" Right = { MaybeEventTargetProvTitle } }
+	Optional = { Left = "thirdparty" Right = MaybeEventTargetChar }
+	Optional = { Left = "plot_backers" Right = Bool }
+	Optional = { Left = "faction" Right = Faction }
+	(Optional If = V110) = { Left = "tier" Right = Tier }
+	Optional = { Left = "infamy" Right = Double }
+}
+
+
+(ContextValidator Siege) = { }
+
+Global = {
+(Type SiegeTrigger) = {
+	ContextValidator = SiegeTrigger
+}
+}
+
+(ContextValidator SiegeTrigger) = {
+	Inherits = Trigger
+	
+	ThisTarget = SiegeTrigger
+	Conditional = SiegeTrigger
+	
+	Members = {
+		(Y  ) = { Left = "is_attacker" Right = Bool }
+		(N Y) = { Left = "troops" Right = {
+			Single = { Left = "who" Right = { Literal = "troops" } }
+			Single = { Left = "value" Right = Double }
+			Single = { Left = "enemy" Right = Bool }
+		} }
+	}
+	
+	Scopes = {
+		SiegeTrigger = "enemy"
+		CharTrigger = "leader"
+		TitleTrigger = "holder_scope"
+		ProvTrigger = "location"
+	}
+}
+
+Global = {
+(Type SiegeCommand) = {
+	ContextValidator = SiegeCommand
+}
+}
+
+(ContextValidator SiegeCommand) = {
+	Inherits = Command
+	
+	ThisTarget = SiegeCommand
+	
+	Members = {
+		(Y  ) = { Left = "troops" Right = Double }
+		(Y  ) = { Left = "morale" Right = Double }
+		
+	}
+	
+	Scopes = {
+		SiegeCommand = "enemy"
+		CharCommand = "leader"
+		ProvCommand = "location"
+	}
+}
+
+(ContextValidator Trigger) = {
+	Set = {
+		SiegeTrigger = SiegeTrigger
+		Siege = Siege
+	}
+}
+
+(ContextValidator Command) = {
+	Set = {
+		SiegeCommand = SiegeCommand
+		SiegeTrigger = SiegeTrigger
+		Siege = Siege
+	}
+}
+
+(ContextValidator War) = { }
+(ContextValidator Side) = { }
+
+Global = {
+(Type WarTrigger) = {
+	ContextValidator = WarTrigger
+}
+}
+
+(ContextValidator WarTrigger) = {
+	Inherits = Trigger
+	
+	ThisTarget = WarTrigger
+	Conditional = WarTrigger
+	
+	Members = {
+		(A Y) = { Left = "using_cb" Right = CasusBelli }
+		(Y  ) = { Left = "war_score" Right = Double }
+		(N Y) = { Left = "war_title" Right = { MaybeEventTargetProvTitle } }
+		(N Y) = { Left = "days_since_last_hostile_action" Right = {
+			Single = { Left = "who" Right = MaybeEventTargetChar }
+			Single = { Left = "days" Right = PInt }
+		} }
+		(N Y) = { Left = "war_participation" Right = {
+			Single = { Left = "who" Right = MaybeEventTargetChar }
+			Single = { Left = "score" Right = PDbl }
+		} }
+	}
+	
+	Scopes = {
+		SideTrigger = "attacker"
+		SideTrigger = "defender"
+		TitleTrigger = "thirdparty_title"
+		(If If = V110) = {
+			SideTrigger = "any_attacker"
+			SideTrigger = "any_defender"
+			TitleTrigger = "thirdparty_title_scope"
+		}
+	}
+}
+
+Global = {
+(Type WarCommand) = {
+	ContextValidator = WarCommand
+}
+}
+
+(ContextValidator WarCommand) = {
+	Inherits = Command
+	ThisTarget = WarCommand
+	
+	Members = {
+		(A Y) = { Left = "end_war" Right = WarEnd }
+		(Y  ) = { Left = "war_score" Right = Double }
+	}
+	
+	Scopes = {
+		WarTrigger = "limit"
+		CharCommand = "attacker"
+		CharCommand = "defender"
+		CharCommand = "any_attacker"
+	}
+}
+
+(ContextValidator Trigger) = {
+	Set = {
+		WarTrigger = WarTrigger
+		SideTrigger = SideTrigger
+		War = War
+	}
+}
+
+(ContextValidator Command) = {
+	Set = {
+		WarCommand = WarCommand
+		WarTrigger = WarTrigger
+		SideTrigger = SideTrigger
+		War = War
+	}
+}
+
+
+Global = {
+(Type SideTrigger) = {
+	ContextValidator = SideTrigger
+}
+}
+
+(ContextValidator SideTrigger) = {
+	Inherits = CharTrigger
+	
+	ThisTarget = SideTrigger
+	Conditional = SideTrigger
+	
+	Members = {
+		(Y  ) = { Left = "war_score" Right = Double }
+	}
+	
+	Scopes = {
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

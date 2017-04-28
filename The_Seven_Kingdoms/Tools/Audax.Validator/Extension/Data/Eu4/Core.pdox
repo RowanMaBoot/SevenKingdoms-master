@@ -1,0 +1,293 @@
+Name = "Europa Universalis 4"
+Key = Eu4
+System = "Eu4"
+
+(AddFlag Add1)
+
+Packages = {
+	CoreColor
+	CoreDate
+	CoreProvince
+	FloatColor
+	Eu4Core
+	Localization
+	ComplexDate
+	IconRef
+}
+
+
+Includes = {
+	"..\_Common\FactorModifier"
+
+	Options
+
+	"History\Advisors"
+	"History\Countries"
+	"History\Diplomacy"
+	"History\Provinces"
+	"History\Wars"
+	
+	"Calls\_Main"
+	
+	Achievements
+	AdvisorTypes
+	AI
+	Bookmarks
+	Buildings
+	CbTypes
+	(ColonialRegions If = Add1)
+	Country
+	Cultures
+	Decisions
+	Diplomacy
+	Disasters
+	Events
+	Factions
+	Governments
+	Ideas
+	ImperialReforms
+	Localization
+	Map
+	Misc
+	Missions
+	Modifiers
+	Music
+	OnActions
+	RebelTypes
+	Religions
+	RevoltTriggers
+	Tech
+	Trading
+	Units
+	Wargoals
+}
+
+(FileGroup Cultures "common\cultures" "*.txt")
+(FileGroup Religion "common\religions" "*.txt")
+(FileGroup Decisions "decisions" "*.txt")
+(FileGroup Ideas "common\ideas" "*.txt")
+
+Global = {
+(Type.Or Key If = NoCheckKey) = { Type = String }
+(Type.Or Key IfNot = NoCheckKey) = { Type = LocalizationKey }
+
+(Type.Enum IsInWarCategory) = { Values = {
+	"attacker_leader"
+	"defender_leader"
+	"casus_belli"
+	"defenders"
+	"participants"
+	"war_score"
+	"start_date"
+	"duration"
+	"war_goal_province"
+} }
+(Type.Enum Terrain) = { 		Import = { (FileGroup "map\terrain.txt") 		SelectPath = "categories\*\[L]" } }
+(Type.Enum AdvisorType) = { 		Import = { (FileGroup "common\advisortypes" "*.txt") 		SelectPath = "*\[L]" } }
+(Type.Enum Tag) = {	 				Import = { (FileGroup "common\country_tags" "*.txt")					SelectPath = "*\[L]" } }
+(Type.Enum WarGoalType) = { Import = { (FileGroup "common\wargoal_types" "*.txt") SelectPath = "*\[L]" } }
+(Type.Enum CbType) = { Import = { (FileGroup "common\cb_types" "*.txt") SelectPath = "*\[L]" } }
+(Type.Enum CultureGroup) = {	 	Import = { (FileGroup Ref = Cultures)					SelectPath = "*\[L]" } }
+(Type.Enum Culture) = {	 			Import = { (FileGroup Ref = Cultures)					SelectPath = "*\*\[L]" } }
+(Type.Enum ReligionGroup) = {	 	Import = { (FileGroup Ref = Religion)					SelectPath = "*\[L]" } }
+(Type.Enum Religion) = {	 		Import = { (FileGroup Ref = Religion)					SelectPath = "*\*\[L]" } }
+(Type.Enum Building) = { 			Import = { (FileGroup "common\buildings" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum TradeGood) = {	 		Import = { (FileGroup "common\tradegoods" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum RebelType) = {	 		Import = { (FileGroup "common\rebel_types" "*.txt")			SelectPath = "*\[L]" } Values = { "religious_rebels" } }
+(Type.Enum TechGroup) = {	 		Import = { (FileGroup "common\technology.txt")			SelectPath = "groups\*\[L]" } }
+(Type.Enum TechTable) = {	 		Import = { (FileGroup "common\technology.txt")			SelectPath = "tables\*\[L]" } }
+(Type.Enum Government) = {	 		Import = { (FileGroup "common\governments" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum OpinionModifier) = {	 		Import = { (FileGroup "common\opinion_modifiers" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum AiPersonality) = {	 		Import = { (FileGroup "common\ai_personalities" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum StateEdict) = {	 		Import = { (FileGroup "common\state_edicts" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum AiAttitude) = { Values = {
+	attitude_neutral
+	atittude_rivalry
+	attitude_hostile
+	attitude_friendly
+	attitude_defensive
+	attitude_threatened
+	attitude_outraged
+	attitude_protective
+	attitude_domineering
+	attitude_overlord
+	attitude_loyal
+	attitude_disloyal
+	attitude_rebellious
+	attitude_allied
+} }
+(Type.Enum Dlc) = { Values = {
+	"Star and Crescent"
+	"American Dream"
+	"Purple Phoenix"
+	"Conquest of Paradise"
+	"Wealth of Nations"
+	"Res Publica"
+	"Art of War"
+	"El Dorado"
+	"Common Sense"
+	"The Cossacks"
+	"Mare Nostrum"
+	"National Monuments Pack II"
+	"Rights of Man"
+	"Women in History"
+	"Mandate of Heaven"
+} }
+(Type.Or ExportToVariableCountryValue) = {
+	Type = CountryModifierDoubleKey
+	Type.Enum = {
+		Values = {
+			prestige
+			war_exhaustion
+			manpower
+			manpower_percentage
+			max_manpower
+			states_development
+			average_autonomy
+			average_home_autonomy
+			corruption
+			stability
+			treasury
+			land_forcelimit
+			naval_forcelimit
+			average_unrest
+			num_of_cities
+			army_tradition
+			navy_tradition
+			mercantilism
+			overextension_percentage
+			inflation
+			num_of_ports
+			patriarch_authority
+			piety
+			religious_unity
+			ADM
+			DIP
+			MIL
+			heir_adm
+			heir_dip
+			heir_mil
+			tolerance_to_this
+			trade_income_percentage
+			years_of_income
+			monthly_income
+			army_size
+			navy_size
+			adm_tech
+			dip_tech
+			mil_tech
+			border_distance
+			capital_distance
+
+			monarch_age
+			heir_age
+			consort_age
+			consort_adm
+			consort_dip
+			consort_mil
+			ruler_consort_marriage_length
+			total_development
+		}
+	}
+}
+(Type.Or ExportToVariableProvinceValue) = {
+	Type = ProvinceModifierDoubleKey
+	Type.Enum = {
+		Values = {
+			province_trade_power
+			base_manpower
+			base_production
+			base_tax
+			development
+			unrest
+			nationalism
+			tolerance_to_this
+		}
+	}
+}
+(Type.Enum Mission) = {	 		Import = { (FileGroup "missions" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum SpriteType) = {	 		Import = { (FileGroup "interface" "*.gfx")			SelectPath = "spriteTypes\spriteType\name\[R]" } }
+(Type.Enum GreatProject) = { 			Import = { (FileGroup "common\great_projects" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum Climate) = { 			Import = { (FileGroup "map\climate.txt")			SelectPath = "*\[L]" } }
+(Type.Enum PersonalDeity) = { 			Import = { (FileGroup "common\personal_deities" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum AmbientObject) = { 			Import = { (FileGroup "map\ambient_object.txt")			SelectPath = "type\object\name\[R]" } }
+(Type.Enum TradeNode) = {	 		Import = { (FileGroup "common\tradenodes" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum Policy) = {	 		Import = { (FileGroup "common\policies" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum GovernmentRank) = { Values = { 1 2 3 4 5 6 7 8 9 10 } }
+(Type.Enum ParliamentIssue) = {	 		Import = { (FileGroup "common\parliament_issues" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum ChurchAspect) = {	 		Import = { (FileGroup "common\church_aspects" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum Area) = {	 		Import = { (FileGroup Ref = AreaPath)			SelectPath = "*\[L]" FileFormat = PdoWithEu4AreaHack } }
+(Type.Enum SuperRegion) = {	 		Import = { (FileGroup Ref = SuperRegionPath)			SelectPath = "*\[L]" } }
+(Type.Enum ProvinceGroup) = {	 		Import = { (FileGroup Ref = ProvinceGroupPath)			SelectPath = "*\[L]" } }
+(Type.Enum Estate) = {	 		Import = { (FileGroup "common\estates" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum SubjectType) = {	 		Import = { (FileGroup "common\subject_types" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum Age) = {	 		Import = { (FileGroup "common\ages" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum Incident) = {	 		Import = { (FileGroup "common\incidents" "*.txt")			SelectPath = "*\[L]" } }
+(Type.Enum PeaceOffer) = {
+	Values = {
+		po_annex	po_demand_provinces	po_revoke_cores	po_release_vassals	po_release_annexed	po_change_religion
+		po_form_personal_union	po_gold	po_become_vassal	po_concede_defeat	po_annul_treaties	po_change_government
+		po_revoke_elector	po_trade_power	po_return_cores	po_independence	po_become_protectorate	po_humiliate
+		po_dismantle_revolution	po_enforce_rebel_demands	po_change_hre_religion	po_humiliate_rival	po_give_up_claim
+		po_force_migration	po_become_tributary_state	po_take_mandate
+	}
+}
+
+(Type.Enum SpecificUnit) = {
+	Import = {
+		(DataSource PathListing) = {
+			(FileGroup "common\units" "*.txt")
+			JustFileName = True
+			DropExtension = True
+			ForceLower = True
+		}
+		
+		SelectPath = "*\[L]"
+	}
+	
+	CaseInsensitive = True
+	
+}
+
+(Type.Enum EventModifier) = {	 	Import = { (FileGroup "common\event_modifiers" "*.txt")		SelectPath = "*\[L]" } }
+(Type.Enum StaticModifier) = {	 	Import = { (FileGroup "common\static_modifiers" "*.txt")	SelectPath = "*\[L]" } }
+(Type.Enum TriggeredModifier) = {	Import = { (FileGroup "common\triggered_modifiers" "*.txt")	SelectPath = "*\[L]" } }
+(Type.Or Modifier) = {
+	Type = EventModifier
+	Type = StaticModifier
+	Type = TriggeredModifier
+}
+
+(Type TraitNumber) = {
+	(RestrictedNumber "TraitNumber") = {
+		Type = Int
+		Message = "Trait value must be between 1 and 9, inclusive, but is {0}."
+		Gte = 0
+		Lte = 9
+	}
+}
+
+(Type.Enum CountryDecision) = {	 	Import = { (FileGroup Ref = Decisions)					SelectPath = "country_decisions\*\[L]" } }
+(Type.Enum ReligionDecision) = {	Import = { (FileGroup Ref = Decisions)					SelectPath = "religion_decisions\*\[L]" } }
+(Type.Enum Faction) = { Import = { (FileGroup "common\factions" "*.txt") SelectPath = "*\[L]" } }
+(Type.Enum Continent) = {	 		Import = { (FileGroup Ref = ContinentPath)				SelectPath = "*\[L]" } }
+
+(Type.Enum IdeaGroup) = {	 	Import = { (FileGroup Ref = Ideas)					SelectPath = "*\[L]" } }
+(Type.Enum Idea) = {	 		Import = { (FileGroup Ref = Ideas)					SelectPath = "*\*\[L]" } }
+(Type.Enum GraphicalCultureType) = { Import = { (DataSource LineFile) = { (FileGroup "common\graphicalculturetype.txt") } SelectPath = ".\[L]" } }
+
+(Type.Enum LandUnitType) = { Values = { infantry cavalry artillery } }
+(Type.Enum SeaUnitType) = { Values = { heavy_ship light_ship galley transport } }
+(Type.Enum UnitType) = { Values = { infantry cavalry artillery heavy_ship light_ship galley transport } }
+(Type.Enum GovernmentType) = { Values = { monarchy republic theocracy dictatorship } }
+(Type.Enum Trait) = { Values = { ADM DIP MIL } }
+(Type.Enum LeaderType) = { Values = { conquistador general explorer admiral } }
+(Type.Enum EventNamespace) = { Import = { (FileGroup "events" "*.txt") SelectPath = "namespace\[R]" } }
+(Type.Enum FetishistCult) = { Import = { (FileGroup "common\fetishist_cults" "*.txt") SelectPath = "*\[L]" } }
+(Type.Enum LeaderPersonality) = { Import = { (FileGroup "common\leader_personalities" "*.txt") SelectPath = "*\[L]" } }
+(Type.Enum RulerPersonality) = { Import = { (FileGroup "common\ruler_personalities" "*.txt") SelectPath = "*\[L]" } }
+(Type.Enum Institution) = { Import = { (FileGroup "common\institutions" "*.txt") SelectPath = "*\[L]" } }
+(Type.Enum OriginalDynasty) = { Values = { original_dynasty } }
+(Type.Enum CustomLocalization) = { Import = { (FileGroup "customizable_localization" "*.txt") SelectPath = "defined_text\name\[R]" } }
+
+}

@@ -1,0 +1,115 @@
+(Validator Setup) = {
+	Type = GroupValidator
+	FriendlyName = "Setup"
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\province_setup" "*.txt")
+		ValidatorName = ProvinceSetupFile
+	}
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\bookmarks" "*.txt")
+		ValidatorName = BookmarkFile
+	}
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\game_rules" "*.txt")
+		ValidatorName = GameRuleFile
+	}
+}
+
+(Type BookmarkFile) = {
+	(Ch N N) = {
+		Left = { Type = String }
+		Right = Bookmark
+		UniqueId = Left
+	}
+}
+
+(Type Bookmark) = {
+	Single = { Left = "desc" Right = Key }
+	Single = { Left = "date" Right = Date }
+	
+	Optional = { Left = "era" Right = Bool }
+	Optional = { Left = "custom_start" Right = Bool }
+	
+	NodeSwitcher = {
+		Node = "era"
+		MarkChecked = False
+		Default = NonEraBookmark
+		Switch = {
+			"yes" = EraBookmark
+			"no" = NonEraBookmark
+		}
+	}
+}
+
+(Type NonEraBookmark) = {
+	Single = { Left = "name" Right = Key }
+	(Ch N Y) = { Left = "selectable_character" Right = {
+		Single = { Left = "id" Right = CharacterId }
+	} }
+}
+
+(Type EraBookmark) = {
+	Single = {
+		Left = "name"
+		Right = Key
+		(CheckKey "*_INFO" Right IfNot = NoCheckKey)
+	}
+	Optional = { Left = "picture" Right = String }
+	Optional = { Left = "custom_start" Right = Bool }
+	(Ch N Y) = { Left = "selectable_character" Right = EraSelectableCharacter }
+}
+
+(Type EraSelectableCharacter) = {
+	Single = { Left = "id" Right = CharacterId }
+	Optional = { Left = "age" Right = PInt }
+	Optional = { Left = "name" Right = Key }
+	Optional = { Left = "title" Right = AnyTitle }
+	Optional = { Left = "title_name" Right = Key }
+	Optional = { Left = "coa_dynasty" Right = Bool }
+	Optional = { Left = "dlc" Right = Dlc }
+	
+	Optional = { Left = "character" Right = {
+		Single = { Left = "dna" Right = String }
+		Single = { Left = "properties" Right = String }
+		Single = { Left = "religion" Right = Religion }
+		Single = { Left = "culture" Right = Culture }
+		Single = { Left = "dynasty" Right = DynastyId }
+		Single = { Left = "government" Right = Government }
+		Optional = { Left = "female" Right = Bool }
+	} }
+}
+
+(Type GameRuleFile) = {
+	(Ch N N) = { Left = { Type = String } Right = GameRuleDef UniqueId = Left }
+}
+
+(Type GameRuleDef) = {
+	Single = { Left = "name" Right = Key }
+	Optional = { Left = "dlc" Right = Dlc }
+	(Ch N Y) = { Left = "group" Right = Key }
+	(Ch N Y) = { Left = "option" Right = {
+		Single = { Left = "name" Right = String }
+		Single = { Left = "text" Right = Key }
+		Single = { Left = "desc" Right = Key }
+		Optional = { Left = "achievements" Right = Bool }
+	} }
+}
+
+(Type ProvinceSetupFile) = {
+	(Ch N N) = { Left = { Type = LandProvince } Right = ProvinceSetupDef UniqueId = Left }
+}
+
+(Type ProvinceSetupDef) = {
+	ProvSetupCheck
+	Single = { Left = "title" Right = CountTitle }
+	Single = { Left = "max_settlements" Right = PInt }
+	Single = { Left = "terrain" Right = Terrain }
+	
+}
+

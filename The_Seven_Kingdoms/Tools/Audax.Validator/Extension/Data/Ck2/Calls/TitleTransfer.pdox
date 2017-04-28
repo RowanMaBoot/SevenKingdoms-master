@@ -1,0 +1,104 @@
+# stuff for transferring titles, including creation and destruction
+
+(ContextValidator TitleTrigger) = { Members = {
+	(Y  ) = { Left = "can_be_given_away" Right = Bool }
+
+} }
+
+(ContextValidator Command) = { Members = {
+	(N Y) = { Left = "activate_title" Right = {
+		Single = { Left = "title" Right = { AnyTitle MaybeEventTargetTitle } }
+		Single = { Left = "status" Right = Bool }
+	} }
+	(N Y) = { Left = "destroy_landed_title" Right = { MaybeEventTargetCharTitle AnyTitle } }
+	(N Y) = { Left = "unsafe_destroy_landed_title" Right = { MaybeEventTargetCharTitle AnyTitle } }
+
+} }
+
+(ContextValidator ProvCommand) = { Members = {
+	(N Y) = { Left = "build_holding" Right = {
+		Optional = { Left = "title" Right = BaronTitle }
+		Single = { Left = "type" Right = Building }
+		Optional = { Left = "holder" Right = MaybeEventTargetChar }
+	} }
+
+} }
+
+Global = {
+(Type.Enum UsurpType) = { Values = { invasion holy_war claim revolt host faction_demand } }
+}
+
+(Type UsurpClause) = {
+	Single = { Left = "target" Right = MaybeEventTargetTitle }
+	Single = { Left = "type" Right = UsurpType }
+}
+
+(Type GainClause) = {
+	Single = { Left = "who" Right = MaybeEventTargetChar }
+	Single = { Left = "type" Right = UsurpType }
+}
+
+(Type UsurpClauseChar) = {
+	Single = { Left = "target" Right = MaybeEventTargetChar }
+	Single = { Left = "type" Right = UsurpType }
+}
+
+(ContextValidator CharCommand) = { Members = {
+	(N Y) = { Left = "give_minor_title" Right = MinorTitle }
+	(N Y) = { Left = "usurp_title" Right = { MaybeEventTargetTitle UsurpClause } }
+	(N Y) = { Left = "usurp_title_only" Right = { MaybeEventTargetTitle UsurpClause } }
+	(N Y) = { Left = "gain_all_occupied_titles" Right = { MaybeEventTargetChar GainClause } }
+	(N Y) = { Left = "occupy_minors_of_occupied_settlements" Right = MaybeEventTargetChar }
+	
+	(N Y) = { Left = "grant_title" Right = { MaybeEventTargetTitle UsurpClause } }
+	(N Y) = { Left = "grant_title_no_opinion" Right = { MaybeEventTargetTitle UsurpClause } }
+	(Y  ) = { Left = "troops" Right = Double }
+	(Y  ) = { Left = "morale" Right = Double }
+	(N Y) = { Left = "gain_settlements_under_title" Right = {
+		Single = { Left = "title" Right = MaybeEventTargetTitle }
+		Single = { Left = "enemy" Right = MaybeEventTargetChar }
+		Optional = { Left = "is_crusade" Right = Bool }
+		Optional = { Left = "type" Right = UsurpType }
+	} }
+	(N Y) = { Left = "inherit" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "usurp_title_plus_barony_if_unlanded" Right = { MaybeEventTargetTitle UsurpClause } }
+	(N Y) = { Left = "gain_title" Right = { MaybeEventTargetTitle } }
+
+} }
+
+(ContextValidator TitleCommand) = { Members = {
+	(N Y) = { Left = "press_claim" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "usurp_title" Right = { MaybeEventTargetChar UsurpClauseChar } }
+	(N Y) = { Left = "usurp_title_only" Right = { MaybeEventTargetChar UsurpClauseChar } }
+	(N Y) = { Left = "destroy_landed_title" Right = Yes }
+	(N Y) = { Left = "grant_title" Right = { MaybeEventTargetChar UsurpClauseChar } }
+	(N Y) = { Left = "grant_title_no_opinion" Right = { MaybeEventTargetChar UsurpClauseChar } }
+	(N Y) = { Left = "gain_title" Right = { MaybeEventTargetChar AnyTitle UsurpClauseChar } }
+	(N Y) = { Left = "usurp_title_plus_barony_if_unlanded" Right = { MaybeEventTargetChar UsurpClauseChar } }
+	(N Y) = { Left = "gain_title_plus_barony_if_unlanded" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "usurp_title_plus_barony_if_unlanded_and_vassals" Right = { MaybeEventTargetChar UsurpClauseChar } }
+	(N Y) = { Left = "usurp_title_plus_barony_if_unlanded_and_vassals_no_adj" Right = { MaybeEventTargetChar UsurpClauseChar } }
+	(N Y) = { Left = "grant_kingdom_w_adjudication" Right = MaybeEventTargetChar }
+
+} }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,120 @@
+(ContextValidator TitleTrigger) = { Scopes = {
+	CharTrigger = "holder_scope"
+
+} }
+
+(ContextValidator ProvTrigger) = { Scopes = {
+	CharTrigger = "holder_scope"
+
+} }
+
+(ContextValidator TitleCommand) = { Scopes = {
+	CharCommand = "holder_scope"
+
+} }
+
+(ContextValidator ProvCommand) = { Scopes = {
+	CharCommand = "holder_scope"
+
+} }
+
+(ContextValidator CharTrigger) = { Members = {
+	(N N) = { Left = "random_trade_post" Right = ProvTriggerWithCount }
+	(N N) = { Left = "any_trade_post" Right = ProvTriggerWithCount }
+	(N N) = { Left = "random_fort" Right = ProvTriggerWithCount }
+	(N N) = { Left = "any_fort" Right = ProvTriggerWithCount }
+	(N N) = { Left = "random_hospital" Right = ProvTriggerWithCount }
+	(N N) = { Left = "any_hospital" Right = ProvTriggerWithCount }
+
+} }
+
+(ContextValidator ProvTrigger) = { Members = {
+	(N Y) = { Left = "has_building" Right = { Building ImprovementValue } }
+
+} }
+
+(ContextValidator TitleTrigger) = { Members = {
+	(A Y) = { Left = "holding_type" Right = HoldingType }
+	(Y  ) = { Left = "is_primary_holder_title" Right = Bool }
+	(Y  ) = { Left = "is_primary_holder_title_tier" Right = Bool }
+	(Y  ) = { Left = "has_holder" Right = Bool }
+	(Y  ) = { Left = "holder" Right = MaybeEventTargetChar }
+	
+	(Y  ) = { Left = "is_feudal" Right = Bool }
+	(Y  ) = { Left = "is_theocracy" Right = Bool }
+	(Y  ) = { Left = "is_republic" Right = Bool }
+	
+	(Y  ) = { Left = "num_of_buildings" Right = PInt }
+	(N Y) = { Left = "has_building" Right = { Building ImprovementValue } }
+
+} }
+
+(ContextValidator Command) = { Members = {
+	# https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-93#post-19730333
+	(N Y) = { Left = "destroy_tradepost" Right = MaybeEventTargetProvTitle }
+	(N Y) = { Left = "destroy_fort" Right = MaybeEventTargetProv }
+	(N Y) = { Left = "destroy_hospital" Right = MaybeEventTargetProv }
+} }
+
+(ContextValidator CharCommand) = { Members = {
+	(N N) = { Left = "random_trade_post" Right = ProvMaybeLimitCommand }
+	(N N) = { Left = "any_trade_post" Right = ProvMaybeLimitCommand }
+	(N N) = { Left = "random_fort" Right = ProvMaybeLimitCommand }
+	(N N) = { Left = "any_fort" Right = ProvMaybeLimitCommand }
+	(N N) = { Left = "random_hospital" Right = ProvMaybeLimitCommand }
+	(N N) = { Left = "any_hospital" Right = ProvMaybeLimitCommand }
+	
+	(N Y) = { Left = "create_fort" Right = MaybeEventTargetProv }
+	(N Y) = { Left = "create_tradepost" Right = MaybeEventTargetProv }
+	(N Y) = { Left = "create_hospital" Right = MaybeEventTargetProv }
+
+} }
+
+(ContextValidator ProvCommand) = { Members = {
+	(N Y) = { Left = "add_to_extra_holding" Right = {
+		Single = { Left = "type" Right = { Literal = "hospital" Literal = "fort" Literal = "trade_post" } }
+		Single = { Left = "building" Right = ImprovementValue }
+	} }
+	(N Y) = { Left = "destroy_in_extra_holding" Right = {
+		Single = { Left = "type" Right = { Literal = "hospital" Literal = "fort" Literal = "trade_post" } }
+		Single = { Left = "building" Right = ImprovementValue }
+	} }
+} }
+
+(ContextValidator TitleCommand) = { Members = {
+	(N Y) = { Left = "create_fort" Right = MaybeEventTargetProv }
+	(N Y) = { Left = "create_tradepost" Right = MaybeEventTargetProv }
+	(N Y) = { Left = "create_hospital" Right = MaybeEventTargetProv }
+
+	(N N) = { Left = "destroy_random_building" Right = { Yes MaybeEventTargetTitle } }
+
+	(N Y) = { Left = "add_to_extra_holding" Right = {
+		Single = { Left = "type" Right = { Literal = "hospital" Literal = "fort" Literal = "trade_post" } }
+		Single = { Left = "building" Right = ImprovementValue }
+	} }
+	(N Y) = { Left = "destroy_in_extra_holding" Right = {
+		Single = { Left = "type" Right = { Literal = "hospital" Literal = "fort" Literal = "trade_post" } }
+		Single = { Left = "building" Right = ImprovementValue }
+	} }
+} }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,267 @@
+###########################################
+#                                         #
+# Zoroastrian Holy Pets Events  		  #
+#                                         #
+# ID ZP.1-ZP.100 						  #
+#                                         #
+###########################################
+
+# Written by Henrik "Groogy" Hansson
+# In Memory of Nix the Hedgehog, forever missed never forgotten
+# 
+# Events are inspired from the Vendidad texts taken from the Avesta
+# and historical texts that retell Persian relationship with "Dogs"
+
+namespace = ZP
+
+### As a pious Zoroastrian we need a holy dog
+character_event = {
+	id = ZP.1
+	desc = EVTDESC_ZP_1
+	picture = GFX_evt_steppe_mercenaries
+	border = GFX_event_normal_frame_war
+
+	is_triggered_only = yes
+
+	capable_only = yes
+	prisoner = no
+	only_rulers = yes
+	religion_group = zoroastrian_group
+
+	weight_multiplier = {
+		days = 1
+
+		modifier = {
+			factor = 2
+			has_focus = focus_theology
+		}
+		modifier = {
+			factor = 2
+			has_focus = focus_family
+		}
+		modifier = {
+			factor = 2
+			trait = zealous
+		}
+		modifier = {
+			factor = 2
+			trait = kind
+		}
+		modifier = {
+			factor = 1.5
+			trait = martial_cleric
+		}
+		modifier = {
+			factor = 1.5
+			trait = scholarly_theologian
+		}
+		modifier = {
+			factor = 1.5
+			trait = mastermind_theologian
+		}
+
+		modifier = {
+			factor = 1.5
+			piety = 150
+		}
+
+		modifier = {
+			factor = 1.5
+			piety = 300
+		}
+
+		modifier = {
+			factor = 1.5
+			piety = 600
+		}
+
+		modifier = {
+			factor = 1.5
+			piety = 1200
+		}
+
+		modifier = {
+			factor = 0.1
+			trait = cynical
+		}
+		modifier = {
+			factor = 0.1
+			trait = cruel
+		}
+	}
+
+	trigger = {
+		is_adult = yes
+		NOT = { trait = masterless_dog }
+		NOT = { trait = house_dog }
+		NOT = { trait = hedgehog }
+		NOT = { trait = otter }
+	}
+	
+	option = {
+		name = "EVTOPTA_ZP_1"
+		character_event = { id = ZP.2 }
+	}
+
+	option = {
+		name = "EVTOPTB_ZP_1"
+		character_event = { id = ZP.3 }
+	}
+
+	option = {
+		name = "EVTOPTC_ZP_1"
+		character_event = { id = ZP.4 }
+	}
+
+	option = {
+		name = "EVTOPTD_ZP_1"
+		piety = -10
+	}
+}
+
+# Adopting a masterless dog to protect your city from evil creatures.
+character_event = {
+	id = ZP.2
+	desc = EVTDESC_ZP_2
+	picture = GFX_evt_steppe_mercenaries
+	border = GFX_event_normal_frame_war
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA_ZP_2"
+		add_trait = masterless_dog
+		capital_scope = {
+			add_province_modifier = { name = masterless_dog duration = -1 }
+		}
+	}
+
+	option = {
+		name = "EVTOPTB_ZP_2"
+		add_trait = house_dog
+		add_character_modifier = { name = house_dog duration = -1 }
+	}
+
+	option = {
+		name = "CHANGED_MIND"
+		character_event = { id = ZP.1 }
+	}
+}
+
+# Adopting a hedgehog which will keep your house clean from vermin
+character_event = {
+	id = ZP.3
+	desc = EVTDESC_ZP_3
+	picture = GFX_evt_steppe_mercenaries
+	border = GFX_event_normal_frame_war
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA_ZP_3"
+		add_trait = hedgehog
+	}
+
+	option = {
+		name = "CHANGED_MIND"
+		character_event = { id = ZP.1 }
+	}
+}
+
+# Adopting a otter which will keep your land safe from draught
+character_event = {
+	id = ZP.4
+	desc = EVTDESC_ZP_4
+	picture = GFX_evt_steppe_mercenaries
+	border = GFX_event_normal_frame_war
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA_ZP_4"
+		add_trait = otter
+	}
+
+	option = {
+		name = "CHANGED_MIND"
+		character_event = { id = ZP.1 }
+	}
+}
+
+# Clean up event for traits
+character_event = {
+	id = ZP.5
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			trait = masterless_dog
+			trait = house_dog
+			trait = hedgehog
+			trait = otter
+		}
+	}
+
+	immediate = {
+		trigger_switch = {
+			on_trigger = trait
+			masterless_dog = { remove_trait = masterless_dog character_event = { id = ZP.6 } }
+			house_dog = { remove_trait = house_dog character_event = { id = ZP.6 }}
+			hedgehog = { remove_trait = hedgehog }
+			otter = { remove_trait = otter }
+		}
+	}
+}
+
+# Clean up event for the modifiers
+character_event = {
+	id = ZP.6
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		any_demesne_province = {
+			if = {
+				limit = { 
+					has_province_modifier = masterless_dog
+					ROOT = {
+						OR = {
+							NOT = { trait = masterless_dog }
+							NOT = { capital_scope = { province = PREVPREV } }
+						}
+					}
+				}
+				remove_province_modifier = masterless_dog
+			}
+
+			if = {
+				limit = {
+					NOT = { has_province_modifier = masterless_dog }
+					ROOT = {
+						trait = masterless_dog
+						capital_scope = { province = PREVPREV }
+					}
+				}
+				add_province_modifier = { name = masterless_dog duration = -1 }
+			}
+		}
+
+		if = {
+			limit = { 
+				has_character_modifier = house_dog
+				NOT = { trait = house_dog }
+			}
+			remove_character_modifier = house_dog
+		}
+		if = {
+			limit = {
+				NOT = { has_character_modifier = house_dog }
+				trait = house_dog
+			}
+			add_character_modifier = { name = house_dog duration = -1 }
+		}
+	}
+}

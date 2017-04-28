@@ -1,0 +1,77 @@
+# Family stuff, excluding spouse
+# so basically mother, father, children, siblings
+
+(ContextValidator CharTrigger) = { Members = {
+	(N N) = { Left = "any_child" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_child_even_if_dead" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_sibling" Right = CharTriggerWithCount }
+	(N N) = { Left = "any_sibling_even_if_dead" Right = CharTriggerWithCount }
+	
+	(N N) = { Left = "father" Right = CharTrigger }
+	(N N) = { Left = "real_father" Right = CharTrigger }
+	(N N) = { Left = "father_of_unborn" Right = CharTrigger }
+	(N N) = { Left = "father_even_if_dead" Right = CharTrigger }
+	(N N) = { Left = "real_father_even_if_dead" Right = CharTrigger }
+	(N N) = { Left = "mother" Right = CharTrigger }
+	(N N) = { Left = "mother_even_if_dead" Right = CharTrigger }
+	
+	(N Y) = { Left = "is_father" Right = { MaybeEventTargetChar Bool } }
+	(N Y) = { Left = "is_mother" Right = { MaybeEventTargetChar Bool } }
+	(N Y) = { Left = "is_child_of" Right = { MaybeEventTargetChar } }
+	(Y  ) = { Left = "num_of_children" Right = NnInt }
+	(N Y) = { Left = "sibling" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "family" Right = { MaybeEventTargetCharTitle Bool } }
+	(N Y) = { Left = "is_close_relative" Right = { Bool MaybeEventTargetChar } }
+	(Y  ) = { Left = "was_conceived_a_bastard" Right = Bool }
+	(Y  ) = { Left = "father_of_unborn_known" Right = Bool }
+	
+	(Y  ) = { Left = "is_father_real_father" Right = Bool }
+
+} }
+
+(ContextValidator CharCommand) = { Members = {
+	(N N) = { Left = "any_child" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_child" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_child_even_if_dead" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_child_even_if_dead" Right = CharMaybeLimitCommand }
+	
+	(N N) = { Left = "any_sibling" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_sibling" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "any_sibling_even_if_dead" Right = CharMaybeLimitCommand }
+	(N N) = { Left = "random_sibling_even_if_dead" Right = CharMaybeLimitCommand }
+
+	(N N) = { Left = "mother" Right = CharCommand }
+	(N N) = { Left = "father" Right = CharCommand }
+	(N N) = { Left = "real_father" Right = CharCommand }
+	(N N) = { Left = "father_of_unborn" Right = CharCommand }
+	(N N) = { Left = "father_even_if_dead" Right = CharCommand }
+	(N N) = { Left = "real_father_even_if_dead" Right = CharCommand }
+	(N N) = { Left = "mother_even_if_dead" Right = CharCommand }
+
+	(Y  ) = { Left = "set_father" Right = { MaybeEventTargetChar CharacterId 0 } }
+	(Y  ) = { Left = "set_mother" Right = { MaybeEventTargetChar CharacterId 0 } }
+	(Y  ) = { Left = "set_real_father" Right = { MaybeEventTargetChar CharacterId 0 } }
+	(Y  ) = { Left = "father_of_unborn_known" Right = Bool }
+
+} }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

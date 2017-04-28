@@ -1,0 +1,56 @@
+(ContextValidator CharTrigger) = { Members = {
+	(Y  ) = { Left = "wealth" Right = { Double } }
+	(Y  ) = { Left = "scaled_wealth" Right = Double }
+	(Y  ) = { Left = "treasury" Right = Double }
+	(Y  ) = { Left = "yearly_income" Right = Double }
+	(Y  ) = { Left = "monthly_income" Right = Double }
+
+} }
+
+(ContextValidator TitleTrigger) = { Members = {
+	(Y  ) = { Left = "monthly_income" Right = Double }
+	(Y  ) = { Left = "yearly_income" Right = Double }
+
+} }
+
+(ContextValidator CharCommand) = { Members = {
+	(N Y) = { Left = "transfer_scaled_wealth" Right = {
+		Optional = { Left = "from" Right = MaybeEventTargetChar }
+		Optional = { Left = "to" Right = MaybeEventTargetChar }
+		Single = { Left = "value" Right = { All NnDbl } }
+		Optional = { Left = "min" Right = { NnDbl } }
+		Optional = { Left = "max" Right = NnDbl }
+		OneOf = { from to }
+	} }
+	(Y  ) = { Left = "wealth" Right = { MaybeEventTargetChar Double } }
+	(Y  ) = { Left = "scaled_wealth" Right = { Double ScaledWealthClause } }
+	(Y  ) = { Left = "clear_wealth" Right = Yes }
+	(N Y) = { Left = "clear_wealth" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "treasury" Right = Double }
+
+} }
+
+(Type ScaledWealthClause) = {
+	Single = { Left = "value" Right = { All Double } }
+	Optional = { Left = "min" Right = { Double } }
+	Optional = { Left = "max" Right = { Double } }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

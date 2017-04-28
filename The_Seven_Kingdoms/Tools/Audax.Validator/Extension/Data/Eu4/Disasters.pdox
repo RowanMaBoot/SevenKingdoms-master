@@ -1,0 +1,51 @@
+﻿Global = {
+
+(Type DisasterFile) = {
+	(Ch Y N) = { Left = { Type = String } Right = DisasterDef UniqueId = Left }
+}
+(Type.Enum Disaster) = { Import = { (FileGroup "common\disasters" "*.txt") SelectPath = "*\[L]" } }
+
+}
+
+(Type DisasterDef) = {
+	(CheckKey "*" Left IfNot = NoCheckKey)
+	# Apparently this isn't used: https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.720987/page-59#post-20825972
+	#(CheckKey "desc_*" Left IfNot = NoCheckKey)
+
+	Single = { Left = "potential" Right = CountryTrigger }
+	Single = { Left = "can_start" Right = CountryTrigger }
+	Single = { Left = "progress" Right = DisasterProgress }
+	Optional = { Left = "down_progress" Right = DisasterProgress }
+	Single = { Left = "can_end" Right = CountryTrigger }
+	Optional = { Left = "on_start" Right = CountryEventId }
+	Optional = { Left = "on_end" Right = CountryEventId }
+	Optional = { Left = "modifier" Right = CountryModifierDef }
+	Optional = { Left = "on_monthly" Right = DisasterTick }
+	
+	Optional = { Left = "can_stop" Right = CountryTrigger }
+}
+
+(Type DisasterProgress) = {
+	Optional = { Left = "factor" Right = NnDbl }
+	(Ch N Y) = { Left = "modifier" Right = DisasterModifier }
+}
+
+(Type DisasterModifier) = {
+	Single = { Left = "factor" Right = Double }
+	Inherits = CountryTrigger
+}
+
+(Type DisasterTick) = {
+	Optional = { Left = "random_events" Right = CountryRandomEventGroup }
+	Optional = { Left = "events" Right = CountryEventGroup }
+
+}
+
+(Type CountryRandomEventGroup) = {
+	(Ch N Y) = { Left = { Type = PInt } Right = { CountryEventId (ProvinceEventId IfNot = Events.StrictIdChecking) 0 } }
+}
+
+(Type CountryEventGroup) = {
+	(PdoList Y) = { Type = { CountryEventId (ProvinceEventId IfNot = Events.StrictIdChecking) } }
+}
+

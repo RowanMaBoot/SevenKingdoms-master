@@ -1,0 +1,63 @@
+(ContextValidator Trigger) = { Members = {
+
+} }
+
+(ContextValidator ProvinceTrigger) = { Members = {
+	# "yes" no longer valid: https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.720987/page-48#post-19974738
+	(N Y) = { Left = "is_core" Right = { Tag Owner MaybeEventTargetCountryProvince Emperor Controller } } # UNTESTED: NOT is_core=owner UNTESTED: yes UNTESTED controller
+	(Y  ) = { Left = "is_overseas" Right = Bool }
+	(Y  ) = { Left = "is_colony" Right = Bool } # UNTESTED: is_colony = yes
+	(Y  IfNot = Debug) = { Left = "has_empty_adjacent_province" Right = Yes }
+	(Y  If = Debug) = { Left = "has_empty_adjacent_province" Right = Bool } # BROKEN for no it seems
+	(Y  ) = { Left = "is_empty" Right = Bool }
+	(A Y) = { Left = "owned_by" Right = { Tag } }
+	(N Y) = { Left = "owned_by" Right = { MaybeEventTargetCountryProvince Emperor Controller } }
+	(A Y) = { Left = "controlled_by" Right = { Tag } }
+	(A Y) = { Left = "controlled_by" Right = { RebelType } }
+	(N Y) = { Left = "controlled_by" Right = { Owner MaybeEventTargetCountryProvince } } # UNTESTED: NOT = { controlled_by = owner }
+	(N Y) = { Left = "is_claim" Right = { Tag MaybeEventTargetCountryProvince Controller Owner Yes Emperor } } # UNTESTED MaybeEventTargetCountryProvince
+	
+} }
+
+(ContextValidator CountryTrigger) = { Members = {
+	(N Y) = { Left = "owns" Right = { LandProvince MaybeEventTargetProvince } }
+	(N Y) = { Left = "is_core" Right = LandProvince }
+
+	(N Y) = { Left = "num_of_owned_provinces_with" Right = {
+		Single = { Left = "value" Right = PInt }
+		Inherits = ProvinceTrigger
+	} }
+	
+	(N Y) = { Left = "is_claim" Right = { MaybeEventTargetProvince LandProvince } }
+} }
+
+(ContextValidator Command) = { Members = {
+
+} }
+
+(ContextValidator ProvinceCommand) = { Members = {
+	(N Y) = { Left = "add_core" Right = { Tag MaybeEventTargetCountryProvince Emperor Owner Controller } }
+	(N Y) = { Left = "remove_core" Right = { Tag MaybeEventTargetCountryProvince Emperor } }
+
+} }
+
+(ContextValidator CountryCommand) = { Members = {
+	(N Y) = { Left = "add_core" Right = { LandProvince MaybeEventTargetCountryProvince } }
+	(N Y) = { Left = "remove_core" Right = { LandProvince MaybeEventTargetCountryProvince } }
+
+} }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

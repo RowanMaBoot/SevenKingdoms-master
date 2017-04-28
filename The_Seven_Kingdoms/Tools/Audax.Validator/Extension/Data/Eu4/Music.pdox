@@ -1,0 +1,52 @@
+
+Global = {
+	(Type SongFile) = {
+		(Ch N Y) = { Left = "song" Right = SongDef }
+	}
+
+	(Type MusicAssetFile) = {
+		(Ch N Y) = { Left = "music" Right = MusicAssetDef }
+	}
+}
+
+(Type SongDef) = {
+	Single = { Left = "name" Right = MusicAssetName }
+	
+	Single = { Left = "chance" Right = SongChance }
+}
+
+(Type SongChance) = {
+	Optional = { Left = "factor" Right = NnDbl }
+	(Ch N Y) = { Left = "modifier" Right = Modifier }
+}
+
+(Type Modifier) = {
+	#Inherits = FactorModifier
+	Optional = { Left = "factor" Right = NnDbl }
+	
+	Inherits = CountryTrigger
+	
+}
+
+(Type.Enum MusicAssetName) = { Import = { (FileGroup "music\music.asset") SelectPath = "music\name\[R]" } }
+
+(Type MusicAssetDef) = {
+	Single = { Left = "name" Right = String UniqueId = Right }
+	Single = {
+		Left = "file"
+		Right = String
+		UniqueId = Right
+		FileExists = {
+			Target = "[R]"
+			Path = "music\*"
+		}
+	}
+}
+
+
+
+
+
+
+
+

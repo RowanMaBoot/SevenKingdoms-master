@@ -1,0 +1,55 @@
+
+(ContextValidator CharTrigger) = { Members = {
+	(N N) = { Left = { Type = JobTitle } Right = CharTrigger }
+	
+	(Y  ) = { Left = "banish" Right = Bool }
+	(Y  ) = { Left = "num_of_prisoners" Right = NnInt }
+	(Y  ) = { Left = "prisoner" Right = Bool }
+	(Y  ) = { Left = "imprisoned_days" Right = NnInt }
+	
+	# Outdated; now has_ambition/has_plot
+	#(A Y) = { Left = "has_objective" Right = { Bool Objective } }
+	(A Y) = { Left = "has_job_action" Right = { Bool JobAction } }
+	(N Y) = { Left = "has_job_title" Right = { Bool JobTitle } }
+	(N Y) = { Left = "has_minor_title" Right ={ Bool MinorTitle } }
+
+} }
+
+(ContextValidator CharCommand) = { Members = {
+	(N N) = { Left = { Type = JobTitle } Right = CharCommand }
+	
+	(Y  ) = { Left = "banish" Right = { Yes MaybeEventTargetChar } }
+	(Y  ) = { Left = "reverse_banish" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "prisoner" Right = { MaybeEventTargetChar Bool } } # yes=imprisoned by current liege
+	(N Y) = { Left = "imprison" Right = { Bool MaybeEventTargetChar } }
+	(N Y) = { Left = "reverse_imprison" Right = { Yes MaybeEventTargetChar } }
+	(Y  ) = { Left = "add_objective" Right = Objective }
+	# Outdated, now cancel_objective/cancel_plot
+	#(Y  ) = { Left = "cancel_objective" Right = { Bool Objective } }
+	(Y  ) = { Left = "give_job_title" Right = JobTitle }
+	(N Y) = { Left = "remove_title" Right = { JobTitle MinorTitle } }
+	(Y  ) = { Left = "send_assassin" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "impregnate" Right = { MaybeEventTargetChar 0 Yes } }
+	(N Y) = { Left = "impregnate_cuckoo" Right = { MaybeEventTargetChar Yes } }
+
+} }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

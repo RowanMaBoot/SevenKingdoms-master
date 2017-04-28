@@ -1,0 +1,174 @@
+﻿
+(Validator Diplomacy) = {
+	Type = GroupValidator
+	FriendlyName = "Diplomacy"
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\subject_types" "*.txt")
+		ValidatorName = SubjectTypeFile
+	}
+	
+	Validator = {
+		Type = Default
+		(FileGroup "history\diplomacy" "*.txt")
+		ValidatorName = DiplomacyFile
+	}
+}
+
+(Type SubjectTypeFile) = {
+	# Separate to avoid localization checks
+	Optional = { Left = "default" Right = SubjectTypeDef UniqueId = Left }
+	(Ch N N) = {
+		Left = { Type = String }
+		Right = SubjectTypeDef
+		UniqueId = Left
+		(CheckKey "*" Left IfNot = NoCheckKey)
+		(CheckKey "*_title" Left IfNot = NoCheckKey)
+		(CheckKey "*_title_plural" Left IfNot = NoCheckKey)
+		(CheckKey "*_is_our" Left IfNot = NoCheckKey)
+		(CheckKey "*_long_desc" Left IfNot = NoCheckKey)
+	}
+}
+
+(Type SubjectTypeDef) = {
+	Optional = { Left = "sprite" Right = String }
+	Optional = { Left = "diplomacy_overlord_sprite" Right = String }
+	Optional = { Left = "diplomacy_subject_sprite" Right = String }
+	
+	Optional = { Left = "has_overlords_ruler" Right = Bool }
+	Optional = { Left = "can_fight_independence_war" Right = Bool }
+	Optional = { Left = "is_voluntary" Right = Bool }
+	Optional = { Left = "transfer_trade_power" Right = Bool }
+	Optional = { Left = "transfer_trade_if_merchant_republic" Right = Bool }
+	Optional = { Left = "joins_overlords_wars" Right = Bool }
+	Optional = { Left = "joins_colonial_wars" Right = Bool }
+	Optional = { Left = "can_be_integrated" Right = Bool }
+	Optional = { Left = "can_release_and_play" Right = Bool }
+	Optional = { Left = "uses_tariffs" Right = Bool }
+	Optional = { Left = "dynamically_created_during_history" Right = Bool }
+	Optional = { Left = "eats_overlords_colonies" Right = Bool }
+	Optional = { Left = "has_colonial_parent" Right = Bool }
+	Optional = { Left = "overlord_can_attack" Right = Bool }
+	Optional = { Left = "overlord_can_be_subject" Right = Bool }
+	Optional = { Left = "can_have_subjects_of_other_types" Right = Bool }
+	Optional = { Left = "can_be_annexed" Right = Bool }
+	Optional = { Left = "takes_diplo_slot" Right = Bool }
+	Optional = { Left = "has_power_projection" Right = Bool }
+	Optional = { Left = "can_release_in_peace" Right = Bool }
+	Optional = { Left = "uses_military_focus" Right = Bool }
+	Optional = { Left = "overlord_protects_external" Right = Bool }
+	Optional = { Left = "counts_for_borders" Right = Bool }
+	Optional = { Left = "overlord_enforce_peace_attacking" Right = Bool }
+	Optional = { Left = "can_use_claims" Right = Bool }
+	Optional = { Left = "gives_daimyo_bonuses" Right = Bool }
+	Optional = { Left = "gets_help_with_rebels" Right = Bool }
+	Optional = { Left = "share_rebel_popup" Right = Bool }
+	Optional = { Left = "allows_taking_land_without_independence" Right = Bool }
+	Optional = { Left = "max_government_rank" Right = Int }
+	Optional = { Left = "cities_required_for_bonuses" Right = Int }
+	Optional = { Left = "trust_on_start" Right = Double }
+	Optional = { Left = "base_liberty_desire" Right = Double }
+	Optional = { Left = "liberty_desire_negative_prestige" Right = Double }
+	Optional = { Left = "liberty_desire_development_ratio" Right = Double }
+	Optional = { Left = "liberty_desire_same_dynasty" Right = Double }
+	Optional = { Left = "pays_overlord" Right = Double }
+	Optional = { Left = "forcelimit_bonus" Right = Double }
+	Optional = { Left = "military_focus" Right = Double }
+	Optional = { Left = "relative_power_class" Right = Double }
+	Optional = { Left = "diplomacy_view_class" Right = Double }
+	Optional = { Left = "can_fight" Right = CanDef }
+	Optional = { Left = "can_rival" Right = CanDef }
+	Optional = { Left = "can_ally" Right = CanDef }
+	Optional = { Left = "can_marry" Right = CanDef }
+	Optional = { Left = "embargo_rivals" Right = Bool }
+	Optional = { Left = "support_loyalists" Right = Bool }
+	Optional = { Left = "subsidize_armies" Right = Bool }
+	Optional = { Left = "scutage" Right = Bool }
+	Optional = { Left = "send_officers" Right = Bool }
+	Optional = { Left = "divert_trade" Right = Bool }
+	Optional = { Left = "placate_rulers" Right = Bool }
+	Optional = { Left = "place_relative_on_throne" Right = Bool }
+	Optional = { Left = "enforce_religion" Right = Bool }
+	Optional = { Left = "customize_subject" Right = Bool }
+	Optional = { Left = "replace_governor" Right = Bool }
+	Optional = { Left = "grant_province" Right = Bool }
+	Optional = { Left = "enforce_culture" Right = Bool }
+	Optional = { Left = "siphon_income" Right = Bool }
+	Optional = { Left = "fortify_march" Right = Bool }
+	Optional = { Left = "seize_territory" Right = Bool }
+	Optional = { Left = "start_colonial_war" Right = Bool }
+	Optional = { Left = "grant_core_claim" Right = Bool }
+	Optional = { Left = "sacrifice_ruler" Right = Bool }
+	Optional = { Left = "sacrifice_heir" Right = Bool }
+	Optional = { Left = "increase_tariffs" Right = Bool }
+	Optional = { Left = "decrease_tariffs" Right = Bool }
+	Optional = { Left = "takeondebt" Right = Bool }
+	Optional = { Left = "bestow_gifts" Right = Bool }
+	Optional = { Left = "send_additional_troops" Right = Bool }
+	Optional = { Left = "demand_artifacts" Right = Bool }
+	Optional = { Left = "demand_additional_tribute" Right = Bool }
+	Optional = { Left = "force_seppuku" Right = Bool }
+	Optional = { Left = "contribute_to_capital" Right = Bool }
+	Optional = { Left = "force_isolation" Right = Bool }
+	Optional = { Left = "return_land" Right = Bool }
+	Optional = { Left = "conscript_general" Right = Bool }
+	Optional = { Left = "sword_hunt" Right = Bool }
+	Optional = { Left = "sankin_kotai" Right = Bool }
+	Optional = { Left = "expel_ronin" Right = Bool }
+	Optional = { Left = "can_send_tribute" Right = Bool }
+	Optional = { Left = "construct_colonial" Right = Bool }
+	Optional = { Left = "use_colonial_ui" Right = Bool }
+	Optional = { Left = "created_by_overlord" Right = Bool }
+	Optional = { Left = "count" Right = SubjectType }
+	Optional = { Left = "construct_union" Right = Bool }
+	Optional = { Left = "use_union_ui" Right = Bool }
+	Optional = { Left = "construct_march" Right = Bool }
+	Optional = { Left = "construct_vassal" Right = Bool }
+	Optional = { Left = "use_vassal_ui" Right = Bool }
+	Optional = { Left = "use_march_ui" Right = Bool }
+	
+	Optional = { Left = "copy_from" Right = SubjectType }
+	(Ch N Y) = { Left = "modifier_subject" Right = {
+		Literal = "clear"
+		Type = ModifierSubjectOverlordDef
+	} }
+	(Ch N Y) = { Left = "modifier_overlord" Right = {
+		Literal = "clear"
+		Type = ModifierSubjectOverlordDef
+	} }
+
+	Optional = { Left = "overlord_opinion_modifier" Right = {
+		Literal = "null"
+		Type = OpinionModifier
+	} }
+	Optional = { Left = "subject_opinion_modifier" Right = {
+		Literal = "null"
+		Type = OpinionModifier
+	} }
+}
+
+(Type ModifierSubjectOverlordDef) = {
+	Single = { Left = "modifier" Right = Modifier }
+	Optional = { Left = "trigger" Right = CountryTriggerFromCountry }
+	Optional = { Left = "expiration_message_overlord" Right = Key }
+	Optional = { Left = "expiration_message_subject" Right = Key }
+}
+
+(Type CanDef) = {
+	(Ch N Y) = { Left = "same_overlord" Right = { Type = SubjectType Literal = "all" } }
+	(Ch N Y) = { Left = "other_overlord" Right = { Type = SubjectType Literal = "all" } }
+	Optional = { Left = "neighboring_primitives" Right = Bool }
+	Optional = { Left = "neighboring_other_religion" Right = Bool }
+	Optional = { Left = "independent_nations" Right = Bool }
+	
+}
+
+Global = {
+(Type CountryTriggerFromCountry) = { ContextValidator = CountryTriggerFromCountry }
+
+(ContextValidator CountryTriggerFromCountry) = {
+	Inherits = CountryTrigger
+	FromTarget = Country
+}
+}

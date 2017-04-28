@@ -1,0 +1,109 @@
+(ContextValidator CharTrigger) = { Scopes = {
+	CharTrigger = "religion_head"
+	CharTrigger = "rightful_religious_head_scope"
+	TitleTrigger = "crusade_target"
+
+} }
+
+(ContextValidator CharCommand) = { Scopes = {
+	CharCommand = "religion_head"
+	CharCommand = "rightful_religious_head_scope"
+
+} }
+
+(ContextValidator ProvTrigger) = { Members = {
+	(A Y) = { Left = "religion" Right = Religion }
+	(N Y) = { Left = "religion" Right = { MaybeEventTargetCharProvReligionTitle NewChar } }
+	(A Y) = { Left = "religion_group" Right = ReligionGroup }
+	(N Y) = { Left = "religion_group" Right = { MaybeEventTargetCharProvReligionTitle } }
+	(Y  ) = { Left = "religion_authority" Right = { NnDbl MaybeEventTargetChar } }
+	(N Y) = { Left = "is_heresy_of" Right = { MaybeEventTargetCharProvReligionTitle Religion } }
+	(Y  ) = { Left = "is_heretic" Right = Bool }
+	(N Y) = { Left = "is_parent_religion" Right = { MaybeEventTargetCharProvReligionTitle } }
+	(Y  ) = { Left = "is_hard_to_convert" Right = Bool }
+
+} }
+
+(ContextValidator CharTrigger) = { Members = {
+	(Y  ) = { Left = "is_hard_to_convert" Right = Bool }
+	(A Y) = { Left = "religion" Right = Religion }
+	(N Y) = { Left = "religion" Right = { MaybeEventTargetCharProvReligionTitle NewChar } }
+	(A Y) = { Left = "religion_group" Right = ReligionGroup }
+	(N Y) = { Left = "religion_group" Right = { MaybeEventTargetCharProvReligionTitle } }
+
+	(N Y) = { Left = "excommunicated_for" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "is_heresy_of" Right = { Religion MaybeEventTargetCharProvReligionTitle } }
+	(N Y) = { Left = "is_parent_religion" Right = { MaybeEventTargetCharProvReligionTitle } }
+	(N Y) = { Left = "rightful_religious_head" Right = MaybeEventTargetChar }
+	(Y  ) = { Left = "religion_authority" Right = { NnDblP MaybeEventTargetChar } }
+	
+	(Y  ) = { Left = "can_call_crusade" Right = Bool }
+	(Y  ) = { Left = "controls_religion" Right = { Bool } }
+	(N Y) = { Left = "controls_religion" Right = { Religion } }
+	(Y  ) = { Left = "has_called_crusade" Right = Bool }
+	(Y  ) = { Left = "is_heretic" Right = Bool }
+	(Y  ) = { Left = "can_change_religion" Right = Bool }
+
+} }
+
+(ContextValidator TitleTrigger) = { Members = {
+	(Y  ) = { Left = "controls_religion" Right = { Bool } }
+	(N Y) = { Left = "controls_religion" Right = { Religion } }
+	(N Y) = { Left = "is_holy_site" Right = { MaybeEventTargetCharProv } }
+
+} }
+
+(ContextValidator ProvCommand) = { Members = {
+	(Y  ) = { Left = "religion" Right = { Religion MaybeEventTargetCharProvReligionTitle NewChar } }
+	(Y  ) = { Left = "reverse_religion" Right = { MaybeEventTargetCharProvReligionTitle } }
+	(Y  ) = { Left = "become_heretic" Right = Yes }
+	(Y   IfNot = V110) = { Left = "religion_authority" Right = Double }
+	(N Y If = V110) = { Left = "religion_authority" Right = { Double ComplexRA } }
+	(Y  ) = { Left = "abandon_heresy" Right = Yes }
+
+} }
+
+(ContextValidator CharCommand) = { Members = {
+	(Y  ) = { Left = "religion" Right = { Religion MaybeEventTargetCharProvReligionTitle NewChar } }
+	(N Y) = { Left = "unsafe_religion" Right = { Religion MaybeEventTargetCharProvReligionTitle NewChar } }
+	(Y   IfNot = V110) = { Left = "religion_authority" Right = Double }
+	(N Y If = V110) = { Left = "religion_authority" Right = { Double ComplexRA } }
+	(Y  ) = { Left = "reverse_religion" Right = { MaybeEventTargetCharProv } }
+	(Y  ) = { Left = "abandon_heresy" Right = Yes }
+	(Y  ) = { Left = "excommunicate" Right = Bool }
+	(Y  ) = { Left = "become_heretic" Right = Bool }
+	
+
+} }
+
+(ContextValidator TitleCommand) = { Members = {
+	(Y  ) = { Left = "religion" Right = { Religion MaybeEventTargetCharProvReligionTitle } }
+} }
+
+(Type ComplexRA) = {
+	Single = { Left = "modifier" Right = ReligionModifier }
+	Optional = { Left = "years" Right = PInt }
+	Optional = { Left = "months" Right = PInt }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

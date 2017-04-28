@@ -1,0 +1,84 @@
+(ContextValidator ProvTrigger) = { Members = {
+	(N Y) = { Left = "has_province_modifier" Right = { NormalModifier TriggeredModifier } }
+	(N Y) = { Left = "has_instances_of_province_modifier" Right = {
+		Single = { Left = "modifier" Right = { NormalModifier TriggeredModifier } }
+		Single = { Left = "amount" Right = PInt }
+	} }
+
+} }
+
+(ContextValidator CharTrigger) = { Members = {
+	(N Y) = { Left = "has_character_modifier" Right = { NormalModifier TriggeredModifier } }
+	(N Y) = { Left = "has_instances_of_character_modifier" Right = {
+		Single = { Left = "modifier" Right = { NormalModifier TriggeredModifier } }
+		Single = { Left = "amount" Right = PInt }
+	} }
+	# https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-92#post-19690931
+	# Check if this actually works
+	#(N Y) = { Left = "has_province_modifier" Right = { NormalModifier TriggeredModifier } }
+
+} }
+
+(ContextValidator TitleTrigger) = { Members = {
+	(N Y) = { Left = "has_holding_modifier" Right = { NormalModifier TriggeredModifier } }
+	(N Y) = { Left = "has_instances_of_holding_modifier" Right = {
+		Single = { Left = "modifier" Right = { NormalModifier TriggeredModifier } }
+		Single = { Left = "amount" Right = PInt }
+	} }
+} }
+
+(ContextValidator ProvCommand) = { Members = {
+	(N Y) = { Left = "add_province_modifier" Right = AddModifier }
+	(N Y) = { Left = "remove_province_modifier" Right = NormalModifier }
+	(N Y) = { Left = "remove_province_modifiers" Right = {
+		Single = { Left = "modifier" Right = NormalModifier }
+		Single = { Left = "amount" Right = PInt }
+	} }
+
+} }
+
+(ContextValidator CharCommand) = { Members = {
+	(N Y) = { Left = "add_character_modifier" Right = AddModifier }
+	(N Y) = { Left = "remove_character_modifier" Right = NormalModifier }
+	(N Y) = { Left = "remove_character_modifiers" Right = {
+		Single = { Left = "modifier" Right = NormalModifier }
+		Single = { Left = "amount" Right = PInt }
+	} }
+	(N Y) = { Left = "add_province_modifier" Right = AddModifier }
+	(N Y) = { Left = "remove_province_modifier" Right = NormalModifier }
+
+	(N Y) = { Left = "add_society_modifier" Right = AddModifier }
+	(N Y) = { Left = "remove_society_modifier" Right = NormalModifier }
+	(N Y) = { Left = "remove_society_modifiers" Right = {
+		Single = { Left = "modifier" Right = NormalModifier }
+		Single = { Left = "amount" Right = PInt }
+	} }
+} }
+
+(ContextValidator TitleCommand) = { Members = {
+	(N Y) = { Left = "add_holding_modifier" Right = AddModifier }
+	(N Y) = { Left = "remove_holding_modifier" Right = NormalModifier }
+	(N Y) = { Left = "remove_holding_modifiers" Right = {
+		Single = { Left = "modifier" Right = NormalModifier }
+		Single = { Left = "amount" Right = PInt }
+	} }
+
+} }
+
+(ContextValidator SocietyCommand) = { Members = {
+
+} }
+
+(Type AddModifier Example = "{ name = X [duration = Y] ... }") = {
+	Single = { Left = { "modifier" "name" } Right = NormalModifier }
+	Optional = { Left = { "duration" "days" "months" "years" } Right = { -1 PInt } }
+	Optional = { Left = "hidden" Right = Bool }
+	Optional = { Left = "inherit" Right = Bool }
+	Optional = { Left = "stacking" Right = Bool }
+
+}
+
+
+
+
+

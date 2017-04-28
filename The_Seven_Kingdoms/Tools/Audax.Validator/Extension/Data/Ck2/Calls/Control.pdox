@@ -1,0 +1,547 @@
+# This file contains flags, if statements,
+# limits, random, THIS-stuff, variables, etc
+
+(ContextValidator Trigger) = { Members = {
+	(N N) = { Left = "check_variable" Right = CheckVar }
+	(N Y) = { Left = "is_variable_equal" Right = CheckVar }
+
+	(N N) = { Left = { Type = ThisChar } Right = CharTrigger }
+	(N N) = { Left = { Type = ThisProv } Right = ProvTrigger }
+	(N N) = { Left = { Type = ThisTitle } Right = TitleTrigger }
+	(N N) = { Left = { Type = ThisBattle } Right = BattleTrigger }
+	(N N) = { Left = { Type = ThisWar } Right = WarTrigger }
+	(N N) = { Left = { Type = ThisArtifact } Right = ArtifactTrigger }
+	(N N) = { Left = { Type = ThisSociety } Right = SocietyTrigger }
+
+	(Y  ) = { Left = "always" Right = Bool }
+	(Y  ) = { Left = "difficulty" Right = NnInt }
+
+	(Y  ) = { Left = "year" Right = NnInt }
+	(Y  ) = { Left = "month" Right = NnInt }
+	(Y  ) = { Left = "random" Right = Double }
+	
+	(N Y) = { Left = "has_global_flag" Right = String (LocalOp "chk" "[R]" AddChecker GlobalFlag If = TraceFlags) }
+	(N Y) = { Left = "had_global_flag" Right = GlobalFlagClause }
+
+	# Event targets
+	(N N) = { Left = { Type = TriggerEventTargetName } Right = Untyped } # Event target code will check at end once target has been resolved
+	
+	(Y N) = { Left = { Type = ScriptedTrigger } Right = Bool ScriptedTriggerCheck }
+} }
+
+(ContextValidator ProvTrigger) = { Members = {
+	(N Y) = { Left = "has_province_flag" Right = String (LocalOp "chk" "[R]" AddChecker ProvinceFlag If = TraceFlags) }
+	(N Y) = { Left = "had_province_flag" Right = ProvFlagClause }
+	
+	(N N) = { Left = "calc_true_if" Right = {
+		Single = { Left = "amount" Right = PInt }
+		ContextValidator = {
+			Target = ProvTrigger
+			IsOrClause = True
+			NestedOrIsCool = True
+		}
+	} }
+
+} }
+
+(ContextValidator CharTrigger) = { Members = {
+	(N Y) = { Left = "has_dynasty_flag" Right = String (LocalOp "chk" "[R]" AddChecker DynastyFlag If = TraceFlags) }
+	(N Y) = { Left = "had_dynasty_flag" Right = DynastyFlagClause }
+
+	(N Y) = { Left = "has_character_flag" Right = String (LocalOp "chk" "[R]" AddChecker CharFlag If = TraceFlags) }
+	(N Y) = { Left = "had_character_flag" Right = CharFlagClause }
+
+	(N Y) = { Left = "has_quest" Right = String (LocalOp "chk" "[R]" AddChecker CharQuest If = TraceFlags) }
+	
+	(N N) = { Left = "calc_true_if" Right = {
+		Single = { Left = "amount" Right = PInt }
+		ContextValidator = {
+			Target = CharTrigger
+			IsOrClause = True
+			NestedOrIsCool = True
+		}
+	} }
+} }
+
+(ContextValidator TitleTrigger) = { Members = {
+	(N N) = { Left = "calc_true_if" Right = {
+		Single = { Left = "amount" Right = PInt }
+		ContextValidator = {
+			Target = TitleTrigger
+			IsOrClause = True
+			NestedOrIsCool = True
+		}
+	} }
+	
+	(N Y) = { Left = "has_title_flag" Right = String (LocalOp "chk" "[R]" AddChecker TitleFlag If = TraceFlags) }
+	(N Y) = { Left = "had_title_flag" Right = TitleFlagClause }
+} }
+
+(ContextValidator BattleTrigger) = { Members = {
+	(N N) = { Left = "calc_true_if" Right = {
+		Single = { Left = "amount" Right = PInt }
+		ContextValidator = {
+			Target = BattleTrigger
+			IsOrClause = True
+			NestedOrIsCool = True
+		}
+	} }
+} }
+
+(ContextValidator ArtifactTrigger) = { Members = {
+	(N Y) = { Left = "has_artifact_flag" Right = String (LocalOp "chk" "[R]" AddChecker ArtifactFlag If = TraceFlags) }
+	
+	(N N) = { Left = "calc_true_if" Right = {
+		Single = { Left = "amount" Right = PInt }
+		ContextValidator = {
+			Target = ArtifactTrigger
+			IsOrClause = True
+			NestedOrIsCool = True
+		}
+	} }
+} }
+
+(ContextValidator Command) = { Members = {
+	(N N) = { Left = "set_variable" Right = SetVar }
+	(N N) = { Left = "change_variable" Right = ChangeVar }
+	(N N) = { Left = "multiply_variable" Right = ChangeVar }
+	(N N) = { Left = "subtract_variable" Right = ChangeVar }
+	(N N) = { Left = "divide_variable" Right = ChangeVar }
+
+	(N N) = { Left = { Type = ThisChar } Right = CharCommand }
+	(N N) = { Left = { Type = ThisProv } Right = ProvCommand }
+	(N N) = { Left = { Type = ThisTitle } Right = TitleCommand }
+	# Is this needed?
+	#(N N) = { Left = { Type = ThisBatle } Right = BattleCommand }
+	(N N) = { Left = { Type = ThisWar } Right = WarCommand }
+	(N N) = { Left = { Type = ThisArtifact } Right = ArtifactCommand }
+	(N N) = { Left = { Type = ThisSociety } Right = SocietyCommand }
+	
+	(N Y) = { Left = "set_global_flag" Right = String (LocalOp "set" "[R]" AddSetter GlobalFlag If = TraceFlags) }
+	(N Y) = { Left = "clr_global_flag" Right = String (LocalOp "clr" "[R]" AddSetter GlobalFlag If = TraceFlags) }
+	
+	# Event targets
+	(Y  ) = { Left = "clear_global_event_targets" Right = Yes }
+	(N Y) = { Left = "clear_global_event_target" Right = String EventTargetClearGlobal }
+	(N Y) = { Left = "clear_event_target" Right = String EventTargetClear }
+	(N Y) = { Left = "save_event_target_as" Right = String EventTargetSet }
+	(N Y) = { Left = "save_global_event_target_as" Right = String EventTargetSetGlobal }
+	(N N) = { Left = { Type = CommandEventTargetName } Right = Untyped } # Event target code will check at end once target has been resolved
+	(N N) = { Left = "repeat_event" Right = {
+		Single = { Left = "id" Right = String }
+		Optional = { Left = "days" Right = PInt }
+		Optional = { Left = "random" Right = NnDbl }
+		Optional = { Left = "tooltip" Right = Key }
+	} }
+
+	(N N) = { Left = { Type = ScriptedCommand } Right = Yes ScriptedCommandCheck }
+	
+	(N Y) = { Left = "export_to_variable" Right = {
+		(LocalOp "cng" "which\[R]" 0 AddSetter Variable If = TraceFlags)
+		Single = { Left = "which" Right = String }
+		Optional = { Left = "who" Right = MaybeEventTargetCharProvTitle }
+		Single = { Left = "value" Right = String }
+		CheckExportToVariableValue
+	} }
+} }
+
+(Type ProvRandomListModifier) = {
+	Inherits = FactorModifier
+	Single = { Left = "factor" Right = NonNegDbl }
+	
+	Inherits = ProvTrigger
+}
+
+(Type CharRandomListModifier) = {
+	Inherits = FactorModifier
+	Single = { Left = "factor" Right = NonNegDbl }
+	
+	Inherits = CharTrigger
+}
+
+(Type TitleRandomListModifier) = {
+	Inherits = FactorModifier
+	Single = { Left = "factor" Right = NonNegDbl }
+	
+	Inherits = TitleTrigger
+}
+
+(Type ArtifactRandomListModifier) = {
+	Inherits = FactorModifier
+	Single = { Left = "factor" Right = NonNegDbl }
+	
+	Inherits = ArtifactTrigger
+}
+
+(Type SocietyRandomListModifier) = {
+	Inherits = FactorModifier
+	Single = { Left = "factor" Right = NonNegDbl }
+	
+	Inherits = SocietyTrigger
+}
+
+(ContextValidator ProvCommand) = { Members = {
+	(N N) = { Left = { "if" "IF" } Right = ProvIfClause }
+	(N N) = { Left = "while" Right = ProvIfClause }
+	
+	(N N) = { Left = "random" Right = {
+		Inherits = ProvCommand
+		Single = { Left = "chance" Right = Int }
+		(Ch N Y) = { Left = "modifier" Right = ProvRandomListModifier }
+	} }
+	(N N) = { Left = "random_list" Right = {
+		(Ch N N) = { Left = { Type = Int } Right = {
+			Inherits = ProvCommand
+			Optional = { Left = "trigger" Right = ProvTrigger }
+			(Ch N Y) = { Left = "modifier" Right = ProvRandomListModifier }
+		} }
+	} }
+	
+	(N Y) = { Left = "set_province_flag" Right = String (LocalOp "set" "[R]" AddSetter ProvinceFlag If = TraceFlags) }
+	(N Y) = { Left = "clr_province_flag" Right = String (LocalOp "clr" "[R]" AddSetter ProvinceFlag If = TraceFlags) }
+
+	(N N) = { Left = "trigger_switch" Right = { OnTriggerChecker = { Trigger = ProvTrigger Command = ProvCommand } } }
+} }
+
+(ContextValidator WarCommand) = { Members = {
+	(N N) = { Left = { "if" "IF" } Right = WarIfClause }
+	(N N) = { Left = "while" Right = WarIfClause }
+} }
+
+(ContextValidator CharCommand) = { Members = {
+	(N N) = { Left = { "if" "IF" } Right = CharIfClause }
+	(N N) = { Left = "while" Right = CharIfClause }
+
+	(N N) = { Left = "random" Right = {
+		Inherits = CharCommand
+		Single = { Left = "chance" Right = Int }
+		(Ch N Y) = { Left = "modifier" Right = CharRandomListModifier }
+	} }
+	(N N) = { Left = "random_list" Right = {
+		(Ch N N) = { Left = { Type = Int } Right = {
+			Inherits = CharCommand
+			Optional = { Left = "trigger" Right = CharTrigger }
+			(Ch N Y) = { Left = "modifier" Right = CharRandomListModifier }
+		} }
+	} }
+
+	(N Y) = { Left = "set_dynasty_flag" Right = String (LocalOp "set" "[R]" AddSetter DynastyFlag If = TraceFlags) }
+	(N Y) = { Left = "clr_dynasty_flag" Right = String (LocalOp "clr" "[R]" AddSetter DynastyFlag If = TraceFlags) }
+
+	(N Y) = { Left = "set_character_flag" Right = String (LocalOp "set" "[R]" AddSetter CharFlag If = TraceFlags) }
+	(N Y) = { Left = "clr_character_flag" Right = String (LocalOp "clr" "[R]" AddSetter CharFlag If = TraceFlags) }
+	(N Y) = { Left = "clr_quest" Right = String (LocalOp "clr" "[R]" AddSetter CharQuest If = TraceFlags) }
+	(N Y) = { Left = "clr_quest" Right = {
+		Single = { Left = "id" Right = String (LocalOp "clr" "[R]" AddSetter CharQuest If = TraceFlags) }
+		Optional = { Left = "failure" Right = Bool }
+	} }
+	
+	(N N) = { Left = "trigger_switch" Right = { OnTriggerChecker = { Trigger = CharTrigger Command = CharCommand } } }
+} }
+
+(ContextValidator TitleCommand) = { Members = {
+	(N N) = { Left = { "if" "IF" } Right = TitleIfClause }
+	(N N) = { Left = "while" Right = TitleIfClause }
+
+	(N N) = { Left = "random" Right = {
+		Inherits = TitleCommand
+		Single = { Left = "chance" Right = Int }
+		(Ch N Y) = { Left = "modifier" Right = TitleRandomListModifier }
+	} }
+	(N N) = { Left = "random_list" Right = {
+		(Ch N N) = { Left = { Type = Int } Right = {
+			Inherits = TitleCommand
+			Optional = { Left = "trigger" Right = TitleTrigger }
+			(Ch N Y) = { Left = "modifier" Right = TitleRandomListModifier }
+		} }
+	} }
+	
+	(N Y) = { Left = "set_title_flag" Right = String (LocalOp "set" "[R]" AddSetter TitleFlag If = TraceFlags) }
+	(N Y) = { Left = "clr_title_flag" Right = String (LocalOp "clr" "[R]" AddSetter TitleFlag If = TraceFlags) }
+} }
+
+(ContextValidator ArtifactCommand) = { Members = {
+	(N N) = { Left = { "if" "IF" } Right = ArtifactIfClause }
+	(N N) = { Left = "while" Right = ArtifactIfClause }
+
+	(N N) = { Left = "random" Right = {
+		Inherits = ArtifactCommand
+		Single = { Left = "chance" Right = Int }
+		(Ch N Y) = { Left = "modifier" Right = ArtifactRandomListModifier }
+	} }
+	(N N) = { Left = "random_list" Right = {
+		(Ch N N) = { Left = { Type = Int } Right = {
+			Inherits = ArtifactCommand
+			Optional = { Left = "trigger" Right = ArtifactTrigger }
+			(Ch N Y) = { Left = "modifier" Right = ArtifactRandomListModifier }
+		} }
+	} }
+	
+	(Y  ) = { Left = "set_original_owner" Right = MaybeEventTargetChar }
+	(N Y) = { Left = "set_artifact_flag" Right = String (LocalOp "set" "[R]" AddSetter ArtifactFlag If = TraceFlags) }
+	(N Y) = { Left = "clr_artifact_flag" Right = String (LocalOp "clr" "[R]" AddSetter ArtifactFlag If = TraceFlags) }
+} }
+
+(ContextValidator SocietyCommand) = { Members = {
+	(N N) = { Left = { "if" "IF" } Right = SocietyIfClause }
+	(N N) = { Left = "while" Right = SocietyIfClause }
+
+	(N N) = { Left = "random" Right = {
+		Inherits = SocietyCommand
+		Single = { Left = "chance" Right = Int }
+		(Ch N Y) = { Left = "modifier" Right = SocietyRandomListModifier }
+	} }
+	(N N) = { Left = "random_list" Right = {
+		(Ch N N) = { Left = { Type = Int } Right = {
+			Inherits = SocietyCommand
+			Optional = { Left = "trigger" Right = SocietyTrigger }
+			(Ch N Y) = { Left = "modifier" Right = SocietyRandomListModifier }
+		} }
+	} }
+	
+	(N Y) = { Left = "set_artifact_flag" Right = String (LocalOp "set" "[R]" AddSetter ArtifactFlag If = TraceFlags) }
+	(N Y) = { Left = "clr_artifact_flag" Right = String (LocalOp "clr" "[R]" AddSetter ArtifactFlag If = TraceFlags) }
+} }
+
+(ContextValidator SiegeCommand) = { Members = {
+	(N N) = { Left = { "if" "IF" } Right = SiegeIfClause }
+	(N N) = { Left = "while" Right = SiegeIfClause }
+
+	(N N) = { Left = "random" Right = {
+		Inherits = SiegeCommand
+		Single = { Left = "chance" Right = Int }
+		(Ch N Y) = { Left = "modifier" Right = SiegeRandomListModifier }
+	} }
+	(N N) = { Left = "random_list" Right = {
+		(Ch N N) = { Left = { Type = Int } Right = {
+			Inherits = SiegeCommand
+			Optional = { Left = "trigger" Right = SiegeTrigger }
+			(Ch N Y) = { Left = "modifier" Right = SiegeRandomListModifier }
+		} }
+	} }
+} }
+
+(ContextValidator UnitCommand) = { Members = {
+	(N N) = { Left = { "if" "IF" } Right = UnitIfClause }
+	(N N) = { Left = "while" Right = UnitIfClause }
+} }
+
+(Type ProvIfClause) = {
+	Inherits = ProvCommand
+	Single = { Left = "limit" Right = ProvTrigger }
+}
+
+(Type CharIfClause) = {
+	Inherits = CharCommand
+	Single = { Left = "limit" Right = CharTrigger }
+}
+
+(Type WarIfClause) = {
+	Inherits = WarCommand
+	Single = { Left = "limit" Right = WarTrigger }
+}
+
+(Type TitleIfClause) = {
+	Inherits = TitleCommand
+	Single = { Left = "limit" Right = TitleTrigger }
+}
+
+(Type UnitIfClause) = {
+	Inherits = UnitCommand
+	Single = { Left = "limit" Right = UnitTrigger }
+}
+
+(Type ArtifactIfClause) = {
+	Inherits = ArtifactCommand
+	Single = { Left = "limit" Right = ArtifactTrigger }
+}
+
+(Type SocietyIfClause) = {
+	Inherits = SocietyCommand
+	Single = { Left = "limit" Right = SocietyTrigger }
+}
+
+(Type SiegeIfClause) = {
+	Inherits = SiegeCommand
+	Single = { Left = "limit" Right = SiegeTrigger }
+}
+
+Global = {
+(Type ProvMaybeLimitCommand) = {
+	Inherits = ProvCommand
+	Inherits = ProvLimit # Needs to be outside so that the AddStackFrame doesn't interfere with ProvCommand
+	
+	# Limits number of targets
+	Optional = { Left = "count" Right = PInt }
+}
+
+(Type CharMaybeLimitCommand) = {
+	Inherits = CharCommand
+	Inherits = CharLimit
+	
+	# Limits number of targets
+	Optional = { Left = "count" Right = PInt }
+}
+
+(Type TitleMaybeLimitCommand) = {
+	Inherits = TitleCommand
+	Inherits = TitleLimit
+	
+	# Limits number of targets
+	Optional = { Left = "count" Right = PInt }
+}
+
+(Type UnitMaybeLimitCommand) = {
+	Inherits = UnitCommand
+	Inherits = UnitLimit
+	
+	# Limits number of targets
+	Optional = { Left = "count" Right = PInt }
+}
+
+(Type ArtifactMaybeLimitCommand) = {
+	Inherits = ArtifactCommand
+	Inherits = ArtifactLimit
+	
+	# Limits number of targets
+	Optional = { Left = "count" Right = PInt }
+}
+
+(Type SiegeMaybeLimitCommand) = {
+	Inherits = SiegeCommand
+	Inherits = SiegeLimit
+	
+	# Limits number of targets
+	Optional = { Left = "count" Right = PInt }
+}
+}
+
+(Type ProvLimit) = {
+	AddContextValidatorStackFrame = Prov
+	Optional = { Left = "limit" Right = ProvTrigger }
+}
+
+(Type CharLimit) = {
+	AddContextValidatorStackFrame = Char
+	Optional = { Left = "limit" Right = CharTrigger }
+}
+
+(Type TitleLimit) = {
+	AddContextValidatorStackFrame = Title
+	Optional = { Left = "limit" Right = TitleTrigger }
+}
+
+(Type UnitLimit) = {
+	AddContextValidatorStackFrame = Unit
+	Optional = { Left = "limit" Right = UnitTrigger }
+}
+
+(Type ArtifactLimit) = {
+	AddContextValidatorStackFrame = Unit
+	Optional = { Left = "limit" Right = ArtifactTrigger }
+}
+
+(Type SiegeLimit) = {
+	AddContextValidatorStackFrame = Siege
+	Optional = { Left = "limit" Right = SiegeTrigger }
+}
+
+# NOTE: "months" and "years" are removed from the following because of https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-96#post-19868037
+# But now they work: https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-104#post-20594845
+
+(Type ProvFlagClause) = {
+	Single = { Left = "flag" Right = String (LocalOp "chk" "[R]" AddChecker ProvinceFlag If = TraceFlags) }
+	Single = { Left = { "days" "months" "years" } Right = NnInt }
+	# May not work anymore (or never worked?): https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-105#post-20657258
+	#Optional = { Left = "random" Right = PInt }
+}
+
+(Type TitleFlagClause) = {
+	Single = { Left = "flag" Right = String (LocalOp "chk" "[R]" AddChecker TitleFlag If = TraceFlags) }
+	Single = { Left = { "days" "months" "years" } Right = NnInt }
+	# May not work anymore (or never worked?): https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-105#post-20657258
+	#Optional = { Left = "random" Right = PInt }
+}
+
+(Type DynastyFlagClause) = {
+	Single = { Left = "flag" Right = String (LocalOp "chk" "[R]" AddChecker DynastyFlag If = TraceFlags) }
+	Single = { Left = { "days" "months" "years" } Right = NnInt }
+	# May not work anymore (or never worked?): https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-105#post-20657258
+	#Optional = { Left = "random" Right = PInt }
+}
+
+(Type CharFlagClause) = {
+	Single = { Left = "flag" Right = String (LocalOp "chk" "[R]" AddChecker CharFlag If = TraceFlags) }
+	Single = { Left = { "days" "months" "years" } Right = NnInt }
+	# May not work anymore (or never worked?): https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-105#post-20657258
+	#Optional = { Left = "random" Right = PInt }
+}
+
+(Type GlobalFlagClause) = {
+	Single = { Left = "flag" Right = String (LocalOp "chk" "[R]" AddChecker GlobalFlag If = TraceFlags) }
+	Single = { Left = { "days" "months" "years" } Right = NnInt }
+	# May not work anymore (or never worked?): https://forum.paradoxplaza.com/forum/index.php?threads/the-validator-find-errors-quickly-and-with-minimal-pain.597480/page-105#post-20657258
+	#Optional = { Left = "random" Right = PInt }
+}
+
+
+
+
+
+
+
+
+
+
+(Type Var) = {
+	Single = { Left = "which" Right = String }
+	Single = { Left = "value" Right = Double }
+}
+
+(Type CheckVar) = {
+	FancilyPickCorrectBecauseParadoxDoesntMakeThingsWithDifferentNames = { TwoWhich = CheckVar0 Else = CheckVar1 }
+}
+
+(Type CheckVar0) = {
+	(Ch N Y 2 2) = { Left = "which" Right = String }
+	(LocalOp "chk" "which\[R]" AddChecker Variable If = TraceFlags)
+}
+
+(Type CheckVar1) = {
+	Inherits = Var
+	(LocalOp "chk" "which\[R]" AddChecker Variable If = TraceFlags)
+}
+
+(Type SetVar) = {
+	FancilyPickCorrectBecauseParadoxDoesntMakeThingsWithDifferentNames = { TwoWhich = SetVar0 Else = SetVar1 }
+}
+
+(Type SetVar0) = {
+	(Ch N Y 2 2) = { Left = "which" Right = String }
+	(LocalOp "set" "which\[R]" 0 AddSetter Variable If = TraceFlags)
+	(LocalOp "set" "which\[R]" 1 AddChecker Variable If = TraceFlags)
+}
+
+(Type SetVar1) = {
+	Inherits = Var
+	(LocalOp "set" "which\[R]" AddSetter Variable If = TraceFlags)
+}
+
+(Type ChangeVar) = {
+	FancilyPickCorrectBecauseParadoxDoesntMakeThingsWithDifferentNames = { TwoWhich = ChangeVar0 Else = ChangeVar1 }
+}
+
+(Type ChangeVar0) = {
+	(Ch N Y 2 2) = { Left = "which" Right = String }
+	(LocalOp "cng" "which\[R]" 0 AddSetter Variable If = TraceFlags)
+	(LocalOp "cng" "which\[R]" 1 AddChecker Variable If = TraceFlags)
+}
+
+(Type ChangeVar1) = {
+	Inherits = Var
+	(LocalOp "cng" "which\[R]" AddSetter Variable If = TraceFlags)
+}
+
+
+
+

@@ -1,0 +1,96 @@
+(Validator Societies) = {
+	Type = GroupValidator
+	FriendlyName = "Societies"
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\societies" "*.txt")
+		ValidatorName = SocietyFile
+	}
+}
+
+(Type SocietyFile) = {
+	(Ch N N) = {
+		Left = { Type = String }
+		Right = SocietyDef
+		UniqueId = Left
+		(CheckKey "*" Left IfNot = NoCheckKey)
+		(CheckKey "*_leader_desc" Left IfNot = NoCheckKey)
+		(CheckKey "*_desc" Left IfNot = NoCheckKey)
+		(CheckKey "currency_name_*" Left IfNot = NoCheckKey)
+	}
+}
+
+(Type SocietyDef) = {
+	Single = { Left = "primary_attribute" Right = Attribute }
+	
+	Optional = { Left = "is_religious" Right = Bool }
+	Optional = { Left = "is_secret" Right = Bool }
+	Optional = { Left = "criminal" Right = Bool }
+	Optional = { Left = "devil_worshipper" Right = Bool }
+	
+	Single = { Left = "sound" Right = String }
+	Single = { Left = "society_ranks_gfx" Right = String }
+	
+	Single = { Left = "opinion_to_other_members" Right = Double }
+	Single = { Left = "opinion_per_rank_above" Right = Double }
+	Optional = { Left = "opinion_to_perceived_members" Right = Double }
+	Optional = { Left = "opinion_to_pretenders" Right = Double }
+	
+	Optional = { Left = "active" Right = GlobalTrigger }
+	Optional = { Left = "indestructible" Right = Bool }
+	Optional = { Left = "can_join_society" Right = CharTrigger }
+	Optional = { Left = "show_society" Right = CharTrigger }
+	Optional = { Left = "potential" Right = CharTrigger }
+	Child = { Left = "society_rank" Right = SocietyRankDef }
+	Optional = { Left = "monthly_currency_gain" Right = {
+		Single = { Left = "name" Right = Key }
+		(Ch N Y) = { Left = "per_attribute" Right = {
+			Single = { Left = "name" Right = Attribute }
+			Single = { Left = "value" Right = Double }
+		} }
+		(Ch N Y) = { Left = "has_trait" Right = {
+			Single = { Left = "trait" Right = Trait }
+			Single = { Left = "value" Right = Double }
+		} }
+		(Ch N Y) = { Left = "society_rank" Right = {
+			Single = { Left = "rank" Right = PInt }
+			Single = { Left = "value" Right = Double }
+		} }
+	} }
+	
+	Optional = { Left = "member_score_per_attribute" Right = Double }
+	Optional = { Left = "member_score_per_rank" Right = Double }
+	Optional = { Left = "society_rank_up_decision" Right = SocietyDecision }
+	
+	Optional = { Left = "member_score" Right = {
+		Single = { Left = "value" Right = Double }
+		(Ch N Y) = { Left = "modifier" Right = {
+			Inherits = CharTrigger
+			Single = { Left = "factor" Right = Double }
+		} }
+	} }
+	
+	Optional = { Left = "non_interference" Right = CharTriggerFromChar }
+	
+	Optional = { Left = "startup_populate" Right = {
+		Single = { Left = "trigger" Right = CharTrigger }
+	} }
+	
+	Optional = { Left = "plots" Right = { (PdoList Y) = { Type = String } } }
+	Optional = { Left = "ambitions" Right = { (PdoList Y) = { Type = String } } }
+}
+
+(Type SocietyRankDef) = {
+	Single = { Left = "level" Right = PInt }
+	Single = { Left = "limit" Right = PInt }
+	Single = { Left = "startup_limit" Right = NnInt }
+	Optional = { Left = "decisions" Right = { (PdoList Y) = { Type = Decision } } }
+	Optional = { Left = "modifier" Right = {
+		Inherits = CharModifier
+		Optional = { Left = "is_visible" Right = CharTriggerFromChar }
+	} }
+	Optional = { Left = "custom_tooltip" Right = Key }
+	Optional = { Left = "obedience_tooltip" Right = Key }
+	Optional = { Left = "obedient" Right = CharTrigger }
+}

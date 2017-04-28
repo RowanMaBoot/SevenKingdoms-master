@@ -1,0 +1,133 @@
+(Validator Death) = {
+	Type = GroupValidator
+	FriendlyName = "Death"
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\execution_methods" "*.txt")
+		ValidatorName = ExecutionMethodsFile
+	}
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\death_text" "*.txt")
+		ValidatorName = DeathTextFile
+	}
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\death" "*.txt")
+		ValidatorName = DeathReasonFile
+	}
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common\disease" "*.txt")
+		ValidatorName = Diseases
+	}
+}
+
+(Type Diseases) = {
+	(Ch Y N) = { Left = { Type = String } Right = Disease (CheckKey "*" Left IfNot = NoCheckKey) }
+}
+
+(Type Disease) = {
+	Single = { Left = "contagiousness" Right = NonNegDblPercent }
+	Single = { Left = "outbreak_chance" Right = NonNegDblPercent }
+	Single = { Left = "effect" Right = ProvModifier }
+	Single = { Left = "icon" Right = { IconRef = GFX_disease_icons } }
+	Single = { Left = "tooltip" Right = Key }
+	Single = { Left = "months" Right = PInt }
+	Single = { Left = "trait" Right = Trait }
+	Single = { Left = "always_get_message" Right = Bool }
+	Optional = { Left = "active" Right = Bool }
+	Optional = { Left = "rip" Right = Bool }
+	Optional = { Left = "major" Right = Bool }
+	Optional = { Left = "disease_gfx" Right = String }
+	
+	Single = { Left = "color" Right = { FloatColor Color } }
+	Required = { Left = "timeperiod" Right = TimePeriod }
+	Optional = { Left = "on_province_infection" Right = ProvCommand }
+	Optional = { Left = "yearly_province_pulse" Right = ProvCommand }
+	Optional = { Left = "on_character_infection" Right = CharCommand }
+	Optional = { Left = "character_infection_chances" Right = {
+		Single = { Left = "months" Right = PInt }
+	} }
+}
+
+(Type TimePeriod) = {
+	Single = { Left = "start_date" Right = Date }
+	Single = { Left = "end_date" Right = Date }
+	Single = { Left = "one_only" Right = Bool }
+	Optional = { Left = "min_nb_province" Right = PInt }
+	Optional = { Left = "max_nb_province" Right = PInt }
+	Optional = { Left = "spread_through_water" Right = Bool }
+	Optional = { Left = "max_total_provinces" Right = PInt }
+	Optional = { Left = "months" Right = PInt }
+	Optional = { Left = "outbreak_chance" Right = Double }
+	Optional = { Left = "can_outbreak" Right = GlobalTrigger }
+	Optional = { Left = "province_infection_duration" Right = PInt }
+	
+	Child = { Left = "outbreak_scenario" Right = {
+		Single = { Left = "chance" Right = Double }
+		Single = { Left = "start_provinces" Right = { (PdoList Y) = { Type = LandProvince } } }
+		Single = { Left = "excluded_regions" Right = { (PdoList Y) = { Type = GeographicalRegion } } }
+	} }
+
+}
+
+(Type DeathReasonFile) = {
+	(Ch N N) = { Left = { Type = String } Right = DeathReasonDef UniqueId = Left }
+}
+
+(Type DeathReasonDef) = {
+	Optional = { Left = "violent" Right = Bool }
+	Optional = { Left = "can_nokiller" Right = Bool }
+	Single = { Left = "long_desc" Right = Key }
+	Optional = { Left = "execution" Right = Bool }
+	Optional = { Left = "murder_unknown" Right = Bool }
+	
+	Optional = { Left = "sound_list" Right = {
+		Single = { Left = "male" Right = { (PdoList Y) = { Type = Sound } } }
+		Single = { Left = "female" Right = { (PdoList Y) = { Type = Sound } } }
+	} }
+}
+
+(Type DeathTextFile) = {
+	(Ch N N) = {
+		Left = { Type = String }
+		Right = DeathTextDef
+		UniqueId = Left
+		(CheckKey "*" Left IfNot = NoCheckKey)
+	}
+}
+
+(Type DeathTextDef) = {
+	Single = { Left = "weight_multiplier" Right = {
+		Single = { Left = "factor" Right = Double }
+		(Ch N Y) = { Left = "modifier" Right = {
+			Single = { Left = "factor" Right = NnDbl }
+
+			Inherits = FactorModifier
+			Inherits = CharTrigger
+		} }
+	} }
+}
+
+(Type ExecutionMethodsFile) = {
+	(Ch N N) = { Left = "execution_method" Right = ExecutionMethodDef }
+}
+
+(Type ExecutionMethodDef) = {
+	Single = { Left = "death" Right = DeathReason }
+	Single = { Left = "weight_multiplier" Right = {
+		Single = { Left = "factor" Right = Double }
+		(Ch N Y) = { Left = "modifier" Right = {
+			Single = { Left = "factor" Right = NnDbl }
+
+			Inherits = FactorModifier
+			Inherits = CharTriggerFromChar
+		} }
+	} }
+	Single = { Left = "trigger" Right = CharTriggerFromChar }
+}

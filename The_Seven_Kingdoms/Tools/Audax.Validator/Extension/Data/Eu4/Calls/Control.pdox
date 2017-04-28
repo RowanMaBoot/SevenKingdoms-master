@@ -1,0 +1,108 @@
+(ContextValidator Trigger) = { Members = {
+	(A Y) = { Left = "start_date" Right = Date }
+
+	# Event targets
+	(N N) = { Left = { Type = TriggerEventTargetName } Right = Untyped } # Event target code will check at end once target has been resolved
+	(Y N) = { Left = { Type = ScriptedTrigger } Right = Bool ScriptedTriggerCheck }
+	(N Y) = { Left = "has_saved_event_target" Right = String EventTargetHas }
+} }
+
+(ContextValidator Command) = { Members = {
+	(N Y) = { Left = "custom_tooltip" Right = Key }
+	
+	# Event targets
+	(Y  ) = { Left = "clear_global_event_targets" Right = Yes }
+	(N Y) = { Left = "clear_global_event_target" Right = String EventTargetClearGlobal }
+	(N Y) = { Left = "clear_event_target" Right = String EventTargetClear }
+	(N Y) = { Left = "save_event_target_as" Right = String EventTargetSet }
+	(N Y) = { Left = "save_global_event_target_as" Right = String EventTargetSetGlobal }
+	(N N) = { Left = { Type = CommandEventTargetName } Right = Untyped } # Event target code will check at end once target has been resolved
+	(N N) = { Left = { Type = ScriptedCommand } Right = Yes ScriptedCommandCheck }
+} }
+
+(ContextValidator ProvinceCommand) = { Members = {
+	(N N) = { Left = "province_event" Right = {
+		Inherits = EventCallBase
+		Single = { Left = "id" Right = ProvinceEventId }
+	} }
+	
+	(N N) = { Left = "random" Right = RandomProvinceCommand }
+	(N N) = { Left = "random_list" Right = RandomProvinceList }
+	
+	(N N) = { Left = "trigger_switch" Right = { OnTriggerChecker = { Trigger = ProvinceTrigger Command = ProvinceCommand } } }
+} }
+
+(ContextValidator CountryCommand) = { Members = {
+	(N N) = { Left = "country_event" Right = {
+		Inherits = EventCallBase
+		Single = { Left = "id" Right = { CountryEventId (ProvinceEventId IfNot = Events.StrictIdChecking) } }
+	} }
+
+	(N N) = { Left = "random" Right = RandomCountryCommand }
+	(N N) = { Left = "random_list" Right = RandomCountryList }
+	
+	(N N) = { Left = "trigger_switch" Right = { OnTriggerChecker = { Trigger = CountryTrigger Command = CountryCommand } } }
+} }
+
+(ContextValidator StateCommand) = { Members = {
+	(N N) = { Left = "random" Right = RandomStateCommand }
+	(N N) = { Left = "random_list" Right = RandomStateList }
+	
+	(N N) = { Left = "trigger_switch" Right = { OnTriggerChecker = { Trigger = StateTrigger Command = StateCommand } } }
+} }
+
+(ContextValidator GlobalCommand) = { Members = {
+	(N N) = { Left = "random" Right = RandomGlobalCommand }
+	(N N) = { Left = "random_list" Right = RandomGlobalList }
+	
+	(N N) = { Left = "trigger_switch" Right = { OnTriggerChecker = { Trigger = GlobalTrigger Command = GlobalCommand } } }
+} }
+
+
+
+
+
+(Type RandomCountryCommand) = {
+	Inherits = CountryCommand
+	Single = { Left = "chance" Right = Int }
+}
+
+(Type RandomCountryList) = {
+	(Ch N N) = { Left = { Type = Double } Right = CountryCommand }
+}
+
+(Type RandomProvinceCommand) = {
+	Inherits = ProvinceCommand
+	Single = { Left = "chance" Right = Int }
+}
+
+(Type RandomProvinceList) = {
+	(Ch N N) = { Left = { Type = Double } Right = ProvinceCommand }
+}
+
+(Type RandomStateCommand) = {
+	Inherits = StateCommand
+	Single = { Left = "chance" Right = Int }
+}
+
+(Type RandomStateList) = {
+	(Ch N N) = { Left = { Type = Double } Right = StateCommand }
+}
+
+(Type RandomGlobalCommand) = {
+	Inherits = GlobalCommand
+	Single = { Left = "chance" Right = Int }
+}
+
+(Type RandomGlobalList) = {
+	(Ch N N) = { Left = { Type = Double } Right = GlobalCommand }
+}
+
+(Type EventCallBase) = {
+	Optional = { Left = "days" Right = NnInt }
+	#Optional = { Left = "months" Right = NnInt }
+	#Optional = { Left = "years" Right = NnInt }
+	AtMostOne = { days years months }
+	Optional = { Left = "tooltip" Right = Key }
+	Optional = { Left = "random" Right = PInt }
+}

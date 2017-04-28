@@ -1,0 +1,73 @@
+(Validator Decisions) = {
+	Type = GroupValidator
+	FriendlyName = "Decisions and laws"
+	
+	Validator = {
+		Type = Default
+		(FileGroup "decisions" "*.txt")
+		ValidatorName = DecisionFile
+	}
+	
+	Validator = {
+		Type = Default
+		(FileGroup "common/laws" "*.txt")
+		ValidatorName = LawFile
+	}
+}
+
+(Type DecisionFile) = {
+	(Local ID Uid) = Left
+
+	Optional = { Left = "decisions" Right = NormalDecisionGroup }
+	Optional = { Left = "plot_decisions" Right = NormalDecisionGroup }
+	Optional = { Left = "targetted_decisions" Right = TargetDecisionGroup }
+	Optional = { Left = "targeted_decisions" Right = TargetDecisionGroup }
+	Optional = { Left = "vassal_decisions" Right = VassalDecisionGroup }
+	Optional = { Left = "title_decisions" Right = TitleDecisionGroup }
+	Optional = { Left = "trade_post_decisions" Right = TradePostDecisionGroup }
+	Optional = { Left = "fort_decisions" Right = FortDecisionGroup }
+	Optional = { Left = "settlement_decisions" Right = SettlementDecisionGroup }
+	Optional = { Left = "hospital_decisions" Right = HospitalDecisionGroup }
+	Optional = { Left = "society_decisions" Right = SocietyDecisionGroup }
+	
+}
+
+(Type LawInfo) = {
+	Single = { Left = "law_type" Right = LawType }
+	Optional = { Left = "allowed_for_councillors" Right = Bool }
+	Optional = { Left = "left_value" Right = Key }
+	Optional = { Left = "right_value" Right = Key }
+	Optional = { Left = "slider_sprite" Right = String }
+}
+
+(Type LawFile) = {
+	(Local ID Uid) = Left
+	
+	Optional = { Left = "law_groups" Right = {
+		(Ch N N) = {
+			Left = { Type = Law Type = LawGroup }
+			UniqueId = Left
+			Right = LawInfo
+		}
+	} }
+
+	Optional = { Left = "de_jure_laws" Right = DeJureDecisionGroup }
+	Optional = { Left = "laws" Right = DeJureDecisionGroup }
+	Optional = { Left = "gender_laws" Right = DeJureDecisionGroup }
+	Optional = { Left = "succession_laws" Right = SuccessionLawsDecisionGroup }
+	
+}
+
+(Import "NormalDecisionGroup" From "DecisionsHelper" WithFlag "normal")
+(Import "DeJureDecisionGroup" From "DecisionsHelper" WithFlag "dejure")
+(Import "SuccessionLawsDecisionGroup" From "DecisionsHelper" WithFlag "succ")
+(Import "TargetDecisionGroup" From "DecisionsHelper" WithFlag "target")
+(Import "VassalDecisionGroup" From "DecisionsHelper" WithFlag "v")
+(Import "TitleDecisionGroup" From "DecisionsHelper" WithFlag "title")
+(Import "TradePostDecisionGroup" From "DecisionsHelper" WithFlag "tp")
+(Import "FortDecisionGroup" From "DecisionsHelper" WithFlag "fort")
+(Import "SettlementDecisionGroup" From "DecisionsHelper" WithFlag "settle")
+(Import "HospitalDecisionGroup" From "DecisionsHelper" WithFlag "hospital")
+(Import "SocietyDecisionGroup" From "DecisionsHelper" WithFlag "society")
+
+

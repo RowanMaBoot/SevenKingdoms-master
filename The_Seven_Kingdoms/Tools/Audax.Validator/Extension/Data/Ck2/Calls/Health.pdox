@@ -1,0 +1,88 @@
+(ContextValidator ProvTrigger) = { Members = {
+	(Y  ) = { Left = "has_disease" Right = Bool }
+	(N Y) = { Left = "disease" Right = Disease }
+	(Y  ) = { Left = "hospital_level" Right = PInt }
+	(N Y) = { Left = "hospital_has_building" Right = ImprovementValue }
+	(Y  ) = { Left = "hospital_has_any_building" Right = Yes }
+	(Y  ) = { Left = "disease_defence" Right = Double }
+
+} }
+
+(ContextValidator TitleTrigger) = { Members = {
+	(Y  ) = { Left = "has_hospital" Right = Bool }
+	(N Y) = { Left = "hospital_has_building" Right = ImprovementValue }
+	(Y  ) = { Left = "hospital_has_any_building" Right = Yes }
+
+} }
+
+(ContextValidator CharTrigger) = { Members = {
+	(N N) = { Left = "any_hospital" Right = ProvTrigger }
+
+	(Y  ) = { Left = "base_health" Right = NnDbl }
+	(Y  ) = { Left = "health" Right = NnDbl }
+	
+	(Y  ) = { Left = "in_seclusion" Right = Bool }
+	(Y  ) = { Left = "is_ill" Right = Bool }
+	(Y  ) = { Left = "is_alive" Right = Bool }
+	(Y  ) = { Left = "age" Right = NnInt }
+
+	# http://forum.paradoxplaza.com/forum/showthread.php?597480-The-Validator-Find-errors-quickly-and-with-minimal-pain!&p=18614735&viewfull=1#post18614735
+	#(Y  ) = { Left = "has_disease" Right = Bool }
+	(Y  ) = { Left = "has_epidemic" Right = Bool }
+
+} }
+
+(ContextValidator Command) = { Members = {
+	(N Y) = { Left = "start_outbreak" Right = Disease }
+	(N Y) = { Left = "activate_disease" Right = Disease }
+
+} }
+
+(ContextValidator ProvCommand) = { Members = {
+	(N Y) = { Left = "spawn_disease" Right = Disease }
+	(Y  ) = { Left = "reduce_disease" Right = Double }
+
+} }
+
+(ContextValidator CharCommand) = { Members = {
+	(N N) = { Left = "any_hospital" Right = ProvCommand }
+
+	(Y  ) = { Left = "health" Right = Double }
+	(Y  ) = { Left = "death" Right = {
+		Type = Yes
+		Type = {
+			Optional = { Left = "death_reason" Right = DeathReason }
+			Optional = { Left = "killer" Right = { MaybeEventTargetChar } }
+			OneOf = { "death_reason" "killer" }
+		}
+	} }
+	(Y  ) = { Left = "cure_illness" Right = Yes }
+	(Y  ) = { Left = "num_of_hospitals" Right = PInt }
+	(N Y) = { Left = "num_of_hospitals_diff" Right = {
+		Single = { Left = "character" Right = MaybeEventTargetChar }
+		Single = { Left = "value" Right = PInt }
+	} }
+
+} }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

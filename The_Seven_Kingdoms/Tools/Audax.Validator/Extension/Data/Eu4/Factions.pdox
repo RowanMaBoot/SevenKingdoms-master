@@ -1,0 +1,31 @@
+Global = {
+	(Type FactionFile) = {
+		(Ch N N) = { Left = { Type = String } Right = FactionDef UniqueId = Left }
+	}
+}
+
+(Type FactionDef) = {
+	(CheckKey "*" Left IfNot = NoCheckKey)
+	(CheckKey "*_influence" Left IfNot = NoCheckKey)
+	(CheckKey "*_FACTION_DESC" Left IfNot = NoCheckKey)
+	
+	Single = { Left = "monarch_power" Right = Trait }
+	Single = { Left = "modifier" Right = CountryModifierDef }
+	Optional = { Left = "always" Right = Bool }
+
+	Optional = { Left = "rule" Right = Rules }
+	Optional = { Left = "allow" Right = CountryTrigger }
+}
+
+
+(Type Rules) = {
+	Optional = { Left = "can_not_build_colonies" Right = Bool }
+	Optional = { Left = "capped_by_forcelimit" Right = Bool }
+	Optional = { Left = "can_not_build_buildings" Right = Bool }
+	Optional = { Left = "can_not_declare_war" Right = Bool }	
+	
+	#Optional = { Left = "can_not_send_merchants" Right = Bool }
+	#Optional = { Left = "can_not_build_missionaries" Right = Bool }
+}
+
+
