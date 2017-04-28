@@ -87,9 +87,9 @@ NDiplomacy = {
 	PIETY_OPINION_DIV = 50,										-- Divider for piety to church opinion
 	PIETY_OPINION_MAX = 10,										-- Max opinion impact of piety (positive OR negative)	
 	MIN_PREP_INV_TARGET_HOLDINGS = 9,							-- The target must control at least this many holdings within the target kingdom to be a valid prepared invasion target
-	MAX_PREP_INV_TARGET_HOLDINGS = 40,							-- The target must control at the most this many holdings within the target kingdom to be a valid prepared invasion target
-	MAX_PREP_INV_ATTACKER_HOLDINGS = 40,						-- The attacker must have fewer Holdings than this in the realm (disallow Prepared Invasions for rulers who are already very powerful)
-	PREP_INV_REQ_PRESTIGE = 1000,								-- Need to have this much Prestige to prepare an invasion
+	MAX_PREP_INV_TARGET_HOLDINGS = 50,							-- The target must control at the most this many holdings within the target kingdom to be a valid prepared invasion target
+	MAX_PREP_INV_ATTACKER_HOLDINGS = 50,						-- The attacker must have fewer Holdings than this in the realm (disallow Prepared Invasions for rulers who are already very powerful)
+	PREP_INV_REQ_PRESTIGE = 750,								-- Need to have this much Prestige to prepare an invasion
 	BASE_REVOLT_CHANCE_MOD = 250,								-- Pre Old Gods rebel spawn chance modifier (fires on_rebel_revolt) : lower means fewer revolts. MUST NOT BE ZERO.
 	TOG_REVOLT_CHANCE_MOD = 100,								-- Old Gods rebel spawn chance modifier (fires on_rebel_revolt) : lower means fewer revolts. MUST NOT BE ZERO. 
 	JAIN_LIEGE_OPINION_BONUS = 15,								-- Jain Lieges Get Vassal Opinion Bonus
@@ -708,7 +708,17 @@ NDiplomacy = {
 	OFFER_CONSORT_INTERACTION_THRESHOLD_FOR_YES = 0,   	 		-- useless since this is an auto accepted interaction.
 	OFFER_CONSORT_INTERACTION_MUST_HAVE_COST = 0,				-- Is having prestige/piety >= cost required for this action?
 	OFFER_CONSORT_INTERACTION_ENABLED = 1,						-- Should this action be used at all?	
-		
+	
+	GIVE_ARTIFACT_INTERACTION_MONEY = 0,
+	GIVE_ARTIFACT_INTERACTION_PIETY = 0,
+	GIVE_ARTIFACT_INTERACTION_PRESTIGE = 0,
+	GIVE_ARTIFACT_INTERACTION_THRESHOLD_FOR_NO = 0,				-- useless since this is an auto accepted interaction.
+	GIVE_ARTIFACT_INTERACTION_THRESHOLD_FOR_YES = 0,   	 		-- useless since this is an auto accepted interaction.
+	GIVE_ARTIFACT_INTERACTION_MUST_HAVE_COST = 0,				-- Is having prestige/piety >= cost required for this action?
+	GIVE_ARTIFACT_INTERACTION_ENABLED = 1,						-- Should this action be used at all?	
+	
+	ARTIFACT_VALUE_OPINION_MULT = 6.0,								-- Multiplied with Artifact Quality
+	
 	LANDED_SIBLING_PRESTIGE_BONUS = 5,							-- For religions with landed win prestige bonus. Is multiplied with the percentage of how many of your realm they own.
 	LANDED_HALF_SIBLING_PRESTIGE_BONUS = 5,						-- For religions with landed win prestige bonus. Is multiplied with the percentage of how many of your realm they own.
 	LANDED_NIECE_PRESTIGE_BONUS = 2,							-- For religions with landed win prestige bonus. Is multiplied with the percentage of how many of your realm they own.
@@ -752,6 +762,8 @@ NDiplomacy = {
 
 	ALLIANCE_BREAKER_MODIFIER_MONTHS = 3650,				-- How long the alliance breaker temporary modifier lasts
 	TRUCE_BREAKER_MODIFIER_MONTHS = 3650,					-- How long the truce breaker temporary modifier lasts
+
+	DIPLO_ICON_DURATION_DAYS = 96							-- How long incoming diplomatic message stay before being auto declined
 },
 
 NCouncil = {
@@ -803,7 +815,7 @@ NCharacter = {
 	PRESTIGE_FROM_DYNASTY_ON_BIRTH_DIV = 5, 		-- Newly born characters get the dynasty prestige of their mother and father divided by this as their starting prestige
 	PRESTIGE_FROM_DYNASTY_ON_MARRIAGE_DIV = 10, 	-- Characters get the dynasty prestige of the spouse divided by this on marriage
 	NEED_GUARDIAN_AT_AGE = 6, 						-- The age at which children should be appointed a mentor/guardian
-	MAX_WARDS_PER_GUARDIAN = 3,
+	MAX_WARDS_PER_GUARDIAN = 2,
 	ASSIGN_ACTION_DAYS = 183, 						-- Days before a Councillor can be assigned a new job in a county
 	MARRIAGE_TIER_DIFF_PRESTIGE_MULT = 100, 		-- Prestige multiplier from marrying below or above your rank.
 	CONSORT_TIER_PRESTIGE_MULT = 25,				-- Prestige multiplier for rank of consort	
@@ -819,20 +831,20 @@ NCharacter = {
 	MAX_LED_FACTIONS = 2,							-- Maximum number of led Factions
 	MAX_JOINED_FACTIONS = 2,						-- Maximum number of Factions a character can be a member of (including led factions)
 	NON_AGGRESSION_PACT_BLOCKS_FACTIONS = 1,		-- If set to 1 then factions will be blocked for vassals that have a non-aggression pact with their liege.
-	PORTRAIT_ADULT_MALE_AGE_THRESHOLD = 15,			-- Male child to adult age portrait switch
-	PORTRAIT_ADULT_FEMALE_AGE_THRESHOLD = 15,		-- Female child to adult age portrait switch
+	PORTRAIT_ADULT_MALE_AGE_THRESHOLD = 16,			-- Male child to adult age portrait switch
+	PORTRAIT_ADULT_FEMALE_AGE_THRESHOLD = 16,		-- Female child to adult age portrait switch
 	PORTRAIT_MID_AGE_THRESHOLD = 30,				-- Middle age switch for character portraits
 	PORTRAIT_OLD_AGE_THRESHOLD = 50,				-- Old age switch for character portraits
-	AGE_OF_ADULTHOOD_MALE = 15,						-- Male can rule at this age. 
-	AGE_OF_ADULTHOOD_FEMALE = 15,					-- Female can rule at this age.
-	AGE_OF_MARRIAGE_MALE = 14,						-- Male allowed to marry at this age.
-	AGE_OF_MARRIAGE_FEMALE = 14,					-- Female allowed to marry at this age.
+	AGE_OF_ADULTHOOD_MALE = 16,						-- Male can rule at this age. 
+	AGE_OF_ADULTHOOD_FEMALE = 16,					-- Female can rule at this age.
+	AGE_OF_MARRIAGE_MALE = 16,						-- Male allowed to marry at this age.
+	AGE_OF_MARRIAGE_FEMALE = 16,					-- Female allowed to marry at this age.
 	AGE_ADOLESCENT = 12,							-- Children are considered to be adolescent from this age
 	AGE_YOUNG = 20,									-- Non-child characters below this age have the 'teen' static modifier applied
-	AGE_ADULT = 34,									-- Non-child characters below this age have the 'young' static modifier applied
-	AGE_OLD = 58,									-- Non-child characters below this age have the 'adult' static modifier applied
+	AGE_ADULT = 30,									-- Non-child characters below this age have the 'young' static modifier applied
+	AGE_OLD = 50,									-- Non-child characters below this age have the 'adult' static modifier applied
 	AGE_VERY_OLD = 70,								-- Non-child characters below this age have the 'old' static modifier applied
-	MAX_CHILD_BIRTH_AGE = 48,						-- Female menopause age.
+	MAX_CHILD_BIRTH_AGE = 45,						-- Female menopause age.
 	CHILD_BIRTH_TO_PREGNANCY_WAIT = 3,
 	BASE_NR_OF_CHILDREN_PER_COUPLE = 2,
 	EXTRA_NR_OF_CHILDREN_FOR_PLAYERS = 2,
@@ -846,24 +858,24 @@ NCharacter = {
 	NATURAL_DEATH_CHANCE_AGE_20 = 15,				-- Natural deaths per decade out of 10000 people: Age 20-29
 	NATURAL_DEATH_CHANCE_AGE_30 = 20,				-- Natural deaths per decade out of 10000 people: Age 30-39
 	NATURAL_DEATH_CHANCE_AGE_40 = 51,				-- Natural deaths per decade out of 10000 people: Age 40-49
-	NATURAL_DEATH_CHANCE_AGE_50 = 84,				-- Natural deaths per decade out of 10000 people: Age 50-59
-	NATURAL_DEATH_CHANCE_AGE_60 = 211,				-- Natural deaths per decade out of 10000 people: Age 60-69
-	NATURAL_DEATH_CHANCE_AGE_70 = 624,				-- Natural deaths per decade out of 10000 people: Age 70-79
-	NATURAL_DEATH_CHANCE_AGE_80 = 2400,				-- Natural deaths per decade out of 10000 people: Age 80-90
-	NATURAL_DEATH_CHANCE_AGE_90 = 4000,				-- Natural deaths per decade out of 10000 people: Age 90-99
+	NATURAL_DEATH_CHANCE_AGE_50 = 100,				-- Natural deaths per decade out of 10000 people: Age 50-59
+	NATURAL_DEATH_CHANCE_AGE_60 = 400,				-- Natural deaths per decade out of 10000 people: Age 60-69
+	NATURAL_DEATH_CHANCE_AGE_70 = 1400,				-- Natural deaths per decade out of 10000 people: Age 70-79
+	NATURAL_DEATH_CHANCE_AGE_80 = 3500,				-- Natural deaths per decade out of 10000 people: Age 80-90
+	NATURAL_DEATH_CHANCE_AGE_90 = 7000,				-- Natural deaths per decade out of 10000 people: Age 90-99
 	NATURAL_DEATH_CHANCE_AGE_100 = 9000,			-- Natural deaths per decade out of 10000 people: Age 100+
 	FERTILITY_BASE_MULT = 0.50,						-- Base fertility multiplier to adjust the base chance of impregnation
 	SECONDARY_SPOUSE_FERTILITY_MULT = 0.50,			-- Applied to fertility of secondary spouses and concubines
 	NOT_SPOUSE_FERTILITY_MULT = 0.50,				-- Applied to fertility when two lovers are not married
 	MARRIED_LOVERS_FERTILITY_MULT = 1.5,			-- Applied to fertility when lovers are married
-	INFANT_DEATH_CHANCE = 0.01,						-- Chance of stillbirth / death at birth
+	INFANT_DEATH_CHANCE = 0.0,						-- Chance of stillbirth / death at birth
 	EARLY_PORTRAIT_AND_UNIT_BEFORE_YEAR = 950,		-- Before this date, early versions of Units and Portraits will be used if available
 	LATE_PORTRAIT_AND_UNIT_AFTER_YEAR = 1200,		-- After this date, late versions of Units and Portraits will be used if available
 	TRIBAL_EMPTY_HOLDING_LEVY_MULTIPLIER = 0.5,
 	TRIBAL_EMPTY_HOLDING_GARRISON_MULTIPLIER = 0.5,
 	TRIBAL_EMPTY_HOLDING_TAX_MULTIPLIER = 0.5,
 	MALE_ATTRACTION_CUTOFF = 65,					-- After this age, the sex appeal of traits no longer have any effect
-	FEMALE_ATTRACTION_CUTOFF = 48,					-- After this age, the sex appeal of traits no longer have any effect
+	FEMALE_ATTRACTION_CUTOFF = 45,					-- After this age, the sex appeal of traits no longer have any effect
 	ADULT_DIPLOMACY_OPINION_SUB_FACTOR = 4,			-- Adult diplomacy factor affecting opinion value
 	ADULT_DIPLOMACY_OPINION_MUL_FACTOR = 1.5,			-- Adult diplomacy factor affecting opinion value
 	CHILD_DIPLOMACY_OPINION_SUB_FACTOR = 4,			-- Adult diplomacy factor affecting opinion value
@@ -1160,7 +1172,7 @@ NMilitary = {
 	MIN_COMBAT_DAYS = 8,							-- Minimum number of days in combat
 	NUMBER_OF_RETREAT_DAYS = 8,					-- Number of days before you retreat successfully
 	NUMBER_OF_TROOPS_PER_GALLEY = 100,				-- Number of men each galley can hold
-	FRIENDLY_TERRITORY_LEVY_RETURN_PERCENT = 0.9,	-- Percent of subunit that returns to levy when unit is disbanded in friendly territory
+	FRIENDLY_TERRITORY_LEVY_RETURN_PERCENT = 1.0,	-- Percent of subunit that returns to levy when unit is disbanded in friendly territory
 	OTHER_TERRITORY_LEVY_RETURN_PERCENT = 0.5,		-- Percent of subunit that returns to levy when unit is disbanded in non-friendly territory
 	LEVY_MAINTENANCE_FACTOR = 1.5,					-- General maintenance factor for levy troops
 	HOLDING_LEVY_SIZE_OWNER_MARTIAL_BASE = 0.50,	
@@ -1190,7 +1202,7 @@ NMilitary = {
 	SIEGE_MORALE_LOSS = 0.2,						-- Monthly morale loss in a siege
 	DAYS_BETWEEN_COMBAT_EVENTS = 10,				-- Combat events will happen every this many days
 	BATTLE_PRESTIGE_MULTIPLIER = 10,				-- Total prestige gained in the battle will be this * ( losers losses ) / 1000
-	BATTLE_TECH_MULTIPLIER = 0.0,					-- Military tech gain from battles multiplier.
+	BATTLE_TECH_MULTIPLIER = 0.5,					-- Military tech gain from battles multiplier.
 	MAINLEADER_PRESTIGE_PART = 0.35,				-- The % of the total prestige gained in the battle that the center flank leader will get
 	FLANKLEADER_PRESTIGE_PART = 0.125,				-- The % of the total prestige gained in the battle that each other flank leader will get
 	BATTLE_UNIT_OWNER_PRESTIGE_MULT = 0.5,			-- The % of the total prestige gained in the battle that will be divided among the participating unit owners
@@ -1221,14 +1233,14 @@ NMilitary = {
 	ENEMY_SETTLEMENT_SUPPLY_BONUS = -0.1,			-- Supply bonus from enemy settlements(woot!)
 	NEARBY_SETTLEMENT_SINGLE_SUPPLY_BONUS = 0.75,	-- Bonus for nearby settlement, if not controlling one yourself
 	MAX_ATTRITION_LEADER_REDUCTION = -0.1,			-- Center leader reduces max attrition(reduction in actual percent)
-	ATTRITION_LEVEL_FACTOR = 0.7,					-- A general "attrition per month" multiplier
-	ATTRITION_LEVEL_FACTOR_50_OVER = 1.5,			-- A general "attrition per month" multiplier when 50% over the supply limit
-	ATTRITION_LEVEL_FACTOR_100_OVER = 3.0,			-- A general "attrition per month" multiplier when 100% over the supply limit
+	ATTRITION_LEVEL_FACTOR = 0.5,					-- A general "attrition per month" multiplier
+	ATTRITION_LEVEL_FACTOR_50_OVER = 1.0,			-- A general "attrition per month" multiplier when 50% over the supply limit
+	ATTRITION_LEVEL_FACTOR_100_OVER = 2.0,			-- A general "attrition per month" multiplier when 100% over the supply limit
 	COASTAL_SUPPLY_BONUS = 0.5,						-- Supply bonus in coastal provinces
 	PAGAN_HOME_SUPPLY_MOD = 0.12,					-- Non Pagans suffer extreme attrition in some Pagan homelands (based on province religion)
 	NAVAL_ATTRITION = 0.0,							-- Attrition taken monthly by units loaded on ships
-	ARMY_MOVEMENT_SPEED = 2,						-- Base movement speed of land units
-	NAVY_MOVEMENT_SPEED = 10,						-- Base movement speed of naval units
+	ARMY_MOVEMENT_SPEED = 3,						-- Base movement speed of land units
+	NAVY_MOVEMENT_SPEED = 15,						-- Base movement speed of naval units
 	ARMY_LOAD_MOVE_COST = 20.0,						-- Movement cost for moving armies onto fleets at sea.
 	ARMY_UNLOAD_MOVE_COST = 20.0,					-- Movement cost for moving armies off fleets at sea.
 	OVERRUN_RATIO = 25,								-- Ratio needed for total extermination of enemy units
@@ -1448,26 +1460,26 @@ NMilitary = {
 },
 
 NTechnology = {
-	DONT_EXECUTE_TECH_BEFORE = 6000,				-- Set this to your earliest starting year
-	POINTS_PER_ATTRIBUTE = 0.00,
+	DONT_EXECUTE_TECH_BEFORE = 769,				-- Set this to your earliest starting year
+	POINTS_PER_ATTRIBUTE = 0.04,
 
-	BASE_NEIGHBOUR_SPREAD_BONUS = 0.00, 		-- bonus for each neighbour with the tech
-	NEIGHBOUR_SAME_RELIGON_GROUP_MULT = 0.0, 	-- multiplier to the above bonus if neighbour is of your religious group
-	BASE_DEMESNE_SPREAD_BONUS = 0.00, 			-- bonus for each other province in demesne with the tech
-	MAX_DEMESNE_BONUS = 0.0, 					-- maximum bonus from demesne
-	TRADEPOST_SPREAD_BONUS = 0.000, 			-- Spread from trade posts
-	SPYACTION_SPREAD_BONUS = 0.000,				-- Spread from the target of the study technology spymaster action
+	BASE_NEIGHBOUR_SPREAD_BONUS = 0.03, 		-- bonus for each neighbour with the tech
+	NEIGHBOUR_SAME_RELIGON_GROUP_MULT = 2.0, 	-- multiplier to the above bonus if neighbour is of your religious group
+	BASE_DEMESNE_SPREAD_BONUS = 0.06, 			-- bonus for each other province in demesne with the tech
+	MAX_DEMESNE_BONUS = 0.3, 					-- maximum bonus from demesne
+	TRADEPOST_SPREAD_BONUS = 0.002, 			-- Spread from trade posts
+	SPYACTION_SPREAD_BONUS = 0.006,				-- Spread from the target of the study technology spymaster action
 	
-	IDEAL_YEAR_LEVEL_0 = 6000, 					-- the chance to get a progress to this level will increase after this date and decrease before it
-	IDEAL_YEAR_LEVEL_8 = 8900,
-	IDEAL_YEAR_AHEAD_PENALTY_INVEST = 0.0,		-- Percent increase in cost pre level ahead of ideal date
+	IDEAL_YEAR_LEVEL_0 = 700, 					-- the chance to get a progress to this level will increase after this date and decrease before it
+	IDEAL_YEAR_LEVEL_8 = 1500,
+	IDEAL_YEAR_AHEAD_PENALTY_INVEST = 0.6,		-- Percent increase in cost pre level ahead of ideal date
 	
 	PAGAN_HOME_ATTRITION_REMOVAL_LEVEL = 4.0,
 
 	NOMAD_TRIBUTARY_LEECH_RATIO = 10,			-- Nomads leeches 0.01% of the tech growth of their tributaries
 	
-	BASE_FROM_NOMAD_CAPITAL_SPREAD_BONUS = 0.00,-- bonus for nomad capital with the tech
-	BASE_TO_NOMAD_CAPITAL_SPREAD_BONUS = 0.0	-- bonus for the province the nomad capital resides in
+	BASE_FROM_NOMAD_CAPITAL_SPREAD_BONUS = 0.09,-- bonus for nomad capital with the tech
+	BASE_TO_NOMAD_CAPITAL_SPREAD_BONUS = 0.2	-- bonus for the province the nomad capital resides in
 },  
 
 NDisease = {
@@ -1537,7 +1549,7 @@ NAI =
 	MIL_AI_COUNTER_INVADE_DISTANCE_THRESHOLD = 120,			-- Defenders in wars will not counter invade past this distance
 	CRUSADE_CREATION_MONTH_DELAY = 360,						-- Months from the end of one Crusade before the AI will call a new one
 	NAVAL_INVASION_RANGE = 100,								-- Factor which increase AI invasion range if set higher
-	DOW_AGGRESSION_FACTOR = 0.75,							-- General aggressiveness declarations of war
+	DOW_AGGRESSION_FACTOR = 0.66,							-- General aggressiveness declarations of war
 	MARRIAGE_AI_PRESTIGE_VALUE = 0.33,						-- Multiplier for how highly AI values prestige when arranging marriages and evaluating marriage offers
 	MAX_KING_TITLES_TO_CREATE = 0,							-- AI will not seek to create/usurp more King-level titles than this (0 for unlimited)
 	MAX_EMPIRE_TITLES_TO_CREATE = 0,						-- AI will not seek to create/usurp more Empire-level titles than this (0 for unlimited)
@@ -1692,13 +1704,6 @@ NFrontend =
 	MP_OPTIONS_LOOK_X = 490.0,
 	MP_OPTIONS_LOOK_Y = 0.0,	
 	MP_OPTIONS_LOOK_Z = 1200.0,
-	
-	TUTORIAL_POS_X = 600.0,
-	TUTORIAL_POS_Y = 150.0,
-	TUTORIAL_POS_Z = 1248.0,
-	TUTORIAL_LOOK_X = 450.0,
-	TUTORIAL_LOOK_Y = 0.0,	
-	TUTORIAL_LOOK_Z = 1398.0,
 	
 	CREDITS_POS_X = 1000.0,
 	CREDITS_POS_Y = 200.0,
