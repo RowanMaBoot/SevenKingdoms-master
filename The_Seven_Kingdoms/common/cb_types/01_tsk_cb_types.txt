@@ -39,13 +39,19 @@ tsk_county_conquest = {
 	can_use = {
 		ROOT = {
 			NOT = { same_realm = FROM }
-			primary_title = { higher_tier_than = COUNT } 
 			mercenary = no
+			OR = {
+				primary_title = { higher_tier_than = DUKE }
+				AND = {
+					primary_title = { higher_tier_than = COUNT } 
+					religion_group = drowned_god_group
+				}
+			}
 		}
 	}
 
 	can_use_title = {
-		tier = count
+		tier = COUNT
 		OR = {
 			FROM = {
 				has_landed_title = PREV
@@ -68,12 +74,21 @@ tsk_county_conquest = {
 			}
 		}
 		
-		location = {
-			any_neighbor_province = {
-				owner = {
-					OR = {
-						character = ROOT
-						is_liege_or_above = ROOT
+		OR = {
+			AND = {
+				ROOT = { religion_group = drowned_god_group }
+				FROM = { NOT = { religion_group = drowned_god_group } }
+				location = {
+					port = yes
+				}
+			}
+			location = {
+				any_neighbor_province = {
+					owner = {
+						OR = {
+							character = ROOT
+							is_liege_or_above = ROOT
+						}
 					}
 				}
 			}
@@ -233,13 +248,13 @@ tsk_duchy_conquest = {
 	can_use = {
 		ROOT = {
 			NOT = { same_realm = FROM }
-			primary_title = { higher_tier_than = DUKE } 
+			primary_title = { higher_tier_than = KING } 
 			mercenary = no
 		}
 	}
 
 	can_use_title = {
-		tier = duchy
+		tier = DUKE
 		
 		OR = {
 			FROM = {
