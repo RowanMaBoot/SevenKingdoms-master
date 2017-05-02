@@ -18,6 +18,8 @@ namespace = administration_main
 # Twice a year it will try to remove the modifier
 # On inheriting the title, it will try to remove the modifier
 
+# non functional because I am a derp and did not know what I was doing
+
 #################
 ### THE EVENT ###
 #################
@@ -35,13 +37,16 @@ province_event = {
 		# Make sure we don't have the modifier already
 		NOT = {
 			has_province_modifier = wrong_duchy_administration
-		}
-		# Checks the province Duchy
-		duchy = {
-			# Checks the Holder of the Duchy
-			holder_scope = {
-				# Checks if the controller of the province, ROOT, controls the Duchy
-				NOT = { character = ROOT }
+			
+			# Checks the province Duchy
+			duchy = {
+				# Checks the Holder of the Duchy
+				holder_scope = {
+					# Checks if the controller of the province, ROOT, controls the Duchy
+					owner = {
+						character = ROOT
+					}
+				}
 			}
 		}
 	}
@@ -67,7 +72,9 @@ province_event = {
 			# Checks the Holder of the Duchy
 			holder_scope = {
 				# Checks if the controller of the province, ROOT, controls the Duchy
-				character = ROOT
+				owner = {
+					character = ROOT
+				}
 			}
 		}
 	}
