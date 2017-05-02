@@ -1,0 +1,78 @@
+namespace = administration_main
+
+##############################
+##### MODIFIER REFERENCE #####
+##############################
+##############################
+
+# wrong_duchy_administration
+## Wrong Duchy Administration serves to nerf taking of counties outside of duchies you
+## personally own by giving them a large debuff to tax income, levy size and bolstering
+## revolt risk in said province.
+
+# Province events have a similar impact to playable only events.
+
+# Every year it will try to add the modifier
+# On usurping the title, it will try to add the modifier
+
+# Twice a year it will try to remove the modifier
+# On inheriting the title, it will try to remove the modifier
+
+#################
+### THE EVENT ###
+#################
+#################
+
+# Main Event
+
+province_event = { 
+	id = administration_main.1
+	hide_window = yes
+	
+	is_triggered_only = yes # on_action yearly pulse event
+	
+	trigger = {
+		# Make sure we don't have the modifier already
+		NOT = {
+			has_province_modifier = wrong_duchy_administration
+		}
+		# Checks the province Duchy
+		duchy = {
+			# Checks the Holder of the Duchy
+			holder_scope = {
+				# Checks if the controller of the province, ROOT, controls the Duchy
+				NOT = { character = ROOT }
+			}
+		}
+	}
+	
+	immediate = {
+		add_province_modifier = { name = wrong_duchy_administration duration = -1 }
+	}
+}
+
+# Clean up
+
+province_event = { 
+	id = administration_main.2
+	hide_window = yes
+	
+	is_triggered_only = yes # on_action yearly pulse event
+	
+	trigger = {
+		# Make sure the province has the modifier
+		has_province_modifier = wrong_duchy_administration
+		# Checks the province Duchy
+		duchy = {
+			# Checks the Holder of the Duchy
+			holder_scope = {
+				# Checks if the controller of the province, ROOT, controls the Duchy
+				character = ROOT
+			}
+		}
+	}
+	
+	immediate = {
+		remove_province_modifier = wrong_duchy_administration
+	}
+}
