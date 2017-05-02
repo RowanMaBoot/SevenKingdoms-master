@@ -22,10 +22,10 @@ tsk_county_conquest = {
 	allowed_to_target_tributaries = no
 	allowed_to_target_suzerains = no
 	
-	# You require 200 prestige to use
+	# You require 300 prestige to use
 	can_use_gui = {
 		ROOT = {
-			prestige = 200
+			prestige = 300
 			NOT = {
 				trait = content
 			}
@@ -33,7 +33,7 @@ tsk_county_conquest = {
 	}
 	
 	on_add = {
-		ROOT = { prestige = -200 }
+		ROOT = { prestige = -300 }
 	}
 	
 	can_use = {
@@ -52,6 +52,21 @@ tsk_county_conquest = {
 
 	can_use_title = {
 		tier = COUNT
+		
+		# This block checks if the target holder is an AI.
+		# If they are not an AI, check if the location is their capital.
+		# If it is their capital, 
+		NOT = {
+			AND = {
+				FROM = {
+					ai = no
+				}
+				location = {
+					is_capital = no
+				}
+			}
+		}
+		
 		OR = {
 			FROM = {
 				has_landed_title = PREV
@@ -153,7 +168,7 @@ tsk_county_conquest = {
 
 	on_fail_title = {
 		ROOT = {
-			prestige = -100
+			prestige = -200
 		}
 	
 		any_defender = {
