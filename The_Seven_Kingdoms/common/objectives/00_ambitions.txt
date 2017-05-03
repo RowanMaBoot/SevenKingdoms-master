@@ -2643,3 +2643,54 @@ obj_see_the_realm_prosper = {
 		}
 	}
 }
+
+obj_train_dueling = {
+	type = character
+	
+	potential = {
+	is_adult = yes
+	is_playable = yes
+	NOT = { age = 40 }
+	}
+	
+	allow = {
+		NOT = { trait = incapable }
+		NOT = { trait = infirm }
+		NOT = { trait = blind }
+		NOT = { trait = maimed }
+		NOT = { trait = dwarf }
+		NOT = { trait = weak }
+		NOT = { has_character_flag = obj_train_dueling }
+	}
+	chance = {
+		factor = 100
+		modifier = { 
+			is_female = yes
+			factor = 0.5
+		}
+	}
+	success = { 
+		OR = {
+			trait = dueling_adept
+			trait = dueling_skilled
+			trait = dueling_expert
+			trait = dueling_master
+			trait = dueling_legend
+		}
+	}
+	abort = {
+		OR = {
+			trait = maimed
+			trait = incapable
+			trait = infirm
+			age = 40
+		}
+	}
+	abort_effect = {
+	}
+	effect = {
+		prestige = 20
+		set_character_flag = obj_train_dueling
+	}
+}
+	
