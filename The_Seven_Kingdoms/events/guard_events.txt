@@ -1,149 +1,539 @@
-##Forming the Sunguard##
-namespace = sunguard
+###Roseguard###
+namespace = roseguard
 character_event = {
-	id = sunguard.1
-	desc = "EVTDESCsunguard.1"
+	id = roseguard.1001
+	desc = "EVTDESCroseguard.1001"
 	
 	only_independent = yes
 	
-	trigger = { 
-		has_landed_title = e_dorne
+	trigger = {
+		has_landed_title = e_the_reach
+		
+		has_global_flag = roseguard_recruiting
+		
+		OR = {
+			had_character_flag = { flag = ignore_roseguard days = 365 } 
+			NOT = { has_character_flag = ignore_roseguard }	
+		}
+		
 		NOT = {
-			sunguard = {
+			roseguard = {
+				is_alive = yes
 				count = 7
 			}
 		}
-		OR = { 
-			has_global_flag = sunguard_recruiting
+		OR = {
+			has_global_flag = roseguard_recruiting
+			is_title_active = d_roseguard
 		}
+		
 		any_realm_character = {
 			is_female = no
 			is_married = no
 			prisoner = no
 			age = 16
+			NOT = { character = ROOT }
 			is_ruler = no
+			NOT = { is_rival = ROOT }
+			NOT = { has_character_flag = refused_roseguard }	
 			OR = {
-				trait = dueling_novice
-				trait = dueling_adept
 				trait = dueling_skilled
 				trait = dueling_expert
 				trait = dueling_master
 				trait = dueling_legend
 			}
-		}
+		}	
 	}
 	
 	mean_time_to_happen = {
-		days = 12
+		months = 1
 	}
 	
 	option = {
-		name = "EVTOPTAsunguard.1"
+		name = "EVTOPTAroseguard.1001" ##Ferocius Fighters##
+		
 		trigger = {
 			any_realm_character = {
 				is_female = no
 				is_married = no
-				age = 16
 				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
 				is_ruler = no
+				{ is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
 				OR = {
-					trait = dueling_novice
-					trait = dueling_adept
 					trait = dueling_skilled
 					trait = dueling_expert
 					trait = dueling_master
 					trait = dueling_legend
+				}
+				OR = {
 					martial = 18
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+			}
+		}
+		
+		ai_chance = {
+			factor = 2
+			modifier = {
+				factor = 3
+				OR = {
+					trait = diligent
+					trait = weak
+					trait = honest
+					trait = just
+				}
+			}
+		}
+		
+		character_event = { id = roseguard.1002 }
+	}
+	
+	option = {
+		name = "EVTOPTBroseguard.2001" ##Faithful Friends##
+		
+		trigger = {
+			any_realm_character = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					AND = {
+						OR = {
+							trait = dueling_skilled
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+						}
+						OR = {
+							trait = dueling_skilled
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+							martial = 12
+							trait = strong
+							trait = brave
+							trait = tall
+							trait = quick
+							trait = genius
+						}
+						opinion = { who = ROOT value =  75 }
+					}
+					AND = {
+						OR = {
+							trait = dueling_skilled
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+						}
+						OR = {
+							trait = dueling_skilled
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+							martial = 12
+							trait = strong
+							trait = brave
+							trait = tall
+							trait = quick
+							trait = genius
+						}
+						opinion = { who = ROOT value =  60 }
+					}
 				}
 			}
 		}
 		
 		ai_chance = {
-			factor = 1
+			factor = 2
+			modifier = {
+				factor = 3
+				OR = {
+					trait = deceitful
+					trait = arbitrary
+					trait = paranoid
+				}
+			}
 		}
 		
-		character_event = sunguard.2
+		character_event = { id = roseguard.1003 }
+	}
+	
+	option = {
+		name = "EVTOPTCroseguard.1001" ##Vassal Children##	
+		trigger = {
+			any_realm_character = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+				OR = {
+					martial = 12
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+				father = {
+					war = no
+					is_alive = yes
+					is_ruler = yes
+					tier = duke
+					num_of_children = 2
+				}
+			}
+			NOT = {
+				any_realm_character = {
+					is_female = no
+					is_married = no
+					prisoner = no
+					age = 16
+					NOT = { character = ROOT }
+					is_ruler = no
+					NOT = { is_rival = ROOT }
+					NOT = { has_character_flag = refused_roseguard }	
+					OR = {
+						trait = dueling_skilled
+						trait = dueling_expert
+						trait = dueling_master
+						trait = dueling_legend
+					}
+					OR = {
+						martial = 10
+						trait = strong
+						trait = brave
+						trait = tall
+						trait = quick
+						trait = genius
+					}	
+					father = {
+						war = no
+						is_alive = yes
+						is_ruler = yes
+						tier = king
+						num_of_children = 2
+					}
+				}
+			}	
+		}
+		
+		ai_chance = {
+			factor = 1
+			modifier = {
+				factor = 4
+				OR = {
+					trait = greedy
+					trait = envious
+					trait = ambitious
+				}
+			}
+		}
+		
+		character_event = { id = roseguard.1004 }
+	}
+	
+	option = {
+		name = "EVTOPTDroseguard.1001" ##Strong Family children##
+		
+		trigger = {
+			any_realm_character = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+				OR = {
+					martial = 10
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+				father = {
+					war = no
+					is_alive = yes
+					is_ruler = yes
+					tier = king
+					num_of_children = 2
+				}
+			}
+		}
+		
+		ai_chance = {
+			factor = 2
+			modifier = {
+				factor = 3
+				OR = {
+					trait = greedy
+					trait = envious
+					trait = ambitious
+				}
+			}
+		}
+		
+		character_event = { id = roseguard.1006 }
+	}
+	#No suitable candidates
+	option = {
+		name = "EVTOPTF2001" #Weak people#
+		trigger = {
+			NOT = {
+				any_realm_character = {
+					is_female = no
+					is_married = no
+					prisoner = no
+					age = 14
+					NOT = { character = ROOT }
+					is_ruler = no
+					NOT = { is_rival = ROOT }
+					NOT = { has_character_flag = refused_roseguard }	
+					OR = {
+						AND = {
+							OR = {
+								trait = dueling_skilled
+								trait = dueling_expert
+								trait = dueling_master
+								trait = dueling_legend
+							}
+							OR = {
+								martial = 15
+								trait = strong
+								trait = brave
+								trait = tall
+								trait = quick
+								trait = genius
+							}	
+						}
+						AND = {
+							OR = {
+								trait = dueling_novice
+								trait = dueling_adept
+								trait = dueling_skilled
+								trait = dueling_expert
+								trait = dueling_master
+								trait = dueling_legend
+							}
+							OR = {
+								trait = dueling_expert
+								trait = dueling_master
+								trait = dueling_legend
+								martial = 10
+								trait = strong
+								trait = brave
+								trait = tall
+								trait = quick
+								trait = genius
+							}
+							opinion = { who = ROOT value =  50 }
+						}
+						AND = {
+							OR = {
+								trait = dueling_expert
+								trait = dueling_master
+								trait = dueling_legend
+							}
+							OR = {
+								trait = dueling_expert
+								trait = dueling_master
+								trait = dueling_legend
+								martial = 16
+								trait = strong
+								trait = brave
+								trait = tall
+								trait = quick
+								trait = genius
+							}
+							opinion = { who = ROOT value =  40 }
+						}
+						AND = {
+							OR = {
+								trait = dueling_skilled
+								trait = dueling_expert
+								trait = dueling_master
+								trait = dueling_legend
+							}
+							OR = {
+								martial = 14
+								trait = strong
+								trait = brave
+								trait = tall
+								trait = quick
+								trait = genius
+							}	
+							father = {
+								war = no
+								is_alive = yes
+								is_ruler = yes
+								OR = {
+									tier = duke
+									tier = king
+								}	
+								num_of_children = 2
+							}
+						}
+					}
+				}
+			}
+			#Weak Choice#
+			any_realm_character = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+			}	
+		}
+		character_event = { id = roseguard.1057 }
+	}	
+	option = {
+		name = "EVTOPTEroseguard.1001" #No one is ready#.
+		trigger = { ai = no }
+		set_character_flag = ignore_roseguard
 	}
 }
 
-##Fearsome Fighters##
+##Ferocious Fighters##
 character_event = {
-	id = sunguard.2
-	desc = "EVTDESCsunguard.2"
+	id = roseguard.1002
+	desc = "EVTDESCroseguard.1002"
 	
 	is_triggered_only = yes
-	
+
 	immediate = {
 		random_realm_character = {
 			limit = {
 				is_female = no
 				is_married = no
-				age = 16
 				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
 				is_ruler = no
-				trait = dueling_novice
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
 				OR = {
-					trait = dueling_adept
-					trait = dueling_skilled
 					trait = dueling_expert
 					trait = dueling_master
 					trait = dueling_legend
-					martial = 18
 				}
+				OR = {
+					martial = 18
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
 			}
-			set_character_flag = sunguard_1
+			set_character_flag = roseguard_1
 		}
 		random_realm_character = {
 			limit = {
 				is_female = no
 				is_married = no
-				age = 16
 				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
 				is_ruler = no
-				trait = dueling_novice
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
 				OR = {
-					trait = dueling_adept
-					trait = dueling_skilled
 					trait = dueling_expert
 					trait = dueling_master
 					trait = dueling_legend
-					martial = 18
 				}
+				OR = {
+					martial = 18
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+				NOT = { has_character_flag = roseguard_1 }
 			}
-			set_character_flag = sunguard_2
+			set_character_flag = roseguard_2
 		}
 		random_realm_character = {
 			limit = {
 				is_female = no
 				is_married = no
-				age = 16
 				prisoner = no
+				age = 16
 				is_ruler = no
-				trait = dueling_novice
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
 				OR = {
-					trait = dueling_adept
-					trait = dueling_skilled
 					trait = dueling_expert
 					trait = dueling_master
 					trait = dueling_legend
-					martial = 18
 				}
+				OR = {
+					martial = 18
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+				NOT = { has_character_flag = roseguard_1 }
+				NOT = { has_character_flag = roseguard_2 }
 			}
-			set_character_flag = sunguard_3
+			set_character_flag = roseguard_3
 		}
 	}
 	
 	option = {
-		name = "EVTOPTAsunguard.2"
-		trigger = { any_realm_character = { has_character_flag = sunguard_1 } }		
+		name = "EVTOPTAroseguard.1002" #This one#
+		trigger = { any_realm_character = { has_character_flag = roseguard_1 } }		
 		random_realm_character = {
-			limit = { has_character_flag = sunguard_1 }		
+			limit = { has_character_flag = roseguard_1 }		
 			if = {
 				limit = { 
 					is_primary_heir = yes 
 					father = { NOT = { character = ROOT } }
 				}
-				character_event = { id = sunguard.3 }
+				character_event = { id = roseguard.1046 } #Annoy parent#
 			}
 			if = {
 				limit = { 
@@ -152,28 +542,29 @@ character_event = {
 						father = { character = ROOT }
 					}	
 				}
-				character_event = { id = sunguard.3 }
-			}
+				character_event = { id = roseguard.1005 }
+			}				
 		}
-			hidden_tooltip = {
+		hidden_tooltip = {
 			any_realm_character = {
-				clr_character_flag = sunguard_1	
-				clr_character_flag = sunguard_2	
-				clr_character_flag = sunguard_3
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
 			}
 		}
 	}
+	
 	option = {
-		name = "EVTOPTBsunguard.2"
-		trigger = { any_realm_character = { has_character_flag = sunguard_2 } }	
+		name = "EVTOPTAroseguard.1002" #This one#	
+		trigger = { any_realm_character = { has_character_flag = roseguard_2 } }
 		random_realm_character = {
-			limit = { has_character_flag = sunguard_2 }		
+			limit = { has_character_flag = roseguard_2 }		
 			if = {
 				limit = { 
 					is_primary_heir = yes 
 					father = { NOT = { character = ROOT } }
 				}
-				character_event = { id = sunguard.3 }
+				character_event = { id = roseguard.1046 } #Annoy parent#
 			}
 			if = {
 				limit = { 
@@ -182,28 +573,29 @@ character_event = {
 						father = { character = ROOT }
 					}	
 				}
-				character_event = { id = sunguard.3 }
-			}
-		}
-			hidden_tooltip = {
+				character_event = { id = roseguard.1005 }
+			}				
+		}	
+		hidden_tooltip = {
 			any_realm_character = {
-				clr_character_flag = sunguard_1		
-				clr_character_flag = sunguard_2
-				clr_character_flag = sunguard_3
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
 			}
 		}
 	}
+	
 	option = {
-		name = "EVTOPTCsunguard.2"
-		trigger = { any_realm_character = { has_character_flag = sunguard_3 } }		
+		name = "EVTOPTAroseguard.1002" #This one#	
+		trigger = { any_realm_character = { has_character_flag = roseguard_3 } }
 		random_realm_character = {
-			limit = { has_character_flag = sunguard_3 }		
+			limit = { has_character_flag = roseguard_3 }		
 			if = {
 				limit = { 
 					is_primary_heir = yes 
 					father = { NOT = { character = ROOT } }
 				}
-				character_event = { id = sunguard.3 }
+				character_event = { id = roseguard.1046 } #annoy_parent
 			}
 			if = {
 				limit = { 
@@ -212,14 +604,932 @@ character_event = {
 						father = { character = ROOT }
 					}	
 				}
-				character_event = { id = sunguard.3 }
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
 			}
 		}
-			hidden_tooltip = {
+	}
+	
+	option = {
+		name = "EVTOPTDroseguard.1002" #None
+		trigger = { ai = no }
+		hidden_tooltip = {
 			any_realm_character = {
-				clr_character_flag = sunguard_1
-				clr_character_flag = sunguard_2
-				clr_character_flag = sunguard_3
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+}
+
+##Faithful Friends##
+character_event = {
+	id = roseguard.1003
+	desc = "EVTDESCroseguard.1003"
+	
+	is_triggered_only = yes
+
+	immediate = {
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					AND = {
+						OR = {
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+						}
+						OR = {
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+							martial = 12
+							trait = strong
+							trait = brave
+							trait = tall
+							trait = quick
+							trait = genius
+						}
+						opinion = { who = ROOT value =  75 }
+					}
+					AND = {
+						OR = {
+							trait = dueling_skilled
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+						}
+						OR = {
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+							martial = 14
+							trait = strong
+							trait = brave
+							trait = tall
+							trait = quick
+							trait = genius
+						}
+						opinion = { who = ROOT value =  50 }
+					}
+				}
+			}
+			set_character_flag = roseguard_1
+		}
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					AND = {
+						OR = {
+							trait = dueling_skilled
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+						}
+						OR = {
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+							martial = 10
+							trait = strong
+							trait = brave
+							trait = tall
+							trait = quick
+							trait = genius
+						}
+						opinion = { who = ROOT value =  75 }
+					}
+					AND = {
+						OR = {
+							trait = dueling_skilled
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+						}
+						OR = {
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+							martial = 14
+							trait = strong
+							trait = brave
+							trait = tall
+							trait = quick
+							trait = genius
+						}
+						opinion = { who = ROOT value =  50 }
+					}
+				}
+				NOT = { has_character_flag = roseguard_1 }
+			}
+			set_character_flag = roseguard_2
+		}
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					AND = {
+						OR = {
+							trait = dueling_skilled
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+						}
+						OR = {
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+							martial = 10
+							trait = strong
+							trait = brave
+							trait = tall
+							trait = quick
+							trait = genius
+						}
+						opinion = { who = ROOT value =  75 }
+					}
+					AND = {
+						OR = {
+							trait = dueling_skilled
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+						}
+						OR = {
+							trait = dueling_expert
+							trait = dueling_master
+							trait = dueling_legend
+							martial = 14
+							trait = strong
+							trait = brave
+							trait = tall
+							trait = quick
+							trait = genius
+						}
+						opinion = { who = ROOT value =  50 }
+					}
+				}
+				NOT = { has_character_flag = roseguard_1 }
+				NOT = { has_character_flag = roseguard_2 }
+			}
+			set_character_flag = roseguard_3
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this one	
+		trigger = { any_realm_character = { has_character_flag = roseguard_1 } }	
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_1 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this_one	
+		trigger = { any_realm_character = { has_character_flag = roseguard_2 } }
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_2 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this_one
+		trigger = { any_realm_character = { has_character_flag = roseguard_3 } }
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_3 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTDroseguard.1002" #No one 
+		trigger = { ai = no }
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+}
+
+##Important Family##
+character_event = {
+	id = roseguard.1004
+	desc = "EVTDESCroseguard.1004"
+	
+	is_triggered_only = yes
+
+	immediate = {
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+				OR = {
+					martial = 14
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+				father = {
+					war = no
+					is_alive = yes
+					is_ruler = yes
+					#opinion = { who = ROOT value = 0 }
+					tier = duke
+					num_of_children = 2
+				}
+			}
+			set_character_flag = roseguard_1
+		}
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+				OR = {
+					martial = 14
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+				father = {
+					war = no
+					is_alive = yes
+					is_ruler = yes
+					#opinion = { who = ROOT value = 0 }
+					tier = duke
+					num_of_children = 2
+				}
+				NOT = { has_character_flag = roseguard_1 }
+			}
+			set_character_flag = roseguard_2
+		}
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+				OR = {
+					martial = 14
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+				father = {
+					war = no
+					is_alive = yes
+					is_ruler = yes
+					#opinion = { who = ROOT value = 0 }
+					tier = duke
+					num_of_children = 2
+				}
+				NOT = { has_character_flag = roseguard_1 }
+				NOT = { has_character_flag = roseguard_2 }
+			}
+			set_character_flag = roseguard_3
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this one	
+		trigger = { any_realm_character = { has_character_flag = roseguard_1 } }	
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_1 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this_one	
+		trigger = { any_realm_character = { has_character_flag = roseguard_2 } }
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_2 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this_one
+		trigger = { any_realm_character = { has_character_flag = roseguard_3 } }
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_3 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTDroseguard.1002" #No one 
+		trigger = { ai = no }
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+}
+
+##King Family##
+character_event = {
+	id = roseguard.1006
+	desc = "EVTDESCroseguard.1006"
+	
+	is_triggered_only = yes
+
+	immediate = {
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+				OR = {
+					martial = 10
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+				father = {
+					war = no
+					is_alive = yes
+					is_ruler = yes
+					tier = king
+					num_of_children = 2
+				}
+			}
+			set_character_flag = roseguard_1
+		}
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+				OR = {
+					martial = 10
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+				father = {
+					war = no
+					is_alive = yes
+					is_ruler = yes
+					tier = king
+					num_of_children = 2
+				}
+				NOT = { has_character_flag = roseguard_1 }
+			}
+			set_character_flag = roseguard_2
+		}
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+				OR = {
+					martial = 10
+					trait = strong
+					trait = brave
+					trait = tall
+					trait = quick
+					trait = genius
+				}	
+				father = {
+					war = no
+					is_alive = yes
+					is_ruler = yes
+					tier = king
+					num_of_children = 2
+				}
+				NOT = { has_character_flag = roseguard_1 }
+				NOT = { has_character_flag = roseguard_2 }
+			}
+			set_character_flag = roseguard_3
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this one	
+		trigger = { any_realm_character = { has_character_flag = roseguard_1 } }	
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_1 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this_one	
+		trigger = { any_realm_character = { has_character_flag = roseguard_2 } }
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_2 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this_one
+		trigger = { any_realm_character = { has_character_flag = roseguard_3 } }
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_3 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTDroseguard.1002" #No one 
+		trigger = { ai = no }
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+}
+##Anyone###
+character_event = {
+	id = roseguard.1057
+	desc = "EVTDESCroseguard.1057"
+	
+	is_triggered_only = yes
+
+	immediate = {
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_kingsguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+			}
+			set_character_flag = roseguard_1
+		}
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+				NOT = { has_character_flag = roseguard_1 }
+			}
+			set_character_flag = roseguard_2
+		}
+		random_realm_character = {
+			limit = {
+				is_female = no
+				is_married = no
+				prisoner = no
+				age = 16
+				NOT = { character = ROOT }
+				is_ruler = no
+				NOT = { is_rival = ROOT }
+				NOT = { has_character_flag = refused_roseguard }	
+				OR = {
+					trait = dueling_skilled
+					trait = dueling_expert
+					trait = dueling_master
+					trait = dueling_legend
+				}
+				NOT = { has_character_flag = roseguard_1 }
+				NOT = { has_character_flag = roseguard_2 }
+			}
+			set_character_flag = roseguard_3
+		}
+	}
+	
+	option = {
+		name = "EVTOPTA7770002" #this_one		
+		trigger = { any_realm_character = { has_character_flag = roseguard_1 } }
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_1 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this_one		
+		trigger = { any_realm_character = { has_character_flag = roseguard_2 } }
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_2 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAroseguard.1002" #this_one
+		trigger = { any_realm_character = { has_character_flag = roseguard_3 } }
+		random_realm_character = {
+			limit = { has_character_flag = roseguard_3 }		
+			if = {
+				limit = { 
+					is_primary_heir = yes 
+					father = { NOT = { character = ROOT } }
+				}
+				character_event = { id = roseguard.1046 } #annoy_parent
+			}
+			if = {
+				limit = { 
+					OR = {
+						is_primary_heir = no 
+						father = { character = ROOT }
+					}	
+				}
+				character_event = { id = roseguard.1005 }
+			}				
+		}
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTDroseguard.1002" #None
+		trigger = { ai = no }
+		hidden_tooltip = {
+			any_realm_character = {
+				clr_character_flag = roseguard_1
+				clr_character_flag = roseguard_2
+				clr_character_flag = roseguard_3
 			}
 		}
 	}
