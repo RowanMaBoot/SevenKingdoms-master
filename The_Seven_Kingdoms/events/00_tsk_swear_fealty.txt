@@ -1,0 +1,70 @@
+namespace = tsk_swear_fealty
+
+character_event = {
+	id = tsk_swear_fealty.1
+	desc = EVTDESCTSK_SWR_FEA
+	hide_window = yes
+	is_triggered_only = yes
+	only_playable = yes
+	
+	option = {
+		name = EVTOPTATSK_SWR_FEA1 # Form Empire, Accept as Vassal
+		
+		primary_title = {
+				create_title = {
+					tier = EMPEROR
+					landless = no
+					temporary = no
+					custom_created = yes
+					culture = ROOT
+					holder = ROOT
+					base_title = THIS
+					copy_title_laws = yes
+				}
+
+				hidden_tooltip = {
+					ROOT = {
+						primary_title = {
+							holder_scope = {
+								any_title_under = {
+									limit = {
+										tier = KING
+										empire = {
+											has_holder = no
+										}
+									}
+									de_jure_liege = PREVPREV
+								}
+								any_title_under = {
+									limit = {
+										tier = DUKE
+										location = {
+											kingdom = {
+												empire = {
+													has_holder = no
+												}
+												
+												NOT = { de_jure_liege_or_above = PREVPREVPREVPREV }
+												ROOT = {
+													completely_controls = PREV
+												}
+											}
+										}
+									}
+									location = {
+										kingdom = {
+											de_jure_liege = PREVPREVPREVPREV
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+	}
+	
+	option = {
+		name = EVTOPTATSK_SWR_FEA2 # No
+	}
+}
