@@ -10,58 +10,73 @@ character_event = {
 	option = {
 		name = EVTOPTATSK_SWR_FEA1 # Form Empire, Accept as Vassal
 		
+        # Consider uses nested if statements with limiters
+        # to assign premade empire tier titles based on primary held
+        # title.
+        
+        # We could create some complex combinations, based on original title
+        # and the title of sender.
+        
+        # For example, if Arbor sends Oldtown an offer, the Wynelander Kingdom
+        # could be formed, using a flag that consists of a mix of both Arbor 
+        # and Oldtown flag.
+        
 		primary_title = {
-				create_title = {
-					tier = EMPEROR
-					landless = no
-					temporary = no
-					custom_created = yes
-					culture = ROOT
-					holder = ROOT
-					base_title = THIS
-					copy_title_laws = yes
-				}
+            create_title = {
+                tier = EMPEROR
+                landless = no
+                temporary = no
+                custom_created = yes
+                culture = ROOT
+                holder = ROOT
+                base_title = THIS
+                copy_title_laws = yes
+            }
 
-				hidden_tooltip = {
-					ROOT = {
-						primary_title = {
-							holder_scope = {
-								any_title_under = {
-									limit = {
-										tier = KING
-										empire = {
-											has_holder = no
-										}
-									}
-									de_jure_liege = PREVPREV
-								}
-								any_title_under = {
-									limit = {
-										tier = DUKE
-										location = {
-											kingdom = {
-												empire = {
-													has_holder = no
-												}
-												
-												NOT = { de_jure_liege_or_above = PREVPREVPREVPREV }
-												ROOT = {
-													completely_controls = PREV
-												}
-											}
-										}
-									}
-									location = {
-										kingdom = {
-											de_jure_liege = PREVPREVPREVPREV
-										}
-									}
-								}
-							}
-						}
-					}
-				}
-			}
+            hidden_tooltip = {
+                ROOT = {
+                    primary_title = {
+                        holder_scope = {
+                            any_title_under = {
+                                limit = {
+                                    tier = KING
+                                    empire = {
+                                        has_holder = no
+                                    }
+                                }
+                                de_jure_liege = PREVPREV
+                            }
+                            any_title_under = {
+                                limit = {
+                                    tier = DUKE
+                                    location = {
+                                        kingdom = {
+                                            empire = {
+                                                has_holder = no
+                                            }
+                                            
+                                            NOT = { de_jure_liege_or_above = PREVPREVPREVPREV }
+                                            ROOT = {
+                                                completely_controls = PREV
+                                            }
+                                        }
+                                    }
+                                }
+                                location = {
+                                    kingdom = {
+                                        de_jure_liege = PREVPREVPREVPREV
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        FROMFROM = {
+            holder_scope = { set_defacto_liege = ROOT }
+        }
 	}
 	
 	option = {

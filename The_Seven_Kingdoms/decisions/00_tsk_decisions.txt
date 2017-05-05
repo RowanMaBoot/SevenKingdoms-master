@@ -36,23 +36,29 @@ targetted_decisions = {
 			is_adult = yes
 			tier = KING
 			
-			culture = FROM
+			culture_group = FROM
 			religion = FROM
+            
+            NOT = {
+                character = FROM
+            }
+            
+            
 		}
 		
 		
 		allow = {
-			NOT = { trait = ambitious }
-			
-			prestige = 150
+            FROM = { # To use as a buffer to prevent instantly becoming vassals off the get-go
+                prestige = 200
+            }
 		}
 		
 		effect = {
-			prestige = -300
+			FROM = {
+                prestige = -200
+            }
 			
-			ROOT = {
-				event = tsk_swear_fealty.1
-			}
+			character_event = { id = tsk_swear_fealty.1 }
 		}
 	}
 }
