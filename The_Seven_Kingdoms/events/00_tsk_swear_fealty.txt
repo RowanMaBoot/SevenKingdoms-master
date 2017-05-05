@@ -9,6 +9,10 @@ character_event = {
 	
 	option = {
 		name = EVTOPTATSK_SWR_FEA1 # Form Empire, Accept as Vassal
+        
+        # FROMFROM is the player who requested to be vassalized by
+        # same tier ruler.
+        # ROOT is the target, ie the potential liege
 		
         # Consider uses nested if statements with limiters
         # to assign premade empire tier titles based on primary held
@@ -20,6 +24,54 @@ character_event = {
         # For example, if Arbor sends Oldtown an offer, the Wynelander Kingdom
         # could be formed, using a flag that consists of a mix of both Arbor 
         # and Oldtown flag.
+        
+        # If Arbor is offering to form a union with Oldtown,
+        # The Wynlands can be formed.
+        if = {
+            limit = {
+                FROMFROM = {
+                    primary_title = {
+                        title = k_the_arbor
+                    }
+                }
+                ROOT = {
+                    primary_title = {
+                        title = k_oldtown
+                    }
+                }
+            }
+            e_the_wynelands = {
+                grant_title = ROOT
+                make_primary_title = yes
+                copy_title_laws = k_oldtown
+                copy_title_history = k_oldtown
+            }
+            break = yes
+        }
+        # Reverse
+        if = {
+            limit = {
+                FROMFROM = {
+                    primary_title = {
+                        title = k_oldtown
+                    }
+                }
+                ROOT = {
+                    primary_title = {
+                        title = k_the_arbor
+                    }
+                }
+            }
+            e_the_wynelands = {
+                grant_title = ROOT
+                make_primary_title = yes
+                copy_title_laws = k_the_arbor
+                copy_title_history = k_the_arbor
+            }
+            break = yes
+        }
+        
+        # Otherwise, form generic CM title based off current primary title.
         
 		primary_title = {
             create_title = {
