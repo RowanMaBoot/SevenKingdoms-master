@@ -7,6 +7,285 @@ namespace = NCE
 ######################
 ######################
 
+# on_adolescence pulse, firing at 12 years plus six months and 14 years plus six months
+# Instead of using events that may or may not fire, I will assure that the event fires at least twice
+# and then manually adjust the chance of getting traits through one event.
+
+#! Childhood Strength/Weakness Event Chain Start
+
+character_event = {
+	id = NCE.15998
+	desc = "EVTDESC15998"
+	picture = "GFX_evt_child_play"
+	
+	is_triggered_only = yes
+	
+	only_capable = yes
+    
+	trigger = {
+		
+        NOR = {
+			trait = incapable
+			is_inaccessible_trigger = yes
+			has_character_modifier = the_dungeon
+			has_character_modifier = the_oubliette
+		}
+        
+		age = 12
+		NOT = { age = 16 }
+        
+		educator = {
+			always = yes
+		}
+	}
+    
+    # The effects
+    immediate = {
+        
+        random_list = {
+            # A chance of getting strong, improved by being fit, reduced by being weak
+            # Stuff that lowers the chance starts off earlier on, with chance increasing stuff later.
+            # So lots of negatives have less of an impact as they stack. I think.
+            
+            # 40 chance of an effect
+            # 30 chance of no effect
+            # 10 Becomes strong
+            # 15 Becomes fit
+            # 15 Becomes weak
+            # 20 Weak becomes no trait
+            
+            30 = {                      # No effect at all
+                 modifier = {
+                    factor = 1.2          # Higher chance of no effect, fit
+                    trait = fit
+                }
+                modifier = {
+                    factor = 0.8          # Slightly lower chance of no effect, weak
+                    trait = weak
+                }
+            }
+            
+            10 = {
+                modifier = {
+                    factor = 0          # Since we already have the trait, reduction
+                    trait = strong
+                }
+                modifier = {            # Being of a poor physique just isn't compatible with being strong.
+                    factor = 0
+                    trait = poor_physique
+                }
+                
+                modifier = {
+                    factor = 0.5        # Reduces by 50% of value chance if you are weak -- less chance of being assigned
+                    trait = weak
+                }
+                
+                modifier = {
+                    trait = lisp
+                    factor = 0.9
+                }
+                modifier = {
+                    trait = stutter
+                    factor = 0.9
+                }
+                modifier = {
+                    trait = harelip
+                    factor = 0.9
+                }
+                modifier = {
+                    trait = hunchback
+                    factor = 0.7
+                }
+                modifier = {
+                    trait = clubfooted
+                    factor = 0.6
+                }
+                modifier = {
+                    trait = inbred
+                    factor = 0.5
+                }
+                
+                modifier = {
+                    factor = 1.5        # If our character is fit, they have a greater chance of becoming strong.
+                    trait = fit
+                }
+                
+                modifier = {
+                    factor = 2.0        # If our character has a strong physique, they are double as likely to become strong.
+                    trait = strong_physique
+                }
+                
+                # Removed other traits, add strong
+                remove_trait = fit
+                remove_trait = weak
+                add_trait = strong
+                
+            }
+            
+            # Effects of negative traits are much less drastic for fit, but still apparent
+            
+            15 = {
+                modifier = {
+                    factor = 0           # Since we have a better version, negate
+                    trait = strong
+                }
+                modifier = {
+                    factor = 0          # Since we already have the trait, negate
+                    trait = fit
+                }
+                
+                modifier = {            # Being of a poor physique makes it much more difficult to be fit.
+                    factor = 0.5
+                    trait = poor_physique
+                }
+                
+                modifier = {
+                    factor = 0.7        # Reduced chance if the character is already weak
+                    trait = weak
+                }
+                
+                modifier = {
+                    trait = hunchback
+                    factor = 0.8
+                }
+                modifier = {
+                    trait = clubfooted
+                    factor = 0.7
+                }
+                modifier = {
+                    trait = inbred
+                    factor = 0.6
+                }
+                
+                modifier = {
+                    factor = 2.0        # If our character has a strong physique, they are double as likely to become strong.
+                    trait = strong_physique
+                }
+                
+                remove_trait = strong
+                remove_trait = weak
+                add_trait = fit
+            }
+            
+            15 = {
+                modifier = {
+                    factor = 0          # Since we already have the trait, negate
+                    trait = weak
+                }
+                modifier = {
+                    factor = 0.0        # Strong physique means... Strong.
+                    trait = strong_physique
+                }
+                
+                modifier = {
+                    trait = hunchback
+                    factor = 1.2
+                }
+                modifier = {
+                    trait = clubfooted
+                    factor = 1.3
+                }
+                modifier = {
+                    trait = inbred
+                    factor = 1.5
+                }
+                
+                modifier = {            # Being of a poor physique makes it more likely that they will be weak.
+                    factor = 1.5
+                    trait = poor_physique
+                }
+                
+                remove_trait = strong
+                remove_trait = fit
+                add_trait = weak
+            }
+            
+            20 = {                      # Remove weak, no traits
+                modifier = {
+                    factor = 0          # Don't fire for anyone other than someone who is weak.
+                    NOT = {
+                        trait = weak
+                    }
+                }
+                modifier = {
+                    factor = 1.5        # Strong physique means... Strong.
+                    trait = strong_physique
+                }
+                
+                remove_trait = strong
+                remove_trait = fit
+                remove_trait = weak
+            }
+        }
+    }
+    
+    option = {
+		name = "EVTOPTA15998"
+        
+        name = {
+          trigger = {
+            trait = strong
+          }
+          text = EVTDESC_CASE315998
+        }
+
+        name = {
+          trigger = {
+            trait = fit
+          }
+          text = EVTDESC_CASE315998
+        }
+        
+        name = {
+          trigger = {
+            trait = weak
+          }
+          text = EVTDESC_CASE315998
+        }
+        
+        name = {
+          trigger = {
+            NOR = {
+                trait = strong
+                trait = weak
+                trait = weak
+            }
+          }
+          text = EVTDESC_CASE415998
+        }
+
+            
+        # Notification for Guardian
+        hidden_tooltip = {
+            guardian = {
+                character_event = {
+                    id = NCE.15999
+                    days = 3
+                }
+            }
+        }
+	}
+}
+
+character_event = {
+	id = NCE.15999
+	desc = "EVTDESC15999"
+	picture = "GFX_evt_guardian"
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA15999"
+	}
+}
+
+#!! Event Chain End
+
+
+#################################################################################################
+############################################## OLD ##############################################
+#################################################################################################
+
 # on_action event
 # child is strong
 character_event = {
