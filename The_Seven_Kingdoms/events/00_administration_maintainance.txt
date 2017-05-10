@@ -10,73 +10,81 @@ namespace = administration_main
 ## personally own by giving them a large debuff to tax income, levy size and bolstering
 ## revolt risk in said province.
 
-# Province events have a similar impact to playable only events.
-
-# Every year it will try to add the modifier
-# On usurping the title, it will try to add the modifier
-
-# Twice a year it will try to remove the modifier
-# On inheriting the title, it will try to remove the modifier
-
-# non functional because I am a derp and did not know what I was doing
+# administration_main.1 -- Main event, assigns modifier
+# administration_main.2 -- Cleanup, removes modifier
 
 #################
 ### THE EVENT ###
 #################
 #################
 
-# Main Event
-
 province_event = { 
 	id = administration_main.1
 	hide_window = yes
 	
-	is_triggered_only = yes # on_action yearly pulse event
-	
 	trigger = {
 		# Make sure we don't have the modifier already
-		NOT = {
-			has_province_modifier = wrong_duchy_administration
-			
-			# Checks the province Duchy
-			duchy = {
-				# Checks the Holder of the Duchy
-				holder_scope = {
-					# Checks if the controller of the province, ROOT, controls the Duchy
-					owner = {
-						character = ROOT
-					}
-				}
-			}
-		}
-	}
-	
-	immediate = {
+        NOT = {
+            has_province_modifier = wrong_duchy_administration
+        }
+        
+		NOT = { # NO
+            owner = { # Owner of Province
+                ROOT = { # province
+                    duchy = { # parent duchy
+                        holder_scope = { # holder of parent duchy
+                            character = PREVPREVPREV # is owner of province
+                        }
+                    }
+                }
+            }
+        }
+        
+        NOT = {
+            owner = {
+                primary_title = {
+                    OR = {
+                        tier = COUNT
+                        tier = DUKE
+                    }
+                }
+            }
+        }
+    }
+    
+    immediate = {
 		add_province_modifier = { name = wrong_duchy_administration duration = -1 }
 	}
 }
-
-# Clean up
 
 province_event = { 
 	id = administration_main.2
 	hide_window = yes
 	
-	is_triggered_only = yes # on_action yearly pulse event
-	
 	trigger = {
-		# Make sure the province has the modifier
+		# Make sure we have the modifier
 		has_province_modifier = wrong_duchy_administration
-		# Checks the province Duchy
-		duchy = {
-			# Checks the Holder of the Duchy
-			holder_scope = {
-				# Checks if the controller of the province, ROOT, controls the Duchy
-				owner = {
-					character = ROOT
-				}
-			}
-		}
+        
+        OR = {
+            owner = { # Owner of Province
+                ROOT = { # province
+                    duchy = { # parent duchy
+                        holder_scope = { # holder of parent duchy
+                            character = PREVPREVPREV # is owner of province
+                        }
+                    }
+                }
+            }
+            owner = {
+                primary_title = {
+                    OR = {
+                        tier = COUNT
+                        tier = DUKE
+                    }
+                }
+            }
+        }
+        
 	}
 	
 	immediate = {
