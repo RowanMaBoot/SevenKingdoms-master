@@ -3,79 +3,102 @@ namespace = nights_watch
 # These events are dedicated to the Black Brothers.
 # It will move any under thirteen characters out of the NW
 
+# Lord Commander and vassals Cleanup
+# This fires for the Lord Commander and their vassals on a regular basis if they are married or lacking our trait
 
-# Relatively low impact.
+# Insignificant impact, fired on new holder and twice a year.
 character_event = {
-	id = nights_watch.1
-	desc = nights_watch_desc.1
-	# picture = 
-	
-	is_triggered_only = yes
-	# consider setting it up as a pulse event in on_actions
-	# if so, is_triggered_only = yes should be enabled.
-	
-	# Check that our character is in the court of the night's watch.
-	# Make sure they are not already a black brother.
-	
-	trigger = {		
-		
-		# Should skip Barons? Hardcoded remarry, don't want to turn them into character gens.
-		OR = {
-				higher_tier_than = baron
-				spouse = { higher_tier_than = baron }
-		}
-		
-		OR = {
-			primary_title = {
-				OR = {
-					title = d_the_wall
-					title = k_the_nights_watch
-				}
-			}
-			any_liege = {
-				primary_title = {
-					OR = {
-						title = d_the_wall
-						title = k_the_nights_watch
-					}
-				}
-			}
-		}
-		NOT = {
-			trait = black_brother
-		}
-	}
-	
-	weight_multiplier = {
-		days = 1
-	}
-	
-	# If they are male and above the age of 13, give them the night's watch trait.
-	# if not, remove them from the night's watch.
-	
-	# Improvement:
-	# If you hit the criteria, do what is wanted.
-	# if do not (included married), remove.
-	
-	option = {
-		# If the character is either a woman or under the age of 13, send them away.
-		# If the character is above the age of 13 and not a female, give them the trait.
-		if = {
-			limit = {
-				age = 13
-				is_female = no
-			}
-			add_trait = black_brother
-		}
-		if = {
-			limit = {
-				spouse = {
-					trait = black_brother
-				} 
-			}
-			remove_spouse = spouse
-		}
-		if = {
+    id = nights_watch.1
+    
+    hide_window = yes
+    is_triggered_only = yes
+    
+    # This should prevent it from firing for our barons
+    only_playable = yes
+    
+    trigger = {
+        OR = {
+            is_married = yes
+            NOT = {
+                trait = black_brother
+            }
+        }
+        OR = {
+            primary_title = {
+                OR = {
+                    title = d_the_wall
+                    title = k_the_nights_watch
+                }
+            }
+            any_liege = {
+                primary_title = {
+                    OR = {
+                        title = d_the_wall
+                        title = k_the_nights_watch
+                    }
+                }
+            }
+        }
+    }
+    
+    immediate = {
+        if = {
+            limit = {
+                NOT = {
+                    trait = black_brother
+                }
+            }
+            add_trait = black_brother
+        }
+        if = {
+            limit = {
+                is_married = yes
+            }
+            remove_spouse = spouse
+        }
+    }
+}
+
+# Court cleanup
+# Sends females and children away to relatives, or if lacking, other realms.
+# Split off into second event, so it can be fired less frequently
+# Plus, I think the original event was broken.
+
+# Slightly harsher impact than the first event, but fired yearly
+character_event = {
+    id = nights_watch.2
+    
+    hide_window = yes
+    is_triggered_only = yes
+    
+    trigger = {
+        liege = {
+            trait = black_brother
+        }
+        NOT = {
+            trait = black_brother
+        }
+        is_ruler = no
+    }
+    
+    immediate = {
+        if = {
+            limit = {
+                spouse = {
+                    trait = black_brother
+                }
+                remove_spouse = spouse
+            }
+        }
+        if = {
+            limit = {
+                age = 13
+                is_female = no
+            }
+            add_trait = black_brother
+            break = yes
+        }
+        if = {
 			limit = {
 				OR = {
 					is_female = yes
@@ -84,6 +107,108 @@ character_event = {
 					}
 				}
 			}
+            father = {
+                if = {
+                    limit = {
+                        is_alive = yes
+                    }
+                    if = {
+                        limit = {
+                            is_ruler = yes
+                        }
+                        ROOT = {
+                            move_character = PREV
+                        }
+                        break = yes
+                    }
+                    if = {
+                        limit = {
+                            NOT = {
+                                is_ruler = yes
+                                ROOT = {
+                                    mother = {
+                                        is_alive = yes
+                                        is_ruler = yes
+                                    }
+                                }
+                            }
+                        }
+                        liege = {
+                            ROOT = {
+                                move_character = PREV
+                            }
+                        }
+                        break = yes
+                    }
+                }
+            }
+            mother = {
+                if = {
+                    limit = {
+                        is_alive = yes
+                    }
+                    if = {
+                        limit = {
+                            is_ruler = yes
+                        }
+                        ROOT = {
+                            move_character = PREV
+                        }
+                        break = yes
+                    }
+                    if = {
+                        limit = {
+                            NOT = {
+                                is_ruler = yes
+                            }
+                        }
+                        liege = {
+                            ROOT = {
+                                move_character = PREV
+                            }
+                        }
+                        break = yes
+                    }
+                }
+            }
+            if = {
+                limit = {
+                    NOT = {
+                        dynasty = NONE
+                    }
+                }
+                if = {
+                    limit = {
+                        dynasty_head = {
+                            NOT = {
+                                character = ROOT
+                            }
+                            is_alive = yes
+                            is_ruler = yes
+                        }
+                    }
+                    dynasty_head = {
+                        ROOT = {
+                            move_character = PREV
+                        }
+                    }
+                    break = yes
+                }
+                if = {
+                    limit = {
+                        random_dynasty_member = {
+                            is_alive = yes
+                            is_ruler = yes
+                        }
+                    }
+                    random_dynasty_member = {
+                        ROOT = {
+                            move_character = PREV
+                        }
+                    }
+                    break = yes
+                }
+            }
 			random_independent_ruler = {
 				limit = {
 					NOR = {
@@ -92,9 +217,11 @@ character_event = {
 					} 
 				}
 				random_realm_lord = {
-					ROOT = { move_character = PREV }
+					ROOT = {
+                        move_character = PREV
+                    }
 				}
 			}
 		}
-	}
+    }
 }
