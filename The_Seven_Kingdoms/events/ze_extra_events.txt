@@ -403,24 +403,7 @@ character_event = {
 	}
 }
 
-## Dynamic Mercenaries Events
-# Type 2
-character_event = {
-	id = ZE.88887
-	
-	hide_window = yes
-
-	is_triggered_only = yes
-	
-	immediate = {
-		primary_title = {
-			band_creator = {
-				character_event = { id = ZE.88888 }
-			}
-		}
-	}
-}
-
+# Convert Some Troops
 character_event = {
 	id = ZE.23101
 	picture = GFX_evt_large_army
@@ -455,11 +438,13 @@ character_event = {
 		wealth = -100
 	}
 	option = {
-		name = EVTOPTD_ZE_23101
+		name = EVTOPTD_ZE_99991_TSK
+        
+        character_event = { id = ZE.88888 }
 	}
 }
 
-# TSK Arm different troops!
+# TSK convert to different troops!
 character_event = {
 	id = ZE.88888
 	picture = GFX_evt_large_army
@@ -469,7 +454,7 @@ character_event = {
 
 	option = {
 		name = EVTOPTB_ZE_23101
-		FROM = {
+		FROMFROM = {
 			primary_title = {
 				change_mercenary_composition = {
 					from = light_infantry
@@ -482,7 +467,7 @@ character_event = {
 	}
 	option = {
 		name = EVTOPTC_ZE_23101
-		FROM = {
+		FROMFROM = {
 			primary_title = {
 				change_mercenary_composition = {
 					from = light_cavalry
@@ -491,7 +476,7 @@ character_event = {
 				}
 			}
 		}
-		wealth = -100
+		wealth = -150
 	}
 	option = {
 		name = EVTOPTD_ZE_23101
@@ -515,23 +500,7 @@ character_event = {
 	}
 }
 
-# Send More Troops
-character_event = {
-	id = ZE.77777
-	
-	hide_window = yes
-
-	is_triggered_only = yes
-	
-	immediate = {
-		primary_title = {
-			band_creator = {
-				character_event = { id = ZE.77778 }
-			}
-		}
-	}
-}
-
+# Send 100 Troops per 50 Gold
 character_event = {
 	id = ZE.23106
 	picture = GFX_evt_large_army
@@ -564,11 +533,14 @@ character_event = {
 		wealth = -50
 	}
 	option = {
-		name = EVTOPTD_ZE_23101
+		name = EVTOPTD_ZE_99991_TSK
+        
+        character_event = { id = ZE.77778 }
 	}
 }
 
 # TSK Send More Troops
+# Send 200 Troops per 100 Gold
 character_event = {
 	id = ZE.77778
 	picture = GFX_evt_large_army
@@ -578,7 +550,10 @@ character_event = {
 
 	option = {
 		name = EVTOPTA_ZE_23106
-		FROM = {
+        trigger = {
+            wealth = 100
+        }
+		FROMFROM = {
 			primary_title = {
 				change_mercenary_composition = {
 					type = light_infantry
@@ -586,11 +561,14 @@ character_event = {
 				}
 			}
 		}
-		wealth = -50
+		wealth = -100
 	}
 	option = {
 		name = EVTOPTB_ZE_23106
-		FROM = {
+        trigger = {
+            wealth = 100
+        }
+		FROMFROM = {
 			primary_title = {
 				change_mercenary_composition = {
 					type = light_cavalry
