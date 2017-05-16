@@ -25,10 +25,10 @@ tsk_county_conquest = {
 	# You require 300 prestige to use
 	can_use_gui = {
 		ROOT = {
-			prestige = 300
 			NOT = {
 				trait = content
 			}
+            prestige = 300
 		}
 	}
 	
@@ -47,7 +47,10 @@ tsk_county_conquest = {
 				primary_title = { higher_tier_than = DUKE }
 				AND = {
 					primary_title = { higher_tier_than = COUNT } 
-					religion_group = drowned_god_group
+					OR = {
+                        religion_group = drowned_god_group
+                        culture_group = iron_islander
+                    }
 				}
 			}
 		}
@@ -56,20 +59,31 @@ tsk_county_conquest = {
 	can_use_title = {
 		tier = COUNT
 		
-		# This block checks if the target holder is an AI.
-		# If they are not an AI, check if the location is their capital.
-		# If it is their capital, 
-		NOT = {
+        # if:
+        # Our target is a player (ai = no)
+        # the location is the capital (is_capital = yes)
+        # then disallow war
+        
+		NOR = {
 			AND = {
 				FROM = {
 					ai = no
 				}
 				location = {
-					is_capital = no
+					is_capital = yes
 				}
+			}
+            ROOT = {
+				has_landed_title = PREV
+			}
+            holder_scope = {
+				is_liege_or_above = ROOT
 			}
 		}
 		
+        # Our target holds the county
+        # or they have a vassal that holds it
+        
 		OR = {
 			FROM = {
 				has_landed_title = PREV
@@ -83,23 +97,46 @@ tsk_county_conquest = {
 			}
 		}
 
-		NOR = {
-			ROOT = {
-				has_landed_title = PREV
-			}
-			holder_scope = {
-				is_liege_or_above = ROOT
-			}
-		}
-		
+		# Drowned gods may target who they wish
+        # so long as the target is coastal
+        
+        # If it is not a specific title or ironborn,
+        # then
+        # target province/s must border the target realm
+        
 		OR = {
 			AND = {
-				ROOT = { religion_group = drowned_god_group }
-				FROM = { NOT = { religion_group = drowned_god_group } }
+				ROOT = {
+                    religion_group = drowned_god_group
+                    culture_group = iron_islander
+                }
 				location = {
 					port = yes
 				}
 			}
+            # Some islands literally cannot do anything, so they are being granted the ability to take ports
+            # only applicable if it is your primary title.
+            AND = {
+                ROOT = {
+                    primary_title = {
+                        OR = {
+                            title = e_the_iron_islands
+                            title = k_the_iron_islands
+                            title = k_the_shields
+                            title = k_evenstar
+                            title = k_the_arbor
+                            title = k_the_sisters
+                            title = k_fair_isle
+                            title = k_the_stepstones
+                            title = k_andalos
+                            title = k_stone
+                        }
+                    }
+                }
+                location = {
+					port = yes
+				}
+            }
 			location = {
 				any_neighbor_province = {
 					owner = {
@@ -114,13 +151,23 @@ tsk_county_conquest = {
 	}
 
 	is_valid_title = {
-		AND = {
+		OR = {
+            # If we are both drowned_god and an iron islander culture group, we can freely wage war
 			ROOT = {
-				NOT = { same_realm = FROM }
-			}
-            ROOT = {
-                NOT = { religion = FROM }
+                religion_group = drowned_god_group
+                culture_group = iron_islander
+                NOT = {
+                    same_realm = FROM
+                }
             }
+            
+            # Otherwise you cannot declare against the same religion
+            ROOT = {
+				NOT = {
+                    same_realm = FROM
+                    religion = FROM
+                }
+			}
 		}
 	
 		OR = {
@@ -231,6 +278,7 @@ tsk_county_conquest = {
 	}
 }
 
+# Now subjugates duchies rather than conquers
 tsk_duchy_conquest = {
 	name = CB_NAME_TSK_DUCHY_CONQUEST
 	war_name = WAR_NAME_TSK_DUCHY_CONQUEST
@@ -249,13 +297,13 @@ tsk_duchy_conquest = {
 	
 	infamy_modifier = 1.5
 	
-	# You require 800 prestige to use
+	# You require 700 prestige to use
 	can_use_gui = {
 		ROOT = {
-			prestige = 800
 			NOT = {
 				trait = content
 			}
+            prestige = 700
 		}
 	}
 	
@@ -265,17 +313,43 @@ tsk_duchy_conquest = {
 	
 	can_use = {
 		ROOT = {
-			NOT = {
+			NOR = {
                 same_realm = FROM
                 religion = FROM
             }
-			primary_title = { higher_tier_than = KING } 
-			mercenary = no
+            mercenary = no
+			OR = {
+				primary_title = { higher_tier_than = KING }
+				AND = {
+					primary_title = { higher_tier_than = DUKE } 
+					OR = {
+                        religion_group = drowned_god_group
+                        culture_group = iron_islander
+                    }
+				}
+			}
 		}
 	}
 
 	can_use_title = {
 		tier = DUKE
+        
+        NOR = {
+            AND = {
+                FROM = {
+                    ai = no
+                }
+                location = {
+                    is_capital = yes
+                }
+            }
+            ROOT = {
+				has_landed_title = PREV
+			}
+            holder_scope = {
+				is_liege_or_above = ROOT
+			}
+        }
 		
 		OR = {
 			FROM = {
@@ -286,6 +360,51 @@ tsk_duchy_conquest = {
 				NOR = { 
 					same_realm = ROOT
 					religion = ROOT
+				}
+			}
+		}
+        
+        OR = {
+			AND = {
+				ROOT = {
+                    religion_group = drowned_god_group
+                    culture_group = iron_islander
+                }
+				location = {
+					port = yes
+				}
+			}
+            # Some islands literally cannot do anything, so they are being granted the ability to take ports
+            # only applicable if it is your primary title.
+            AND = {
+                ROOT = {
+                    primary_title = {
+                        OR = {
+                            title = e_the_iron_islands
+                            title = k_the_iron_islands
+                            title = k_the_shields
+                            title = k_evenstar
+                            title = k_the_arbor
+                            title = k_the_sisters
+                            title = k_fair_isle
+                            title = k_the_stepstones
+                            title = k_andalos
+                            title = k_stone
+                        }
+                    }
+                }
+                location = {
+					port = yes
+				}
+            }
+			location = {
+				any_neighbor_province = {
+					owner = {
+						OR = {
+							character = ROOT
+							is_liege_or_above = ROOT
+						}
+					}
 				}
 			}
 		}
@@ -314,12 +433,22 @@ tsk_duchy_conquest = {
 	}
 
 	is_valid_title = {
-		AND = {
+		OR = {
+            # If we are both drowned_god and an iron islander culture group, we can freely wage war
 			ROOT = {
-				NOT = { same_realm = FROM }
-			}
-			ROOT = {
-				NOT = { religion = FROM }
+                religion_group = drowned_god_group
+                culture_group = iron_islander
+                NOT = {
+                    same_realm = FROM
+                }
+            }
+            
+            # Otherwise you cannot declare against the same religion
+            ROOT = {
+				NOT = {
+                    same_realm = FROM
+                    religion = FROM
+                }
 			}
 		}
 	
@@ -334,26 +463,16 @@ tsk_duchy_conquest = {
 	}
 
 	on_success_title = {
-		usurp_title_plus_barony_if_unlanded = { target = ROOT type = invasion }
-		
-		any_de_jure_vassal_title = { # take all baronies too
-			limit = {
-				has_holder = yes
-				holder_scope = {
-					OR = {
-						character = FROM
-						is_liege_or_above = FROM
-						AND = {
-							is_liege_or_above = ROOT
-							NOT = { culture = ROOT }
-							NOT = { religion = ROOT }
-						}
-					}
-				}
-			}
-
-			usurp_title = ROOT
-		}
+        
+        ROOT = {
+            vassalize_or_take_under_title = {
+                title = PREV
+                enemy = FROM
+                # same_religion = yes # Only vassalize rulers of my religion
+                type = invasion
+            }
+        }
+        
 		
 		any_attacker = {
 			limit = { character = ROOT }
@@ -445,28 +564,35 @@ tsk_subjugation = {
 	
 	can_use_gui = {
 		ROOT = {
-			prestige = 2550
+			prestige = 2050
 			trait = ambitious
 		}
 	}
 	
 	on_add = {
-		ROOT = { prestige = -2500 }
+		ROOT = { prestige = -2000 }
 	}
 	
 	can_use = {
 		ROOT = {
-			NOT = { same_realm = FROM }
-			NOT = { is_liege_or_above = FROM }
-			has_horde_culture = no # Should use tribal invasion instead
+			NOR = {
+                same_realm = FROM
+                is_liege_or_above = FROM
+                religion = FROM
+            }
+			has_horde_culture = no
 			is_nomadic = no
 			mercenary = no
+            primary_title = {
+                higher_tier_than = KING
+            }
 		}
 		FROM = {
-			culture_group = ROOT
 			NOT = {
 				any_war = {
-					defender = { character = PREVPREV }
+					defender = {
+                        character = PREVPREV
+                    }
 					using_cb = tsk_subjugation
 				}
 			}
@@ -474,29 +600,60 @@ tsk_subjugation = {
 	}
 	
 	can_use_title = {
-		ROOT = {
-			OR = {
-				NOT = { has_character_modifier = launched_subjugation }
-				AND = {
-					has_ambition = obj_become_king
-					capital_scope = {
-						kingdom = {
-							title = PREVPREVPREV
-						}
-					}
-				}
+		NOR = {
+            ROOT = {
+                NOT = {
+                    has_character_modifier = launched_subjugation
+                }
+            }
+            ROOT = {
+				has_landed_title = PREV
 			}
-		}
+            ROOT = {
+                same_realm = FROM
+            }
+        }
 
 		FROM = {
 			any_realm_title = {
 				de_jure_liege_or_above = PREVPREV
 			}
 		}
+        
+        any_direct_de_jure_vassal_title = {
+			OR = {
+				holder_scope = {
+					OR = {
+						character = ROOT
+						is_liege_or_above = ROOT
+					}
+				}
+				location = {
+					any_neighbor_province = {
+						has_owner = yes
+						owner = {
+							OR = {
+								character = ROOT
+								is_liege_or_above = ROOT
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
-	is_valid_title = {
-		FROM = {
+	is_valid_title = {	
+		OR = {
+			FROM = {
+				has_landed_title = PREV
+			}
+			holder_scope = {
+				is_liege_or_above = FROM
+			}
+		}
+        
+        FROM = {
 			any_realm_title = {
 				de_jure_liege_or_above = PREVPREV
 			}
@@ -505,23 +662,11 @@ tsk_subjugation = {
 	
 	on_add_title = {
 		ROOT = {
-			if = {
-				limit = {
-					OR = {
-						NOT = { has_ambition = obj_become_king }
-						capital_scope = {
-							kingdom = {
-								NOT = { title = PREVPREVPREV }
-							}
-						}
-					}
-				}
-				add_character_modifier = { 
-					name = launched_subjugation
-					years = 100
-					hidden = yes
-				}
-			}
+            add_character_modifier = { 
+                name = launched_subjugation
+                years = 20
+                hidden = yes
+            }
 		}
 	}
 
