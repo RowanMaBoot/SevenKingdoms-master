@@ -317,18 +317,20 @@ tsk_duchy_conquest = {
     
     can_use = {
         ROOT = {
-            NOR = {
-                same_realm = FROM
-                religion = FROM
-            }
             mercenary = no
             OR = {
-                primary_title = { higher_tier_than = KING }
                 AND = {
                     primary_title = { higher_tier_than = DUKE } 
                     OR = {
                         religion_group = drowned_god_group
                         culture_group = iron_islander
+                    }
+                }
+                AND = {
+                    primary_title = { higher_tier_than = KING }
+                    NOR = {
+                        same_realm = FROM
+                        religion = FROM
                     }
                 }
             }
@@ -338,76 +340,22 @@ tsk_duchy_conquest = {
     can_use_title = {
         tier = DUKE
         
-        NOR = {
-            AND = {
-                FROM = {
-                    ai = no
-                }
-                location = {
-                    is_capital = yes
-                }
-            }
-            ROOT = {
-                has_landed_title = PREV
-            }
-            holder_scope = {
-                is_liege_or_above = ROOT
-            }
-        }
-        
         OR = {
             FROM = {
                 has_landed_title = PREV
             }
             holder_scope = {
                 is_liege_or_above = FROM
-                NOR = {
-                    same_realm = ROOT
-                    religion = ROOT
-                }
-            }
-        }
-        
-        OR = {
-            AND = {
-                ROOT = {
-                    religion_group = drowned_god_group
-                    culture_group = iron_islander
-                }
-                location = {
-                    port = yes
-                }
-            }
-            # Some islands literally cannot do anything, so they are being granted the ability to take ports
-            # only applicable if it is your primary title.
-            AND = {
-                ROOT = {
-                    primary_title = {
+                OR = {
+                    ROOT = {
                         OR = {
-                            title = e_the_iron_islands
-                            title = k_the_iron_islands
-                            title = k_the_shields
-                            title = k_evenstar
-                            title = k_the_arbor
-                            title = k_the_sisters
-                            title = k_fair_isle
-                            title = k_the_stepstones
-                            title = k_andalos
-                            title = k_stone
+                            religion_group = drowned_god_group
+                            culture_group = iron_islander
                         }
                     }
-                }
-                location = {
-                    port = yes
-                }
-            }
-            location = {
-                any_neighbor_province = {
-                    owner = {
-                        OR = {
-                            character = ROOT
-                            is_liege_or_above = ROOT
-                        }
+                    NOR = {
+                        same_realm = ROOT
+                        religion = ROOT
                     }
                 }
             }
@@ -449,7 +397,7 @@ tsk_duchy_conquest = {
             
             # Otherwise you cannot declare against the same religion
             ROOT = {
-                NOT = {
+                NOR = {
                     same_realm = FROM
                     religion = FROM
                 }
