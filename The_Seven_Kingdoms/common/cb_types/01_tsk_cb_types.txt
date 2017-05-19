@@ -22,34 +22,38 @@ tsk_county_conquest = {
     allowed_to_target_tributaries = no
     allowed_to_target_suzerains = no
     
-    # You require 300 prestige to use
+    # You require 150 prestige to use
     can_use_gui = {
         ROOT = {
             NOT = {
                 trait = content
             }
-            prestige = 300
+            prestige = 155
         }
     }
     
     on_add = {
-        ROOT = { prestige = -300 }
+        ROOT = { prestige = -150 }
     }
     
     can_use = {
         ROOT = {
-            NOR = {
-                same_realm = FROM
-                religion = FROM
-            }
             mercenary = no
+            NOT = {
+                same_realm = ROOT
+            }
             OR = {
-                primary_title = { higher_tier_than = DUKE }
                 AND = {
                     primary_title = { higher_tier_than = COUNT } 
-                    OR = {
+                    AND = {
                         religion_group = drowned_god_group
                         culture_group = iron_islander
+                    }
+                }
+                AND = {
+                    primary_title = { higher_tier_than = DUKE }
+                    NOT = {
+                        religion = FROM
                     }
                 }
             }
@@ -90,9 +94,19 @@ tsk_county_conquest = {
             }
             holder_scope = {
                 is_liege_or_above = FROM
-                NOR = { 
+                NOT = {
                     same_realm = ROOT
-                    religion = ROOT
+                }
+                OR = {
+                    AND = {
+                        ROOT = {
+                            religion_group = drowned_god_group
+                            culture_group = iron_islander
+                        }
+                    }
+                    NOT = { 
+                        religion = ROOT
+                    }
                 }
             }
         }
@@ -205,19 +219,6 @@ tsk_county_conquest = {
 
             usurp_title = ROOT
         }
-        
-        any_attacker = {
-            limit = { character = ROOT }
-            participation_scaled_prestige = 100
-            participation_scaled_piety = 50
-        }
-        any_attacker = {
-            limit = { NOT = { character = ROOT } }
-            hidden_tooltip = { 
-                participation_scaled_prestige = 100 
-                participation_scaled_piety = 50
-            }
-        }
     }
 
     on_fail_title = {
@@ -307,12 +308,12 @@ tsk_duchy_conquest = {
             NOT = {
                 trait = content
             }
-            prestige = 700
+            prestige = 550
         }
     }
     
     on_add = {
-        ROOT = { prestige = -800 }
+        ROOT = { prestige = -500 }
     }
     
     can_use = {
@@ -421,20 +422,6 @@ tsk_duchy_conquest = {
                 enemy = FROM
                 # same_religion = yes # Only vassalize rulers of my religion
                 type = invasion
-            }
-        }
-        
-        
-        any_attacker = {
-            limit = { character = ROOT }
-            participation_scaled_prestige = 100
-            participation_scaled_piety = 50
-        }
-        any_attacker = {
-            limit = { NOT = { character = ROOT } }
-            hidden_tooltip = { 
-                participation_scaled_prestige = 100 
-                participation_scaled_piety = 50
             }
         }
     }
