@@ -1182,15 +1182,6 @@ character_event = {
 	trigger = {
 		has_dlc = "Legacy of Rome"
 		in_command = no
-		NOT = { religion_group = indian_group }
-		capital_scope = {
-			NOT = { region = world_india }
-		}
-		location = {
-			county = {
-				NOT = { region = world_india }
-			}
-		}
 		NOT = { is_inaccessible_trigger = yes }
 	}
 	
@@ -1251,7 +1242,7 @@ character_event = {
 			female = no
 			age = 22
 			religion = ROOT
-			culture = manden
+			culture = lysene
 			attributes = {
 				stewardship = 6
 			}
@@ -1330,7 +1321,7 @@ character_event = {
 			female = no
 			age = 22
 			religion = ROOT
-			culture = ethiopian
+			culture = myrman
 			attributes = {
 				diplomacy = 6
 			}
@@ -1411,7 +1402,7 @@ character_event = {
 			female = no
 			age = 22
 			religion = ROOT
-			culture = greek
+			culture = pentoshi
 			attributes = {
 				intrigue = 6
 			}
@@ -1486,7 +1477,7 @@ character_event = {
 			female = no
 			age = 22
 			religion = ROOT
-			culture = bedouin_arabic
+			culture = high_valyrian
 			attributes = {
 				martial = 6
 			}
@@ -1557,213 +1548,6 @@ character_event = {
 				death = {
 					death_reason = death_missing
 				}
-			}
-		}
-	}
-}
-
-### Tzykanion
-
-# AI Challenges
-character_event = {
-	id = LoR.900
-	hide_window = yes
-	
-	ai = yes
-	min_age = 16
-	max_age = 50
-	capable_only = yes
-	only_playable = yes
-	prisoner = no
-	culture = greek
-	only_men = yes
-	
-	trigger = {
-		primary_title = { higher_tier_than = COUNT }
-		is_feudal = yes
-		OR = {
-			liege = {
-				has_dlc = "Legacy of Rome"
-				has_landed_title = e_byzantium
-				NOT = { has_character_flag = no_more_tzykanion }
-				ai = no
-				culture = greek
-				is_female = no
-				prisoner = no
-				age = 16
-				NOT = { age = 50 }
-				NOT = { trait = infirm }
-				NOT = { trait = incapable }
-				NOT = { is_inaccessible_trigger = yes }
-			}
-			liege = {
-				has_landed_title = e_byzantium
-				any_realm_lord = {
-					ai = no
-					has_dlc = "Legacy of Rome"
-					NOT = { has_character_flag = no_more_tzykanion }
-					same_liege = ROOT
-					culture = greek
-					is_female = no
-					prisoner = no
-					age = 16
-					NOT = { age = 50 }
-					NOT = { trait = infirm }
-					NOT = { trait = incapable }
-					NOT = { is_inaccessible_trigger = yes }
-				}
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 1800
-	}
-	
-	immediate = {
-		if = {
-			limit = {
-				liege = {
-					has_landed_title = e_byzantium
-					ai = no
-					culture = greek
-					is_female = no
-					prisoner = no
-					age = 16
-					NOT = { age = 50 }
-					NOT = { trait = infirm }
-					NOT = { trait = incapable }
-					NOT = { is_inaccessible_trigger = yes }
-				}
-			}
-			liege = {
-				save_event_target_as = tzykanion
-				character_event = { id = LoR.901 }
-			}
-		}
-		if = {
-			limit = { NOT = { event_target:tzykanion = { always = yes } } }
-
-			liege = {
-				random_realm_lord = {
-					limit = { 
-						ai = no
-						NOT = { has_character_flag = no_more_tzykanion }
-						same_liege = ROOT
-						culture = greek
-						is_female = no
-						prisoner = no
-						age = 16
-						NOT = { age = 50 }
-						NOT = { trait = infirm }
-						NOT = { trait = incapable }
-						NOT = { is_inaccessible_trigger = yes }
-					}
-					save_event_target_as = tzykanion
-					character_event = { id = LoR.901 }
-				}
-			}
-		}		
-	}
-}
-
-# Player is Challenged
-character_event = {
-	id = LoR.901
-	desc = EVTDESCLoR.901
-	picture = GFX_evt_hippodrome_byzantine
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = EVTOPTALoR.901
-		custom_tooltip = {
-			text = tzykanion_accepted
-			hidden_tooltip = {
-				if = {
-					limit = {
-						NOT = { trait = wroth }
-					}
-					random_list = {
-						50 = {
-							character_event = { id = LoR.902 }
-						}
-						50 = {
-							character_event = { id = LoR.903 }
-						}
-					}
-				}
-				if = {
-					limit = { trait = wroth }
-					character_event = { id = LoR.904 }
-				}
-			}
-		}
-	}
-	option = {
-		name = EVTOPTBLoR.901
-		custom_tooltip = { text = tzykanion_declined }
-	}
-}
-
-# Player Wins
-character_event = {
-	id = LoR.902
-	desc = EVTDESCLoR.902
-	picture = GFX_evt_hippodrome_byzantine
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = EVTOPTALoR.902
-		prestige = 25
-
-		event_target:tzykanion = {
-			opinion = {
-				modifier = opinion_tzykanion_pos
-				who = ROOT
-			}
-		}
-	}
-}
-
-# Player Loses
-character_event = {
-	id = LoR.903
-	desc = EVTDESCLoR.903
-	picture = GFX_evt_hippodrome_byzantine
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = EVTOPTALoR.903
-		
-		event_target:tzykanion = {
-			opinion = {
-				modifier = opinion_tzykanion_pos
-				who = ROOT
-			}
-		}
-	}
-}
-
-# Player Goes Bananas
-character_event = {
-	id = LoR.904
-	desc = EVTDESCLoR.904
-	picture = GFX_evt_hippodrome_byzantine
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = EVTOPTALoR.904
-		prestige = -25
-		set_character_flag = no_more_tzykanion
-		
-		event_target:tzykanion = {
-			opinion = {
-				modifier = opinion_tzykanion_neg
-				who = ROOT
 			}
 		}
 	}
