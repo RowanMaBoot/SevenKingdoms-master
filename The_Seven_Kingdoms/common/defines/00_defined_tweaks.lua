@@ -15,7 +15,7 @@ NDefines.NDiplomacy.EXECUTE_IMPRISONED_INTERACTION_PIETY = 10 -- Reduced from 20
 NDefines.NDiplomacy.DEMAND_RELIGIOUS_CONVERSION_INTERACTION_PIETY = 25 -- Increased from 0
 NDefines.NDiplomacy.DEMAND_RELIGIOUS_CONVERSION_INTERACTION_PRESTIGE = 50 -- Increased from 0
 
-NDefines.NDiplomacy.MAX_DIPLO_DISTANCE = 900
+NDefines.NDiplomacy.MAX_DIPLO_DISTANCE = 1500
 
 -- Council
 NDefines.NCouncil.ENFORCE_PEACE_START_DELAY = 6 -- from 3
