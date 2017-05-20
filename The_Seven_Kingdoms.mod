@@ -1,4 +1,4 @@
-name = "The Seven Kingdoms: Standalone | A1.0"
+name = "The Seven Kingdoms: Standalone | A1.1"
 path = "mod/The_Seven_Kingdoms"
 user_dir = "The_Seven_Kingdoms"
 
