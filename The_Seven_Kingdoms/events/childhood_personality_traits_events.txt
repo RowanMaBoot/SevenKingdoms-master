@@ -556,7 +556,7 @@ character_event = {
 	
 	min_age = 6
 	max_age = 16
-	religion_group = christian
+	religion_group = the_seven_group
 	lacks_dlc = "Conclave"
 
 	is_triggered_only = yes
@@ -1766,10 +1766,7 @@ character_event = {
 	
 	trigger = {
 		NOT = {
-			religion_group = muslim
-		}
-		NOT = {
-			religion_group = indian_group
+			religion = rhllor
 		}
 		NOT = { personality_traits = 5 }
 		NOT = { trait = zealous }
@@ -1890,7 +1887,7 @@ character_event = {
 	
 	min_age = 6
 	max_age = 16
-	religion_group = muslim
+	religion = rhllor
 	lacks_dlc = "Conclave"
 
 	is_triggered_only = yes
@@ -3047,7 +3044,7 @@ character_event = {
 	
 	trigger = {
 		NOT = {
-			religion_group = muslim
+			religion = rhllor
 		}
 		NOT = { personality_traits = 5 }
 		NOT = { trait = zealous }
@@ -3168,7 +3165,7 @@ character_event = {
 	
 	min_age = 6
 	max_age = 16
-	religion_group = muslim
+	religion = rhllor
 	lacks_dlc = "Conclave"
 
 	is_triggered_only = yes
@@ -3485,6 +3482,9 @@ character_event = {
 				father = {
 					trait = homosexual
 				}
+                mother = {
+					trait = homosexual
+				}
 			}
 		}
 		
@@ -3513,7 +3513,7 @@ character_event = {
 		num_traits = 4
 		trait = homosexual
 		NOT = {
-			religion_group = muslim
+			culture_group = dornish
 		}
 	}
 
@@ -3532,46 +3532,6 @@ character_event = {
 	}
 	option = {
 		name = "EVTOPTB1985"
-		remove_trait = homosexual
-	}
-}
-
-### Remove Homosexual - Muslim ###
-character_event = {
-	id = 1986
-	desc = "EVTDESC1986"
-	picture = GFX_evt_brothel
-	
-	min_age = 13
-	max_age = 17
-	only_capable = yes
-	is_married = no
-	
-	trigger = {
-		has_guardian = yes
-		num_traits = 4
-		trait = homosexual
-		OR = {
-			religion_group = muslim
-			religion_group = indian_group
-		}
-	}
-
-	mean_time_to_happen = {
-		months = 480
-		
-		modifier = {
-			factor = 0.1
-			trait = zealous
-		}
-	}
-	
-	option = {
-		name = "EVTOPTA1986"
-		piety = -50
-	}
-	option = {
-		name = "EVTOPTB1986"
 		remove_trait = homosexual
 	}
 }
@@ -3616,6 +3576,32 @@ character_event = {
 			factor = 0.5
 			trait = lustful
 		}
+		
+		modifier = {
+			factor = 0.75
+			trait = trusting
+			any_courtier = {
+				age = 12
+				not = { age = 18 }
+				trait = homosexual
+				reverse_opinion = { who = ROOT value = 25 }
+			}		
+		} 
+        
+        modifier = {
+			factor = 0.9
+			OR = {
+				guardian = {
+					trait = homosexual
+				}
+				father = {
+					trait = homosexual
+				}
+                mother = {
+					trait = homosexual
+				}
+			}
+		}
 	}
 	
 	option = {
@@ -3641,7 +3627,7 @@ character_event = {
 		num_traits = 4
 		trait = homosexual
 		NOT = {
-			religion_group = muslim
+			culture_group = dornish
 		}
 	}
 
@@ -4487,7 +4473,7 @@ character_event = {
 		has_guardian = yes
 		NOT = { personality_traits = 5 }
 		NOT = {
-			religion_group = muslim
+			religion = rhllor
 		}
 	}
 	
@@ -4584,7 +4570,7 @@ character_event = {
 	
 	min_age = 6
 	max_age = 11
-	religion_group = christian
+	religion_group = the_seven_group
 	lacks_dlc = "Conclave"
 
 	is_triggered_only = yes
@@ -4730,7 +4716,6 @@ character_event = {
 	
 	trigger = {
 		has_guardian = yes
-		#religion_group = christian
 		NOT = { trait = zealous }
 		NOT = { trait = cynical }
 		NOT = { personality_traits = 5 }
@@ -5182,7 +5167,7 @@ character_event = {
 	
 	min_age = 11
 	max_age = 16
-	religion_group = christian
+	religion_group = the_seven_group
 	lacks_dlc = "Conclave"
 
 	is_triggered_only = yes
@@ -5599,7 +5584,6 @@ character_event = {
 	
 	trigger = {
 		has_guardian = yes
-		NOT = { religion_group = indian_group }
 		NOT = { trait = lustful }
 		NOT = { trait = chaste }
 		NOT = { trait = temperate }
@@ -5706,9 +5690,9 @@ character_event = {
 	trigger = {
 		has_guardian = yes
 		OR = {
-			religion_group = christian
-			religion_group = muslim
-			religion_group = jewish_group
+			religion_group = the_seven_group
+			religion_group = valyrian_group
+			religion = rhllor
 		}
 		NOT = { trait = cynical }
 		NOT = { trait = craven }
