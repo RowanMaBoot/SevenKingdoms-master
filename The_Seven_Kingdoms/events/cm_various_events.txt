@@ -1,65 +1,4 @@
 ###########################################
-# Charlemagne various events              #
-#                                         #
-# ID CM.2000-CM.3999                      #
-# ID CM.5000-CM.5999                      #
-###########################################
-
-# Written by Tobias Bodlund
-
-namespace = CM
-
-# Ragnar Lodbrok gains his nickname
-character_event = {
-	id = CM.5000
-	desc = EVTDESC_CM_5000
-	picture = GFX_evt_child_sword
-
-	is_triggered_only = yes
-	
-	only_men = yes
-	has_character_flag = is_ragnar_lodbrok
-	
-	trigger = {
-		has_dlc = "Charlemagne"
-		year = 780
-		NOT = { year = 795 }
-		NOT = { has_nickname = nick_lodbrok }
-	}
-	
-	option = {
-		name = EVTOPTA_CM_5001
-		give_nickname = nick_lodbrok
-		prestige = 10
-		add_trait = robust
-		add_trait = diligent
-		hidden_tooltip = { father = { character_event = { id = CM.5001 } } }
-	}
-}
-
-# Father
-character_event = {
-	id = CM.5001
-	desc = EVTDESC_CM_5001
-	picture = GFX_evt_child_sword
-
-	is_triggered_only = yes
-
-	option = {
-		name = EVTOPTA_CM_5001
-		tooltip = {
-			any_child = {
-				limit = { has_character_flag = is_ragnar_lodbrok }
-				give_nickname = nick_lodbrok
-				prestige = 10
-				add_trait = robust
-				add_trait = diligent
-			}
-		}
-	}
-}
-
-###########################################
 # Hero knight events                      #
 # ID CM.2000-CM.3999                      #
 ###########################################
@@ -145,8 +84,11 @@ character_event = {
 			age = 9
 			OR = {
 				is_female = no
-				religion = cathar
-				religion = messalian
+				religion = the_mother
+				religion = lady_of_the_waves
+				religion = vulture_god
+				religion = old_gods_beyond
+				religion_group = valyrian_group
 				father = { primary_title = { has_law = status_of_women_4 } }
 				mother = { primary_title = { has_law = status_of_women_4 } }
 				has_game_rule = {
@@ -168,8 +110,11 @@ character_event = {
 				age = 9
 				OR = {
 					is_female = no
-					religion = cathar
-					religion = messalian
+					religion = the_mother
+					religion = lady_of_the_waves
+					religion = vulture_god
+					religion = old_gods_beyond
+					religion_group = valyrian_group
 					father = { primary_title = { has_law = status_of_women_4 } }
 					mother = { primary_title = { has_law = status_of_women_4 } }
 					has_game_rule = {
