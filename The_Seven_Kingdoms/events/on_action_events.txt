@@ -52,7 +52,6 @@ character_event = {
 		if = {
 			limit = {
 				NOT = { trait = kinslayer }
-				NOT = { religion = rhllor }
 				event_target:target_victim = {
 					dynasty = ROOT
 				}
@@ -452,8 +451,7 @@ character_event = {
 					if = {
 						limit = {
 							is_close_relative = PREV
-							NOT = { religion = messalian }
-							NOT = { religion = zoroastrian }
+							NOT = { religion_group = valyrian_group }
 						}
 						add_character_modifier = {
 							name = incestuous_adulteress
@@ -464,8 +462,7 @@ character_event = {
 						limit = {
 							OR = {
 								NOT = { is_close_relative = PREV }
-								religion = messalian
-								religion = zoroastrian
+								religion_group = valyrian_group
 							}
 						}
 						add_character_modifier = {
@@ -529,7 +526,7 @@ character_event = {
 						limit = { same_sex = PREV }
 						if = {
 							limit = {
-								religion_group = pagan_group
+								religion_group = westerosi_pagan_group
 							}
 							add_character_modifier = {
 								name = known_sodomite_pagan
@@ -538,7 +535,7 @@ character_event = {
 						}
 						if = {
 							limit = {
-								NOT = { religion_group = pagan_group }
+								NOT = { religion_group = westerosi_pagan_group }
 							}
 							add_character_modifier = {
 								name = known_sodomite
@@ -550,8 +547,7 @@ character_event = {
 					if = {
 						limit = {
 							is_close_relative = PREV
-							NOT = { religion = messalian }
-							NOT = { religion = zoroastrian }
+							NOT = { religion_group = valyrian_group }
 						}
 						add_character_modifier = {
 							name = incestuous_adulterer
@@ -563,13 +559,12 @@ character_event = {
 							is_married = yes
 							OR = {
 								NOT = { is_close_relative = PREV }
-								religion = messalian
-								religion = zoroastrian
+								religion_group = valyrian_group
 							}
 						}
 						if = {
 							limit = {
-								NOT = { religion_group = pagan_group }
+								NOT = { religion_group = westerosi_pagan_group }
 							}
 							add_character_modifier = {
 								name = adulterer
@@ -1967,7 +1962,7 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = pagan_group }
+		ROOT = { religion_group = westerosi_pagan_group }
 		new_character = {
 			religion_group = the_seven_group
 		}
@@ -2025,7 +2020,7 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = pagan_group }
+		ROOT = { religion_group = westerosi_pagan_group }
 		new_character = {
 			religion = rhllor
 		}
@@ -2083,91 +2078,11 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = pagan_group }
+		ROOT = { religion_group = westerosi_pagan_group }
 		new_character = {
 			NOT = { religion = rhllor }
 			NOT = { religion_group = the_seven_group }
 		}
-	}
-	
-	option = {
-		name = EVTOPTA324 # For [God Name]!
-		trigger = { religion = ROOT }
-	}
-	option = {
-		name = EVTOPTB200 # No concern of ours
-		trigger = {
-			NOT = { religion = ROOT }
-			new_character = {
-				NOT = { religion = PREV }
-				NOT = { character = PREV }
-			}
-		}
-	}
-	option = {
-		name = EVTOPTD200 # To Arms!
-		trigger = {
-			new_character = {
-				character = PREV
-			}
-		}
-	}
-	option = {
-		name = EVTOPTE200 # Terrible News!
-		trigger = {
-			new_character = {
-				religion = PREV
-				NOT = { character = PREV }
-			}
-		}
-	}
-}
-
-# ZOROASTRIAN GREAT HOLY WAR
-# Called from 'on_crusade_creation'
-# new_character is the targetted enemy
-# ROOT is the religious head
-# FROM is the attacked kingdom title
-narrative_event = {
-	id = 327
-	title = EVTNAME200
-	picture = GFX_evt_battle
-	border = GFX_event_narrative_frame_war
-	
-	desc = {
-		text = EVTDESC327
-		trigger = {
-			new_character = {
-				NOT = { religion_group = the_seven_group }
-				NOT = { religion = rhllor }
-			}
-		}
-	}
-	desc = {
-		text = EVTDESC327_MUSLIMS
-		trigger = {
-			new_character = {
-				religion = rhllor
-			}
-		}
-	}
-	desc = {
-		text = EVTDESC327_CHRIST
-		trigger = {
-			new_character = {
-				religion_group = the_seven_group
-			}
-		}
-	}
-	
-	is_triggered_only = yes
-	major = yes
-	show_ROOT = yes
-	hide_new = yes
-	
-	trigger = {
-		can_call_crusade = yes
-		ROOT = { religion_group = zoroastrian_group }
 	}
 	
 	option = {
@@ -3444,10 +3359,7 @@ character_event = {
 			has_character_flag = recieved_royal_marriage_aid_duty
 		}
 		OR = {
-			AND = {
-				NOT = { religion = zoroastrian }
-				NOT = { religion = messalian }
-			}
+            NOT = { religion_group = valyrian_group }
 			NOT = { new_character = { is_close_relative = FROM } }
 		}
 		OR = {
@@ -3533,7 +3445,7 @@ character_event = {
 	desc = EVTDESC501
 	picture = GFX_evt_marriage_zoroastrian_group
 	
-	religion = zoroastrian
+	religion_group = valyrian_group
 	
 	is_triggered_only = yes
 	
@@ -3654,134 +3566,6 @@ character_event = {
 		}
 	}
 }
-
-# On-action event: Messalian close kin marriage
-character_event = {
-	id = 502
-	desc = EVTDESC502
-	picture = GFX_evt_marriage
-	
-	religion = messalian
-	
-	is_triggered_only = yes
-	
-	trigger = {
-		new_character = { is_close_relative = FROM }
-		OR = {
-			FROM = { character = ROOT }
-			AND = {
-				FROM = {
-					dynasty = ROOT
-					is_primary_heir = ROOT
-				}
-				new_character = {
-					NOT = { character = ROOT }
-				}
-			}
-		}
-	}
-	
-	option = {
-		name = EVTOPTA500
-		scaled_wealth = {
-			value = 0.5
-			min = 10
-		}
-		if = {
-			limit = { tier = EMPEROR }
-			piety = 300
-		}
-		if = {
-			limit = { tier = KING }
-			piety = 200
-		}
-		if = {
-			limit = { tier = DUKE }
-			piety = 100
-		}
-		if = {
-			limit = { tier = COUNT }
-			piety = 50
-		}
-		if = {
-			limit = { tier = BARON }
-			piety = 25
-		}
-	}
-	option = {
-		name = EVTOPTB500
-		
-		if = {
-			limit = { tier = EMPEROR }
-			piety = 300
-		}
-		if = {
-			limit = { tier = KING }
-			piety = 200
-		}
-		if = {
-			limit = { tier = DUKE }
-			piety = 100
-		}
-		if = {
-			limit = { tier = COUNT }
-			piety = 50
-		}
-		if = {
-			limit = { tier = BARON }
-			piety = 25
-		}
-		
-		if = {
-			limit = {
-				NOT = { yearly_income = 50 }
-			}
-			if = {
-				limit = { tier = EMPEROR }
-				prestige = 150
-			}
-			if = {
-				limit = { tier = KING }
-				prestige = 50
-			}
-			if = {
-				limit = { tier = DUKE }
-				prestige = 25
-			}
-			if = {
-				limit = { tier = COUNT }
-				prestige = 13
-			}
-			if = {
-				limit = { tier = BARON }
-				prestige = 6
-			}
-			break = yes
-		}
-		
-		if = {
-			limit = { tier = EMPEROR }
-			prestige = 300
-		}
-		if = {
-			limit = { tier = KING }
-			prestige = 200
-		}
-		if = {
-			limit = { tier = DUKE }
-			prestige = 100
-		}
-		if = {
-			limit = { tier = COUNT }
-			prestige = 50
-		}
-		if = {
-			limit = { tier = BARON }
-			prestige = 25
-		}
-	}
-}
-
 
 # Approve or disapprove of de facto Law Change
 letter_event = {
@@ -4461,41 +4245,6 @@ narrative_event = {
 				limit = { is_heresy_of = ROOT }
 				religion = ROOT
 			}
-		}
-		if = {
-			limit = { religion = norse_pagan_reformed }
-			d_jomsvikings = {
-				religion = norse_pagan_reformed # This Holy Order now changes religion
-			}
-			set_global_flag = norse_reformation
-		}
-		if = {
-			limit = { religion = tengri_pagan_reformed }
-			set_global_flag = tengri_reformation
-		}
-		if = {
-			limit = { religion = baltic_pagan_reformed }
-			set_global_flag = baltic_reformation
-		}
-		if = {
-			limit = { religion = finnish_pagan_reformed }
-			set_global_flag = finnish_reformation
-		}
-		if = {
-			limit = { religion = aztec_reformed }
-			set_global_flag = aztec_reformation
-		}
-		if = {
-			limit = { religion = slavic_pagan_reformed }
-			set_global_flag = slavic_reformation
-		}
-		if = {
-			limit = { religion = west_african_pagan_reformed }
-			set_global_flag = west_african_reformation
-		}
-		if = {
-			limit = { religion = zun_pagan_reformed }
-			set_global_flag = zun_reformation
 		}
 	}
 
