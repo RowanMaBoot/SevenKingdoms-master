@@ -52,7 +52,7 @@ character_event = {
 		if = {
 			limit = {
 				NOT = { trait = kinslayer }
-				NOT = { religion_group = muslim }
+				NOT = { religion = rhllor }
 				event_target:target_victim = {
 					dynasty = ROOT
 				}
@@ -316,7 +316,7 @@ character_event = {
 		
 		if = {
 			limit = {
-				religion_group = christian
+				religion_group = the_seven_group
 				OR = {
 					AND = {
 						is_ruler = yes
@@ -749,7 +749,7 @@ character_event = {
 			if = {
 				limit = { 
 					dynasty = ROOT 
-					NOT = { religion_group = muslim }
+					NOT = { religion = rhllor }
 				}
 				add_trait = kinslayer
 			}
@@ -1617,9 +1617,9 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = christian }
+		ROOT = { religion_group = the_seven_group }
 		new_character = {
-			religion_group = muslim
+			religion = rhllor
 		}
 	}
 	
@@ -1675,10 +1675,10 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = christian }
+		ROOT = { religion_group = the_seven_group }
 		new_character = {
-			NOT = { religion_group = muslim }
-			NOT = { religion_group = christian }
+			NOT = { religion = rhllor }
+			NOT = { religion_group = the_seven_group }
 		}
 	}
 	
@@ -1734,9 +1734,9 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = christian }
+		ROOT = { religion_group = the_seven_group }
 		new_character = {
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 	}
 	
@@ -1792,9 +1792,9 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = muslim }
+		ROOT = { religion = rhllor }
 		new_character = {
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 	}
 	
@@ -1850,10 +1850,10 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = muslim }
+		ROOT = { religion = rhllor }
 		new_character = {
-			NOT = { religion_group = muslim }
-			NOT = { religion_group = christian }
+			NOT = { religion = rhllor }
+			NOT = { religion_group = the_seven_group }
 		}
 	}
 	
@@ -1909,9 +1909,9 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = muslim }
+		ROOT = { religion = rhllor }
 		new_character = {
-			religion_group = muslim
+			religion = rhllor
 		}
 	}
 	
@@ -1969,7 +1969,7 @@ narrative_event = {
 		can_call_crusade = yes
 		ROOT = { religion_group = pagan_group }
 		new_character = {
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 	}
 	
@@ -2027,7 +2027,7 @@ narrative_event = {
 		can_call_crusade = yes
 		ROOT = { religion_group = pagan_group }
 		new_character = {
-			religion_group = muslim
+			religion = rhllor
 		}
 	}
 	
@@ -2085,8 +2085,8 @@ narrative_event = {
 		can_call_crusade = yes
 		ROOT = { religion_group = pagan_group }
 		new_character = {
-			NOT = { religion_group = muslim }
-			NOT = { religion_group = christian }
+			NOT = { religion = rhllor }
+			NOT = { religion_group = the_seven_group }
 		}
 	}
 	
@@ -2138,8 +2138,8 @@ narrative_event = {
 		text = EVTDESC327
 		trigger = {
 			new_character = {
-				NOT = { religion_group = christian }
-				NOT = { religion_group = muslim }
+				NOT = { religion_group = the_seven_group }
+				NOT = { religion = rhllor }
 			}
 		}
 	}
@@ -2147,7 +2147,7 @@ narrative_event = {
 		text = EVTDESC327_MUSLIMS
 		trigger = {
 			new_character = {
-				religion_group = muslim
+				religion = rhllor
 			}
 		}
 	}
@@ -2155,7 +2155,7 @@ narrative_event = {
 		text = EVTDESC327_CHRIST
 		trigger = {
 			new_character = {
-				religion_group = christian
+				religion_group = the_seven_group
 			}
 		}
 	}
@@ -2172,86 +2172,6 @@ narrative_event = {
 	
 	option = {
 		name = EVTOPTA324 # For [God Name]!
-		trigger = { religion = ROOT }
-	}
-	option = {
-		name = EVTOPTB200 # No concern of ours
-		trigger = {
-			NOT = { religion = ROOT }
-			new_character = {
-				NOT = { religion = PREV }
-				NOT = { character = PREV }
-			}
-		}
-	}
-	option = {
-		name = EVTOPTD200 # To Arms!
-		trigger = {
-			new_character = {
-				character = PREV
-			}
-		}
-	}
-	option = {
-		name = EVTOPTE200 # Terrible News!
-		trigger = {
-			new_character = {
-				religion = PREV
-				NOT = { character = PREV }
-			}
-		}
-	}
-}
-
-# JEWISH GREAT HOLY WAR
-# Called from 'on_crusade_creation'
-# new_character is the targetted enemy
-# ROOT is the religious head
-# FROM is the attacked kingdom title
-narrative_event = {
-	id = 328
-	title = EVTNAME200
-	picture = GFX_evt_battle
-	border = GFX_event_narrative_frame_war
-	
-	desc = {
-		text = EVTDESC328
-		trigger = {
-			new_character = {
-				NOT = { religion_group = christian }
-				NOT = { religion_group = muslim }
-			}
-		}
-	}
-	desc = {
-		text = EVTDESC328_MUSLIMS
-		trigger = {
-			new_character = {
-				religion_group = muslim
-			}
-		}
-	}
-	desc = {
-		text = EVTDESC328_CHRIST
-		trigger = {
-			new_character = {
-				religion_group = christian
-			}
-		}
-	}
-	
-	is_triggered_only = yes
-	major = yes
-	show_ROOT = yes
-	hide_new = yes
-	
-	trigger = {
-		can_call_crusade = yes
-		ROOT = { religion_group = jewish_group }
-	}
-	
-	option = {
-		name = EVTOPTA328 # God and Israel!
 		trigger = { religion = ROOT }
 	}
 	option = {
@@ -2930,13 +2850,13 @@ diploresponse_event = {
 	desc = {
 		text = EVTDESC236
 		trigger = {
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 	}
 	desc = {
 		text = EVTDESC236_NC
 		trigger = {
-			NOT = { religion_group = christian }
+			NOT = { religion_group = the_seven_group }
 		}
 	}
 
@@ -3520,7 +3440,7 @@ character_event = {
 	
 	trigger = {
 		NOR = { 
-			religion_group = muslim 
+			religion = rhllor 
 			has_character_flag = recieved_royal_marriage_aid_duty
 		}
 		OR = {
