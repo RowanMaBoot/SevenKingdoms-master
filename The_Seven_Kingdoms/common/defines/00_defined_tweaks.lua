@@ -30,16 +30,16 @@ NDefines.NTitle.EMPEROR_LANDLESS_SON_PRESTIGE = 0.4
 
 -- Characters
 
-NDefines.NCharacter.CHANGE_AMBITION_YEARS = 1 -- from 3
-NDefines.NCharacter.CHANGE_FOCUS_YEARS = 3 -- from 5
+NDefines.NCharacter.CHANGE_AMBITION_YEARS = 2 -- from 3
+NDefines.NCharacter.CHANGE_FOCUS_YEARS = 4 -- from 5
 
 NDefines.NCharacter.MAX_JOINED_FACTIONS = 4
 
 NDefines.NCharacter.PRESTIGE_FROM_DYNASTY_ON_BIRTH_DIV = 15
 NDefines.NCharacter.PRESTIGE_FROM_DYNASTY_ON_MARRIAGE_DIV = 15
 
-NDefines.NCharacter.PORTRAIT_ADULT_MALE_AGE_THRESHOLD = 14
-NDefines.NCharacter.PORTRAIT_ADULT_FEMALE_AGE_THRESHOLD = 14
+NDefines.NCharacter.PORTRAIT_ADULT_MALE_AGE_THRESHOLD = 15
+NDefines.NCharacter.PORTRAIT_ADULT_FEMALE_AGE_THRESHOLD = 15
 
 NDefines.NCharacter.PORTRAIT_MID_AGE_THRESHOLD = 30
 NDefines.NCharacter.PORTRAIT_OLD_AGE_THRESHOLD = 50
@@ -57,13 +57,13 @@ NDefines.NCharacter.AGE_VERY_OLD = 70
 
 NDefines.NCharacter.MAX_CHILD_BIRTH_AGE = 48
 
-NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_50 = 84
-NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_60 = 211
-NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_70 = 624
+NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_50 = 70
+NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_60 = 200
+NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_70 = 550
 NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_80 = 2400
 NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_90 = 4000
 
-NDefines.NCharacter.INFANT_DEATH_CHANCE = 0.01
+NDefines.NCharacter.INFANT_DEATH_CHANCE = 0.03
 
 NDefines.NCharacter.FEMALE_ATTRACTION_CUTOFF = 48
 
@@ -81,17 +81,17 @@ NDefines.NMilitary.MAX_COMMANDERS_DUKE = 5 -- from 4
 NDefines.NMilitary.MAX_COMMANDERS_KING = 7 -- from 6
 NDefines.NMilitary.MAX_COMMANDERS_EMPEROR = 9 -- from 8
 
-NDefines.NMilitary.FRIENDLY_TERRITORY_LEVY_RETURN_PERCENT = 0.9 -- Reduced from 1.0 to reduce exploiting.
-NDefines.NMilitary.OTHER_TERRITORY_LEVY_RETURN_PERCENT = 0.33 -- Reduced from 0.50 (50% loss) to 0.33 (77% loss) to reduce exploiting.
+NDefines.NMilitary.FRIENDLY_TERRITORY_LEVY_RETURN_PERCENT = 0.95 -- Reduced from 1.0 to reduce exploiting.
+NDefines.NMilitary.OTHER_TERRITORY_LEVY_RETURN_PERCENT = 0.40 -- Reduced from 0.50 (50% loss) to 0.33 (77% loss) to reduce exploiting.
 
 NDefines.NMilitary.BATTLE_TECH_MULTIPLIER = 0.0 -- Removed
 
 NDefines.NMilitary.ATTRITION_LEVEL_FACTOR = 0.6 -- Increased from 0.5
-NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_50_OVER = 1.5 -- Increased from 1.0
-NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_100_OVER = 3.0 -- Increased from 2.0
+NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_50_OVER = 1.2 -- Increased from 1.0
+NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_100_OVER = 2.5 -- Increased from 2.0
 
 NDefines.NMilitary.ARMY_MOVEMENT_SPEED = 3
-NDefines.NMilitary.NAVY_MOVEMENT_SPEED = 10 -- Reduced from 15
+NDefines.NMilitary.NAVY_MOVEMENT_SPEED = 12 -- Reduced from 15, 4x faster than land movement
 
 NDefines.NMilitary.GALLEYS_MAINTENANCE = 50 -- Reduced from 300
 
