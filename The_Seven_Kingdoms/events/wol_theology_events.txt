@@ -35,17 +35,17 @@ character_event = {
 
 	desc = {
 		trigger = {
-			OR = {
-				NOT = { religion_group = pagan_group } # Scriptures
-				is_reformed_religion = yes
-			}
+			religion = old_gods
 		}
 		text = EVTDESC_WoL_7000_non_unref_pagan
 	}
 	desc = {
 		trigger = {
-			religion_group = pagan_group # Stories
-			is_reformed_religion = no
+			religion = lady_of_the_waves
+            religion = vulture_god
+            religion = old_gods_beyond
+            religion = old_gods_beyond_white
+            
 		}
 		text = EVTDESC_WoL_7000_unref_pagan
 	}
@@ -57,10 +57,7 @@ character_event = {
 	option = {
 		name = EVTOPTA_WoL_7000 # Yes, study scriptures
 		trigger = {
-			OR = {
-				NOT = { religion_group = pagan_group }
-				is_reformed_religion = yes
-			}
+			religion = old_gods
 		}
 		piety = 20
 		hidden_tooltip = { character_event = { id = WoL.7001 days = 90 } }
@@ -68,8 +65,10 @@ character_event = {
 	option = {
 		name = EVTOPTB_WoL_7000 # Yes, listen to stories
 		trigger = {
-			religion_group = pagan_group
-			is_reformed_religion = no
+			religion = lady_of_the_waves
+            religion = vulture_god
+            religion = old_gods_beyond
+            religion = old_gods_beyond_white
 		}
 		piety = 20
 		hidden_tooltip = { character_event = { id = WoL.7001 days = 90 } }
@@ -96,66 +95,27 @@ character_event = {
 
 	desc = {
 		trigger = {
-			OR = {
-				NOT = { religion_group = pagan_group } # Scriptures
-				is_reformed_religion = yes
-			}
+			religion = old_gods
 		}
 		text = EVTDESC_WoL_7001_non_unref_pagan
 	}
 	desc = {
 		trigger = {
-			religion_group = pagan_group # Stories
-			is_reformed_religion = no
+			religion = lady_of_the_waves
+            religion = vulture_god
+            religion = old_gods_beyond
+            religion = old_gods_beyond_white
 		}
 		text = EVTDESC_WoL_7001_unref_pagan
 	}
 
 	option = {
-		name = EVTOPTA_WoL_7001 # Scriptures
-		trigger = {
-			OR = {
-				NOT = { religion_group = pagan_group }
-				is_reformed_religion = yes
-			}
-		}
-		piety = 20
-		add_character_modifier = {
-			name = ancient_wisdom
-			years = 3
-		}
-		if = {
-			limit = {
-				NOT = { has_character_modifier = religious_studies }
-				NOT = { has_character_modifier = religious_philosopher }
-				NOT = { trait = theologian }
-			}
-			add_character_modifier = {
-				name = religious_studies
-				duration = -1
-			}
-			set_character_flag = religious_studies_timer
-		}
-		if = {
-			limit = {
-				has_character_modifier = religious_studies
-				NOT = { has_character_modifier = religious_philosopher }
-				NOT = { trait = theologian }
-				had_character_flag = { flag = religious_studies_timer days = 1800 }
-			}
-			clr_character_flag = religious_studies_timer
-			remove_character_modifier = religious_studies
-			add_character_modifier = {
-				name = religious_philosopher
-				duration = -1
-			}
-		}
-	}
-	option = {
 		name = EVTOPTB_WoL_7001 # Stories
 		trigger = {
-			religion_group = pagan_group # Stories
-			is_reformed_religion = no
+			religion = lady_of_the_waves
+            religion = vulture_god
+            religion = old_gods_beyond
+            religion = old_gods_beyond_white
 		}
 		piety = 20
 		add_character_modifier = {
@@ -285,9 +245,7 @@ character_event = {
 		has_focus = focus_theology
 		in_command = no
 		NOT = { religion_group = the_seven_group }
-		NOT = { religion = rhllor }
-		NOT = { religion_group = jewish_group }
-		NOT = { religion_group = indian_group }
+		NOT = { religion_group = eastern_group }
 		NOT = { is_inaccessible_trigger = yes }
 		NOT = { has_character_flag = do_not_disturb }
 		NOT = { has_character_flag = wol_theology_visited_holy_site }
@@ -490,12 +448,12 @@ character_event = {
 		has_focus = focus_theology
 		is_priest = no
 		NOT = { trait = zealous }
-		NOT = { trait = sympathy_christendom }
-		NOT = { trait = sympathy_islam }
-		NOT = { trait = sympathy_pagans }
-		NOT = { trait = sympathy_zoroastrianism }
-		NOT = { trait = sympathy_judaism }
-		NOT = { trait = sympathy_indian }
+		NOT = { trait = sympathy_the_seven }
+		NOT = { trait = sympathy_eastern }
+		NOT = { trait = sympathy_westerosi_pagan }
+		NOT = { trait = sympathy_drowned_god }
+		NOT = { trait = sympathy_valyrian }
+		NOT = { trait = sympathy_eastern_pagan }
 		NOT = { has_character_flag = wol_theology_view_other_religions }
 		any_realm_character = {
 			NOT = { religion_group = ROOT }
@@ -548,27 +506,27 @@ character_event = {
 		}
 		if = {
 			limit = { FROM = { religion_group = the_seven_group } }
-			add_trait = sympathy_christendom
+			add_trait = sympathy_the_seven
 		}
 		if = {
-			limit = { FROM = { religion = rhllor } }
-			add_trait = sympathy_islam
+			limit = { FROM = { religion_group = eastern_group } }
+			add_trait = sympathy_eastern
 		}
 		if = {
-			limit = { FROM = { religion_group = pagan_group } }
-			add_trait = sympathy_pagans
+			limit = { FROM = { religion_group = westerosi_pagan_group } }
+			add_trait = sympathy_westerosi_pagan
 		}
 		if = {
-			limit = { FROM = { religion_group = zoroastrian_group } }
-			add_trait = sympathy_zoroastrianism
+			limit = { FROM = { religion_group = drowned_god_group } }
+			add_trait = sympathy_drowned_god
 		}
 		if = {
-			limit = { FROM = { religion_group = jewish_group } }
-			add_trait = sympathy_judaism
+			limit = { FROM = { religion_group = valyrian_group } }
+			add_trait = sympathy_valyrian
 		}
 		if = {
-			limit = { FROM = { religion_group = indian_group } }
-			add_trait = sympathy_indian
+			limit = { FROM = { religion_group = eastern_pagan_group } }
+			add_trait = sympathy_eastern_pagan
 		}
 	}
 	option = {
@@ -596,18 +554,19 @@ character_event = {
 	desc = {
 		text = EVTDESC_WoL_7050
 		trigger = {
-			OR = {
-				NOT = { religion_group = pagan_group }
-				is_reformed_religion = yes
-			}
+			religion = old_gods
 		}
 	}
 	
 	desc = {
 		text = EVTDESC_WoL_7050_PAGAN
 		trigger = {
-			religion_group = pagan_group
-			is_reformed_religion = no
+			OR = {
+                religion = lady_of_the_waves
+                religion = vulture_god
+                religion = old_gods_beyond
+                religion = old_gods_beyond_white
+            }
 		}
 	}
 
@@ -697,9 +656,7 @@ character_event = {
 		trait = zealous
 		OR = {
 			religion_group = the_seven_group
-			religion = rhllor
-			religion_group = zoroastrian_group
-			religion_group = jewish_group
+			religion_group = sympathy_eastern
 		}
 		NOT = { has_character_flag = wol_theology_heretic }
 	}
@@ -889,23 +846,18 @@ character_event = {
 		text = EVTDESC_WoL_7080
 		trigger = {
 			NOR = {
-				religion_group = pagan_group
-				religion = rhllor
-				religion_group = indian_group
+				religion_group = westerosi_pagan_group
+				religion_group = eastern_group
 			}
 		}
 	}
 	desc = {
 		text = EVTDESC_WoL_7080_PAGAN
-		trigger = { religion_group = pagan_group }
+		trigger = { religion_group = westerosi_pagan_group }
 	}
 	desc = {
 		text = EVTDESC_WoL_7080_MUSLIM
-		trigger = { religion = rhllor }
-	}
-	desc = {
-		text = EVTDESC_WoL_7080_INDIAN
-		trigger = { religion_group = indian_group }
+		trigger = { religion_group = eastern_group }
 	}
 
 	trigger = {
@@ -1023,8 +975,7 @@ character_event = {
 		trigger = {
 			NOR = {
 				trait = lunatic
-				religion_group = pagan_group
-				religion_group = indian_group
+				religion_group = westerosi_pagan_group
 			}
 		}
 	}
@@ -1034,16 +985,7 @@ character_event = {
 			NOT = {
 				trait = lunatic				
 			}
-			religion_group = pagan_group
-		}
-	}
-	desc = {
-		text = EVTDESC_WoL_7091_INDIAN
-		trigger = {
-			NOT = {
-				trait = lunatic				
-			}
-			religion_group = indian_group
+			religion_group = westerosi_pagan_group
 		}
 	}
 	desc = {
@@ -1055,7 +997,6 @@ character_event = {
 
 	trigger = {
 		NOT = { trait = on_pilgrimage }
-		NOT = { trait = on_hajj }
 	}
 	
 	option = {
@@ -1267,9 +1208,8 @@ character_event = {
 		name = EVTOPT_WoL_7091_CHASTE
 		trigger = {
 			trait = chaste
-			NOR = {
+			NOT = {
 				religion_group = the_seven_group
-				religion_group = indian_group
 			}
 		}
 		ai_chance = {
