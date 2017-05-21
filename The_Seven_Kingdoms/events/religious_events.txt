@@ -188,10 +188,7 @@ character_event = {
 	
 	trigger = {
 		controls_religion = yes
-		OR = {
-			religion = catholic
-			religion = fraticelli
-		}
+		religion = the_seven
 		
 		any_playable_ruler = {
 			religion = ROOT
@@ -282,10 +279,7 @@ character_event = {
 	
 	trigger = {
 		controls_religion = yes
-		OR = {
-			religion = catholic
-			religion = fraticelli
-		}
+		religion = the_seven
 		
 		any_playable_ruler = {
 			religion = ROOT
@@ -369,10 +363,7 @@ character_event = {
 	
 	trigger = {
 		controls_religion = yes
-		OR = {
-			religion = catholic
-			religion = fraticelli
-		}
+		religion = the_seven
 
 		any_playable_ruler = {
 			religion = ROOT
@@ -1026,320 +1017,6 @@ character_event = {
 	}
 }
 
-
-########################################
-# Formation of the Orders
-########################################
-
-# Formation of the Knights of St John
-narrative_event = {
-	id = 39100
-	title = "EVTNAME39100"
-	desc = "EVTDESC39100"
-	picture = "GFX_evt_crusaders"
-	border = "GFX_event_narrative_frame_religion"
-	
-	major = yes
-	only_playable = yes
-	only_men = yes
-	religion_group = the_seven_group
-	has_global_flag = christian_crusades_unlocked
-	
-	trigger = {
-		OR = {
-			religion = catholic
-			religion = cathar
-			religion = fraticelli
-			religion = waldensian
-			religion = lollard
-		}
-		is_heretic = no
-		
-		NOT = { is_title_active = d_knights_hospitaler }
-		
-		
-		OR = {
-			year = 1113	# Historical
-			221 = { # Provence
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			214 = { # Toulouse
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			112 = { # Paris
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			119 = { # Cologne
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			257 = { # Braunschweig
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			e_byzantium = {
-				holder_scope = {
-					NOT = { religion_group = the_seven_group }
-				}
-			}
-			496 = { # Constantinople
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			753 = { # Ancyra
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			333 = { # Rome
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			AND = {
-				482 = { # Athens
-					NOT = { owner = { religion_group = the_seven_group } }
-				}
-				481 = { # Corinth
-					NOT = { owner = { religion_group = the_seven_group } }
-				}
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 4
-	}
-	
-	immediate = {
-		activate_title = { title = d_knights_hospitaler status = yes }
-		create_random_soldier = {
-			dynasty = none
-			random_traits = yes
-			religion = ROOT
-		}
-		new_character = {
-			d_knights_hospitaler = {
-				grant_title = PREV
-			}
-			set_defacto_liege = THIS
-			wealth = 500
-			set_government_type = feudal_government
-		}
-		
-		religion_authority = {
-			modifier = religious_order_formed
-			years = 10
-		}
-	}
-	option = {
-		name = "EVTOPTA39100"
-		trigger = {
-			religion = ROOT
-		}
-	}
-	option = {
-		name = "EVTOPTB39100"
-		trigger = {
-			NOT = { religion_group = the_seven_group }
-		}
-	}
-	option = {
-		name = "EVTOPTC39100"
-		trigger = {
-			religion_group = the_seven_group
-			NOT = { religion = ROOT }
-		}
-	}
-}
-
-# Formation of the Knights Templar
-narrative_event = {
-	id = 39101
-	title = "EVTNAME39101"
-	desc = "EVTDESC39101"
-	picture = "GFX_evt_crusaders"
-	border = "GFX_event_narrative_frame_religion"
-	
-	major = yes
-	only_playable = yes
-	only_men = yes
-	religion_group = the_seven_group
-	has_global_flag = christian_crusades_unlocked
-	
-	trigger = {
-		OR = {
-			religion = catholic
-			religion = cathar
-			religion = fraticelli
-			religion = waldensian
-			religion = lollard
-		}
-		is_heretic = no
-		
-		NOT = { year = 1312 }
-		NOT = { is_title_active = d_knights_templar }
-	
-		
-		OR = {
-			year = 1118	# Historical
-			
-			e_byzantium = {
-				holder_scope = {
-					NOT = { religion_group = the_seven_group }
-				}
-			}
-			496 = { # Constantinople
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			753 = { # Ancyra
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			333 = { # Rome
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			AND = {
-				482 = { # Athens
-					NOT = { owner = { religion_group = the_seven_group } }
-				}
-				481 = { # Corinth
-					NOT = { owner = { religion_group = the_seven_group } }
-				}
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 4
-	}
-	
-	immediate = {
-		activate_title = { title = d_knights_templar status = yes }
-		create_random_soldier = {
-			dynasty = none
-			random_traits = yes
-			religion = ROOT
-		}
-		new_character = {
-			d_knights_templar = {
-				grant_title = PREV
-			}
-			set_defacto_liege = THIS
-			wealth = 600
-			set_government_type = feudal_government
-		}
-		
-		religion_authority = {
-			modifier = religious_order_formed
-			years = 10
-		}
-	}
-	option = {
-		name = "EVTOPTA39101"
-		trigger = {
-			religion = ROOT
-		}
-	}
-	option = {
-		name = "EVTOPTB39101"
-		trigger = {
-			NOT = { religion_group = the_seven_group }
-		}
-	}
-	option = {
-		name = "EVTOPTC39100"
-		trigger = {
-			religion_group = the_seven_group
-			NOT = { religion = ROOT }
-		}
-	}
-}
-
-# Formation of the Teutonic Order
-narrative_event = {
-	id = 39102
-	title = "EVTNAME39102"
-	desc = "EVTDESC39102"
-	picture = "GFX_evt_crusaders"
-	border = "GFX_event_narrative_frame_religion"
-	
-	major = yes
-	only_playable = yes
-	only_men = yes
-	religion_group = the_seven_group
-	has_global_flag = christian_crusades_unlocked
-	
-	trigger = {
-		OR = {
-			religion = catholic
-			religion = cathar
-			religion = fraticelli
-			religion = waldensian
-			religion = lollard
-		}
-		is_heretic = no
-		
-		NOT = { is_title_active = d_teutonic_order }
-		
-		OR = {
-			year = 1192	# Historical
-			221 = { # Provence
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			214 = { # Toulouse
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			112 = { # Paris
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			119 = { # Cologne
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			257 = { # Braunschweig
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 4
-	}
-	
-	immediate = {
-		activate_title = { title = d_teutonic_order status = yes }
-		create_random_soldier = {
-			dynasty = none
-			random_traits = yes
-			religion = ROOT
-		}
-		new_character = {
-			d_teutonic_order = {
-				grant_title = PREV
-			}
-			set_defacto_liege = THIS
-			wealth = 500
-			set_government_type = feudal_government
-		}
-		
-		religion_authority = {
-			modifier = religious_order_formed
-			years = 10
-		}
-	}
-	option = {
-		name = "EVTOPTA39102"
-		trigger = {
-			religion = ROOT
-		}
-	}
-	option = {
-		name = "EVTOPTB39102"
-		trigger = {
-			NOT = { religion_group = the_seven_group }
-		}
-	}
-	option = {
-		name = "EVTOPTC39100"
-		trigger = {
-			religion_group = the_seven_group
-			NOT = { religion = ROOT }
-		}
-	}
-}
-
 ########################################
 # PAPAL EVENTS
 ########################################
@@ -1358,10 +1035,7 @@ character_event = {
 	
 	trigger = {
 		controls_religion = yes
-		OR = {
-			religion = catholic
-			religion = fraticelli
-		}
+		religion = the_seven
 		
 		wealth = 500
 		any_playable_ruler = {
@@ -1479,10 +1153,7 @@ character_event = {
 	
 	trigger = {
 		controls_religion = yes
-		OR = {
-			religion = catholic
-			religion = fraticelli
-		}
+		religion = the_seven
 		
 		any_independent_ruler = {
 			religion = ROOT
@@ -1606,10 +1277,8 @@ character_event = {
 	religion_group = the_seven_group
 	
 	trigger = {
-		OR = {
-			religion = catholic
-			religion = fraticelli
-		}
+		religion = the_seven
+        
 		prisoner = yes
 		is_theocracy = yes
 		imprisoned_days = 14
@@ -1882,86 +1551,6 @@ character_event = {
 	}	
 }
 
-#ORTHODOX
-character_event = {
-	id = 39230
-	desc = "EVTDESC39230"	#Orthodox & We got a bishop in jail.
-	picture = GFX_evt_heretic
-	border = GFX_event_normal_frame_religion
-	
-	religion = orthodox
-	
-	is_triggered_only = yes
-	
-	trigger = {
-		in_command = no
-		num_of_prisoners = 1
-		religion_authority = 0.02
-		any_courtier = {
-			prisoner = yes
-			demesne_size = 1
-			is_theocracy = yes
-			religion = orthodox
-			imprisoned_days = 100
-			host = { character = ROOT }		
-		}
-	}
-	
-	weight_multiplier = {
-		factor = 1
-		modifier = {
-			factor = 1.5
-			trait = zealous
-		}
-		modifier = {
-			factor = 1.5
-			trait = just
-		}
-		modifier = {
-			factor = 1.5
-			religion_authority = 0.25
-		}
-		modifier = {
-			factor = 1.5
-			religion_authority = 0.50
-		}
-	}
-	
-	option = {
-		name = "EVTOPTA39230"	#let him go
-		
-		random_courtier = {
-			limit = {
-				prisoner = yes
-				demesne_size = 1
-				religion = orthodox
-				imprisoned_days = 100
-				is_theocracy = yes
-				host = { character = ROOT }		
-			}
-			prisoner = no 
-		}
-		religion_authority = {
-			modifier = ruler_bowed_to_patriarch
-			years = 10
-		}
-		piety = 10
-	}
-	
-	option = {
-		name = "EVTOPTB39230"	#refuse
-		piety = -25
-		prestige = -25
-		religion_authority = {
-			modifier = ruler_defied_patriarch
-			years = 10
-		}
-	}
-	
-	
-}
-
-
 ########################################################################
 #Religious Head does not like it when you have heathens in your employ
 ########################################################################
@@ -1982,10 +1571,7 @@ character_event = {
 	
 	trigger = {
 		controls_religion = yes
-		OR = {
-			religion = catholic
-			religion = fraticelli
-		}
+		religion = the_seven
 		
 		religion_authority = 0.20
 
@@ -1997,7 +1583,7 @@ character_event = {
 				prisoner = no
 				OR = {
 					religion = rhllor
-					religion_group = pagan_group
+					religion_group = westerosi_pagan_group
 				}
 				OR = {
 					has_job_title = job_chancellor
@@ -2031,7 +1617,7 @@ character_event = {
 					prisoner = no
 					OR = {
 						religion = rhllor
-						religion_group = pagan_group
+						religion_group = westerosi_pagan_group
 					}
 					OR = {
 						has_job_title = job_chancellor
@@ -2072,7 +1658,7 @@ character_event = {
 				prisoner = no
 				OR = {
 					religion = rhllor
-					religion_group = pagan_group
+					religion_group = westerosi_pagan_group
 				}
 				OR = {
 					has_job_title = job_chancellor
@@ -2171,256 +1757,6 @@ character_event = {
 	
 	option = {
 		name = "EVTOPTA39244" 
-		prestige = -10
-	}
-}
-
-#Orthodox variant
-
-#The Patriarch asks a ruler that they should not have heathens employed
-character_event = {
-	id = 39260
-	desc = "EVTDESC39260"	
-	picture = GFX_evt_heretic
-	border = GFX_event_normal_frame_religion
-
-	only_playable = yes
-	min_age = 16
-	only_capable = yes
-	prisoner = no
-	only_men = yes
-	religion = orthodox
-	war = no
-	
-	trigger = {
-		controls_religion = yes
-		religion_authority = 0.20
-
-		any_playable_ruler = {
-			religion = orthodox
-			rightful_religious_head = ROOT
-			NOT = { has_character_flag = patriarch_dislikes_heathen_employed }
-			any_courtier = {
-				prisoner = no
-				OR = {
-					religion = rhllor
-					religion_group = pagan_group
-				}
-				OR = {
-					has_job_title = job_chancellor
-					has_job_title = job_marshal
-					has_job_title = job_treasurer
-					has_job_title = job_spymaster
-					has_job_title = job_spiritual
-				} 
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 50
-		modifier = {
-			factor = 0.25
-			trait = zealous
-		}
-	}
-
-	option = {
-		name = "EVTOPTA39260"	#ask them
-		ai_chance = {	factor = 100 }
-		random_playable_ruler = {
-			limit = {
-				religion = orthodox
-				rightful_religious_head = ROOT
-				NOT = { has_character_flag = patriach_dislikes_heathen_employed }
-
-				any_courtier = {
-					prisoner = no
-					OR = {
-						religion = rhllor
-						religion_group = pagan_group
-					}
-					OR = {
-						has_job_title = job_chancellor
-						has_job_title = job_marshal
-						has_job_title = job_treasurer
-						has_job_title = job_spymaster
-						has_job_title = job_spiritual
-					} 
-				}
-			}
-			character_event = { id = 39261 days = 14 tooltip = EVTTOOLTIP39261 }
-			set_character_flag = patriarch_dislikes_heathen_employed
-		}
-	}
-
-	option = {
-		name = "EVTOPTB39260"	#ignore it.
-		ai_chance = {	factor = 0 }
-		religion_authority = {
-			modifier = head_of_religion_neglect
-			years = 10
-		}
-	}
-}
-
-#Demands is coming on us about
-character_event = {
-	id = 39261
-	desc = "EVTDESC39261"
-	picture = GFX_evt_throne_room
-	border = GFX_event_normal_frame_religion
-	
-	is_triggered_only = yes
-	
-	immediate = {
-		random_courtier = {
-			limit = {
-				prisoner = no
-				OR = {
-					religion = rhllor
-					religion_group = pagan_group
-				}
-				OR = {
-					has_job_title = job_chancellor
-					has_job_title = job_marshal
-					has_job_title = job_treasurer
-					has_job_title = job_spymaster
-					has_job_title = job_spiritual
-				} 
-			}
-			set_character_flag = heathen_to_target
-		}
-	}
-	
-	
-	option = {
-		name = "EVTOPTA39261" #banish
-		ai_chance = {
-			factor = 2
-		}
-		random_courtier = {
-			limit = { has_character_flag = heathen_to_target }
-			clr_character_flag = heathen_to_target
-			banish = yes
-		}
-		
-		FROM = {
-			opinion = {
-				modifier = pope_heathen_removal_approve
-				who = ROOT
-				years = 5
-			}
-		}
-
-		hidden_tooltip = {
-			FROM = {  character_event = { id = 39262 days = 1   } }
-		}	
-		clr_character_flag = patriarch_dislikes_heathen_employed
-	}
-	option = {
-		name = "EVTOPTB39261"	#imprison
-		tooltip_info = intrigue
-		trigger = {
-			realm_intrigue = 15
-		}
-		random_courtier = {
-			limit = { has_character_flag = heathen_to_target }
-			clr_character_flag = heathen_to_target
-			imprison = yes
-		}
-		FROM = {
-			opinion = {
-				modifier = pope_heathen_removal_approve_2
-				who = ROOT
-				years = 5
-			}
-		}
-		hidden_tooltip = {
-			FROM = {  character_event = { id = 39263 days = 1  } }
-		}	
-		clr_character_flag = patriarch_dislikes_heathen_employed
-	}
-	option = {
-		name = "EVTOPTC39261"	#Ignore the Patriarch
-		ai_chance = {
-			factor = 1
-			modifier = {
-				factor =  0
-				NOT = {
-					trait = cynical
-				}
-			}
-		}
-		FROM = {
-			opinion = {
-				modifier = opinion_ignore_patriarch_request
-				who = ROOT
-				years = 5
-			}
-		}
-		
-		
-		random_courtier = {
-			limit = { has_character_flag = heathen_to_target }
-			clr_character_flag = heathen_to_target
-			
-			opinion = {
-				modifier = opinion_defended_me
-				who = ROOT
-				years = 5
-			}
-
-		}
-		piety = -50
-		
-		hidden_tooltip = {
-			FROM = {  character_event = { id = 39264 days = 1 } }
-		}
-	}
-}
-
-#they banished the heathen
-character_event = {
-	id = 39262
-	desc = "EVTDESC39262"
-	picture = GFX_evt_emissary
-	border = GFX_event_normal_frame_religion
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = "EVTOPTA39262" 
-		prestige = 10
-	}
-}
-
-#they imprisoned the heathen
-character_event = {
-	id = 39263
-	desc = "EVTDESC39263"
-	picture = GFX_evt_into_the_dungeon
-	border = GFX_event_normal_frame_religion
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = "EVTOPTA39263" 
-		prestige = 5
-	}
-}
-
-#they ignored us
-character_event = {
-	id = 39264
-	desc = "EVTDESC39264"	
-	picture = GFX_evt_spymaster
-	border = GFX_event_normal_frame_religion
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = "EVTOPTA39264" 
 		prestige = -10
 	}
 }
@@ -2794,10 +2130,7 @@ character_event = {
 	
 	trigger = {
 		controls_religion = yes
-		OR = {
-			religion = catholic
-			religion = fraticelli
-		}
+		religion = the_seven
 	
 		religion_authority = 0.30
 		prestige = 20
@@ -2981,10 +2314,7 @@ character_event = {
 	
 	trigger = {
 		controls_religion = yes
-		OR = {
-			religion = catholic
-			religion = fraticelli
-		}
+		religion = the_seven
 	
 		any_vassal = {
 			tier = baron
@@ -3058,270 +2388,6 @@ letter_event = {
 		prestige = 5
 	}	
 }
-
-###############################################################
-#Orthodox flavour: Icons!
-###############################################################
-character_event = {
-	id = 39300
-	desc = "EVTDESC39300"	# Icon of Mary, Mother of God  
-	picture = "GFX_evt_icon"
-	border = "GFX_event_normal_frame_religion"
-
-	
-	min_age = 16
-	only_playable = yes
-	prisoner = no
-	only_capable = yes
-	religion = orthodox
-
-	trigger = {
-		is_heretic = no
-		NOT = {
-			has_character_flag = commisioned_icon
-		}
-		NOT = { trait = cynical }
-	}
-	
-	mean_time_to_happen = {
-		months = 600	
-		modifier = {
-			factor = 0.8
-			trait = zealous
-		}
-		modifier = {
-			factor = 0.8
-			piety = 100
-		}
-		modifier = {
-			factor = 0.8
-			trait = kind
-		}
-	}
-	option = {
-		name = "EVTOPTA39300"	#Yes Please
-		scaled_wealth = -0.25
-		change_intrigue = 1
-		set_character_flag = commisioned_icon
-	} 
-	option = {
-		name = "EVTOPTB39300"	#No.
-		piety = -25
-		if = {
-			limit = { trait = zealous }
-			remove_trait = zealous
-		}
-	} 
-}
-
-#Icon of Christ Pantocrator
-character_event = {
-	id = 39301
-	desc = "EVTDESC39301"	
-	picture = "GFX_evt_icon"
-	border = "GFX_event_normal_frame_religion"
-
-	min_age = 16
-	only_playable = yes
-	prisoner = no
-	only_capable = yes
-	religion = orthodox
-
-	trigger = {
-		is_heretic = no
-		NOT = {
-			has_character_flag = commisioned_icon
-		}
-		NOT = { trait = cynical }
-	}
-	
-	mean_time_to_happen = {
-		months = 600	
-		modifier = {
-			factor = 0.8
-			trait = zealous
-		}
-		modifier = {
-			factor = 0.8
-			piety = 100
-		}
-		modifier = {
-			factor = 0.8
-			trait = gregarious
-		}
-		
-	}
-	option = {
-		name = "EVTOPTA39301"	#Yes Please
-		scaled_wealth = -0.25
-		change_diplomacy = 1
-		set_character_flag = commisioned_icon
-	} 
-	option = {
-		name = "EVTOPTB39301"	#No.
-		piety = -25
-		if = {
-			limit = { trait = zealous }
-			remove_trait = zealous
-		}
-	} 
-}
-
-#Icon of St.Peter
-character_event = {
-	id = 39302
-	desc = "EVTDESC39302"	
-	picture = "GFX_evt_icon"
-	border = "GFX_event_normal_frame_religion"
-	
-	min_age = 16
-	only_playable = yes
-	prisoner = no
-	only_capable = yes
-	religion = orthodox
-
-	trigger = {
-		is_heretic = no
-		NOT = {
-			has_character_flag = commisioned_icon
-		}
-		NOT = { trait = cynical }
-	}
-	
-	mean_time_to_happen = {
-		months = 600	
-		modifier = {
-			factor = 0.8
-			trait = zealous
-		}
-		modifier = {
-			factor = 0.8
-			piety = 100
-		}
-		modifier = {
-			factor = 0.8
-			trait = just
-		}
-		
-	}
-	option = {
-		name = "EVTOPTA39302"	#Yes Please
-		scaled_wealth = -0.25
-		change_stewardship = 1
-		set_character_flag = commisioned_icon
-	} 
-	option = {
-		name = "EVTOPTB39302"	#No.
-		piety = -25
-		if = {
-			limit = { trait = zealous }
-			remove_trait = zealous
-		}
-	} 
-}
-
-#Icon of John the Baptist
-character_event = {
-	id = 39303
-	desc = "EVTDESC39303"	
-	picture = "GFX_evt_icon"
-	border = "GFX_event_normal_frame_religion"
-
-	min_age = 16
-	only_playable = yes
-	prisoner = no
-	only_capable = yes
-	religion = orthodox
-
-	trigger = {
-		is_heretic = no
-		NOT = {
-			has_character_flag = commisioned_icon
-		}
-		NOT = { trait = cynical }
-	}
-	
-	mean_time_to_happen = {
-		months = 600	
-		modifier = {
-			factor = 0.8
-			trait = zealous
-		}
-		modifier = {
-			factor = 0.8
-			piety = 100
-		}
-		modifier = {
-			factor = 0.8
-			trait = patient
-		}
-		
-	}
-	option = {
-		name = "EVTOPTA39303"	#Yes Please
-		scaled_wealth = -0.25
-		change_learning = 1
-		set_character_flag = commisioned_icon
-	} 
-	option = {
-		name = "EVTOPTB39303"	#No.
-		piety = -25
-		if = {
-			limit = { trait = zealous }
-			remove_trait = zealous
-		}
-	} 
-}
-
-#Icon of Saint George
-character_event = {
-	id = 39304
-	desc = "EVTDESC39304"
-	picture = "GFX_evt_icon"
-	border = "GFX_event_normal_frame_religion"
-	
-	min_age = 16
-	only_playable = yes
-	prisoner = no
-	only_capable = yes
-	religion = orthodox
-
-	trigger = {
-		is_heretic = no
-		NOT = {
-			has_character_flag = commisioned_icon
-		}
-		NOT = { trait = cynical }
-	}
-	
-	mean_time_to_happen = {
-		months = 600	
-		modifier = {
-			factor = 0.8
-			trait = zealous
-		}
-		modifier = {
-			factor = 0.8
-			piety = 100
-		}
-	}
-	option = {
-		name = "EVTOPTA39304"	#Yes Please
-		scaled_wealth = -0.25
-		change_martial = 1
-		set_character_flag = commisioned_icon
-	} 
-	option = {
-		name = "EVTOPTB39304"	#No.
-		piety = -25
-		if = {
-			limit = { trait = zealous }
-			remove_trait = zealous
-		}
-	} 
-}
-
-
 
 ########################################
 # A True Knight of christendom.
@@ -3580,27 +2646,32 @@ character_event = {
 			modifier = {
 				factor = 0
 				FROM = { religion_group = the_seven_group }
-				trait = sympathy_christendom
+				trait = sympathy_the_seven
 			}
 			modifier = {
 				factor = 0
 				FROM = { religion = rhllor }
-				trait = sympathy_islam
+				trait = sympathy_eastern
 			}
 			modifier = {
 				factor = 0
-				FROM = { religion_group = jewish_group }
-				trait = sympathy_judaism
+				FROM = { religion_group = westerosi_pagan_group }
+				trait = sympathy_westerosi_pagan
 			}
 			modifier = {
 				factor = 0
-				FROM = { religion_group = zoroastrian_group }
-				trait = sympathy_zoroastrianism
+				FROM = { religion_group = drowned_god_group }
+				trait = sympathy_drowned_god
 			}
 			modifier = {
 				factor = 0
-				FROM = { religion_group = indian_group }
-				trait = sympathy_indian
+				FROM = { religion_group = valyrian_group }
+				trait = sympathy_valyrian
+			}
+            modifier = {
+				factor = 0
+				FROM = { religion_group = eastern_pagan_group }
+				trait = sympathy_eastern_pagan
 			}
 		}
 		
@@ -3735,30 +2806,10 @@ character_event = {
 			modifier = {
 				factor = 2
 				NOT = { government = nomadic_government }  # We're already adopting civilized ways...
-				NOT = { government = tribal_government }
-			}
-			modifier = {
-				factor = 0.2
-				OR = {
-					culture = old_saxon
-					culture_group = baltic
-					culture_group = finno_ugric  # The most stubborn pagans
-				}
-				
-			}
-			modifier = {
-				factor = 0.2
-				culture_group = east_slavic # Like alcohol
-				FROM = {
-					religion = rhllor
-				}
-			}
-			modifier = {
-				factor = 0.2
-				culture_group = north_germanic # Vikings do like their alcohol
-				FROM = {
-					religion = rhllor
-				}
+				NOR = {
+                    government = tribal_government
+                    government = wildling_government
+                }
 			}
 			
 			# Pragmatism
@@ -3820,26 +2871,6 @@ character_event = {
 					}
 				}
 			}
-			modifier = {
-				factor = 0.2
-				NOR = {
-					religion = tengri_pagan
-					religion = aztec
-					any_realm_province = {
-						any_neighbor_province = {
-							owner = {
-								top_liege = {
-									NAND = {
-										religion_group = pagan_group
-										is_reformed_religion = no
-									}
-									any_realm_province = { TECH_RECRUITMENT = 4 } # More cocky when pagan homeland attrition effect is active against neighbors
-								}
-							}
-						}
-					}
-				}
-			}
 		}
 		
 		FROM = {
@@ -3886,27 +2917,32 @@ character_event = {
 			modifier = {
 				factor = 3
 				FROM = { religion_group = the_seven_group }
-				trait = sympathy_christendom
+				trait = sympathy_the_seven
 			}
 			modifier = {
 				factor = 3
 				FROM = { religion = rhllor }
-				trait = sympathy_islam
+				trait = sympathy_eastern
 			}
 			modifier = {
 				factor = 3
-				FROM = { religion_group = jewish_group }
-				trait = sympathy_judaism
+				FROM = { religion_group = westerosi_pagan_group }
+				trait = sympathy_westerosi_pagan
 			}
 			modifier = {
 				factor = 3
-				FROM = { religion_group = zoroastrian_group }
-				trait = sympathy_zoroastrianism
+				FROM = { religion_group = drowned_god_group }
+				trait = sympathy_drowned_god
 			}
 			modifier = {
 				factor = 3
-				FROM = { religion_group = indian_group }
-				trait = sympathy_indian
+				FROM = { religion_group = valyrian_group }
+				trait = sympathy_valyrian
+			}
+            modifier = {
+				factor = 3
+				FROM = { religion_group = eastern_pagan_group }
+				trait = sympathy_eastern_pagan
 			}
 			
 			# Personal
@@ -3998,29 +3034,10 @@ character_event = {
 			modifier = {
 				factor = 2
 				NOT = { government = nomadic_government }  # We're already adopting civilized ways...
-				NOT = { government = tribal_government }
-			}
-			modifier = {
-				factor = 0.2
-				OR = {
-					culture_group = baltic
-					culture_group = finno_ugric  # The most stubborn pagans
-				}
-				
-			}
-			modifier = {
-				factor = 0.2
-				culture_group = east_slavic # Like alcohol
-				FROM = {
-					religion = rhllor
-				}
-			}
-			modifier = {
-				factor = 0.2
-				culture_group = north_germanic # Vikings do like their alcohol
-				FROM = {
-					religion = rhllor
-				}
+				NOR = {
+                    government = tribal_government
+                    government = wildling_government
+                }
 			}
 			
 			# Pragmatism
@@ -4081,26 +3098,6 @@ character_event = {
 							top_liege = {
 								religion = FROM
 								relative_power = { who = ROOT power = 2.0 } # Powerful neighbor of that religion
-							}
-						}
-					}
-				}
-			}
-			modifier = {
-				factor = 0.2
-				NOR = {
-					religion = tengri_pagan
-					religion = aztec
-					any_realm_province = {
-						any_neighbor_province = {
-							owner = {
-								top_liege = {
-									NAND = {
-										religion_group = pagan_group
-										is_reformed_religion = no
-									}
-									any_realm_province = { TECH_RECRUITMENT = 4 } # More cocky when pagan homeland attrition effect is active against neighbors
-								}
 							}
 						}
 					}
@@ -4342,29 +3339,10 @@ letter_event = {
 			modifier = {
 				factor = 2
 				NOT = { government = nomadic_government }  # We're already adopting civilized ways...
-				NOT = { government = tribal_government }
-			}
-			modifier = {
-				factor = 0.2
-				OR = {
-					culture = old_saxon
-					culture_group = baltic
-					culture_group = finno_ugric  # The most stubborn pagans
-				}
-			}
-			modifier = {
-				factor = 0.2
-				culture_group = east_slavic # Like alcohol
-				FROM = {
-					religion = rhllor
-				}
-			}
-			modifier = {
-				factor = 0.2
-				culture_group = north_germanic # Vikings do like their alcohol
-				FROM = {
-					religion = rhllor
-				}
+				NOR = {
+                    government = tribal_government
+                    government = wildling_government
+                }
 			}
 		}
 		
@@ -4769,1139 +3747,6 @@ character_event = {
 	}
 }
 
-# RISE OF THE SHI'A CALIPHATE
-narrative_event = {
-	id = 39640
-	title = EVTNAME39640
-	desc = EVTDESC39640
-	picture = GFX_evt_bishop
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	only_independent = yes
-	only_playable = yes
-	religion = rhllor
-	
-	trigger = {
-		is_landed = yes
-		NOT = { religion = shiite }
-		higher_tier_than = DUKE
-		d_shiite = {
-			has_holder = no
-		}
-		uses_decadence = yes
-		decadence = 10
-		NOT = { has_global_flag = shia_caliphate_revolt_ongoing }
-		any_realm_province = {
-			kingdom = {
-				OR = {
-					has_holder = no
-					holder_scope = {
-						character = ROOT
-					}
-				}
-				num_title_realm_provs = {
-					who = ROOT
-					value = 6
-				}
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 1800
-		modifier = {
-			factor = 0.25
-			OR = {
-				c_cairo = {
-					holder_scope = {
-						same_realm = ROOT
-					}
-				}
-				c_damascus = {
-					holder_scope = {
-						same_realm = ROOT
-					}
-				}
-				c_tunis = {
-					holder_scope = {
-						same_realm = ROOT
-					}
-				}
-			}
-		}
-		modifier = {
-			factor = 0.5
-			decadence = 90
-		}
-		modifier = {
-			factor = 4.0
-			NOT = { decadence = 25 }
-		}
-		modifier = {
-			factor = 2.0
-			year = 1100
-		}
-		modifier = {
-			factor = 2.0
-			year = 1200
-		}
-		modifier = {
-			factor = 2.0
-			year = 1300
-		}
-		modifier = {
-			factor = 4.0
-			year = 1400
-		}
-		modifier = {
-			factor = 2.0
-			NOT = { religion = sunni }
-		}
-		modifier = {
-			factor = 10.0
-			ai = no
-		}
-	}
-	
-	immediate = {
-		set_character_flag = shia_caliphate_revolt
-		set_global_flag = shia_caliphate_revolt_ongoing
-		
-		decadence = -30 # Do not want to be hit with a decadence revolt as well!
-		
-		if = {
-			limit = {
-				ai = yes
-				capital_scope = {
-					kingdom = {
-						OR = {
-							has_holder = no
-							holder_scope = {
-								character = ROOT
-							}
-						}
-						num_title_realm_provs = {
-							who = ROOT
-							value = 6
-						}
-					}
-				}
-			}
-			capital_scope = { save_event_target_as = spawn_province }
-			set_character_flag = spawn_point_set
-		}
-		
-		if = {
-			limit = {
-				NOT = { has_character_flag = spawn_point_set }
-			}
-			random_realm_province = {
-				limit = {
-					kingdom = {
-						OR = {
-							has_holder = no
-							holder_scope = {
-								character = ROOT
-							}
-						}
-						num_title_realm_provs = {
-							who = ROOT
-							value = 10
-						}
-					}
-				}
-				save_event_target_as = spawn_province
-				set_character_flag = spawn_point_set
-			}
-		}
-		
-		if = {
-			limit = {
-				NOT = { has_character_flag = spawn_point_set }
-			}
-			random_realm_province = {
-				limit = {
-					kingdom = {
-						OR = {
-							has_holder = no
-							holder_scope = {
-								character = ROOT
-							}
-						}
-						num_title_realm_provs = {
-							who = ROOT
-							value = 6
-						}
-					}
-				}
-				save_event_target_as = spawn_province
-				set_character_flag = spawn_point_set
-			}
-		}
-		
-		clr_character_flag = spawn_point_set
-		
-		event_target:spawn_province = {
-			if = {
-				limit = {
-					religion = rhllor
-					NOT = { religion = shiite }
-				}
-				religion = shiite
-			}
-		
-			ROOT = {
-				create_character = {
-					dynasty = random
-					religion = shiite
-					culture = ROOT
-					female = no
-					age = 3
-					health = 6.5
-					fertility = 0.6
-					trait = sayyid
-					trait = quick
-					trait = fair
-					attributes = {
-						learning = 1
-						diplomacy = 2
-						martial = 1
-						stewardship = 1
-						intrigue = 1
-					}
-				}
-				
-				new_character = {
-					set_character_flag = shia_caliphate_pretender
-					if = {
-						limit = { ROOT = { ai = yes } }
-						wealth = 1000
-					}
-					if = {
-						limit = { ROOT = { ai = no } }
-						wealth = 250
-					}
-					create_title = {
-						tier = DUKE
-						landless = yes
-						temporary = yes
-						culture = ROOT
-						name = SHIA_CALIPHATE_REVOLT
-						holder = THIS
-					}
-					create_character = {
-						random_traits = yes
-						dynasty = none
-						religion = THIS
-						culture = THIS
-						female = no
-						age = 30
-						trait = brilliant_strategist
-					}
-					new_character = {
-						if = {
-							limit = { ROOT = { ai = yes } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.25
-								attrition = 0.5
-								cannot_inherit = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.33
-							}
-						}
-						if = {
-							limit = { ROOT = { ai = no } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.15
-								attrition = 0.5
-								cannot_inherit = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.25
-							}
-						}
-					}
-					create_character = {
-						random_traits = yes
-						dynasty = none
-						religion = THIS
-						culture = THIS
-						female = no
-						age = 27
-						trait = brilliant_strategist
-					}
-					new_character = {
-						if = {
-							limit = { ROOT = { ai = yes } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.25
-								attrition = 0.5
-								cannot_inherit = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.33
-							}
-						}
-						if = {
-							limit = { ROOT = { ai = no } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.15
-								attrition = 0.5
-								cannot_inherit = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.25
-							}
-						}
-					}
-					create_character = {
-						random_traits = yes
-						dynasty = none
-						religion = THIS
-						culture = THIS
-						female = no
-						age = 25
-						trait = skilled_tactician
-					}
-					new_character = {
-						if = {
-							limit = { ROOT = { ai = yes } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.25
-								attrition = 0.5
-								cannot_inherit = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.33
-							}
-						}
-						if = {
-							limit = { ROOT = { ai = no } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.15
-								attrition = 0.5
-								cannot_inherit = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.25
-							}
-						}
-					}
-					create_character = {
-						random_traits = yes
-						dynasty = none
-						religion = THIS
-						culture = THIS
-						female = no
-						age = 23
-						trait = skilled_tactician
-					}
-					new_character = {
-						if = {
-							limit = { ROOT = { ai = yes } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.25
-								attrition = 0.5
-								cannot_inherit = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.33
-							}
-						}
-						if = {
-							limit = { ROOT = { ai = no } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.15
-								attrition = 0.5
-								cannot_inherit = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.25
-							}
-						}
-					}
-					create_character = {
-						random_traits = yes
-						dynasty = none
-						religion = THIS
-						culture = THIS
-						female = no
-						age = 27
-						trait = skilled_tactician
-					}
-					new_character = {
-						if = {
-							limit = { ROOT = { ai = yes } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.25
-								attrition = 0.5
-								cannot_inherit = yes
-								disband_on_peace = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.33
-							}
-						}
-						if = {
-							limit = { ROOT = { ai = no } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.15
-								attrition = 0.5
-								cannot_inherit = yes
-								disband_on_peace = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.25
-							}
-						}
-					}
-					create_character = {
-						random_traits = yes
-						dynasty = none
-						religion = THIS
-						culture = THIS
-						female = no
-						age = 24
-						trait = skilled_tactician
-					}
-					new_character = {
-						if = {
-							limit = { ROOT = { ai = yes } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.25
-								attrition = 0.5
-								cannot_inherit = yes
-								disband_on_peace = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.33
-							}
-						}
-						if = {
-							limit = { ROOT = { ai = no } }
-							spawn_unit = {
-								province = PREVPREVPREV
-								home = PREVPREVPREV
-								owner = PREV
-								match_character = PREVPREV
-								match_mult = 0.15
-								attrition = 0.5
-								cannot_inherit = yes
-								disband_on_peace = yes
-								reinforces = yes
-								reinforce_rate_multiplier = 0.25
-							}
-						}
-					}
-					create_character = {
-						random_traits = yes
-						dynasty = none
-						religion = THIS
-						culture = THIS
-						female = no
-						age = 32
-						trait = brilliant_strategist
-					}
-					new_character = {
-						spawn_unit = {
-							province = PREVPREVPREV
-							home = PREVPREVPREV
-							owner = PREV
-							match_character = PREVPREV
-							match_mult = 0.2
-							attrition = 0.0
-							cannot_inherit = yes
-							disband_on_peace = yes
-							reinforces = yes
-							reinforce_rate_multiplier = 0.25
-						}
-					}
-					create_character = {
-						random_traits = yes
-						dynasty = none
-						religion = THIS
-						culture = THIS
-						female = no
-						age = 25
-						trait = skilled_tactician
-					}
-					new_character = {
-						spawn_unit = {
-							province = PREVPREVPREV
-							home = PREVPREVPREV
-							owner = PREV
-							match_character = PREVPREV
-							match_mult = 0.2
-							attrition = 0.0
-							cannot_inherit = yes
-							disband_on_peace = yes
-							reinforces = yes
-							reinforce_rate_multiplier = 0.25
-						}
-					}
-					create_character = {
-						random_traits = yes
-						dynasty = none
-						religion = THIS
-						culture = THIS
-						female = no
-						age = 28
-						trait = skilled_tactician
-					}
-					new_character = {
-						spawn_unit = {
-							province = PREVPREVPREV
-							home = PREVPREVPREV
-							owner = PREV
-							match_character = PREVPREV
-							match_mult = 0.2
-							attrition = 0.0
-							cannot_inherit = yes
-							disband_on_peace = yes
-							reinforces = yes
-							reinforce_rate_multiplier = 0.25
-						}
-					}
-					war = {
-						target = ROOT
-						casus_belli = shia_caliphate_rising
-						thirdparty_title = PREVPREV
-						tier = KING
-					}
-				}
-			}
-		}
-	}
-	
-	option = {
-		name = "EVTOPTA39640"
-		trigger = {
-			has_character_flag = shia_caliphate_revolt 
-		}
-		clr_character_flag = shia_caliphate_revolt
-	}
-	
-	option = {
-		name = "EVTOPTB39640"
-		trigger = {
-			religion = shiite
-		}
-	}
-	option = {
-		name = "EVTOPTC39640"
-		trigger = {
-			religion = rhllor
-			NOT = { religion = shiite }
-			NOT = { has_character_flag = shia_caliphate_revolt }
-		}
-	}
-	option = {
-		name = "EVTOPTD39640"
-		trigger = {
-			NOT = { religion = rhllor }
-			NOT = { has_character_flag = shia_caliphate_revolt }
-		}
-	}
-}
-
-# THE START OF THE CHRISTIAN CRUSADES - 1090 AND JERUSALEM NOT CHRISTIAN
-narrative_event = {
-	id = 39660
-	title = EVTNAME39660
-	desc = EVTDESC39660
-	picture = GFX_evt_jerusalem
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	show_ROOT = yes
-	hide_new = yes
-	
-	only_playable = yes
-	min_age = 16
-	only_men = yes
-	religion = catholic
-	
-	trigger = {
-		controls_religion = yes
-		year = 1090
-		
-		774 = { # Jerusalem
-			NOT = { owner = { religion_group = the_seven_group } }
-		}
-		
-		NOT = { has_global_flag = christian_crusades_unlocked }
-	}
-	
-	mean_time_to_happen = {
-		months = 120
-	}
-	
-	immediate = {
-		set_global_flag = christian_crusades_unlocked
-	}
-	
-	option = {
-		name = EVTOPTA39660
-		trigger = {
-			religion_group = the_seven_group
-		}
-	}
-	
-	option = {
-		name = EVTOPTB39660
-		trigger = {
-			NOT = { religion_group = the_seven_group }
-		}
-	}
-}
-
-# THE START OF THE CHRISTIAN CRUSADES - BYZANTIUM FAILING
-narrative_event = {
-	id = 39661
-	title = EVTNAME39660
-	desc = EVTDESC39661
-	picture = GFX_evt_hagia_sofia
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	show_ROOT = yes
-	hide_new = yes
-	
-	only_playable = yes
-	min_age = 16
-	only_men = yes
-	religion = catholic
-	
-	trigger = {
-		year = 900
-		controls_religion = yes
-		NOT = { has_global_flag = christian_crusades_unlocked }
-		
-		OR = {
-			e_byzantium = {
-				holder_scope = {
-					NOT = { religion_group = the_seven_group }
-				}
-			}
-			496 = { # Constantinople
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			753 = { # Ancyra
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			AND = {
-				482 = { # Athens
-					NOT = { owner = { religion_group = the_seven_group } }
-				}
-				481 = { # Corinth
-					NOT = { owner = { religion_group = the_seven_group } }
-				}
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	immediate = {
-		set_global_flag = christian_crusades_unlocked
-	}
-	
-	option = {
-		name = EVTOPTA39660
-		trigger = {
-			religion_group = the_seven_group
-		}
-	}
-	
-	option = {
-		name = EVTOPTB39660
-		trigger = {
-			NOT = { religion_group = the_seven_group }
-		}
-	}
-}
-
-# THE START OF THE CHRISTIAN CRUSADES - ROME HAS FALLEN
-narrative_event = {
-	id = 39662
-	title = EVTNAME39660
-	desc = EVTDESC39662
-	picture = GFX_evt_pope
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	show_ROOT = yes
-	hide_new = yes
-	
-	only_playable = yes
-	min_age = 16
-	only_men = yes
-	religion = catholic
-	
-	trigger = {
-		year = 900
-		controls_religion = yes
-		NOT = { has_global_flag = christian_crusades_unlocked }
-		
-		333 = { # Rome
-			owner = {
-				OR = {
-					NOT = { religion_group = the_seven_group }
-					is_heretic = yes
-				}
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	immediate = {
-		set_global_flag = christian_crusades_unlocked
-	}
-	
-	option = {
-		name = EVTOPTA39660
-		trigger = {
-			religion_group = the_seven_group
-		}
-	}
-	
-	option = {
-		name = EVTOPTB39660
-		trigger = {
-			NOT = { religion_group = the_seven_group }
-		}
-	}
-}
-
-# THE START OF THE CHRISTIAN CRUSADES - EUROPE
-narrative_event = {
-	id = 39663
-	title = EVTNAME39660
-	desc = EVTDESC39663
-	picture = GFX_evt_crusaders
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	show_ROOT = yes
-	hide_new = yes
-	
-	only_playable = yes
-	min_age = 16
-	only_men = yes
-	religion = catholic
-	
-	trigger = {
-		year = 900
-		controls_religion = yes
-		NOT = { has_global_flag = christian_crusades_unlocked }
-		
-		OR = {
-			221 = { # Provence
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			214 = { # Toulouse
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			112 = { # Paris
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			119 = { # Cologne
-				religion_group = the_seven_group
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-			257 = { # Braunschweig
-				religion_group = the_seven_group
-				NOT = { owner = { religion_group = the_seven_group } }
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	immediate = {
-		set_global_flag = christian_crusades_unlocked
-	}
-	
-	option = {
-		name = EVTOPTA39660
-		trigger = {
-			religion_group = the_seven_group
-		}
-	}
-	
-	option = {
-		name = EVTOPTB39660
-		trigger = {
-			NOT = { religion_group = the_seven_group }
-		}
-	}
-}
-
-# THE START OF MUSLIM JIHADS - 1187 IF THERE IS STILL A CALIPH
-narrative_event = {
-	id = 39670
-	title = EVTNAME39670
-	desc = EVTDESC39670
-	picture = GFX_evt_bishop
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	show_ROOT = yes
-	hide_new = yes
-	
-	only_playable = yes
-	min_age = 16
-	religion = rhllor
-	
-	trigger = {
-		controls_religion = yes
-		year = 1187
-		
-		NOT = { has_global_flag = muslim_jihads_unlocked }
-	}
-	
-	mean_time_to_happen = {
-		months = 120
-	}
-	
-	immediate = {
-		set_global_flag = muslim_jihads_unlocked
-	}
-	
-	option = {
-		name = EVTOPTA39670
-		trigger = {
-			religion = rhllor
-		}
-	}
-	
-	option = {
-		name = EVTOPTB39670
-		trigger = {
-			NOT = { religion = rhllor }
-		}
-	}
-}
-
-# THE START OF MUSLIM JIHADS - JERUSALEM HAS FALLEN
-narrative_event = {
-	id = 39671
-	title = EVTNAME39670
-	desc = EVTDESC39671
-	picture = GFX_evt_jerusalem_captured_muslims
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	show_ROOT = yes
-	hide_new = yes
-	
-	only_playable = yes
-	min_age = 16
-	religion = rhllor
-	
-	trigger = {
-		year = 900
-		controls_religion = yes
-		NOT = { has_global_flag = muslim_jihads_unlocked }
-		774 = { # Jerusalem
-			NOT = { owner = { religion = rhllor } }
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	immediate = {
-		set_global_flag = muslim_jihads_unlocked
-	}
-	
-	option = {
-		name = EVTOPTA39670
-		trigger = {
-			religion = rhllor
-		}
-	}
-	
-	option = {
-		name = EVTOPTB39670
-		trigger = {
-			NOT = { religion = rhllor }
-		}
-	}
-}
-
-# THE START OF MUSLIM JIHADS - MECCA HAS FALLEN
-narrative_event = {
-	id = 39672
-	title = EVTNAME39670
-	desc = EVTDESC39672
-	picture = GFX_evt_mecca_falls_soa
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	show_ROOT = yes
-	hide_new = yes
-	
-	only_playable = yes
-	min_age = 16
-	religion = rhllor
-	
-	trigger = {
-		year = 900
-		controls_religion = yes
-		NOT = { has_global_flag = muslim_jihads_unlocked }
-		719 = { # Mecca
-			NOT = { owner = { religion = rhllor } }
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	immediate = {
-		set_global_flag = muslim_jihads_unlocked
-	}
-	
-	option = {
-		name = EVTOPTA39670
-		trigger = {
-			religion = rhllor
-		}
-	}
-	
-	option = {
-		name = EVTOPTB39670
-		trigger = {
-			NOT = { religion = rhllor }
-		}
-	}
-}
-
-# THE START OF MUSLIM JIHADS - THE CENTER CANNOT HOLD
-narrative_event = {
-	id = 39673
-	title = EVTNAME39670
-	desc = EVTDESC39673
-	picture = GFX_evt_moors
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	show_ROOT = yes
-	hide_new = yes
-	
-	only_playable = yes
-	min_age = 16
-	religion = rhllor
-	
-	trigger = {
-		year = 900
-		controls_religion = yes
-		NOT = { has_global_flag = muslim_jihads_unlocked }
-		OR = {
-			693 = { # Baghdad
-				NOT = { owner = { religion = rhllor } }
-			}
-			728 = { # Damascus
-				NOT = { owner = { religion = rhllor } }
-			}
-			796 = { # Cairo
-				NOT = { owner = { religion = rhllor } }
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	immediate = {
-		set_global_flag = muslim_jihads_unlocked
-	}
-	
-	option = {
-		name = EVTOPTA39670
-		trigger = {
-			religion = rhllor
-		}
-	}
-	
-	option = {
-		name = EVTOPTB39670
-		trigger = {
-			NOT = { religion = rhllor }
-		}
-	}
-}
-
-# THE START OF MUSLIM JIHADS - AFRICA UNDER THREAT
-narrative_event = {
-	id = 39674
-	title = EVTNAME39670
-	desc = EVTDESC39674
-	picture = GFX_evt_desert
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	show_ROOT = yes
-	hide_new = yes
-	
-	only_playable = yes
-	min_age = 16
-	religion = rhllor
-	
-	trigger = {
-		year = 1000
-		controls_religion = yes
-		NOT = { has_global_flag = muslim_jihads_unlocked }
-		OR = {
-			843 = { # Marrakesh
-				NOT = { owner = { religion = rhllor } }
-			}
-			817 = { # Tunis
-				NOT = { owner = { religion = rhllor } }
-			}
-			831 = { # Al Djazair
-				NOT = { owner = { religion = rhllor } }
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 3
-	}
-	
-	immediate = {
-		set_global_flag = muslim_jihads_unlocked
-	}
-	
-	option = {
-		name = EVTOPTA39670
-		trigger = {
-			religion = rhllor
-		}
-	}
-	
-	option = {
-		name = EVTOPTB39670
-		trigger = {
-			NOT = { religion = rhllor }
-		}
-	}
-}
-
-# THE START OF PAGAN GREAT HOLY WARS - AFTER THE ABRAHAMICS
-narrative_event = {
-	id = 39680
-	title = EVTNAME39680
-	desc = EVTDESC39680
-	picture = GFX_evt_midwinter_blot_oldgods
-	border = GFX_event_narrative_frame_religion
-	
-	major = yes
-	
-	show_ROOT = yes
-	hide_new = yes
-	
-	only_playable = yes
-	min_age = 16
-	religion_group = pagan_group
-	
-	trigger = {
-		controls_religion = yes
-		
-		NOT = { has_global_flag = pagan_ghws_unlocked }
-		
-		OR = {
-			has_global_flag = muslim_jihads_unlocked
-			has_global_flag = christian_crusades_unlocked
-		}
-	}
-	
-	mean_time_to_happen = {
-		months = 120
-	}
-	
-	immediate = {
-		set_global_flag = pagan_ghws_unlocked
-	}
-	
-	option = {
-		name = EVTOPTA39680
-		trigger = {
-			religion = ROOT
-		}
-	}
-	
-	option = {
-		name = EVTOPTB39680
-		trigger = {
-			religion_group = pagan_group
-			NOT = { religion = ROOT }
-		}
-	}
-	
-	option = {
-		name = EVTOPTC39680
-		trigger = {
-			NOT = { religion_group = pagan_group }
-		}
-	}
-}
-
 # Vassal accepts religious conversion demand. 
 # Fired from 'on_vassal_accepts_religious_conversion'
 # FROMFROM is the demander. FROM is the target vassal. ROOT is the current character. Fires for the target and each of his/her courtiers and direct vassals (but not for characters below the target's vassals).
@@ -5952,12 +3797,6 @@ character_event = {
 		clr_religion_char_flag_effect = yes #Must clear all old flags to avoid double traits
 		add_religion_char_flag_effect = yes
 		religion = FROMFROM
-		if = {
-			limit = {
-				religion_group = indian_group
-			}
-			character_event = { id = RoI.120 } # Assign Indian religion branch
-		}
 		if = {
 			limit = {
 				character = FROM
@@ -6024,12 +3863,6 @@ character_event = {
 		religion = FROMFROM
 		if = {
 			limit = {
-				religion_group = indian_group
-			}
-			character_event = { id = RoI.120 } # Assign Indian religion branch
-		}
-		if = {
-			limit = {
 				character = FROM
 			}
 			character_event = { id = MNM.3949 days = 3 random = 10 }
@@ -6049,8 +3882,8 @@ character_event = {
 		k_papal_state = {
 			any_claimant = {
 				OR = {
-					NOT = { religion = catholic }
-					any_liege = { NOT = { religion = catholic } }
+					NOT = { religion = the_seven }
+					any_liege = { NOT = { religion = the_seven } }
 				}
 			}
 		}
@@ -6065,249 +3898,11 @@ character_event = {
 			any_claimant = {
 				limit = {
 					OR ={
-						NOT = { religion = catholic }
-						any_liege = { NOT = { religion = catholic } }
+						NOT = { religion = the_seven }
+						any_liege = { NOT = { religion = the_seven } }
 					}
 				}
 				remove_claim = k_papal_state
-			}
-		}
-	}
-}
-
-# Fraticelli antipope immediately loses claim if he or liege is no longer Fraticelli
-character_event = {
-	id = 39702
-
-	hide_window = yes
-
-	only_playable = yes
-	
-	trigger = {
-		d_fraticelli = {
-			any_claimant = {
-				OR = {
-					NOT = { religion = fraticelli }
-					any_liege = { NOT = { religion = fraticelli } }
-				}
-			}
-		}
-	}
-	
-	mean_time_to_happen = {
-		days = 1
-	}
-	
-	immediate = {
-		d_fraticelli = {
-			any_claimant = {
-				limit = {
-					OR = {
-						NOT = { religion = fraticelli }
-						any_liege = { NOT = { religion = fraticelli } }
-					}
-				}
-				remove_claim = d_fraticelli
-			}
-		}
-	}
-}
-
-# Establishing the Fraticelli Papacy
-character_event = {
-	id = 39703
-	desc = {
-		text = EVTDESC39703A
-		trigger = {
-			character = FROM
-		}
-	}
-	desc = {
-		text = EVTDESC39703B
-		trigger = {
-			NOT = { character = FROM }
-		}
-	}
-	picture = GFX_evt_bishop
-	border = GFX_event_normal_frame_religion
-	
-	major = yes
-
-	is_triggered_only = yes
-	major_trigger = {
-		religion_group = the_seven_group
-	}
-	
-	only_playable = yes
-	
-	option = {
-		name = EVTOPTA_SOA_4200
-		trigger = {
-			religion = fraticelli
-		}
-	}
-	option = {
-		name = EVTOPTB_SOA_4200
-		trigger = {
-			religion = catholic
-		}
-	}
-	option = {
-		name = EVTOPTC_SOA_4200
-		trigger = {
-			NOR = {
-				religion = fraticelli
-				religion = catholic
-			}
-		}
-	}
-}
-
-# Establishing the Iconoclast Patriarchy
-long_character_event = {
-	id = 39704
-	desc = {
-		text = EVTDESC39704A
-		trigger = {
-			character = FROM
-		}
-	}
-	desc = {
-		text = EVTDESC39704B
-		trigger = {
-			NOT = { character = FROM }
-		}
-	}
-	picture = GFX_evt_bishop
-	border = GFX_event_long_frame_religion
-	
-	major = yes
-	
-	is_triggered_only = yes
-	major_trigger = {
-		religion_group = the_seven_group
-	}
-	
-	only_playable = yes
-	
-	option = {
-		name = EVTOPTA_SOA_4200
-		trigger = {
-			religion = iconoclast
-		}
-	}
-	option = {
-		name = EVTOPTB_SOA_4200
-		trigger = {
-			religion = orthodox
-		}
-	}
-	option = {
-		name = EVTOPTC_SOA_4200
-		trigger = {
-			NOR = {
-				religion = iconoclast
-				religion = orthodox
-			}
-		}
-	}
-}
-
-# Restore the Pope in Rome
-character_event = {
-	id = 39705
-	desc = {
-		text = EVTDESC39705A
-		trigger = {
-			character = FROM
-		}
-	}
-	desc = {
-		text = EVTDESC39705B
-		trigger = {
-			NOT = { character = FROM }
-		}
-	}
-	picture = GFX_evt_bishop
-	border = GFX_event_normal_frame_religion
-	
-	major = yes
-	
-	is_triggered_only = yes
-	major_trigger = {
-		religion_group = the_seven_group
-	}
-	
-	only_playable = yes
-	
-	option = {
-		name = EVTOPTA_SOA_4200
-		trigger = {
-			religion = fraticelli
-		}
-	}
-	option = {
-		name = EVTOPTB_SOA_4200
-		trigger = {
-			religion = catholic
-		}
-	}
-	option = {
-		name = EVTOPTC_SOA_4200
-		trigger = {
-			NOR = {
-				religion = fraticelli
-				religion = catholic
-			}
-		}
-	}
-}
-
-# Restore the Ecumenical Patriarchy
-long_character_event = {
-	id = 39706
-	desc = {
-		text = EVTDESC39706A
-		trigger = {
-			character = FROM
-		}
-	}
-	desc = {
-		text = EVTDESC39706B
-		trigger = {
-			NOT = { character = FROM }
-		}
-	}
-	picture = GFX_evt_bishop
-	border = GFX_event_long_frame_religion
-	
-	major = yes
-	
-	is_triggered_only = yes
-	major_trigger = {
-		religion_group = the_seven_group
-	}
-	
-	only_playable = yes
-	
-	option = {
-		name = EVTOPTA_SOA_4200
-		trigger = {
-			religion = orthodox
-		}
-	}
-	option = {
-		name = EVTOPTB_SOA_4200
-		trigger = {
-			religion = iconoclast
-		}
-	}
-	option = {
-		name = EVTOPTC_SOA_4200
-		trigger = {
-			NOR = {
-				religion = iconoclast
-				religion = orthodox
 			}
 		}
 	}
