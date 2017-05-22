@@ -640,18 +640,10 @@ plot_kill_character = {
 			society_member_of = the_assassins
 			society_rank >= 2
 		}
-		OR = {
-			FROM = { 
-				NOR = {
-					religion = shiite
-					trait = secretly_shiite
-				}
-			}
-			ROOT = {
-				has_quest = quest_the_assassins_assassination
-				quest_target = { character = FROM }
-			}
-		}
+        ROOT = {
+            has_quest = quest_the_assassins_assassination
+            quest_target = { character = FROM }
+        }
 	}
 	
 	# Plotter scope
@@ -1016,7 +1008,7 @@ plot_kill_character = {
 				top_liege = { character = father }
 			}
 			FROM = {
-				religion_group = muslim
+				religion_group = the_seven_group
 				top_liege = { character = father }
 			}
 		}
@@ -1029,7 +1021,20 @@ plot_kill_character = {
 				is_landed = no
 			}
 			FROM = {
-				religion_group = muslim
+				religion_group = the_seven_group
+				top_liege = { character = father }
+			}
+		}
+        
+        modifier = {
+			factor = 1.5
+			plot_target_char = {
+				sibling = FROM
+				ai = no
+				top_liege = { character = father }
+			}
+			FROM = {
+				religion_group = the_seven_group
 				top_liege = { character = father }
 			}
 		}
@@ -1068,18 +1073,8 @@ plot_kill_spouse = {
 			society_member_of = the_assassins
 			society_rank >= 2
 		}
-		OR = {
-			FROM = { 
-				NOR = {
-					religion = shiite
-					trait = secretly_shiite
-				}
-			}
-			ROOT = {
-				has_quest = quest_the_assassins_assassination
-				quest_target = { character = FROM }
-			}
-		}
+        has_quest = quest_the_assassins_assassination
+        quest_target = { character = FROM }
 	}
 	
 	# Plotter scope

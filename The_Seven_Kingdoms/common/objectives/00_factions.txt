@@ -1025,7 +1025,6 @@ faction_succ_seniority = {
 				}
 			}
 		}
-		NOT = { religion_group = muslim }
 		primary_title = { higher_tier_than = BARON }
 		
 		NOT = { in_faction = faction_succ_primogeniture }
@@ -1122,7 +1121,6 @@ faction_succ_seniority = {
 				}
 			}
 			
-			NOT = { religion_group = muslim }	
 			NOT = { in_faction = faction_succ_primogeniture }
 			NOT = { in_faction = faction_succ_feudal_elective }
 			NOT = { in_faction = faction_succ_gavelkind }			
@@ -1693,7 +1691,6 @@ faction_succ_primogeniture = {
 				}
 			}	
 		}
-		NOT = { religion_group = muslim }
 		primary_title = { higher_tier_than = BARON }
 		
 		NOT = { in_faction = faction_succ_seniority }
@@ -1790,7 +1787,6 @@ faction_succ_primogeniture = {
 				}
 			}
 			
-			NOT = { religion_group = muslim }	
 			NOT = { in_faction = faction_succ_seniority }
 			NOT = { in_faction = faction_succ_feudal_elective }
 			NOT = { in_faction = faction_succ_gavelkind }	
@@ -2366,7 +2362,6 @@ faction_succ_gavelkind = {
 				}
 			}
 		}
-		NOT = { religion_group = muslim }
 		primary_title = { higher_tier_than = BARON }
 		
 		NOT = { in_faction = faction_succ_seniority }
@@ -2463,7 +2458,6 @@ faction_succ_gavelkind = {
 				}
 			}
 			
-			NOT = { religion_group = muslim }	
 			NOT = { in_faction = faction_succ_seniority }
 			NOT = { in_faction = faction_succ_primogeniture }
 			NOT = { in_faction = faction_succ_feudal_elective }
@@ -3043,7 +3037,6 @@ faction_succ_feudal_elective = {
 				}
 			}			
 		}
-		NOT = { religion_group = muslim }
 		primary_title = { higher_tier_than = BARON }
 		
 		NOT = { in_faction = faction_succ_seniority }
@@ -3148,7 +3141,6 @@ faction_succ_feudal_elective = {
 				}
 			}
 			
-			NOT = { religion_group = muslim }	
 			NOT = { in_faction = faction_succ_seniority }
 			NOT = { in_faction = faction_succ_primogeniture }
 			NOT = { in_faction = faction_succ_gavelkind }
@@ -5148,55 +5140,9 @@ faction_independence = {
 		modifier = {
 			factor = 0
 			liege = {
-				religion = ROOT
-				culture = ROOT
-				OR = {
-					NOT = { distance = { who = ROOT distance = 100 } }
-					AND = {
-						NOT = { distance = { who = ROOT distance = 200 } }
-						ROOT = {
-							OR = {
-								NOT = { religion_group = pagan_group }
-								is_reformed_religion = yes
-							}
-						}
-						OR = {
-							NOT = { ROOT = { religion_group = pagan_group } }
-							ROOT = { is_reformed_religion = yes }
-						}
-					}
-					AND = {
-						de_jure_vassal_or_below = ROOT
-						NOT = { ROOT = { tier = KING } }
-					}
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0
-			liege = {
 				current_heir = {
 					character = ROOT
 				}
-			}
-		}
-		
-		modifier = {
-			factor = 0
-			lower_tier_than = KING
-			OR = {
-				NOT = { religion_group = pagan_group }
-				is_reformed_religion = yes
-			}
-			liege = {
-				culture_group = ROOT
-				religion_group = ROOT
-				OR = {
-					religion = ROOT
-					culture = ROOT
-				}
-				NOT = { distance = { who = ROOT distance = 200 } }
 			}
 		}
 		
@@ -5247,17 +5193,6 @@ faction_independence = {
 		}
 		
 		modifier = {
-			factor = 0.1
-			OR = {
-				NOT = { religion_group = pagan_group }
-				is_reformed_religion = yes
-			}
-			liege = {
-				NOT = { distance = { who = ROOT distance = 200 } }
-			}
-		}
-		
-		modifier = {
 			factor = 0.25
 			liege = {
 				religion = ROOT
@@ -5276,12 +5211,6 @@ faction_independence = {
 			liege = {
 				distance = { who = ROOT distance = 400 }
 			}
-		}
-		
-		modifier = {
-			factor = 2.0
-			religion_group = pagan_group
-			is_reformed_religion = no
 		}
 		
 		modifier = {
@@ -5450,60 +5379,6 @@ faction_independence = {
 		modifier = {
 			factor = 0
 			liege = {
-				religion = ROOT
-				culture = ROOT
-				OR = {
-					NOT = { distance = { who = ROOT distance = 100 } }
-					AND = {
-						NOT = { distance = { who = ROOT distance = 200 } }
-						ROOT = {
-							OR = {
-								NOT = { religion_group = pagan_group }
-								is_reformed_religion = yes
-							}
-						}
-					}
-					AND = {
-						de_jure_vassal_or_below = ROOT
-						NOT = { ROOT = { tier = KING } }
-					}
-				}
-			}
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0
-			lower_tier_than = KING
-			OR = {
-				NOT = { religion_group = pagan_group }
-				is_reformed_religion = yes
-			}
-			liege = {
-				culture_group = ROOT
-				religion_group = ROOT
-				OR = {
-					religion = ROOT
-					culture = ROOT
-				}
-				NOT = { distance = { who = ROOT distance = 200 } }
-			}
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0
-			liege = {
 				current_heir = {
 					character = ROOT
 				}
@@ -5624,23 +5499,6 @@ faction_independence = {
 			}
 		}
 		
-		modifier = {
-			factor = 0.1
-			OR = {
-				NOT = { religion_group = pagan_group }
-				is_reformed_religion = yes
-			}
-			liege = {
-				NOT = { distance = { who = ROOT distance = 200 } }
-			}
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}
-		}
-		
 		# Clans are very unlikely to join Independence factions led by non-nomads
 		modifier = {
 			factor = 0.01
@@ -5681,12 +5539,6 @@ faction_independence = {
 			liege = {
 				distance = { who = ROOT distance = 400 }
 			}
-		}
-		
-		modifier = {
-			factor = 2.0
-			religion_group = pagan_group
-			is_reformed_religion = no
 		}
 		
 		modifier = {
@@ -5993,10 +5845,7 @@ faction_claimant = {
 			
 			OR = {
 				is_female = no
-				AND = {
-					NOT = { religion_group = muslim } 
-					NOT = { ROOT = { succ_law_title = { has_law = agnatic_succession } } }
-				}
+				NOT = { ROOT = { succ_law_title = { has_law = agnatic_succession } } }
 			}
 			
 			OR = {
@@ -6253,10 +6102,7 @@ faction_claimant = {
 		modifier = {
 			factor = 0
 			FROM = {
-				OR = {
-					religion = catholic
-					religion = fraticelli
-				}
+				religion = the_seven
 				top_liege = {
 					FROM = {
 						liege = {
@@ -6265,10 +6111,7 @@ faction_claimant = {
 					}
 					religion = FROM
 					rightful_religious_head_scope = {
-						OR = {
-							has_claim = k_papal_state
-							has_claim = d_fraticelli
-						}
+						has_claim = k_papal_state
 					}
 					any_realm_lord = {
 						in_faction = faction_antiking
@@ -6770,10 +6613,7 @@ faction_claimant = {
 		# If there is an antiking faction, prioritize that
 		modifier = {
 			factor = 0
-			OR = {
-				religion = catholic
-				religion = fraticelli
-			}
+			religion = the_seven
 			top_liege = {
 				ROOT = {
 					liege = {
@@ -6782,10 +6622,7 @@ faction_claimant = {
 				}
 				religion = ROOT
 				rightful_religious_head_scope = {
-					OR = {
-						has_claim = k_papal_state
-						has_claim = d_fraticelli
-					}
+                    has_claim = k_papal_state
 				}
 				any_realm_lord = {
 					in_faction = faction_antiking
@@ -7197,20 +7034,14 @@ faction_antiking = {
 				}
 			}
 		}
-		OR = {
-			religion = catholic
-			religion = fraticelli
-		}
+		religion = the_seven
 		NOT = { trait = incapable }
 		primary_title = { higher_tier_than = COUNT }
 		liege = {
 			religion = ROOT
 			government = nomadic_government
 			rightful_religious_head_scope = {
-				OR = {
-					has_claim = k_papal_state
-					has_claim = d_fraticelli
-				}
+				has_claim = k_papal_state
 			}
 			NOT = {
 				any_demesne_title = {
