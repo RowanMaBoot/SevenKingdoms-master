@@ -1,0 +1,112 @@
+########## These triggers are used for factions ##########
+
+# Used to determine if a character is on the council. Can be used for boosting or reducing chance.
+has_council_position_trigger = {
+    OR = {
+        has_job_title = job_chancellor
+        has_job_title = job_marshal
+        has_job_title = job_treasurer
+        has_job_title = job_spymaster
+        has_job_title = job_spiritual
+	}
+}
+
+# For religions that are more likely to join faction
+religion_faction_pull_trigger = {
+    OR = {
+        religion_group = drowned_god_group
+        religion_group = valyrian_group
+        religion_group = eastern_pagan_group
+        AND = {
+            religion_group = westerosi_pagan_group
+            liege = {
+				NOT = { religion_group = westerosi_pagan_group }
+			}
+        }
+        AND = {
+            religion = the_seven
+            liege = {
+                NOT = { religion = the_seven }
+            }
+        }
+    }
+}
+
+# For religions that are less likely to join faction
+religion_faction_aversion_trigger = {
+    OR = {
+        religion_group = eastern_group
+        AND = {
+            religion_group = westerosi_pagan_group
+            liege = {
+				religion_group = westerosi_pagan_group
+			}
+        }
+    }
+}
+
+# For cultures that are more likely to join factions
+culture_faction_pull_trigger = {
+    OR = {
+        culture_group = iron_islander
+        culture_group = valyrian
+        culture_group = free_folk
+        
+        culture = westerlander
+        culture = goldman
+        culture = fairman
+        culture = reachman
+    }
+}
+
+# For cultures that are less likely to join factions
+culture_faction_aversion_trigger = {
+    OR = {
+        culture_group = essos_group
+        
+        culture = wynelander # Drinking wine all day...
+        culture = pentoshi
+        culture = flatland_pentoshi
+        
+        # Dornish and marcher lords are content so long as they serve their own people.
+        AND = {
+            culture_group = dornish
+            liege = {
+                culture_group = PREV
+            }
+        }
+        AND = {
+            OR = {
+                culture = shieldislander
+                culture = north_marcher
+                culture = marcher
+            }
+            liege = {
+                culture_group = PREV
+            }
+        }
+        AND = {
+            culture_group = first_men
+            NOT = {
+                culture = westerlander
+                culture = goldman
+                culture = fairman
+                culture = reachman
+            }
+            liege = {
+                culture_group = PREV
+            }
+        }
+    }
+}
+
+# For traits and so on that should be unable to form or create factions.
+should_not_join_factions_trigger = {
+    OR = {
+        trait = incapable
+        trait = black_brother
+        liege = {
+            trait = black_brother
+        }
+    }
+}
