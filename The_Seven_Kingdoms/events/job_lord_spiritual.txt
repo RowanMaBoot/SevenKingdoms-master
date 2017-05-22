@@ -163,33 +163,13 @@ character_event = {
 			}
 		}
 		
-		# Hindus and Buddhists have a hard time converting other Indian religions
 		modifier = {
 			factor = 3.0
-			OR = {
-				religion = hindu
-				religion = buddhist
-			}
-			location = {
-				religion_group = indian_group
-			}
-		}
-		# Jains have a hard time converting ALL non-pagans
-		modifier = {
-			factor = 3.0
-			religion = jain
-			location = {
-				NOT = { religion_group = pagan_group }
-			}
-		}
-		
-		modifier = {
-			factor = 3.0
-			religion_group = pagan_group
+			religion_group = westerosi_pagan_group
 			is_reformed_religion = no
 			location = {
 				OR = {
-					NOT = { religion_group = pagan_group }
+					NOT = { religion_group = westerosi_pagan_group }
 					is_reformed_religion = yes
 				}
 			}
@@ -381,7 +361,7 @@ character_event = {
 		}
 		modifier = {
 			factor = 3.0
-			religion_group = pagan_group
+			religion_group = westerosi_pagan_group
 			is_reformed_religion = no
 		}
 	}
@@ -709,8 +689,7 @@ character_event = {
 	
 	trigger = {
 		has_job_action = action_inquisition
-		NOT = { religion_group = pagan_group }
-		NOT = { religion_group = indian_group }
+		NOT = { religion_group = westerosi_pagan_group }
 		trait = zealous
 		location = {
 			any_province_lord = {
@@ -1160,7 +1139,7 @@ character_event = {
 				NOT = { character = ROOT }
 				NOT = { is_liege_of = ROOT }
 				NOT = { religion = ROOT }
-				religion_group = pagan_group
+				religion_group = westerosi_pagan_group
 				NOT = { same_realm = ROOT }
 				controls_religion = no
 			}
@@ -1203,7 +1182,7 @@ character_event = {
 				NOT = { character = ROOT }
 				NOT = { is_liege_of = ROOT }
 				NOT = { religion = ROOT }
-				religion_group = pagan_group
+				religion_group = westerosi_pagan_group
 				is_reformed_religion = no
 				NOT = { same_realm = ROOT }
 				controls_religion = no
@@ -1329,7 +1308,7 @@ character_event = {
 				NOT = { character = ROOT }
 				NOT = { is_liege_of = ROOT }
 				NOT = { religion = ROOT }
-				religion_group = pagan_group
+				religion_group = westerosi_pagan_group
 				is_reformed_religion = no
 				NOT = { same_realm = ROOT }
 			}
@@ -1401,7 +1380,7 @@ character_event = {
 							at_location = ROOT
 							NOT = { trait = incapable }
 							ai = yes
-							religion_group = pagan_group
+							religion_group = westerosi_pagan_group
 						}
 						character_event = { id = 39610 days = 1 }
 					}
@@ -1430,7 +1409,7 @@ character_event = {
 				NOT = { character = ROOT }
 				NOT = { is_liege_of = ROOT }
 				NOT = { religion = ROOT }
-				religion_group = pagan_group
+				religion_group = westerosi_pagan_group
 				NOT = { same_realm = ROOT }
 			}
 		}
@@ -1657,7 +1636,6 @@ character_event = {
 	
 	trigger = {
 		has_job_action = action_improve_rel_relations
-		NOT = { religion_group = indian_group }
 		religion_head = {
 			NOT = { character = liege }
 		}
@@ -1896,7 +1874,6 @@ character_event = {
 	
 	trigger = {
 		has_job_action = action_advance_cul_tech
-		NOT = { religion_group = indian_group }
 		is_heretic = no
 		OR = {
 			religion_group = the_seven_group
