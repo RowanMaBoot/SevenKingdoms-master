@@ -276,7 +276,7 @@ character_event = {
 	min_age = 16
 	only_playable = yes
 	prisoner = no
-	religion = catholic
+	religion = the_seven
 	
 	trigger = {
 		in_command = no
@@ -636,11 +636,6 @@ character_event = {
 	}
 	option = {
 		name = EVTOPTC73006 #Give him a beating for messing with inferiors
-		if = {
-			limit = { religion = jain }
-			piety = -20
-			custom_tooltip = { text = jain_ahimsa_tooltip }
-		}
 		event_target:knocked_up_maid = {
 			opinion = {
 				modifier = resentful_of_my_behaviour
@@ -974,13 +969,7 @@ character_event = {
 	
 	trigger = {
 		year = 1415
-		OR = {
-			religion = catholic
-			religion = cathar
-			religion = fraticelli
-			religion = waldensian
-			religion = lollard
-		}
+		religion_group = the_seven_group
 		NOT = { has_character_flag = ars_moriendi }
 	}
 	
@@ -1869,16 +1858,7 @@ character_event = {
 		NOT = {
 			religion = rhllor
 		}
-		OR = {
-			is_theocracy = yes
-			AND = {
-				is_ruler = no
-				NOT = { religion = orthodox }
-				NOT = { is_heresy_of = orthodox }
-				NOT = { religion = miaphysite }
-				NOT = { is_heresy_of = miaphysite }
-			}
-		}
+		is_theocracy = yes
 		independent = no
 		is_councillor = no
 		NOT = { liege = { has_character_flag = asked_lord_spiritual_petition } }
