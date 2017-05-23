@@ -41,3 +41,5 @@ Other Content:
 #############################################################
 'Velho e Bom Joe' for the Culturally Different Cities mod, which has been partially integrated.
 Excellent Game of Thrones artwork by Marc Simonetti is being used in our mod, and can be found here: http://art.marcsimonetti.com/grr-martin-a-song-of-ice-and-fire
+Christopher Thorstenson For his music (Dragon Wars): https://www.jamendo.com/track/1057094/dragon-wars
+Marc Teichert For his music (The Beginning Of The Adventure): https://www.jamendo.com/track/589413/the-beginning-of-the-adventure
