@@ -20,15 +20,8 @@ faction_loyalist = {
 	warning_level = 0 # At this level of faction power we give player an alert. Set to 0 for no alerts.
 	
 	potential = {
-		is_ruler = yes
-		independent = no
-		is_landed = yes
-		is_adult = yes
-        mercenary = no
-		primary_title = { holy_order = no }
-        
-		NOT = { can_not_join_factions_trigger = yes }
-        
+        allow_join_faction_trigger = yes
+
 		OR = {
 			is_patrician = yes
 			higher_tier_than = BARON
@@ -64,6 +57,14 @@ faction_loyalist = {
         # Council
         
         modifier = { factor = 1.3 has_council_position_trigger = yes }
+        
+        # Religion Culture Pull / Aversion
+        
+        modifier = { factor = 0.5  religion_faction_pull_trigger = yes }
+        modifier = { factor = 0.5  culture_faction_pull_trigger = yes }
+        
+        modifier = { factor = 1.5  religion_faction_aversion_trigger = yes }
+        modifier = { factor = 1.5  culture_faction_aversion_trigger = yes }
         
         # Culture
 		
@@ -149,6 +150,14 @@ faction_loyalist = {
         # Council
         
         modifier = { factor = 1.3 has_council_position_trigger = yes }
+        
+        # Religion Culture Pull / Aversion
+        
+        modifier = { factor = 0.5  religion_faction_pull_trigger = yes }
+        modifier = { factor = 0.5  culture_faction_pull_trigger = yes }
+        
+        modifier = { factor = 1.5  religion_faction_aversion_trigger = yes }
+        modifier = { factor = 1.5  culture_faction_aversion_trigger = yes }
         
         # Culture
 		
@@ -4192,14 +4201,7 @@ faction_independence = {
 			in_faction = faction_loyalist
 		}
 		
-		prisoner = no
-		is_ruler = yes
-		independent = no
-		is_landed = yes
-		is_adult = yes
-        mercenary = no
-        
-		primary_title = { holy_order = no }
+		allow_join_faction_trigger = yes
         
 		OR = {
 			NOT = { has_dlc = "Zeus" }
@@ -4231,7 +4233,6 @@ faction_independence = {
 				}
 			}
 			
-			# Mongols and Aztecs do not have independence revolt problems before 1350
 			OR = {
 				primary_title = { is_tribal = no }
 				NOT = { culture = ROOT }
@@ -4275,8 +4276,6 @@ faction_independence = {
 				}
 			}
 		}
-		
-		NOT = { can_not_join_factions_trigger = yes }
 		
 		NOT = { has_character_modifier = faction_independence_ultimatum_timer }
 	}
@@ -4440,6 +4439,14 @@ faction_independence = {
         # Council
         
         modifier = { factor = 0.7 has_council_position_trigger = yes }
+        
+        # Religion Culture Pull / Aversion
+        
+        modifier = { factor = 1.5  religion_faction_pull_trigger = yes }
+        modifier = { factor = 1.5  culture_faction_pull_trigger = yes }
+        
+        modifier = { factor = 0.5  religion_faction_aversion_trigger = yes }
+        modifier = { factor = 0.5  culture_faction_aversion_trigger = yes }
         
         # Culture
 		
@@ -4628,11 +4635,11 @@ faction_independence = {
 			OR = {
 				AND = {
 					NOT = { in_faction = faction_independence }
-					opinion = { who = LIEGE value = 60 }
+					opinion = { who = LIEGE value = 50 }
 				}
 				AND = {
 					in_faction = faction_independence
-					opinion = { who = LIEGE value = 80 }
+					opinion = { who = LIEGE value = 60 }
 				}
 			}
 			
@@ -4717,6 +4724,14 @@ faction_independence = {
         # Council
         
         modifier = { factor = 0.7 has_council_position_trigger = yes }
+        
+        # Religion Culture Pull / Aversion
+        
+        modifier = { factor = 1.5  religion_faction_pull_trigger = yes }
+        modifier = { factor = 1.5  culture_faction_pull_trigger = yes }
+        
+        modifier = { factor = 0.5  religion_faction_aversion_trigger = yes }
+        modifier = { factor = 0.5  culture_faction_aversion_trigger = yes }
         
         # Culture
 		
