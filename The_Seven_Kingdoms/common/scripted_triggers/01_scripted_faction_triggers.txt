@@ -1,4 +1,30 @@
+##########################################################
 ########## These triggers are used for factions ##########
+##########################################################
+
+# Character is self serving
+self_serving_trigger = {
+    NOR = {
+        trait = content
+        trait = honourable
+    }
+    OR = {
+        trait = ambitious
+        trait = cruel
+        trait = impaler
+        trait = heartless
+        trait = sociopath
+        trait = dishonourable
+    }
+}
+
+# Character respects the laws
+is_trustworthy_trigger = {
+    OR = {
+        trait = humble
+        trait = just
+    }
+}
 
 # Used to determine if a character is on the council. Can be used for boosting or reducing chance.
 has_council_position_trigger = {
@@ -9,6 +35,107 @@ has_council_position_trigger = {
         has_job_title = job_spymaster
         has_job_title = job_spiritual
 	}
+    NOT = {
+        self_serving_trigger = yes
+    }
+}
+
+# Already in a faction
+in_faction_trigger = {
+    OR = {
+        in_faction = faction_succ_primogeniture
+        in_faction = faction_succ_feudal_elective
+        in_faction = faction_succ_seniority
+        in_faction = faction_succ_gavelkind
+        in_faction = faction_independence
+        in_faction = faction_lower_crown_authority
+        in_faction = faction_claimant
+        in_faction = faction_depose_liege
+        in_faction = faction_republic
+        in_faction = faction_increase_council_power
+    }
+}
+
+# Has no reason to support the liege
+is_disloyal_to_liege_trigger = {
+    OR = {
+        trait = sociopath # Does not care
+        
+        AND = {
+            NOT = {
+				liege = { reverse_opinion = { who = ROOT value = 0 } }
+			}
+			OR = {
+				NOT = { liege = { is_allied_with = ROOT } }
+				NOT = { liege = { has_non_aggression_pact_with = ROOT } }
+			}
+        }
+        AND = {
+            NOR = {
+                trait = just
+                trait = honourable
+                trait = kind
+                trait = bleeding_heart
+                trait = content
+            }
+            liege = {
+                NOR = {
+                    is_friend = ROOT
+                    is_allied_with = ROOT
+                    has_non_aggression_pact_with = ROOT
+                    is_lover = ROOT
+                }
+                OR = {
+                    has_regent = yes
+                    NOT = { reverse_opinion = { who = ROOT value = 30 } }
+                }	
+                NAND = {
+                    has_regent = yes
+                    regent = { reverse_opinion = { who = ROOT value = 30 } }
+                }
+            }
+        }
+    }
+}
+
+# Is a friend or an ally
+is_friend_with_liege_trigger = {
+    liege = {
+        OR = {
+            is_allied_with = ROOT
+            has_non_aggression_pact_with = ROOT
+            is_friend = ROOT
+        }
+    }
+    NOR = {
+        trait = dishonourable
+        trait = sociopath
+    }
+}
+
+# Is a very good friend with liege or an ally
+is_good_friend_with_liege_trigger = {
+    liege = { 
+        OR = {
+            is_allied_with = ROOT
+            has_non_aggression_pact_with = ROOT
+            is_friend = ROOT
+        } 
+    } 
+    OR = {
+        trait = just
+        trait = honourable
+        trait = kind
+        trait = bleeding_heart
+        trait = content
+    }
+    NOR = {
+        trait = arbitrary
+        trait = irrational
+        trait = deceitful
+        trait = dishonourable
+        trait = sociopath
+    }
 }
 
 # For religions that are more likely to join faction
@@ -100,13 +227,431 @@ culture_faction_aversion_trigger = {
     }
 }
 
+is_culture_same = {
+    liege = {
+        culture = ROOT
+    }
+}
+
+is_culture_group_same = {
+    liege = {
+        culture_group = ROOT
+        NOT = {
+            culture = ROOT
+        }
+    }
+}
+
+is_different_culture_same_group = {
+    liege = {
+        NOT = {
+            culture = ROOT
+        }
+        culture_group = ROOT
+    }
+}
+
+is_different_culture_group = {
+    liege = {
+        NOT = {
+            culture_group = ROOT
+        }
+    }
+}
+
+################################ OPINION TRIGGERS ################################
+
+liege_opinion_vassal_p99_trigger = {
+    liege = {
+        reverse_opinion = { who = ROOT value = 99 }
+    }
+    NOT = {
+        has_opinion_modifier = {
+            who = FROM
+            modifier = opinion_coerced_into_joining_faction
+        }
+    }
+}
+liege_opinion_vassal_p85_trigger = {
+    liege = {
+        reverse_opinion = { who = ROOT value = 85 }
+    }
+    NOT = {
+        has_opinion_modifier = {
+            who = FROM
+            modifier = opinion_coerced_into_joining_faction
+        }
+    }
+}
+liege_opinion_vassal_p70_trigger = {
+    liege = {
+        reverse_opinion = { who = ROOT value = 70 }
+    }
+    NOT = {
+        has_opinion_modifier = {
+            who = FROM
+            modifier = opinion_coerced_into_joining_faction
+        }
+    }
+}
+liege_opinion_vassal_p55_trigger = {
+    liege = {
+        reverse_opinion = { who = ROOT value = 55 }
+    }
+    NOT = {
+        has_opinion_modifier = {
+            who = FROM
+            modifier = opinion_coerced_into_joining_faction
+        }
+    }
+}
+liege_opinion_vassal_p40_trigger = {
+    liege = {
+        reverse_opinion = { who = ROOT value = 40 }
+    }
+}
+liege_opinion_vassal_p25_trigger = {
+    liege = {
+        reverse_opinion = { who = ROOT value = 25 }
+    }
+}
+liege_opinion_vassal_p5_trigger = {
+    liege = {
+        reverse_opinion = { who = ROOT value = 5 }
+    }
+}
+
+###########################################################################
+
+liege_opinion_vassal_n5_trigger = {
+    NOT = {
+        liege = {
+            reverse_opinion = { who = ROOT value = -5 }
+        }
+    }
+}
+liege_opinion_vassal_n25_trigger = {
+    NOT = {
+        liege = {
+            reverse_opinion = { who = ROOT value = -25 }
+        }
+    }
+}
+liege_opinion_vassal_n40_trigger = {
+    NOT = {
+        liege = {
+            reverse_opinion = { who = ROOT value = -40 }
+        }
+    }
+}
+liege_opinion_vassal_n55_trigger = {
+    NOT = {
+        liege = {
+            reverse_opinion = { who = ROOT value = -55 }
+        }
+    }
+}
+liege_opinion_vassal_n70_trigger = {
+    NOT = {
+        liege = {
+            reverse_opinion = { who = ROOT value = -70 }
+        }
+    }
+}
+liege_opinion_vassal_n85_trigger = {
+    NOT = {
+        liege = {
+            reverse_opinion = { who = ROOT value = -85 }
+        }
+    }
+}
+liege_opinion_vassal_n99_trigger = {
+    NOT = {
+        liege = {
+            reverse_opinion = { who = ROOT value = -99 }
+        }
+    }
+}
+
+###########################################################################
+
+vassal_opinion_liege_p99 = {
+    opinion = { who = LIEGE value = 99 }
+}
+
+vassal_opinion_liege_p85 = {
+    opinion = { who = LIEGE value = 85 }
+}
+
+vassal_opinion_liege_p70 = {
+    opinion = { who = LIEGE value = 70 }
+}
+
+vassal_opinion_liege_p55 = {
+    opinion = { who = LIEGE value = 55 }
+}
+
+vassal_opinion_liege_p40 = {
+    opinion = { who = LIEGE value = 40 }
+}
+
+vassal_opinion_liege_p25 = {
+    opinion = { who = LIEGE value = 25 }
+}
+
+vassal_opinion_liege_p5 = {
+    opinion = { who = LIEGE value = 5 }
+}
+
+###########################################################################
+
+vassal_opinion_liege_n5 = {
+    NOT = { opinion = { who = LIEGE value = -5 } }
+}
+
+vassal_opinion_liege_n25 = {
+    NOT = { opinion = { who = LIEGE value = -25 } }
+}
+
+vassal_opinion_liege_n40 = {
+    NOT = { opinion = { who = LIEGE value = -40 } }
+}
+
+vassal_opinion_liege_n55 = {
+    NOT = { opinion = { who = LIEGE value = -55 } }
+}
+
+vassal_opinion_liege_n70 = {
+    NOT = { opinion = { who = LIEGE value = -70 } }
+}
+
+vassal_opinion_liege_n85 = {
+    NOT = { opinion = { who = LIEGE value = -85 } }
+}
+
+vassal_opinion_liege_n99 = {
+    NOT = { opinion = { who = LIEGE value = -99 } }
+}
+
+################################ RELIGION ################################
+
+is_zealous_liege_zealous_same_religion = {
+    liege = {
+        religion = ROOT
+        trait = zealous
+    }
+    trait = zealous
+}
+
+is_zealous_same_religion = {
+    liege = {
+        religion = ROOT
+    }
+    trait = zealous
+}
+
+is_just_same_religion = {
+    liege = {
+        religion = ROOT
+    }
+    NOT = {
+        trait = cynical
+    }
+}
+
+is_cynical_different_religion = {
+    NOT = {
+        liege = {
+            religion = ROOT
+        }
+    }
+    trait = cynical
+}
+
+is_just_different_religion = {
+    NAND = {
+        liege = {
+            religion = ROOT
+        }
+        trait = cynical
+    }
+}
+
+is_zealous_different_religion = {
+    NOT = {
+        liege = {
+            religion = ROOT
+        }
+    }
+    trait = zealous
+}
+
+################################ HEIR TRIGGERS ################################
+
+heir_positive_rel_1_trigger = {
+    NOT = {
+        trait = sociopath
+    }
+    FROMFROM = {
+        current_heir = {
+            character = ROOT
+        }
+    }
+    liege = {
+        reverse_opinion = { who = ROOT value = 10 }
+    }
+}
+
+heir_positive_rel_2_trigger = {
+    NOT = {
+        trait = sociopath
+    }
+    FROMFROM = {
+        current_heir = {
+            character = ROOT
+        }
+    }
+    liege = {
+        reverse_opinion = { who = ROOT value = 20 }
+    }
+}
+
+heir_positive_rel_3_trigger = {
+    NOT = {
+        trait = sociopath
+    }
+    FROMFROM = {
+        current_heir = {
+            character = ROOT
+        }
+    }
+    liege = {
+        reverse_opinion = { who = ROOT value = 30 }
+    }
+}
+
+# Heir is not of your culture
+heir_not_culture_trigger = {
+    NOT = {
+        culture_group = FROMROM
+    }
+    FROMFROM = {
+        current_heir = {
+            character = ROOT
+        }
+    }
+}
+
+# Heir is not of your religion
+heir_not_religion_trigger = {
+    NOT = {
+        religion = FROMROM
+    }
+    FROMFROM = {
+        current_heir = {
+            character = ROOT
+        }
+    }
+}
+
+# Heir is neither your culture or religion
+heir_not_culture_and_religion_trigger = {
+    NOR = {
+        religion = FROMROM
+        culture_group = FROMROM
+    }
+    FROMFROM = {
+        current_heir = {
+            character = ROOT
+        }
+    }
+}
+
+################################ OTHER TRIGGERS ################################
+
 # For traits and so on that should be unable to form or create factions.
-should_not_join_factions_trigger = {
+can_not_join_factions_trigger = {
     OR = {
         trait = incapable
         trait = black_brother
         liege = {
             trait = black_brother
         }
+    }
+}
+
+# Controls if they can join a faction or not.
+allow_join_faction_trigger = {
+    ROOT = {
+        is_ruler = yes
+        independent = no
+        is_landed = yes
+        is_adult = yes
+        
+        NOT = {
+            can_not_join_factions_trigger
+        }
+    }
+}
+
+character_is_irrational = {
+    OR = {
+        trait = arbitrary
+        trait = irrational
+    }
+}
+
+liege_is_bastard_kind = {
+    OR = {
+        trait = just
+        trait = bleeding_heart
+        trait = kind
+    }
+    
+    liege = {
+        OR = {
+            trait = bastard
+            trait = legit_bastard
+        }
+    }
+}
+
+liege_is_bastard_unkind = {
+    NOR = {
+        trait = just
+        trait = bleeding_heart
+        trait = kind
+        trait = honourable
+    }
+    
+    liege = {
+        OR = {
+            trait = bastard
+            trait = legit_bastard
+        }
+    }
+}
+
+liege_is_600_distance = {
+    liege = {
+        distance = { who = ROOT distance = 600 }
+    }
+}
+
+liege_is_800_distance = {
+    liege = {
+        distance = { who = ROOT distance = 800 }
+    }
+}
+
+liege_is_1200_distance = {
+    liege = {
+        distance = { who = ROOT distance = 1200 }
+    }
+}
+
+liege_is_1500_distance = {
+    liege = {
+        distance = { who = ROOT distance = 1500 }
     }
 }

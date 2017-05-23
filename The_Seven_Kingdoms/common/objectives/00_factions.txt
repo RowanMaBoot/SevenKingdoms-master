@@ -24,11 +24,11 @@ faction_loyalist = {
 		independent = no
 		is_landed = yes
 		is_adult = yes
-		
-		NOR = {
-			trait = incapable
-			trait = black_brother
-		}
+        mercenary = no
+		primary_title = { holy_order = no }
+        
+		NOT = { can_not_join_factions_trigger = yes }
+        
 		OR = {
 			is_patrician = yes
 			higher_tier_than = BARON
@@ -41,468 +41,93 @@ faction_loyalist = {
 			is_primary_holder_title = yes
 			higher_tier_than = DUKE
 		}
-		
 		prisoner = no
 	}
 	
 	# Requirements to be able to join (ROOT is the character wanting to join)
 	# ROOT = JOINER, FROM = TARGET
 	allow_join = {
-		ROOT = {
-			is_ruler = yes
-			independent = no
-			is_landed = yes
-			is_adult = yes
-			
-			NOR = {
-				trait = incapable
-				trait = black_brother
-			}
-		}
+		allow_join_faction_trigger = yes
 	}
 	
 	# Chance they will consider creating the faction.
 	chance = {
 		factor = 2.0
 		
-		# Will not form or join if our character is neither Just or Content and has
-		# no personal relationship with the liege or regent in question.
-		modifier = {
-			factor = 0
-			
-			NOR = {
-				trait = just
-				trait = bleeding_heart
-				trait = content
-			}
-			liege = {
-				NOR = {
-					is_friend = ROOT
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_lover = ROOT
-				}
-				OR = {
-					has_regent = yes
-					NOT = { reverse_opinion = { who = ROOT value = 30 } }
-				}	
-				NAND = {
-					has_regent = yes
-					regent = { reverse_opinion = { who = ROOT value = 30 } }
-				}
-			}
-		}
+		# Loyalty (Friends, Alliance, Sociopathy)
+        
+        modifier = { factor = 0.0 is_disloyal_to_liege_trigger = yes }
+        modifier = { factor = 0.1 self_serving_trigger = yes }
+		modifier = { factor = 2.5 is_friend_with_liege_trigger = yes }
+        modifier = { factor = 3.5 is_good_friend_with_liege_trigger = yes }
+        
+        # Council
+        
+        modifier = { factor = 1.3 has_council_position_trigger = yes }
+        
+        # Culture
 		
-		modifier = {
-			factor = 2.5
-			liege = {
-				OR = {
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_friend = ROOT
-				}
-			}
-		}
+		modifier = { factor = 2.0 is_culture_same = yes }
+		modifier = { factor = 1.5 is_culture_group_same = yes }
+		modifier = { factor = 0.8 is_different_culture_same_group = yes }
+		modifier = { factor = 0.35 is_different_culture_group = yes }
+        
+        # Religion
 		
-		# If our character is just or kind, they will be far more loyal than if they were not
-		# basically, closer friends are less likely to betray one another
-		# Does not apply to arbitrary characters, even if kind and/or just - fallback to previous modifier
-		modifier = {
-			factor = 3.5
-			liege = { 
-				OR = {
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_friend = ROOT
-				} 
-			} 
-			OR = {
-				trait = just
-				trait = bleeding_heart
-				trait = kind
-				trait = honourable
-			}
-			NOT = {
-				trait = arbitrary
-				trait = dishonourable
-			}
-		}
+		modifier = { factor = 5.0 is_zealous_liege_zealous_same_religion = yes }
+		modifier = { factor = 3.5 is_zealous_same_religion = yes }
+		modifier = { factor = 2.5 is_just_same_religion = yes }
+		modifier = { factor = 0.9 is_cynical_different_religion = yes }
+		modifier = { factor = 0.5 is_just_different_religion = yes }
+		modifier = { factor = 0.0 is_zealous_different_religion = yes }
+        
+        # Opinion
 		
-		modifier = {
-			factor = 0
-			NOT = {
-				liege = { reverse_opinion = { who = ROOT value = 0 } }
-			}
-			OR = {
-				NOT = { liege = { is_allied_with = ROOT } }
-				NOT = { liege = { has_non_aggression_pact_with = ROOT } }
-			}		
-		}
+		modifier = { factor = 2.0 liege_opinion_vassal_p99_trigger = yes }
+		modifier = { factor = 1.8 liege_opinion_vassal_p85_trigger = yes }
+		modifier = { factor = 1.6 liege_opinion_vassal_p70_trigger = yes }
+		modifier = { factor = 1.4 liege_opinion_vassal_p55_trigger = yes }
+		modifier = { factor = 1.3 liege_opinion_vassal_p40_trigger = yes }
+		modifier = { factor = 1.2 liege_opinion_vassal_p25_trigger = yes }
+		modifier = { factor = 1.1 liege_opinion_vassal_p5_trigger = yes }
 		
-		modifier = { 
-			factor = 0.1
-			
-			NOT = {
-				trait = content
-			}
-			OR = {
-				trait = ambitious
-				trait = cruel
-				trait = impaler
-				trait = heartless
-				trait = sociopath
-				trait = dishonourable
-			}
-		}
+		modifier = { factor = 0.8 liege_opinion_vassal_n5_trigger = yes }
+		modifier = { factor = 0.7 liege_opinion_vassal_n25_trigger = yes }
+		modifier = { factor = 0.6 liege_opinion_vassal_n40_trigger = yes }
+		modifier = { factor = 0.5 liege_opinion_vassal_n55_trigger = yes }
+		modifier = { factor = 0.3 liege_opinion_vassal_n70_trigger = yes }
+		modifier = { factor = 0.1 liege_opinion_vassal_n85_trigger = yes }
+		modifier = { factor = 0.0 liege_opinion_vassal_n99_trigger = yes }
+        
+        # Traits
+        
+		modifier = { factor = 3.0 trait = content }
+        modifier = { factor = 1.3 trait = honest }
+        modifier = { factor = 0.6 trait = deceitful }
+        modifier = { factor = 0.6 character_is_irrational = yes }
 		
-		modifier = {
-			factor = 2.0
-			
-			liege = {
-				culture = ROOT
-			}
-		}
-		
-		modifier = {
-			factor = 1.5
-			
-			liege = {
-				culture_group = ROOT
-			}
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			liege = {
-				NOT = {
-					culture = ROOT
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.35
-			
-			liege = {
-				NOT = {
-					culture_group = ROOT
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 5.0
-			
-			liege = {
-				religion = ROOT
-				trait = zealous
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 3.5
-			
-			liege = {
-				religion = ROOT
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 2.5
-			
-			liege = {
-				religion = ROOT
-			}
-			NOT = {
-				trait = cynical
-			}
-		}
-		
-		modifier = {
-			factor = 0.9
-			
-			NOT = {
-				liege = {
-					religion = ROOT
-				}
-			}
-			trait = cynical
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			NAND = {
-				liege = {
-					religion = ROOT
-				}
-				trait = cynical
-			}
-		}
-		
-		modifier = {
-			factor = 0.0
-			
-			NOT = {
-				liege = {
-					religion = ROOT
-				}
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 2
-			liege = {
-				reverse_opinion = { who = ROOT value = 100 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.8
-			liege = {
-				reverse_opinion = { who = ROOT value = 85 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.6
-			liege = {
-				reverse_opinion = { who = ROOT value = 70 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.4
-			liege = {
-				reverse_opinion = { who = ROOT value = 55 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.3
-			liege = {
-				reverse_opinion = { who = ROOT value = 40 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.2
-			liege = {
-				reverse_opinion = { who = ROOT value = 25 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.1
-			liege = {
-				reverse_opinion = { who = ROOT value = 5 }
-			}
-		}
-		
-		modifier = {
-			factor = 0.9
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -5 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.8
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -25 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.7
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -40 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.6
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -55 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.4
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -70 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.2
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -85 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.0
-			
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -99 }
-				}
-			}
-		}
-		
-		# Less likely to join the faction just because of irrational reasons
-		modifier = {
-			factor = 0.6
-			
-			OR = {
-				trait = arbitrary
-				trait = irrational
-			}
-		}
-		
-		modifier = {
-			factor = 1.1
-			
-			trait = honest
-		}
-		
-		modifier = {
-			factor = 3.0
-			
-			trait = content
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			trait = decietful
-		}
-		
-		modifier = {
-			factor = 0.6
-			
-			NOR = {
-				trait = just
-				trait = bleeding_heart
-				trait = kind
-				trait = honourable
-			}
-			
-			liege = {
-				OR = {
-					trait = bastard
-					trait = legit_bastard
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.9
-			
-			OR = {
-				trait = just
-				trait = bleeding_heart
-				trait = kind
-			}
-			
-			liege = {
-				OR = {
-					trait = bastard
-					trait = legit_bastard
-				}
-			}
-		}
-		
-		# Heir will always be loyal as long as relations are positive.
-		modifier = {
-			factor = 10.0
-			NOT = {
-				trait = sociopath
-			}
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-			liege = {
-				reverse_opinion = { who = ROOT value = 30 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.5
-			NOT = {
-				trait = sociopath
-			}
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-			liege = {
-				reverse_opinion = { who = ROOT value = 10 }
-			}
-		}
+        # Bastard
+        
+        modifier = { factor = 0.9 liege_is_bastard_kind = yes }
+		modifier = { factor = 0.6 liege_is_bastard_unkind = yes }
+
+        # Heir will always be loyal as long as relations are positive.
+        
+        modifier = { factor = 5.0 heir_positive_rel_3_trigger = yes }
+        modifier = { factor = 2.0 heir_positive_rel_2_trigger = yes }
+        modifier = { factor = 1.5 heir_positive_rel_1_trigger = yes }
 		
 		# If you heir is of a foreign religion or culture, they will be unlikely to be loyal.
-		
-		modifier = {
-			factor = 0.8
-			
-			NOT = { culture_group = FROMROM }
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			NOT = { religion = FROMROM }
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-		}
+        
+		modifier = { factor = 0.8 heir_not_culture_trigger = yes }
+		modifier = { factor = 0.5 heir_not_religion_trigger = yes }
 		
 		# If they are not of your culture group or religion, then have fun.
-		
-		modifier = {
-			factor = 0
-			
-			NOR = {
-				religion = FROMROM
-				culture_group = FROMROM
-			}
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-		}
+        
+		modifier = { factor = 0 heir_not_culture_and_religion_trigger = yes }
 	}
 	
-	# The chance that the AI will join (given the faction exists.
+	# The chance that the AI will join (given the faction exists).
 	# AI membership weight: ROOT is the prospective member. FROM is the faction leader. FROMFROM is the target title or character. 
 	
 	membership = {
@@ -511,460 +136,80 @@ faction_loyalist = {
 		modifier = {
 			factor = 0
 			
-			OR = {
-				in_faction = faction_succ_primogeniture
-				in_faction = faction_succ_feudal_elective
-				in_faction = faction_succ_seniority
-				in_faction = faction_succ_gavelkind
-				in_faction = faction_independence
-				in_faction = faction_lower_crown_authority
-				in_faction = faction_claimant
-				in_faction = faction_depose_liege
-				in_faction = faction_republic
-				in_faction = faction_increase_council_power
-			}
+			in_faction_trigger = yes
 		}
 		
-		# Will not form or join if our character is neither Just or Content and has
-		# no personal relationship with the liege or regent in question.
-		modifier = {
-			factor = 0
-			
-			NOR = {
-				trait = just
-				trait = bleeding_heart
-				trait = content
-			}
-			liege = {
-				NOR = {
-					is_friend = ROOT
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_lover = ROOT
-				}
-				OR = {
-					has_regent = yes
-					NOT = { reverse_opinion = { who = ROOT value = 30 } }
-				}	
-				NAND = {
-					has_regent = yes
-					regent = { reverse_opinion = { who = ROOT value = 30 } }
-				}
-			}
-		}
+		# Loyalty (Friends, Alliance, Sociopathy)
+        
+        modifier = { factor = 0.0 is_disloyal_to_liege_trigger = yes }
+        modifier = { factor = 0.1 self_serving_trigger = yes }
+		modifier = { factor = 2.5 is_friend_with_liege_trigger = yes }
+        modifier = { factor = 3.5 is_good_friend_with_liege_trigger = yes }
+        
+        # Council
+        
+        modifier = { factor = 1.3 has_council_position_trigger = yes }
+        
+        # Culture
 		
-		modifier = {
-			factor = 2.5
-			liege = {
-				OR = {
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_friend = ROOT
-				}
-			}
-		}
+		modifier = { factor = 2.0 is_culture_same = yes }
+		modifier = { factor = 1.5 is_culture_group_same = yes }
+		modifier = { factor = 0.8 is_different_culture_same_group = yes }
+		modifier = { factor = 0.35 is_different_culture_group = yes }
+        
+        # Religion
 		
-		# If our character is just or kind, they will be far more loyal than if they were not
-		# basically, closer friends are less likely to betray one another
-		# Does not apply to arbitrary characters, even if kind and/or just - fallback to previous modifier
-		modifier = {
-			factor = 3.5
-			liege = { 
-				OR = {
-					is_allied_with = ROOT
-					has_non_aggression_pact_with = ROOT
-					is_friend = ROOT
-				} 
-			} 
-			OR = {
-				trait = just
-				trait = bleeding_heart
-				trait = kind
-				trait = honourable
-			}
-			NOT = {
-				trait = arbitrary
-				trait = dishonourable
-			}
-		}
+		modifier = { factor = 5.0 is_zealous_liege_zealous_same_religion = yes }
+		modifier = { factor = 3.5 is_zealous_same_religion = yes }
+		modifier = { factor = 2.5 is_just_same_religion = yes }
+		modifier = { factor = 0.9 is_cynical_different_religion = yes }
+		modifier = { factor = 0.5 is_just_different_religion = yes }
+		modifier = { factor = 0.0 is_zealous_different_religion = yes }
+        
+        # Opinion
 		
-		modifier = {
-			factor = 0
-			NOT = {
-				liege = { reverse_opinion = { who = ROOT value = 0 } }
-			}
-			OR = {
-				NOT = { liege = { is_allied_with = ROOT } }
-				NOT = { liege = { has_non_aggression_pact_with = ROOT } }
-			}		
-		}
+		modifier = { factor = 2.0 liege_opinion_vassal_p99_trigger = yes }
+		modifier = { factor = 1.8 liege_opinion_vassal_p85_trigger = yes }
+		modifier = { factor = 1.6 liege_opinion_vassal_p70_trigger = yes }
+		modifier = { factor = 1.4 liege_opinion_vassal_p55_trigger = yes }
+		modifier = { factor = 1.3 liege_opinion_vassal_p40_trigger = yes }
+		modifier = { factor = 1.2 liege_opinion_vassal_p25_trigger = yes }
+		modifier = { factor = 1.1 liege_opinion_vassal_p5_trigger = yes }
 		
-		modifier = { 
-			factor = 0.1
-			
-			NOT = {
-				trait = content
-			}
-			OR = {
-				trait = ambitious
-				trait = cruel
-				trait = impaler
-				trait = heartless
-				trait = sociopath
-				trait = dishonourable
-			}
-		}
+		modifier = { factor = 0.8 liege_opinion_vassal_n5_trigger = yes }
+		modifier = { factor = 0.7 liege_opinion_vassal_n25_trigger = yes }
+		modifier = { factor = 0.6 liege_opinion_vassal_n40_trigger = yes }
+		modifier = { factor = 0.5 liege_opinion_vassal_n55_trigger = yes }
+		modifier = { factor = 0.3 liege_opinion_vassal_n70_trigger = yes }
+		modifier = { factor = 0.1 liege_opinion_vassal_n85_trigger = yes }
+		modifier = { factor = 0.0 liege_opinion_vassal_n99_trigger = yes }
+        
+        # Traits
+        
+		modifier = { factor = 3.0 trait = content }
+        modifier = { factor = 1.1 trait = honest }
+        modifier = { factor = 0.6 trait = deceitful }
+        modifier = { factor = 0.6 character_is_irrational = yes }
 		
-		modifier = {
-			factor = 2.0
-			
-			liege = {
-				culture = ROOT
-			}
-		}
-		
-		modifier = {
-			factor = 1.5
-			
-			liege = {
-				culture_group = ROOT
-			}
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			liege = {
-				NOT = {
-					culture = ROOT
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.35
-			
-			liege = {
-				NOT = {
-					culture_group = ROOT
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 5.0
-			
-			liege = {
-				religion = ROOT
-				trait = zealous
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 3.5
-			
-			liege = {
-				religion = ROOT
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 2.5
-			
-			liege = {
-				religion = ROOT
-			}
-			NOT = {
-				trait = cynical
-			}
-		}
-		
-		modifier = {
-			factor = 0.9
-			
-			NOT = {
-				liege = {
-					religion = ROOT
-				}
-			}
-			trait = cynical
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			NAND = {
-				liege = {
-					religion = ROOT
-				}
-				trait = cynical
-			}
-		}
-		
-		modifier = {
-			factor = 0.0
-			
-			NOT = {
-				liege = {
-					religion = ROOT
-				}
-			}
-			trait = zealous
-		}
-		
-		modifier = {
-			factor = 2
-			liege = {
-				reverse_opinion = { who = ROOT value = 100 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.8
-			liege = {
-				reverse_opinion = { who = ROOT value = 85 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.6
-			liege = {
-				reverse_opinion = { who = ROOT value = 70 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.4
-			liege = {
-				reverse_opinion = { who = ROOT value = 55 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.3
-			liege = {
-				reverse_opinion = { who = ROOT value = 40 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.2
-			liege = {
-				reverse_opinion = { who = ROOT value = 25 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.1
-			liege = {
-				reverse_opinion = { who = ROOT value = 5 }
-			}
-		}
-		
-		modifier = {
-			factor = 0.9
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -5 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.8
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -25 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.7
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -40 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.6
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -55 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.4
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -70 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.2
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -85 }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.0
-			
-			NOT = {
-				liege = {
-					reverse_opinion = { who = ROOT value = -99 }
-				}
-			}
-		}
-		
-		# Less likely to join the faction just because of irrational reasons
-		modifier = {
-			factor = 0.6
-			
-			OR = {
-				trait = arbitrary
-				trait = irrational
-			}
-		}
-		
-		modifier = {
-			factor = 1.1
-			
-			trait = honest
-		}
-		
-		modifier = {
-			factor = 3.0
-			
-			trait = content
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			trait = decietful
-		}
-		
-		modifier = {
-			factor = 0.6
-			
-			NOR = {
-				trait = just
-				trait = bleeding_heart
-				trait = kind
-				trait = honourable
-			}
-			
-			liege = {
-				OR = {
-					trait = bastard
-					trait = legit_bastard
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.9
-			
-			OR = {
-				trait = just
-				trait = bleeding_heart
-				trait = kind
-			}
-			
-			liege = {
-				OR = {
-					trait = bastard
-					trait = legit_bastard
-				}
-			}
-		}
-		
-		# Heir will always be loyal as long as relations are positive.
-		modifier = {
-			factor = 10.0
-			NOT = {
-				trait = sociopath
-			}
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-			liege = {
-				reverse_opinion = { who = ROOT value = 30 }
-			}
-		}
-		
-		modifier = {
-			factor = 1.5
-			NOT = {
-				trait = sociopath
-			}
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-			liege = {
-				reverse_opinion = { who = ROOT value = 10 }
-			}
-		}
+        # Bastard
+        
+        modifier = { factor = 0.9 liege_is_bastard_kind = yes }
+		modifier = { factor = 0.6 liege_is_bastard_unkind = yes }
+
+        # Heir will always be loyal as long as relations are positive.
+        
+        modifier = { factor = 5.0 heir_positive_rel_3_trigger = yes }
+        modifier = { factor = 2.0 heir_positive_rel_2_trigger = yes }
+        modifier = { factor = 1.5 heir_positive_rel_1_trigger = yes }
 		
 		# If you heir is of a foreign religion or culture, they will be unlikely to be loyal.
-		
-		modifier = {
-			factor = 0.8
-			
-			NOT = { culture_group = FROMROM }
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.5
-			
-			NOT = { religion = FROMROM }
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-		}
+        
+		modifier = { factor = 0.8 heir_not_culture_trigger = yes }
+		modifier = { factor = 0.5 heir_not_religion_trigger = yes }
 		
 		# If they are not of your culture group or religion, then have fun.
-		
-		modifier = {
-			factor = 0
-			
-			NOR = {
-				religion = FROMROM
-				culture_group = FROMROM
-			}
-			FROMFROM = {
-				current_heir = {
-					character = ROOT
-				}
-			}
-		}
-		
-		# Consider having membership be influenced by the faction leader.
-		# Having negative opinion of the leader won't have a big impact, but liking the leader
-		# more than the ruler could encourage some to join the faction out of desire to support say,
-		# a friend.
+        
+		modifier = { factor = 0 heir_not_culture_and_religion_trigger = yes }
 	}
 	
 	success = {
@@ -4952,7 +4197,10 @@ faction_independence = {
 		independent = no
 		is_landed = yes
 		is_adult = yes
+        mercenary = no
+        
 		primary_title = { holy_order = no }
+        
 		OR = {
 			NOT = { has_dlc = "Zeus" }
 			is_voter = no
@@ -4962,20 +4210,17 @@ faction_independence = {
 				OR = {
 					is_council_content = no
 					NOT = { primary_title = { has_law = war_voting_power_1 } }
-					#has_council = no
+					# has_council = no
 				}
 			}
 		}
 		
-		NOT = { trait = incapable }
-		
-		higher_tier_than = BARON
 		OR = {
 			ai = yes
 			is_feudal = yes
 			is_tribal = yes
 			is_nomadic = yes
-			higher_tier_than = COUNT
+			higher_tier_than = BARON
 		}
 		
 		liege = {
@@ -5031,16 +4276,9 @@ faction_independence = {
 			}
 		}
 		
-		NOT = { has_landed_title = k_orthodox }
-		
-		NOT = {
-			liege = {
-				trait = black_brother
-			}
-		}
+		NOT = { can_not_join_factions_trigger = yes }
 		
 		NOT = { has_character_modifier = faction_independence_ultimatum_timer }
-		mercenary = no
 	}
 	
 	# Target scope
@@ -5066,9 +4304,9 @@ faction_independence = {
 			independent = no
 			is_landed = yes
 			is_adult = yes
-			NOT = { trait = incapable }
 			prisoner = no
 			mercenary = no
+            
 			OR = {
 				NOT = { has_dlc = "Zeus"}
 				is_voter = no
@@ -5191,144 +4429,101 @@ faction_independence = {
 			factor = 0
 			preparing_invasion = yes
 		}
+        
+        # Loyalty (Friends, Alliance, Sociopathy)
+        
+        modifier = { factor = 2.0 is_disloyal_to_liege_trigger = yes }
+        modifier = { factor = 1.5 self_serving_trigger = yes }
+		modifier = { factor = 0.2 is_friend_with_liege_trigger = yes }
+        modifier = { factor = 0.0 is_good_friend_with_liege_trigger = yes }
 		
-		modifier = {
-			factor = 0.25
-			liege = {
-				religion = ROOT
-				culture = ROOT
-			}
-		}
+        # Council
+        
+        modifier = { factor = 0.7 has_council_position_trigger = yes }
+        
+        # Culture
 		
-		modifier = {
-			factor = 1.5
-			liege = {
-				distance = { who = ROOT distance = 300 }
-			}
-		}
-		modifier = {
-			factor = 2.0
-			liege = {
-				distance = { who = ROOT distance = 400 }
-			}
-		}
+		modifier = { factor = 0.5 is_culture_same = yes }
+		modifier = { factor = 0.75 is_culture_group_same = yes }
+		modifier = { factor = 1.2 is_different_culture_same_group = yes }
+		modifier = { factor = 2.0 is_different_culture_group = yes }
+        
+        # Religion
 		
-		modifier = {
-			factor = 2.0
-			liege = {
-				NOT = { religion_group = ROOT }
-			}
-		}
+		modifier = { factor = 0.0 is_zealous_liege_zealous_same_religion = yes }
+		modifier = { factor = 0.5 is_zealous_same_religion = yes }
+		modifier = { factor = 0.9 is_just_same_religion = yes }
+		modifier = { factor = 1.2 is_cynical_different_religion = yes }
+		modifier = { factor = 2.0 is_just_different_religion = yes }
+		modifier = { factor = 3.0 is_zealous_different_religion = yes }
+        
+        # Opinion - Liege -> Vassal
 		
-		modifier = {
-			factor = 1.5
-			liege = {
-				NOT = { culture_group = ROOT }
-			}
-		}
+		modifier = { factor = 0.0 liege_opinion_vassal_p99_trigger = yes }
+		modifier = { factor = 0.1 liege_opinion_vassal_p85_trigger = yes }
+		modifier = { factor = 0.3 liege_opinion_vassal_p70_trigger = yes }
+		modifier = { factor = 0.5 liege_opinion_vassal_p55_trigger = yes }
+		modifier = { factor = 0.6 liege_opinion_vassal_p40_trigger = yes }
+		modifier = { factor = 0.7 liege_opinion_vassal_p25_trigger = yes }
+		modifier = { factor = 0.8 liege_opinion_vassal_p5_trigger = yes }
 		
-		modifier = {
-			factor = 0.5
-			opinion = { who = LIEGE value = 20 } 			
-		}
-		modifier = {
-			factor = 0
-			opinion = { who = LIEGE value = 40 } 
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}			
-		}
-		modifier = {
-			factor = 1.5
-			NOT = { opinion = { who = LIEGE value = -20 } } 
-		}
-		modifier = {
-			factor = 2.0
-			NOT = { opinion = { who = LIEGE value = -50 } } 
-		}
-		modifier = {
-			factor = 4.0
-			NOT = { opinion = { who = LIEGE value = -75 } } 
-		}
+		modifier = { factor = 1.1 liege_opinion_vassal_n5_trigger = yes }
+		modifier = { factor = 1.2 liege_opinion_vassal_n25_trigger = yes }
+		modifier = { factor = 1.3 liege_opinion_vassal_n40_trigger = yes }
+		modifier = { factor = 1.4 liege_opinion_vassal_n55_trigger = yes }
+		modifier = { factor = 1.6 liege_opinion_vassal_n70_trigger = yes }
+		modifier = { factor = 1.8 liege_opinion_vassal_n85_trigger = yes }
+		modifier = { factor = 2.0 liege_opinion_vassal_n99_trigger = yes }
+        
+        # Opinion - Vassal -> Liege
+        
+        # modifier = { factor = 0.0 vassal_opinion_liege_p99 = yes }
+		# modifier = { factor = 0.1 vassal_opinion_liege_p85 = yes }
+		# modifier = { factor = 0.3 vassal_opinion_liege_p70 = yes }
+		# modifier = { factor = 0.5 vassal_opinion_liege_p55 = yes }
+		# modifier = { factor = 0.6 vassal_opinion_liege_p40 = yes }
+		# modifier = { factor = 0.7 vassal_opinion_liege_p25 = yes }
+		# modifier = { factor = 0.8 vassal_opinion_liege_p5 = yes }
 		
-		modifier = {
-			factor = 0.025
-			trait = content
-		}
-		modifier = {
-			factor = 0.025
-			trait = imbecile
-		}
-		modifier = {
-			factor = 0.025
-			trait = craven
-		}
-		modifier = {
-			factor = 0.1
-			trait = inbred
-		}
-		modifier = {
-			factor = 0.1
-			OR = {
-				trait = slow
-				trait = dull
-			}
-		}
-		modifier = {
-			factor = 0.5
-			trait = kind
-		}
-		modifier = {
-			factor = 0.5
-			trait = charitable
-		}
-		modifier = {
-			factor = 0.5
-			trait = honest
-		}
-		modifier = {
-			factor = 0.75
-			trait = humble
-		}
-		modifier = {
-			factor = 0.75
-			trait = just
-		}
-		modifier = {
-			factor = 1.5
-			trait = proud
-		}
-		modifier = {
-			factor = 1.5
-			trait = brave
-		}
-		modifier = {
-			factor = 1.5
-			trait = arbitrary
-		}
-		modifier = {
-			factor = 2.0
-			trait = envious
-		}
-		modifier = {
-			factor = 2.0
-			trait = greedy
-		}
-		modifier = {
-			factor = 2.0
-			trait = impaler
-		}
-		modifier = {
-			factor = 2.0
-			trait = deceitful
-		}
-		modifier = {
-			factor = 4.0
-			trait = ambitious
-		}
+		# modifier = { factor = 1.1 vassal_opinion_liege_n5 = yes }
+		# modifier = { factor = 1.2 vassal_opinion_liege_n25 = yes }
+		# modifier = { factor = 1.3 vassal_opinion_liege_n40 = yes }
+		# modifier = { factor = 1.4 vassal_opinion_liege_n55 = yes }
+		# modifier = { factor = 1.6 vassal_opinion_liege_n70 = yes }
+		# modifier = { factor = 1.8 vassal_opinion_liege_n85 = yes }
+		# modifier = { factor = 2.0 vassal_opinion_liege_n99 = yes }
+        
+        # Distance
+        
+		modifier = { factor = 1.3 liege_is_600_distance = yes }
+		modifier = { factor = 1.6 liege_is_800_distance = yes }
+		modifier = { factor = 2.0 liege_is_1200_distance = yes }
+        modifier = { factor = 2.5 liege_is_1500_distance = yes }
+		
+        # Traits
+        
+        modifier = { factor = 0.1 is_dumb_trigger = yes }
+		modifier = { factor = 0.5 has_benevolent_trait_trigger = yes }
+		modifier = { factor = 0.75 is_trustworthy_trigger = yes }
+        modifier = { factor = 0.9 is_smart_trigger = yes }
+        modifier = { factor = 1.5 character_is_irrational = yes }
+        
+        
+		modifier = { factor = 0.025 trait = content }
+		modifier = { factor = 0.025 trait = craven }
+		modifier = { factor = 0.1 trait = inbred }
+        modifier = { factor = 1.25 trait = envious }
+        modifier = { factor = 1.25 trait = brave }
+		modifier = { factor = 1.5 trait = proud }
+		modifier = { factor = 1.5 trait = arbitrary }
+		modifier = { factor = 1.5 trait = greedy }
+		modifier = { factor = 2.0 trait = deceitful }
+        
+        # Bastard
+        
+        modifier = { factor = 1.1 liege_is_bastard_kind = yes }
+		modifier = { factor = 1.6 liege_is_bastard_unkind = yes }
+        
 		modifier = {
 			factor = 1.5
 			primary_title = {
@@ -5365,7 +4560,6 @@ faction_independence = {
 				trait = incapable
 				is_adult = no
 				is_landed = no
-				has_landed_title = k_orthodox
 				preparing_invasion = yes
 			}
 		}
@@ -5453,7 +4647,6 @@ faction_independence = {
 		modifier = {
 			factor = 0
 			liege = { 
-				NOT = { year = 1350 }
 				primary_title = { is_tribal_type_title = yes }
 				culture = ROOT
 				religion = ROOT
@@ -5514,179 +4707,81 @@ faction_independence = {
 			}
 		}
 		
-		modifier = {
-			factor = 0.25
-			liege = {
-				religion = ROOT
-				culture = ROOT
-			}
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}
-		}
+		# Loyalty (Friends, Alliance, Sociopathy)
+        
+        modifier = { factor = 2.0 is_disloyal_to_liege_trigger = yes }
+        modifier = { factor = 1.5 self_serving_trigger = yes }
+		modifier = { factor = 0.2 is_friend_with_liege_trigger = yes }
+        modifier = { factor = 0.0 is_good_friend_with_liege_trigger = yes }
 		
-		modifier = {
-			factor = 1.5
-			liege = {
-				distance = { who = ROOT distance = 300 }
-			}
-		}
-		modifier = {
-			factor = 2.0
-			liege = {
-				distance = { who = ROOT distance = 400 }
-			}
-		}
+        # Council
+        
+        modifier = { factor = 0.7 has_council_position_trigger = yes }
+        
+        # Culture
 		
-		modifier = {
-			factor = 2.0
-			liege = {
-				NOT = { religion_group = ROOT }
-			}
-		}
+		modifier = { factor = 0.5 is_culture_same = yes }
+		modifier = { factor = 0.75 is_culture_group_same = yes }
+		modifier = { factor = 1.2 is_different_culture_same_group = yes }
+		modifier = { factor = 2.0 is_different_culture_group = yes }
+        
+        # Religion
 		
-		modifier = {
-			factor = 1.5
-			liege = {
-				NOT = { culture_group = ROOT }
-			}
-		}
+		modifier = { factor = 0.0 is_zealous_liege_zealous_same_religion = yes }
+		modifier = { factor = 0.5 is_zealous_same_religion = yes }
+		modifier = { factor = 0.9 is_just_same_religion = yes }
+		modifier = { factor = 1.2 is_cynical_different_religion = yes }
+		modifier = { factor = 2.0 is_just_different_religion = yes }
+		modifier = { factor = 3.0 is_zealous_different_religion = yes }
+        
+        # Opinion - Liege -> Vassal
 		
-		modifier = {
-			factor = 0.5
-			opinion = { who = LIEGE value = 20 } 
-		}
-		modifier = {
-			factor = 0
-			opinion = { who = LIEGE value = 40 } 
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}			
-		}
-		modifier = {
-			factor = 1.5
-			NOT = { opinion = { who = LIEGE value = -20 } } 
-		}
-		modifier = {
-			factor = 2.0
-			NOT = { opinion = { who = LIEGE value = -50 } } 
-		}
-		modifier = {
-			factor = 4.0
-			NOT = { opinion = { who = LIEGE value = -75 } } 
-		}
+		modifier = { factor = 0.0 liege_opinion_vassal_p99_trigger = yes }
+		modifier = { factor = 0.1 liege_opinion_vassal_p85_trigger = yes }
+		modifier = { factor = 0.3 liege_opinion_vassal_p70_trigger = yes }
+		modifier = { factor = 0.5 liege_opinion_vassal_p55_trigger = yes }
+		modifier = { factor = 0.6 liege_opinion_vassal_p40_trigger = yes }
+		modifier = { factor = 0.7 liege_opinion_vassal_p25_trigger = yes }
+		modifier = { factor = 0.8 liege_opinion_vassal_p5_trigger = yes }
 		
-		modifier = {
-			factor = 0.025
-			trait = content
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}
-		}
-		modifier = {
-			factor = 0.025
-			trait = imbecile
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}
-		}
-		modifier = {
-			factor = 0.025
-			trait = craven
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}
-		}
-		modifier = {
-			factor = 0.1
-			trait = inbred
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}
-		}
-		modifier = {
-			factor = 0.1
-			OR = {
-				trait = slow
-				trait = dull
-			}
-			NOT = {	
-				has_opinion_modifier = {
-					who = FROM
-					modifier = opinion_coerced_into_joining_faction
-				}
-			}
-		}
-		modifier = {
-			factor = 0.5
-			trait = kind
-		}
-		modifier = {
-			factor = 0.5
-			trait = charitable
-		}
-		modifier = {
-			factor = 0.5
-			trait = honest
-		}
-		modifier = {
-			factor = 0.75
-			trait = humble
-		}
-		modifier = {
-			factor = 0.75
-			trait = just
-		}
-		modifier = {
-			factor = 1.5
-			trait = proud
-		}
-		modifier = {
-			factor = 1.5
-			trait = brave
-		}
-		modifier = {
-			factor = 1.5
-			trait = arbitrary
-		}
-		modifier = {
-			factor = 2.0
-			trait = envious
-		}
-		modifier = {
-			factor = 2.0
-			trait = greedy
-		}
-		modifier = {
-			factor = 2.0
-			trait = impaler
-		}
-		modifier = {
-			factor = 2.0
-			trait = deceitful
-		}
-		modifier = {
-			factor = 4.0
-			trait = ambitious
-		}
+		modifier = { factor = 1.1 liege_opinion_vassal_n5_trigger = yes }
+		modifier = { factor = 1.2 liege_opinion_vassal_n25_trigger = yes }
+		modifier = { factor = 1.3 liege_opinion_vassal_n40_trigger = yes }
+		modifier = { factor = 1.4 liege_opinion_vassal_n55_trigger = yes }
+		modifier = { factor = 1.6 liege_opinion_vassal_n70_trigger = yes }
+		modifier = { factor = 1.8 liege_opinion_vassal_n85_trigger = yes }
+		modifier = { factor = 2.0 liege_opinion_vassal_n99_trigger = yes }
+        
+        # Distance
+        
+		modifier = { factor = 1.3 liege_is_600_distance = yes }
+		modifier = { factor = 1.6 liege_is_800_distance = yes }
+		modifier = { factor = 2.0 liege_is_1200_distance = yes }
+        modifier = { factor = 2.5 liege_is_1500_distance = yes }
+		
+        # Traits
+        
+        modifier = { factor = 0.1 is_dumb_trigger = yes }
+		modifier = { factor = 0.5 has_benevolent_trait_trigger = yes }
+		modifier = { factor = 0.75 is_trustworthy_trigger = yes }
+        modifier = { factor = 0.9 is_smart_trigger = yes }
+        modifier = { factor = 1.5 character_is_irrational = yes }
+        
+        
+		modifier = { factor = 0.025 trait = content }
+		modifier = { factor = 0.025 trait = craven }
+		modifier = { factor = 0.1 trait = inbred }
+        modifier = { factor = 1.25 trait = envious }
+        modifier = { factor = 1.25 trait = brave }
+		modifier = { factor = 1.5 trait = proud }
+		modifier = { factor = 1.5 trait = arbitrary }
+		modifier = { factor = 1.5 trait = greedy }
+		modifier = { factor = 2.0 trait = deceitful }
+        
+        # Bastard
+        
+        modifier = { factor = 1.1 liege_is_bastard_kind = yes }
+		modifier = { factor = 1.6 liege_is_bastard_unkind = yes }
 	}
 	
 	success = {
@@ -6098,28 +5193,6 @@ faction_claimant = {
 			NOT = { new_character = { culture = FROM } }
 		}
 		
-		# If there is an antiking faction, prioritize that
-		modifier = {
-			factor = 0
-			FROM = {
-				religion = the_seven
-				top_liege = {
-					FROM = {
-						liege = {
-							character = PREVPREV
-						}
-					}
-					religion = FROM
-					rightful_religious_head_scope = {
-						has_claim = k_papal_state
-					}
-					any_realm_lord = {
-						in_faction = faction_antiking
-					}
-				}
-			}
-		}
-		
 		modifier = {
 			factor = 0
 			NOT = {
@@ -6273,64 +5346,6 @@ faction_claimant = {
 				dynasty = FROM
 			}
 		}
-		modifier = {
-			factor = 0.5
-			title = e_byzantium
-			FROM = { culture_group = byzantine }
-			new_character = {
-				NOT = { trait = born_in_the_purple }
-			}
-		}
-		
-		modifier = {
-			factor = 2.0
-			title = e_byzantium
-			FROM = { culture_group = byzantine }
-			new_character = {
-				trait = born_in_the_purple
-			}
-		}
-		modifier = {
-			factor = 0.5
-			title = e_byzantium
-			FROM = { culture_group = byzantine }
-			holder_scope = {
-				trait = born_in_the_purple
-			}
-		}
-		
-		modifier = {
-			factor = 2.0
-			title = e_byzantium
-			FROM = { culture_group = byzantine }
-			holder_scope = {
-				NOT = { trait = born_in_the_purple }
-			}
-		}
-		
-		modifier = {
-			factor = 2.0
-			new_character = {
-				trait = sayyid
-			}
-			holder_scope = {
-				NOT = { trait = sayyid }
-			}
-		}
-		modifier = {
-			factor = 1.5
-			new_character = {
-				trait = mirza
-			}
-			holder_scope = {
-				NOT = {
-					OR = {
-						trait = sayyid 
-						trait = mirza 
-					}
-				}
-			}
-		}
 		
 		modifier = {
 			factor = 4.0
@@ -6435,13 +5450,6 @@ faction_claimant = {
 				is_landed = no
 				preparing_invasion = yes
 			}
-
-#			FROMFROM = {
-#				new_character = {
-#					NOT = { character = ROOT }
-#				}
-#			}
-
 		}
 		
 		modifier = {
@@ -6780,74 +5788,6 @@ faction_claimant = {
 					NOT = { age = 5 }
 					NOT = { character = ROOT }
 				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.5
-			culture_group = byzantine
-			FROMFROM = {
-				title = e_byzantium
-				new_character = {
-					NOT = { trait = born_in_the_purple }
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 0.5
-			culture_group = byzantine
-			FROMFROM = {
-				title = e_byzantium
-			}
-			liege = {
-				trait = born_in_the_purple
-			}
-		}
-		
-		modifier = {
-			factor = 2.0
-			culture_group = byzantine
-			FROMFROM = {
-				title = e_byzantium
-				new_character = {
-					trait = born_in_the_purple
-				}
-			}
-		}
-		
-		modifier = {
-			factor = 2.0
-			culture_group = byzantine
-			FROMFROM = {
-				title = e_byzantium
-			}
-			liege = {
-				NOT = { trait = born_in_the_purple }
-			}
-		}
-		
-		modifier = {
-			factor = 2.0
-			FROMFROM = {
-				new_character = {
-					trait = sayyid
-				}
-			}
-			liege = {
-				NOT = { trait = sayyid }
-			}
-		}
-		modifier = {
-			factor = 1.5
-			FROMFROM = {
-				new_character = {
-					trait = mirza
-				}
-			}
-			liege = {
-				NOT = { trait = sayyid }
-				NOT = { trait = mirza }
 			}
 		}
 		
