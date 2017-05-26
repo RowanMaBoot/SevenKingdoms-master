@@ -679,18 +679,14 @@ action_inquisition = {
 		num_of_settlements = 1
 		NAND = {
 			FROM = { job_spiritual = { has_character_modifier = spiritual_refused_pagans } }  # See Event ZE.5040
-			owner = { religion_group = pagan_group }
+			owner = { religion_group = westerosi_pagan_group }
 		}
 		OR = {
 			owner = {
-				FROM = { NOT = { religion_group = pagan_group } }
+				FROM = { NOT = { religion_group = westerosi_pagan_group } }
 				independent = yes
 				NOT = { religion = FROM }
-				religion_group = pagan_group
-				OR = {
-					NOT = { religion = aztec }
-					year = 1350
-				}
+				religion_group = westerosi_pagan_group
 				is_reformed_religion = no
 				capital_scope = {
 					province = ROOT
@@ -725,7 +721,6 @@ action_improve_rel_relations = {
 	
 	potential = {
 		FROM = {
-			NOT = { religion_group = muslim }
 			FROM = {
 				job_spiritual = {
 					NOT = {
@@ -830,30 +825,4 @@ action_hunt_heretics = {
 	offmap = yes
 	
 	events = { MNM.70031 }
-}
-
-# Lord Spiritual (Muslim only)
-action_charity = {
-	attribute = learning
-	
-	potential = {
-		FROM = { religion_group = muslim }
-		FROM = {
-			job_spiritual = {
-				NOT = {
-					has_character_modifier = in_seclusion
-				}
-			}
-		}
-	}
-	
-	trigger = {
-		any_province_lord = {
-			character = FROM
-		}
-	}
-	
-	local_revolt_risk = -0.01
-	
-	events = { 20040 20043 20048 20050 }
 }
