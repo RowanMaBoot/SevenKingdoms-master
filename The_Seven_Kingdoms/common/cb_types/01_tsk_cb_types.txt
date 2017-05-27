@@ -548,12 +548,41 @@ tsk_subjugation = {
                 same_realm = FROM
             }
         }
-
-        FROM = {
-            any_realm_title = {
-                de_jure_liege_or_above = PREVPREV
+        
+        holder_scope = {
+            is_liege_or_above = FROM
+            NOT = {
+                same_realm = ROOT
             }
         }
+        
+        any_direct_de_jure_vassal_title = {
+            OR = {
+                holder_scope = {
+                    OR = {
+                        character = ROOT
+                        is_liege_or_above = ROOT
+                    }
+                }
+                location = {
+                    any_neighbor_province = {
+                        has_owner = yes
+                        owner = {
+                            OR = {
+                                character = ROOT
+                                is_liege_or_above = ROOT
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        # FROM = {
+            # any_realm_title = {
+                # de_jure_liege_or_above = PREVPREV
+            # }
+        # }
     }
     
     is_valid_title = {    
@@ -566,18 +595,18 @@ tsk_subjugation = {
             }
         }
         
-        FROM = {
-            any_realm_title = {
-                de_jure_liege_or_above = PREVPREV
-            }
-        }
+        # FROM = {
+            # any_realm_title = {
+                # de_jure_liege_or_above = PREVPREV
+            # }
+        # }
     }
     
     on_add_title = {
         ROOT = {
             add_character_modifier = { 
                 name = launched_subjugation
-                years = 20
+                years = 5
                 hidden = yes
             }
         }
