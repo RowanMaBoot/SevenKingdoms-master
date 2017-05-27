@@ -524,35 +524,26 @@ tsk_subjugation = {
             is_nomadic = no
             mercenary = no
         }
-        FROM = {
-            NOT = {
-                any_war = {
-                    defender = {
-                        character = PREVPREV
-                    }
-                    using_cb = tsk_subjugation
-                }
-            }
-        }
     }
     
     can_use_title = {
-        NOR = {
-            ROOT = {
-                has_character_modifier = launched_subjugation
-            }
-            ROOT = {
+        tier = KING
+        
+        OR = {
+            FROM = {
                 has_landed_title = PREV
             }
-            ROOT = {
-                same_realm = FROM
+            holder_scope = {
+                is_liege_or_above = FROM
+                NOT = {
+                    same_realm = ROOT
+                }
             }
         }
         
-        holder_scope = {
-            is_liege_or_above = FROM
-            NOT = {
-                same_realm = ROOT
+        NOT = {
+            ROOT = {
+                has_character_modifier = launched_subjugation
             }
         }
 
@@ -564,6 +555,11 @@ tsk_subjugation = {
     }
     
     is_valid_title = {    
+        ROOT = {
+            NOT = {
+                same_realm = FROM
+            }
+        }
         OR = {
             FROM = {
                 has_landed_title = PREV
