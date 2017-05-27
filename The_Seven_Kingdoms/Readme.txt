@@ -41,5 +41,21 @@ Other Content:
 #############################################################
 'Velho e Bom Joe' for the Culturally Different Cities mod, which has been partially integrated.
 Excellent Game of Thrones artwork by Marc Simonetti is being used in our mod, and can be found here: http://art.marcsimonetti.com/grr-martin-a-song-of-ice-and-fire
-Christopher Thorstenson For his music (Dragon Wars): https://www.jamendo.com/track/1057094/dragon-wars
-Marc Teichert For his music (The Beginning Of The Adventure): https://www.jamendo.com/track/589413/the-beginning-of-the-adventure
+
+
+#############################################################
+Music										
+#############################################################
+- Christopher Thorstenson:
+	Dragon Wars : https://www.jamendo.com/track/1057094/dragon-wars
+	Lighthouse : https://www.jamendo.com/track/1057092/lighthouse
+- Marc Teichert: 
+	The Beginning Of The Adventure : https://www.jamendo.com/track/589413/the-beginning-of-the-adventure
+	Anonymous : https://www.jamendo.com/track/1191321/anonymous
+- Grégoire Lourme:
+	Legends : https://www.jamendo.com/track/1376555/legends  
+	Asgard has Fallen : https://www.jamendo.com/track/1376562/asgard-has-fallen 
+	Life in Trenches : https://www.jamendo.com/track/1336207/life-in-trenches
+- CH Joy:
+	Inspirational Trailer : https://www.jamendo.com/track/1390798/inspirational-trailer
+
