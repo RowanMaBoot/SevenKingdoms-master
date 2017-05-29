@@ -56,7 +56,33 @@ targetted_decisions = {
 		
 		allow = {
             FROM = { # To use as a buffer to prevent instantly becoming vassals off the get-go
-                prestige = 200
+                if = {
+                    limit = {
+                        OR = {
+                            religion_group = the_seven_group
+                            religion = rhllor
+                            religion = valyrian
+                        }
+                    }
+                    prestige = 800
+                }
+                if = {
+                    limit = {
+                        religion = old_gods
+                    }
+                    prestige = 1200
+                }
+                if = {
+                    limit = {
+                        NOR {
+                            religion_group = the_seven_group
+                            religion = rhllor
+                            religion = valyrian
+                            religion = old_gods
+                        }
+                    }
+                    prestige = 1600
+                }
             }
 		}
 		

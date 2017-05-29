@@ -1,0 +1,109 @@
+###########################################################################################
+######################################### REMEMBER ########################################
+# THE BONUS GRANTED IS ADDITIVE. ALL PREVIOUS UPGRADES ARE INCLUDED IN THE OVERALL VALUE! #
+###########################################################################################
+
+# Settlements have a number of levels. Levels are improved simply through building, but however require a high standard of development in that province.
+# We could rename holdings to: Urban regions, Rural Regions, Tribal Regions and Religious Distritbs.
+# OK. Those are kinda bad, but it gets the point across.
+
+##############################################
+####### CITY CORE SETTLEMENT REFERENCE #######
+##############################################
+##############################################
+
+#<tag> = {
+#	desc = description used in the tooltip of the building
+#	trigger = used for tech requirement of the building, set to 0 if no requirement so it can be build automatically on new games
+#	gold_cost = cost to build the building
+#	build_time = time to build, in days
+#	
+#	ai_creation_fatbor = weight that the AI uses to determine what building to build
+#	extra_tech_building_start = when starting a new game this building will be pre-built if the province has higher tech than the requirement + this + random 0-1
+#}
+
+# For example, you will first build the most basic building in a new city holding; a hamlet.
+
+# City Holding Core Settlement Levels
+# These upgrades may be difficult or borderline unfeasible to obtain. The very high levels should require a lot of prestige and gold to achieve, as well as a large number of upgrades.
+# In other words, many of these levels may be specific to certain holdings.
+
+# tb_core_level_1	|   Dispersed Nomadic Camps | This region is dominated by sparse groups of tribals, living predominately nomadic lifestyles in small camps.
+# tb_core_level_2	|	Semi-permanent Camps | With a growing population, access to food and water becomes more difficult for those living in this region, and so many establish semi-permanent camps on fertile grounds and near clean water.
+# tb_core_level_3	|	Permanent Settlements | Due to larger populations, permanent settlements have been established in the region. Although the materials used are often primitive, the sight of wooden structures is no longer so uncommon.
+
+# Nothing can be built without the base level one building. It is, in essence, required to use the holding.
+# It will cost virtually nothing and takes very little time to build. The AI will build it very quickly.
+
+###########################################
+####### CITY CORE SETTLEMENT LEVELS #######
+###########################################
+###########################################
+
+tribal = {
+    tb_core_level_1 = {
+		desc = tb_core_level_1_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 0.0 # We want this building to always be assigned.
+		
+		ai_creation_factor = 150 # Super high priority.
+		
+		prestige_cost = 250
+		build_time = 365
+		
+		light_infantry = 70
+		archers = 25
+		
+		fort_level = 0.05
+		tax_income = 0.15
+		
+		levy_size = 0.02
+	}
+	
+	tb_core_level_2 = {
+		desc = tb_core_level_2_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 0.8 # We want this building to still always be assigned.
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_1
+		
+		prestige_cost = 500
+		build_time = 453
+		
+		light_infantry = 70
+		archers = 25
+		
+		fort_level = 0.05
+		tax_income = 0.75
+		
+		retinuesize = 50
+		
+		local_tax_modifier = -0.02
+	}
+	
+	tb_core_level_3 = {
+		desc = tb_core_level_3_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 1.8 # We want it to be assigned, but not very often.
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_2
+		
+		prestige_cost = 800
+		build_time = 558
+		
+		light_infantry = 70
+		archers = 25
+		
+		fort_level = 0.05
+		tax_income = 0.75
+		
+		retinuesize = 50
+		
+		levy_size = -0.01
+		local_tax_modifier = -0.02
+	}
+}
