@@ -90,8 +90,8 @@ NDefines.NMilitary.ATTRITION_LEVEL_FACTOR = 0.5 -- Increased from 0.5
 NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_50_OVER = 1.0 -- Increased from 1.0
 NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_100_OVER = 2.0 -- Increased from 2.0
 
-NDefines.NMilitary.ARMY_MOVEMENT_SPEED = 3
-NDefines.NMilitary.NAVY_MOVEMENT_SPEED = 12 -- Reduced from 15, 4x faster than land movement
+NDefines.NMilitary.ARMY_MOVEMENT_SPEED = 4 -- Originally 3
+NDefines.NMilitary.NAVY_MOVEMENT_SPEED = 16 -- Originally 15
 
 NDefines.NMilitary.GALLEYS_MAINTENANCE = 50 -- Reduced from 300
 

@@ -20,6 +20,29 @@ targetted_decisions = {
 		# From potential is the player using the decision
 		from_potential = {
 			ai = no
+            
+            
+            OR = {
+                NOR = {
+                    AND = {
+                        trait = ambitious
+                        NOT = {
+                            trait = craven
+                        }
+                    }
+                    AND = {
+                        trait = proud
+                        trait = brave
+                    }
+                    trait = heartless
+                    trait = sociopath
+                    trait = dishonourable
+                }
+                realm_levy_diff = {
+                    who = ROOT
+                    value = 10000
+                }
+            }
 			
 			independent = yes
 			is_adult = yes
@@ -30,7 +53,22 @@ targetted_decisions = {
 		
 		# Potential is the target
 		potential = {
-			ai = no
+			# ai = no
+            
+            if = {
+                limit = {
+                    ai = yes
+                }
+                opinion = {
+                    who = FROM
+                    value = 25
+                }
+            }
+            
+            realm_levy_diff = {
+                who = FROM
+                value = 3000
+            }
 			
 			independent = yes
 			is_adult = yes
