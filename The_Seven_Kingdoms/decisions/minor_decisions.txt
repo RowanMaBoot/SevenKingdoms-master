@@ -561,132 +561,132 @@ decisions = {
 		}
 	}	
 
-	ancestor_worship = {
-		only_playable = yes
-		is_high_prio = yes 
+#	ancestor_worship = {  #It's broken due to the lacking event file and I don't really think those events fit these relgions
+#		only_playable = yes
+#		is_high_prio = yes 
 
-		potential = {
-			has_dlc = "The Old Gods"
-			is_playable = yes
-			is_landed = yes
-			is_adult = yes
-			prisoner = no
-			OR = {
-				religion = old_gods
-				religion = old_gods_beyond
-				religion = old_gods_beyond_white
-				religion = drowned_god
-				religion = storm_god
-				religion = lady_of_the_waves
-				religion = vulture_god
-				religion = the_weeping_lady
-				religion = lady_of_the_rocks
-			}
-		}
+#		potential = {
+#			has_dlc = "The Old Gods"
+#			is_playable = yes
+#			is_landed = yes
+#			is_adult = yes
+#			prisoner = no
+#			OR = {
+#				religion = old_gods
+#				religion = old_gods_beyond
+#				religion = old_gods_beyond_white
+#				religion = drowned_god
+#				religion = storm_god
+#				religion = lady_of_the_waves
+#				religion = vulture_god
+#				religion = the_weeping_lady
+#				religion = lady_of_the_rocks
+#			}
+#		}
 
-		allow = {
-			war = no
-			custom_tooltip = {
-				text = UNOCCUPIED_DEMESNE_TITLE
-				hidden_tooltip = {
-					any_demesne_title = {
-						NOT = { higher_tier_than = count }
-						is_occupied = no
-					}
-				}
-			}
-			NOT = { is_inaccessible_trigger = yes }
-			custom_tooltip = {
-				text = is_not_busy_trigger_tooltip
-				hidden_tooltip = { NOT = { has_character_flag = do_not_disturb } }
-			}
-			custom_tooltip = {
-				text = worship_cooldown_tooltip
-				hidden_tooltip = { NOT = { has_character_modifier = worshipped_ancestors_timer } }
-			}
-		}
+#		allow = {
+#			war = no
+#			custom_tooltip = {
+#				text = UNOCCUPIED_DEMESNE_TITLE
+#				hidden_tooltip = {
+#					any_demesne_title = {
+#						NOT = { higher_tier_than = count }
+#						is_occupied = no
+#					}
+#				}
+#			}
+#			NOT = { is_inaccessible_trigger = yes }
+#			custom_tooltip = {
+#				text = is_not_busy_trigger_tooltip
+#				hidden_tooltip = { NOT = { has_character_flag = do_not_disturb } }
+#			}
+#			custom_tooltip = {
+#				text = worship_cooldown_tooltip
+#				hidden_tooltip = { NOT = { has_character_modifier = worshipped_ancestors_timer } }
+#			}
+#		}
 
-		effect = {
-			set_character_flag = recent_minor_decision
-			set_character_flag = do_not_disturb
-			custom_tooltip = {
-				text = prepare_worship_ancestors
-				hidden_tooltip = { 
-					character_event = { id = TOG.7000 } 
-					add_character_modifier = {
-						name = worshipped_ancestors_timer
-						years = 10
-						hidden = yes
-					}
-				}
-			}
-		}
-		revoke_allowed = {
-			always = no
-		}
-		ai_will_do = {
-			factor = 0.01
+#		effect = {
+#			set_character_flag = recent_minor_decision
+#			set_character_flag = do_not_disturb
+#			custom_tooltip = {
+#				text = prepare_worship_ancestors
+#				hidden_tooltip = { 
+#					character_event = { id = TOG.7000 } 
+#					add_character_modifier = {
+#						name = worshipped_ancestors_timer
+#						years = 10
+#						hidden = yes
+#					}
+#				}
+#			}
+#		}
+#		revoke_allowed = {
+#			always = no
+#		}
+#		ai_will_do = {
+#			factor = 0.01
 			
-			modifier = {
-				factor = 0.01
-				trait = cynical
-			}
-			modifier = {
-				factor = 5
-				trait = zealous
-			}	
-			modifier = {
-				factor = 0
-				has_character_flag = recent_minor_decision
-				NOT = {
-					had_character_flag = {
-						flag = recent_minor_decision
-						days = 730
-					}
-				}
-			}
-		}
-	}
+#			modifier = {
+#				factor = 0.01
+#				trait = cynical
+#			}
+#			modifier = {
+#				factor = 5
+#				trait = zealous
+#			}	
+#			modifier = {
+#				factor = 0
+#				has_character_flag = recent_minor_decision
+#				NOT = {
+#					had_character_flag = {
+#						flag = recent_minor_decision
+#						days = 730
+#					}
+#				}
+#			}
+#		}
+#	}
 	
-	# Sky burial
-	sky_burial_decision = {
-		only_playable = yes
-		is_high_prio = yes
-		potential = {
-			is_playable = yes
-			has_character_flag = sky_burial
-			NOT = { has_character_flag = performed_sky_burial }
-			OR = {
-				religion = old_gods_beyond
-				religion = old_gods_beyond_white
-				religion = storm_god
-				religion = vulture_god
-			}
-		}
-		allow = {
-			is_adult = yes
-			in_command = no
-			prisoner = no
-			NOT = { trait = incapable }
-			NOT = { trait = infirm }
-			NOT = { is_inaccessible_trigger = yes }
-			NOT = { has_character_flag = do_not_disturb }
-		}
-		effect = {
-			custom_tooltip = { text = sky_burial_custom_tooltip }
-			hidden_tooltip = {
-				character_event = { id = HL.8005 }
-				clr_character_flag = sky_burial
-				set_character_flag = performed_sky_burial
-			}
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0.05
-			}
-		}
-	}
+#	# Sky burial #Also broken
+#	sky_burial_decision = {
+#		only_playable = yes
+#		is_high_prio = yes
+#		potential = {
+#			is_playable = yes
+#			has_character_flag = sky_burial
+#			NOT = { has_character_flag = performed_sky_burial }
+#			OR = {
+#				religion = old_gods_beyond
+#				religion = old_gods_beyond_white
+#				religion = storm_god
+#				religion = vulture_god
+#			}
+#		}
+#		allow = {
+#			is_adult = yes
+#			in_command = no
+#			prisoner = no
+#			NOT = { trait = incapable }
+#			NOT = { trait = infirm }
+#			NOT = { is_inaccessible_trigger = yes }
+#			NOT = { has_character_flag = do_not_disturb }
+#		}
+#		effect = {
+#			custom_tooltip = { text = sky_burial_custom_tooltip }
+#			hidden_tooltip = {
+#				character_event = { id = HL.8005 }
+#				clr_character_flag = sky_burial
+#				set_character_flag = performed_sky_burial
+#			}
+#		}
+#		ai_will_do = {
+#			factor = 1
+#			modifier = {
+#				factor = 0.05
+#			}
+#		}
+#	}
 
 	# Choose Warhorse (Nomad)
 	choose_warhorse_nomad = {
