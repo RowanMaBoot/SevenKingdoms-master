@@ -1,4 +1,4 @@
-#############################################################
+﻿#############################################################
 CONTACT / PERMISSIONS
 #############################################################
 
@@ -18,29 +18,34 @@ The Team & Contributors:
 
 Although everyone in the team has helped around with just about everything from ideas or contributions, their main work will be spotlighted along with their listing! ;)
 
-Rowan - Project Lead, building system, the map, resource system & other tidbits
-Vierwood - History, titles, characters, province names - basically, a huge amount of work
-tsf4 - History, titles, cultural buildings, characters, barony history, province and barony names - basically, a huge amount of work
+Rowan - Project Lead, building system, the map, lazy af
+Vierwood - History, titles, characters, province names
+tsf4 - History, titles, cultural buildings, characters, barony history, province and barony names
 Moen - Flags, dynasty flags & other GFX tidbits
 Digger The Dwarf - Characters, history and other tidbits
-Adramelech - 3D art, the wall and other tidbits.
 Godman - Tweaks, Characters, Dueling System, King's Guard Events and other little tidbits.
+Adramelech - 3D art, the wall and other tidbits.
 ZeroFighterR - Lore (blame him if anything is wrong), buildings, events, nicknames & other flavour
 Almaron - Extensive lore advice, examples & suggestions
+Feliprinsss - Some oceans names, suggestions, tweaks and tidbits
+Existential Crisis - Darklyn History, characters, nicknames and more.
 
 #############################################################
-General Contributors:
+Content:
+#############################################################
+Velho e Bom Joe - for the Culturally Different Cities mod, which has been partially integrated.
+Marc Simonetti - For his excellent Game of Thrones artwork, which is being used in our mod: http://art.marcsimonetti.com/grr-martin-a-song-of-ice-and-fire
+
+#############################################################
+Other Credits:
 #############################################################
 blackninja9939 - For help, advice and some edits here and there!
-Feliprinsss - Some oceans names, suggestions, tweaks and tidbits
-Existential Crisis - A couple of characters.
-Patrick - Some small suggestions
-
-#############################################################
-Other Content:
-#############################################################
-'Velho e Bom Joe' for the Culturally Different Cities mod, which has been partially integrated.
-Excellent Game of Thrones artwork by Marc Simonetti is being used in our mod, and can be found here: http://art.marcsimonetti.com/grr-martin-a-song-of-ice-and-fire
+SweetThose - A number of suggested changes and tweaks, as well as some localisations.
+JonStryker - For the mapfiller tool, which played a fundamental role in getting this mod working in a reasonable amount of time!
+AgentPaper - For the Character Generator, used by Vierwood to rapidly fill out regions with placeholder dynasties.
+GIMP - A great, completely free, image editing program which has been responsible for everything from the heightmap and terrain to images used for some of the traits.
+Paradox Wiki - Provided an invaluable resource for the development of a mod, especially one of this size.
+Paradox CK2 Dev Team - For providing a cool game with awesome modding support!
 
 
 #############################################################
