@@ -2,78 +2,78 @@
 #
 # filter = [self/court/home_court/vassals/sub_realm/realm/dynasty/all] ('self' MUST be set for decisions targetting only the taker, the other filter types can be set to lessen CPU load)
 # ai_target_filter = [self/court/home_court/vassals/sub_realm/realm/dynasty/all] (which characters for which the AI evaluates the decision.)
-#	court: all characters in the AI's host court, including prisoners, and characters currently away (wards, prisoners, etc)
-#	home_court: all characters in the AI's home court, including prisoners, and characters currently away (wards, prisoners, etc)
-#	vassals: direct vassal rulers of the AI's employer
-#	sub_realm: all characters below the AI's employer
-#	realm: all characters in the same top realm as the AI
-#	dynasty: all members of the same dynasty
-#	rivals: your rivals plus any character you have an opinion modifier with 'crime = yes' set (the same set of characters the 'is_foe' trigger evaluates)
-#	all: all living characters (Avoid if possible. VERY CPU-HEAVY!)
-#	
+#    court: all characters in the AI's host court, including prisoners, and characters currently away (wards, prisoners, etc)
+#    home_court: all characters in the AI's home court, including prisoners, and characters currently away (wards, prisoners, etc)
+#    vassals: direct vassal rulers of the AI's employer
+#    sub_realm: all characters below the AI's employer
+#    realm: all characters in the same top realm as the AI
+#    dynasty: all members of the same dynasty
+#    rivals: your rivals plus any character you have an opinion modifier with 'crime = yes' set (the same set of characters the 'is_foe' trigger evaluates)
+#    all: all living characters (Avoid if possible. VERY CPU-HEAVY!)
+#    
 
 targetted_decisions = {
-	
-	tsk_swear_fealty = {
-		only_rulers = yes
-		
-		# From potential is the player using the decision
-		from_potential = {
-			ai = no
-			
-			independent = yes
-			is_adult = yes
-			prisoner = no
-			
-			tier = KING
-		}
-		
-		# Potential is the target
-		potential = {
-			OR = {
-				ai = no
-				AND = {
-					ai = yes
-					opinion = {
-						who = FROM
-						value = 30
-					}
-				}
-			}
-			
-			independent = yes
-			is_adult = yes
-			tier = KING
-			
-			culture_group = FROM
-			religion = FROM
+    
+    tsk_swear_fealty = {
+        only_rulers = yes
+        
+        # From potential is the player using the decision
+        from_potential = {
+            ai = no
+            
+            independent = yes
+            is_adult = yes
+            prisoner = no
+            
+            tier = KING
+        }
+        
+        # Potential is the target
+        potential = {
+            OR = {
+                ai = no
+                AND = {
+                    ai = yes
+                    opinion = {
+                        who = FROM
+                        value = 30
+                    }
+                }
+            }
+            
+            independent = yes
+            is_adult = yes
+            tier = KING
+            
+            culture_group = FROM
+            religion = FROM
 
-			# Make sure we're not asking ourself
-			# Or a special title
-			NOR = {
-				character = FROM
-		               	primary_title = {
-                	   		OR = {
-                       				title = d_the_wall
-                      			 	title = k_the_nights_watch
-	                   		}
-               			}
-          		}
-		}
-		
-		
-		allow = {
-           		 FROM = { # To use as a buffer to prevent instantly becoming vassals off the get-go
-               			 prestige = 2500
-           		 }
-		}
-		
-		effect = {
-			FROM = {
-                		prestige = -2500
-           		}
-			
-			character_event = { id = tsk_swear_fealty.1 }
-		}
-	}
+            # Make sure we're not asking ourself
+            # Or a special title
+            NOR = {
+                character = FROM
+                primary_title = {
+                    OR = {
+                        title = d_the_wall
+                        title = k_the_nights_watch
+                    }
+                }
+            }
+        }
+        
+        
+        allow = {
+            FROM = { # To use as a buffer to prevent instantly becoming vassals off the get-go
+                prestige = 2500
+            }
+        }
+        
+        effect = {
+            FROM = {
+                prestige = -2500
+            }
+            
+            character_event = { id = tsk_swear_fealty.1 }
+        }
+    }
 }
