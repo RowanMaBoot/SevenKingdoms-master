@@ -1,0 +1,97 @@
+# Consolidate the Realm
+# Original decisions by charts / strachkvas (700 lines)
+# Consolidated and rewritten into a single decision by Rowan / N0body.
+
+# Decision should check for your current held Empire or the Empire-region you fall into.
+# Based on held Empire, you will have the ability to consolidate your realm, destroying lesser Kingdoms in favour of
+# a one-Kingdom one-Empire region instead of a many-Kingdoms one-Empire situation, therefore allowing for the Seven Kingdoms.
+
+# Our character must completely control one of the Seven Kingdoms.
+# If they do, they will be able to use this decision to consolidate the realm.
+# AI characters will not recieve the event, and will instead submit. If there is a player vassal, however,
+# they will have the option to refuse.
+
+decisions = {
+    consolidate_realm = {
+        
+        potential = {
+            independent = yes
+            
+            OR = {
+                AND = {
+                    completely_controls = e_the_north
+                    NOT = { has_global_flag = north_consolidated }
+                }
+                AND = {
+                    completely_controls = e_the_vale
+                    NOT = { has_global_flag = vale_consolidated }
+                }
+                AND = {
+                    completely_controls = e_the_riverlands
+                    NOT = { has_global_flag = riverlands_consolidated }
+                }
+                AND = {
+                    completely_controls = e_the_westerlands
+                    NOT = { has_global_flag = westerlands_consolidated }
+                }
+                AND = {
+                    completely_controls = e_the_stormlands
+                    NOT = { has_global_flag = stormlands_consolidated }
+                }
+                AND = {
+                    completely_controls = e_the_reach
+                    NOT = { has_global_flag = reach_consolidated }
+                }
+                AND = {
+                    completely_controls = e_dorne
+                    NOT = { has_global_flag = dorne_consolidated }
+                }
+            }
+        }
+        
+        allow = {
+            AND =  {
+                OR = {
+                    AND = {
+                        diplomacy = 22
+                        job_chancellor = { diplomacy = 24 }
+                    }
+                    AND = {
+                        stewardship = 26
+                    }
+                    AND = {
+                        intrigue = 22
+                        job_spymaster = { intrigue = 24 }
+                    }
+                }
+                is_adult = yes
+                NOT = { trait = content }
+            }
+        }
+        effect = {
+            prestige = 2000
+            
+            if = {
+                limit = {
+                    completely_controls = e_the_north
+                }
+                any_vassal = {
+                    limit = {
+                        tier = DUKE
+                        NOT = { tier = KING }
+                    }
+                    de_jure_liege = k_the_north
+                }
+                any_vassal = {
+                    limit = {
+                        tier = KING
+                    }
+                    primary_title = {
+                        destroy_landed_title = THIS
+                    }
+                }
+            }
+            set_global_flag = north_consolidated
+        }
+    }
+}
