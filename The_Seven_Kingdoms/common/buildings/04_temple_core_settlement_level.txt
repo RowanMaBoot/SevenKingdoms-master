@@ -1,0 +1,78 @@
+###########################################################################################
+######################################### REMEMBER ########################################
+# THE BONUS GRANTED IS ADDITIVE. ALL PREVIOUS UPGRADES ARE INCLUDED IN THE OVERALL VALUE! #
+###########################################################################################
+
+# Settlements have a number of levels. Levels are improved simply through building, but however require a high standard of development in that province.
+# We could rename holdings to: Urban regions, Rural Regions, Tribal Regions and Religious Districts.
+# OK. Those are kinda bad, but it gets the point across.
+
+# To prevent snowballing, settlement core upgrades will require both gold and prestige. Or just prestige.
+
+# starting to work on the temple buildings, just to have them in. Feel free to change, but let me know. - tsf4
+# Temples should offer less straight up levies, but perhaps a bit more modifiers representing the protection they offer.
+################################################
+####### TEMPLE CORE SETTLEMENT REFERENCE #######
+################################################
+################################################
+
+#<tag> = {
+#	desc = description used in the tooltip of the building
+#	trigger = used for tech requirement of the building, set to 0 if no requirement so it can be build automatically on new games
+#	gold_cost = cost to build the building
+#	build_time = time to build, in days
+#	
+#	ai_creation_factor = weight that the AI uses to determine what building to build
+#	extra_tech_building_start = when starting a new game this building will be pre-built if the province has higher tech than the requirement + this + random 0-1
+#}
+
+# tp_core_level_1	|	<culture> Grove
+# tp_core_level_2	|	Small <culture> Shrine
+# tp_core_level_3	|	<culture> Shrine
+# tp_core_level_4	|	Small <culture> Temple
+# tp_core_level_5	|	<culture> Temple
+# tp_core_level_6	|	Major <culture> Temple
+# tp_core_level_7	|	Huge <culture> Temple
+# tp_core_level_8	|	Minor <culture> Church
+# tp_core_level_9	|	<culture> Church
+# tp_core_level_10	|	Large <culture> Church
+# tp_core_level_11	|	Gargantuan <culture> Church
+
+# Nothing can be built without the base level one building. It is, in essence, required to use the holding.
+# It will cost virtually nothing and takes very little time to build. The AI will build it very quickly.
+
+#############################################
+####### TEMPLE CORE SETTLEMENT LEVELS #######
+#############################################
+#############################################
+
+# Prestige cost is expo
+# (x+y) * 1.25
+# x = base cost, starting @ 500
+# y = static incremental increase, @ 250
+# then rounded to a more normal figure.
+
+temple = {
+	tp_core_level_1 = {
+		desc = tp_core_level_1_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 0.0 # We want this building to always be assigned
+		
+		ai_creation_factor = 150 # Super high priority.
+		
+		prestige_cost = 250
+		build_time = 365
+		
+		heavy_infantry = 5
+		light_infantry = 15
+		archers = 5
+		
+		fort_level = 0.20
+		tax_income = 1.25
+		
+		retinuesize = 50
+		
+		local_tax_modifier = 0.20
+		levy_size = 0.10
+	}
+}

@@ -19,7 +19,7 @@ The Team & Contributors:
 Although everyone in the team has helped around with just about everything from ideas or contributions, their main work will be spotlighted along with their listing! ;)
 
 Rowan - Project Lead, building system, the map, lazy af
-Vierwood - History, titles, characters, province names
+Vierwood - Project Co-Lead, Head of all Things History, titles, characters, flags, portraits, CoAs, province names
 tsf4 - History, titles, cultural buildings, characters, barony history, province and barony names
 Moen - Flags, dynasty flags & other GFX tidbits
 Digger The Dwarf - Characters, history and other tidbits
@@ -36,7 +36,8 @@ Content:
 #############################################################
 Velho e Bom Joe - for the Culturally Different Cities mod, which has been partially integrated.
 Marc Simonetti - For his excellent Game of Thrones artwork, which is being used in our mod: http://art.marcsimonetti.com/grr-martin-a-song-of-ice-and-fire
-
+Silverino - For allowing us to use some of his portraits from the excelent CPR+ mod.
+The AGOT team - For allowing us to edit and use their wonderful portraits. 
 #############################################################
 Other Credits:
 #############################################################

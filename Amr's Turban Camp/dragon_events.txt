@@ -1,2 +1,181 @@
+#The beginning of dragon events.
 
+namespace = devent
+character_event = {
+	id = devent.0
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	immediate = {
+		remove_trait = dragon 
+		add_trait = dragon
+		
+		remove_trait = lustful
+		remove_trait = chaste
+		remove_trait = gluttonous
+		remove_trait = temperate
+		remove_trait = greedy
+		remove_trait = charitable
+		remove_trait = slothful
+		remove_trait = diligent
+		remove_trait = envious
+		remove_trait = kind
+		remove_trait = wroth
+		remove_trait = patient
+		remove_trait = haughty
+		remove_trait = affectionate
+		remove_trait = timid
+		remove_trait = rowdy
+		remove_trait = lustful
+		remove_trait = chaste
+		remove_trait = gluttonous
+		remove_trait = temperate
+		remove_trait = greedy
+		remove_trait = charitable
+		remove_trait = slothful
+		remove_trait = diligent
+		remove_trait = envious
+		remove_trait = kind
+		remove_trait = willful
+		remove_trait = brooding
+		remove_trait = indolent
+		remove_trait = playful
+		remove_trait = conscientious
+		remove_trait = fussy
+		remove_trait = curious
+		remove_trait = idolizer
+		remove_trait = proud
+		remove_trait = humble
+		remove_trait = deceitful
+		remove_trait = honest
+		remove_trait = craven
+		remove_trait = brave
+		remove_trait = shy
+		remove_trait = gregarious
+		remove_trait = ambitious
+		remove_trait = content
+		remove_trait = arbitrary
+		remove_trait = just
+		remove_trait = cynical
+		remove_trait = zealous
+		remove_trait = paranoid
+		remove_trait = trusting
+		remove_trait = cruel
+		remove_trait = authoritative
+		remove_trait = rude
+		remove_trait = familyperson
+		remove_trait = selfish
+		remove_trait = stubborn
+		remove_trait = ruthless
+		remove_trait = honorable
+	}
+	
+	option = {
+		name = OK
+	}
+}
+#Dragon Maintenance
+character_event = {
+	id = devent.1
+	desc = ""
+	picture = ""
+
+	is_triggered_only = yes
+	culture = dragon
+
+	trigger = {
+	trait = dragon
+	}
+
+	immediate = {
+		remove_trait = dragon 
+		add_trait = dragon
+		
+		remove_trait = lustful
+		remove_trait = chaste
+		remove_trait = gluttonous
+		remove_trait = temperate
+		remove_trait = greedy
+		remove_trait = charitable
+		remove_trait = slothful
+		remove_trait = diligent
+		remove_trait = envious
+		remove_trait = kind
+		remove_trait = wroth
+		remove_trait = patient
+		remove_trait = haughty
+		remove_trait = affectionate
+		remove_trait = timid
+		remove_trait = rowdy
+		remove_trait = lustful
+		remove_trait = chaste
+		remove_trait = gluttonous
+		remove_trait = temperate
+		remove_trait = greedy
+		remove_trait = charitable
+		remove_trait = slothful
+		remove_trait = diligent
+		remove_trait = envious
+		remove_trait = kind
+		remove_trait = willful
+		remove_trait = brooding
+		remove_trait = indolent
+		remove_trait = playful
+		remove_trait = conscientious
+		remove_trait = fussy
+		remove_trait = curious
+		remove_trait = idolizer
+		remove_trait = proud
+		remove_trait = humble
+		remove_trait = deceitful
+		remove_trait = honest
+		remove_trait = craven
+		remove_trait = brave
+		remove_trait = shy
+		remove_trait = gregarious
+		remove_trait = ambitious
+		remove_trait = content
+		remove_trait = arbitrary
+		remove_trait = just
+		remove_trait = cynical
+		remove_trait = zealous
+		remove_trait = paranoid
+		remove_trait = trusting
+		remove_trait = cruel
+		remove_trait = authoritative
+		remove_trait = rude
+		remove_trait = familyperson
+		remove_trait = selfish
+		remove_trait = stubborn
+		remove_trait = ruthless
+		remove_trait = honorable
+	}
+	
+	option = {
+		name = OK
+	}
+	if = { #Will give misguided_warrior
+		limit = {
+			age = 14
+			NOT = { age = 16 }  #Makes sure they only get it in the age of 14-15.
+		}
+		add_trait = misguided_warrior
+	}
+	if = {
+		limit = {trait = dragon_wounded}
+		random = {
+			chance = 50
+			remove_trait = dragon_wounded	
+		}
+		if = {
+			limit = {trait = dragon_wounded}
+			limit = {trait = dragon_strong}
+			random = {
+				chance = 30
+				remove_trait = dragon_wounded
+			}
+		}
+	}
+}
 
