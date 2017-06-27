@@ -9,13 +9,12 @@ succession_laws = {
 		vassal_opinion = 5
 	
 		potential = {
-			holder_scope = {
+			
+            holder_scope = {
 				# Prevent AI from being able to have this law unless they already have it. Players can get it however.
 				ai = no
 				has_law = succ_gavelkind
-			}
-			holder_scope = {
-				OR = {
+                OR = {
 					independent = yes
 					NOT = {
 						any_liege = {
@@ -51,7 +50,20 @@ succession_laws = {
 		}
 		allow = {
 			holder_scope = {
-				is_tribal = no
+				# Prevent AI from being able to have this law unless they already have it. Players can get it however.
+				ai = no
+				has_law = succ_gavelkind
+                OR = {
+					is_tribal = no
+					custom_tooltip = { 
+						text = TT_NOT_UNREFORMED_PAGAN
+						hidden_tooltip = {
+							NOT = {
+                                culture_group = free_folk
+                            }
+						}
+					}
+				}
 			}
 			NAND = { 
 				has_law = succession_voting_power_1
@@ -71,11 +83,6 @@ succession_laws = {
 		dynasty_opinion = 5
 	
 		potential = {
-			holder_scope = {
-				# Prevent AI from being able to have this law unless they already have it. Players can get it however.
-				ai = no
-				has_law = succ_gavelkind
-			}
 			holder_scope = {
 				is_nomadic = no
 				OR = {
@@ -146,6 +153,7 @@ succession_laws = {
 						NOT = { title = PREVPREV }
 					}
 				}
+				
 				OR = {
 					is_republic = no
 					is_patrician = yes
@@ -241,7 +249,17 @@ succession_laws = {
 						is_vice_royalty = yes
 					}
 				}
-				holder_scope = {
+				AND = {
+					holder_scope = {
+						OR = {
+							independent = yes
+							NOT = {
+								any_liege = {
+									holy_order = yes
+								}
+							}
+						}
+					}
 					OR = {
 						is_landless_type_title = no
 						is_tribal_type_title = yes
@@ -432,6 +450,7 @@ succession_laws = {
 						}
 					}
 				}
+				
 				is_merchant_republic = no
 				is_patrician = no
 				OR = {
@@ -497,13 +516,13 @@ succession_laws = {
 			always = no
 		}
 	}
+
 	succ_turkish_succession = {
 		oldest_child_opinion = -5
 #		child_opinion = 30
 #		dynasty_opinion = 10
 		potential = {
 			holder_scope = {
-				religion_group = drowned_god_group
 				is_republic = no
 				is_merchant_republic = no
 				is_nomadic = no
@@ -587,12 +606,21 @@ succession_laws = {
 				holy_order = yes
 				AND = {
 					tier = baron
-					is_republic = yes
+					OR = {
+						is_republic = yes
+						#AND = {
+							is_theocracy = yes
+							#NOT = { holder_scope = { religion_group = muslim } }
+						#}
+					}
 				}
 				holder_scope = {
 					OR = {
 						is_republic = yes
-						is_theocracy = yes
+						#AND = {
+							is_theocracy = yes
+							#NOT = { religion_group = muslim }
+						#}
 					}
 				}
 			}
@@ -880,8 +908,13 @@ gender_laws = {
 			OR = {
 				holder_scope = {
 					OR = {
+						culture_group = dornish
+                        culture_group = free_folk
+                        culture_group = high_valyrian
+                        religion_group = valyrian_group
+						religion = old_gods
 						religion = the_mother
-						religion = boashi
+                        religion = rhllor
 					}
 				}
 				OR = {
