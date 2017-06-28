@@ -1,3 +1,195 @@
+##############################
+### CUSTOM TSK GOVERNMENTS ###
+##############################
+##############################
+
+# Night's Watch
+
+government_flavor = {
+	name = gov_nights_watch
+	graphics = GFX_evt_beheading
+	priority = 1
+	trigger = {
+		government = nights_watch_government
+	}
+}
+
+# Wildling Government
+
+government_flavor = {
+	name = gov_wildling_chiefdom
+	graphics = GFX_evt_tribal_lands
+	priority = 1
+	trigger = {
+		NOT = { has_law = succ_gavelkind }
+		government = wildling_government
+	}
+}
+
+government_flavor = {
+	name = gov_noble_wildling_chiefdom
+	graphics = GFX_evt_tribal_lands
+	priority = 1
+	trigger = {
+		government = wildling_government
+		has_law = succ_gavelkind
+	}
+}
+
+# Freehold
+
+government_flavor = {
+	name = gov_aristocratic_electorial_freehold
+	graphics = GFX_evt_holy_emperor
+	priority = 1
+	trigger = {
+		government = freehold_government
+		has_landed_title = e_valyrian_freehold
+		has_law = succ_feudal_elective
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 6
+				has_law = law_voting_power_1
+				has_law = banish_voting_power_1
+				has_law = execution_voting_power_1
+				has_law = revoke_title_voting_power_1
+				has_law = grant_title_voting_power_1
+				has_law = imprison_voting_power_1
+				has_law = war_voting_power_1
+			}
+		}
+	}
+}
+
+government_flavor = {
+	name = gov_aristocratic_hereditary_freehold
+	graphics = GFX_evt_holy_emperor
+	priority = 1
+	trigger = {
+		government = freehold_government
+		has_landed_title = e_valyrian_freehold
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 6
+				has_law = law_voting_power_1
+				has_law = banish_voting_power_1
+				has_law = execution_voting_power_1
+				has_law = revoke_title_voting_power_1
+				has_law = grant_title_voting_power_1
+				has_law = imprison_voting_power_1
+				has_law = war_voting_power_1
+			}
+		}
+	}
+}
+
+government_flavor = {
+	name = gov_electorial_despotic_freehold
+	graphics = GFX_evt_holy_emperor
+	priority = 1
+	trigger = {
+		government = freehold_government
+		has_law = succ_feudal_elective
+		has_landed_title = e_valyrian_freehold
+		calc_true_if = {
+			amount = 2
+			has_law = banish_voting_power_0
+			has_law = execution_voting_power_0
+			has_law = revoke_title_voting_power_0
+			has_law = grant_title_voting_power_0
+			has_law = imprison_voting_power_0
+			has_law = war_voting_power_0
+		}
+		NOT = {
+			calc_true_if = {
+				amount = 7
+				has_law = law_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+	}	
+}
+
+government_flavor = {
+	name = gov_hereditary_despotic_freehold
+	graphics = GFX_evt_holy_emperor
+	priority = 1
+	trigger = {
+		government = freehold_government
+		has_law = succ_feudal_elective
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		has_landed_title = e_valyrian_freehold
+		calc_true_if = {
+			amount = 2
+			has_law = banish_voting_power_0
+			has_law = execution_voting_power_0
+			has_law = revoke_title_voting_power_0
+			has_law = grant_title_voting_power_0
+			has_law = imprison_voting_power_0
+			has_law = war_voting_power_0
+		}
+		NOT = {
+			calc_true_if = {
+				amount = 7
+				has_law = law_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+	}	
+}
+
+government_flavor = {
+	name = gov_electorial_absolute_freehold
+	graphics = GFX_evt_holy_emperor
+	priority = 1
+	trigger = {
+		government = freehold_government
+		has_law = succ_feudal_elective
+		has_landed_title = e_valyrian_freehold
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}
+}
+
+government_flavor = {
+	name = gov_hereditary_absolute_freehold
+	graphics = GFX_evt_holy_emperor
+	priority = 1
+	trigger = {
+		government = freehold_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		has_landed_title = e_valyrian_freehold
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}
+}
+
 #########################
 # Standard Flavor Names #
 #########################
@@ -61,6 +253,89 @@ government_flavor = {
 }
 
 government_flavor = {
+	name = gov_electorial_aristocratic_monarchy_tengri
+	graphics = GFX_evt_mongols
+	priority = 1
+	trigger = {
+		government = feudal_government
+		has_law = succ_feudal_elective
+		religion = dothraki
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 6
+				has_law = law_voting_power_1
+				has_law = banish_voting_power_1
+				has_law = execution_voting_power_1
+				has_law = revoke_title_voting_power_1
+				has_law = grant_title_voting_power_1
+				has_law = imprison_voting_power_1
+				has_law = war_voting_power_1
+			}
+		}
+	}
+}
+
+government_flavor = {
+	name = gov_muslim_aristocratic_monarchy
+	graphics = GFX_evt_emissary_arabic
+	priority = 1
+	trigger = {
+		government = muslim_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 6
+				has_law = law_voting_power_1
+				has_law = banish_voting_power_1
+				has_law = execution_voting_power_1
+				has_law = revoke_title_voting_power_1
+				has_law = grant_title_voting_power_1
+				has_law = imprison_voting_power_1
+				has_law = war_voting_power_1
+			}
+		}
+	}
+}
+
+government_flavor = {
+	name = gov_elective_muslim_aristocratic_monarchy
+	graphics = GFX_evt_emissary_arabic
+	priority = 1
+	trigger = {
+		government = muslim_government
+		has_law = succ_feudal_elective
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 6
+				has_law = law_voting_power_1
+				has_law = banish_voting_power_1
+				has_law = execution_voting_power_1
+				has_law = revoke_title_voting_power_1
+				has_law = grant_title_voting_power_1
+				has_law = imprison_voting_power_1
+				has_law = war_voting_power_1
+			}
+		}
+	}
+}
+
+government_flavor = {
 	name = gov_hereditary_aristocratic_monarchy
 	graphics = GFX_evt_found_hre
 	priority = 1
@@ -69,8 +344,8 @@ government_flavor = {
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+            religion = dothraki
 		}
 		NOR = { 
 			has_law = imperial_administration
@@ -97,10 +372,33 @@ government_flavor = {
 		government = feudal_government
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
-		OR = {
-			religion = drowned_god
-			religion = storm_god
+		religion_group = drowned_god_group
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
 		}
+		calc_true_if = {
+			amount = 6
+			has_law = law_voting_power_1
+			has_law = banish_voting_power_1
+			has_law = execution_voting_power_1
+			has_law = revoke_title_voting_power_1
+			has_law = grant_title_voting_power_1
+			has_law = imprison_voting_power_1
+			has_law = war_voting_power_1
+		}
+	}	
+}
+
+government_flavor = {
+	name = gov_hereditary_aristocratic_monarchy_tengri
+	graphics = GFX_evt_mongols
+	priority = 1
+	trigger = {
+		government = feudal_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		religion = dothraki
 		NOR = { 
 			has_law = imperial_administration
 			has_law = ze_administration_laws_2
@@ -126,8 +424,8 @@ government_flavor = {
 		government = feudal_government
 		has_law = succ_feudal_elective
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+            religion = dothraki
 		}
 		NOR = { 
 			has_law = imperial_administration
@@ -164,10 +462,7 @@ government_flavor = {
 	trigger = {
 		government = feudal_government
 		has_law = succ_feudal_elective
-		OR = {
-			religion = drowned_god
-			religion = storm_god
-		}
+		religion_group = drowned_god_group
 		NOR = { 
 			has_law = imperial_administration
 			has_law = ze_administration_laws_2
@@ -197,6 +492,119 @@ government_flavor = {
 }
 
 government_flavor = {
+	name = gov_electorial_despotic_monarchy_tengri
+	graphics = GFX_evt_tengri_throneroom_oldgods
+	priority = 1
+	trigger = {
+		government = feudal_government
+		has_law = succ_feudal_elective
+		religion = dothraki
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		calc_true_if = {
+			amount = 2
+			has_law = banish_voting_power_0
+			has_law = execution_voting_power_0
+			has_law = revoke_title_voting_power_0
+			has_law = grant_title_voting_power_0
+			has_law = imprison_voting_power_0
+			has_law = war_voting_power_0
+		}
+		NOT = {
+			calc_true_if = {
+				amount = 7
+				has_law = law_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+	}	
+}
+
+government_flavor = {
+	name = gov_muslim_despotic_monarchy
+	graphics = GFX_evt_carriage_arabic
+	priority = 1
+	trigger = {
+		government = muslim_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 2
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+		NOT = {
+			calc_true_if = {
+				amount = 7
+				has_law = law_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+	}	
+}
+
+government_flavor = {
+	name = gov_elective_muslim_despotic_monarchy
+	graphics = GFX_evt_carriage_arabic
+	priority = 1
+	trigger = {
+		government = muslim_government
+		has_law = succ_feudal_elective
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 2
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+		NOT = {
+			calc_true_if = {
+				amount = 7
+				has_law = law_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+	}	
+}
+
+government_flavor = {
 	name = gov_hereditary_despotic_monarchy
 	graphics = GFX_evt_throne_room
 	priority = 1
@@ -205,8 +613,8 @@ government_flavor = {
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+			religion = dothraki
 		}
 		NOR = { 
 			has_law = imperial_administration
@@ -247,10 +655,47 @@ government_flavor = {
 		government = feudal_government
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
-		OR = {
-			religion = drowned_god
-			religion = storm_god
+		religion_group = drowned_god_group
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
 		}
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 2
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+		NOT = {
+			calc_true_if = {
+				amount = 7
+				has_law = law_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+	}	
+}
+
+government_flavor = {
+	name = gov_hereditary_despotic_monarchy_tengri
+	graphics = GFX_evt_tengri_throneroom_oldgods
+	priority = 1
+	trigger = {
+		government = feudal_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		religion = dothraki
 		NOR = { 
 			has_law = imperial_administration
 			has_law = ze_administration_laws_2
@@ -290,8 +735,8 @@ government_flavor = {
 		government = feudal_government
 		has_law = succ_feudal_elective
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+			religion = dothraki
 		}
 		NOR = { 
 			has_law = imperial_administration
@@ -314,10 +759,72 @@ government_flavor = {
 	trigger = {
 		government = feudal_government
 		has_law = succ_feudal_elective
-		OR = {
-			religion = drowned_god
-			religion = storm_god
+		religion_group = drowned_god_group
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
 		}
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}
+}
+
+government_flavor = {
+	name = gov_electorial_absolute_monarchy_tengri
+	graphics = GFX_evt_mongols_pillage_oldgods
+	priority = 1
+	trigger = {
+		government = feudal_government
+		has_law = succ_feudal_elective
+		religion = dothraki
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}
+}
+
+government_flavor = {
+	name = gov_muslim_absolute_monarchy
+	graphics = GFX_evt_throne_room_arabic
+	priority = 1
+	trigger = {
+		government = muslim_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}
+}
+
+government_flavor = {
+	name = gov_elective_muslim_absolute_monarchy
+	graphics = GFX_evt_throne_room_arabic
+	priority = 1
+	trigger = {
+		government = muslim_government
+		has_law = succ_feudal_elective
 		NOR = { 
 			has_law = imperial_administration
 			has_law = ze_administration_laws_2
@@ -341,8 +848,8 @@ government_flavor = {
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+			religion = dothraki
 		}
 		NOR = { 
 			has_law = imperial_administration
@@ -366,10 +873,30 @@ government_flavor = {
 		government = feudal_government
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
-		OR = {
-			religion = drowned_god
-			religion = storm_god
+		religion_group = drowned_god_group
+		NOR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
 		}
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}	
+}
+
+government_flavor = {
+	name = gov_hereditary_absolute_monarchy_tengri
+	graphics = GFX_evt_mongols_pillage_oldgods
+	priority = 1
+	trigger = {
+		government = feudal_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		religion = dothraki
 		NOR = { 
 			has_law = imperial_administration
 			has_law = ze_administration_laws_2
@@ -397,8 +924,8 @@ government_flavor = {
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+			religion = dothraki
 		}
 		has_law = law_voting_power_0
 		has_law = banish_voting_power_0
@@ -422,10 +949,96 @@ government_flavor = {
 		government = feudal_government
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
-		OR = {
-			religion = drowned_god
-			religion = storm_god
+		religion_group = drowned_god_group
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}	
+}
+
+government_flavor = {
+	name = gov_hereditary_absolute_autocracy_tengri
+	graphics = GFX_evt_steppe_mercenaries
+	priority = 1
+	trigger = {
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
 		}
+		government = feudal_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		religion = dothraki
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}	
+}
+
+government_flavor = {
+	name = gov_hereditary_absolute_autocracy_indian
+	graphics = GFX_evt_battle_indo_aryan_group
+	priority = 1
+	trigger = {
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		government = feudal_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		religion_group = indian_group
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}	
+}
+
+government_flavor = {
+	name = gov_muslim_absolute_autocracy
+	graphics = GFX_evt_lunatic_arabic
+	priority = 1
+	trigger = {
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		government = muslim_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}	
+}
+
+government_flavor = {
+	name = gov_elective_muslim_absolute_autocracy
+	graphics = GFX_evt_lunatic_arabic
+	priority = 1
+	trigger = {
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		government = muslim_government
+		has_law = succ_feudal_elective
 		has_law = law_voting_power_0
 		has_law = banish_voting_power_0
 		has_law = execution_voting_power_0
@@ -448,8 +1061,8 @@ government_flavor = {
 		government = feudal_government
 		has_law = succ_feudal_elective
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+			religion = dothraki
 		}
 		has_law = law_voting_power_0
 		has_law = banish_voting_power_0
@@ -472,10 +1085,29 @@ government_flavor = {
 		}
 		government = feudal_government
 		has_law = succ_feudal_elective
-		OR = {
-			religion = drowned_god
-			religion = storm_god
+		religion_group = drowned_god_group
+		has_law = law_voting_power_0
+		has_law = banish_voting_power_0
+		has_law = execution_voting_power_0
+		has_law = revoke_title_voting_power_0
+		has_law = grant_title_voting_power_0
+		has_law = imprison_voting_power_0
+		has_law = war_voting_power_0
+	}	
+}
+
+government_flavor = {
+	name = gov_electorial_absolute_autocracy_tengri
+	graphics = GFX_evt_steppe_mercenaries
+	priority = 1
+	trigger = {
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
 		}
+		government = feudal_government
+		has_law = succ_feudal_elective
+		religion = dothraki
 		has_law = law_voting_power_0
 		has_law = banish_voting_power_0
 		has_law = execution_voting_power_0
@@ -495,8 +1127,8 @@ government_flavor = {
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+			religion = dothraki
 		}
 		OR = { 
 			has_law = imperial_administration
@@ -537,10 +1169,124 @@ government_flavor = {
 		government = feudal_government
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
-		OR = {
-			religion = drowned_god
-			religion = storm_god
+		religion_group = drowned_god_group
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
 		}
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 2
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+		NOT = {
+			calc_true_if = {
+				amount = 7
+				has_law = law_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+	}	
+}
+
+government_flavor = {
+	name = gov_hereditary_despotic_autocracy_tengri
+	graphics = GFX_evt_tengri_throneroom_oldgods
+	priority = 1
+	trigger = {
+		government = feudal_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		religion = dothraki
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 2
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+		NOT = {
+			calc_true_if = {
+				amount = 7
+				has_law = law_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+	}	
+}
+
+government_flavor = {
+	name = gov_muslim_despotic_autocracy
+	graphics = GFX_evt_jugglers_arabic
+	priority = 1
+	trigger = {
+		government = muslim_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 2
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+		NOT = {
+			calc_true_if = {
+				amount = 7
+				has_law = law_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+	}	
+}
+
+government_flavor = {
+	name = gov_elective_muslim_despotic_autocracy
+	graphics = GFX_evt_jugglers_arabic
+	priority = 1
+	trigger = {
+		government = muslim_government
+		has_law = succ_feudal_elective
 		OR = { 
 			has_law = imperial_administration
 			has_law = ze_administration_laws_2
@@ -580,8 +1326,8 @@ government_flavor = {
 		government = feudal_government
 		has_law = succ_feudal_elective
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+			religion = dothraki
 		}
 		OR = { 
 			has_law = imperial_administration
@@ -618,10 +1364,43 @@ government_flavor = {
 	trigger = {
 		government = feudal_government
 		has_law = succ_feudal_elective
-		OR = {
-			religion = drowned_god
-			religion = storm_god
+		religion_group = drowned_god_group
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
 		}
+		calc_true_if = {
+			amount = 2
+			has_law = banish_voting_power_0
+			has_law = execution_voting_power_0
+			has_law = revoke_title_voting_power_0
+			has_law = grant_title_voting_power_0
+			has_law = imprison_voting_power_0
+			has_law = war_voting_power_0
+		}
+		NOT = {
+			calc_true_if = {
+				amount = 7
+				has_law = law_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+				has_law = imprison_voting_power_0
+				has_law = war_voting_power_0
+			}
+		}
+	}	
+}
+
+government_flavor = {
+	name = gov_electorial_despotic_autocracy_tengri
+	graphics = GFX_evt_tengri_throneroom_oldgods
+	priority = 1
+	trigger = {
+		government = feudal_government
+		has_law = succ_feudal_elective
+		religion = dothraki
 		OR = { 
 			has_law = imperial_administration
 			has_law = ze_administration_laws_2
@@ -659,8 +1438,8 @@ government_flavor = {
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+			religion = dothraki
 		}
 		OR = { 
 			has_law = imperial_administration
@@ -687,10 +1466,82 @@ government_flavor = {
 		government = feudal_government
 		NOT = { has_law = succ_feudal_elective }
 		mercenary = no
-		OR = {
-			religion = drowned_god
-			religion = storm_god
+		religion_group = drowned_god_group
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
 		}
+		calc_true_if = {
+			amount = 6
+			has_law = law_voting_power_1
+			has_law = banish_voting_power_1
+			has_law = execution_voting_power_1
+			has_law = revoke_title_voting_power_1
+			has_law = grant_title_voting_power_1
+			has_law = imprison_voting_power_1
+			has_law = war_voting_power_1
+		}
+	}
+}
+
+government_flavor = {
+	name = gov_hereditary_aristocratic_autocracy_tengri
+	graphics = GFX_evt_mongols
+	priority = 1
+	trigger = {
+		government = feudal_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		religion = dothraki
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		calc_true_if = {
+			amount = 6
+			has_law = law_voting_power_1
+			has_law = banish_voting_power_1
+			has_law = execution_voting_power_1
+			has_law = revoke_title_voting_power_1
+			has_law = grant_title_voting_power_1
+			has_law = imprison_voting_power_1
+			has_law = war_voting_power_1
+		}
+	}
+}
+
+government_flavor = {
+	name = gov_muslim_aristocratic_autocracy
+	graphics = GFX_evt_council_speaker
+	priority = 1
+	trigger = {
+		government = muslim_government
+		NOT = { has_law = succ_feudal_elective }
+		mercenary = no
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
+		}
+		calc_true_if = {
+			amount = 6
+			has_law = law_voting_power_1
+			has_law = banish_voting_power_1
+			has_law = execution_voting_power_1
+			has_law = revoke_title_voting_power_1
+			has_law = grant_title_voting_power_1
+			has_law = imprison_voting_power_1
+			has_law = war_voting_power_1
+		}
+	}
+}
+
+government_flavor = {
+	name = gov_elective_muslim_aristocratic_autocracy
+	graphics = GFX_evt_council_speaker
+	priority = 1
+	trigger = {
+		government = muslim_government
+		has_law = succ_feudal_elective
 		OR = { 
 			has_law = imperial_administration
 			has_law = ze_administration_laws_2
@@ -716,8 +1567,8 @@ government_flavor = {
 		government = feudal_government
 		has_law = succ_feudal_elective
 		NOR = {
-			religion = drowned_god
-			religion = storm_god
+			religion_group = drowned_god_group
+			religion = dothraki
 		}
 		OR = { 
 			has_law = imperial_administration
@@ -746,10 +1597,35 @@ government_flavor = {
 	trigger = {
 		government = feudal_government
 		has_law = succ_feudal_elective
-		OR = {
-			religion = drowned_god
-			religion = storm_god
+		religion_group = drowned_god_group
+		OR = { 
+			has_law = imperial_administration
+			has_law = ze_administration_laws_2
 		}
+		OR = {
+			NOT = { has_dlc = "Conclave" }
+			calc_true_if = {
+				amount = 6
+				has_law = law_voting_power_1
+				has_law = banish_voting_power_1
+				has_law = execution_voting_power_1
+				has_law = revoke_title_voting_power_1
+				has_law = grant_title_voting_power_1
+				has_law = imprison_voting_power_1
+				has_law = war_voting_power_1
+			}
+		}
+	}
+}
+
+government_flavor = {
+	name = gov_electorial_aristocratic_autocracy_tengri
+	graphics = GFX_evt_mongols
+	priority = 1
+	trigger = {
+		government = feudal_government
+		has_law = succ_feudal_elective
+		religion = dothraki
 		OR = { 
 			has_law = imperial_administration
 			has_law = ze_administration_laws_2
@@ -908,6 +1784,7 @@ government_flavor = {
 	trigger = {
 		is_vice_royalty = yes
 		tier = DUKE
+		NOT = { culture_group = valyrian }
 	}
 }
 
@@ -918,6 +1795,29 @@ government_flavor = {
 	trigger = {
 		is_vice_royalty = yes
 		tier = KING
+		NOT = { culture_group = valyrian }
+	}
+}
+
+government_flavor = {
+	name = gov_duchy_viceroy_byz
+	graphics = GFX_evt_market_byzantine
+	priority = 2
+	trigger = {
+		is_vice_royalty = yes
+		tier = DUKE
+		culture_group = valyrian
+	}
+}
+
+government_flavor = {
+	name = gov_king_viceroy_byz
+	graphics = GFX_evt_victory_arch_byzantine
+	priority = 2
+	trigger = {
+		is_vice_royalty = yes
+		tier = KING
+		culture_group = valyrian
 	}
 }
 
@@ -954,6 +1854,26 @@ government_flavor = {
 	}
 }
 
+government_flavor = {
+	name = gov_pope
+	graphics = GFX_evt_pope
+	priority = 4
+	trigger = {
+		has_landed_title = k_papal_state
+		NOT = { trait = bad_priest_christian }
+	}
+}
+
+government_flavor = {
+	name = gov_bad_pope
+	graphics = GFX_evt_pope_feast
+	priority = 4
+	trigger = {
+		has_landed_title = k_papal_state
+		trait = bad_priest_christian
+	}
+}
+
 #####################################
 # Special Flavor Names (priority 4) #
 #####################################
@@ -964,198 +1884,6 @@ government_flavor = {
 	priority = 4
 	trigger = {
 		in_revolt = yes
-	}
-}
-
-##############################
-### CUSTOM TSK GOVERNMENTS ###
-##############################
-##############################
-
-# Night's Watch
-
-government_flavor = {
-	name = gov_nights_watch
-	graphics = GFX_evt_beheading
-	priority = 3
-	trigger = {
-		government = nights_watch_government
-	}
-}
-
-# Wildling Government
-
-government_flavor = {
-	name = gov_wildling_chiefdom
-	graphics = GFX_evt_tribal_lands
-	priority = 1
-	trigger = {
-		NOT = { has_law = succ_gavelkind }
-		government = wildling_government
-	}
-}
-
-government_flavor = {
-	name = gov_noble_wildling_chiefdom
-	graphics = GFX_evt_tribal_lands
-	priority = 1
-	trigger = {
-		government = wildling_government
-		has_law = succ_gavelkind
-	}
-}
-
-# Freehold
-
-government_flavor = {
-	name = gov_aristocratic_electorial_freehold
-	graphics = GFX_evt_holy_emperor
-	priority = 2
-	trigger = {
-		government = freehold_government
-		has_landed_title = e_valyrian_freehold
-		has_law = succ_feudal_elective
-		OR = {
-			NOT = { has_dlc = "Conclave" }
-			calc_true_if = {
-				amount = 6
-				has_law = law_voting_power_1
-				has_law = banish_voting_power_1
-				has_law = execution_voting_power_1
-				has_law = revoke_title_voting_power_1
-				has_law = grant_title_voting_power_1
-				has_law = imprison_voting_power_1
-				has_law = war_voting_power_1
-			}
-		}
-	}
-}
-
-government_flavor = {
-	name = gov_aristocratic_hereditary_freehold
-	graphics = GFX_evt_holy_emperor
-	priority = 2
-	trigger = {
-		government = freehold_government
-		has_landed_title = e_valyrian_freehold
-		NOT = { has_law = succ_feudal_elective }
-		mercenary = no
-		OR = {
-			NOT = { has_dlc = "Conclave" }
-			calc_true_if = {
-				amount = 6
-				has_law = law_voting_power_1
-				has_law = banish_voting_power_1
-				has_law = execution_voting_power_1
-				has_law = revoke_title_voting_power_1
-				has_law = grant_title_voting_power_1
-				has_law = imprison_voting_power_1
-				has_law = war_voting_power_1
-			}
-		}
-	}
-}
-
-government_flavor = {
-	name = gov_electorial_despotic_freehold
-	graphics = GFX_evt_holy_emperor
-	priority = 2
-	trigger = {
-		government = freehold_government
-		has_law = succ_feudal_elective
-		has_landed_title = e_valyrian_freehold
-		calc_true_if = {
-			amount = 2
-			has_law = banish_voting_power_0
-			has_law = execution_voting_power_0
-			has_law = revoke_title_voting_power_0
-			has_law = grant_title_voting_power_0
-			has_law = imprison_voting_power_0
-			has_law = war_voting_power_0
-		}
-		NOT = {
-			calc_true_if = {
-				amount = 7
-				has_law = law_voting_power_0
-				has_law = banish_voting_power_0
-				has_law = execution_voting_power_0
-				has_law = revoke_title_voting_power_0
-				has_law = grant_title_voting_power_0
-				has_law = imprison_voting_power_0
-				has_law = war_voting_power_0
-			}
-		}
-	}	
-}
-
-government_flavor = {
-	name = gov_hereditary_despotic_freehold
-	graphics = GFX_evt_holy_emperor
-	priority = 2
-	trigger = {
-		government = freehold_government
-		has_law = succ_feudal_elective
-		NOT = { has_law = succ_feudal_elective }
-		mercenary = no
-		has_landed_title = e_valyrian_freehold
-		calc_true_if = {
-			amount = 2
-			has_law = banish_voting_power_0
-			has_law = execution_voting_power_0
-			has_law = revoke_title_voting_power_0
-			has_law = grant_title_voting_power_0
-			has_law = imprison_voting_power_0
-			has_law = war_voting_power_0
-		}
-		NOT = {
-			calc_true_if = {
-				amount = 7
-				has_law = law_voting_power_0
-				has_law = banish_voting_power_0
-				has_law = execution_voting_power_0
-				has_law = revoke_title_voting_power_0
-				has_law = grant_title_voting_power_0
-				has_law = imprison_voting_power_0
-				has_law = war_voting_power_0
-			}
-		}
-	}	
-}
-
-government_flavor = {
-	name = gov_electorial_absolute_freehold
-	graphics = GFX_evt_holy_emperor
-	priority = 2
-	trigger = {
-		government = freehold_government
-		has_law = succ_feudal_elective
-		has_landed_title = e_valyrian_freehold
-		has_law = law_voting_power_0
-		has_law = banish_voting_power_0
-		has_law = execution_voting_power_0
-		has_law = revoke_title_voting_power_0
-		has_law = grant_title_voting_power_0
-		has_law = imprison_voting_power_0
-		has_law = war_voting_power_0
-	}
-}
-
-government_flavor = {
-	name = gov_hereditary_absolute_freehold
-	graphics = GFX_evt_holy_emperor
-	priority = 2
-	trigger = {
-		government = freehold_government
-		NOT = { has_law = succ_feudal_elective }
-		mercenary = no
-		has_landed_title = e_valyrian_freehold
-		has_law = law_voting_power_0
-		has_law = banish_voting_power_0
-		has_law = execution_voting_power_0
-		has_law = revoke_title_voting_power_0
-		has_law = grant_title_voting_power_0
-		has_law = imprison_voting_power_0
-		has_law = war_voting_power_0
 	}
 }
 
