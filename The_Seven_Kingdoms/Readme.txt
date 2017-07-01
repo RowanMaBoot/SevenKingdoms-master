@@ -37,7 +37,6 @@ Content:
 Velho e Bom Joe - for the Culturally Different Cities mod, which has been partially integrated.
 Marc Simonetti - For his excellent Game of Thrones artwork, which is being used in our mod: http://art.marcsimonetti.com/grr-martin-a-song-of-ice-and-fire
 Silverino - For allowing us to use some of his portraits from the excelent CPR+ mod.
-The AGOT team - For allowing us to edit and use their wonderful portraits. 
 #############################################################
 Other Credits:
 #############################################################
