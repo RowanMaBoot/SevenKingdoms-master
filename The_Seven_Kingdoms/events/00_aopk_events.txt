@@ -1,20 +1,24 @@
 namespace = APOK
 
-#The Age of Petty Kings
+# The Age of Petty Kings, Introduction
 narrative_event = {
 	id = AOPK.1
     title = EVTTITLE_AOPK.1
 	desc = EVTDESC_AOPK.1
    	picture = "GFX_AOPK"
     
+    major = yes
     only_playable = yes
-
-	major = yes
+    
+    is_triggered_only = yes
 
     trigger = {
-        year = 6566
-        NOT = {
-            6567
+        
+        AND = {
+            year = 6565
+            NOT = {
+                6570
+            }
         }
         
         NOT = {
@@ -24,6 +28,49 @@ narrative_event = {
     
     immediate = {
 		set_global_flag = AOPK_event_1
+	}
+    
+	option = {
+		name = "EVTOPTAOPK.0"
+	}
+}
+
+# The State of the Vale
+narrative_event = {
+	id = AOPK.2
+    title = EVTTITLE_AOPK.2
+	desc = EVTDESC_AOPK.2
+   	picture = "GFX_AOPK"
+    
+    major = yes
+    only_playable = yes
+    
+    is_triggered_only = yes
+
+    trigger = {
+        
+        AND = {
+            year = 6565
+            NOT = {
+                6570
+            }
+        }
+        
+        OR = {
+            culture = valeman
+            culture = lowland_valeman
+            culture = mountain_clansmen
+            culture = bronzeman
+            culture = sisterman
+        }
+        
+        NOT = {
+            has_global_flag = AOPK_event_2
+        }
+    }
+    
+    immediate = {
+		set_global_flag = AOPK_event_2
 	}
     
 	option = {
