@@ -4,21 +4,25 @@ namespace = APOK
 narrative_event = {
 	id = AOPK.1
     title = EVTTITLE_AOPK.1
-	desc = EVTDESC_AOPK.1
-   	picture = "GFX_AOPK"
     
-    major = yes
-    only_playable = yes
+    picture = GFX_evt_battle
     
     is_triggered_only = yes
+    major = yes
+    
+    # For various versions of the event, depending on culture.
+    desc = {
+        text = EVTDESC_AOPK.1
+    }
 
+    major_trigger = {
+        ai = no
+    }
+    
     trigger = {
-        
-        AND = {
-            year = 6565
-            NOT = {
-                6570
-            }
+        year = 6565
+        NOT = {
+            6570
         }
         
         NOT = {
@@ -28,49 +32,6 @@ narrative_event = {
     
     immediate = {
 		set_global_flag = AOPK_event_1
-	}
-    
-	option = {
-		name = "EVTOPTAOPK.0"
-	}
-}
-
-# The State of the Vale
-narrative_event = {
-	id = AOPK.2
-    title = EVTTITLE_AOPK.2
-	desc = EVTDESC_AOPK.2
-   	picture = "GFX_AOPK"
-    
-    major = yes
-    only_playable = yes
-    
-    is_triggered_only = yes
-
-    trigger = {
-        
-        AND = {
-            year = 6565
-            NOT = {
-                6570
-            }
-        }
-        
-        OR = {
-            culture = valeman
-            culture = lowland_valeman
-            culture = mountain_clansmen
-            culture = bronzeman
-            culture = sisterman
-        }
-        
-        NOT = {
-            has_global_flag = AOPK_event_2
-        }
-    }
-    
-    immediate = {
-		set_global_flag = AOPK_event_2
 	}
     
 	option = {
