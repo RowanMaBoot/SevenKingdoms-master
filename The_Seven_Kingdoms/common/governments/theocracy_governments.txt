@@ -13,6 +13,7 @@ theocracy_governments = {
         }
         free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
             tribal_government
+            wildling_government
         }
         accepts_liege_governments = {
             feudal_government
@@ -24,6 +25,14 @@ theocracy_governments = {
         title_prefix = "temple_"
         potential = {
             is_patrician = no
+            AND = {
+                NOT = {
+                    capital_holding = {
+                        holding_type = TEMPLE
+                    }
+                    is_government_potential = wildling_government
+                }
+            }
         }
         
         color = { 220 220 220 }
