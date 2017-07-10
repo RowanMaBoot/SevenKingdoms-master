@@ -1,0 +1,67 @@
+###########################################
+#                                         #
+# M&M Monastic Orders Events              #
+#                                         #
+# ID MNM.4000-MNM.4999		              #
+#                                         #
+###########################################
+
+#IDs:
+#4100-4199 David
+#4200-4399 Milla
+#4399 Used to clear secluded meditation/prayer mission in certain cases
+#4400-4599 Mathilda -> Drikus used 4435 - 4443
+#4600-4799 Drikus
+#4800-4999 Jakob
+
+namespace = TSK_S
+
+###JOINING###
+
+#From on_character_ask_to_join_society
+character_event = {
+    id = TSK_S.1
+	hide_window = yes
+    is_triggered_only = yes
+    trigger = {
+    	FROM = { leader = { is_knightly_member_trigger = yes } }
+    }
+    immediate = {
+    	FROM = { leader = { character_event = { id = TSK_S.2 } } }
+    }
+}
+
+#Ping event
+character_event = {
+    id = TSK_S.2
+	hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+    	FROM = { letter_event = { id = TSK_S.3 } }
+    }
+}
+
+#Welcome letter
+letter_event = {
+    id = TSK_S.3
+    desc = EVTDESC_TSK_S_3
+    border = GFX_event_letter_frame_religion
+
+    is_triggered_only = yes
+	
+	immediate = { set_character_flag = society_join_block }
+	
+    option = { 
+        name = EVTOPTA_TSK_S_3
+
+        FROM = {
+            ROOT = {
+                join_prev_monastic_order_society = yes
+            }
+        }
+		
+		scaled_wealth = -0.25
+		
+		clr_character_flag = society_join_block
+    }
+}
