@@ -176,7 +176,7 @@ NDefines.NGraphics.CITY_SPRAWL_AMOUNT = 1.4
 
 -- AI
 NDefines.NAI.RAID_MAX_REALM_SIZE = 48 -- from 24
-NDefines.NAI.RAID_AGGRESSION = 20 -- from 18, slightly fewer raids
+NDefines.NAI.RAID_AGGRESSION = 30 -- from 18, then 20, fewer raids
 
 -- Ruler Designer
 NDefines.NRulerDesigner.MAX_AGE = 70
