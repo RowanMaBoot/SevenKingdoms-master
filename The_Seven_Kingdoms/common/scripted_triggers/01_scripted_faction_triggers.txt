@@ -11,6 +11,7 @@ self_serving_trigger = {
     OR = {
         trait = ambitious
         trait = cruel
+        trait = deceitful
         trait = impaler
         trait = heartless
         trait = sociopath
@@ -21,7 +22,7 @@ self_serving_trigger = {
 # Character respects the laws
 is_trustworthy_trigger = {
     OR = {
-        trait = humble
+        trait = honourable
         trait = just
     }
 }
@@ -640,6 +641,7 @@ liege_is_bastard_kind = {
         trait = just
         trait = bleeding_heart
         trait = kind
+        trait = honourable
     }
     
     liege = {
@@ -651,11 +653,26 @@ liege_is_bastard_kind = {
 }
 
 liege_is_bastard_unkind = {
+    OR = {
+        trait = wroth
+        trait = cruel
+        trait = heartless
+        trait = sociopath
+        trait = deceitful
+    }
+    
+    liege = {
+        OR = {
+            trait = bastard
+            trait = legit_bastard
+        }
+    }
+}
+
+liege_is_bastard_generic = {
     NOR = {
-        trait = just
-        trait = bleeding_heart
-        trait = kind
-        trait = honourable
+        liege_is_bastard_kind = yes
+        liege_is_bastard_unkind = yes
     }
     
     liege = {
