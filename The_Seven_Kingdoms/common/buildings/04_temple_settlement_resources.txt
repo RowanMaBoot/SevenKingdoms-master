@@ -1,0 +1,4203 @@
+###########################################################################################
+######################################### REMEMBER ########################################
+# THE BONUS GRANTED IS ADDITIVE. ALL PREVIOUS UPGRADES ARE INCLUDED IN THE OVERALL VALUE! #
+###########################################################################################
+
+# Resource buildings require one of two things:
+
+# the presence of a certain terrain type AND no present 'resource' modifier.
+# OR
+# the presence of a certain resource type modifier
+
+# Resources can be found in 00_resource_modifiers.txt in the event_modifiers folder.
+
+# Castles have a focus on Pastures, Cities on Farmlands
+
+#########################
+####### REFERENCE #######
+#########################
+#########################
+
+#<tag> = {
+#	desc = description used in the tooltip of the building
+#	trigger = used for tech requirement of the building, set to 0 if no requirement so it can be build automatically on new games
+#	gold_cost = cost to build the building
+#	build_time = time to build, in days
+#	
+#	ai_creation_factor = weight that the AI uses to determine what building to build
+#	extra_tech_building_start = when starting a new game this building will be pre-built if the province has higher tech than the requirement + this + random 0-1
+#}
+
+# Farmlands - generic - Sustenance Farming, provides small levy and trivial tax bonus
+# Vineyards - farmlands in reach and dornish plains - provide small tax
+# Orchards - hills - provide small tax
+# Pastures - plains, hills, mountains - Provides good tax income, small levy bonus
+
+# Universal
+
+# tp_farming_f_1	|	Trivial Sustenance Farming			|	tp_core_level_1
+# tp_farming_f_2	|	Insignificant Sustenance Farming	|	tp_core_level_2
+# tp_farming_f_3	|	Meagre Sustenance Farming			|	tp_core_level_4
+# tp_farming_f_4	|	Noteworthy Sustenance Farming		|	tp_core_level_6
+# tp_farming_f_5	|	Significant Sustenance Farming		|	tp_core_level_8
+# tp_farming_f_6	|	Widespread Sustenance Farming		|	tp_core_level_10
+
+# Kingdom / Terrain Specific
+
+# - Reach, Dorne (NOT NORTHMARCHER OR SHIELDISLANDER)
+# tp_farming_v_1	|	Trivial Smallhold Vineyards
+# tp_farming_v_2	|	Insignificant Smallhold Vineyards
+# tp_farming_v_3	|	Meagre Smallhold Vineyards
+# tp_farming_v_4	|	Noteworthy Smallhold Vineyards
+# tp_farming_v_5	|	Significant Smallhold Vineyards
+# tp_farming_v_6	|	Sprawling Smallhold Vineyards
+
+# - Stormlands, Wendwater, Blackwaterman
+# tp_farming_o_1	|	Trivial Smallhold Orchards
+# tp_farming_o_2	|	Insignificant Smallhold Orchards
+# tp_farming_o_3	|	Meagre Smallhold Orchards
+# tp_farming_o_4	|	Noteworthy Smallhold Orchards
+# tp_farming_o_5	|	Significant Smallhold Orchards
+# tp_farming_o_6	|	Sprawling Smallhold Orchards
+
+# - Crownlander, Riverlands, Northmarcher
+# tp_pastures_c_1	|	Trivial Cattle Pastures
+# tp_pastures_c_2	|	Insignificant Cattle Pastures
+# tp_pastures_c_3	|	Meagre Cattle Pastures
+# tp_pastures_c_4	|	Noteworthy Cattle Pastures
+# tp_pastures_c_5	|	Significant Cattle Pastures
+# tp_pastures_c_6	|	Sprawling Cattle Pastures
+
+# - lowland valemen, northmen, tribes
+# tp_pastures_s_1	|	Trivial Sheep Pastures
+# tp_pastures_s_2	|	Insignificant Sheep Pastures
+# tp_pastures_s_3	|	Meagre Sheep Pastures
+# tp_pastures_s_4	|	Noteworthy Sheep Pastures
+# tp_pastures_s_5	|	Significant Sheep Pastures
+# tp_pastures_s_6	|	Sprawling Sheep Pastures
+
+# - beyond the wall, valemen, mountain clansmen
+# tp_pastures_g_1	|	Trivial Goat Pastures
+# tp_pastures_g_2	|	Insignificant Sheep Pastures
+# tp_pastures_g_3	|	Meagre Sheep Pastures
+# tp_pastures_g_4	|	Noteworthy Sheep Pastures
+# tp_pastures_g_5	|	Significant Sheep Pastures
+# tp_pastures_g_6	|	Sprawling Sheep Pastures
+
+####################################
+######## RESOURCE BUILDINGS ########
+####################################
+
+# tp_steelworks_1				|	Tiny Steelworks
+# tp_steelworks_2				|	Meagre Steelworks
+# tp_steelworks_3				|	Average Steelworks
+# tp_steelworks_4				|	Noteworthy Steelworks
+
+# tp_lumbermill_k_1				|	Tiny Kingswood Lumbermill
+# tp_lumbermill_k_2				|	Meagre Kingswood Lumbermill
+# tp_lumbermill_k_3				|	Average Kingswood Lumbermill
+# tp_lumbermill_k_4				|	Noteworthy Kingswood Lumbermill
+
+# tp_lumbermill_r_1				|	Tiny Rainwood Lumbermill
+# tp_lumbermill_r_2				|	Meagre Rainwood Lumbermill
+# tp_lumbermill_r_3				|	Average Rainwood Lumbermill
+# tp_lumbermill_r_4				|	Noteworthy Rainwood Lumbermill
+
+# tp_lumbermill_m_1				|	Tiny Mistwood Lumbermill
+# tp_lumbermill_m_2				|	Meagre Mistwood Lumbermill
+# tp_lumbermill_m_3				|	Average Mistwood Lumbermill
+# tp_lumbermill_m_4				|	Noteworthy Mistwood Lumbermill
+
+# tp_lumbermill_l_1				|	Tiny Lemonwood Lumbermill
+# tp_lumbermill_l_2				|	Meagre Lemonwood Lumbermill
+# tp_lumbermill_l_3				|	Average Lemonwood Lumbermill
+# tp_lumbermill_l_4				|	Noteworthy Lemonwood Lumbermill
+
+# tp_lumbermill_w_1				|	Tiny Wolfswood Lumbermill
+# tp_lumbermill_w_2				|	Meagre Wolfswood Lumbermill
+# tp_lumbermill_w_3				|	Average Wolfswood Lumbermill
+# tp_lumbermill_w_4				|	Noteworthy Wolfswood Lumbermill
+
+# tp_mine_f_1					|	Tiny Flint Quarry
+# tp_mine_f_2					|	Meagre Flint Quarry
+# tp_mine_f_3					|	Average Flint Quarry
+# tp_mine_f_4					|	Noteworthy Flint Quarry
+
+# tp_mine_c_1					|	Tiny Coal Mine
+# tp_mine_c_2					|	Meagre Coal Mine
+# tp_mine_c_3					|	Average Coal Mine
+# tp_mine_c_4					|	Noteworthy Coal Mine
+
+# tp_mine_sa_1					|	Tiny Salt Mine
+# tp_mine_sa_2					|	Meagre Salt Mine
+# tp_mine_sa_3					|	Average Salt Mine
+# tp_mine_sa_4					|	Noteworthy Salt Mine
+
+# tp_mine_co_1					|	Tiny Copper Mine
+# tp_mine_co_2					|	Meagre Copper Mine
+# tp_mine_co_3					|	Average Copper Mine
+# tp_mine_co_4					|	Noteworthy Copper Mine
+
+# tp_mine_i_1					|	Tiny Iron Mine
+# tp_mine_i_2					|	Meagre Iron Mine
+# tp_mine_i_3					|	Average Iron Mine
+# tp_mine_i_4					|	Noteworthy Iron Mine
+
+# tp_mine_s_1					|	Tiny Silver Mine
+# tp_mine_s_2					|	Meagre Silver Mine
+# tp_mine_s_3					|	Average Silver Mine
+# tp_mine_s_4					|	Noteworthy Silver Mine
+
+# tp_mine_g_1					|	Tiny Gold Mine
+# tp_mine_g_2					|	Meagre Gold Mine
+# tp_mine_g_3					|	Average Gold Mine
+# tp_mine_g_4					|	Noteworthy Gold Mine
+
+# tp_mine_m_1					|	Tiny Marble Quarry
+# tp_mine_m_2					|	Meagre Marble Quarry
+# tp_mine_m_3					|	Average Marble Quarry
+# tp_mine_m_4					|	Noteworthy Marble Quarry
+
+# tp_mine_gr_1					|	Tiny Granite Quarry
+# tp_mine_gr_2					|	Meagre Granite Quarry
+# tp_mine_gr_3					|	Average Granite Quarry
+# tp_mine_gr_4					|	Noteworthy Granite Quarry
+
+# tp_mine_gm_1					|	Tiny Gemstone Mine
+# tp_mine_gm_2					|	Meagre Gemstone Mine
+# tp_mine_gm_3					|	Average Gemstone Mine
+# tp_mine_gm_4					|	Noteworthy Gemstone Mine
+
+# tp_mine_d_1					|	Tiny Diamond Mine
+# tp_mine_d_2					|	Meagre Diamond Mine
+# tp_mine_d_3					|	Average Diamond Mine
+# tp_mine_d_4					|	Noteworthy Diamond Mine
+
+# tp_mine_o_1					|	Tiny Dragonglass Mine
+# tp_mine_o_2					|	Meagre Dragonglass Mine
+# tp_mine_o_3					|	Average Dragonglass Mine
+# tp_mine_o_4					|	Noteworthy Dragonglass Mine
+
+# tp_seal_hunt_1				|	Insignificant Seal Hunting
+# tp_seal_hunt_2				|	Meagre Seal Hunting
+# tp_seal_hunt_3				|	Average Seal Hunting
+# tp_seal_hunt_4				|	Noteworthy Seal Hunting
+
+# tp_jewellery_1				|	Tiny Jeweller
+# tp_jewellery_2				|	Meagre Jeweller
+# tp_jewellery_3				|	Average Jeweller
+# tp_jewellery_4				|	Noteworthy Jeweller
+
+# tp_precious_fabrics_1			|	Tiny Fabric Merchant
+# tp_precious_fabrics_2			|	Meagre Fabric Merchant
+# tp_precious_fabrics_3			|	Average Fabric Merchant
+# tp_precious_fabrics_4			|	Noteworthy Fabric Merchant
+
+# NOTE
+# Remove tax and garrison bonus from lumbermills, give them
+# build cost reduction (1% per level, 2% last)
+
+# Granite and Marble do not touch levy or garrison, but give
+# a build cost reduction (2% per level, 3% last)
+
+
+################################################################
+######################## BLAH BLAH BLA #########################
+################################################################
+################################################################
+
+#	potential = {
+#			duchy = {
+#				OR = {
+#					title = d_title
+#				}	
+#			}
+#			location = {
+#				NOT = {
+#					terrain = plains
+#					terrain = steppe
+#					terrain = marsh
+#					terrain = woods
+#					terrain = forest
+#					terrain = farmlands
+#				}
+#			}
+#		}
+
+castle = {
+	#############################################
+	########################## SUSTENANCE FARMING
+	#############################################
+	
+	tp_farming_f_1 = {
+		desc = tp_farming_f_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 88
+		
+		gold_cost = 76
+		build_time = 145
+		
+		light_infantry = 80
+		archers = 20
+		
+		tax_income = 0.20
+		
+		fort_level = -0.15
+	}
+	
+	tp_farming_f_2 = {
+		desc = tp_farming_f_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_farming_f_1
+		
+		gold_cost = 93
+		build_time = 169
+		
+		light_infantry = 80
+		archers = 20
+		
+		tax_income = 0.20
+		
+		fort_level = -0.15
+	}
+	
+	tp_farming_f_3 = {
+		desc = tp_farming_f_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 86
+		
+		upgrades_from = tp_farming_f_2
+		
+		gold_cost = 112
+		build_time = 195
+		
+		light_infantry = 80
+		archers = 20
+		
+		tax_income = 0.20
+		
+		fort_level = -0.15
+	}
+	
+	tp_farming_f_4 = {
+		desc = tp_farming_f_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 85
+		
+		upgrades_from = tp_farming_f_3
+		
+		gold_cost = 133
+		build_time = 224
+		
+		light_infantry = 80
+		archers = 20
+		
+		tax_income = 0.20
+		
+		fort_level = -0.15
+	}
+	
+	tp_farming_f_5 = {
+		desc = tp_farming_f_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_8 }
+		
+		ai_creation_factor = 84
+		
+		upgrades_from = tp_farming_f_4
+		
+		gold_cost = 156
+		build_time = 256
+		
+		light_infantry = 80
+		archers = 20
+		
+		tax_income = 0.20
+		
+		fort_level = -0.15
+		
+		levy_size = 0.01
+	}
+	
+	tp_farming_f_6 = {
+		desc = tp_farming_f_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_10 }
+		
+		ai_creation_factor = 83
+		
+		upgrades_from = tp_farming_f_5
+		
+		gold_cost = 181
+		build_time = 291
+		
+		light_infantry = 80
+		archers = 20
+		
+		tax_income = 0.20
+		
+		fort_level = -0.15
+		
+		levy_size = 0.01
+	}
+	####################################
+	########################## VINEYARDS
+	####################################
+	
+	tp_farming_v_1 = {
+		desc = tp_farming_v_1_desc
+		
+		potential = {
+			location = {
+				AND = {
+					OR = {
+						terrain = plains
+						terrain = farmlands
+					}
+					OR = {
+						culture = dornish
+						culture = salt_dornish
+						culture = sand_dornish
+						culture = stone_dornish
+						culture = scorched_dornish
+						culture = orphans_of_the_greenblood
+						culture = north_marcher
+						culture = reachman
+						culture = manderish
+						culture = wynelander
+						culture = evenstar
+					}
+				}
+			}
+		}
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 106
+		build_time = 195
+		
+		garrison_size = 0.01
+		
+		tax_income = 0.60
+		
+		fort_level = -0.25
+		
+		light_cavalry = 15
+		knights = 4
+	}
+	
+	tp_farming_v_2 = {
+		desc = tp_farming_v_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_farming_v_1
+		
+		gold_cost = 126
+		build_time = 224
+		
+		garrison_size = 0.01
+		
+		tax_income = 0.60
+		
+		fort_level = -0.25
+		
+		light_cavalry = 15
+		knights = 4
+	}
+	
+	tp_farming_v_3 = {
+		desc = tp_farming_v_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_farming_v_2
+		
+		gold_cost = 148
+		build_time = 256
+		
+		garrison_size = 0.01
+		
+		tax_income = 0.60
+		
+		fort_level = -0.25
+		
+		light_cavalry = 15
+		knights = 4
+	}
+	
+	tp_farming_v_4 = {
+		desc = tp_farming_v_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_farming_v_3
+		
+		gold_cost = 172
+		build_time = 291
+		
+		garrison_size = 0.01
+		
+		tax_income = 0.60
+		
+		fort_level = -0.25
+		
+		light_cavalry = 15
+		knights = 4
+	}
+	
+	tp_farming_v_5 = {
+		desc = tp_farming_v_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_8 }
+		
+		ai_creation_factor = 86
+		
+		upgrades_from = tp_farming_v_4
+		
+		gold_cost = 199
+		build_time = 330
+		
+		garrison_size = 0.01
+		
+		tax_income = 0.60
+		
+		fort_level = -0.25
+		
+		light_cavalry = 15
+		knights = 4
+		local_tax_modifier = 0.01
+	}
+	
+	tp_farming_v_6 = {
+		desc = tp_farming_v_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_10 }
+		
+		ai_creation_factor = 85
+		
+		upgrades_from = tp_farming_v_5
+		
+		gold_cost = 228
+		build_time = 373
+		
+		garrison_size = 0.01
+		
+		tax_income = 0.60
+		
+		fort_level = -0.25
+		
+		light_cavalry = 15
+		knights = 4
+		
+		local_tax_modifier = 0.01
+		levy_size = 0.01
+	}
+	
+	###################################
+	########################## ORCHARDS
+	###################################
+	
+	tp_farming_o_1 = {
+		desc = tp_farming_o_1_desc
+		
+		potential = {
+			location = {
+				AND = {
+					OR = {
+						terrain = plains
+						terrain = farmlands
+						terrain = hills
+					}
+					OR = {
+						culture = blackwaterman
+						culture = stormlander
+						culture = marcher
+						culture = waterman
+						culture = wrathman
+						culture = rainlander
+					}
+				}
+			}
+		}
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 97
+		build_time = 237
+		
+		tax_income = 0.50
+		
+		fort_level = -0.20
+		
+		light_cavalry = 15
+		knights = 4
+	}
+	
+	tp_farming_o_2 = {
+		desc = tp_farming_o_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_farming_o_1
+		
+		gold_cost = 116
+		build_time = 270
+		
+		tax_income = 0.50
+		
+		fort_level = -0.20
+		
+		light_cavalry = 15
+		knights = 4
+	}
+	
+	tp_farming_o_3 = {
+		desc = tp_farming_o_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_farming_o_2
+		
+		gold_cost = 137
+		build_time = 307
+		
+		tax_income = 0.50
+		
+		fort_level = -0.20
+		
+		light_cavalry = 15
+		knights = 4
+	}
+	
+	tp_farming_o_4 = {
+		desc = tp_farming_o_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_farming_o_3
+		
+		gold_cost = 160
+		build_time = 347
+		
+		tax_income = 0.50
+		
+		fort_level = -0.20
+		
+		light_cavalry = 15
+		knights = 4
+	}
+	
+	tp_farming_o_5 = {
+		desc = tp_farming_o_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_8 }
+		
+		ai_creation_factor = 86
+		
+		upgrades_from = tp_farming_o_4
+		
+		gold_cost = 186
+		build_time = 391
+		
+		tax_income = 0.50
+		
+		fort_level = -0.20
+		
+		light_cavalry = 15
+		knights = 4
+		
+		levy_size = 0.01
+	}
+	
+	tp_farming_o_6 = {
+		desc = tp_farming_o_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_10 }
+		
+		ai_creation_factor = 85
+		
+		upgrades_from = tp_farming_o_5
+		
+		gold_cost = 214
+		build_time = 440
+		
+		levy_size = 0.005
+		
+		tax_income = 0.50
+		
+		fort_level = -0.20
+		
+		light_cavalry = 15
+		knights = 4
+		
+		local_tax_modifier = 0.01
+		levy_size = 0.01
+	}
+	
+	##########################################
+	########################## CATTLE PASTURES
+	##########################################
+	
+	tp_farming_c_1 = {
+		desc = tp_farming_c_1_desc
+		
+		potential = {
+			location = {
+				AND = {
+					OR = {
+						terrain = plains
+						terrain = farmlands
+						terrain = hills
+					}
+					OR = {
+						culture = north_marcher
+						
+						culture = crownlander
+						
+						culture = riverlander
+						
+						culture = muddish
+						culture = crackclawmen
+						culture = dusklander
+						
+						culture = sisterman
+					}
+				}
+			}
+		}
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 116
+		build_time = 125
+		
+		tax_income = 0.40
+		
+		fort_level = -0.20
+		
+		light_infantry = 20
+		archers = 30
+	}
+	
+	tp_farming_c_2 = {
+		desc = tp_farming_c_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_farming_c_1
+		
+		gold_cost = 137
+		build_time = 147
+		
+		tax_income = 0.40
+		
+		fort_level = -0.20
+		
+		light_infantry = 20
+		archers = 30
+	}
+	
+	tp_farming_c_3 = {
+		desc = tp_farming_c_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_farming_c_2
+		
+		gold_cost = 160
+		build_time = 171
+		
+		tax_income = 0.40
+		
+		fort_level = -0.20
+		
+		light_infantry = 20
+		archers = 30
+	}
+	
+	tp_farming_c_4 = {
+		desc = tp_farming_c_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_farming_c_3
+		
+		gold_cost = 186
+		build_time = 198
+		
+		tax_income = 0.40
+		
+		fort_level = -0.20
+		
+		light_infantry = 20
+		archers = 30
+		
+		levy_size = 0.01
+	}
+	
+	tp_farming_c_5 = {
+		desc = tp_farming_c_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_8 }
+		
+		ai_creation_factor = 86
+		
+		upgrades_from = tp_farming_c_4
+		
+		gold_cost = 214
+		build_time = 227
+		
+		levy_size = 0.01
+		
+		tax_income = 0.40
+		
+		fort_level = -0.20
+		
+		light_infantry = 20
+		archers = 30
+		
+		levy_size = 0.01
+	}
+	
+	tp_farming_c_6 = {
+		desc = tp_farming_c_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_10 }
+		
+		ai_creation_factor = 85
+		
+		upgrades_from = tp_farming_c_5
+		
+		gold_cost = 245
+		build_time = 259
+		
+		levy_size = 0.01
+		
+		tax_income = 0.40
+		
+		fort_level = -0.20
+		
+		light_infantry = 20
+		archers = 30
+		
+		levy_size = 0.01
+	}
+	
+	#########################################
+	########################## SHEEP PASTURES
+	#########################################
+	
+	tp_farming_s_1 = {
+		desc = tp_farming_s_1_desc
+		
+		potential = {
+			location = {
+				AND = {
+					OR = {
+						terrain = plains
+						terrain = farmlands
+						terrain = hills
+						#terrain = mountain
+					}
+					OR = {
+						culture = flint_clansmen
+						culture = northmen
+						culture = barrowmen
+						culture = clansmen
+						culture = crabmen
+						culture = craggon
+						
+						culture = bronzeman
+						culture = lowland_valeman
+						
+						culture = andal
+						
+						#culture = valeman
+						#culture = mountain_clansmen
+					}
+				}
+			}
+		}
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 93
+		build_time = 112
+		
+		tax_income = 0.45
+		
+		fort_level = -0.15
+		
+		light_infantry = 25
+		archers = 35
+	}
+	
+	tp_farming_s_2 = {
+		desc = tp_farming_s_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_farming_s_1
+		
+		gold_cost = 112
+		build_time = 133
+		
+		tax_income = 0.45
+		
+		fort_level = -0.15
+		
+		light_infantry = 25
+		archers = 35
+	}
+	
+	tp_farming_s_3 = {
+		desc = tp_farming_s_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_farming_s_2
+		
+		gold_cost = 133
+		build_time = 156
+		
+		tax_income = 0.45
+		
+		fort_level = -0.15
+		
+		light_infantry = 25
+		archers = 35
+	}
+	
+	tp_farming_s_4 = {
+		desc = tp_farming_s_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_farming_s_3
+		
+		gold_cost = 156
+		build_time = 181
+		
+		tax_income = 0.45
+		
+		fort_level = -0.15
+		
+		light_infantry = 25
+		archers = 35
+	}
+	
+	tp_farming_s_5 = {
+		desc = tp_farming_s_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_8 }
+		
+		ai_creation_factor = 86
+		
+		upgrades_from = tp_farming_s_4
+		
+		gold_cost = 181
+		build_time = 209
+		
+		tax_income = 0.45
+		
+		fort_level = -0.15
+		
+		light_infantry = 25
+		archers = 35
+		
+		levy_size = 0.01
+	}
+	
+	tp_farming_s_6 = {
+		desc = tp_farming_s_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_10 }
+		
+		ai_creation_factor = 85
+		
+		upgrades_from = tp_farming_s_5
+		
+		gold_cost = 209
+		build_time = 239
+		
+		tax_income = 0.45
+		
+		fort_level = -0.15
+		
+		light_infantry = 25
+		archers = 35
+		levy_size = 0.01
+		local_tax_modifier = 0.01
+	}
+	
+	#########################################
+	########################## SHEEP PASTURES
+	#########################################
+	
+	tp_farming_g_1 = {
+		desc = tp_farming_g_1_desc
+		
+		potential = {
+			location = {
+				AND = {
+					OR = {
+						terrain = plains
+						terrain = farmlands
+						terrain = hills
+						terrain = mountain
+					}
+					OR = {
+						culture = hill_clansmen
+						
+						culture = valeman
+						culture = mountain_clansmen
+						
+						culture = thenn
+						culture = nightrunners
+						culture = frozen_shore
+						culture = ice_rivermen
+						culture = hornfoots
+						culture = cavemen
+						culture = gildlic
+						culture = dumhic
+						culture = hartenn
+						culture = saliosi
+						culture = harishic
+						culture = skagosi
+						culture = wildling
+					}
+				}
+			}
+		}
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 89
+		build_time = 103
+		
+		tax_income = 0.35
+		
+		fort_level = -0.10
+		
+		light_infantry = 25
+		archers = 45
+	}
+	
+	tp_farming_g_2 = {
+		desc = tp_farming_g_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_farming_g_1
+		
+		gold_cost = 107
+		build_time = 123
+		
+		tax_income = 0.35
+		
+		fort_level = -0.10
+		
+		light_infantry = 25
+		archers = 45
+	}
+	
+	tp_farming_g_3 = {
+		desc = tp_farming_g_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_farming_g_2
+		
+		gold_cost = 127
+		build_time = 145
+		
+		tax_income = 0.35
+		
+		fort_level = -0.10
+		
+		light_infantry = 25
+		archers = 45
+	}
+	
+	tp_farming_g_4 = {
+		desc = tp_farming_g_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_farming_g_3
+		
+		gold_cost = 149
+		build_time = 169
+		
+		tax_income = 0.35
+		
+		fort_level = -0.10
+		
+		light_infantry = 25
+		archers = 45
+	}
+	
+	tp_farming_g_5 = {
+		desc = tp_farming_g_5_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_8 }
+		
+		ai_creation_factor = 86
+		
+		upgrades_from = tp_farming_g_4
+		
+		gold_cost = 173
+		build_time = 195
+		
+		tax_income = 0.35
+		
+		fort_level = -0.10
+		
+		light_infantry = 25
+		archers = 45
+		
+		levy_size = 0.01
+	}
+	
+	tp_farming_g_6 = {
+		desc = tp_farming_g_6_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		prerequisites = { tp_castle_town_10 }
+		
+		ai_creation_factor = 85
+		
+		upgrades_from = tp_farming_g_5
+		
+		gold_cost = 200
+		build_time = 224
+		
+		tax_income = 0.35
+		
+		fort_level = -0.10
+		
+		light_infantry = 25
+		archers = 45
+		
+		levy_size = 0.01
+		local_tax_modifier = 0.01
+	}
+	
+	#####################################
+	########################## STEELWORKS
+	#####################################
+	
+	tp_steelworks_1 = {
+		desc = tp_steelworks_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = steel
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 207
+		build_time = 283
+		
+		tax_income = 0.45
+		
+		heavy_infantry = 10
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+	}
+	
+	tp_steelworks_2 = {
+		desc = tp_steelworks_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = steel
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_steelworks_1
+		
+		gold_cost = 237
+		build_time = 321
+		
+		tax_income = 0.45
+		
+		heavy_infantry = 10
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+	}
+	
+	tp_steelworks_3 = {
+		desc = tp_steelworks_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = steel
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_steelworks_2
+		
+		gold_cost = 270
+		build_time = 363
+		
+		tax_income = 0.45
+		
+		heavy_infantry = 10
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+	}
+	
+	tp_steelworks_4 = {
+		desc = tp_steelworks_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = steel
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_steelworks_3
+		
+		gold_cost = 307
+		build_time = 409
+		
+		tax_income = 0.45
+		
+		heavy_infantry = 15
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.03
+		knights_offensive = 0.02
+		knights_defensive = 0.03
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.03
+	}
+	
+	####################################
+	########################## KINGSWOOD
+	####################################
+	
+	tp_lumbermill_k_1 = {
+		desc = tp_lumbermill_k_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = kingswood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 161
+		build_time = 281
+		
+		tax_income = 0.55
+		
+		archers = 10
+		light_cavalry = 10
+		
+		archers_offensive = 0.03
+		archers_defensive = 0.01
+		light_cavalry_offensive = 0.03
+		light_cavalry_defensive = 0.01
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_k_2 = {
+		desc = tp_lumbermill_k_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = kingswood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_lumbermill_k_1
+		
+		gold_cost = 187
+		build_time = 139
+		
+		tax_income = 0.55
+		
+		archers = 10
+		light_cavalry = 10
+		
+		archers_offensive = 0.03
+		archers_defensive = 0.01
+		light_cavalry_offensive = 0.03
+		light_cavalry_defensive = 0.01
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_k_3 = {
+		desc = tp_lumbermill_k_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = kingswood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_lumbermill_k_2
+		
+		gold_cost = 215
+		build_time = 360
+		
+		tax_income = 0.55
+		
+		archers = 10
+		light_cavalry = 10
+		
+		archers_offensive = 0.03
+		archers_defensive = 0.01
+		light_cavalry_offensive = 0.03
+		light_cavalry_defensive = 0.01
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_k_4 = {
+		desc = tp_lumbermill_k_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = kingswood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_lumbermill_k_3
+		
+		gold_cost = 246
+		build_time = 406
+		
+		tax_income = 0.55
+		
+		archers = 10
+		light_cavalry = 10
+		
+		archers_offensive = 0.03
+		archers_defensive = 0.01
+		light_cavalry_offensive = 0.03
+		light_cavalry_defensive = 0.01
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	####################################
+	########################## RAINWOOOD
+	####################################
+	
+	tp_lumbermill_r_1 = {
+		desc = tp_lumbermill_r_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = rainwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 133
+		build_time = 274
+		
+		tax_income = 0.35
+		
+		light_cavalry = 10
+		knights = 5
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		knights_offensive = 0.02
+		knights_defensive = 0.01
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_r_2 = {
+		desc = tp_lumbermill_r_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = rainwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_lumbermill_r_1
+		
+		gold_cost = 156
+		build_time = 311
+		
+		tax_income = 0.35
+		
+		light_cavalry = 10
+		knights = 5
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		knights_offensive = 0.02
+		knights_defensive = 0.01
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_r_3 = {
+		desc = tp_lumbermill_r_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = rainwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_lumbermill_r_2
+		
+		gold_cost = 181
+		build_time = 352
+		
+		tax_income = 0.35
+		
+		light_cavalry = 10
+		knights = 5
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		knights_offensive = 0.02
+		knights_defensive = 0.01
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_r_4 = {
+		desc = tp_lumbermill_r_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = rainwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_lumbermill_r_3
+		
+		gold_cost = 209
+		build_time = 397
+		
+		tax_income = 0.35
+		
+		light_cavalry = 10
+		knights = 5
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		knights_offensive = 0.02
+		knights_defensive = 0.01
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	####################################
+	########################## MISTWOOD
+	####################################
+	
+	tp_lumbermill_m_1 = {
+		desc = tp_lumbermill_m_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = mistwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 145
+		build_time = 265
+		
+		tax_income = 0.45
+		
+		archers = 10
+		knights = 5
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_m_2 = {
+		desc = tp_lumbermill_m_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = mistwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_lumbermill_m_1
+		
+		gold_cost = 169
+		build_time = 301
+		
+		tax_income = 0.45
+		
+		archers = 10
+		knights = 5
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_m_3 = {
+		desc = tp_lumbermill_m_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = mistwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_lumbermill_m_2
+		
+		gold_cost = 195
+		build_time = 341
+		
+		tax_income = 0.45
+		
+		archers = 10
+		knights = 5
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_m_4 = {
+		desc = tp_lumbermill_m_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = mistwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_lumbermill_m_3
+		
+		gold_cost = 224
+		build_time = 385
+		
+		tax_income = 0.45
+		
+		archers = 10
+		knights = 5
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	####################################
+	########################## LEMONWOOD
+	####################################
+	
+	tp_lumbermill_l_1 = {
+		desc = tp_lumbermill_l_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = lemonwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 153
+		build_time = 273
+		
+		tax_income = 0.50
+		
+		light_infantry = 15
+		archers = 10
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.03
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_l_2 = {
+		desc = tp_lumbermill_l_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = lemonwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_lumbermill_l_1
+		
+		gold_cost = 178
+		build_time = 310
+		
+		tax_income = 0.50
+		
+		light_infantry = 15
+		archers = 10
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.03
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_l_3 = {
+		desc = tp_lumbermill_l_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = lemonwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_lumbermill_l_2
+		
+		gold_cost = 205
+		build_time = 351
+		
+		tax_income = 0.50
+		
+		light_infantry = 15
+		archers = 10
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.03
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_l_4 = {
+		desc = tp_lumbermill_l_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = lemonwood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_lumbermill_l_3
+		
+		gold_cost = 235
+		build_time = 396
+		
+		tax_income = 0.50
+		
+		light_infantry = 15
+		archers = 10
+		
+		archers_offensive = 0.02
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.03
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	####################################
+	########################## WOLFSWOOD
+	####################################
+	
+	tp_lumbermill_w_1 = {
+		desc = tp_lumbermill_w_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = wolfswood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 129
+		build_time = 251
+		
+		tax_income = 0.35
+		
+		light_infantry = 10
+		archers = 15
+		
+		archers_offensive = 0.03
+		archers_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_w_2 = {
+		desc = tp_lumbermill_w_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = wolfswood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_lumbermill_w_1
+		
+		gold_cost = 151
+		build_time = 286
+		
+		tax_income = 0.35
+		
+		light_infantry = 10
+		archers = 15
+		
+		archers_offensive = 0.03
+		archers_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_w_3 = {
+		desc = tp_lumbermill_w_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = wolfswood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_lumbermill_w_2
+		
+		gold_cost = 176
+		build_time = 324
+		
+		tax_income = 0.35
+		
+		light_infantry = 10
+		archers = 15
+		
+		archers_offensive = 0.03
+		archers_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.03
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	tp_lumbermill_w_4 = {
+		desc = tp_lumbermill_w_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = wolfswood
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_lumbermill_w_3
+		
+		gold_cost = 203
+		build_time = 366
+		
+		tax_income = 0.35
+		
+		light_infantry = 10
+		archers = 15
+		
+		archers_offensive = 0.03
+		archers_defensive = 0.03
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.02
+	}
+	
+	#####################################
+	########################## FLINT MINE
+	#####################################
+	
+	tp_mine_f_1 = {
+		desc = tp_mine_f_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = flint
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 68
+		build_time = 221
+		
+		tax_income = 0.25
+		
+		archers = 15
+		light_infantry = 15
+		
+		archers_offensive = 0.04
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.04
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.01
+	}
+	
+	tp_mine_f_2 = {
+		desc = tp_mine_f_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = flint
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_f_1
+		
+		gold_cost = 84
+		build_time = 253
+		
+		tax_income = 0.25
+		
+		archers = 15
+		light_infantry = 15
+		
+		archers_offensive = 0.04
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.04
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.01
+	}
+	
+	tp_mine_f_3 = {
+		desc = tp_mine_f_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = flint
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_f_2
+		
+		gold_cost = 102
+		build_time = 288
+		
+		tax_income = 0.25
+		
+		archers = 15
+		light_infantry = 15
+		
+		archers_offensive = 0.04
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.04
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.01
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_f_4 = {
+		desc = tp_mine_f_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = flint
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_f_3
+		
+		gold_cost = 122
+		build_time = 326
+		
+		tax_income = 0.25
+		
+		archers = 15
+		light_infantry = 15
+		
+		archers_offensive = 0.04
+		archers_defensive = 0.02
+		light_infantry_offensive = 0.04
+		light_infantry_defensive = 0.02
+		
+		local_build_cost_modifier = -0.02
+		local_tax_modifier = 0.01
+	}
+	
+	####################################
+	########################## COAL MINE
+	####################################
+	
+	tp_mine_c_1 = {
+		desc = tp_mine_c_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = coal
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 93
+		build_time = 267
+		
+		tax_income = 0.30
+		
+		pikemen_offensive = 0.01
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.01
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.01
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.01
+		heavy_infantry_defensive = 0.01
+		light_infantry_offensive = 0.01
+		light_infantry_defensive = 0.01
+		archers_offensive = 0.01
+		archers_defensive = 0.01
+		
+		local_tax_modifier = 0.01
+		
+	}
+	
+	tp_mine_c_2 = {
+		desc = tp_mine_c_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = coal
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_c_1
+		
+		gold_cost = 112
+		build_time = 303
+		
+		tax_income = 0.30
+		
+		pikemen_offensive = 0.01
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.01
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.01
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.01
+		heavy_infantry_defensive = 0.01
+		light_infantry_offensive = 0.01
+		light_infantry_defensive = 0.01
+		archers_offensive = 0.01
+		archers_defensive = 0.01
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_c_3 = {
+		desc = tp_mine_c_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = coal
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_c_2
+		
+		gold_cost = 133
+		build_time = 343
+		
+		tax_income = 0.30
+		
+		pikemen_offensive = 0.01
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.01
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.01
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.01
+		heavy_infantry_defensive = 0.01
+		light_infantry_offensive = 0.01
+		light_infantry_defensive = 0.01
+		archers_offensive = 0.01
+		archers_defensive = 0.01
+	}
+	
+	tp_mine_c_4 = {
+		desc = tp_mine_c_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = coal
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_c_3
+		
+		gold_cost = 156
+		build_time = 387
+		
+		tax_income = 0.30
+		
+		pikemen_offensive = 0.01
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.01
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.01
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.01
+		heavy_infantry_defensive = 0.01
+		light_infantry_offensive = 0.01
+		light_infantry_defensive = 0.01
+		archers_offensive = 0.01
+		archers_defensive = 0.01
+	}
+	
+	####################################
+	########################## SALT MINE
+	####################################
+	
+	tp_mine_sa_1 = {
+		desc = tp_mine_sa_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = salt
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 121
+		build_time = 259
+		
+		tax_income = 0.35
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_sa_2 = {
+		desc = tp_mine_sa_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = salt
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_sa_1
+		
+		gold_cost = 143
+		build_time = 294
+		
+		tax_income = 0.35
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_sa_3 = {
+		desc = tp_mine_sa_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = salt
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_sa_2
+		
+		gold_cost = 167
+		build_time = 333
+		
+		tax_income = 0.35
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_sa_4 = {
+		desc = tp_mine_sa_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = salt
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_sa_3
+		
+		gold_cost = 193
+		build_time = 379
+		
+		tax_income = 0.35
+	}
+	
+	######################################
+	########################## COPPER MINE
+	######################################
+	
+	tp_mine_co_1 = {
+		desc = tp_mine_co_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = copper
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 175
+		build_time = 264
+		
+		tax_income = 0.40
+		
+		land_morale = 0.01
+		
+		pikemen_offensive = 0.02
+		light_cavalry_offensive = 0.02
+		knights_offensive = 0.02
+		heavy_infantry_offensive = 0.02
+		light_infantry_offensive = 0.02
+	}
+	
+	tp_mine_co_2 = {
+		desc = tp_mine_co_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = copper
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_co_1
+		
+		gold_cost = 202
+		build_time = 300
+		
+		tax_income = 0.40
+		
+		land_morale = 0.01
+		
+		pikemen_offensive = 0.02
+		light_cavalry_offensive = 0.02
+		knights_offensive = 0.02
+		heavy_infantry_offensive = 0.02
+		light_infantry_offensive = 0.02
+	}
+	
+	tp_mine_co_3 = {
+		desc = tp_mine_co_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = copper
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_co_2
+		
+		gold_cost = 232
+		build_time = 340
+		
+		tax_income = 0.40
+		
+		land_morale = 0.01
+		
+		pikemen_offensive = 0.02
+		light_cavalry_offensive = 0.02
+		knights_offensive = 0.02
+		heavy_infantry_offensive = 0.02
+		light_infantry_offensive = 0.02
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_co_4 = {
+		desc = tp_mine_co_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = copper
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_co_3
+		
+		gold_cost = 265
+		build_time = 384
+		
+		tax_income = 0.40
+		
+		land_morale = 0.01
+		
+		pikemen_offensive = 0.02
+		light_cavalry_offensive = 0.02
+		knights_offensive = 0.02
+		heavy_infantry_offensive = 0.02
+		light_infantry_offensive = 0.02
+		
+		local_tax_modifier = 0.01
+	}
+	
+	####################################
+	########################## IRON MINE
+	####################################
+	
+	tp_mine_i_1 = {
+		desc = tp_mine_i_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = iron
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 181
+		build_time = 271
+		
+		tax_income = 0.27
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.01
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.01
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.03
+		heavy_infantry_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.02
+	}
+	
+	tp_mine_i_2 = {
+		desc = tp_mine_i_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = iron
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_i_1
+		
+		gold_cost = 209
+		build_time = 308
+		
+		tax_income = 0.27
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.01
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.01
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.03
+		heavy_infantry_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.02
+	}
+	
+	tp_mine_i_3 = {
+		desc = tp_mine_i_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = iron
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_i_2
+		
+		gold_cost = 239
+		build_time = 348
+		
+		tax_income = 0.27
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.01
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.01
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.03
+		heavy_infantry_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.02
+	}
+	
+	tp_mine_i_4 = {
+		desc = tp_mine_i_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = iron
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_i_3
+		
+		gold_cost = 272
+		build_time = 392
+		
+		tax_income = 0.27
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.01
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.01
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.03
+		heavy_infantry_defensive = 0.02
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.02
+		
+		local_tax_modifier = 0.01
+		levy_size = 0.01
+	}
+	
+	######################################
+	########################## SILVER MINE
+	######################################
+	
+	tp_mine_s_1 = {
+		desc = tp_mine_s_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = silver
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 211
+		build_time = 267
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.75
+		
+		local_tax_modifier = 0.02
+	}
+	
+	tp_mine_s_2 = {
+		desc = tp_mine_s_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = silver
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_s_1
+		
+		gold_cost = 242
+		build_time = 303
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.75
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_s_3 = {
+		desc = tp_mine_s_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = silver
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_s_2
+		
+		gold_cost = 276
+		build_time = 343
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.75
+	}
+	
+	tp_mine_s_4 = {
+		desc = tp_mine_s_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = silver
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_s_3
+		
+		gold_cost = 313
+		build_time = 387
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.75
+		
+		levy_size = 0.01
+	}
+	
+	####################################
+	########################## GOLD MINE
+	####################################
+	
+	tp_mine_g_1 = {
+		desc = tp_mine_g_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = gold
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 242
+		build_time = 274
+		
+		land_morale = 0.02
+		levy_reinforce_rate = 0.01
+		
+		tax_income = 0.90
+		
+		local_tax_modifier = 0.02
+	}
+	
+	tp_mine_g_2 = {
+		desc = tp_mine_g_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = gold
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_g_1
+		
+		gold_cost = 276
+		build_time = 311
+		
+		land_morale = 0.02
+		levy_reinforce_rate = 0.01
+		
+		tax_income = 0.90
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_g_3 = {
+		desc = tp_mine_g_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = gold
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_g_2
+		
+		gold_cost = 313
+		build_time = 352
+		
+		land_morale = 0.02
+		levy_reinforce_rate = 0.01
+		
+		tax_income = 0.90
+	}
+	
+	tp_mine_g_4 = {
+		desc = tp_mine_g_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = gold
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_g_3
+		
+		gold_cost = 354
+		build_time = 397
+		
+		land_morale = 0.02
+		levy_reinforce_rate = 0.01
+		
+		tax_income = 0.90
+		
+		levy_size = 0.01
+	}
+	
+	######################################
+	########################## MARBLE MINE
+	######################################
+	
+	tp_mine_m_1 = {
+		desc = tp_mine_m_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = marble
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 212
+		build_time = 283
+		
+		tax_income = 0.70
+		
+		local_build_cost_modifier = -0.04
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_m_2 = {
+		desc = tp_mine_m_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = marble
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_m_1
+		
+		gold_cost = 243
+		build_time = 321
+		
+		tax_income = 0.70
+		
+		local_build_cost_modifier = -0.04
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_m_3 = {
+		desc = tp_mine_m_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = marble
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_m_2
+		
+		gold_cost = 277
+		build_time = 363
+		
+		tax_income = 0.70
+		
+		local_build_cost_modifier = -0.04
+	}
+	
+	tp_mine_m_4 = {
+		desc = tp_mine_m_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = marble
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_m_3
+		
+		gold_cost = 314
+		build_time = 409
+		
+		tax_income = 0.70
+		
+		local_build_cost_modifier = -0.04
+	}
+	
+	#######################################
+	########################## GRANITE MINE
+	#######################################
+	
+	tp_mine_gr_1 = {
+		desc = tp_mine_gr_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = granite
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 204
+		build_time = 287
+		
+		tax_income = 0.65
+		
+		local_build_cost_modifier = -0.05
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_gr_2 = {
+		desc = tp_mine_gr_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = granite
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_gr_1
+		
+		gold_cost = 234
+		build_time = 325
+		
+		tax_income = 0.65
+		
+		local_build_cost_modifier = -0.05
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_gr_3 = {
+		desc = tp_mine_gr_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = granite
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_gr_2
+		
+		gold_cost = 267
+		build_time = 367
+		
+		tax_income = 0.65
+		
+		local_build_cost_modifier = -0.05
+	}
+	
+	tp_mine_gr_4 = {
+		desc = tp_mine_gr_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = granite
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_gr_3
+		
+		gold_cost = 303
+		build_time = 413
+		
+		tax_income = 0.65
+		
+		local_build_cost_modifier = -0.05
+	}
+	
+	########################################
+	########################## GEMSTONE MINE
+	########################################
+	
+	tp_mine_gm_1 = {
+		desc = tp_mine_gm_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = northern_gems
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 207
+		build_time = 267
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02
+		
+		tax_income = 0.70
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_gm_2 = {
+		desc = tp_mine_gm_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = northern_gems
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_gm_1
+		
+		gold_cost = 237
+		build_time = 303
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02
+		
+		tax_income = 0.70
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_gm_3 = {
+		desc = tp_mine_gm_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = northern_gems
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_gm_2
+		
+		gold_cost = 270
+		build_time = 343
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02
+		
+		tax_income = 0.70
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_gm_4 = {
+		desc = tp_mine_gm_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = northern_gems
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_gm_3
+		
+		gold_cost = 307
+		build_time = 387
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02
+		
+		tax_income = 0.70
+		
+		levy_size = 0.01
+	}
+	
+	#######################################
+	########################## DIAMOND MINE
+	#######################################
+	
+	tp_mine_d_1 = {
+		desc = tp_mine_d_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = diamonds
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 227
+		build_time = 300
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02
+		
+		tax_income = 1.0
+		
+		local_tax_modifier = 0.02
+	}
+	
+	tp_mine_d_2 = {
+		desc = tp_mine_d_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = diamonds
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_d_1
+		
+		gold_cost = 259
+		build_time = 340
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02
+		
+		tax_income = 1.0
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_d_3 = {
+		desc = tp_mine_d_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = diamonds
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_d_2
+		
+		gold_cost = 294
+		build_time = 384
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02
+		
+		tax_income = 1.00
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_mine_d_4 = {
+		desc = tp_mine_d_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = diamonds
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_d_3
+		
+		gold_cost = 333
+		build_time = 432
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.02
+		
+		tax_income = 1.00
+		
+		local_tax_modifier = 0.01
+	}
+	
+	########################################
+	########################## OBSIDIAN MINE
+	########################################
+	
+	tp_mine_o_1 = {
+		desc = tp_mine_o_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = obsidian
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 163
+		build_time = 186
+		
+		levy_reinforce_rate = 0.02
+		land_morale = 0.03
+		
+		tax_income = 0.45
+		
+		local_tax_modifier = 0.01
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.02
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.01
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.01
+	}
+	
+	tp_mine_o_2 = {
+		desc = tp_mine_o_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = obsidian
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_mine_o_1
+		
+		gold_cost = 189
+		build_time = 214
+		
+		levy_reinforce_rate = 0.02
+		land_morale = 0.03
+		
+		tax_income = 0.45
+		
+		local_tax_modifier = 0.01
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.02
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.01
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.01
+	}
+	
+	tp_mine_o_3 = {
+		desc = tp_mine_o_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = obsidian
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_mine_o_2
+		
+		gold_cost = 217
+		build_time = 245
+		
+		levy_reinforce_rate = 0.02
+		land_morale = 0.03
+		
+		tax_income = 0.45
+		
+		levy_size = 0.01
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.02
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.01
+		light_infantry_offensive = 0.02
+		light_infantry_defensive = 0.01
+	}
+	
+	tp_mine_o_4 = {
+		desc = tp_mine_o_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = obsidian
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_mine_o_3
+		
+		gold_cost = 248
+		build_time = 279
+		
+		levy_reinforce_rate = 0.02
+		land_morale = 0.03
+		
+		tax_income = 0.45
+		
+		levy_size = 0.01
+		
+		pikemen_offensive = 0.02
+		pikemen_defensive = 0.01
+		light_cavalry_offensive = 0.02
+		light_cavalry_defensive = 0.01
+		knights_offensive = 0.02
+		knights_defensive = 0.01
+		heavy_infantry_offensive = 0.02
+		heavy_infantry_defensive = 0.01
+		light_infantry_offensive = 0.03
+		light_infantry_defensive = 0.02
+	}
+	
+	#######################################
+	########################## SEAL HUNTING
+	#######################################
+	
+	tp_seal_hunt_1 = {
+		desc = tp_seal_hunt_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = seals
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 103
+		build_time = 123
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.35
+		
+		levy_size = 0.01
+	}
+	
+	tp_seal_hunt_2 = {
+		desc = tp_seal_hunt_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = seals
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_seal_hunt_1
+		
+		gold_cost = 123
+		build_time = 145
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.35
+		
+		levy_size = 0.01
+	}
+	
+	tp_seal_hunt_3 = {
+		desc = tp_seal_hunt_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = seals
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_seal_hunt_2
+		
+		gold_cost = 145
+		build_time = 169
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.35
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_seal_hunt_4 = {
+		desc = tp_seal_hunt_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = seals
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_seal_hunt_3
+		
+		gold_cost = 169
+		build_time = 195
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.35
+		
+		local_tax_modifier = 0.01
+	}
+	
+	###################################
+	########################## JEWELLER
+	###################################
+	
+	tp_jewellery_1 = {
+		desc = tp_jewellery_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = jewellery
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 211
+		build_time = 174
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.85
+		
+		local_tax_modifier = 0.02
+	}
+	
+	tp_jewellery_2 = {
+		desc = tp_jewellery_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = jewellery
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_jewellery_1
+		
+		gold_cost = 242
+		build_time = 201
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.85
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_jewellery_3 = {
+		desc = tp_jewellery_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = jewellery
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_jewellery_2
+		
+		gold_cost = 273
+		build_time = 231
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.85
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_jewellery_4 = {
+		desc = tp_jewellery_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = jewellery
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_jewellery_3
+		
+		gold_cost = 313
+		build_time = 264
+		
+		levy_reinforce_rate = 0.01
+		land_morale = 0.01
+		
+		tax_income = 0.85
+	}
+	
+	##########################################
+	########################## FABRIC MERCHANT
+	##########################################
+	
+	tp_precious_fabrics_1 = {
+		desc = tp_precious_fabrics_1_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.0
+		
+		potential = {
+			location = {
+				has_province_modifier = precious_fabrics
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_1 }
+		
+		ai_creation_factor = 90
+		
+		gold_cost = 200
+		build_time = 204
+		
+		land_morale = 0.02
+		
+		tax_income = 0.75
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_precious_fabrics_2 = {
+		desc = tp_precious_fabrics_2_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = precious_fabrics
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_3 }
+		
+		ai_creation_factor = 89
+		
+		upgrades_from = tp_precious_fabrics_1
+		
+		gold_cost = 230
+		build_time = 234
+		
+		land_morale = 0.02
+		
+		tax_income = 0.75
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_precious_fabrics_3 = {
+		desc = tp_precious_fabrics_3_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = precious_fabrics
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_4 }
+		
+		ai_creation_factor = 88
+		
+		upgrades_from = tp_precious_fabrics_2
+		
+		gold_cost = 263
+		build_time = 267
+		
+		land_morale = 0.02
+		
+		tax_income = 0.75
+		
+		local_tax_modifier = 0.01
+	}
+	
+	tp_precious_fabrics_4 = {
+		desc = tp_precious_fabrics_4_desc
+		
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.0
+		
+		potential = {
+			location = {
+				has_province_modifier = precious_fabrics
+			}
+			FROMFROM = {
+				is_capital = yes # Should restrict the building to the county capital
+			}
+		}
+		
+		prerequisites = { tp_castle_town_6 }
+		
+		ai_creation_factor = 87
+		
+		upgrades_from = tp_precious_fabrics_3
+		
+		gold_cost = 299
+		build_time = 303
+		
+		land_morale = 0.02
+		
+		tax_income = 0.75
+		
+		local_tax_modifier = 0.02
+	}
+}
