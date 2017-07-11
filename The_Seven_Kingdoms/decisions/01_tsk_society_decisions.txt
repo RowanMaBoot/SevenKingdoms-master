@@ -1,0 +1,50 @@
+# Request Knighthood, Rank 1 Onwards
+# Establish a ward as a page from 10, at 15 let your page become a squire.
+
+society_decisions = {
+    request_knighthood = {
+        only_playable = yes
+        is_high_prio = yes
+        
+        potential = {
+            society_member_of = knighthood_the_seven
+            society_rank == 2
+            is_playable = yes
+            block_general_event_trigger = no
+        }
+        allow = {
+            wealth = 200
+            society_currency >= 500
+            days_in_society > 730
+        }
+        effect = {
+            # Event for Knighthood
+            hidden_tooltip = {
+                save_event_target_as = knighthood_target
+                set_character_flag = has_sent_request_for_knighthood
+                character_event = { id = TSK_S.4 days = 20 random = 10 } # sends hidden delayed event to self, which then sends request to Leader of the society
+            }
+        }
+        revoke_allowed = {
+            always = no
+        }
+        ai_will_do = {
+            factor = 1
+            
+            modifier = {
+                factor = 0
+                NOT = { wealth = 250 }
+            }
+            
+            modifier = {
+                factor = 0.1
+                NOT = { age = 26 }
+            }
+            
+            modifier = {
+                factor = 10
+                age = 40
+            }
+        }
+    }
+}

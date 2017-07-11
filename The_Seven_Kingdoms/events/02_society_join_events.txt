@@ -48,3 +48,70 @@ letter_event = {
     }
 }
 
+# Request Knighthood
+
+character_event = {
+    id = TSK_S.4
+    desc = EVTDESC_TSK_S.4
+    border = GFX_event_letter_frame_religion
+	
+	hide_window = yes
+
+	trigger = {
+		has_character_flag = has_sent_request_for_knighthood
+	}
+	
+	is_triggered_only = yes
+	
+    immediate = {
+		if = {
+			limit = { is_in_society = yes }
+			random_society_member = {
+				limit = {
+					is_society_grandmaster = yes
+					same_society_as = ROOT
+				}
+				character_event = { id = TSK_S.5 }
+			}
+		}
+		if = {
+			limit = { is_in_society = no }
+			clr_character_flag = has_sent_request_for_knighthood
+		}
+	}
+}
+
+# Grandmaster gets the rank-up request
+character_event = {
+	id = TSK_S.5
+	
+	hide_window = yes
+
+	is_triggered_only = yes
+
+	immediate = {
+		event_target:knighthood_target = { letter_event = { id = TSK_S.6 } }
+	}
+}
+
+#Grand master approves my request
+letter_event = {
+	id = TSK_S.6
+	desc = EVTDESC_TSK_S.6
+	border = GFX_event_letter_frame_intrigue
+
+	trigger = {
+		has_character_flag = has_sent_request_for_knighthood
+	}
+	
+	is_triggered_only = yes
+
+	#Yes
+	option = {
+		name = {
+			text = EVTOPTA_TSK_S.6
+		}
+		add_trait = knight
+		clr_character_flag = has_sent_request_for_knighthood
+	}
+}
