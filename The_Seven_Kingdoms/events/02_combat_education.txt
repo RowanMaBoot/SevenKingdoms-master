@@ -20,75 +20,97 @@ character_event = {
         }
         # Blockers. If you're the same skill as your educator, you cannot progress.
         NOR = {
-            AND = {
-                educator_is_not_combat_trained = yes
-                is_combat_untrained = yes
-            }
-            AND = {
-                educator_legend = yes
-                is_combat_legend_or_lower = yes
-            }
-            AND = {
-                educator_master = yes
-                is_combat_master_or_lower = yes
-            }
-            AND = {
-                educator_expert = yes
-                is_combat_expert_or_lower = yes
-            }
-            AND = {
-                educator_skilled = yes
-                is_combat_skilled_or_lower = yes
-            }
-            AND = {
-                educator_adept = yes
-                is_combat_adept_or_lower = yes
-            }
-            AND = {
-                educator_novice = yes
-                is_combat_novice = yes
-            }
+            is_educator_and_ward_legend = yes
+            is_educator_and_ward_master = yes
+            is_educator_and_ward_expert = yes
+            is_educator_and_ward_skilled = yes
+            is_educator_and_ward_adept = yes
+            is_educator_and_ward_novice = yes
         }
     }
     
     mean_time_to_happen = {
-        months = 12
+        months = 21
         
         # Educator influence
         modifier = {
-            factor = 0.6
-            educator_legend = yes
+            factor = 0.8
+            educator = {
+                trait = dueling_legend
+            }
         }
         modifier = {
-            factor = 0.7
-            educator_master = yes
+            factor = 0.8
+            educator = {
+                is_culture_swordsmanship_specialised = yes
+            }
+        }
+        modifier = {
+            factor = 0.85
+            educator = {
+                trait = dueling_master
+            }
         }
         modifier = {
             factor = 0.9
-            educator_expert = yes
+            educator = {
+                trait = dueling_expert
+            }
         }
         modifier = {
-            factor 1.1
-            educator_skilled = yes
+            factor = 0.9
+            educator = {
+                has_education_martial_trigger = yes
+            }
         }
         modifier = {
-            factor = 1.3
-            educator_adept = yes
+            factor = 0.9
+            educator = {
+                is_knightly_member_trigger = yes
+            }
         }
         modifier = {
-            factor = 1.5
-            educator_novice = yes
+            factor = 0.9
+            educator = {
+                is_culture_swordsmanship_favoured = yes
+            }
         }
         modifier = {
             factor = 0.95
-            educator = { is_trustworthy_trigger = yes }
+            educator = {
+                is_trustworthy_trigger = yes
+            }
         }
         modifier = {
             factor = 1.1
-            educator = { has_council_position_trigger = yes }
+            educator = {
+                has_council_position_trigger = yes
+            }
+        }
+        modifier = {
+            factor 1.1
+            educator = {
+                trait = dueling_skilled
+            }
+        }
+        modifier = {
+            factor = 1.3
+            educator = {
+                trait = dueling_adept
+            }
+        }
+        modifier = {
+            factor = 1.5
+            educator = {
+                trait = dueling_novice
+            }
         }
         
         # Ward influence
+        modifier = {
+            factor = 0.7
+            is_strong_trigger = yes
+        }
         modifier = {
             factor = 0.8
             OR = {
@@ -102,7 +124,15 @@ character_event = {
         }
         modifier = {
             factor = 0.8
-            is_strong_trigger = yes
+            self_serving_trigger = yes
+        }
+        modifier = {
+            factor = 0.8
+            is_smart_trigger = yes
+        }
+        modifier = {
+            factor = 0.8
+            is_culture_swordsmanship_specialised = yes
         }
         modifier = {
             factor = 0.9
@@ -113,19 +143,15 @@ character_event = {
         }
         modifier = {
             factor = 0.9
-            self_serving_trigger = yes
-        }
-        modifier = {
-            factor = 0.9
-            is_smart_trigger = yes
-        }
-        modifier = {
-            factor = 0.9
             has_virtue_trigger = yes
         }
         modifier = {
             factor = 0.9
             has_attractive_trait_trigger = yes
+        }
+        modifier = {
+            factor = 0.90
+            is_culture_swordsmanship_favoured = yes
         }
         modifier = {
             factor = 1.1
