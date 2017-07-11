@@ -48,3 +48,86 @@ society_decisions = {
         }
     }
 }
+
+# Allows members of the Seven group to Knight members of their court for 200 prestige a piece.
+
+targetted_decisions = {
+    knight_target = {
+        ai_target_filter = court
+        
+        from_potential = {
+			ai = no
+		}
+		potential = {
+			is_combat_trained = yes
+            religion_group = the_seven_group
+		}
+		allow = {
+			always = yes
+            FROM = {
+                prestige = 200
+            }
+		}
+        
+        effect = {
+			# Remove prestige based on their current trait.
+            if = {
+                limit = {
+                    trait = page
+                }
+                FROM = {
+                    prestige = -150
+                }
+            }
+            if = {
+                limit = {
+                    trait = squire
+                }
+                FROM = {
+                    prestige = -100
+                }
+            }
+            if = {
+                limit = {
+                    NOR = {
+                        trait = page
+                        trait = squire
+                    }
+                }
+                FROM = {
+                    prestige = -200
+                }
+            }
+            
+            # Give them the Knighthood, be it Knight or Hedge (depending on faith)
+            if = {
+                limit = {
+                    FROM = {
+                        religion = the_seven
+                        trait = knight
+                    }
+                }
+                add_trait = knight
+            }
+            if = {
+                limit = {
+                    FROM = {
+                        OR = {
+                            NOT = {
+                                religion = the_seven
+                            }
+                            trait = hedge_knight
+                        }
+                    }
+                }
+                add_trait = hedge_knight
+            }
+		}
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+			factor = 0
+		}
+    }
+}
