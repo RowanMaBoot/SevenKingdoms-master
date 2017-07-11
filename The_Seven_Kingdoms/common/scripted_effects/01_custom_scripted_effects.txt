@@ -34,3 +34,155 @@ heal_minor = {
 	}
 }
 
+# Can be used anywhere you want to buff the combat skill of a character.
+# Made for the education events, where it is tied into the skills of the educator (preventing too much growth).
+
+train_combat_skill = {
+    if = {
+        limit = {
+            NOR = {
+                trait = dueling_novice
+				trait = dueling_adept
+				trait = dueling_skilled
+				trait = dueling_expert
+				trait = dueling_master
+				trait = dueling_legend
+            }
+        }
+        add_trait = dueling_novice
+        break = yes
+    }
+    if = {
+        limit = {
+            trait = dueling_novice
+        }
+        hidden_tooltip = { remove_trait = dueling_novice }
+        add_trait = dueling_adept
+        break = yes
+    }
+    if = {
+        limit = {
+            trait = dueling_adept
+        }
+        hidden_tooltip = { remove_trait = dueling_adept }
+        add_trait = dueling_skilled
+        break = yes
+    }
+    if = {
+        limit = {
+            trait = dueling_skilled
+        }
+        hidden_tooltip = { remove_trait = dueling_skilled }
+        add_trait = dueling_expert
+        break = yes
+    }
+    if = {
+        limit = {
+            trait = dueling_expert
+        }
+        hidden_tooltip = { remove_trait = dueling_expert }
+        add_trait = dueling_master
+        break = yes
+    }
+    if = {
+        limit = {
+            trait = dueling_master
+        }
+        hidden_tooltip = { remove_trait = dueling_master }
+        add_trait = dueling_legend
+        break = yes
+    }
+}
+
+# A chance based version that allows improvement of your skill once
+# uses
+# set_character_flag = improved_combat_skills
+# on success to determine if improvement was met. If not, they may retry until they get the result they want (or do not want)
+train_combat_skill_chance_dangerous = {
+    random_list = {
+        25 = {
+            if = {
+                limit = {
+                    NOR = {
+                        trait = dueling_novice
+                        trait = dueling_adept
+                        trait = dueling_skilled
+                        trait = dueling_expert
+                        trait = dueling_master
+                        trait = dueling_legend
+                    }
+                }
+                add_trait = dueling_novice
+                set_character_flag = improved_combat_skills
+                break = yes
+            }
+            if = {
+                limit = {
+                    trait = dueling_novice
+                }
+                hidden_tooltip = { remove_trait = dueling_novice }
+                add_trait = dueling_adept
+                set_character_flag = improved_combat_skills
+                break = yes
+            }
+            if = {
+                limit = {
+                    trait = dueling_adept
+                }
+                hidden_tooltip = { remove_trait = dueling_adept }
+                add_trait = dueling_skilled
+                set_character_flag = improved_combat_skills
+                break = yes
+            }
+            if = {
+                limit = {
+                    trait = dueling_skilled
+                }
+                hidden_tooltip = { remove_trait = dueling_skilled }
+                add_trait = dueling_expert
+                set_character_flag = improved_combat_skills
+                break = yes
+            }
+        }
+        50 = {
+            # do nothing
+        }
+        18 = {
+            random _list = {
+                85 = { add_trait = wounded }
+                15 = { add_trait = severely_injured }
+            }
+        }
+        5 = {
+            random_list = {
+                20 = {
+                    add_trait = one_eyed
+                    add_trait = wounded
+                }
+                20 = {
+                    add_trait = one_handed
+                    add_trait = severely_injured
+                }
+                15 = {
+                    add_trait = blinded
+                    add_trait = severely_injured
+                }
+                10 = {
+                    add_trait = one_legged
+                    add_trait = severely_injured
+                }
+                10 = {
+                    add_trait = disfigured
+                    add_trait = severely_injured
+                }
+                10 = { add_trait = mangled }
+                
+            }
+        }
+        2 = {
+            death = {
+                death_reason = death_accident
+            }
+        }
+    }
+}

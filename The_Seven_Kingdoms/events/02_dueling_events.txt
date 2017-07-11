@@ -1,98 +1,60 @@
-###Dueling Events###
+### Forced Training Events ###
 
-#Player seeks to train
-namespace = dueling
+# Character seeks to enhance their own fighting skill
+# Cannot be improved beyond expert. Master and Legend are reserved for trained children only.
+namespace = TSK_CT
 character_event = {
-	id = dueling.1
-	desc = "EVTDESCdueling.1"
-	
-	hide_from = yes
-	
-	is_triggered_only = yes
+	id = TSK_CT.1
+	desc = EVTDESC_TSK_CT.1
 	
 	min_age = 16
 	capable_only = yes
 	prisoner = no
 	
 	trigger = {
-        NOT = {
-            has_character_flag = already_trained
+        NOR = {
+            has_character_flag = improved_combat_skills
+            trait = dueling_master
+            trait = dueling_legend
+        }
+        has_objective = obj_train_dueling
+    }
+    
+    mean_time_to_happen = {
+        months = 36
+        
+        modifier = {
+            factor = 0.7
+            age = 18
+            NOT = { age = 25 }
+        }
+        modifier = {
+            factor = 0.9
+            self_serving_trigger = yes
+        }
+        modifier = {
+            factor = 0.9
+            is_smart_trigger = yes
+        }
+        modifier = {
+            factor = 1.1
+            is_female = yes
+        }
+        modifier = {
+            factor = 1.2
+            is_weak_trigger = yes
+        }
+        modifier = {
+            factor = 3.0
+            has_symptom_trigger = yes
         }
     }
 	
 	option = {
-		name = "EVTOPTAdueling.1" #I shall become stronger
-		ai_chance = { factor = 100 }
-		set_character_flag = already_trained
-		if = {
-			limit = { trait = dueling_novice }
-			random = { chance = 80
-				hidden_tooltip = { remove_trait = dueling_novice }
-				add_trait = dueling_adept
-			}
-			random = { chance = 20
-				add_trait = wounded
-			}
-			break = yes
-		}
-		if = {
-			limit = { trait = dueling_adept }
-			random = { chance = 50
-				hidden_tooltip = { remove_trait = dueling_adept }
-				add_trait = dueling_skilled
-			}
-			random = { chance = 20
-				add_trait = wounded
-			}
-			break = yes
-		}
-		if = {
-			limit = { trait = dueling_skilled }
-			random = { chance = 30
-				hidden_tooltip = { remove_trait = dueling_skilled }
-				add_trait = dueling_expert
-			}
-			random = { chance = 20
-				add_trait = wounded
-			}
-			break = yes
-		}
-		if = {
-			limit = { trait = dueling_expert }
-			random = { chance = 10
-				hidden_tooltip = { remove_trait = dueling_expert }
-				add_trait = dueling_master
-			}
-			random = { chance = 20
-				add_trait = wounded
-			}
-			break = yes
-		}
-		if = {
-			limit = { trait = dueling_master }
-			random = { chance = 1
-				hidden_tooltip = { remove_trait = dueling_master }
-				add_trait = dueling_legend
-			}
-			random = { chance = 20
-				add_trait = wounded
-			}
-			break = yes
-		}
-		if = {
-			limit = { 
-				NOT = {
-					OR = {
-						trait = dueling_novice
-						trait = dueling_adept
-						trait = dueling_skilled
-						trait = dueling_expert
-						trait = dueling_master
-						trait = dueling_legend
-					}
-				}
-			}
-			add_trait = dueling_novice
-		}
+		name = EVTOPTA_TSK_CT.1
+		
+        train_combat_skill_chance_dangerous = yes
+        
+        ai_chance = { factor = 100 }
 	}
 }
