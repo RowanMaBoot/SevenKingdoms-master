@@ -15,8 +15,11 @@ greensight_unconcious = {
     
     health = 0.25
     
-    
     learning = 1
+    
+    command_modifier = {
+		random = 0.30
+	}
     
     ai_rationality = 5
 }
@@ -39,10 +42,14 @@ greensight_awakening = {
     martial = 1
     stewardship = 1
     
+    command_modifier = {
+		random = 0.25
+	}
+    
     ai_rationality = 10
 }
 
-# The Awakened have limited control over the Greensight, but are far from masters of the sight.
+# The Awakened have control over the Greensight, but are far from masters of the sight.
 greensight_awakened = {
     potential = {
         religion_group = westerosi_pagan_group
@@ -59,6 +66,10 @@ greensight_awakened = {
     learning = 1
     martial = 1
     stewardship = 1
+    
+    command_modifier = {
+		random = 0.20 # Control means less seen, but also less likely to see paths created by knowledge of their sight.
+	}
     
     ai_rationality = 20
 }
@@ -78,20 +89,24 @@ greenseer  = {
     diplomacy = 2
     learning = 3
     
+    command_modifier = {
+		random = 0.10
+	}
+    
     ai_rationality = 10
 }
 
 # Page
 page  = {
     potential = {
-        religion_group = the_seven_group
         NOR = {
             trait = squire
+            trait = dragon_knight
+            trait = red_knight
             trait = knight
             trait = hedge_knight
         }
-        age = 6
-        NOT = { age = 17 }
+        NOT = { age = 17 } # Remove after the age of 17, leeway
     }
     
     customizer = yes
@@ -101,8 +116,11 @@ page  = {
     learning = 1
     stewardship = 1
     
+    prestige = 0.05
+    
     vassal_opinion = -15
     same_opinion = 15
+    sex_appeal_opinion = 5
     
     ai_rationality = 5
     ai_honor = 15
@@ -111,13 +129,13 @@ page  = {
 # Squire
 squire  = {
     potential = {
-        religion_group = the_seven_group
         NOR = {
             trait = page
+            trait = dragon_knight
+            trait = red_knight
             trait = knight
             trait = hedge_knight
         }
-        age = 16
     }
     
     customizer = yes
@@ -127,50 +145,102 @@ squire  = {
     learning = 1
     martial = 1
     
+    prestige = 0.05
+    
     vassal_opinion = -5
     same_opinion = 10
-    sex_appeal_opinion = 5
+    sex_appeal_opinion = 10
     
     ai_rationality = 5
     ai_honor = 15
 }
 
-# Red Knight
+# Red Knight, R'hllor
 red_knight  = {
     potential = {
-        religion = rhllor
         NOR = {
             trait = page
             trait = squire
+            trait = dragon_knight
+            trait = knight
+            trait = hedge_knight
         }
-        age = 16
     }
     
     customizer = yes
     random = no
     hidden = no
     
-    learning = 2
-    martial = 4
+    learning = 3
+    martial = 3
+    
+    prestige = 0.25
+    
+    command_modifier = {
+        religious_enemy = 0.25
+        morale_defence = 0.10
+        
+        cavalry = 0.1
+        light_infantry = -0.2
+    }
     
     vassal_opinion = 10
     same_opinion = 10
+    sex_appeal_opinion = 15
     
-    ai_zeal = 25
+    ai_zeal = 30
     ai_rationality = -10
     ai_honor = 10
+}
+
+# Red Knight
+dragon_knight  = {
+    potential = {
+        NOR = {
+            trait = page
+            trait = squire
+            trait = red_knight
+            trait = knight
+            trait = hedge_knight
+        }
+    }
+    
+    customizer = yes
+    random = no
+    hidden = no
+    
+    diplomacy = 1
+    learning = 1
+    martial = 4
+    
+    prestige = 0.25
+    
+    command_modifier = {
+        religious_enemy = 0.10
+        morale_defence = 0.15
+        
+        cavalry = 0.1
+        light_infantry = -0.20
+    }
+    
+    vassal_opinion = 10
+    same_opinion = 10
+    sex_appeal_opinion = 15
+    
+    ai_zeal = 10
+    ai_honor = 5
 }
 
 # Knight
 knight  = {
     potential = {
-        religion = the_seven
         NOR = {
             trait = page
             trait = squire
+            trait = dragon_knight
+            trait = red_knight
             trait = hedge_knight
         }
-        age = 16
     }
     
     customizer = yes
@@ -180,6 +250,16 @@ knight  = {
     diplomacy = 2
     learning = 1
     martial = 3
+    
+    prestige = 0.25
+    
+    command_modifier = {
+        religious_enemy = 0.15
+        morale_defence = 0.05
+        
+        cavalry = 0.1
+        light_infantry = -0.2
+    }
     
     vassal_opinion = 5
     same_opinion = 5
@@ -192,13 +272,13 @@ knight  = {
 
 hedge_knight  = {
     potential = {
-        religion_group = the_seven_group
         NOR = {
             trait = page
             trait = squire
+            trait = dragon_knight
+            trait = red_knight
             trait = knight
         }
-        age = 16
     }
     
     customizer = yes
@@ -207,6 +287,8 @@ hedge_knight  = {
     
     learning = 1
     martial = 3
+    
+    prestige = 0.10
     
     vassal_opinion = -5
     same_opinion = 15
