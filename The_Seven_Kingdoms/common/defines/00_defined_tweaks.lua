@@ -180,8 +180,8 @@ NDefines.NAI.RAID_AGGRESSION = 30 -- from 18, then 20, fewer raids
 
 -- Ruler Designer
 NDefines.NRulerDesigner.MAX_AGE = 70
-NDefines.NRulerDesigner.BASE_ATTRIB = 5,
-NDefines.NRulerDesigner.BASE_AGE = 16,
+NDefines.NRulerDesigner.BASE_ATTRIB = 5
+NDefines.NRulerDesigner.BASE_AGE = 16
 NDefines.NRulerDesigner.BASE_FERTILITY = 0.5
 NDefines.NRulerDesigner.BASE_HEALTH = 5.0
 NDefines.NRulerDesigner.COST_ATTRIB = 0.0
