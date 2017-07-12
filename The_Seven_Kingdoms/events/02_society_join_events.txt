@@ -90,7 +90,21 @@ character_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		event_target:knighthood_target = { letter_event = { id = TSK_S.6 } }
+		if = { # If bad, say no
+            limit = {
+                FROMFROM = {
+                    OR = {
+                        trait = cruel
+                        trait = heartless
+                        trait = dishonourable
+                        trait = drunkard
+                    }
+                }
+            }
+            event_target:knighthood_target = { letter_event = { id = TSK_S.7 } }
+            break = yes
+        }
+        event_target:knighthood_target = { letter_event = { id = TSK_S.6 } }
 	}
 }
 
@@ -112,6 +126,27 @@ letter_event = {
 			text = EVTOPTA_TSK_S.6
 		}
 		add_trait = knight
+		clr_character_flag = has_sent_request_for_knighthood
+	}
+}
+
+#Grand master disapproves my request
+letter_event = {
+	id = TSK_S.7
+	desc = EVTDESC_TSK_S.7
+	border = GFX_event_letter_frame_intrigue
+
+	trigger = {
+		has_character_flag = has_sent_request_for_knighthood
+	}
+	
+	is_triggered_only = yes
+
+	#no
+	option = {
+		name = {
+			text = EVTOPTA_TSK_S.7
+		}
 		clr_character_flag = has_sent_request_for_knighthood
 	}
 }
