@@ -1,5 +1,135 @@
 decisions = {
 	
+    employ_sword_dancer = {
+		potential = {
+			ai = no
+		}
+		allow = {
+			prestige = 200
+			scaled_wealth = 2.50
+			NOT = {
+				has_character_modifier = in_seclusion
+			}
+		}
+		effect = {
+			prestige = -200
+			scaled_wealth = -2.50
+			create_random_soldier = {
+				random_traits = yes
+                culture = braavosi
+				dynasty = random
+				female = no
+				attributes = {
+					diplomacy = 2
+					learning = 2
+					stewardship = 2
+					intrigue = 2
+					martial = 8
+				}
+			}
+			new_character = {
+				remove_trait = weak
+                remove_trait = poor_physique
+				remove_trait = slow
+				remove_trait = imbecile
+				remove_trait = dull
+				
+				remove_trait = mystic
+				remove_trait = socializer
+				remove_trait = gamer
+				remove_trait = hedonist
+				remove_trait = duelist
+				remove_trait = hunter
+				remove_trait = strategist
+				remove_trait = administrator
+				remove_trait = architect
+				remove_trait = gardener
+				remove_trait = schemer
+				remove_trait = impaler
+				remove_trait = seducer
+				remove_trait = seductress
+				remove_trait = theologian
+				remove_trait = scholar
+                remove_trait = dishonourable
+                
+                add_trait = duelist
+				
+                random_list = { # Combat traits
+                    90 = {
+                        add_trait = dueling_master
+                    }
+                    10 = {
+                        add_trait = dueling_master
+                    }
+                }
+                
+                random_list = {
+                    10 = {
+                        add_trait = left_handed
+                    }
+                    10 = {
+                        add_trait = ambidexterous
+                    }
+                }
+                
+				random_list = { # Flavor Randomization
+					30 = { 
+						# Nothing
+					}
+					15 = {
+						change_martial = 4
+					}
+					15 = {
+						add_trait = robust
+					}
+					10 = {
+						add_trait = hunter
+					}
+					5 = {
+						add_trait = strategist
+					}
+					5 = {
+						change_martial = 6
+					}
+					5 = {
+						if = {
+							limit = {
+								has_dlc = "Reapers"
+							}
+							add_trait = one_eyed
+						}
+					}
+					5 = { 
+						add_trait = shrewd
+					}
+                    10 = {
+                        random_list = {
+                            10 = {
+                                add_trait = huge
+                            }
+                            45 = {
+                                add_trait = tall
+                            }
+                            45 = {
+                                add_trait = short
+                            }
+                        }
+                    }
+				}
+				save_event_target_as = invited_character
+			}
+			character_event = { id = NE.1 }
+		}
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
+    
+    #
+    
 	employ_soldier = {
 		potential = {
 			ai = no
@@ -49,6 +179,27 @@ decisions = {
 				remove_trait = theologian
 				remove_trait = scholar
 				
+                random_list = { # Combat training
+                    35 = {
+                        # Chance of Nothing
+                    }
+                    20 = {
+                        add_trait = dueling_novice
+                    }
+                    15 = {
+                        add_trait = dueling_adept
+                    }
+                    15 = {
+                        add_trait = dueling_skilled
+                    }
+                    10 = {
+                        add_trait = dueling_expert
+                    }
+                    5 = {
+                        add_trait = dueling_master
+                    }
+                }
+                
 				random_list = { # Flavor Randomization
 					35 = { 
 						# Nothing
@@ -56,25 +207,6 @@ decisions = {
 					15 = {
 						change_martial = 2
 					}
-                    15 = {
-                        random_list = {
-                            30 = {
-                                add_trait = dueling_novice
-                            }
-                            30 = {
-                                add_trait = dueling_adept
-                            }
-                            20 = {
-                                add_trait = dueling_skilled
-                            }
-                            15 = {
-                                add_trait = dueling_expert
-                            }
-                            5 = {
-                                add_trait = dueling_master
-                            }
-                        }
-                    }
 					10 = {
 						add_trait = robust
 					}
