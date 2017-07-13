@@ -1,0 +1,352 @@
+# TSK Combat Duel Events
+
+namespace = TSK_C_DE
+
+# 'perp' and 'victim'
+
+# 'perp' recieves an event at random, meeting criteria.
+# event is hidden, but chooses a 'victim' and pings.
+
+# 'victim' recieves the event, and chooses between fight or flight.
+# decision is pinged to 'perp'
+
+# 'perp' recieves the event and, with randomisation, it decides if they flee or fight.
+# results are decided in this event. (victim dies, perp dies)
+
+# 'victim' recieves event with results. silently pings 'perp' with a result event.
+
+# finish event chain
+
+##############
+
+# letter_event 
+
+# Pick the Target (Victim), decide results
+# Hidden
+character_event = {
+    id = TSK_C_DE.1
+    desc = EVTDESC_TSK_C_DE.1
+	picture = GFX_evt_death
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+    trigger = {
+        OR = {
+            is_combat_trained = yes # Is a capable fighter, and therefore would be at the fore.
+            trait = experimenter # Leadering from the front, regardless of skill
+        }
+        NOT = {
+            trait = craven
+        }
+        ai = no # For now, may allow AI to initiate duels.
+        is_alive = yes
+    }
+    
+    option = {
+        name = EVTOPTA_TSK_C_DE.1
+        
+        FROM = {
+            character_event = { id = TSK_C_DE.2 }
+        }
+    }
+    option = {
+        random_list = {
+            70 = {
+                # Nothing
+            }
+            30 = {
+                add_trait = craven # Relatively low chance, since few may realise your opportunity, let alone jump to conclusion of cowardice.
+            }
+        }
+    }
+}
+
+# Victim is chosen, recieves event and chooses fight or flight.
+character_event = {
+    id = TSK_C_DE.2
+    desc = EVTDESC_TSK_C_DE.2
+	picture = GFX_evt_death
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+    
+    trigger = {
+        is_alive = yes
+    }
+    
+    option = {
+        name = EVTOPTA_TSK_C_DE.2
+        
+        if = {
+            limit = {
+                NOT = { trait = brave }
+            }
+            random_list = {
+                20 = {
+                
+                }
+                80 = {
+                    add_trait = brave
+                }
+            }
+        }
+        
+        FROM = {
+            character_event = { id = TSK_C_DE.3 }
+        }
+    }
+    
+    option = {
+        random_list = {
+            50 = {
+                # Nothing
+            }
+            50 = {
+                add_trait = craven # More obvious, the lord who gave chase may talk of your cowardice, or your own men may see it.
+            }
+        }
+        character_event = { id = TSK_C_DE.3 }
+        
+        # You either succeed or fail, 50/50
+        random_list = {
+            50 = {
+                set_character_flag = tsk_duel_flee_attempt
+            }
+            50 = {
+                set_character_flag = tsk_duel_flee_attempt_success
+            }
+        }
+    }
+}
+
+# Perp recives event. Description changes based on: fight, flight or failed flight.
+# results are decided based on those three.
+character_event = {
+    id = TSK_C_DE.3
+    desc = EVTDESC_TSK_C_DE.3
+	picture = GFX_evt_death
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+    trigger = {
+        is_alive = yes
+    }
+    
+    # Flees
+    desc = {
+		text = EVTDESCA_TSK_C_DE.3
+		trigger = {
+			FROM = {
+                has_character_flag = tsk_duel_flee_attempt_success
+            }
+		} 
+	}
+    
+    # Tried to Flee, Fail
+    desc = {
+		text = EVTDESCB_TSK_C_DE.3
+		trigger = {
+            FROM = {
+                has_character_flag = tsk_duel_flee_attempt
+            }
+        }
+	}
+    
+    # Fallback
+    desc = {
+		text = EVTDESCC_TSK_C_DE.3
+        FROM = {
+            NOR = {
+                has_character_flag = tsk_duel_flee_attempt_success
+                has_character_flag = tsk_duel_flee_attempt
+            }
+        }
+	}
+    
+    option = {
+        name = EVTOPTA_TSK_C_DE.3
+        
+        # Successfully Flee, End Chain
+        if = {
+            limit = {
+                FROM = {
+                    has_character_flag = tsk_duel_flee_attempt_success
+                }
+            }
+            clr_character_flag = tsk_duel_flee_attempt_success
+            clr_character_flag = tsk_duel_flee_attempt
+            break = yes
+        }
+        # Fail or Engage
+        if = {
+            limit = {
+                FROM = {
+                    NOT = {
+                        has_character_flag = tsk_duel_flee_attempt_success
+                    }
+                }
+            }
+            clr_character_flag = tsk_duel_flee_attempt_success
+            clr_character_flag = tsk_duel_flee_attempt
+            FROM = {
+                character_event = { id = TSK_C_DE.4 }
+            }
+            break = yes
+        }
+    }
+}
+
+# 'victim' recieves results, immediately informs perp
+# handles victim death?
+character_event = {
+    id = TSK_C_DE.4
+    desc = EVTDESC_TSK_C_DE.4
+	picture = GFX_evt_death
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+    trigger = {
+        is_alive = yes
+    }
+    
+    immediate = {
+    
+    }
+    
+    # add_maimed_trait_effect = yes (various maiming)
+    
+    option = {
+        name = EVTOPTA_TSK_C_DE.4
+        
+        ### Three possible 'Major' outcomes. ###
+        
+        # Perp harms victim, perp unharmed
+        # Perp harms victim, perp harmed
+        # victim harms perp, victim unharmed
+        
+        # The chance is modified by the difference in combat skill. The bigger the difference, the higher the chance of a favourable result.
+        # If both are matched, death will never happen but they will both be injured.
+        
+        random_list = {
+            33 = {
+                modifier = {
+                    factor = 3
+                    FROM = {
+                        combat_rating_diff = { who = ROOT value = 7 } # Huge difference
+                    }
+                }
+                modifier = {
+                    factor = 2
+                    FROM = {
+                        combat_rating_diff = { who = ROOT value = 5 } # Big difference
+                        NOT = { combat_rating_diff = { who = FROM value = 7 } }
+                    }
+                }
+                modifier = {
+                    factor = 1.5
+                    FROM = {
+                        combat_rating_diff = { who = ROOT value = 3 } # difference
+                        NOT = { combat_rating_diff = { who = FROM value = 5 } }
+                    }
+                }
+                
+                
+                if = {
+                    limit = { can_be_maimed_trigger = yes }
+                    random_list = { }
+                }
+                if = {
+                    limit = { can_be_maimed_trigger = no }
+                    random_list = { }
+                }
+            }
+            33 = {
+                modifier = {
+                    factor = 2
+                    combat_rating_diff = { who = FROM value = 0 } # No difference
+                }
+                if = {
+                    limit = { can_be_maimed_trigger = yes }
+                    random_list = { }
+                }
+                if = {
+                    limit = { can_be_maimed_trigger = no }
+                    random_list = { }
+                }
+            }
+            33 = {
+                modifier = {
+                    factor = 3
+                    combat_rating_diff = { who = FROM value = 7 } # Huge difference
+                }
+                modifier = {
+                    factor = 2
+                    combat_rating_diff = { who = FROM value = 5 } # Big difference
+                    NOT = { combat_rating_diff = { who = FROM value = 7 } }
+                }
+                modifier = {
+                    factor = 1.5
+                    combat_rating_diff = { who = FROM value = 3 } # difference
+                    NOT = { combat_rating_diff = { who = FROM value = 5 } }
+                }
+                if = {
+                    limit = { can_be_maimed_trigger = yes }
+                    random_list = { }
+                }
+                if = {
+                    limit = { can_be_maimed_trigger = no }
+                    random_list = { }
+                }
+            }
+        }
+        
+        # Not Wounded, Can be Maimed
+        if = {
+            limit = {
+                can_be_maimed_trigger = yes
+            }
+        }
+        # Wounded, Can be Maimed
+        if = {
+            limit = {
+                can_be_maimed_trigger = yes
+            }
+        }
+        # Maimed and/or wounded
+        if = {
+            limit = {
+                can_be_maimed_trigger = no
+            }
+        }
+        
+        FROM = {
+            character_event = { id = TSK_C_DE.5 }
+        }
+    }
+}
+
+# 'perp' informed
+# handles perp death?
+character_event = {
+    id = TSK_C_DE.5
+    desc = EVTDESC_TSK_C_DE.5
+	picture = GFX_evt_death
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+    trigger = {
+        
+    }
+    
+    immediate = {
+    
+    }
+    
+    option = {
+        name = EVTOPTA_TSK_C_DE.5
+    }
+}
