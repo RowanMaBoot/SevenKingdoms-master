@@ -214,14 +214,6 @@ character_event = {
     }
     
     immediate = {
-    
-    }
-    
-    # add_maimed_trait_effect = yes (various maiming)
-    
-    option = {
-        name = EVTOPTA_TSK_C_DE.4
-        
         ### Three possible 'Major' outcomes. ###
         
         # Perp harms victim, perp unharmed
@@ -316,24 +308,33 @@ character_event = {
                 }
             }
         }
+    }
+    
+    # add_maimed_trait_effect = yes (various maiming)
+    
+    option = {
+        name = EVTOPTA_TSK_C_DE.4
         
-        # Not Wounded, Can be Maimed
-        if = {
-            limit = {
-                can_be_maimed_trigger = yes
-            }
+        trigger = {
+            NOT = { has_character_flag = tsk_duel_death }
         }
-        # Wounded, Can be Maimed
-        if = {
-            limit = {
-                can_be_maimed_trigger = yes
-            }
+        
+        FROM = {
+            character_event = { id = TSK_C_DE.5 }
         }
-        # Maimed and/or wounded
-        if = {
-            limit = {
-                can_be_maimed_trigger = no
-            }
+    }
+    
+    # Arrrrgh!
+    option = {
+        name = EVTOPTB_TSK_C_DE.4
+        
+        trigger = {
+            has_character_flag = tsk_duel_death
+        }
+        
+        death = {
+            death_reason = death_duel
+            killer = FROM
         }
         
         FROM = {
@@ -355,12 +356,21 @@ character_event = {
         is_alive = yes
     }
     
+    # Death
+    desc = {
+		text = EVTDESCA_TSK_C_DE.5
+        trigger = {
+            has_character_flag = tsk_duel_death
+        }
+	}
+    
     # Loss
     desc = {
-		text = EVTDESCC_TSK_C_DE.3
+		text = EVTDESCB_TSK_C_DE.5
         trigger = {
             has_character_flag = tsk_duel_lost
             NOT = {
+                has_character_flag = tsk_duel_death
                 FROM = {
                     is_alive = no
                     death_reason = death_duel
@@ -372,9 +382,11 @@ character_event = {
     
     # Draw
     desc = {
+        text = EVTDESCC_TSK_C_DE.5
         trigger = {
             has_character_flag = tsk_duel_draw_damaged
             NOT = {
+                has_character_flag = tsk_duel_death
                 FROM = {
                     is_alive = no
                     death_reason = death_duel
@@ -386,7 +398,9 @@ character_event = {
     
     # FROM Killed, Draw
     desc = {
+        text = EVTDESCD_TSK_C_DE.5
         trigger = {
+            has_character_flag = tsk_duel_death
             FROM = {
                 is_alive = no
                 death_reason = death_duel
@@ -397,7 +411,9 @@ character_event = {
     
     # FROM Killed, Fallback (No damage taken)
     desc = {
+        text = EVTDESCE_TSK_C_DE.5
         trigger = {
+            has_character_flag = tsk_duel_death
             FROM = {
                 is_alive = no
                 death_reason = death_duel
@@ -408,10 +424,12 @@ character_event = {
     
     # Fallback (No damage taken)
     desc = {
+        text = EVTDESCF_TSK_C_DE.5
         trigger = {
             NOR = {
                 has_character_flag = tsk_duel_lost
                 has_character_flag = tsk_duel_draw_damaged
+                has_character_flag = tsk_duel_death
             }
             FROM = {
                 is_alive = no
@@ -424,17 +442,25 @@ character_event = {
     option = {
         name = EVTOPTA_TSK_C_DE.5
         
-        if = {
-            limit = {
-            
-            }
-            
+        trigger = {
+            NOT = { has_character_flag = tsk_duel_death }
         }
-        if = {
-            limit = {
-            
-            }
-            
+        
+        clr_character_flag = tsk_duel_draw_damaged
+        clr_character_flag = tsk_duel_lost
+    }
+    
+    # Death (Arrrrgh!)
+    option = {
+        name = EVTOPTB_TSK_C_DE.5
+        
+        trigger = {
+            has_character_flag = tsk_duel_death
+        }
+        
+        death = {
+            death_reason = death_duel
+            killer = FROM
         }
         
         clr_character_flag = tsk_duel_draw_damaged
