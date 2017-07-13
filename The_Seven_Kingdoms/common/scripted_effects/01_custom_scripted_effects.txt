@@ -187,6 +187,43 @@ train_combat_skill_chance_dangerous = {
     }
 }
 
-serious_head_injury_effect = {
+victim_battle_wounding_minor_effect = {
+    random_list = {
+        90 = {
+            add_trait = wounded
+        }
+        10 = {
+            add_maimed_trait_effect = yes
+        }
+    }
+}
 
+# FROM is the sending of doom in this case.
+# If FROM is killed, then they need to be sent an event from our current ROOT so they become FROM.
+victim_battle_wounding_major_effect = {
+    random_list = {
+        80 = {
+            add_maimed_trait_effect = yes
+        }
+        20 = {
+            death = {
+                death_reason = death_duel
+                killer = FROM
+            }
+        }
+    }
+}
+
+victim_batle_wounding_death_effect = {
+    random_list = {
+        10 = {
+            add_trait = wounded
+        }
+        90 = {
+            death = {
+                death_reason = death_duel
+                killer = FROM
+            }
+        }
+    }
 }

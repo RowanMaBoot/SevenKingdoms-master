@@ -179,7 +179,7 @@ character_event = {
             clr_character_flag = tsk_duel_flee_attempt
             break = yes
         }
-        # Fail or Engage
+        # Fail to flee or Engage
         if = {
             limit = {
                 FROM = {
@@ -193,7 +193,6 @@ character_event = {
             FROM = {
                 character_event = { id = TSK_C_DE.4 }
             }
-            break = yes
         }
     }
 }
@@ -231,6 +230,8 @@ character_event = {
         # If both are matched, death will never happen but they will both be injured.
         
         random_list = {
+            # FROM deals damage to ROOT without taking harm
+            # Set Flag for FROM to indicate victory
             33 = {
                 modifier = {
                     factor = 3
@@ -256,27 +257,44 @@ character_event = {
                 
                 if = {
                     limit = { can_be_maimed_trigger = yes }
-                    random_list = { }
+                    random_list = {
+                        50 = {
+                            victim_battle_wounding_minor_effect = yes
+                        }
+                        50 = {
+                            victim_battle_wounding_major_effect = yes
+                        }
+                    }
                 }
                 if = {
                     limit = { can_be_maimed_trigger = no }
                     random_list = { }
                 }
             }
+            # Both matched, deal damage to each other. Handle self damage.
+            # Set flag for FROM to indicate draw so they can handle their damage in their event
             33 = {
                 modifier = {
-                    factor = 2
+                    factor = 3
                     combat_rating_diff = { who = FROM value = 0 } # No difference
                 }
+                
                 if = {
                     limit = { can_be_maimed_trigger = yes }
-                    random_list = { }
+                    random_list = {
+                        50 = { victim_battle_wounding_minor_effect = yes }
+                        50 = { victim_battle_wounding_major_effect = yes }
+                    }
                 }
                 if = {
                     limit = { can_be_maimed_trigger = no }
                     random_list = { }
                 }
+                FROM = {
+                    set_character_flag = tsk_duel_draw_damaged
+                }
             }
+            # Set flag for FROM to indicate losing, handle negative effects there
             33 = {
                 modifier = {
                     factor = 3
@@ -292,13 +310,9 @@ character_event = {
                     combat_rating_diff = { who = FROM value = 3 } # difference
                     NOT = { combat_rating_diff = { who = FROM value = 5 } }
                 }
-                if = {
-                    limit = { can_be_maimed_trigger = yes }
-                    random_list = { }
-                }
-                if = {
-                    limit = { can_be_maimed_trigger = no }
-                    random_list = { }
+                
+                FROM = {
+                    set_character_flag = tsk_duel_lost
                 }
             }
         }
@@ -328,8 +342,7 @@ character_event = {
     }
 }
 
-# 'perp' informed
-# handles perp death?
+# 'perp' informed, handle flags and/or damage
 character_event = {
     id = TSK_C_DE.5
     desc = EVTDESC_TSK_C_DE.5
@@ -339,14 +352,13 @@ character_event = {
 	is_triggered_only = yes
 	
     trigger = {
-        
-    }
-    
-    immediate = {
-    
+        is_alive = yes
     }
     
     option = {
         name = EVTOPTA_TSK_C_DE.5
+        
+        clr_character_flag = tsk_duel_draw_damaged
+        clr_character_flag = tsk_duel_lost
     }
 }
