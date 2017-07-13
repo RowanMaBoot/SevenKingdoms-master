@@ -199,17 +199,6 @@ character_event = {
     option = {
         name = EVTOPTA_TSK_C_DE.3
         
-        # Successfully Flee, End Chain
-        if = {
-            limit = {
-                FROM = {
-                    has_character_flag = tsk_duel_flee_attempt_success
-                }
-            }
-            clr_character_flag = tsk_duel_flee_attempt_success
-            clr_character_flag = tsk_duel_flee_attempt
-            break = yes
-        }
         # Fail to flee or Engage
         if = {
             limit = {
@@ -224,6 +213,16 @@ character_event = {
             FROM = {
                 character_event = { id = TSK_C_DE.4 }
             }
+        }
+        # Successfully Flee, End Chain
+        if = {
+            limit = {
+                FROM = {
+                    has_character_flag = tsk_duel_flee_attempt_success
+                }
+            }
+            clr_character_flag = tsk_duel_flee_attempt_success
+            clr_character_flag = tsk_duel_flee_attempt
         }
     }
 }
@@ -267,14 +266,14 @@ character_event = {
                     factor = 2
                     FROM = {
                         combat_rating_diff = { who = ROOT value = 5 } # Big difference
-                        NOT = { combat_rating_diff = { who = FROM value = 7 } }
+                        NOT = { combat_rating_diff = { who = ROOT value = 7 } }
                     }
                 }
                 modifier = {
                     factor = 1.5
                     FROM = {
                         combat_rating_diff = { who = ROOT value = 3 } # difference
-                        NOT = { combat_rating_diff = { who = FROM value = 5 } }
+                        NOT = { combat_rating_diff = { who = ROOT value = 5 } }
                     }
                 }
                 
@@ -389,32 +388,29 @@ character_event = {
     # add_maimed_trait_effect = yes (various maiming)
     
     option = {
-        name = EVTOPTA_TSK_C_DE.4
+        name = {
+            text = EVTOPTA_TSK_C_DE.4
         
-        trigger = {
-            NOT = { has_character_flag = tsk_duel_death }
+            trigger = {
+                NOT = { has_character_flag = tsk_duel_death }
+            }
+        }
+        name = {
+            text = EVTOPTB_TSK_C_DE.4
+        
+            trigger = {
+                has_character_flag = tsk_duel_death
+            }
         }
         
-        clr_character_flag = tsk_duel_draw_damaged
-        clr_character_flag = tsk_duel_lost
-        clr_character_flag = tsk_duel_death
-        
-        FROM = {
-            character_event = { id = TSK_C_DE.5 }
-        }
-    }
-    
-    # Arrrrgh!
-    option = {
-        name = EVTOPTB_TSK_C_DE.4
-        
-        trigger = {
-            has_character_flag = tsk_duel_death
-        }
-        
-        death = {
-            death_reason = death_duel
-            killer = FROM
+        if = {
+            limit = {
+                has_character_flag = tsk_duel_death
+            }
+            death = {
+                death_reason = death_duel
+                killer = FROM
+            }
         }
         
         clr_character_flag = tsk_duel_draw_damaged
@@ -441,7 +437,6 @@ character_event = {
     }
     
     immediate = {
-        
         if = {
             limit = {
                 can_be_maimed_trigger = no
@@ -567,30 +562,28 @@ character_event = {
     }
     
     option = {
-        name = EVTOPTA_TSK_C_DE.5
-        
-        trigger = {
-            NOT = { has_character_flag = tsk_duel_death }
+        name = {
+            text = EVTOPTA_TSK_C_DE.5
+            trigger = {
+                NOT = { has_character_flag = tsk_duel_death }
+            }
+        }
+        name = {
+            text = EVTOPTB_TSK_C_DE.5
+            trigger = {
+                has_character_flag = tsk_duel_death
+            }
         }
         
-        clr_character_flag = tsk_duel_draw_damaged
-        clr_character_flag = tsk_duel_lost
-        clr_character_flag = tsk_duel_death
-    }
-    
-    # Death (Arrrrgh!)
-    option = {
-        name = EVTOPTB_TSK_C_DE.5
-        
-        trigger = {
-            has_character_flag = tsk_duel_death
+        if = {
+            limit = {
+                has_character_flag = tsk_duel_death
+            }
+            death = {
+                death_reason = death_duel
+                killer = FROM
+            }
         }
-        
-        death = {
-            death_reason = death_duel
-            killer = FROM
-        }
-        
         clr_character_flag = tsk_duel_draw_damaged
         clr_character_flag = tsk_duel_lost
         clr_character_flag = tsk_duel_death
