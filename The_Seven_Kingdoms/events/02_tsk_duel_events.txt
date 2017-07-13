@@ -200,7 +200,8 @@ character_event = {
 }
 
 # 'victim' recieves results, immediately informs perp
-# handles victim death?
+# possible issue; does not know if perp is dead or not, as death and damage is handled in event.5
+
 character_event = {
     id = TSK_C_DE.4
     desc = EVTDESC_TSK_C_DE.4
@@ -258,9 +259,11 @@ character_event = {
                 }
                 if = {
                     limit = { can_be_maimed_trigger = no }
-                    
+
                     victim_batle_wounding_death_effect = yes
                 }
+                
+                set_character_flag = tsk_duel_lost
             }
             # Both matched, deal damage to each other. Handle self damage.
             # Set flag for FROM to indicate draw so they can handle their damage in their event
@@ -282,6 +285,8 @@ character_event = {
                     
                     victim_batle_wounding_death_effect = yes
                 }
+                
+                set_character_flag = tsk_duel_draw_damaged
                 FROM = {
                     set_character_flag = tsk_duel_draw_damaged
                 }
@@ -310,6 +315,63 @@ character_event = {
         }
     }
     
+    # Death
+    desc = {
+		text = EVTDESCA_TSK_C_DE.5
+        trigger = {
+            has_character_flag = tsk_duel_death
+        }
+	}
+    
+    # Loss
+    desc = {
+		text = EVTDESCB_TSK_C_DE.5
+        trigger = {
+            has_character_flag = tsk_duel_lost
+            NOT = {
+                has_character_flag = tsk_duel_death
+                FROM = {
+                    is_alive = no
+                    death_reason = death_duel
+                    killer = ROOT
+                }
+            }
+        }
+	}
+    
+    # Draw
+    desc = {
+        text = EVTDESCC_TSK_C_DE.5
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            NOT = {
+                has_character_flag = tsk_duel_death
+                FROM = {
+                    is_alive = no
+                    death_reason = death_duel
+                    killer = ROOT
+                }
+            }
+        }
+    }
+    
+    # Fallback (No damage taken)
+    desc = {
+        text = EVTDESCF_TSK_C_DE.5
+        trigger = {
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_draw_damaged
+                has_character_flag = tsk_duel_death
+            }
+            FROM = {
+                is_alive = no
+                death_reason = death_duel
+                killer = ROOT
+            }
+        }
+    }
+    
     # add_maimed_trait_effect = yes (various maiming)
     
     option = {
@@ -318,6 +380,10 @@ character_event = {
         trigger = {
             NOT = { has_character_flag = tsk_duel_death }
         }
+        
+        clr_character_flag = tsk_duel_draw_damaged
+        clr_character_flag = tsk_duel_lost
+        clr_character_flag = tsk_duel_death
         
         FROM = {
             character_event = { id = TSK_C_DE.5 }
@@ -337,6 +403,10 @@ character_event = {
             killer = FROM
         }
         
+        clr_character_flag = tsk_duel_draw_damaged
+        clr_character_flag = tsk_duel_lost
+        clr_character_flag = tsk_duel_death
+        
         FROM = {
             character_event = { id = TSK_C_DE.5 }
         }
@@ -354,6 +424,49 @@ character_event = {
 	
     trigger = {
         is_alive = yes
+    }
+    
+    immediate = {
+        
+        if = {
+            limit = {
+                can_be_maimed_trigger = no
+                has_character_flag = tsk_duel_draw_damaged
+            }
+            victim_batle_wounding_death_effect = yes
+        }
+        if = {
+            limit = {
+                can_be_maimed_trigger = yes
+                has_character_flag = tsk_duel_draw_damaged
+            }
+            random_list = {
+                50 = { victim_battle_wounding_minor_effect = yes }
+                50 = { victim_battle_wounding_major_effect = yes }
+            }
+        }
+        
+        
+        if = {
+            limit = {
+                can_be_maimed_trigger = no
+                has_character_flag = tsk_duel_lost
+            }
+            random_list = {
+                50 = { victim_battle_wounding_minor_effect = yes }
+                50 = { victim_battle_wounding_major_effect = yes }
+            }
+        }
+        if = {
+            limit = {
+                can_be_maimed_trigger = yes
+                has_character_flag = tsk_duel_lost
+            }
+            random_list = {
+                50 = { victim_battle_wounding_minor_effect = yes }
+                50 = { victim_battle_wounding_major_effect = yes }
+            }
+        }
     }
     
     # Death
@@ -448,6 +561,7 @@ character_event = {
         
         clr_character_flag = tsk_duel_draw_damaged
         clr_character_flag = tsk_duel_lost
+        clr_character_flag = tsk_duel_death
     }
     
     # Death (Arrrrgh!)
@@ -465,5 +579,6 @@ character_event = {
         
         clr_character_flag = tsk_duel_draw_damaged
         clr_character_flag = tsk_duel_lost
+        clr_character_flag = tsk_duel_death
     }
 }
