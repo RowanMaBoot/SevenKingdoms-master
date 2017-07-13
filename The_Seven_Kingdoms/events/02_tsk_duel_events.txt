@@ -157,10 +157,12 @@ character_event = {
     # Fallback
     desc = {
 		text = EVTDESCC_TSK_C_DE.3
-        FROM = {
-            NOR = {
-                has_character_flag = tsk_duel_flee_attempt_success
-                has_character_flag = tsk_duel_flee_attempt
+        trigger = {
+            FROM = {
+                NOR = {
+                    has_character_flag = tsk_duel_flee_attempt_success
+                    has_character_flag = tsk_duel_flee_attempt
+                }
             }
         }
 	}
@@ -258,17 +260,14 @@ character_event = {
                 if = {
                     limit = { can_be_maimed_trigger = yes }
                     random_list = {
-                        50 = {
-                            victim_battle_wounding_minor_effect = yes
-                        }
-                        50 = {
-                            victim_battle_wounding_major_effect = yes
-                        }
+                        50 = { victim_battle_wounding_minor_effect = yes }
+                        50 = { victim_battle_wounding_major_effect = yes }
                     }
                 }
                 if = {
                     limit = { can_be_maimed_trigger = no }
-                    random_list = { }
+                    
+                    victim_batle_wounding_death_effect = yes
                 }
             }
             # Both matched, deal damage to each other. Handle self damage.
@@ -288,7 +287,8 @@ character_event = {
                 }
                 if = {
                     limit = { can_be_maimed_trigger = no }
-                    random_list = { }
+                    
+                    victim_batle_wounding_death_effect = yes
                 }
                 FROM = {
                     set_character_flag = tsk_duel_draw_damaged
@@ -355,8 +355,87 @@ character_event = {
         is_alive = yes
     }
     
+    # Loss
+    desc = {
+		text = EVTDESCC_TSK_C_DE.3
+        trigger = {
+            has_character_flag = tsk_duel_lost
+            NOT = {
+                FROM = {
+                    is_alive = no
+                    death_reason = death_duel
+                    killer = ROOT
+                }
+            }
+        }
+	}
+    
+    # Draw
+    desc = {
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            NOT = {
+                FROM = {
+                    is_alive = no
+                    death_reason = death_duel
+                    killer = ROOT
+                }
+            }
+        }
+    }
+    
+    # FROM Killed, Draw
+    desc = {
+        trigger = {
+            FROM = {
+                is_alive = no
+                death_reason = death_duel
+                killer = ROOT
+            }
+        }
+    }
+    
+    # FROM Killed, Fallback (No damage taken)
+    desc = {
+        trigger = {
+            FROM = {
+                is_alive = no
+                death_reason = death_duel
+                killer = ROOT
+            }
+        }
+    }
+    
+    # Fallback (No damage taken)
+    desc = {
+        trigger = {
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_draw_damaged
+            }
+            FROM = {
+                is_alive = no
+                death_reason = death_duel
+                killer = ROOT
+            }
+        }
+    }
+    
     option = {
         name = EVTOPTA_TSK_C_DE.5
+        
+        if = {
+            limit = {
+            
+            }
+            
+        }
+        if = {
+            limit = {
+            
+            }
+            
+        }
         
         clr_character_flag = tsk_duel_draw_damaged
         clr_character_flag = tsk_duel_lost
