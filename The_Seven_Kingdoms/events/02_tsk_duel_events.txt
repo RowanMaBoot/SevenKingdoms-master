@@ -51,7 +51,6 @@ character_event = {
     
     # In case we have any leftover flags, ie due to someone dying before the chain can finish.
     immediate = {
-        clear_event_target = duel_initiator
         clear_event_target = duel_opponent
         
         clr_character_flag = tsk_duel_flee_attempt_success
@@ -67,10 +66,6 @@ character_event = {
             clr_character_flag = tsk_duel_death
         }
         
-        # ROOT is the character recieving this event, centre flank
-        ROOT = {
-            save_event_target_as = duel_initiator
-        }
         # FROM is the opposing commander, centre flank
         FROM = {
             save_event_target_as = duel_opponent
@@ -80,7 +75,7 @@ character_event = {
     option = {
         name = EVTOPTA_TSK_C_DE.1
         
-        duel_opponent = { character_event = { id = TSK_C_DE.2 } }
+        FROM = { character_event = { id = TSK_C_DE.2 } }
     }
     option = {
         name = EVTOPTB_TSK_C_DE.1
@@ -127,7 +122,7 @@ character_event = {
             }
         }
         
-        duel_initiator = { character_event = { id = TSK_C_DE.3 } }
+        FROM = { character_event = { id = TSK_C_DE.3 } }
     }
     
     option = {
@@ -141,7 +136,6 @@ character_event = {
                 add_trait = craven # More obvious, the lord who gave chase may talk of your cowardice, or your own men may see it.
             }
         }
-        duel_initiator = { character_event = { id = TSK_C_DE.3 } }
         
         # You either succeed or fail, 50/50
         random_list = {
@@ -152,6 +146,8 @@ character_event = {
                 set_character_flag = tsk_duel_flee_attempt_success
             }
         }
+        
+        FROM = { character_event = { id = TSK_C_DE.3 } }
     }
 }
 
@@ -174,7 +170,7 @@ character_event = {
     desc = {
 		text = EVTDESC_A_TSK_C_DE.3
 		trigger = {
-			duel_opponent = { has_character_flag = tsk_duel_flee_attempt_success }
+			FROM = { has_character_flag = tsk_duel_flee_attempt_success }
 		} 
 	}
     
@@ -182,7 +178,7 @@ character_event = {
     desc = {
 		text = EVTDESC_B_TSK_C_DE.3
 		trigger = {
-            duel_opponent = { has_character_flag = tsk_duel_flee_attempt }
+            FROM = { has_character_flag = tsk_duel_flee_attempt }
         }
 	}
     
@@ -190,7 +186,7 @@ character_event = {
     desc = {
 		text = EVTDESC_C_TSK_C_DE.3
         trigger = {
-            duel_opponent = {
+            FROM = {
                 NOR = {
                     has_character_flag = tsk_duel_flee_attempt_success
                     has_character_flag = tsk_duel_flee_attempt
@@ -202,18 +198,31 @@ character_event = {
     option = {
         name = EVTOPTA_TSK_C_DE.3
         
+        name = {
+            text = EVTOPTA_TSK_C_DE.3
+            trigger = {
+                FROM = { has_character_flag = tsk_duel_flee_attempt_success }
+            }
+        }
+        name = {
+            text = EVTOPTB_TSK_C_DE.3
+            trigger = {
+                FROM = { NOT = { has_character_flag = tsk_duel_flee_attempt_success } }
+            }
+        }
+        
         # Fail to flee or Engage
         if = {
             limit = {
-                duel_opponent = { NOT = { has_character_flag = tsk_duel_flee_attempt_success } }
+                FROM = { NOT = { has_character_flag = tsk_duel_flee_attempt_success } }
             }
             
-            duel_opponent = { character_event = { id = TSK_C_DE.4 } }
+            FROM = { character_event = { id = TSK_C_DE.4 } }
         }
         # Successfully flee
         if = {
             limit = {
-                duel_opponent = { has_character_flag = tsk_duel_flee_attempt_success }
+                FROM = { has_character_flag = tsk_duel_flee_attempt_success }
             }
             
             # End, no event
@@ -297,9 +306,19 @@ character_event = {
         
         victim_duel_determine_effect = yes # Uses flags to assign effect
         
+        if = {
+            limit = {
+                has_character_flag = tsk_duel_death
+            }
+            death = {
+                death_reason = death_duel
+                killer = FROM
+            }
+        }
+        
         ###
         
-        duel_initiator = { character_event = { id = TSK_C_DE.5 } }
+        FROM = { character_event = { id = TSK_C_DE.5 } }
     }
 }
 
@@ -381,5 +400,15 @@ character_event = {
         ############################
         
         victim_duel_determine_effect = yes # Uses flags to assign effect
+        
+        if = {
+            limit = {
+                has_character_flag = tsk_duel_death
+            }
+            death = {
+                death_reason = death_duel
+                killer = FROM
+            }
+        }
     }
 }
