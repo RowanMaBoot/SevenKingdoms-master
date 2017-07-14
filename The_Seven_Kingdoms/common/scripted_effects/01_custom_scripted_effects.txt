@@ -230,11 +230,9 @@ victim_duel_wounding_death_effect = {
 victim_duel_wounding_major_effect = {
     random_list = {
         85 = {
-            # add_maimed_trait_effect = yes
             set_character_flag = tsk_duel_wounded_major
         }
         10 = {
-            # add_trait_wounded_effect = yes
             set_character_flag = tsk_duel_wounded_minor
         }
         5 = {
@@ -260,7 +258,7 @@ victim_duel_wounding_minor_effect = {
     }
 }
 
-victim_duel_determine_effect = {
+victim_duel_determine_effect_duel_opponent = {
     if = {
         limit = {
             has_character_flag = tsk_duel_wounded_major
@@ -279,7 +277,31 @@ victim_duel_determine_effect = {
         }
         death = {
             death_reason = death_duel
-            killer = FROM
+            killer = duel_initiator
+        }
+    }
+}
+
+victim_duel_determine_effect_duel_initiator = {
+    if = {
+        limit = {
+            has_character_flag = tsk_duel_wounded_major
+        }
+        add_maimed_trait_effect = yes
+    }
+    if = {
+        limit = {
+            has_character_flag = tsk_duel_wounded_minor
+        }
+        add_trait_wounded_effect = yes
+    }
+    if = {
+        limit = {
+            has_character_flag = tsk_duel_death
+        }
+        death = {
+            death_reason = death_duel
+            killer = duel_opponent
         }
     }
 }

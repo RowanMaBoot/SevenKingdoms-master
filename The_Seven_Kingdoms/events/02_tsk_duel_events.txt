@@ -2,8 +2,6 @@
 
 namespace = TSK_C_DE
 
-# Event scope seems fucked
-
 # Flags
 # clr_character_flag = tsk_duel_flee_attempt_success
 # clr_character_flag = tsk_duel_flee_attempt
@@ -30,10 +28,8 @@ namespace = TSK_C_DE
 
 ##############
 
-# letter_event 
-
 # Pick the Target (Victim), decide results
-# Hidden
+# duel_initiator
 character_event = {
     id = TSK_C_DE.1
     desc = EVTDESC_TSK_C_DE.1
@@ -55,7 +51,8 @@ character_event = {
     
     # In case we have any leftover flags, ie due to someone dying before the chain can finish.
     immediate = {
-        clear_event_target = combat_target
+        clear_event_target = duel_initiator
+        clear_event_target = duel_opponent
         
         clr_character_flag = tsk_duel_flee_attempt_success
         clr_character_flag = tsk_duel_flee_attempt
@@ -70,17 +67,20 @@ character_event = {
             clr_character_flag = tsk_duel_death
         }
         
-        #FROM = {
-        #    save_event_target_as = combat_target
-        #}
+        # ROOT is the character recieving this event, centre flank
+        ROOT = {
+            save_event_target_as = duel_initiator
+        }
+        # FROM is the opposing commander, centre flank
+        FROM = {
+            save_event_target_as = duel_opponent
+        }
     }
     
     option = {
         name = EVTOPTA_TSK_C_DE.1
         
-        #combat_target = { character_event = { id = TSK_C_DE.2 } }
-        
-        FROM = { character_event = { id = TSK_C_DE.2 } }
+        duel_opponent = { character_event = { id = TSK_C_DE.2 } }
     }
     option = {
         name = EVTOPTB_TSK_C_DE.1
@@ -97,6 +97,7 @@ character_event = {
 }
 
 # Victim is chosen, recieves event and chooses fight or flight.
+# duel_opponent
 character_event = {
     id = TSK_C_DE.2
     desc = EVTDESC_TSK_C_DE.2
@@ -126,9 +127,7 @@ character_event = {
             }
         }
         
-        FROM = {
-            character_event = { id = TSK_C_DE.3 }
-        }
+        duel_initiator = { character_event = { id = TSK_C_DE.3 } }
     }
     
     option = {
@@ -142,7 +141,7 @@ character_event = {
                 add_trait = craven # More obvious, the lord who gave chase may talk of your cowardice, or your own men may see it.
             }
         }
-        character_event = { id = TSK_C_DE.3 }
+        duel_initiator = { character_event = { id = TSK_C_DE.3 } }
         
         # You either succeed or fail, 50/50
         random_list = {
@@ -158,6 +157,7 @@ character_event = {
 
 # Perp recives event. Description changes based on: fight, flight or failed flight.
 # results are decided based on those three.
+# duel_initiator
 character_event = {
     id = TSK_C_DE.3
     desc = EVTDESC_TSK_C_DE.3
@@ -172,29 +172,25 @@ character_event = {
     
     # Flees
     desc = {
-		text = EVTDESCA_TSK_C_DE.3
+		text = EVTDESC_A_TSK_C_DE.3
 		trigger = {
-			FROM = {
-                has_character_flag = tsk_duel_flee_attempt_success
-            }
+			duel_opponent = { has_character_flag = tsk_duel_flee_attempt_success }
 		} 
 	}
     
     # Tried to Flee, Fail
     desc = {
-		text = EVTDESCB_TSK_C_DE.3
+		text = EVTDESC_B_TSK_C_DE.3
 		trigger = {
-            FROM = {
-                has_character_flag = tsk_duel_flee_attempt
-            }
+            duel_opponent = { has_character_flag = tsk_duel_flee_attempt }
         }
 	}
     
     # Fallback
     desc = {
-		text = EVTDESCC_TSK_C_DE.3
+		text = EVTDESC_C_TSK_C_DE.3
         trigger = {
-            FROM = {
+            duel_opponent = {
                 NOR = {
                     has_character_flag = tsk_duel_flee_attempt_success
                     has_character_flag = tsk_duel_flee_attempt
@@ -209,33 +205,24 @@ character_event = {
         # Fail to flee or Engage
         if = {
             limit = {
-                FROM = {
-                    NOT = {
-                        has_character_flag = tsk_duel_flee_attempt_success
-                    }
-                }
+                duel_opponent = { NOT = { has_character_flag = tsk_duel_flee_attempt_success } }
             }
-            clr_character_flag = tsk_duel_flee_attempt_success
-            clr_character_flag = tsk_duel_flee_attempt
-            FROM = {
-                character_event = { id = TSK_C_DE.4 }
-            }
+            
+            duel_opponent = { character_event = { id = TSK_C_DE.4 } }
         }
-        # Successfully Flee, End Chain
+        # Successfully flee
         if = {
             limit = {
-                FROM = {
-                    has_character_flag = tsk_duel_flee_attempt_success
-                }
+                duel_opponent = { has_character_flag = tsk_duel_flee_attempt_success }
             }
-            clr_character_flag = tsk_duel_flee_attempt_success
-            clr_character_flag = tsk_duel_flee_attempt
+            
+            # End, no event
         }
     }
 }
 
 # 'victim' recieves results, immediately informs perp
-
+# duel_opponent
 character_event = {
     id = TSK_C_DE.4
     desc = EVTDESC_TSK_C_DE.4
@@ -254,81 +241,56 @@ character_event = {
     
     desc = {
         text = EVTDESC_A_TSK_C_DE.4
-        trigger = {
-            is_victorious_opponent_dead = yes
-        }
+        trigger = { is_victorious_opponent_dead = yes }
     }
     desc = {
         text = EVTDESC_B_TSK_C_DE.4
-        trigger = {
-            is_victorious_untouched_opponent_wounded = yes
-        }
+        trigger = { is_victorious_untouched_opponent_wounded = yes }
     }
 
     desc = {
         text = EVTDESC_C_TSK_C_DE.4
-        trigger = {
-            is_draw_untouched_opponent_untouched = yes
-        }
+        trigger = { is_draw_untouched_opponent_untouched = yes }
     }
     desc = {
         text = EVTDESC_D_TSK_C_DE.4
-        trigger = {
-            is_draw_untouched_opponent_wounded = yes
-        }
+        trigger = { is_draw_untouched_opponent_wounded = yes }
     }
     desc = {
         text = EVTDESC_E_TSK_C_DE.4
-        trigger = {
-            is_draw_wounded_opponent_untouched = yes
-        }
+        trigger = { is_draw_wounded_opponent_untouched = yes }
     }
     desc = {
         text = EVTDESC_F_TSK_C_DE.4
-        trigger = {
-            is_draw_wounded_opponent_wounded = yes
-        }
+        trigger = { is_draw_wounded_opponent_wounded = yes }
     }
     desc = {
         text = EVTDESC_G_TSK_C_DE.4
-        trigger = {
-            is_draw_untouched_opponent_dead = yes
-        }
+        trigger = { is_draw_untouched_opponent_dead = yes }
     }
     desc = {
         text = EVTDESC_H_TSK_C_DE.4
-        trigger = {
-            is_draw_wounded_opponent_dead = yes
-        }
+        trigger = { is_draw_wounded_opponent_dead = yes }
     }
 
     desc = {
         text = EVTDESC_I_TSK_C_DE.4
-        trigger = {
-            is_defeat_wounded_opponent_untouched = yes
-        }
+        trigger = { is_defeat_wounded_opponent_untouched = yes }
     }
     desc = {
         text = EVTDESC_J_TSK_C_DE.4
-        trigger = {
-            is_defeat_dead = yes
-        }
+        trigger = { is_defeat_dead = yes }
     }
     
     option = {
         name = {
             text = EVTOPTA_TSK_C_DE.5
-            trigger = {
-                NOT = { has_character_flag = tsk_duel_death }
-            }
+            trigger = { NOT = { has_character_flag = tsk_duel_death } }
         }
 
         name = {
             text = EVTOPTC_TSK_C_DE.4
-        
-            trigger = {
-                has_character_flag = tsk_duel_death
-            }
+            trigger = { has_character_flag = tsk_duel_death }
         }
         
         ############################
@@ -337,13 +299,12 @@ character_event = {
         
         ###
         
-        FROM = {
-            character_event = { id = TSK_C_DE.5 }
-        }
+        duel_initiator = { character_event = { id = TSK_C_DE.5 } }
     }
 }
 
 # 'perp' informed, handle flags and/or damage
+# duel_initiator
 character_event = {
     id = TSK_C_DE.5
     desc = EVTDESC_TSK_C_DE.5
@@ -357,70 +318,50 @@ character_event = {
     }
     
     immediate = {
-
+        # Results calculated in the last event
     }
     
     desc = {
         text = EVTDESC_A_TSK_C_DE.4
-        trigger = {
-            is_victorious_opponent_dead = yes
-        }
+        trigger = { is_victorious_opponent_dead = yes }
     }
     desc = {
         text = EVTDESC_B_TSK_C_DE.4
-        trigger = {
-            is_victorious_untouched_opponent_wounded = yes
-        }
+        trigger = { is_victorious_untouched_opponent_wounded = yes }
     }
 
     desc = {
         text = EVTDESC_C_TSK_C_DE.4
-        trigger = {
-            is_draw_untouched_opponent_untouched = yes
-        }
+        trigger = { is_draw_untouched_opponent_untouched = yes }
     }
     desc = {
         text = EVTDESC_D_TSK_C_DE.4
-        trigger = {
-            is_draw_untouched_opponent_wounded = yes
-        }
+        trigger = { is_draw_untouched_opponent_wounded = yes }
     }
     desc = {
         text = EVTDESC_E_TSK_C_DE.4
-        trigger = {
-            is_draw_wounded_opponent_untouched = yes
-        }
+        trigger = { is_draw_wounded_opponent_untouched = yes }
     }
     desc = {
         text = EVTDESC_F_TSK_C_DE.4
-        trigger = {
-            is_draw_wounded_opponent_wounded = yes
-        }
+        trigger = { is_draw_wounded_opponent_wounded = yes }
     }
     desc = {
         text = EVTDESC_G_TSK_C_DE.4
-        trigger = {
-            is_draw_untouched_opponent_dead = yes
-        }
+        trigger = { is_draw_untouched_opponent_dead = yes }
     }
     desc = {
         text = EVTDESC_H_TSK_C_DE.4
-        trigger = {
-            is_draw_wounded_opponent_dead = yes
-        }
+        trigger = { is_draw_wounded_opponent_dead = yes }
     }
 
     desc = {
         text = EVTDESC_I_TSK_C_DE.4
-        trigger = {
-            is_defeat_wounded_opponent_untouched = yes
-        }
+        trigger = { is_defeat_wounded_opponent_untouched = yes }
     }
     desc = {
         text = EVTDESC_J_TSK_C_DE.4
-        trigger = {
-            is_defeat_dead = yes
-        }
+        trigger = { is_defeat_dead = yes }
     }
     
     option = {
