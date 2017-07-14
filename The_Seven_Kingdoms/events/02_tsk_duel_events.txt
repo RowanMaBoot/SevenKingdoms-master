@@ -54,6 +54,8 @@ character_event = {
     
     # In case we have any leftover flags, ie due to someone dying before the chain can finish.
     immediate = {
+        clear_event_target = combat_target
+        
         clr_character_flag = tsk_duel_flee_attempt_success
         clr_character_flag = tsk_duel_flee_attempt
         clr_character_flag = tsk_duel_draw_damaged
@@ -66,14 +68,16 @@ character_event = {
             clr_character_flag = tsk_duel_lost
             clr_character_flag = tsk_duel_death
         }
+        
+        FROM = {
+            save_event_target_as = combat_target
+        }
     }
     
     option = {
         name = EVTOPTA_TSK_C_DE.1
         
-        FROM = {
-            character_event = { id = TSK_C_DE.2 }
-        }
+        combat_target = { character_event = { id = TSK_C_DE.2 } }
     }
     option = {
         name = EVTOPTB_TSK_C_DE.1
@@ -199,17 +203,6 @@ character_event = {
     option = {
         name = EVTOPTA_TSK_C_DE.3
         
-        # Successfully Flee, End Chain
-        if = {
-            limit = {
-                FROM = {
-                    has_character_flag = tsk_duel_flee_attempt_success
-                }
-            }
-            clr_character_flag = tsk_duel_flee_attempt_success
-            clr_character_flag = tsk_duel_flee_attempt
-            break = yes
-        }
         # Fail to flee or Engage
         if = {
             limit = {
@@ -225,11 +218,20 @@ character_event = {
                 character_event = { id = TSK_C_DE.4 }
             }
         }
+        # Successfully Flee, End Chain
+        if = {
+            limit = {
+                FROM = {
+                    has_character_flag = tsk_duel_flee_attempt_success
+                }
+            }
+            clr_character_flag = tsk_duel_flee_attempt_success
+            clr_character_flag = tsk_duel_flee_attempt
+        }
     }
 }
 
 # 'victim' recieves results, immediately informs perp
-# possible issue; does not know if perp is dead or not, as death and damage is handled in event.5
 
 character_event = {
     id = TSK_C_DE.4
@@ -243,183 +245,227 @@ character_event = {
         is_alive = yes
     }
     
-    immediate = {
-        ### Three possible 'Major' outcomes. ###
-        
-        # Perp harms victim, perp unharmed
-        # Perp harms victim, perp harmed
-        # victim harms perp, victim unharmed
-        
-        # The chance is modified by the difference in combat skill. The bigger the difference, the higher the chance of a favourable result.
-        # If both are matched, death will never happen but they will both be injured.
-        
-        random_list = {
-            # FROM deals damage to ROOT without taking harm
-            # Set Flag for FROM to indicate victory
-            33 = {
-                modifier = {
-                    factor = 3
-                    FROM = {
-                        combat_rating_diff = { who = ROOT value = 7 } # Huge difference
-                    }
-                }
-                modifier = {
-                    factor = 2
-                    FROM = {
-                        combat_rating_diff = { who = ROOT value = 5 } # Big difference
-                        NOT = { combat_rating_diff = { who = FROM value = 7 } }
-                    }
-                }
-                modifier = {
-                    factor = 1.5
-                    FROM = {
-                        combat_rating_diff = { who = ROOT value = 3 } # difference
-                        NOT = { combat_rating_diff = { who = FROM value = 5 } }
-                    }
-                }
-                
-                
-                if = {
-                    limit = { can_be_maimed_trigger = yes }
-                    random_list = {
-                        50 = { victim_battle_wounding_minor_effect = yes }
-                        50 = { victim_battle_wounding_major_effect = yes }
-                    }
-                }
-                if = {
-                    limit = { can_be_maimed_trigger = no }
-
-                    victim_batle_wounding_death_effect = yes
-                }
-                
-                set_character_flag = tsk_duel_lost
-            }
-            # Both matched, deal damage to each other. Handle self damage.
-            # Set flag for FROM to indicate draw so they can handle their damage in their event
-            33 = {
-                modifier = {
-                    factor = 3
-                    combat_rating_diff = { who = FROM value = 0 } # No difference
-                }
-                
-                if = {
-                    limit = { can_be_maimed_trigger = yes }
-                    random_list = {
-                        50 = { victim_battle_wounding_minor_effect = yes }
-                        50 = { victim_battle_wounding_major_effect = yes }
-                    }
-                }
-                if = {
-                    limit = { can_be_maimed_trigger = no }
-                    
-                    victim_batle_wounding_death_effect = yes
-                }
-                
-                set_character_flag = tsk_duel_draw_damaged
-                FROM = {
-                    set_character_flag = tsk_duel_draw_damaged
-                }
-            }
-            # Set flag for FROM to indicate losing, handle negative effects there
-            33 = {
-                modifier = {
-                    factor = 3
-                    combat_rating_diff = { who = FROM value = 7 } # Huge difference
-                }
-                modifier = {
-                    factor = 2
-                    combat_rating_diff = { who = FROM value = 5 } # Big difference
-                    NOT = { combat_rating_diff = { who = FROM value = 7 } }
-                }
-                modifier = {
-                    factor = 1.5
-                    combat_rating_diff = { who = FROM value = 3 } # difference
-                    NOT = { combat_rating_diff = { who = FROM value = 5 } }
-                }
-                
-                FROM = {
-                    set_character_flag = tsk_duel_lost
-                }
-            }
-        }
+    immediate = {    
+        duel_combat_results_skill_effect = yes
     }
     
-    # Death
+    # Victory, untouched, FROM wounded
     desc = {
-		text = EVTDESCA_TSK_C_DE.4
-        trigger = {
-            has_character_flag = tsk_duel_death
-        }
-	}
-    
-    # Loss
-    desc = {
-		text = EVTDESCB_TSK_C_DE.4
-        trigger = {
-            has_character_flag = tsk_duel_lost
-            NOT = {
-                has_character_flag = tsk_duel_death
-            }
-        }
-	}
-    
-    # Draw
-    desc = {
-        text = EVTDESCC_TSK_C_DE.4
-        trigger = {
-            has_character_flag = tsk_duel_draw_damaged
-            NOT = {
-                has_character_flag = tsk_duel_death
-            }
-        }
-    }
-    
-    # Fallback (No damage taken)
-    desc = {
-        text = EVTDESCD_TSK_C_DE.4
+        text = EVTDESC_A_TSK_C_DE.4
         trigger = {
             NOR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                OR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
+                has_character_flag = tsk_duel_draw_damaged
                 has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Victory, untouched, FROM killed
+    desc = {
+        text = EVTDESC_B_TSK_C_DE.4
+        trigger = {
+            NOR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = no
+            }
+            NOR = {
+                has_character_flag = tsk_duel_draw_damaged
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+
+    # Draw, untouched, FROM untouched
+    desc = {
+        text = EVTDESC_C_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            NOR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                NOR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Draw, untouched, FROM wounded
+    desc = {
+        text = EVTDESC_D_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            NOR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                OR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Draw, injured, FROM untouched
+    desc = {
+        text = EVTDESC_E_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            OR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                NOR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Draw, injured, FROM injured.
+    desc = {
+        text = EVTDESC_F_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            OR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                OR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Draw, untouched, FROM killed
+    desc = {
+        text = EVTDESC_G_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            NOR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = no
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Draw, injured, FROM killed
+    desc = {
+        text = EVTDESC_H_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            OR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = no
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+
+    # Defeat, Wounded, FROM unwounded
+    desc = {
+        text = EVTDESC_I_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_lost
+            OR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                NOR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
                 has_character_flag = tsk_duel_draw_damaged
                 has_character_flag = tsk_duel_death
             }
         }
     }
-    
-    # add_maimed_trait_effect = yes (various maiming)
-    
-    option = {
-        name = EVTOPTA_TSK_C_DE.4
-        
-        trigger = {
-            NOT = { has_character_flag = tsk_duel_death }
-        }
-        
-        clr_character_flag = tsk_duel_draw_damaged
-        clr_character_flag = tsk_duel_lost
-        clr_character_flag = tsk_duel_death
-        
-        FROM = {
-            character_event = { id = TSK_C_DE.5 }
-        }
-    }
-    
-    # Arrrrgh!
-    option = {
-        name = EVTOPTB_TSK_C_DE.4
-        
+    # Dead
+    desc = {
+        text = EVTDESC_J_TSK_C_DE.4
         trigger = {
             has_character_flag = tsk_duel_death
         }
+    }
+    
+    option = {
+        name = {
+            text = EVTOPTA_TSK_C_DE.5
+            trigger = {
+                NOT = { has_character_flag = tsk_duel_death }
+            }
+        }
+
+        name = {
+            text = EVTOPTC_TSK_C_DE.4
         
-        death = {
-            death_reason = death_duel
-            killer = FROM
+            trigger = {
+                has_character_flag = tsk_duel_death
+            }
         }
         
-        clr_character_flag = tsk_duel_draw_damaged
-        clr_character_flag = tsk_duel_lost
-        clr_character_flag = tsk_duel_death
+        ############################
+        
+        victim_duel_determine_effect = yes # Uses flags to assign effect
+        
+        ###
         
         FROM = {
             character_event = { id = TSK_C_DE.5 }
@@ -441,158 +487,221 @@ character_event = {
     }
     
     immediate = {
-        
-        if = {
-            limit = {
-                can_be_maimed_trigger = no
-                has_character_flag = tsk_duel_draw_damaged
-            }
-            victim_batle_wounding_death_effect = yes
-        }
-        if = {
-            limit = {
-                can_be_maimed_trigger = yes
-                has_character_flag = tsk_duel_draw_damaged
-            }
-            random_list = {
-                50 = { victim_battle_wounding_minor_effect = yes }
-                50 = { victim_battle_wounding_major_effect = yes }
-            }
-        }
-        
-        
-        if = {
-            limit = {
-                can_be_maimed_trigger = no
-                has_character_flag = tsk_duel_lost
-            }
-            random_list = {
-                50 = { victim_battle_wounding_minor_effect = yes }
-                50 = { victim_battle_wounding_major_effect = yes }
-            }
-        }
-        if = {
-            limit = {
-                can_be_maimed_trigger = yes
-                has_character_flag = tsk_duel_lost
-            }
-            random_list = {
-                50 = { victim_battle_wounding_minor_effect = yes }
-                50 = { victim_battle_wounding_major_effect = yes }
-            }
-        }
+
     }
     
-    # Death
+    # Victory, untouched, FROM wounded
     desc = {
-		text = EVTDESCA_TSK_C_DE.5
-        trigger = {
-            has_character_flag = tsk_duel_death
-        }
-	}
-    
-    # Loss
-    desc = {
-		text = EVTDESCB_TSK_C_DE.5
-        trigger = {
-            has_character_flag = tsk_duel_lost
-            NOT = {
-                has_character_flag = tsk_duel_death
-                FROM = {
-                    is_alive = no
-                    death_reason = death_duel
-                    killer = ROOT
-                }
-            }
-        }
-	}
-    
-    # Draw
-    desc = {
-        text = EVTDESCC_TSK_C_DE.5
-        trigger = {
-            has_character_flag = tsk_duel_draw_damaged
-            NOT = {
-                has_character_flag = tsk_duel_death
-                FROM = {
-                    is_alive = no
-                    death_reason = death_duel
-                    killer = ROOT
-                }
-            }
-        }
-    }
-    
-    # FROM Killed, Draw
-    desc = {
-        text = EVTDESCD_TSK_C_DE.5
-        trigger = {
-            has_character_flag = tsk_duel_death
-            FROM = {
-                is_alive = no
-                death_reason = death_duel
-                killer = ROOT
-            }
-        }
-    }
-    
-    # FROM Killed, Fallback (No damage taken)
-    desc = {
-        text = EVTDESCE_TSK_C_DE.5
-        trigger = {
-            has_character_flag = tsk_duel_death
-            FROM = {
-                is_alive = no
-                death_reason = death_duel
-                killer = ROOT
-            }
-        }
-    }
-    
-    # Fallback (No damage taken)
-    desc = {
-        text = EVTDESCF_TSK_C_DE.5
+        text = EVTDESC_A_TSK_C_DE.4
         trigger = {
             NOR = {
-                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                OR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
                 has_character_flag = tsk_duel_draw_damaged
+                has_character_flag = tsk_duel_lost
                 has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Victory, untouched, FROM killed
+    desc = {
+        text = EVTDESC_B_TSK_C_DE.4
+        trigger = {
+            NOR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
             }
             FROM = {
                 is_alive = no
-                death_reason = death_duel
-                killer = ROOT
+            }
+            NOR = {
+                has_character_flag = tsk_duel_draw_damaged
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
             }
         }
     }
-    
-    option = {
-        name = EVTOPTA_TSK_C_DE.5
-        
+
+    # Draw, untouched, FROM untouched
+    desc = {
+        text = EVTDESC_C_TSK_C_DE.4
         trigger = {
-            NOT = { has_character_flag = tsk_duel_death }
+            has_character_flag = tsk_duel_draw_damaged
+            NOR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                NOR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
         }
-        
-        clr_character_flag = tsk_duel_draw_damaged
-        clr_character_flag = tsk_duel_lost
-        clr_character_flag = tsk_duel_death
     }
-    
-    # Death (Arrrrgh!)
-    option = {
-        name = EVTOPTB_TSK_C_DE.5
-        
+    # Draw, untouched, FROM wounded
+    desc = {
+        text = EVTDESC_D_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            NOR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                OR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Draw, injured, FROM untouched
+    desc = {
+        text = EVTDESC_E_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            OR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                NOR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Draw, injured, FROM injured.
+    desc = {
+        text = EVTDESC_F_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            OR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                OR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Draw, untouched, FROM killed
+    desc = {
+        text = EVTDESC_G_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            NOR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = no
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Draw, injured, FROM killed
+    desc = {
+        text = EVTDESC_H_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_draw_damaged
+            OR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = no
+            }
+            NOR = {
+                has_character_flag = tsk_duel_lost
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+
+    # Defeat, Wounded, FROM unwounded
+    desc = {
+        text = EVTDESC_I_TSK_C_DE.4
+        trigger = {
+            has_character_flag = tsk_duel_lost
+            OR = {
+                has_character_flag = tsk_duel_wounded_major
+                has_character_flag = tsk_duel_wounded_minor
+            }
+            FROM = {
+                is_alive = yes
+                NOR = {
+                    has_character_flag = tsk_duel_wounded_major
+                    has_character_flag = tsk_duel_wounded_minor
+                }
+            }
+            NOR = {
+                has_character_flag = tsk_duel_draw_damaged
+                has_character_flag = tsk_duel_death
+            }
+        }
+    }
+    # Dead
+    desc = {
+        text = EVTDESC_J_TSK_C_DE.4
         trigger = {
             has_character_flag = tsk_duel_death
         }
-        
-        death = {
-            death_reason = death_duel
-            killer = FROM
+    }
+    
+    option = {
+        name = {
+            text = EVTOPTA_TSK_C_DE.5
+            trigger = {
+                NOT = { has_character_flag = tsk_duel_death }
+            }
+        }
+        name = {
+            text = EVTOPTB_TSK_C_DE.5
+            trigger = {
+                has_character_flag = tsk_duel_death
+            }
         }
         
-        clr_character_flag = tsk_duel_draw_damaged
-        clr_character_flag = tsk_duel_lost
-        clr_character_flag = tsk_duel_death
+        ############################
+        
+        victim_duel_determine_effect = yes # Uses flags to assign effect
     }
 }
