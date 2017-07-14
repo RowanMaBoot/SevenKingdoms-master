@@ -54,6 +54,8 @@ character_event = {
     
     # In case we have any leftover flags, ie due to someone dying before the chain can finish.
     immediate = {
+        clear_event_target = combat_target
+        
         clr_character_flag = tsk_duel_flee_attempt_success
         clr_character_flag = tsk_duel_flee_attempt
         clr_character_flag = tsk_duel_draw_damaged
@@ -66,15 +68,16 @@ character_event = {
             clr_character_flag = tsk_duel_lost
             clr_character_flag = tsk_duel_death
         }
+        
+        FROM = {
+            save_event_target_as = combat_target
+        }
     }
     
     option = {
         name = EVTOPTA_TSK_C_DE.1
         
-        FROM = {
-            save_event_target_as = combat_target
-            combat_target = { character_event = { id = TSK_C_DE.2 } }
-        }
+        combat_target = { character_event = { id = TSK_C_DE.2 } }
     }
     option = {
         name = EVTOPTB_TSK_C_DE.1
