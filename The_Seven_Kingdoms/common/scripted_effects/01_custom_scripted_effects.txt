@@ -187,45 +187,259 @@ train_combat_skill_chance_dangerous = {
     }
 }
 
-victim_battle_wounding_minor_effect = {
-    random_list = {
-        90 = {
-            add_trait = wounded
+### Duel System Wounding
+# Death effect gives them a flag, which can be used to kill the character/s.
+# Minor wounds has a large chance of inflicting wounded and a small chance of maiming.
+# Major wounds has a large chance of maiming, a small chance of wounding and a tiny chance of death.
+
+# Effects (death, injury) are handled in the event options.
+
+# Flags Used:
+# tsk_duel_wounded_major -- used for major injury description -- add_maimed_trait_effect = yes
+# tsk_duel_wounded_minor -- used for minor injury description -- add_trait_wounded_effect = yes
+# tsk_duel_death -- used for death description.
+
+# Combat results has three possible primary outcomes, modified by the combat_rating_diff of participants.
+
+duel_flag_cleanup_effect = {
+    clr_character_flag = tsk_duel_wounded_major
+    clr_character_flag = tsk_duel_wounded_minor
+    clr_character_flag = tsk_duel_death
+    clr_character_flag = tsk_duel_flee_attempt
+    clr_character_flag = tsk_duel_flee_attempt_success
+    clr_character_flag = tsk_duel_draw_damaged
+    clr_character_flag = tsk_duel_lost
+    FROM = {
+        clr_character_flag = tsk_duel_wounded_major
+        clr_character_flag = tsk_duel_wounded_minor
+        clr_character_flag = tsk_duel_death
+        clr_character_flag = tsk_duel_flee_attempt
+        clr_character_flag = tsk_duel_flee_attempt_success
+        clr_character_flag = tsk_duel_draw_damaged
+        clr_character_flag = tsk_duel_lost
+    }
+}
+
+# Combat Effects assign flags, which are then read in the event option to display effects.
+
+duel_combat_loss_effects = {
+    if = {
+        limit = { can_be_maimed_trigger = yes }
+        random_list = {
+            45 = { victim_duel_wounding_major_effect = yes }
+            50 = { victim_duel_wounding_minor_effect = yes }
+            5 = { }
         }
-        10 = {
-            add_maimed_trait_effect = yes
+    }
+    if = {
+        limit = { can_be_maimed_trigger = no }
+
+        victim_duel_wounding_death_effect = yes
+    }
+    
+    set_character_flag = tsk_duel_lost
+}
+
+duel_combat_draw_effects = {
+    if = {
+        limit = { can_be_maimed_trigger = yes }
+        random_list = {
+            20 = { victim_duel_wounding_major_effect = yes }
+            70 = { victim_duel_wounding_minor_effect = yes }
+            10 = { }
+        }
+    }
+    if = {
+        limit = { can_be_maimed_trigger = no }
+        
+        victim_duel_wounding_death_effect = yes
+    }
+    
+    set_character_flag = tsk_duel_draw_damaged # For description
+}
+
+duel_combat_results_skill_effect = {
+    random_list = {
+        # FROM deals damage to ROOT without taking harm
+        # Set Flag for ROOT to indicate victory for FROM
+        33 = {
+            modifier = {
+                factor = 4.00
+                FROM = {
+                    combat_rating_diff = { who = ROOT value = 8 }
+                }
+            }
+            modifier = {
+                factor = 3.50
+                FROM = {
+                    combat_rating_diff = { who = ROOT value = 7 }
+                    NOT = { combat_rating_diff = { who = ROOT value = 8 } }
+                }
+            }
+            modifier = {
+                factor = 2.75
+                FROM = {
+                    combat_rating_diff = { who = ROOT value = 6 }
+                    NOT = { combat_rating_diff = { who = ROOT value = 7 } }
+                }
+            }
+            modifier = {
+                factor = 2.25
+                FROM = {
+                    combat_rating_diff = { who = ROOT value = 5 }
+                    NOT = { combat_rating_diff = { who = ROOT value = 6 } }
+                }
+            }
+            modifier = {
+                factor = 1.75
+                FROM = {
+                    combat_rating_diff = { who = ROOT value = 4 }
+                    NOT = { combat_rating_diff = { who = ROOT value = 5 } }
+                }
+            }
+            modifier = {
+                factor = 1.5
+                FROM = {
+                    combat_rating_diff = { who = ROOT value = 3 }
+                    NOT = { combat_rating_diff = { who = ROOT value = 4 } }
+                }
+            }
+            modifier = {
+                factor = 1.25
+                FROM = {
+                    combat_rating_diff = { who = ROOT value = 2 }
+                    NOT = { combat_rating_diff = { who = ROOT value = 3 } }
+                }
+            }
+            modifier = {
+                factor = 1.15
+                FROM = {
+                    combat_rating_diff = { who = ROOT value = 1 }
+                    NOT = { combat_rating_diff = { who = ROOT value = 2 } }
+                }
+            }
+            
+            duel_combat_loss_effects = yes
+        }
+
+        33 = {
+            modifier = {
+                factor = 3
+                combat_rating_diff = { who = FROM value = 0 } # No difference
+            }
+            
+            # ROOT recieves flags
+            
+            duel_combat_draw_effects = yes
+            
+            # FROM recieves flags
+            
+            FROM = { duel_combat_draw_effects = yes }
+        }
+
+        33 = {
+            modifier = {
+                factor = 4.00
+                combat_rating_diff = { who = FROM value = 8 }
+            }
+            modifier = {
+                factor = 3.50
+                combat_rating_diff = { who = FROM value = 7 }
+                NOT = { combat_rating_diff = { who = FROM value = 8 } }
+            }
+            modifier = {
+                factor = 2.75
+                combat_rating_diff = { who = FROM value = 6 }
+                NOT = { combat_rating_diff = { who = FROM value = 7 } }
+            }
+            modifier = {
+                factor = 2.25
+                combat_rating_diff = { who = FROM value = 5 }
+                NOT = { combat_rating_diff = { who = FROM value = 6 } }
+            }
+            modifier = {
+                factor = 1.75
+                combat_rating_diff = { who = FROM value = 4 }
+                NOT = { combat_rating_diff = { who = FROM value = 5 } }
+            }
+            modifier = {
+                factor = 1.5
+                combat_rating_diff = { who = FROM value = 3 }
+                NOT = { combat_rating_diff = { who = FROM value = 4 } }
+            }
+            modifier = {
+                factor = 1.25
+                combat_rating_diff = { who = FROM value = 2 }
+                NOT = { combat_rating_diff = { who = FROM value = 3 } }
+            }
+            modifier = {
+                factor = 1.15
+                combat_rating_diff = { who = FROM value = 1 }
+                NOT = { combat_rating_diff = { who = FROM value = 2 } }
+            }
+            
+            FROM = { duel_combat_loss_effects = yes }
         }
     }
 }
 
-# FROM is the sending of doom in this case.
-# If FROM is killed, then they need to be sent an event from our current ROOT so they become FROM.
-victim_battle_wounding_major_effect = {
+victim_duel_wounding_death_effect = {
+    set_character_flag = tsk_duel_death
+}
+
+victim_duel_wounding_minor_effect = {
+    
     random_list = {
-        80 = {
-            add_maimed_trait_effect = yes
+        89 = {
+            # add_trait_wounded_effect = yes
+            set_character_flag = tsk_duel_wounded_minor
         }
-        20 = {
-            set_character_flag = tsk_duel_death
-            # death = {
-                # death_reason = death_duel
-                # killer = FROM
-            # }
+        10 = {
+            # add_maimed_trait_effect = yes
+            set_character_flag = tsk_duel_wounded_major
+        }
+        1 = {
+            victim_duel_wounding_death_effect = yes
         }
     }
 }
 
-victim_batle_wounding_death_effect = {
+victim_duel_wounding_major_effect = {
     random_list = {
-        10 = {
-            add_trait = wounded
+        85 = {
+            # add_maimed_trait_effect = yes
+            set_character_flag = tsk_duel_wounded_major
         }
-        90 = {
-            set_character_flag = tsk_duel_death
-            # death = {
-                # death_reason = death_duel
-                # killer = FROM
-            # }
+        10 = {
+            # add_trait_wounded_effect = yes
+            set_character_flag = tsk_duel_wounded_minor
+        }
+        5 = {
+            victim_duel_wounding_death_effect = yes
+        }
+    }
+}
+
+victim_duel_determine_effect = {
+    if = {
+        limit = {
+            has_character_flag = tsk_duel_wounded_major
+        }
+        add_maimed_trait_effect = yes
+    }
+    if = {
+        limit = {
+            has_character_flag = tsk_duel_wounded_minor
+        }
+        add_trait_wounded_effect = yes
+    }
+    if = {
+        limit = {
+            has_character_flag = tsk_duel_death
+        }
+        death = {
+            death_reason = death_duel
+            killer = FROM
         }
     }
 }
