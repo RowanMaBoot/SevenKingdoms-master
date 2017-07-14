@@ -261,3 +261,167 @@ is_combat_legend_or_lower = {
 
 ##
 
+is_victorious_opponent_dead = {
+    NOR = {
+        has_character_flag = tsk_duel_wounded_major
+        has_character_flag = tsk_duel_wounded_minor
+    }
+    FROM = {
+        has_character_flag = tsk_duel_death
+        OR = {
+            has_character_flag = tsk_duel_wounded_major
+            has_character_flag = tsk_duel_wounded_minor
+        }
+    }
+    NOR = {
+        has_character_flag =     _damaged
+        has_character_flag = tsk_duel_lost
+        has_character_flag = tsk_duel_death
+    }
+}
+
+is_victorious_untouched_opponent_wounded = {
+    NOR = {
+        has_character_flag = tsk_duel_wounded_major
+        has_character_flag = tsk_duel_wounded_minor
+    }
+    FROM = {
+        NOT = {
+            has_character_flag = tsk_duel_death
+        }
+    }
+    NOR = {
+        has_character_flag =     _damaged
+        has_character_flag = tsk_duel_lost
+        has_character_flag = tsk_duel_death
+    }
+}
+
+is_draw_untouched_opponent_untouched = {
+    has_character_flag =     _damaged
+    NOR = {
+        has_character_flag = tsk_duel_wounded_major
+        has_character_flag = tsk_duel_wounded_minor
+    }
+    FROM = {
+        NOR = {
+            has_character_flag = tsk_duel_wounded_major
+            has_character_flag = tsk_duel_wounded_minor
+            has_character_flag = tsk_duel_death
+        }
+    }
+    NOR = {
+        has_character_flag = tsk_duel_lost
+        has_character_flag = tsk_duel_death
+    }
+}
+
+is_draw_untouched_opponent_wounded = {
+    has_character_flag =     _damaged
+    NOR = {
+        has_character_flag = tsk_duel_wounded_major
+        has_character_flag = tsk_duel_wounded_minor
+    }
+    FROM = {
+        OR = {
+            has_character_flag = tsk_duel_wounded_major
+            has_character_flag = tsk_duel_wounded_minor
+        }
+        NOT = { has_character_flag = tsk_duel_death }
+    }
+    NOR = {
+        has_character_flag = tsk_duel_lost
+        has_character_flag = tsk_duel_death
+    }
+}
+
+is_draw_wounded_opponent_untouched = {
+    has_character_flag =     _damaged
+    OR = {
+        has_character_flag = tsk_duel_wounded_major
+        has_character_flag = tsk_duel_wounded_minor
+    }
+    FROM = {
+        NOR = {
+            has_character_flag = tsk_duel_wounded_major
+            has_character_flag = tsk_duel_wounded_minor
+        }
+        NOT = { has_character_flag = tsk_duel_death }
+    }
+    NOR = {
+        has_character_flag = tsk_duel_lost
+        has_character_flag = tsk_duel_death
+    }
+}
+
+is_draw_wounded_opponent_wounded = {
+    has_character_flag =     _damaged
+    OR = {
+        has_character_flag = tsk_duel_wounded_major
+        has_character_flag = tsk_duel_wounded_minor
+    }
+    FROM = {
+        OR = {
+            has_character_flag = tsk_duel_wounded_major
+            has_character_flag = tsk_duel_wounded_minor
+        }
+        NOT = { has_character_flag = tsk_duel_death }
+    }
+    NOR = {
+        has_character_flag = tsk_duel_lost
+        has_character_flag = tsk_duel_death
+    }
+}
+
+is_draw_untouched_opponent_dead = {
+    has_character_flag =     _damaged
+    NOR = {
+        has_character_flag = tsk_duel_wounded_major
+        has_character_flag = tsk_duel_wounded_minor
+    }
+    FROM = {
+        has_character_flag = tsk_duel_death
+    }
+    NOR = {
+        has_character_flag = tsk_duel_lost
+        has_character_flag = tsk_duel_death
+    }
+}
+
+is_draw_wounded_opponent_dead = {
+    has_character_flag =     
+    OR = {
+        has_character_flag = tsk_duel_wounded_major
+        has_character_flag = tsk_duel_wounded_minor
+    }
+    FROM = {
+        has_character_flag = tsk_duel_death
+    }
+    NOR = {
+        has_character_flag = tsk_duel_lost
+        has_character_flag = tsk_duel_death
+    }
+}
+
+is_defeat_wounded_opponent_untouched = {
+    has_character_flag = tsk_duel_lost
+    OR = {
+        has_character_flag = tsk_duel_wounded_major
+        has_character_flag = tsk_duel_wounded_minor
+    }
+    FROM = {
+        NOR = {
+            has_character_flag = tsk_duel_wounded_major
+            has_character_flag = tsk_duel_wounded_minor
+        }
+        NOT = { has_character_flag = tsk_duel_death }
+    }
+    NOR = {
+        has_character_flag =     
+        has_character_flag = tsk_duel_death
+    }
+}
+
+is_defeat_dead = {
+    has_character_flag = tsk_duel_death
+}

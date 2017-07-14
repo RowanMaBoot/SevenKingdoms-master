@@ -207,7 +207,7 @@ duel_flag_cleanup_effect = {
     clr_character_flag = tsk_duel_death
     clr_character_flag = tsk_duel_flee_attempt
     clr_character_flag = tsk_duel_flee_attempt_success
-    clr_character_flag = tsk_duel_draw_damaged
+    clr_character_flag = tsk_duel_draw
     clr_character_flag = tsk_duel_lost
     FROM = {
         clr_character_flag = tsk_duel_wounded_major
@@ -215,13 +215,79 @@ duel_flag_cleanup_effect = {
         clr_character_flag = tsk_duel_death
         clr_character_flag = tsk_duel_flee_attempt
         clr_character_flag = tsk_duel_flee_attempt_success
-        clr_character_flag = tsk_duel_draw_damaged
+        clr_character_flag = tsk_duel_draw
         clr_character_flag = tsk_duel_lost
     }
 }
 
-# Combat Effects assign flags, which are then read in the event option to display effects.
+################## STAGE 1 ##################
+# Stage one effects are used in Stage 2.
 
+victim_duel_wounding_death_effect = {
+    set_character_flag = tsk_duel_death
+}
+
+victim_duel_wounding_major_effect = {
+    random_list = {
+        85 = {
+            # add_maimed_trait_effect = yes
+            set_character_flag = tsk_duel_wounded_major
+        }
+        10 = {
+            # add_trait_wounded_effect = yes
+            set_character_flag = tsk_duel_wounded_minor
+        }
+        5 = {
+            victim_duel_wounding_death_effect = yes
+        }
+    }
+}
+
+victim_duel_wounding_minor_effect = {
+    
+    random_list = {
+        89 = {
+            # add_trait_wounded_effect = yes
+            set_character_flag = tsk_duel_wounded_minor
+        }
+        10 = {
+            # add_maimed_trait_effect = yes
+            set_character_flag = tsk_duel_wounded_major
+        }
+        1 = {
+            victim_duel_wounding_death_effect = yes
+        }
+    }
+}
+
+victim_duel_determine_effect = {
+    if = {
+        limit = {
+            has_character_flag = tsk_duel_wounded_major
+        }
+        add_maimed_trait_effect = yes
+    }
+    if = {
+        limit = {
+            has_character_flag = tsk_duel_wounded_minor
+        }
+        add_trait_wounded_effect = yes
+    }
+    if = {
+        limit = {
+            has_character_flag = tsk_duel_death
+        }
+        death = {
+            death_reason = death_duel
+            killer = FROM
+        }
+    }
+}
+
+################## STAGE 2 ##################
+# Stage 2 effects are used in Stage 3
+
+# Combat Effects assign flags, which are then read in the event option to display effects.
 duel_combat_loss_effects = {
     if = {
         limit = { can_be_maimed_trigger = yes }
@@ -255,9 +321,13 @@ duel_combat_draw_effects = {
         victim_duel_wounding_death_effect = yes
     }
     
-    set_character_flag = tsk_duel_draw_damaged # For description
+    set_character_flag = tsk_duel_draw
 }
 
+################## STAGE 3 ##################
+
+# This effect determines the difference in combat skill between fighters and, through a small amount of random,
+# determines what the result of combat is.
 duel_combat_results_skill_effect = {
     random_list = {
         # FROM deals damage to ROOT without taking harm
@@ -379,67 +449,6 @@ duel_combat_results_skill_effect = {
             }
             
             FROM = { duel_combat_loss_effects = yes }
-        }
-    }
-}
-
-victim_duel_wounding_death_effect = {
-    set_character_flag = tsk_duel_death
-}
-
-victim_duel_wounding_minor_effect = {
-    
-    random_list = {
-        89 = {
-            # add_trait_wounded_effect = yes
-            set_character_flag = tsk_duel_wounded_minor
-        }
-        10 = {
-            # add_maimed_trait_effect = yes
-            set_character_flag = tsk_duel_wounded_major
-        }
-        1 = {
-            victim_duel_wounding_death_effect = yes
-        }
-    }
-}
-
-victim_duel_wounding_major_effect = {
-    random_list = {
-        85 = {
-            # add_maimed_trait_effect = yes
-            set_character_flag = tsk_duel_wounded_major
-        }
-        10 = {
-            # add_trait_wounded_effect = yes
-            set_character_flag = tsk_duel_wounded_minor
-        }
-        5 = {
-            victim_duel_wounding_death_effect = yes
-        }
-    }
-}
-
-victim_duel_determine_effect = {
-    if = {
-        limit = {
-            has_character_flag = tsk_duel_wounded_major
-        }
-        add_maimed_trait_effect = yes
-    }
-    if = {
-        limit = {
-            has_character_flag = tsk_duel_wounded_minor
-        }
-        add_trait_wounded_effect = yes
-    }
-    if = {
-        limit = {
-            has_character_flag = tsk_duel_death
-        }
-        death = {
-            death_reason = death_duel
-            killer = FROM
         }
     }
 }
