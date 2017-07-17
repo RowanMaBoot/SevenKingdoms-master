@@ -822,46 +822,44 @@
 	
 	# Martial
 	10 = {
-        factor = 100
-        modifier = {
-            factor = 0
-            in_command = no
-	        NOT = { trait = shieldmaiden }
-            NOT = { has_job_title  = job_marshal }
-        }
+		factor = 100
 		modifier = {
 			factor = 0
-			OR = {
-				AND = {
-					is_female = yes
-					NOT = { trait = shieldmaiden }
-				}
-				real_tier = king
-				real_tier = emperor
-				AND = {
-					real_tier = duke
-					any_demesne_title = {
-						real_tier = baron
-					}
-				}
-				AND = {
-					religion_group = the_seven_group
+			in_command = no
+			NOT = { has_job_title  = job_marshal }
+			NOT = {
+				primary_title = {
 					OR = {
-						AND = {
-							is_ruler = yes
-							is_theocracy = yes
-						}
-						has_job_title = job_spiritual
+						mercenary = yes
+						holy_order = yes
 					}
 				}
 			}
 		}
-	    modifier = {
-            factor = 100
-            in_command = yes
-	    has_job_title  = job_marshal 
-        }
-}
+		modifier = {
+			factor = 0
+			OR = {
+				higher_real_tier_than = duke
+				spouse = { higher_real_tier_than = duke }
+			}
+			in_command = no
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				is_nomadic = yes
+				AND = {
+					liege = { is_nomadic = yes }
+					is_ruler = no
+				}
+			}
+			war = no
+			NOR = {
+				siege = { is_attacker = yes }
+				has_job_title  = job_marshal
+			}
+		}
+	}
 	
 	# Ragged prison clothes
 	11 = {
@@ -1218,36 +1216,36 @@
 			factor = 0
 			in_command = no
 			NOT = { has_job_title  = job_marshal }
-			
+			NOT = {
+				primary_title = {
+					OR = {
+						mercenary = yes
+						holy_order = yes
+					}
+				}
+			}
 		}
 		modifier = {
 			factor = 0
 			OR = {
+				higher_real_tier_than = duke
+				spouse = { higher_real_tier_than = duke }
+			}
+			in_command = no
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				is_nomadic = yes
 				AND = {
-					is_female = yes
-					OR = {
-						NOT = { has_minor_title = title_commander }
-						NOT = { trait = shieldmaiden }
-					}
+					liege = { is_nomadic = yes }
+					is_ruler = no
 				}
-				real_tier = king
-				real_tier = emperor
-				AND = {
-					real_tier = duke
-					any_demesne_title = {
-						real_tier = baron
-					}
-				}
-				AND = {
-					religion_group = the_seven
-					OR = {
-						AND = {
-							is_ruler = yes
-							is_theocracy = yes
-						}
-						has_job_title = job_spiritual
-					}
-				}
+			}
+			war = no
+			NOR = {
+				siege = { is_attacker = yes }
+				has_job_title  = job_marshal
 			}
 		}
 	}
