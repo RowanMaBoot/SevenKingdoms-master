@@ -1,18 +1,102 @@
-namespace = dw
+namespace = DAWN
 
 #On_death event for dawn
 character_event = {
-    id = dw.1
-    
+	id = DAWN.1
+	
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = {
+		has_artifact = dawn
+		has_global_flag = has_dawn
+	}
+	
+	immediate = {
+		destroy_artifact = dawn
+		clr_global_flag = has_dawn
+	}
+}
+
+
+character_event = {
+	id = DAWN.2
+	desc = "EVTDESCDAWN.2"
+	picture = GFX_sword_of_the_morning
+	is_triggered_only = yes
+
+	
+	only_playable = yes
+	
+	trigger = {
+		has_artifact = dawn
+	}
+	option = {
+		name = "EVTOPTADAWN.2"
+		prestige = 350
+		hidden_tooltip = {
+			character_event = {
+				id = DAWN.3
+				days = 2
+			}
+		}		
+	}
+}
+
+
+character_event = {
+    id = DAWN.3
+    desc = "EVTDESCDAWN.3"
+    picture = GFX_sword_of_the_morning
+    major = yes
     is_triggered_only = yes
-    hide_window = yes
-    
+
+   
+    only_playable = yes
+   
     trigger = {
-        has_artifact = dawn
+        NOT = {
+            has_global_flag = DAWN_event_3
+        }
     }
-    
+    major_trigger = {
+        FROM = {
+            has_artifact = dawn
+        }
+    }
+
     immediate = {
-        destroy_artifact = dawn
-        clr_global_flag = dawn_exists
+        set_global_flag = DAWN_event_3
+    }
+    option = {
+        name = "EVTOPTADAWN.3"
+        ai_chance = {
+            factor = 1
+            modifier = {
+                factor = 1
+                OR = {
+                    trait = kind
+                    trait = bleeding_heart
+                    trait = honourable
+                }
+            }
+        }
+    }
+    option = {
+        name = "EVTOPTBDAWN.3"
+        ai_chance = {
+            factor = 1
+            modifier = {
+                factor = 1
+                OR = {
+                    trait = cruel
+                    trait = heartless
+                    trait = dishonorable
+                }
+            }
+        }
+    }
+    after = {
+    	clr_global_flag = DAWN_event_3 #for when others wield it
     }
 }
