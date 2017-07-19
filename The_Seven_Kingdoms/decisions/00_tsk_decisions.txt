@@ -82,64 +82,61 @@ targetted_decisions = {
     }
 }
 decisions = {
-	claim_dawn = {
-		is_high_prio = yes
-		potential = {
-			dynasty = 500
-			age = 16
-			
-			NOT = {has_artifact = dawn}
-			NOT = {has_dawn = {is_alive = yes} }
-		}
-		allow = {
-			OR = {
-				trait = dueling_legend
-				trait = dueling_master
-			}
-			custom_tooltip = {
-				text = TOOLTIP_claim_dawn
-				hidden_tooltip = {
-					calc_true_if = {
-						amount = 3
-						trait = brave
-						trait = kind
-						trait = patient
-						trait = quick
-						trait = just
-						trait = diligent
-						trait = honourable
-						trait = ambitious
-						trait = bleeding_heart
-						trait = huge
-						trait = tall
-						trait = strong_physique
-						trait = strong
-						
-					}
-				}	
-			}
-			NOR = {
-				trait = incapable
-				trait = weak
-				trait = imbecile
-				trait = cruel
-				trait = greedy
-				trait = craven
-				trait = infirm
-				trait = sociopath
-				trait = dishonourable
-				trait = heartless
-				trait = irrational
-				trait = short
-			}
-		}	
-		effect = {
-			add_artifact = dawn
-			give_nickname = nick_the_sword_of_the_morning 
-			hidden_tooltip = {
-				add_trait = has_dawn
-			}
-		} #Will have a future event.
-		ai_will_do = { factor = 100 }
-	}	
-}		
+    claim_dawn = {
+        is_high_prio = yes
+        potential = {
+            dynasty = 500
+            age = 16
+            
+            NOT = { has_global_flag = dawn_exists }
+        }
+        allow = {
+            OR = {
+                trait = dueling_legend
+                trait = dueling_master
+            }
+            custom_tooltip = {
+                text = TOOLTIP_claim_dawn
+                hidden_tooltip = {
+                    calc_true_if = {
+                        amount = 3
+                        trait = brave
+                        trait = kind
+                        trait = patient
+                        trait = quick
+                        trait = just
+                        trait = diligent
+                        trait = honourable
+                        trait = ambitious
+                        trait = bleeding_heart
+                        trait = huge
+                        trait = tall
+                        trait = strong_physique
+                        trait = strong
+                        
+                    }
+                }    
+            }
+            NOR = {
+                trait = incapable
+                trait = weak
+                trait = imbecile
+                trait = cruel
+                trait = greedy
+                trait = craven
+                trait = infirm
+                trait = sociopath
+                trait = dishonourable
+                trait = heartless
+                trait = irrational
+                trait = short
+            }
+        }    
+        effect = {
+            add_artifact = dawn
+            set_global_flag = dawn_exists
+            give_nickname = nick_the_sword_of_the_morning 
+        } #Will have a future event.
+        ai_will_do = { factor = 100 }
+    }    
+}
