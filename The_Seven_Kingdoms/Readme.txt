@@ -30,6 +30,7 @@ Almaron - Extensive lore advice, examples & suggestions
 Feliprinsss - Some oceans names, suggestions, tweaks and tidbits
 Existential Crisis - Darklyn History, characters, nicknames and more.
 GrandiSlayer - Unique descriptions for most of the religions.
+Amr - Artifact gfx, events and decisions.
 
 #############################################################
 Content:
