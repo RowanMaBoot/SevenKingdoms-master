@@ -81,7 +81,7 @@ NDefines.NMilitary.MAX_COMMANDERS_DUKE = 5 -- from 4
 NDefines.NMilitary.MAX_COMMANDERS_KING = 7 -- from 6
 NDefines.NMilitary.MAX_COMMANDERS_EMPEROR = 9 -- from 8
 
-NDefines.NMilitary.FRIENDLY_TERRITORY_LEVY_RETURN_PERCENT = 0.95 -- Reduced from 1.0 to reduce exploiting.
+NDefines.NMilitary.FRIENDLY_TERRITORY_LEVY_RETURN_PERCENT = 1.0 -- 0.95 -- Reduced from 1.0 to reduce exploiting.
 NDefines.NMilitary.OTHER_TERRITORY_LEVY_RETURN_PERCENT = 0.40 -- Reduced from 0.50 (50% loss) to 0.33 (77% loss) to reduce exploiting.
 
 NDefines.NMilitary.BATTLE_TECH_MULTIPLIER = 0.0 -- Removed
@@ -91,7 +91,7 @@ NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_50_OVER = 1.0 -- Increased from 1.0
 NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_100_OVER = 2.0 -- Increased from 2.0
 
 NDefines.NMilitary.ARMY_MOVEMENT_SPEED = 4 -- Originally 3
-NDefines.NMilitary.NAVY_MOVEMENT_SPEED = 16 -- Originally 15
+NDefines.NMilitary.NAVY_MOVEMENT_SPEED = 12 -- Originally 15, 3x Faster than Foot rather than 5x, due to cost changes.
 
 NDefines.NMilitary.GALLEYS_MAINTENANCE = 50 -- Reduced from 300
 
