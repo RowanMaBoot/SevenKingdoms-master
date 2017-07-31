@@ -18,30 +18,37 @@ The Team & Contributors:
 
 Although everyone in the team has helped around with just about everything from ideas or contributions, their main work will be spotlighted along with their listing! ;)
 
-Rowan - Project Lead, building system, the map, lazy af
-Vierwood - Project Co-Lead, Head of all Things History, titles, characters, flags, portraits, CoAs, province names
-tsf4 - History, titles, cultural buildings, characters, barony history, province and barony names
-Moen - Flags, dynasty flags & other GFX tidbits
-Digger The Dwarf - Characters, history and other tidbits
-Godman - Tweaks, Characters, Dueling System, King's Guard Events and other little tidbits.
-Adramelech - 3D art, the wall and other tidbits.
-ZeroFighterR - Lore (blame him if anything is wrong), buildings, events, nicknames & other flavour
-Almaron - Extensive lore advice, examples & suggestions
-Feliprinsss - Some oceans names, suggestions, tweaks and tidbits
-Existential Crisis - Darklyn History, characters, nicknames and more.
-GrandiSlayer - Unique descriptions for most of the religions.
+The Main Lads (Active Team):
+
+Rowan - Project Founder, the map, events & mechanics, anything complex
+Vierwood - Master of the archives, History, titles, characters, flags, portraits, CoAs, province names, Culture GFX*
+tsf4 - Master of names, History, titles, cultural buildings, characters, barony history, province and barony names
+ZeroFighterR - Still searching for his pigeons.
 Amr - Artifact gfx, events and decisions.
+GrandiSlayer - Religion Descriptions, History
+
+Contributors (Prior members or small-time contributors):
+
+Adramelech - He who put Bran the Builder to shame with his masterpiece - a fully 3D wall.
+Almaron - Extensive lore advice, examples & suggestions
+Digger The Dwarf - Characters, History Edits
+Existential Crisis - Characters, Darklyn History
+Feliprinsss - Some oceans names, suggestions, tweaks and tidbits
+Godman - Tweaks, Characters, Dueling System, King's Guard Events and other little tidbits.
+Moen - Flags, dynasty flags & other GFX tidbits
+ZeroFighterR - Nicknames, Lore Advice
 
 #############################################################
 Content:
 #############################################################
 Velho e Bom Joe - for the Culturally Different Cities mod, which has been partially integrated.
 Marc Simonetti - For his excellent Game of Thrones artwork, which is being used in our mod: http://art.marcsimonetti.com/grr-martin-a-song-of-ice-and-fire
-Silverino - For allowing us to use some of his portraits from the excelent CPR+ mod.
+Silverino - For allowing us to use some of his portraits from the excelent CPR+ mod. *Many assets were used extensively by Vierwood to create unique cultures - many thanks!
+
 #############################################################
 Other Credits:
 #############################################################
-blackninja9939 - For help, advice and some edits here and there!
+blackninja9939 - Invaluable support and advice.
 SweetThose - A number of suggested changes and tweaks, as well as some localisations.
 JonStryker - For the mapfiller tool, which played a fundamental role in getting this mod working in a reasonable amount of time!
 AgentPaper - For the Character Generator, used by Vierwood to rapidly fill out regions with placeholder dynasties.
