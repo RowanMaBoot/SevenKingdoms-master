@@ -66,6 +66,10 @@ Music
 - Marc Teichert: 
 	The Beginning Of The Adventure : https://www.jamendo.com/track/589413/the-beginning-of-the-adventure
 	Anonymous : https://www.jamendo.com/track/1191321/anonymous
+	Cracking the Code: https://www.jamendo.com/track/1191325/cracking-the-code
+	Mission Briefing: https://www.jamendo.com/track/477312/mission-briefing
+	The Hollows: https://www.jamendo.com/track/866707/the-hollows
+	Revealings: https://www.jamendo.com/track/736786/revealings
 - Grégoire Lourme:
 	Legends : https://www.jamendo.com/track/1376555/legends  
 	Asgard has Fallen : https://www.jamendo.com/track/1376562/asgard-has-fallen 
