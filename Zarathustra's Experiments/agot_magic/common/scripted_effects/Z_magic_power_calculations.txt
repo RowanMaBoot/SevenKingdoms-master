@@ -1,0 +1,293 @@
+#Magic Power Calculations and manipulation functions. Please use these effects to interact with magical power in events as these functions include failover error checking, and make sure the character is properly initialized for gaining experience in magic casting. 
+
+#List of Functions 
+
+# z_magic_power_sequential_addition
+# z_magic_power_sequential_subtraction
+# z_magic_power_complete_removal
+# z_magic_xp_turnon
+
+# Z_magic_power_calculation
+
+# z_magic_power_random
+
+z_magic_power_sequential_addition = {
+	z_magic_xp_turnon = yes
+	if = { 
+		limit = { 
+			calc_true_if  = { 
+				has_character_modifier = magic_power_4
+				has_character_modifier = magic_power_3
+				has_character_modifier = magic_power_2
+				has_character_modifier = magic_power_1
+				amount = 2			
+			}
+		} 
+		z_magic_power_complete_removal = yes
+		z_magic_power_sequential_addition = yes		
+	}
+	if = { 
+		limit = { 
+			has_character_modifier = magic_power_3
+			nor = { 
+				has_character_modifier = magic_power_4
+				has_character_modifier = magic_power_2
+				has_character_modifier = magic_power_1
+
+			}
+		}
+		remove_character_modifier = magic_power_3
+		add_character_modifier = { name = magic_power_4 duration = -1}
+		if = { 
+			limit = {
+				not = { 
+					check_variable = { which = "magicxp" value = 300}
+				}
+			}
+			set_variable = { which = "magicxp" value = 300}
+		}
+	}
+	if = { 
+		limit = { 
+			has_character_modifier = magic_power_2
+			nor = { 
+				has_character_modifier = magic_power_4
+				has_character_modifier = magic_power_3
+				has_character_modifier = magic_power_1
+
+			}
+		}
+		remove_character_modifier = magic_power_2
+		add_character_modifier = { name = magic_power_3 duration = -1}
+		if = { 
+			limit = {
+				not = { 
+					check_variable = { which = "magicxp" value = 100}
+				}
+			}
+			set_variable = { which = "magicxp" value = 100}
+		}		
+	}
+	if = { 
+		limit = { 
+			has_character_modifier = magic_power_1
+			nor = { 
+				has_character_modifier = magic_power_4
+				has_character_modifier = magic_power_3
+				has_character_modifier = magic_power_2
+
+			}
+		}
+		remove_character_modifier = magic_power_1
+		add_character_modifier = { name = magic_power_2 duration = -1}
+		if = { 
+			limit = {
+				not = { 
+					check_variable = { which = "magicxp" value = 50}
+				}
+			}
+			set_variable = { which = "magicxp" value = 50}
+		}
+	}
+	if = { 
+		limit = { 
+			nor = { 
+				has_character_modifier = magic_power_4
+				has_character_modifier = magic_power_3
+				has_character_modifier = magic_power_2
+				has_character_modifier = magic_power_1
+
+			}
+		}
+		add_character_modifier = { name = magic_power_1 duration = -1}
+		if = { 
+			limit = {
+				not = { 
+					check_variable = { which = "magicxp" value = 25}
+				}
+			}
+			set_variable = { which = "magicxp" value = 25}
+		}
+	}	
+}
+
+
+z_magic_power_sequential_subtraction = {
+	z_magic_xp_turnon = yes 
+	if = { 
+		limit = { 
+			calc_true_if  = { 
+				has_character_modifier = magic_power_4
+				has_character_modifier = magic_power_3
+				has_character_modifier = magic_power_2
+				has_character_modifier = magic_power_1
+				amount = 2			
+			}
+		}
+		z_magic_power_complete_removal = yes
+	}
+	if = { 
+		limit = { 
+			has_character_modifier = magic_power_1
+			nor = { 
+				has_character_modifier = magic_power_4
+				has_character_modifier = magic_power_3
+				has_character_modifier = magic_power_2
+			}
+		}
+		remove_character_modifier = magic_power_1
+		set_variable = { which = "magicxp" value = 15}
+	}
+	if = { 
+		limit = { 
+			has_character_modifier = magic_power_2
+			nor = { 
+				has_character_modifier = magic_power_4
+				has_character_modifier = magic_power_3
+				has_character_modifier = magic_power_1
+
+			}
+		}
+		remove_character_modifier = magic_power_2
+		add_character_modifier = { name = magic_power_1 duration = -1}
+		set_variable = { which = "magicxp" value = 40}
+	}
+	if = { 
+		limit = { 
+			has_character_modifier = magic_power_3
+			nor = { 
+				has_character_modifier = magic_power_4
+				has_character_modifier = magic_power_3
+				has_character_modifier = magic_power_1
+
+			}
+		}
+		remove_character_modifier = magic_power_3
+		add_character_modifier = { name = magic_power_2 duration = -1}
+		set_variable = { which = "magicxp" value = 90}
+	}
+	if = { 
+		limit = { 
+			has_character_modifier = magic_power_4
+			nor = { 
+				has_character_modifier = magic_power_3
+				has_character_modifier = magic_power_2
+				has_character_modifier = magic_power_1
+
+			}
+		}
+		remove_character_modifier = magic_power_4
+		add_character_modifier = { name = magic_power_3 duration = -1}
+		set_variable = { which = "magicxp" value = 200}
+	}	
+
+}
+
+z_magic_power_complete_removal = { 
+	remove_character_modifier = magic_power_1
+	remove_character_modifier = magic_power_2
+	remove_character_modifier = magic_power_3
+	remove_character_modifier = magic_power_4
+}
+
+z_magic_xp_turnon = { 
+	if = {
+		limit = {
+			z_has_magic_power_true = yes  
+			not = { 
+				has_character_flag = magicxp
+				trait = vampire_jade_visible 
+			}
+		}
+		if = { 
+			limit = { 
+				has_character_modifier = magic_power_1
+			}
+			set_variable = { which = "magicxp" value = 25}
+			set_character_flag = magicxp
+		}
+		if = { 
+			limit = { 
+				has_character_modifier = magic_power_2
+			}
+			set_variable = { which = "magicxp" value = 50}
+			set_character_flag = magicxp
+		}
+		if = { 
+			limit = { 
+				has_character_modifier = magic_power_3
+			}
+			set_variable = { which = "magicxp" value = 100}
+			set_character_flag = magicxp
+		}
+		if = { 
+			limit = { 
+				has_character_modifier = magic_power_4
+			}
+			set_variable = { which = "magicxp" value = 300}
+			set_character_flag = magicxp
+		}
+	}
+}
+
+Z_magic_power_calculation = { 
+	if = { 
+		limit = { 
+			check_variable = { which = "magicxp" value = 300}
+		}
+		z_magic_power_complete_removal = yes
+		add_character_modifier = { name = magic_power_4 duration = -1}
+	}
+	if = { 
+		limit = { 
+			check_variable = { which = "magicxp" value = 100}
+			not = {
+				check_variable = { which = "magicxp" value = 299}	
+			}
+		}
+		z_magic_power_complete_removal = yes
+		add_character_modifier = { name = magic_power_3 duration = -1}
+	}
+	if = { 
+		limit = { 
+			check_variable = { which = "magicxp" value = 50}
+			not = {
+				check_variable = { which = "magicxp" value = 99}	
+			}
+		}
+		z_magic_power_complete_removal = yes
+		add_character_modifier = { name = magic_power_2 duration = -1}
+	}
+	if = { 
+		limit = { 
+			not = {
+				check_variable = { which = "magicxp" value = 49}	
+			}
+		}
+		z_magic_power_complete_removal = yes
+		add_character_modifier = { name = magic_power_1 duration = -1}
+	}			
+}
+
+z_magic_power_random = {
+	z_magic_power_complete_removal = yes
+	random_list = {  
+		8 = { 
+			add_character_modifier = { name = magic_power_1 duration = -1 }
+			set_variable = { which = "magicxp" value = 25} 
+		}
+		4 = { 
+			add_character_modifier = { name = magic_power_2 duration = -1 }
+			set_variable = { which = "magicxp" value = 50} 
+		}
+		2 = { 
+			add_character_modifier = { name = magic_power_3 duration = -1 }
+			set_variable = { which = "magicxp" value = 100} 
+		}
+		1 = { 
+			add_character_modifier = { name = magic_power_4 duration = -1 } 
+			set_variable = { which = "magicxp" value = 300}
+		}
+	}
+	z_magic_xp_turnon = yes 					
+}

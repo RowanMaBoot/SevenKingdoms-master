@@ -1,0 +1,578 @@
+namespace = z_flame_magic
+character_event = {
+	id = z_flame_magic.100#
+	name = "Burst of Flame"
+	desc = "The fires of destructive flaming energy leap forth, roping around your enemies, consuming their flesh in a flare of flame."
+	is_triggered_only = yes
+	picture = GFX_evt_mage_lore_high_magic
+
+
+	option = {
+		name = Dacarys!
+		character_event = { id = z_spell_menu.99996}
+		event_target:magic_caster = {
+			set_variable = { which = zdmg value = 15 }
+			set_variable = { which = zmoraledmg value = 15 }		
+			change_variable = { which = zdmg which = caster_level_spellpower }
+			change_variable = { which = zmoraledmg which = caster_level_spellpower }			
+			
+		}
+		any_character = {
+			limit = {
+				war_with = root
+				any_army = {
+					location = { province = event_target:spellloc }
+				}
+			}
+			random_army = {
+				limit = {
+					location = { province = event_target:spellloc }
+				}
+				leader = { 
+					magic_points_setup = yes
+					save_event_target_as = spelltarget
+					magic_resist_test = yes
+				}
+				if = { 
+					limit = { 
+						event_target:magic_caster = { 
+							has_character_flag = resisted
+						}
+					}
+					event_target:magic_caster = {
+						clr_character_flag = resisted
+						divide_variable = { which = zdmg value = 2 }
+						divide_variable = { which = zmoraledmg value = 2 }	
+					}
+				}			
+				magic_dmg_effect = yes
+				morale_dmg_effect = yes
+			}
+		}
+		if = {
+			limit = {
+				event_target:magic_caster = {
+					at_location = event_target:spellloc
+				}
+			}
+			siege = {
+				enemy = {
+					magic_dmg_effect = yes
+					morale_dmg_effect = yes
+				}
+			}
+		}
+	}
+}
+
+character_event = {
+	id = z_flame_magic.200#Drain Magic Power 1"
+	desc = "The formidable fires you conjure, leap from blade to blade, enflaming the entirety of your armies weapons. The indefatigble host of your vengence, now leaps forth to battle, doing untold harm to all who oppose you."
+	is_triggered_only = yes
+	picture = GFX_evt_mage_lore_heavens
+	immediate = {
+	}
+
+	option = {
+		name = From my lips, to your blades.101a#No
+		character_event = { id = z_spell_menu.99996}
+		random_army = { 
+			limit = { 
+				location = { province = event_target:spellloc }
+			}	
+			leader = {
+				combat = {
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_3
+						}
+						set_flank_tactic = z_flames_war_tactic_3
+					}				 
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_2
+						}
+						set_flank_tactic = z_flames_war_tactic_3
+					}
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_1
+						}
+						set_flank_tactic = z_flames_war_tactic_2
+					}
+					if = { 
+						limit = { 
+							nor = { 
+								flank_has_tactic = z_flames_war_tactic_1
+								flank_has_tactic = z_flames_war_tactic_2
+								flank_has_tactic = z_flames_war_tactic_3
+							}
+						}
+						set_flank_tactic = z_flames_war_tactic_1
+					}
+				}
+			}
+			center_flank_leader = {
+				combat = {
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_3
+						}
+						set_flank_tactic = z_flames_war_tactic_3
+					} 
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_2
+						}
+						set_flank_tactic = z_flames_war_tactic_3
+					}
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_1
+						}
+						set_flank_tactic = z_flames_war_tactic_2
+					}
+					if = { 
+						limit = { 
+							nor = { 
+								flank_has_tactic = z_flames_war_tactic_1
+								flank_has_tactic = z_flames_war_tactic_2
+								flank_has_tactic = z_flames_war_tactic_3
+							}
+						}
+
+						set_flank_tactic = z_flames_war_tactic_1
+					}
+				}
+			}
+			left_flank_leader  = {
+				combat = {
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_3
+						}
+						set_flank_tactic = z_flames_war_tactic_3
+					} 
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_2
+						}
+						set_flank_tactic = z_flames_war_tactic_3
+					}
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_1
+						}
+						set_flank_tactic = z_flames_war_tactic_2
+					}
+					if = { 
+						limit = { 
+							nor = { 
+								flank_has_tactic = z_flames_war_tactic_1
+								flank_has_tactic = z_flames_war_tactic_2
+								flank_has_tactic = z_flames_war_tactic_3
+							}
+						}
+						set_flank_tactic = z_flames_war_tactic_1
+					}
+				}
+			}
+			right_flank_leader  = {
+				combat = { 
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_2
+						}
+						set_flank_tactic = z_flames_war_tactic_3
+					}
+					if = { 
+						limit = { 
+							flank_has_tactic = z_flames_war_tactic_1
+						}
+						set_flank_tactic = z_flames_war_tactic_2
+					}
+					if = { 
+						limit = { 
+							nor = { 
+								flank_has_tactic = z_flames_war_tactic_1
+								flank_has_tactic = z_flames_war_tactic_2
+								flank_has_tactic = z_flames_war_tactic_3
+							}
+						}
+						set_flank_tactic = z_flames_war_tactic_1
+					}
+				}
+			}
+		}
+	}
+}
+
+character_event = {
+	id = z_flame_magic.300#Soul Quench 1"
+	desc = "Like the fires of the dragons themselves, you conjure forth a torrent of never ending flame, consuming all that dare move through this space, and bringing no end of suffering to those who think their powers are greater."
+	is_triggered_only = yes
+	picture = GFX_evt_mage_lore_high_magic
+	immediate = {
+		event_target:magic_caster = {
+			random_list = { 
+				1 = {
+					change_variable = {which = "fieryconv" value = 5}
+				}
+				1 = {
+					change_variable = {which = "fieryconv" value = 6}
+				}
+				1 = {
+					change_variable = {which = "fieryconv" value = 7}
+				}
+				1 = {
+					change_variable = {which = "fieryconv" value = 8}
+				}
+				1 = {
+					change_variable = {which = "fieryconv" value = 9}
+				}
+				1 = {
+					change_variable = {which = "fieryconv" value = 10}
+				}
+				1 = {
+					change_variable = {which = "fieryconv" value = 11}
+				}
+				1 = {
+					change_variable = {which = "fieryconv" value = 12}
+				}
+				1 = {
+					change_variable = {which = "fieryconv" value = 13}
+				}
+				1 = {
+					change_variable = {which = "fieryconv" value = 14}
+				}
+				1 = {
+					change_variable = {which = "fieryconv" value = 15}
+				}
+			}
+			change_variable = { which = fieryconv which = caster_level }
+		}
+	}
+
+	option = {
+		name = "In Fire and Blood"#Cast Another Spell ?
+		character_event = { id = z_spell_menu.99996}
+		character_event = { id = z_flame_magic.301 }
+	}
+
+}
+
+
+character_event = {
+	id = z_flame_magic.301#Firey_convocation event 1"
+	is_triggered_only = yes
+	hide_window = yes
+	immediate = {
+		if = {
+			limit = {
+				event_target:magic_caster = { check_variable = {which = "fieryconv" value = 0}}
+			}
+			event_target:magic_caster = { change_variable = {which = "fieryconv" value = -1}}
+
+			event_target:magic_caster = {
+				set_variable = { which = zdmg value = 2 }
+				set_variable = { which = zmoraledmg value = 2 }		
+				change_variable = { which = zdmg which = caster_level_spellpower }
+				change_variable = { which = zmoraledmg which = caster_level_spellpower }			
+			
+			}
+			any_character = {
+				limit = {
+					war_with = root
+					any_army = {
+						location = { province = event_target:spellloc }
+					}
+				}
+				random_army = {
+					limit = {
+						location = { province = event_target:spellloc }
+					}
+					leader = { 
+						magic_points_setup = yes
+						save_event_target_as = spelltarget
+						magic_resist_test = yes
+					}
+					if = { 
+						limit = { 
+							event_target:magic_caster = { 
+								has_character_flag = resisted
+							}
+						}
+						event_target:magic_caster = {
+							clr_character_flag = resisted
+							divide_variable = { which = zdmg value = 2 }
+							divide_variable = { which = zmoraledmg value = 2 }	
+						}
+					}			
+					magic_dmg_effect = yes
+					morale_dmg_effect = yes
+				}
+			}
+			any_character = {
+				if = {
+					limit = {
+						or = {
+							is_vassal_or_below = root
+							character = root
+						}
+						at_location = event_target:spellloc
+					}
+					siege = {
+						enemy = {
+							magic_dmg_effect = yes
+							morale_dmg_effect = yes						
+						}
+					}
+					random = {
+						chance = 1
+						character_event = { id = z_flame_magic.302}
+					}
+				}
+			}
+			repeat_event = { id = z_flame_magic.301 days = 1}
+		}
+	}
+}
+
+
+character_event = {
+	id = z_flame_magic.302
+	desc = "With a signficant exhortion, you let the very flames of purification turn the holdings of your location to ash itself"
+	is_triggered_only = yes
+	picture = GFX_evt_mage_lore_high_magic
+	option = { 
+		name = "Reduce the town to ashes!"
+		event_target:spellloc = {
+			random_province_holding = {
+				destroy_settlement = this
+			}
+		}
+	}
+	option = { 
+		name = "Make an Example"
+		event_target:spellloc = {
+			random_province_holding = {
+				destroy_random_building = yes
+			}
+		}
+	}
+	option = { 
+		name = "Mercy is mine"
+	}	
+}
+
+character_event = {
+	id = z_flame_magic.400#Soul Quench 1"
+	desc = "A devastation unequaled since the fall of Valyria itself. The conflagoration summoned is as if the very world itself has been unmade."
+	is_triggered_only = yes
+	picture = GFX_evt_mage_lore_high_magic
+	immediate = {
+		event_target:magic_caster = {
+			random_list = { 
+				1 = {
+					change_variable = {which = "apoc" value = 5}
+				}
+				1 = {
+					change_variable = {which = "apoc" value = 6}
+				}
+				1 = {
+					change_variable = {which = "apoc" value = 7}
+				}
+				1 = {
+					change_variable = {which = "apoc" value = 8}
+				}
+				1 = {
+					change_variable = {which = "apoc" value = 9}
+				}
+				1 = {
+					change_variable = {which = "apoc" value = 10}
+				}
+				1 = {
+					change_variable = {which = "apoc" value = 11}
+				}
+				1 = {
+					change_variable = {which = "apoc" value = 12}
+				}
+				1 = {
+					change_variable = {which = "apoc" value = 13}
+				}
+				1 = {
+					change_variable = {which = "apoc" value = 14}
+				}
+				1 = {
+					change_variable = {which = "apoc" value = 15}
+				}
+			}
+			change_variable = { which = apoc which = caster_level }
+		}
+	}
+
+	option = {
+		name = "In Fire and Blood"#Cast Another Spell ?
+		character_event = { id = z_spell_menu.99996}
+		character_event = { id = z_flame_magic.401 }
+	}
+
+}
+
+
+character_event = {
+	id = z_flame_magic.401#Firey_convocation event 1"
+	is_triggered_only = yes
+	hide_window = yes
+	immediate = {
+		if = {
+			limit = {
+				event_target:magic_caster = { check_variable = {which = "apoc" value = 0}}
+			}
+			event_target:magic_caster = { change_variable = {which = "apoc" value = -1}}
+
+			event_target:magic_caster = {
+				set_variable = { which = zdmg value = 2 }
+				set_variable = { which = zmoraledmg value = 2 }		
+				change_variable = { which = zdmg which = caster_level_spellpower }
+				change_variable = { which = zmoraledmg which = caster_level_spellpower }			
+			
+			}
+			any_character = {
+				limit = {
+					war_with = root
+					any_army = {
+						location = { province = event_target:spellloc }
+					}
+				}
+				random_army = {
+					limit = {
+						location = { province = event_target:spellloc }
+					}
+					leader = { 
+						magic_points_setup = yes
+						save_event_target_as = spelltarget
+						magic_resist_test = yes
+					}
+					if = { 
+						limit = { 
+							event_target:magic_caster = { 
+								has_character_flag = resisted
+							}
+						}
+						event_target:magic_caster = {
+							clr_character_flag = resisted
+							divide_variable = { which = zdmg value = 2 }
+							divide_variable = { which = zmoraledmg value = 2 }	
+						}
+					}			
+					magic_dmg_effect = yes
+					morale_dmg_effect = yes
+				}
+			}
+			any_character = {
+				if = {
+					limit = {
+						or = {
+							is_vassal_or_below = root
+							character = root
+						}
+						at_location = event_target:spellloc
+					}
+					siege = {
+						enemy = {
+							magic_dmg_effect = yes
+							morale_dmg_effect = yes						
+						}
+					}
+					random = {
+						chance = 1
+						character_event = { id = z_flame_magic.402}
+					}
+				}
+			}
+
+			any_character = {
+				limit = {
+					war_with = root
+					any_army = {
+						location = { event_target:spellloc = { any_neighbor_province = { province = prev } } }
+					}
+				}
+				random_army = {
+					limit = {
+						location = { event_target:spellloc = { any_neighbor_province = { province = prev } } }
+					}
+					leader = { 
+						magic_points_setup = yes
+						save_event_target_as = spelltarget
+						magic_resist_test = yes
+					}
+					if = { 
+						limit = { 
+							event_target:magic_caster = { 
+								has_character_flag = resisted
+							}
+						}
+						event_target:magic_caster = {
+							clr_character_flag = resisted
+							divide_variable = { which = zdmg value = 2 }
+							divide_variable = { which = zmoraledmg value = 2 }	
+						}
+					}			
+					magic_dmg_effect = yes
+					morale_dmg_effect = yes
+				}
+			}
+			any_character = {
+				if = {
+					limit = {
+						or = {
+							is_vassal_or_below = root
+							character = root
+						}
+						location = { event_target:spellloc = { any_neighbor_province = { province = prev } } }
+					}
+					siege = {
+						enemy = {
+							magic_dmg_effect = yes
+							morale_dmg_effect = yes						
+						}
+					}
+					random = {
+						chance = 1
+						character_event = { id = z_flame_magic.402}
+					}
+				}
+			}
+			repeat_event = { id = z_flame_magic.401 days = 1}
+		}
+	}
+}
+
+
+character_event = {
+	id = z_flame_magic.402
+	desc = "With a signficant exhortion, you let the very flames of purification turn the holdings of your location to ash itself"
+	is_triggered_only = yes
+	picture = GFX_evt_mage_lore_high_magic
+	option = { 
+		name = "Reduce the town to ashes!"
+		event_target:spellloc = {
+			random_province_holding = {
+				destroy_settlement = this
+			}
+		}
+	}
+	option = { 
+		name = "Make an Example"
+		event_target:spellloc = {
+			random_province_holding = {
+				destroy_random_building = yes
+			}
+		}
+	}
+	option = { 
+		name = "Mercy is mine"
+	}	
+}

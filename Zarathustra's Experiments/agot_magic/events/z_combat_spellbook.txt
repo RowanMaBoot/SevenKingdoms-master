@@ -1,0 +1,685 @@
+namespace = z_magic_select
+
+character_event = {
+    id = z_magic_select.4001
+    is_triggered_only = yes
+    hide_window = yes
+    
+    immediate = {
+        event_target:magic_caster = {
+            set_variable = { which = "action_nr" value = 0 }  
+            set_variable = { which = "d_action_cancel" value = 0 }                        
+            set_variable = { which = "action_picked" value = 0 }     
+            set_variable = { which = "d_action_flame" value = 0 }
+            set_variable = { which = "d_action_blood" value = 0 }
+            set_variable = { which = "d_action_shadow" value = 0 }
+        }
+        event_target:magic_caster = {
+            set_variable = { which  = "action_nr" value = "0" }
+            set_variable = { which = "action_picked" value = "1" }
+        }                    
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    has_character_flag = flame
+                }
+            }
+            event_target:magic_caster = { 
+                change_variable = { which = "action_nr" value = 1 } 
+                change_variable = { which = "d_action_flame" which = "action_nr" } 
+                set_variable = { which = magic_picked value = 1 }
+            }
+        }
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    has_character_flag = blood
+                }
+            }
+            event_target:magic_caster = { 
+                change_variable = { which = "action_nr" value = 1 } 
+                change_variable = { which = "d_action_blood" which = "action_nr" }
+                set_variable = { which = magic_picked value = 2 } 
+            }
+        }
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    has_character_flag = shadow
+                }
+            }
+            event_target:magic_caster = { 
+                change_variable = { which = "action_nr" value = 1 } 
+                change_variable = { which = "d_action_shadow" which = "action_nr" } 
+                set_variable = { which = magic_picked value = 3 }
+            }
+        }                                  
+        long_character_event = { id = z_magic_select.4002}
+    }
+}
+
+
+
+long_character_event = { 
+    id = z_magic_select.4002
+    title = "Item Crafting"
+    desc = "Of the many arts unique to the mage, none is perhaps more profound than the crafting of enchanted items. Unlike spells and rituals of power, the crafting of an item creates a persisting legacy of profound capability, capable of being wielded not just by the few for whom magic is a part of their blood, but any with the will and the heart to stand forth."
+    picture = "GFX_evt_mage_choose_lore"
+    is_triggered_only = yes
+    trigger = { 
+        event_target:magic_caster = { 
+            is_alive = yes
+        }
+    }
+    # next action
+    option = {
+        name = "NEXT_ACTION"
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    is_variable_equal = { which = "action_picked" which = "action_nr" } 
+                }
+            }
+            event_target:magic_caster = {
+                set_variable = { which = "action_picked" value = 1 } # circular menu
+            }
+            hidden_tooltip = { repeat_event = { id = z_magic_select.4002 }}
+            break = yes
+        }
+        if = {
+            limit = { 
+                event_target:magic_caster = {
+                    NOT = { 
+                        is_variable_equal = { which = "action_picked" which = "action_nr" } 
+                    }
+                }
+            }
+            event_target:magic_caster = {
+                change_variable = { which = "action_picked" value = 1 }
+            }
+            hidden_tooltip = { repeat_event = { id = z_magic_select.4002 }}
+            break = yes
+        }
+        ai_chance = { factor = 1 }
+    }
+    # previous action
+    option = {
+        name = "PREVIOUS_ACTION"
+
+        if = {
+            limit = { 
+                event_target:magic_caster = {
+                    NOT = { 
+                        is_variable_equal = { which = "action_picked" value = "1" } 
+                    }
+                }
+            }
+            event_target:magic_caster = {
+                change_variable = { which = "action_picked" value = -1 }
+            }
+            hidden_tooltip = { repeat_event = { id = z_magic_select.4002 }}
+            break = yes
+        }
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    is_variable_equal = { which = "action_picked" value = "1" } 
+                }
+            }
+            event_target:magic_caster = {
+                set_variable = { which = "action_picked" which = "action_nr" } # circular menu
+            }
+            hidden_tooltip = { repeat_event = { id = z_magic_select.4002 }}
+            break = yes
+        }        
+        ai_chance = { factor = 0 }
+    }
+    option = {
+        name = "Sorceries of Flame"
+        custom_tooltip = {
+            text = "Magics of Flame, born of blood, twisting, hungry, consuming nightmares of power given form, in serpents of hissing flame, that coil and bite and burst forth with agonizing power."
+        }
+        trigger = {
+            event_target:magic_caster = { 
+                is_variable_equal = { which = "action_picked" which = "d_action_flame" } 
+            }
+        }
+        event_target:magic_caster = { 
+            set_variable = { which = "magic_picked" value = "1" }
+        }
+        if = { 
+            limit = { 
+                event_target:magic_caster = { 
+                    has_character_flag = casting_combat
+                }
+            }
+            character_event = { id = z_combat_spell_menu.0 }
+        }
+        if = { 
+            limit = { 
+                event_target:magic_caster = { 
+                    has_character_flag = casting_non_combat
+                }
+            }
+            character_event = { id = z_noncombat_spell_menu.0}
+        }
+        ai_chance = { 
+            factor = 1 
+        }      
+    }
+    option = {
+        name = "Sorceries of Blood"
+        custom_tooltip = {
+            text = "Magics of the life giving substance, the very blood of man, can power the forces of his imagination. With simple invocations the very fate of armies can be determined, as life is ripped from the veins of mortals to empower the life of the immortal."
+        }
+        trigger = {
+            event_target:magic_caster = { 
+                is_variable_equal = { which = "action_picked" which = "d_action_blood" } 
+            }
+        }
+        event_target:magic_caster = { 
+            set_variable = { which = "magic_picked" value = "2" }
+        }
+        if = { 
+            limit = { 
+                event_target:magic_caster = { 
+                    has_character_flag = casting_combat
+                }
+            }
+            character_event = { id = z_combat_spell_menu.0 }
+        }
+        if = { 
+            limit = { 
+                event_target:magic_caster = { 
+                    has_character_flag = casting_non_combat
+                }
+            }
+            character_event = { id = z_noncombat_spell_menu.0}
+        }        
+        ai_chance = { 
+            factor = 1 
+        }      
+    }
+    option = {
+        name = "Sorceries of Shadow"
+        custom_tooltip = {
+            text = "Magics of the cold and twisting nothingness of the nether. Nightmares of the unwoken dream, torments of the human mind, such hideous powers give rise to things not yet fully formed or imagined, to the torment of all whom see it."
+        }
+        trigger = {
+            event_target:magic_caster = { 
+                is_variable_equal = { which = "action_picked" which = "d_action_shadow" } 
+            }
+        }
+        event_target:magic_caster = { 
+            set_variable = { which = "magic_picked" value = "3" }
+        }
+        if = { 
+            limit = { 
+                event_target:magic_caster = { 
+                    has_character_flag = casting_combat
+                }
+            }
+            character_event = { id = z_combat_spell_menu.0 }
+        }
+        if = { 
+            limit = { 
+                event_target:magic_caster = { 
+                    has_character_flag = casting_non_combat
+                }
+            }
+            character_event = { id = z_noncombat_spell_menu.0}
+        }        
+        ai_chance = { 
+            factor = 1 
+        }      
+    }                               
+}
+
+namespace = z_combat_spell_menu
+
+character_event = {
+    id = z_combat_spell_menu.0
+    is_triggered_only = yes
+    hide_window = yes
+    immediate = {
+        event_target:magic_caster = {
+            magic_xp_counter = yes
+            magic_points_setup = yes
+            magic_spells_known = yes
+            set_variable = { which = "dnum" value = "0"} 
+            set_variable = { which = "action_nr" value = "0" }                        
+            set_variable = { which = "action_picked" value = "0" }
+        }
+        character_event = { id = z_combat_spell_menu.1}
+    }
+
+}
+
+character_event = {
+    id = z_combat_spell_menu.1
+    is_triggered_only = yes
+    hide_window = yes
+    
+    immediate = {
+        event_target:magic_caster = {
+            magic_spells_known = yes
+            set_variable = { which = "dnum" value = "0"} 
+            set_variable = { which = "action_nr" value = "0" }                        
+            set_variable = { which = "action_picked" value = "0" }
+            #Magics of Flame
+            if = { 
+                limit = {
+                    event_target:magic_caster = { 
+                        is_variable_equal = { which = magic_picked value = 1 }
+                    }
+                }    
+                set_variable = { which = "d_flame_burst_of_flame" value = "0" }
+                set_variable = { which = "d_flame_fires_of_war" value = "0" }
+                set_variable = { which = "d_flame_field_of_flames" value = "0" }
+                set_variable = { which = "d_flame_apocalypse" value = "0" }     
+            }
+            #Magics of Blood
+            if = { 
+                limit = {
+                    event_target:magic_caster = { 
+                        is_variable_equal = { which = magic_picked value = 2 }
+                    }
+                }    
+                set_variable = { which = "d_flame_burst_of_flame" value = "0" }
+                set_variable = { which = "d_flame_fires_of_war" value = "0" }
+                set_variable = { which = "d_flame_field_of_flames" value = "0" }
+                set_variable = { which = "d_flame_apocalypse" value = "0" }     
+            }
+            #Magics of Shadow
+            if = { 
+                limit = {
+                    event_target:magic_caster = { 
+                        is_variable_equal = { which = magic_picked value = 3 }
+                    }
+                }    
+                set_variable = { which = "d_flame_burst_of_flame" value = "0" }
+                set_variable = { which = "d_flame_fires_of_war" value = "0" }
+                set_variable = { which = "d_flame_field_of_flames" value = "0" }
+                set_variable = { which = "d_flame_apocalypse" value = "0" }     
+            }                        
+        }
+        event_target:magic_caster = {
+            set_variable = { which  = "action_nr" value = "0" }
+            set_variable = { which = "action_picked" value = "1" }
+        }     
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    z_flame_knowledge = yes
+                    is_variable_equal = { which = magic_picked value = 1 }
+                    check_variable = { which = "spellknownlvl" value = "1"}
+                    check_variable = { which = "spell_power" value = "1"}
+                }
+            }
+            event_target:magic_caster = { 
+                change_variable = { which = "action_nr" value = "1" } 
+                change_variable = { which = "d_flame_burst_of_flame" which = "action_nr" } 
+            }
+        }
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    z_flame_knowledge = yes
+                    is_variable_equal = { which = magic_picked value = 1 }
+                    check_variable = { which = "spellknownlvl" value = "1"}
+                    check_variable = { which = "spell_power" value = "1"}
+                }
+            }
+            event_target:magic_caster = { 
+                change_variable = { which = "action_nr" value = "1" } 
+                change_variable = { which = "d_flame_fires_of_war" which = "action_nr" } 
+            }
+        }
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    z_flame_knowledge = yes
+                    is_variable_equal = { which = magic_picked value = 1 } 
+                    check_variable = { which = "spellknownlvl" value = "3"}
+                    check_variable = { which = "spell_power" value = "1"}
+                }
+            }
+            event_target:magic_caster = { 
+                change_variable = { which = "action_nr" value = "1" } 
+                change_variable = { which = "d_flame_field_of_flames" which = "action_nr" } 
+            }
+        }
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    z_flame_knowledge = yes
+                    is_variable_equal = { which = magic_picked value = 1 }
+                    check_variable = { which = "spellknownlvl" value = "4"}
+                    check_variable = { which = "spell_power" value = "1"}
+                }
+            }
+            event_target:magic_caster = { 
+                change_variable = { which = "action_nr" value = "1" } 
+                change_variable = { which = "d_flame_apocalypse" which = "action_nr" } 
+            }
+        }                                                                                                                  
+        long_character_event = { id = z_combat_spell_menu.2}
+    }
+}
+
+long_character_event = { 
+    id = z_combat_spell_menu.2
+    title = z_combat_spell_menu.2
+    desc = "z_combat_spell_menu.2_desc"
+    picture = "GFX_evt_mage_choose_lore"
+    is_triggered_only = yes
+    trigger = { 
+        event_target:magic_caster = { 
+            is_alive = yes
+        }
+    }
+    # next action
+    option = {
+        name = "NEXT_ACTION"
+        if = {
+            limit = { 
+                event_target:magic_caster = {
+                    NOT = { 
+                        is_variable_equal = { which = "action_picked" which = "action_nr" } 
+                    }
+                }
+            }
+            event_target:magic_caster = {
+                change_variable = { which = "action_picked" value = "1" }
+            }
+            hidden_tooltip = { repeat_event = { id = z_combat_spell_menu.2 }}
+            break = yes
+        }
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    is_variable_equal = { which = "action_picked" which = "action_nr" } 
+                }
+            }
+            event_target:magic_caster = {
+                set_variable = { which = "action_picked" value = "1" } # circular menu
+            }
+            hidden_tooltip = { repeat_event = { id = z_combat_spell_menu.2 }}
+            break = yes
+        }        
+        ai_chance = { factor = 1 }
+    }
+    # previous action
+    option = {
+        name = "PREVIOUS_ACTION"
+
+        if = {
+            limit = { 
+                event_target:magic_caster = {
+                    NOT = { 
+                        is_variable_equal = { which = "action_picked" value = "1" } 
+                    }
+                }
+            }
+            event_target:magic_caster = {
+                change_variable = { which = "action_picked" value = "-1" }
+            }
+            hidden_tooltip = { repeat_event = { id = z_combat_spell_menu.2 }}
+            break = yes
+        }
+        if = { 
+            limit = {
+                event_target:magic_caster = { 
+                    is_variable_equal = { which = "action_picked" value = "1" } 
+                }
+            }
+            event_target:magic_caster = {
+                set_variable = { which = "action_picked" which = "action_nr" } # circular menu
+            }
+            hidden_tooltip = { repeat_event = { id = z_combat_spell_menu.2 }}
+            break = yes
+        }        
+        ai_chance = { factor = 0 }
+    }
+    option = {
+        name = "Flame: Burst of Flame SC6"
+        custom_tooltip = {
+            text = "A concentrated burst of raw flame, this envocation is readily used by sorcerers to smash down all enemies in front of them. Has a spellcast value of 6"
+        }
+        trigger = {
+            event_target:magic_caster = { 
+                is_variable_equal = { which = "action_picked" which = "d_flame_burst_of_flame" } 
+                check_variable = { which = "spell_power" value = "1"}
+            }
+        }
+        event_target:magic_caster = {
+            set_variable = {which = "spellcast" value = "6"}
+            set_variable = { which = dnum value = 0 }
+            set_variable = { which = dmin value = 1 }
+        }     
+        character_event =  { id = z_combat_spell_menu.3}
+            
+        ai_chance = { 
+            factor = 1 
+        }      
+    }  
+    option = {
+        name = "Flame: Flames of War SC12"
+        custom_tooltip = {
+            text = "With a whisper the very metal of your armies weapons are engulfed in living fire. This flame will eat through almost any armour, ensuring victory in the face of any enemy. Has a Spell Cast Value of 12"
+        }        
+        trigger = {
+            event_target:magic_caster = { 
+                is_variable_equal = { which = "action_picked" which = "d_flame_fires_of_war" } 
+                check_variable = { which = "spell_power" value = "1"}
+            }
+        }
+        event_target:magic_caster = {
+            set_variable = {which = "spellcast" value = "12"}
+            set_variable = { which = dnum value = 0 }
+            set_variable = { which = dmin value = 1 }
+        }     
+        character_event =  { id = z_combat_spell_menu.3}      
+        ai_chance = { factor = 1 }      
+    }
+    option = {
+        name = "Flame: Field of Flames SC24"
+        custom_tooltip = {
+            text = "With a strng of utterances, Flames themselves engulf all before your vision. A veritable field of buring death is born, and all those who walk it shall know the scars born of a blistering heat beyond mortal ken. This spell has a casting value of 24."
+        }        
+        trigger = {
+            event_target:magic_caster = { 
+                is_variable_equal = { which = "action_picked" which = "d_flame_fires_of_war" } 
+                check_variable = { which = "spell_power" value = "1"}
+            }
+        }
+        event_target:magic_caster = {
+            set_variable = {which = "spellcast" value = "24"}
+            set_variable = { which = dnum value = 0 }
+            set_variable = { which = dmin value = 1 }
+        }     
+        character_event =  { id = z_combat_spell_menu.3}      
+        ai_chance = { factor = 1 }      
+    }
+    option = {
+        name = "Flame: Apocalypse SC36"
+        custom_tooltip = {
+            text = "An envocation without equal, a nightmare beyond comprehension. The use of this spell brings to life a magic beyond even the fables of dragonfire, a horror beyond even the worst accidents of wildfire. This magic burns for days, and blisters everything for miles on miles. This spell has a casting value of 36."
+        }        
+        trigger = {
+            event_target:magic_caster = { 
+                is_variable_equal = { which = "action_picked" which = "d_flame_apocalypse" } 
+                check_variable = { which = "spell_power" value = "1"}
+            }
+        }
+        event_target:magic_caster = {
+            set_variable = {which = "spellcast" value = "36"}
+            set_variable = { which = dnum value = 0 }
+            set_variable = { which = dmin value = 1 }
+        }     
+        character_event =  { id = z_combat_spell_menu.3}      
+        ai_chance = { factor = 1 }      
+    }    
+
+    option = {
+        name = "CANCEL_CASTING"
+        event_target:magic_caster = {
+            clr_character_flag = casting
+            clr_character_flag = casting_non_combat
+            clr_character_flag = casting_combat
+            character_event = { id = magic_system.99997 }
+        }
+        ai_chance = { factor = 1 }      
+    }
+}
+
+
+
+character_event = { 
+    id = z_combat_spell_menu.3
+    title = z_combat_spell_menu.3
+    desc = "z_combat_spell_menu.3_desc"
+    picture = "GFX_evt_mage_choose_lore"
+    is_triggered_only = yes
+    trigger = { 
+        event_target:magic_caster = { 
+            is_alive = yes
+        }
+    }
+
+    option = {
+        trigger = {
+            event_target:magic_caster = {  
+                check_variable = { which = spell_power value = 1}
+            }
+        }
+        name = "Expend Additional Power Dice"
+        custom_tooltip = {
+            text = "By investing time, you generate a random amount of magic points."
+        }
+        event_target:magic_caster = {                    
+            change_variable = { which = "dnum" value = "1"} 
+            change_variable = { which = "spell_power" value = "-1"} 
+            character_event = { id = z_combat_spell_menu.3 } 
+        }
+    }
+    option = {
+        trigger = {
+            event_target:magic_caster = {  
+                check_variable = { which = spell_power value = 2}
+            }
+        }
+        name = "Expend Additional Power Dice +2"
+        custom_tooltip = {
+            text = "By investing time, you generate a random amount of magic points."
+        }
+        event_target:magic_caster = {                    
+            change_variable = { which = "dnum" value = "2"} 
+            change_variable = { which = "spell_power" value = "-2"}  
+        }
+        character_event = { id = z_combat_spell_menu.3 }
+    }    
+    option = {
+        trigger = {
+            event_target:magic_caster = {  
+                check_variable = { which = spell_power value = 3}
+            }
+        }
+        name = "Expend Additional Power Dice +3"
+        custom_tooltip = {
+            text = "By investing time, you generate a random amount of magic points."
+        }
+        event_target:magic_caster = {                    
+            change_variable = { which = "dnum" value = "3"} 
+            change_variable = { which = "spell_power" value = "-3"}  
+        }
+        character_event = { id = z_combat_spell_menu.3 }
+    }
+    option = { 
+        name = "Use Power Dice"
+        trigger = {
+            event_target:magic_caster = {  
+                check_variable = { which = dnum which = dmin}
+            }
+        }
+        custom_tooltip = {
+            text = "By investing time, you generate a random amount of magic points."
+        }
+        character_event = { id = z_combat_spell_menu.5 }            
+    }
+}
+
+
+#Combat Magic Dispel/Spell Continue
+character_event = {
+    id = z_combat_spell_menu.5#Drain Magic Power 1"
+    is_triggered_only = yes
+    hide_window = yes
+    immediate = {
+        event_target:magic_caster = {
+            spellcastmod_calc = yes
+            set_variable = { which = dnum_base which = dnum}
+            miscast_test = yes
+            dispel_setup_effect = yes
+            if = {
+                limit = {
+                    event_target:magic_caster = {
+                        has_character_flag = has_dispel
+                    }
+                }
+                dispel_roll = yes
+                event_target:magic_caster = {
+                    clr_character_flag = has_dispel
+                }
+            }            
+        }
+        if = {
+            limit = {
+                event_target:magic_caster = {
+                    NOR = {
+                        has_character_flag = dispeled
+                        has_character_flag = spell_fail
+                    }
+                }
+            }
+            #High Magic
+            if = { 
+                limit = {
+                    event_target:magic_caster = { 
+                        is_variable_equal = { which = action_picked which = "d_flame_burst_of_flame"}
+                    }
+                }
+                character_event = { id = z_flame_magic.100}
+                break = yes
+            }
+            if = { 
+                limit = {
+                    event_target:magic_caster = { 
+                            is_variable_equal = { which = action_picked which = "d_flame_fires_of_war"}
+                    }
+                }
+                character_event = { id = z_flame_magic.200}
+                break = yes
+            }
+            if = { 
+                limit = {
+                    event_target:magic_caster = { 
+                        is_variable_equal = { which = action_picked which = "d_flame_field_of_flames"}
+                    }
+                }
+                character_event = { id = z_flame_magic.300}
+                break = yes
+            }
+            if = { 
+                limit = {
+                    event_target:magic_caster = { 
+                        is_variable_equal = { which = action_picked which = "d_flame_apocalypse"}
+                    }
+                }
+                character_event = { id = z_flame_magic.400}
+                break = yes
+            }
+        }
+        z_spell_process_non_combat = yes                   
+    }
+}
