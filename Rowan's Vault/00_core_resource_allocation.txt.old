@@ -1,0 +1,322 @@
+namespace = resource_dist
+
+# Created by Rowan
+# Cleaned up and improved by making it an on_action event, blackninja9939
+
+# If anyone has resource suggestions, feel free to introduce them into the file.
+
+###################
+### INFORMATION ###
+###################
+###################
+
+# This file uses a single, on startup, event to assign modifiers to every province.
+
+# The immediate applies all modifier by directly scoping to the provinces and then adding them.
+
+# This allows use to quick and easily change what provinces can have what resource structures built.
+# although we could handle the requirements in our resource structures themselves, it can get messy
+# and overlaps can happen.
+
+##############################
+##### MODIFIER REFERENCE #####
+##############################
+##############################
+
+# kingswood - provides all round buff to archers, a tiny buff to light cavalry (lances), tax income
+# rainwood - provides all round buff to archers, a tiny buff to heavy cavalry (lances), tax income
+# mistwood - provides all round buff to archers, a tiny buff to light infantry, tax income
+# lemonwood - provides all round buff to archers, a tiny buff to light infantry, tax income
+# wolfswood - provides all round buff to archers, a tiny buff to light infantry, tax income
+# flint - provides a small archer and light infantry offensive bonus (a fallback weapon material), small tax income
+# coal
+# salt
+# copper
+# iron
+# steel
+# silver
+# gold
+# marble
+# granite
+# northern_gems
+# diamonds
+# obsidian
+# seals
+# spice
+# jewellery
+# precious_fabrics
+
+#################
+### THE EVENT ###
+#################
+#################
+
+character_event = { 
+	id = resource_dist.1
+	hide_window = yes
+	is_triggered_only = yes #triggered from on_startup
+	
+	trigger = { 
+		NOT = { has_global_flag = resource_setup_complete }
+		is_multiplayer_host_character = yes
+	}
+	
+	# This block scopes directly to the provinces and assigns the resources.
+	immediate = {
+		set_global_flag = resource_setup_complete
+        
+        # Pentos
+		157 = { add_province_modifier = { name = precious_fabrics duration = -1 } }
+		160 = { add_province_modifier = { name = spice duration = -1 } }
+		175 = { add_province_modifier = { name = salt duration = -1 } }
+		190 = { add_province_modifier = { name = precious_fabrics duration = -1 } }
+		
+		# Myr
+		241 = { add_province_modifier = { name = jewellery duration = -1 } }
+		242 = { add_province_modifier = { name = spice duration = -1 } }
+		247 = { add_province_modifier = { name = precious_fabrics duration = -1 } }
+		
+		# Tyrosh
+		297 = { add_province_modifier = { name = spice duration = -1 } }
+		298 = { add_province_modifier = { name = salt duration = -1 } }
+		
+		# Planky Town, Dorne
+		444 = { add_province_modifier = { name = spice duration = -1 } }
+		
+		# Lemonwood
+		466 = { add_province_modifier = { name = lemonwood duration = -1 } }
+		467 = { add_province_modifier = { name = lemonwood duration = -1 } }
+		468 = { add_province_modifier = { name = lemonwood duration = -1 } }
+		469 = { add_province_modifier = { name = lemonwood duration = -1 } }
+		475 = { add_province_modifier = { name = lemonwood duration = -1 } }
+		477 = { add_province_modifier = { name = lemonwood duration = -1 } }
+		
+		# Salt Shore
+		478 = { add_province_modifier = { name = salt duration = -1 } }
+		
+		# Red Mountains
+		493 = { add_province_modifier = { name = salt duration = -1 } }
+		
+		# The Reach
+		541 = { add_province_modifier = { name = precious_fabrics duration = -1 } }
+        
+        580 = { add_province_modifier = { name = honey duration = -1 } } # Honeyholt, Honey
+		
+		# Dornish Marches
+		647 = { add_province_modifier = { name = iron duration = -1 } }
+		650 = { add_province_modifier = { name = coal duration = -1 } }
+		
+		# Stormlands, Rainwood, Mistwood
+		643 = { add_province_modifier = { name = steel duration = -1 } }
+		
+		670 = { add_province_modifier = { name = rainwood duration = -1 } }
+		671 = { add_province_modifier = { name = rainwood duration = -1 } }
+		672 = { add_province_modifier = { name = rainwood duration = -1 } }
+		673 = { add_province_modifier = { name = rainwood duration = -1 } }
+		
+		674 = { add_province_modifier = { name = mistwood duration = -1 } }
+		675 = { add_province_modifier = { name = mistwood duration = -1 } }
+		676 = { add_province_modifier = { name = mistwood duration = -1 } }
+		677 = { add_province_modifier = { name = mistwood duration = -1 } }
+		678 = { add_province_modifier = { name = mistwood duration = -1 } }
+		
+		679 = { add_province_modifier = { name = rainwood duration = -1 } }
+		680 = { add_province_modifier = { name = rainwood duration = -1 } }
+		681 = { add_province_modifier = { name = rainwood duration = -1 } }
+		682 = { add_province_modifier = { name = rainwood duration = -1 } }
+		683 = { add_province_modifier = { name = rainwood duration = -1 } }
+		
+		# Blackwater Bay
+		733 = { add_province_modifier = { name = jewellery duration = -1 } }
+		
+		# Kingswood, Crownlands/Dusklands/Wendwater
+		749 = { add_province_modifier = { name = kingswood duration = -1 } }
+		750 = { add_province_modifier = { name = kingswood duration = -1 } }
+		751 = { add_province_modifier = { name = kingswood duration = -1 } }
+		752 = { add_province_modifier = { name = kingswood duration = -1 } }
+		753 = { add_province_modifier = { name = kingswood duration = -1 } }
+		
+		# Dragonstone - Volcanic activity, good source of both obsidian and diamonds and very good to actually hold.
+		797 = { add_province_modifier = { name = obsidian duration = -1 } add_province_modifier = { name = diamonds duration = -1 } }
+		798 = { add_province_modifier = { name = coal duration = -1 } } # Smouldering Isle, Coal
+		799 = { add_province_modifier = { name = diamonds duration = -1 } } # Isle of Ember, Diamonds
+		800 = { add_province_modifier = { name = obsidian duration = -1 } } # Obsidian, Obsidian (Duh)
+        
+        # Dirtmark - Spicetown
+        801 = { add_province_modifier = { name = spice duration = -1 } } # Driftmakr, Spice
+		
+		# The Westerlands
+        858 = { add_province_modifier = { name = jewellery duration = -1 } } # Lannisport
+        861 = { add_province_modifier = { name = gold duration = -1 } } # Casterly Rock
+		885 = { add_province_modifier = { name = iron duration = -1 } } # Ironlion, Iron Mine
+		889 = { add_province_modifier = { name = gold duration = -1 } } # Castamere, Gold Mine
+		891 = { add_province_modifier = { name = gold duration = -1 } } # Goldcliff, Gold Mine
+		894 = { add_province_modifier = { name = gold duration = -1 } } # The Crag, Gold Mine
+		896 = { add_province_modifier = { name = salt duration = -1 } } # Saltwest, Salt Mine
+		907 = { add_province_modifier = { name = gold duration = -1 } } # Goldhorn, Gold Mine
+		911 = { add_province_modifier = { name = gold duration = -1 } } # Golden Tooth, Gold Mine
+		929 = { add_province_modifier = { name = copper duration = -1 } } # Coppermine, Copper
+		930 = { add_province_modifier = { name = copper duration = -1 } } # Copperhall, Copper
+		946 = { add_province_modifier = { name = copper duration = -1 } } # Greenmine, Copper
+		952 = { add_province_modifier = { name = coal duration = -1 } } # Brightsilver, Coal
+		954 = { add_province_modifier = { name = silver duration = -1 } } # Silverhall, Silver
+		956 = { add_province_modifier = { name = coal duration = -1 } } # Goldgate, Coal
+		957 = { add_province_modifier = { name = tin duration = -1 } } # Brightown, Tin
+		
+		# Iron Islands
+		1156 = { add_province_modifier = { name = iron duration = -1 } }
+		1157 = { add_province_modifier = { name = iron duration = -1 } }
+		1165 = { add_province_modifier = { name = copper duration = -1 } }
+		1166 = { add_province_modifier = { name = granite duration = -1 } }
+		1175 = { add_province_modifier = { name = granite duration = -1 } }
+		1176 = { add_province_modifier = { name = iron duration = -1 } }
+		1178 = { add_province_modifier = { name = silver duration = -1 } }
+		1190 = { add_province_modifier = { name = iron duration = -1 } }
+		
+		# Wolfswood, North
+		1194 = { add_province_modifier = { name = wolfswood duration = -1 } }
+		1195 = { add_province_modifier = { name = wolfswood duration = -1 } }
+		1235 = { add_province_modifier = { name = wolfswood duration = -1 } }
+		1243 = { add_province_modifier = { name = wolfswood duration = -1 } }
+		1244 = { add_province_modifier = { name = wolfswood duration = -1 } }
+		1245 = { add_province_modifier = { name = wolfswood duration = -1 } }
+		1246 = { add_province_modifier = { name = wolfswood duration = -1 } }
+		1248 = { add_province_modifier = { name = wolfswood duration = -1 } }
+		1252 = { add_province_modifier = { name = wolfswood duration = -1 } }
+		1256 = { add_province_modifier = { name = wolfswood duration = -1 } }
+		
+		# Northern Clans - A good source of uncut gemstones. To fully exploit the duchy, they must feudalise
+		1229 = { add_province_modifier = { name = northern_gems duration = -1 } }
+		1231 = { add_province_modifier = { name = northern_gems duration = -1 } }
+		1232 = { add_province_modifier = { name = northern_gems duration = -1 } }
+		1233 = { add_province_modifier = { name = northern_gems duration = -1 } }
+		
+		# The Vale
+		1070 = { add_province_modifier = { name = marble duration = -1 } }
+		1072 = { add_province_modifier = { name = precious_fabrics duration = -1 } }
+		1077 = { add_province_modifier = { name = copper duration = -1 } }
+		1084 = { add_province_modifier = { name = steel duration = -1 } }
+		1091 = { add_province_modifier = { name = coal duration = -1 } }
+		1092 = { add_province_modifier = { name = granite duration = -1 } }
+		1098 = { add_province_modifier = { name = coal duration = -1 } }
+		1099 = { add_province_modifier = { name = granite duration = -1 } }
+		1105 = { add_province_modifier = { name = marble duration = -1 } }
+		1114 = { add_province_modifier = { name = copper duration = -1 } }
+		1116 = { add_province_modifier = { name = granite duration = -1 } }
+		1138 = { add_province_modifier = { name = granite duration = -1 } }
+		1141 = { add_province_modifier = { name = silver duration = -1 } }
+		1142 = { add_province_modifier = { name = iron duration = -1 } }
+		
+		# The North
+		1204 = { add_province_modifier = { name = precious_fabrics duration = -1 } } # White Knife, Furs
+		1215 = { add_province_modifier = { name = seals duration = -1 } } # Karhold, Seals
+		1217 = { add_province_modifier = { name = seals duration = -1 } } # East Harbour, Seals
+		1218 = { add_province_modifier = { name = seals duration = -1 } } # Snowdell, Seals
+		1219 = { add_province_modifier = { name = seals duration = -1 } } # Grey Cliff Tower, Seals
+		1227 = { add_province_modifier = { name = seals duration = -1 } } # Northwold, Seals
+		
+		# Bear Island
+		1240 = { add_province_modifier = { name = seals duration = -1 } } # Bear Island, Seals
+		1242 = { add_province_modifier = { name = seals duration = -1 } } # Bearstone, Seals
+		
+		# Skagos
+		1288 = { add_province_modifier = { name = seals duration = -1 } } # King's House, Seals
+		1293 = { add_province_modifier = { name = seals duration = -1 } } # Driftwood Hall, Seals
+        
+        # Crackclaw
+        807 = { add_province_modifier = { name = tin duration = -1 } } # Crackclaw Barren, Tin
+        
+        ##### OTHER NON-RESOURCE STATIC PROVINCE AFFECTING MODIFIERS #####
+        
+        # Natural Harbours
+        801 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } add_province_modifier = { name = tsk_minor_centre_of_trade duration = -1 } } # Driftmark
+        733 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Blackwater Harbour
+        829 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Dun Port
+        858 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Lannisport
+        2 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Braavos
+        544 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Oldtown
+        541 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Arbor
+        1072 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Gulltown
+        1156 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Pyke
+        1023 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Seagard
+        1165 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Hammerhorn
+        1192 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Lonely Light
+        1193 = { add_province_modifier = { name = tsk_major_natural_harbour duration = -1 } } # Lonely Harbour
+        
+        # Major Population Centres
+        861 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } } # Casterly Rock, Major Pop
+        
+        429 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_minor_centre_of_trade duration = -1 } } # Sunspear, Major Pop and Minor Trade
+        527 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_minor_centre_of_trade duration = -1 } } # Highgarden, Major Pop and Minor Trade
+        544 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_minor_centre_of_trade duration = -1 } } # Oldtown, Major Pop and Minor Trade
+        831 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_minor_centre_of_trade duration = -1 } } # Duskendale, Major Pop and Minor Trade
+        1000 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_minor_centre_of_trade duration = -1 } } # Riverrun, Major Pop and Minor Trade
+        
+        444 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_centre_of_trade duration = -1 } } # Planky Town, Major Pop and Major Trade
+        858 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_centre_of_trade duration = -1 } } # Lannisport, Major Pop and Major Trade
+        889 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_centre_of_trade duration = -1 } } # Castamere, Major Pop and Major Trade
+        1003 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_centre_of_trade duration = -1 } } # Fairmarket, Major Pop and Major Trade
+        1026 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_centre_of_trade duration = -1 } } # Oldstones, Major Pop, Major Trade
+        1072 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_centre_of_trade duration = -1 } } # Gulltown, Major Pop, Major Trade
+        
+        730 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } add_province_modifier = { name = tsk_centre_of_trade duration = -1 } } # Blackwater Hill
+        
+        1198 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } } # Winterfell, Major Pop
+        1220 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } } # Dreadfort, Major Pop
+        1265 = { add_province_modifier = { name = tsk_major_population_centre duration = -1 } } # Barrowton, Major Pop
+        
+        541 = { add_province_modifier = { name = tsk_centre_of_trade duration = -1 } } # Arbor, Major Trade
+        1204 = { add_province_modifier = { name = tsk_centre_of_trade duration = -1 } } # White Knife, Major Trade
+        
+        537 = { add_province_modifier = { name = tsk_minor_centre_of_trade duration = -1 } } # Wynecoast, Minor Trade
+        918 = { add_province_modifier = { name = tsk_minor_centre_of_trade duration = -1 } } # Riverspring, Minor Trade
+        1051 = { add_province_modifier = { name = tsk_minor_centre_of_trade duration = -1 } } # Lord Harroway's Town, Minor Trade
+        
+        # Desolate - Increases build cost and build time
+        # Ravaged - Increases build cost and build time
+        
+        # Dragonstone Isles
+        797 = { add_province_modifier = { name = tsk_volcanic duration = -1 } } # Dragonstone
+		798 = { add_province_modifier = { name = tsk_desolate duration = -1 } }
+		799 = { add_province_modifier = { name = tsk_desolate duration = -1 } }
+		800 = { add_province_modifier = { name = tsk_desolate duration = -1 } }
+        
+        # Lorath, ravaged by war
+        65 = { add_province_modifier = { name = tsk_ravaged duration = -1 } }
+        67 = { add_province_modifier = { name = tsk_ravaged duration = -1 } }
+        
+        # These might be a bit much.
+        if = {
+            limit = {
+                terrain = desert
+            }
+            random = {
+                30 = { add_province_modifier = { name = tsk_bleak duration = -1 } }
+                70 = { }
+            }
+        }
+        if = {
+            limit = {
+                terrain = barrens
+            }
+            random = {
+                30 = { add_province_modifier = { name = tsk_bleak duration = -1 } }
+                60 = { add_province_modifier = { name = tsk_desolate duration = -1 } }
+                10 = { }
+            }
+        }
+        # if = {
+            # limit = {
+                # OR = {
+                    # terrain = plains
+                    # terrain = farmlands
+                    
+                # }
+            # }
+            # random = {
+                # 10 = { add_province_modifier = { name = tsk_fruitful duration = -1 } }
+                # 90 = { }
+            # }
+        # }
+	}
+}
