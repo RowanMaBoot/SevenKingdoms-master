@@ -1,9 +1,10 @@
-# Feudal Government - Basic Feudal Government, primarily for the Seven Faith
-# Muslim Government - Basic Feudal Government, primarily used for Essosi Feudal States, accepts republic overlords
-# Freehold Government - Republic-Feudal Hybrid, ruled by a viceroy
-# Night's Watch Government - Does not accept other governments as liege, uses open elective
-# Old Gods Government - Less centralised form of Fuedal
-# Stepstones Government - Accepts no other governments as liege
+
+# Feudal Government is a Generic Government, used primarily for the Seven. Accepts Old Gods Feudal as a liege.
+# Muslim Government is the Eastern Feudal, and is for Essosi-based Rulers. Accepts Freehold and Republic lieges, but neither Old Gods or Westerosi Feudal.
+# Freehold Government is a special Feudal Government for the on-map Valyrian Freehold.
+# Night's Watch Government is a special Feudal Government for the Night's watch, and accepts no other Governments as a liege.
+# Old Gods Government is the Old Gods Feudal Government, and is specific to Old Gods Characters.
+# Stepstones Feudal is a special Feudal Government for the Stepstones, accepting no valid lieges and is accepted by no other Governments.
 
 feudal_governments = {
 
@@ -18,7 +19,6 @@ feudal_governments = {
             TRIBAL
         }
         accepts_liege_governments = { # Gets the wrong religion modifier instead
-            muslim_government
             old_gods_government
         }
         free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
@@ -29,17 +29,12 @@ feudal_governments = {
         }
         frame_suffix = "_feudal"
         potential = {
-            NOT = {
-                controls_religion = yes
-            }
             NOR = {
-                religion_group = eastern_group  # Eastern Governments
+                controls_religion = yes
+                region = world_essos            # world_essos gets Essosi Feudal
                 religion = old_gods             # Old Gods Government
                 religion = lady_of_the_rocks    # Stepstones Government
                 religion = black_flag           # Stepstones Government
-            }
-            OR = {
-                
             }
             is_patrician = no
         }
@@ -70,8 +65,6 @@ feudal_governments = {
             TRIBAL
         }
         accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            old_gods_government
             freehold_government
             merchant_republic_government
         }
@@ -85,7 +78,7 @@ feudal_governments = {
             NOT = {
                 controls_religion = yes
             }
-            religion_group = eastern_group
+            region = world_essos            # world_essos gets Essosi Feudal
             is_patrician = no
         }
         
@@ -97,12 +90,56 @@ feudal_governments = {
         dukes_called_kings = yes
         barons_need_dynasty = yes
         have_gender_laws = yes
-        allows_matrilineal_marriage = yes
+        allows_matrilineal_marriage = yes   # Consider removing for consistency, as republics in essos also lack matrilineal marriage.
         free_retract_vassalage = yes
 
-        free_levies_in_offensive_war = yes # Took away the hardcoded stuff for muslims where they could raise levies without pissing off vassals if in an offensive war.
+        free_levies_in_offensive_war = no   # Raise levies in offensive war without vassal opinion penalty.
 
         can_build_tribal = no
+        
+        ignore_in_vassal_limit_calculation = {
+            tribal_government
+        }
+        capital_move_delay = 600
+    }
+    
+    # Old Gods Government, Decentralized Feudal/Tribal hybrid?
+    old_gods_government = {
+        preferred_holdings = { CASTLE }
+        allowed_holdings = { 
+            CASTLE 
+            FORT
+            HOSPITAL
+        }
+        allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
+            TRIBAL
+        }
+        accepts_liege_governments = { # Gets the wrong religion modifier instead
+            feudal_government
+        }
+        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+            tribal_government
+            wildling_government
+            stepstones_government
+        }
+        frame_suffix = "_feudal"
+        potential = {
+            NOT = {
+                controls_religion = yes
+            }
+            religion = old_gods
+            is_patrician = no
+        }
+        
+        color = { 125 121 138 }
+        
+        dukes_called_kings = yes
+        barons_need_dynasty = yes
+
+        can_build_tribal = no
+        
+        free_retract_vassalage = yes
+        free_levies_in_offensive_war = yes   # Raise levies in offensive war without vassal opinion penalty.
         
         ignore_in_vassal_limit_calculation = {
             tribal_government
@@ -200,48 +237,6 @@ feudal_governments = {
         capital_move_delay = 600
     }
     
-    # Old Gods Government, Decentralized Feudal/Tribal hybrid?
-    old_gods_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE 
-            FORT
-            HOSPITAL
-        }
-        allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
-            TRIBAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            muslim_government
-            feudal_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            stepstones_government
-        }
-        frame_suffix = "_feudal"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            religion = old_gods
-            is_patrician = no
-        }
-        
-        color = { 125 121 138 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-
-        can_build_tribal = no
-        
-        ignore_in_vassal_limit_calculation = {
-            tribal_government
-        }
-        capital_move_delay = 600
-    }
-    
     # Custom Stepstones Government
     stepstones_government = {
         preferred_holdings = { CASTLE }
@@ -269,12 +264,14 @@ feudal_governments = {
             is_patrician = no
         }
         
-        color = { 166 135 114 }
+        color = { 165 135 115 }
         
         dukes_called_kings = yes
         barons_need_dynasty = yes
 
         can_build_tribal = no
+        
+        free_levies_in_offensive_war = yes   # Raise levies in offensive war without vassal opinion penalty.
         
         ignore_in_vassal_limit_calculation = {
             tribal_government
