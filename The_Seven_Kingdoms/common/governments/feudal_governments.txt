@@ -15,11 +15,9 @@ feudal_governments = {
             FORT
             HOSPITAL
         }
-        allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
-            TRIBAL
-        }
         accepts_liege_governments = { # Gets the wrong religion modifier instead
             old_gods_government
+            nights_watch_government         # Although it cannot rule over the NW, the NW can rule over them.
         }
         free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
             tribal_government
@@ -29,12 +27,14 @@ feudal_governments = {
         }
         frame_suffix = "_feudal"
         potential = {
+            # Generic Block, due to presence of other government types
             NOR = {
                 controls_religion = yes
-                region = world_essos            # world_essos gets Essosi Feudal
-                religion = old_gods             # Old Gods Government
-                religion = lady_of_the_rocks    # Stepstones Government
-                religion = black_flag           # Stepstones Government
+                is_government_potential = muslim_government         # Essosi Goverment
+                is_government_potential = old_gods_government       # Old Gods Government
+                is_government_potential = stepstones_government     # Stepstones Government
+                is_government_potential = freehold_government       # Freehold Government
+                is_government_potential = nights_watch_government   # Night's Watch Government
             }
             is_patrician = no
         }
@@ -46,9 +46,6 @@ feudal_governments = {
 
         can_build_tribal = no
         
-        ignore_in_vassal_limit_calculation = {
-            tribal_government
-        }
         capital_move_delay = 600
     }
     
@@ -78,7 +75,24 @@ feudal_governments = {
             NOT = {
                 controls_religion = yes
             }
-            region = world_essos            # world_essos gets Essosi Feudal
+            OR = {
+                AND = {
+                    has_game_started = no
+                    capital_scope = {
+                        region = world_essos            # Essosi Government
+                    }
+                }
+                # Should potentially block capital switching to Essos to change Government?
+                AND = {
+                    has_game_started = yes
+                    capital_scope = {
+                        region = world_essos            # Essosi Government
+                    }
+                    NOT = {
+                        is_government_potential = feudal_government
+                    }
+                }
+            }
             is_patrician = no
         }
         
@@ -128,6 +142,9 @@ feudal_governments = {
                 controls_religion = yes
             }
             religion = old_gods
+            religion = old_gods_beyond
+            religion = old_gods_beyond_white
+            NOT = { culture_group = free_folk }
             is_patrician = no
         }
         
@@ -203,8 +220,12 @@ feudal_governments = {
         }
         potential = {
             OR = {
-                has_landed_title = d_the_wall
-                has_landed_title = k_the_nights_watch
+                primary_title = { 
+                    OR = {
+                        title = d_the_wall
+                        title = k_the_nights_watch
+                    }
+                }
             }
         }
         
@@ -237,16 +258,12 @@ feudal_governments = {
         capital_move_delay = 600
     }
     
-    # Custom Stepstones Government
     stepstones_government = {
         preferred_holdings = { CASTLE }
         allowed_holdings = { 
             CASTLE 
             FORT
             HOSPITAL
-        }
-        allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
-            TRIBAL
         }
         free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
             tribal_government
@@ -273,9 +290,6 @@ feudal_governments = {
         
         free_levies_in_offensive_war = yes   # Raise levies in offensive war without vassal opinion penalty.
         
-        ignore_in_vassal_limit_calculation = {
-            tribal_government
-        }
         capital_move_delay = 600
     }
 }
