@@ -1250,30 +1250,31 @@
 		}
 	}
 
-		# Blank
+	# Blank
 	11 = {
-		factor = 1
+		factor = 3
 		modifier = {
-			factor = 10000
-			title = k_the_nights_watch
+			factor = 20000
+			trait = shieldmaiden
+			NOT = { has_minor_title = title_commander }
+		}
+        modifier = {
+            factor = 10000
+            OR = {
+                title = k_the_nights_watch
+            }
+        }
+		modifier = {
+			factor = 0
 			OR = {
-				AND = {
-					is_ruler = yes
-					NOR = {
-						is_feudal = yes
-						is_republic = yes
-					}	
-				}
-				AND = {
-					is_ruler = no
-					liege = {
-						NOR = {
-							is_feudal = yes
-							is_republic = yes
-						}	
-					}	
-				}
-			}	
+				real_tier = emperor
+				real_tier = king
+				real_tier = duke
+				has_minor_title = title_prince
+				spouse = { real_tier = emperor }
+				spouse = { real_tier = king }
+				spouse = { real_tier = duke }
+			}
 		}
 	}
 }
