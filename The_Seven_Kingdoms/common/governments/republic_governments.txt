@@ -117,4 +117,95 @@ republic_governments = {
         capital_move_delay = 600
     }
     
+    freehold_government = {
+        preferred_holdings = { CITY }
+        allowed_holdings = { 
+            TRADE_POST
+            CITY
+            CASTLE
+            FAMILY_PALACE
+            FORT
+            HOSPITAL
+        }
+        allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
+            TRIBAL
+        }
+        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+            tribal_government
+            wildling_government
+            stepstones_government
+        }
+        potential = {
+            has_landed_title = e_valyrian_freehold
+            NOT = { controls_religion = yes }
+            is_female = no
+            OR = {
+                AND = {
+                    is_patrician = yes
+                    OR = {
+                        liege_before_war = {
+                            NOT = { character = PREV }
+                            is_merchant_republic = yes
+                            NOT = {
+                                liege_before_war = {
+                                    NOT = { character = PREV }
+                                    is_merchant_republic = yes
+                                }
+                            }
+                        }
+                        has_game_started = no
+                    }
+                }
+                AND = {
+                    OR = {
+                        AND = {
+                            has_game_started = yes
+                            is_merchant_republic = yes
+                        }
+                        capital_scope = { port = yes }
+                    }
+                    higher_real_tier_than = count
+                    any_demesne_province = {
+                        always = yes
+                    }
+                    NOT = {
+                        liege_before_war = {
+                            NOT = { character = PREV }
+                            is_merchant_republic = yes
+                        }
+                    }
+                }
+            }
+        }
+        
+        color = { 110 45 130 }
+        
+        frame_suffix = "_freehold"
+        title_prefix = "city_"
+        
+        dukes_called_kings = no
+        barons_need_dynasty = yes
+        
+        merchant_republic = yes
+        can_imprison_without_reason = no
+        can_revoke_without_reason = no
+        can_usurp_kingdoms_and_empires = no
+        have_gender_laws = no
+        allows_matrilineal_marriage = no
+
+        can_build_tribal = no
+        
+        landed_inheritance = no
+        
+        can_grant_kingdoms_and_empires_to_other_government = yes
+        can_be_granted_kingdoms_and_empires_by_other_government = yes
+        
+        ignore_in_vassal_limit_calculation = {
+            tribal_government
+        }
+        
+        aggression = 0.5 #was 0.25, but comes with an error if it is more than 2 decimal places
+        
+        capital_move_delay = 600
+    }
 }
