@@ -35,6 +35,7 @@ feudal_governments = {
                 is_government_potential = stepstones_government     # Stepstones Government
                 is_government_potential = freehold_government       # Freehold Government
                 is_government_potential = nights_watch_government   # Night's Watch Government
+                is_government_potential = wildling_government       # Wildling Government, Tribal
             }
             is_patrician = no
         }
@@ -72,25 +73,14 @@ feudal_governments = {
         }
         frame_suffix = "_iqta"
         potential = {
-            NOT = {
+            NOR = {
                 controls_religion = yes
+                is_government_potential = freehold_government       # Freehold Government
             }
-            OR = {
-                AND = {
-                    has_game_started = no
-                    capital_scope = {
-                        region = world_essos            # Essosi Government
-                    }
-                }
-                # Should potentially block capital switching to Essos to change Government?
-                AND = {
-                    has_game_started = yes
-                    capital_scope = {
-                        region = world_essos            # Essosi Government
-                    }
-                    NOT = {
-                        is_government_potential = feudal_government
-                    }
+            AND = {
+                has_game_started = no
+                capital_scope = {
+                    region = world_essos            # Essosi Government
                 }
             }
             is_patrician = no
