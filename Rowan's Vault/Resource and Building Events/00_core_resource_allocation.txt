@@ -27,10 +27,12 @@ namespace = core_resource_dist
 # mistwood - provides all round buff to archers, a tiny buff to light infantry, tax income
 # lemonwood - provides all round buff to archers, a tiny buff to light infantry, tax income
 # wolfswood - provides all round buff to archers, a tiny buff to light infantry, tax income
+# lumber
 # flint - provides a small archer and light infantry offensive bonus (a fallback weapon material), small tax income
 # coal
 # salt
 # copper
+# tin
 # iron
 # steel
 # silver
@@ -41,6 +43,12 @@ namespace = core_resource_dist
 # diamonds
 # obsidian
 # seals
+# cheese
+# honey
+# livestock
+# grain
+# fish
+
 # spice
 # jewellery
 # precious_fabrics
@@ -96,6 +104,13 @@ character_event = {
         
         any_demesne_province  = {
             
+            # if = {
+            #    limit = {
+            #        limit stuff
+            #    }
+            #    trigger_switch stuff
+            # }
+            
             # DISTRIBUTE TRADE, POPULATION AND HARBOUR MODIFIERS
             trigger_switch = {
                 on_trigger = province_id
@@ -144,6 +159,249 @@ character_event = {
                 799 = { add_province_modifier = { name = tsk_desolate duration = -1 } }
                 800 = { add_province_modifier = { name = tsk_desolate duration = -1 } }
             }
+            
+            # DISTRIBUTE GENERIC RESOURCES, EXCLUDE UNIQUE SITES, NEST COASTAL AND NON-COASTAL
+            # NORTH AND BEYOND MAY HAVE SEALS OR FISH
+            # TODO - Possibly nest seals WITHIN the random chance block
+            IF = {
+                LIMIT = {
+                    NOT = {
+                        # TODO - Reference the duchies in question and the presence of forest instead.
+                        # IF ANY OF THESE PROVINCES, THIS ENTIRE BLOCK AND SUCCESSIVE BLOCKS FAIL
+                        # Uses prescripted trigger found in 03_resource_prescripted_triggers.txt
+                        has_province_resource_manually_defined_trigger = yes
+                    }
+                }
+                IF = {
+                    LIMIT = {
+                        port = no
+                    }
+                    trigger_switch = {
+                        on_trigger = terrain
+                        
+                        arctic = {
+                            random_list = {
+                                80 = {   }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                            }
+                        }
+                        barrens = {
+                            random_list = {
+                                90 = {   }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                            }
+                        }
+                        farmlands = {
+                            random_list = {
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                                10 = { add_province_modifier = { name = honey duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                                5 = { add_province_modifier = { name = steel duration = -1 } }
+                            }
+                        }
+                        forest = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = lumber duration = -1 } }
+                                10 = { add_province_modifier = { name = honey duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                            }
+                        }
+                        hills = {
+                            random_list = {
+                                10 = { add_province_modifier = { name = coal duration = -1 } }
+                                10 = { add_province_modifier = { name = copper duration = -1 } }
+                                10 = { add_province_modifier = { name = tin duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                            }
+                        }
+                        woods = {
+                            random_list = {
+                                20 = { add_province_modifier = { name = lumber duration = -1 } }
+                                10 = { add_province_modifier = { name = honey duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                            }
+                        }
+                        mountain = {
+                            random_list = {
+                                10 = { add_province_modifier = { name = coal duration = -1 } }
+                                10 = { add_province_modifier = { name = salt duration = -1 } }
+                                10 = { add_province_modifier = { name = copper duration = -1 } }
+                                10 = { add_province_modifier = { name = tin duration = -1 } }
+                                10 = { add_province_modifier = { name = iron duration = -1 } }
+                            }
+                        }
+                        steppe = {
+                            random_list = {
+                                30 = {  }
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                            }
+                        }
+                        plains = {
+                            random_list = {
+                                20 = {  }
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                            }
+                        }
+                        jungle = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = lumber duration = -1 } }
+                                10 = { add_province_modifier = { name = honey duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                5 = { add_province_modifier = { name = spice duration = -1 } }
+                            }
+                        }
+                        fens = {
+                            random_list = {
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = fish duration = -1 } }
+                            }
+                        }
+                        marsh = {
+                            random_list = {
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = fish duration = -1 } }
+                            }
+                        }
+                        desert = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                            }
+                        }
+                    }
+                }
+                IF = {
+                    LIMIT = {
+                        port = yes
+                    }
+                    trigger_switch = {
+                        on_trigger = terrain
+                        
+                        arctic = {
+                            random_list = {
+                                40 = { add_province_modifier = { name = fish duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                            }
+                        }
+                        barrens = {
+                            random_list = {
+                                50 = { add_province_modifier = { name = fish duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                            }
+                        }
+                        farmlands = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                                10 = { add_province_modifier = { name = honey duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                                5 = { add_province_modifier = { name = steel duration = -1 } }
+                            }
+                        }
+                        forest = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                                30 = { add_province_modifier = { name = lumber duration = -1 } }
+                                10 = { add_province_modifier = { name = honey duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                            }
+                        }
+                        hills = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                                10 = { add_province_modifier = { name = coal duration = -1 } }
+                                10 = { add_province_modifier = { name = copper duration = -1 } }
+                                10 = { add_province_modifier = { name = tin duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                            }
+                        }
+                        woods = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                                20 = { add_province_modifier = { name = lumber duration = -1 } }
+                                10 = { add_province_modifier = { name = honey duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                            }
+                        }
+                        mountain = {
+                            random_list = {
+                                20 = { add_province_modifier = { name = fish duration = -1 } }
+                                10 = { add_province_modifier = { name = coal duration = -1 } }
+                                10 = { add_province_modifier = { name = salt duration = -1 } }
+                                10 = { add_province_modifier = { name = copper duration = -1 } }
+                                10 = { add_province_modifier = { name = tin duration = -1 } }
+                                10 = { add_province_modifier = { name = iron duration = -1 } }
+                            }
+                        }
+                        steppe = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                            }
+                        }
+                        plains = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                            }
+                        }
+                        jungle = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                                30 = { add_province_modifier = { name = lumber duration = -1 } }
+                                10 = { add_province_modifier = { name = honey duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                5 = { add_province_modifier = { name = spice duration = -1 } }
+                            }
+                        }
+                        fens = {
+                            random_list = {
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                            }
+                        }
+                        marsh = {
+                            random_list = {
+                                10 = { add_province_modifier = { name = cheese duration = -1 } }
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                            }
+                        }
+                        desert = {
+                            random_list = {
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                                30 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                            }
+                        }
+                        coastal_desert = {
+                            random_list = {
+                                10 = { add_province_modifier = { name = livestock duration = -1 } }
+                                10 = { add_province_modifier = { name = grain duration = -1 } }
+                                30 = { add_province_modifier = { name = fish duration = -1 } }
+                            }
+                        }
+                    }
+                }
+            }
+            
             
             # DISTRIBUTE PROVINCE SPECIFIC RESOURCES
             trigger_switch = {
@@ -249,8 +507,8 @@ character_event = {
                                 798 = { add_province_modifier = { name = coal duration = -1 } } # Smouldering Isle, Coal
                                 799 = { add_province_modifier = { name = diamonds duration = -1 } } # Isle of Ember, Diamonds
                                 800 = { add_province_modifier = { name = obsidian duration = -1 } } # Obsidian, Obsidian (Duh)
-                                # Dirtmark - Spicetown
-                                801 = { add_province_modifier = { name = spice duration = -1 } } # Driftmakr, Spice
+                                # Driftmark - Spicetown
+                                801 = { add_province_modifier = { name = spice duration = -1 } } # Driftmark, Spice
                                 # Crackclaw
                                 807 = { add_province_modifier = { name = tin duration = -1 } } # Crackclaw Barren, Tin
                             }
