@@ -45,11 +45,22 @@ namespace = core_resource_dist
 # jewellery
 # precious_fabrics
 
-# bleak
-# desolate
-# ravaged
+# tsk_arctic
+# tsk_arid
+
+# tsk_lush
+# tsk_fruitful
+
+# tsk_bleak
+# tsk_desolate
+# tsk_ravaged
 # tsk_volcanic
-# fruitful
+
+# tsk_major_population_centre
+# tsk_minor_centre_of_trade
+# tsk_centre_of_trade
+# tsk_natural_harbour
+# tsk_major_natural_harbour
 
 #################
 ### THE EVENT ###
@@ -335,43 +346,84 @@ character_event = {
             }
             
             # AFFECT ENTIRE REGIONS WITH RANDOM MODIFIERS
-            # DORNE - COASTAL LESS LIKELY TO GET ARID, MOUNTAINS AND DESERT HIGHLY LIKELY
+            # DORNE & ESSOS - PORT/COASTAL DO NOT GET ARID, OTHERWISE GIVE ARID
+            # BEYOND THE WALL - GIVE ARCTIC
+            # THE WALL - GIVE BLEAK
             trigger_switch = {
                 on_trigger = region
                 
-                world_dorne = {
-                    
+                world_essos = {
+                    if = {
+                        limit = {
+                            port = no
+                        }
+                        add_province_modifier = { name = tsk_arid duration = -1 }
+                    }
                 }
+                world_the_south = {
+                    trigger_switch = {
+                        on_trigger = terrain
+                        
+                        plains = {
+                            random_list = {
+                                85 = { }
+                                10 = { add_province_modifier = { name = tsk_lush duration = -1 } }
+                                5 = { add_province_modifier = { name = tsk_fruitful duration = -1 } }
+                            }
+                        }
+                        farmlands = {
+                            random_list = {
+                                70 = { }
+                                20 = { add_province_modifier = { name = tsk_lush duration = -1 } }
+                                10 = { add_province_modifier = { name = tsk_fruitful duration = -1 } }
+                            }
+                        }
+                    }
+                }
+                world_dorne = {
+                    if = {
+                        limit = {
+                            NOR = {
+                                port = yes
+                                terrain = desert
+                            }
+                        }
+                        add_province_modifier = { name = tsk_arid duration = -1 }
+                    }
+                    
+                    trigger_switch = {
+                        on_trigger = terrain
+                        
+                        desert = {
+                            random_list = {
+                                60 = { add_province_modifier = { name = tsk_arid duration = -1 } }
+                                20 = { add_province_modifier = { name = tsk_lush duration = -1 } }
+                                20 = { add_province_modifier = { name = tsk_bleak duration = -1 } }
+                            }
+                        }
+                    }
+                }
+                world_beyond_the_wall = {
+                    add_province_modifier = { name = tsk_arctic duration = -1 }
+                }
+                world_the_stepstones = {
+                    add_province_modifier = { name = tsk_bleak duration = -1 }
+                }
+                world_the_wall = {
+                    add_province_modifier = { name = tsk_bleak duration = -1 }
+                }
+                
             }
             
-            # DISTRIBUTE TERRAIN SPECIFIC MODIFIERS AT RANDOM
+            # DISTRIBUTE TERRAIN SPECIFIC MODIFIERS REGARDLESS OF REGION OR OTHER MODIFIERS
+            # IE BLEAK FOR BARRENS
             trigger_switch = {
                 on_trigger = terrain
                 
-                plains = {
-                    random_list = {
-                        85 = { }
-                        10 = { add_province_modifier = { name = tsk_lush duration = -1 } }
-                        5 = { add_province_modifier = { name = tsk_fruitful duration = -1 } }
-                    }
-                }
-                farmlands = {
-                    random_list = {
-                        70 = { }
-                        20 = { add_province_modifier = { name = tsk_lush duration = -1 } }
-                        10 = { add_province_modifier = { name = tsk_fruitful duration = -1 } }
-                    }
-                }
-                desert = {
-                    random_list = {
-                        90 = { add_province_modifier = { name = tsk_arid duration = -1 } }
-                        10 = { add_province_modifier = { name = tsk_bleak duration = -1 } }
-                    }
-                }
                 barrens = {
                     random_list = {
-                        65 = { add_province_modifier = { name = tsk_desolate duration = -1 } }
-                        35 = { add_province_modifier = { name = tsk_bleak duration = -1 } }
+                        65 = { add_province_modifier = { name = tsk_bleak duration = -1 } }
+                        35 = { add_province_modifier = { name = tsk_desolate duration = -1 } }
                     }
                 }
             }
