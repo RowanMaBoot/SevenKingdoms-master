@@ -591,16 +591,16 @@ character_event = {
             }
             
             # AFFECT ENTIRE REGIONS WITH RANDOM MODIFIERS
-            # DORNE & ESSOS - PORT/COASTAL DO NOT GET ARID, OTHERWISE GIVE ARID
+            # DORNE & ESSOS - GIVE ARID
             # BEYOND THE WALL - GIVE ARCTIC
             # THE WALL - GIVE BLEAK
             trigger_switch = {
                 on_trigger = region
                 
-                world_essos = {
+                world_essos_nosteps = {
                     add_province_modifier = { name = tsk_arid duration = -1 }
                 }
-                world_the_south = {
+                world_the_south_nodorne = {
                     trigger_switch = {
                         on_trigger = terrain
                         
@@ -621,8 +621,8 @@ character_event = {
                     }
                 }
                 world_dorne = {
-                    if = {
-                        limit = {
+                    IF = {
+                        LIMIT = {
                             NOT = { terrain = desert } # Handled lower down.
                         }
                         add_province_modifier = { name = tsk_arid duration = -1 }
@@ -649,7 +649,6 @@ character_event = {
                 world_the_wall = {
                     add_province_modifier = { name = tsk_bleak duration = -1 }
                 }
-                
             }
             
             # DISTRIBUTE TERRAIN SPECIFIC MODIFIERS REGARDLESS OF REGION OR OTHER MODIFIERS
