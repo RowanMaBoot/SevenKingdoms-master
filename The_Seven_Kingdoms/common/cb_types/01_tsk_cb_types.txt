@@ -830,6 +830,9 @@ tsk_subjugation = {
     }
 }
 
+# ROOT = Attacker
+# FROM = Defender
+
 tsk_bronzemen_vale = {
     name = CB_NAME_TSK_BRONZEMEN_VALE
     war_name = WAR_NAME_TSK_BRONZEMEN_VALE
@@ -844,23 +847,12 @@ tsk_bronzemen_vale = {
     allowed_to_target_suzerains = no
     
     can_use = {
-        ROOT = {
-            has_landed_title = k_runestone
-        }
-		NOT = { year =  6567 }
+        always = no
     }
     
     can_use_title = {
-        FROM = {
-			has_landed_title = e_the_vale
-		}
+        always = no
     }
-    
-	is_valid_title = {
-		FROM = {
-				has_landed_title = e_the_vale
-		}
-	}
     
     on_success = {
         any_attacker = {
@@ -989,19 +981,7 @@ tsk_bronzemen_vale = {
                     }
                 }
             }
-			#k_runestone = { destroy_landed_title = THIS }
         }
-		ROOT = { 			
-			primary_title = {
-				if = {
-					limit = {
-						tier = KING
-					}
-					destroy_landed_title = THIS
-				}
-			}
-		}
-		k_runestone = { destroy_landed_title = THIS }
         any_defender = {
             limit = { character = FROM }
             participation_scaled_prestige = 500
@@ -1033,73 +1013,6 @@ tsk_bronzemen_vale = {
     
     ai_will_do = { 
         factor = 1
-        
-        # Intrigue
-        modifier = {
-            factor = 1.5
-            
-            trait = elusive_shadow
-        }
-        modifier = {
-            factor = 1.25
-            
-            trait = intricate_webweaver
-        }
-        
-        # Matrial
-        modifier = {
-            factor = 2.0
-            
-            trait = brilliant_strategist
-        }
-        modifier = {
-            factor = 1.5
-            
-            trait = skilled_tactician
-        }
-        modifier = {
-            factor = 1.25
-            
-            trait = tough_soldier
-        }
-        modifier = {
-            factor = 1.15
-            
-            trait = misguided_warrior
-        }
-        
-        # Traits
-        modifier = {
-            factor = 1.25
-            trait = greedy
-        }
-        
-        modifier = {
-            factor = 2.00
-            trait = ambitious
-        }
-        modifier = {
-            factor = 2.00
-            trait = sociopath
-        }
-        
-        # Railroading
-        modifier = {
-            factor = 0.0
-            
-            trait = content
-            NOR = {
-                trait = elusive_shadow
-                trait = intricate_webweaver
-                trait = brilliant_strategist
-                trait = skilled_tactician
-                trait = tough_soldier
-                trait = misguided_warrior
-                trait = ambitious
-                trait = sociopath
-                trait = greedy
-            }
-        }
     }
 }
 
