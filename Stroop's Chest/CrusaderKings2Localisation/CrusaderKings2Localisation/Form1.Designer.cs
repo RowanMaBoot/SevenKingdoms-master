@@ -30,10 +30,12 @@
         {
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.applicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.btn_GetFile = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.manageFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importEventsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportLocalisationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitApplicationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -42,67 +44,83 @@
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.applicationToolStripMenuItem});
+            this.applicationToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1157, 28);
+            this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
+            this.menuStrip1.Size = new System.Drawing.Size(1234, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // applicationToolStripMenuItem
             // 
+            this.applicationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.manageFilesToolStripMenuItem,
+            this.exitApplicationToolStripMenuItem});
             this.applicationToolStripMenuItem.Name = "applicationToolStripMenuItem";
-            this.applicationToolStripMenuItem.Size = new System.Drawing.Size(98, 24);
+            this.applicationToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
             this.applicationToolStripMenuItem.Text = "Application";
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(406, 63);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(422, 22);
-            this.textBox1.TabIndex = 1;
-            this.textBox1.Text = "...";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Enabled = false;
-            this.textBox2.Location = new System.Drawing.Point(406, 104);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(422, 22);
-            this.textBox2.TabIndex = 2;
-            // 
-            // btn_GetFile
-            // 
-            this.btn_GetFile.Location = new System.Drawing.Point(834, 63);
-            this.btn_GetFile.Name = "btn_GetFile";
-            this.btn_GetFile.Size = new System.Drawing.Size(29, 22);
-            this.btn_GetFile.TabIndex = 3;
-            this.btn_GetFile.Text = "...";
-            this.btn_GetFile.UseVisualStyleBackColor = true;
-            this.btn_GetFile.Click += new System.EventHandler(this.btn_GetFile_Click);
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(89, 183);
+            this.dataGridView1.Location = new System.Drawing.Point(11, 37);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(649, 291);
+            this.dataGridView1.Size = new System.Drawing.Size(1212, 535);
             this.dataGridView1.TabIndex = 4;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // manageFilesToolStripMenuItem
+            // 
+            this.manageFilesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.importEventsToolStripMenuItem,
+            this.exportLocalisationToolStripMenuItem});
+            this.manageFilesToolStripMenuItem.Name = "manageFilesToolStripMenuItem";
+            this.manageFilesToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.manageFilesToolStripMenuItem.Text = "Manage Files...";
+            // 
+            // importEventsToolStripMenuItem
+            // 
+            this.importEventsToolStripMenuItem.Name = "importEventsToolStripMenuItem";
+            this.importEventsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.importEventsToolStripMenuItem.Text = "Import Events";
+            this.importEventsToolStripMenuItem.Click += new System.EventHandler(this.importEventsToolStripMenuItem_Click);
+            // 
+            // exportLocalisationToolStripMenuItem
+            // 
+            this.exportLocalisationToolStripMenuItem.Name = "exportLocalisationToolStripMenuItem";
+            this.exportLocalisationToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
+            this.exportLocalisationToolStripMenuItem.Text = "Export Localisation";
+            // 
+            // exitApplicationToolStripMenuItem
+            // 
+            this.exitApplicationToolStripMenuItem.Name = "exitApplicationToolStripMenuItem";
+            this.exitApplicationToolStripMenuItem.Size = new System.Drawing.Size(156, 22);
+            this.exitApplicationToolStripMenuItem.Text = "Exit Application";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1157, 696);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
+            this.ClientSize = new System.Drawing.Size(1234, 583);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.btn_GetFile);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MainMenuStrip = this.menuStrip1;
-            this.MaximizeBox = false;
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.menuStrip1.ResumeLayout(false);
@@ -117,9 +135,11 @@
 
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem applicationToolStripMenuItem;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button btn_GetFile;
+        private System.Windows.Forms.ToolStripMenuItem manageFilesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importEventsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportLocalisationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitApplicationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
         private System.Windows.Forms.DataGridView dataGridView1;
     }
 }
