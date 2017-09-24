@@ -25,19 +25,31 @@ namespace CrusaderKings2Localisation
                 new DataColumn("ENGLISH",typeof(string)),
                 new DataColumn("FRENCH", typeof(string)),
                 new DataColumn("GERMAN", typeof(string)),
-                new DataColumn("", typeof(string)),
+                new DataColumn("EMPTY1", typeof(string)),
                 new DataColumn("SPANISH", typeof(string)),
-                new DataColumn("", typeof(string)),
-                new DataColumn("", typeof(string)),
-                new DataColumn("", typeof(string)),
-                new DataColumn("", typeof(string)),
-                new DataColumn("", typeof(string)),
-                new DataColumn("", typeof(string)),
-                new DataColumn("", typeof(string)),
-                new DataColumn("", typeof(string)),
+                new DataColumn("EMPTY2", typeof(string)),
+                new DataColumn("EMPTY3", typeof(string)),
+                new DataColumn("EMPTY4", typeof(string)),
+                new DataColumn("EMPTY5", typeof(string)),
+                new DataColumn("EMPTY6", typeof(string)),
+                new DataColumn("EMPTY7", typeof(string)),
+                new DataColumn("EMPTY8", typeof(string)),
+                new DataColumn("EMPTY9", typeof(string)),
                 new DataColumn("x", typeof(string)), });
 
+            #region ColumnSettings
             dt.Columns["x"].DefaultValue = "x";
+            dt.Columns["x"].ReadOnly = true;
+            dt.Columns["Column1"].ReadOnly = true;
+            dt.Columns["Column2"].ReadOnly = true;
+            dt.Columns["Column3"].ReadOnly = true;
+            dt.Columns["Column4"].ReadOnly = true;
+            dt.Columns["Column5"].ReadOnly = true;
+            dt.Columns["Column6"].ReadOnly = true;
+            dt.Columns["Column7"].ReadOnly = true;
+            dt.Columns["Column8"].ReadOnly = true;
+            dt.Columns["Column9"].ReadOnly = true;
+            #endregion
 
             this.dataGridView1.DataSource = dt;
         }
@@ -120,6 +132,100 @@ namespace CrusaderKings2Localisation
                     }
                 }
             }
+        }
+
+        private void exitApplicationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string message = "Do you want to Save before Quitting?";
+            string caption = "Exit";
+            MessageBoxButtons buttons = MessageBoxButtons.YesNoCancel;
+            DialogResult result;
+
+            result = MessageBox.Show(message, caption, buttons);
+
+            if (
+            {
+
+            }
+            this.Close();
+        }
+
+        private void ExportToCSV(DataGridView gridIn, string outputFilePath)
+        {
+            //test to see if the DataGridView has any rows
+            if (gridIn.RowCount > 0)
+            {
+                string value = "";
+                DataGridViewRow gridRow = new DataGridViewRow();
+                StreamWriter writeOut = new StreamWriter(outputFilePath);
+
+                SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+                saveFileDialog1.Filter = "CSV Files(.csv)|*.csv";
+
+
+                if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    //write header rows to csv
+                    for (int i = 0; i <= gridIn.Columns.Count - 1; i++)
+                    {
+                        if (i > 0)
+                        {
+                            writeOut.Write(";");
+                        }
+                        writeOut.Write(gridIn.Columns[i].HeaderText);
+                    }
+
+                    writeOut.WriteLine();
+
+                    //write DataGridView rows to csv
+                    for (int j = 0; j <= gridIn.Rows.Count - 1; j++)
+                    {
+                        if (j > 0)
+                        {
+                            writeOut.WriteLine();
+                        }
+
+                        gridRow = gridIn.Rows[j];
+
+                        for (int i = 0; i <= gridIn.Columns.Count - 1; i++)
+                        {
+                            if (i > 0)
+                            {
+                                writeOut.Write(";");
+                            }
+
+                            value = gridRow.Cells[i].Value.ToString();
+                            //replace comma's with spaces
+                            value = value.Replace(',', ' ');
+                            //replace embedded newlines with spaces
+                            value = value.Replace(Environment.NewLine, " ");
+
+                            writeOut.Write(value);
+                        }
+                    }
+                    writeOut.Close();
+
+                    MessageBox.Show("The File was saved sucessfully!", "Completed!", MessageBoxButtons.OK, MessageBoxIcon.None, MessageBoxDefaultButton.Button2);
+                }
+            }
+        }
+
+        private void exportLocalisationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
+            saveFileDialog1.Filter = "CSV Files(.csv)|*.csv";
+
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                writeCSV(dataGridView1, saveFileDialog1.FileName);
+                MessageBox.Show("Converted successfully to *.csv format");
+
+            }           
+        }
+
+        public void writeCSV(DataGridView gridIn, string outputFile)
+        {
+            
         }
     }
 }
