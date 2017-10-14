@@ -1,0 +1,194 @@
+
+# is_valid_title_generic -
+
+# is_coastal_target_root_island_title_trigger - 
+# is_coastal_target_root_raider_trigger -
+# is_neighbour_target_trigger -
+# is_holder_or_liege_of_holder_trigger -
+# is_player_capital_trigger -
+# is_special_unconquerable_trigger -
+
+is_valid_title_generic = {
+    ROOT = {
+        NOT = {
+            same_realm = FROM
+        }
+    }
+    OR = {
+        FROM = {
+            has_landed_title = PREV
+        }
+        holder_scope = {
+            is_liege_or_above = FROM
+        }
+    }
+}
+
+#
+
+is_coastal_target_root_island_title_trigger = {
+    ROOT = {
+        OR = {
+            primary_title = {
+                OR = {
+                    title = e_the_iron_islands
+                    title = k_the_iron_islands
+                    title = k_the_shields
+                    title = k_evenstar
+                    title = k_the_arbor
+                    title = k_the_sisters
+                    title = k_fair_isle
+                    title = k_the_stepstones
+                    title = k_andalos
+                    title = k_stone
+                    title = k_dragonstone
+                    title = d_dragonstone
+                    title = c_dragonstone
+                    title = c_driftmark
+                }
+            }
+            culture = pirate
+        }
+    }
+    location = {
+        port = yes
+    }
+}
+
+is_coastal_target_root_raider_trigger = {
+    ROOT = {
+        religion_group = drowned_god_group
+        culture_group = iron_islander
+    }
+    location = {
+        port = yes
+    }
+}
+
+is_neighbour_target_trigger = {
+    location = {
+        any_neighbor_province = {
+            owner = {
+                OR = {
+                    character = ROOT
+                    is_liege_or_above = ROOT
+                }
+            }
+        }
+    }
+}
+
+is_holder_or_liege_of_holder_trigger = {
+    FROM = {
+        has_landed_title = PREV
+    }
+    holder_scope = {
+        is_liege_or_above = FROM
+        NOT = {
+            same_realm = ROOT
+        }
+    }
+}
+
+#
+
+is_player_capital_trigger = {
+    AND = {
+        FROM = {
+            ai = no
+        }
+        location = {
+            is_capital = yes
+        }
+    }
+    ROOT = {
+        has_landed_title = PREV
+    }
+    holder_scope = {
+        is_liege_or_above = ROOT
+    }
+}
+
+is_special_unconquerable_trigger = {
+    OR = {
+        FROM = {
+            has_landed_title = k_the_nights_watch
+        }
+        holder_scope = {
+            is_liege_or_above = FROM
+            has_landed_title = k_the_nights_watch
+        }
+    }
+}
+
+#
+
+ai_personality_modifier_generic = {
+    # Intrigue
+    modifier = {
+        factor = 1.5
+        trait = elusive_shadow
+    }
+    modifier = {
+        factor = 1.25
+        trait = intricate_webweaver
+    }
+    
+    # Matrial
+    modifier = {
+        factor = 2.0
+        trait = brilliant_strategist
+    }
+    modifier = {
+        factor = 1.5
+        
+        trait = skilled_tactician
+    }
+    modifier = {
+        factor = 1.25
+        
+        trait = tough_soldier
+    }
+    modifier = {
+        factor = 1.15
+        
+        trait = misguided_warrior
+    }
+    
+    # Traits
+    modifier = {
+        factor = 1.25
+        trait = greedy
+    }
+    
+    modifier = {
+        factor = 2.00
+        trait = ambitious
+    }
+    modifier = {
+        factor = 2.00
+        trait = sociopath
+    }
+}
+
+ai_personality_modifier_railroading = {
+    # Railroading
+    modifier = {
+        factor = 0.25
+        
+        OR = {
+            trait = content
+            NOR = {
+                trait = elusive_shadow
+                trait = intricate_webweaver
+                trait = brilliant_strategist
+                trait = skilled_tactician
+                trait = tough_soldier
+                trait = misguided_warrior
+                trait = ambitious
+                trait = sociopath
+                trait = greedy
+            }
+        }
+    }
+}
