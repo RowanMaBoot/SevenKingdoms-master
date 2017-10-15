@@ -8,6 +8,15 @@
 # is_player_capital_trigger -
 # is_special_unconquerable_trigger -
 
+is_valid_generic = {
+    ROOT = {
+        mercenary = no
+        NOT = {
+            same_realm = FROM
+        }
+    }
+}
+
 is_valid_title_generic = {
     ROOT = {
         NOT = {
@@ -28,26 +37,10 @@ is_valid_title_generic = {
 
 is_coastal_target_root_island_title_trigger = {
     ROOT = {
-        OR = {
-            primary_title = {
-                OR = {
-                    title = e_the_iron_islands
-                    title = k_the_iron_islands
-                    title = k_the_shields
-                    title = k_evenstar
-                    title = k_the_arbor
-                    title = k_the_sisters
-                    title = k_fair_isle
-                    title = k_the_stepstones
-                    title = k_andalos
-                    title = k_stone
-                    title = k_dragonstone
-                    title = d_dragonstone
-                    title = c_dragonstone
-                    title = c_driftmark
-                }
+        any_realm_province = {
+            NOT = {
+                port = no # under some strange conditions they may have a non-port province, ie inland island province.
             }
-            culture = pirate
         }
     }
     location = {
@@ -57,8 +50,14 @@ is_coastal_target_root_island_title_trigger = {
 
 is_coastal_target_root_raider_trigger = {
     ROOT = {
-        religion_group = drowned_god_group
-        culture_group = iron_islander
+        OR = {
+            AND = {
+                religion_group = drowned_god_group
+                culture_group = iron_islander
+            }
+            culture = pirate
+            culture = skagosi
+        }
     }
     location = {
         port = yes
@@ -66,12 +65,20 @@ is_coastal_target_root_raider_trigger = {
 }
 
 is_neighbour_target_trigger = {
-    location = {
-        any_neighbor_province = {
-            owner = {
-                OR = {
-                    character = ROOT
-                    is_liege_or_above = ROOT
+    OR = {
+        holder_scope = {
+            OR = {
+                character = ROOT
+                is_liege_or_above = ROOT
+            }
+        }
+        location = {
+            any_neighbor_province = {
+                owner = {
+                    OR = {
+                        character = ROOT
+                        is_liege_or_above = ROOT
+                    }
                 }
             }
         }
