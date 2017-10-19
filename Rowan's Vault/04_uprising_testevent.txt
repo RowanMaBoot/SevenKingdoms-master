@@ -11,129 +11,129 @@ province_event = {
     mean_time_to_happen = {
         years = 5
         
-        modifier = {
-			factor = 0.75
-            
-            owner = {
-                NOT = { diplomacy = 8 }
-            }
-		}
 		modifier = {
 			factor = 0.75
-            
-            owner = {
-                NOT = { martial = 8 }
-            }
+
+			owner = {
+				NOT = { diplomacy = 8 }
+			}
 		}
 		modifier = {
 			factor = 0.75
-            
-            owner = {
-                NOT = { combat_rating = 3 }
-            }
+
+			owner = {
+				NOT = { martial = 8 }
+			}
 		}
-        modifier = {
-			factor = 1.25
-            
-            owner = {
-                diplomacy = 12
-            }
+		modifier = {
+			factor = 0.75
+
+			owner = {
+				NOT = { combat_rating = 3 }
+			}
 		}
 		modifier = {
 			factor = 1.25
-            
-            owner = {
-                martial = 12
-            }
+
+			owner = {
+				diplomacy = 12
+			}
 		}
 		modifier = {
 			factor = 1.25
-            
-            owner = {
-                combat_rating = 5
-            }
+
+			owner = {
+				martial = 12
+			}
 		}
 		modifier = {
 			factor = 1.25
-            
-            owner = {
-                trait = brave
-            }
+
+			owner = {
+				combat_rating = 5
+			}
+		}
+		modifier = {
+			factor = 1.25
+
+			owner = {
+				trait = brave
+			}
 		}
 		modifier = {
 			factor = 0.5
-            
-            owner = {
-                trait = proud
-            }
+
+			owner = {
+				trait = proud
+			}
 		}
-        modifier = {
-            factor = 3.0
-            
-            owner = {
-                trait = cruel
-            }
-        }
-        modifier = {
-            factor = 5
-            
-            has_game_ruler = {
-                name = uprisings
-                value = rare
-            }
-        }
-        modifier = {
-            factor = 1000
-            
-            has_game_ruler = {
-                name = uprisings
-                value = disabled
-            }
-        }
+		modifier = {
+			factor = 3.0
+
+			owner = {
+				trait = cruel
+			}
+		}
+		modifier = {
+			factor = 5
+
+			has_game_ruler = {
+				name = uprisings
+				value = rare
+			}
+		}
+		modifier = {
+			factor = 1000
+
+			has_game_ruler = {
+				name = uprisings
+				value = disabled
+			}
+		}
     }
 
     trigger = {
-        OR = {
-            region = world_beyond_the_wall
-            region = world_the_stepstones
-        }
-        
-        OR = {
-            AND = {
-                NOT = {
-                    owner = {
-                        top_liege = {
-                            culture = pirate
-                        }
-                    }
-                }
-                culture = pirate
-            }
-            AND = {
-                NOT = {
-                    owner = {
-                        top_liege = {
-                            culture_group = free_folk
-                        }
-                    }
-                }
-                culture_group = free_folk
-            }
-        }
-        
-        # Will get clan rebels instead
+		OR = {
+			region = world_beyond_the_wall
+			region = world_the_stepstones
+		}
+
+		OR = {
+			AND = {
+				NOT = {
+					owner = {
+						top_liege = {
+							culture = pirate
+						}
+					}
+				}
+				culture = pirate
+			}
+			AND = {
+				NOT = {
+					owner = {
+						top_liege = {
+							culture_group = free_folk
+						}
+					}
+				}
+				culture_group = free_folk
+			}
+		}
+
+		# Will get clan rebels instead
 		NAND = {
 			has_empty_holding = yes
 			owner = {
 				is_nomadic = yes
 			}
 		}
-        
-        any_province_holding = {
+
+		any_province_holding = {
 			NOT = { holding_type = nomad }
 		}
-        
-        # Heretic revolts have prio
+
+		# Heretic revolts have prio
 		OR = {
 			is_heretic = no
 			owner = {
@@ -143,7 +143,7 @@ province_event = {
 			}
 			has_province_flag = force_peasant_revolt
 		}
-		
+
 		# Religious revolts have prio
 		OR = {
 			owner = {
@@ -153,14 +153,14 @@ province_event = {
 			}
 			has_province_flag = force_peasant_revolt
 		}
-        
-        OR = {
+
+		OR = {
 			has_province_flag = force_peasant_revolt
 			NOT = { # Not if there is already an ongoing peasant revolt for this province
 				owner = {
 					top_liege = {
 						war = yes
-						
+
 						any_war = {
 							defender = { character = PREV }
 							OR = {
@@ -195,7 +195,7 @@ province_event = {
 	}
     
     immediate = {
-        create_character = {
+		create_character = {
 			random_traits = yes
 			dynasty = none
 			religion = ROOT
@@ -208,7 +208,7 @@ province_event = {
 			trait = peasant_leader
 			trait = tough_soldier
 		}
-		
+
 		new_character = {
 			create_title = {
 				tier = DUKE
@@ -219,11 +219,11 @@ province_event = {
 				name = "PEASANT_REVOLT"
 				holder = THIS
 			}
-			
+
 			wealth = 100
-			
+
 			spawn_peasant_army_effect = yes
-			
+
 			if = {
 				limit = {
 					has_game_rule = {
@@ -234,7 +234,7 @@ province_event = {
 				spawn_peasant_army_effect = yes
 				wealth = 150
 			}
-			
+
 			if = {
 				limit = {
 					has_game_rule = {
@@ -247,7 +247,7 @@ province_event = {
 				spawn_peasant_army_effect = yes
 				wealth = 250
 			}
-			
+
 			if = {
 				limit = {
 					has_game_rule = {
@@ -262,7 +262,7 @@ province_event = {
 				spawn_peasant_army_effect = yes
 				wealth = 350
 			}
-			
+
 			# DoW on the province top liege
 			ROOT = {
 				owner = {
@@ -280,8 +280,8 @@ province_event = {
 				}
 			}
 		}
-        
-        owner = {
+
+		owner = {
 			any_liege = {
 				character_event = {
 					id = tsk_generic_uprising.2
@@ -300,9 +300,9 @@ character_event = {
 	desc = EVTDESC_TSK_UPRISNG_2
 	picture = GFX_evt_peasants
 	border = GFX_event_normal_frame_war
-	
+
 	is_triggered_only = yes
-	
+
 	option = {
 		name = "EVTOPTA_TSK_UPRSNG_2a"
 	}
