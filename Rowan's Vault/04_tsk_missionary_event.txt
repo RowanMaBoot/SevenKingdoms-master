@@ -6,6 +6,37 @@ character_event = {
 
     trigger = {
         NOT = { religion_authority = 0.8 }
+        
+        can_change_religion = yes
+		NOT = { is_inaccessible_trigger = yes }
+        
+        OR = {
+            any_vassal = {
+                NOR = {
+                    character = ROOT
+                    religion = ROOT
+                    trait = incapable
+				    is_inaccessible_trigger = yes
+                }
+                save_event_target_as = religion_from
+            }
+            any_demesne_title = {
+				any_neighbor_province = {
+                    NOT = {
+                        religion = ROOT
+                    }
+                    save_event_target_as = religion_from
+                }
+            }
+            any_demesne_title = {
+                tier = COUNT
+                
+                NOT = {
+                    religion = ROOT
+                }
+                save_event_target_as = religion_from
+            }
+        }
     }
   
     mean_time_to_happen = {
@@ -103,6 +134,10 @@ character_event = {
         
         prestige = -50
         piety = -200
+        
+        event_target:religion_from = {
+            reverse_religion = ROOT
+        }
         
         ai_chance = {
             factor = 1
