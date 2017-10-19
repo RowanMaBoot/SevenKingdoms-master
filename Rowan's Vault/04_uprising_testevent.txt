@@ -1,0 +1,309 @@
+# spawns rebels on free folk and pirate provinces on a regular basis.
+# because we know where the cultures are, the event is restricted to the north (beyond the wall) and stepstones regions.
+
+province_event = {
+    id = tsk_generic_uprising.1
+    desc = EVTDESC_TSK_UPRISNG_1
+    
+    picture = GFX_evt_peasants
+	border = GFX_event_normal_frame_war
+    
+    mean_time_to_happen = {
+        years = 5
+        
+        modifier = {
+			factor = 0.75
+            
+            owner = {
+                NOT = { diplomacy = 8 }
+            }
+		}
+		modifier = {
+			factor = 0.75
+            
+            owner = {
+                NOT = { martial = 8 }
+            }
+		}
+		modifier = {
+			factor = 0.75
+            
+            owner = {
+                NOT = { combat_rating = 3 }
+            }
+		}
+        modifier = {
+			factor = 1.25
+            
+            owner = {
+                diplomacy = 12
+            }
+		}
+		modifier = {
+			factor = 1.25
+            
+            owner = {
+                martial = 12
+            }
+		}
+		modifier = {
+			factor = 1.25
+            
+            owner = {
+                combat_rating = 5
+            }
+		}
+		modifier = {
+			factor = 1.25
+            
+            owner = {
+                trait = brave
+            }
+		}
+		modifier = {
+			factor = 0.5
+            
+            owner = {
+                trait = proud
+            }
+		}
+        modifier = {
+            factor = 3.0
+            
+            owner = {
+                trait = cruel
+            }
+        }
+        modifier = {
+            factor = 5
+            
+            has_game_ruler = {
+                name = uprisings
+                value = rare
+            }
+        }
+        modifier = {
+            factor = 1000
+            
+            has_game_ruler = {
+                name = uprisings
+                value = disabled
+            }
+        }
+    }
+
+    trigger = {
+        OR = {
+            region = world_beyond_the_wall
+            region = world_the_stepstones
+        }
+        
+        OR = {
+            AND = {
+                NOT = {
+                    owner = {
+                        top_liege = {
+                            culture = pirate
+                        }
+                    }
+                }
+                culture = pirate
+            }
+            AND = {
+                NOT = {
+                    owner = {
+                        top_liege = {
+                            culture_group = free_folk
+                        }
+                    }
+                }
+                culture_group = free_folk
+            }
+        }
+        
+        # Will get clan rebels instead
+		NAND = {
+			has_empty_holding = yes
+			owner = {
+				is_nomadic = yes
+			}
+		}
+        
+        any_province_holding = {
+			NOT = { holding_type = nomad }
+		}
+        
+        # Heretic revolts have prio
+		OR = {
+			is_heretic = no
+			owner = {
+				top_liege = {
+					NOT = { is_parent_religion = ROOT }
+				}
+			}
+			has_province_flag = force_peasant_revolt
+		}
+		
+		# Religious revolts have prio
+		OR = {
+			owner = {
+				top_liege = {
+					religion_group = ROOT
+				}
+			}
+			has_province_flag = force_peasant_revolt
+		}
+        
+        OR = {
+			has_province_flag = force_peasant_revolt
+			NOT = { # Not if there is already an ongoing peasant revolt for this province
+				owner = {
+					top_liege = {
+						war = yes
+						
+						any_war = {
+							defender = { character = PREV }
+							OR = {
+								AND = {
+									using_cb = peasant_revolt
+									war_title = ROOT # The county
+								}
+								AND = {
+									using_cb = heretic_revolt
+									attacker = { religion = ROOT }
+								}
+								AND = {
+									using_cb = religious_revolt
+									attacker = { religion = ROOT }
+								}
+								AND = {
+									using_cb = liberation_revolt
+									thirdparty_title_scope = {
+										ROOT = {
+											kingdom = {
+												title = PREVPREV
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+    
+    immediate = {
+        create_character = {
+			random_traits = yes
+			dynasty = none
+			religion = ROOT
+			culture = ROOT
+			female = no
+			age = 25
+			attributes = {
+				martial = 5
+			}
+			trait = peasant_leader
+			trait = tough_soldier
+		}
+		
+		new_character = {
+			create_title = {
+				tier = DUKE
+				landless = yes
+				temporary = yes
+				rebel = yes
+				culture = ROOT
+				name = "PEASANT_REVOLT"
+				holder = THIS
+			}
+			
+			wealth = 100
+			
+			spawn_peasant_army_effect = yes
+			
+			if = {
+				limit = {
+					has_game_rule = {
+						name = provincial_revolt_strength
+						value = powerful
+					}
+				}
+				spawn_peasant_army_effect = yes
+				wealth = 150
+			}
+			
+			if = {
+				limit = {
+					has_game_rule = {
+						name = provincial_revolt_strength
+						value = very_powerful
+					}
+				}
+				spawn_peasant_army_effect = yes
+				spawn_peasant_army_effect = yes
+				spawn_peasant_army_effect = yes
+				wealth = 250
+			}
+			
+			if = {
+				limit = {
+					has_game_rule = {
+						name = provincial_revolt_strength
+						value = extremely_powerful
+					}
+				}
+				spawn_peasant_army_effect = yes
+				spawn_peasant_army_effect = yes
+				spawn_peasant_army_effect = yes
+				spawn_peasant_army_effect = yes
+				spawn_peasant_army_effect = yes
+				wealth = 350
+			}
+			
+			# DoW on the province top liege
+			ROOT = {
+				owner = {
+					top_liege = {
+						reverse_war = {
+							target = PREVPREVPREV
+							casus_belli = peasant_revolt
+							thirdparty_title = ROOT
+						}
+						reverse_opinion = {
+							who = PREVPREVPREV
+							modifier = opinion_evil_tyrant
+						}
+					}
+				}
+			}
+		}
+        
+        owner = {
+			any_liege = {
+				character_event = {
+					id = tsk_generic_uprising.2
+				}
+			}
+		}
+    }
+    
+    option = {
+		name = "EVTOPTA_TSK_UPRSNG_1a"
+	}
+}
+    
+character_event = {
+	id = tsk_generic_uprising.2
+	desc = EVTDESC_TSK_UPRISNG_2
+	picture = GFX_evt_peasants
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTA_TSK_UPRSNG_2a"
+	}
+}
