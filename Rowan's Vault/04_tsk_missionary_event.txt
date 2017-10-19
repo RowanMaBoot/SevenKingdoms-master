@@ -5,7 +5,7 @@ character_event = {
     desc = EVTDESCTSK_MSS_EVT_1
 
     trigger = {
-    NOT = { religion_authority = 0.8 }
+        NOT = { religion_authority = 0.8 }
     }
   
     mean_time_to_happen = {
@@ -151,6 +151,31 @@ character_event = {
     option = {
         name = EVTOPTTSK_MSS_EVT2c
         
+        if = {
+            limit = {
+                trait = cruel
+            }
+            add_trait = heartless
+        }
+        
+        if = {
+            limit = {
+                trait = kind
+            }
+            remove_trait = kind
+        }
+        
+        if = {
+            limit = {
+                NOR = {
+                    trait = kind
+                    trait = heartless
+                    trait = cruel
+                }
+            }
+            add_trait = cruel
+        }
+        
         ai_chance = {
             factor = 1
             
@@ -192,7 +217,7 @@ character_event = {
         name = EVTOPTTSK_MSS_EVT3b
         
     }
-    # Pay them off with hold (chance of failure, take gold either way).
+    # Pay them off with gold (chance of failure, take gold either way).
     option = {
         name = EVTOPTTSK_MSS_EVT3c
         
@@ -202,7 +227,7 @@ character_event = {
             factor = 1
             
             modifier = {
-                factor = 4
+                factor = 0.5
                 trait = greedy
             }
             modifier = {
@@ -226,8 +251,8 @@ character_event = {
         }
 
         random_list = {
-            80 = { }
-            20 = { character_event = { id = missionary_evt.4 } }
+            95 = { }
+            5 = { character_event = { id = missionary_evt.4 } }
         }
     }
 
