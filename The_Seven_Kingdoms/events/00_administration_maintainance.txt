@@ -21,29 +21,29 @@ namespace = administration_main
 #################
 
 province_event = { 
-	id = administration_main.1
-	hide_window = yes
-	
-	trigger = {
-		# AI should not be given this penalty, as AI won't be able to deal with it.
-        	ai = no
+    id = administration_main.1
+    hide_window = yes
+
+    trigger = {
+        # AI should not be given this penalty, as AI won't be able to deal with it.
+        ai = no
+
+        # Make sure we don't have the modifier already
+        NOT = {
+            has_province_modifier = wrong_duchy_administration
+        }
         
-		# Make sure we don't have the modifier already
-		NOT = {
-		    has_province_modifier = wrong_duchy_administration
-		}
-        
-		NOT = { # NO
-			owner = { # Owner of Province
-				ROOT = { # province
-					duchy = { # parent duchy
-						holder_scope = { # holder of parent duchy
-							character = PREVPREVPREV # is owner of province
-						}
-					}
-				}
-			}
-		}
+        NOT = { # NO
+            owner = { # Owner of Province
+                ROOT = { # province
+                    duchy = { # parent duchy
+                        holder_scope = { # holder of parent duchy
+                            character = PREVPREVPREV # is owner of province
+                        }
+                    }
+                }
+            }
+        }
         
         NOT = {
             owner = {
@@ -58,18 +58,18 @@ province_event = {
     }
     
     immediate = {
-	    add_province_modifier = { name = wrong_duchy_administration duration = -1 }
-	}
+        add_province_modifier = { name = wrong_duchy_administration duration = -1 }
+    }
 }
 
 province_event = { 
-	id = administration_main.2
-	hide_window = yes
-	
-	trigger = {
-		# Make sure we have the modifier
-		has_province_modifier = wrong_duchy_administration
-        
+    id = administration_main.2
+    hide_window = yes
+
+    trigger = {
+        # Make sure we have the modifier
+        has_province_modifier = wrong_duchy_administration
+
         OR = {
             owner = { # Owner of Province
                 ROOT = { # province
@@ -91,10 +91,10 @@ province_event = {
             # AI should not be given this penalty, as AI won't be able to deal with it.
             ai = yes
         }
-        
-	}
-	
-	immediate = {
-		remove_province_modifier = wrong_duchy_administration
-	}
+
+    }
+
+    immediate = {
+        remove_province_modifier = wrong_duchy_administration
+    }
 }
