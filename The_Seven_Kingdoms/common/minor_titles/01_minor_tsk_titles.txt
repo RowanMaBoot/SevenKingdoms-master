@@ -25,11 +25,35 @@ title_generic_ser = {
     }
     
     allowed_to_grant = {
-        always = no
+        FROM = {
+            OR = {
+                trait = knight
+                trait = red_knight
+                trait = dragon_knight
+                trait = hedge_knight
+            }
+        }
     }
     
     gain_effect = {
+        if = {
+            limit = {
+                OR = {
+                    trait = rhllor
+                }
+            }
+            trigger_switch = {
+                on_trigger = religion
+
+                the_seven = { add_trait = knight }
+                rhllor = { add_trait = red_knight }
+                valyrian = { add_trait = dragon_knight }
+            }
+            break = yes
+        }
+        add_trait = hedge_knight
     }
+    
     lose_effect = {
     }
 
