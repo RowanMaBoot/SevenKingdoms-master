@@ -6,103 +6,103 @@ namespace = GR
 
 # Remove Titles without De Jure land
 character_event = {
-	id = GR.1
-	desc = EVTDESC_GR_1
-	picture = GFX_evt_throne_room
-	
-	is_triggered_only = yes
-	
-	only_playable = yes
-	war = no
-	
-	trigger = {
-		is_merchant_republic = no
-		any_demesne_title = {
-			higher_tier_than = COUNT
-			is_titular = no
-			is_landless_type_title = no
-			NOT = {
-				title = k_papal_state
-			}
-			NOT = {
-				ROOT = {
-					any_realm_title = {
-						tier = COUNT
-						any_dejure_liege = { title = PREVPREVPREV }
-					}
-				}
-			}
-		}
-		has_game_rule = {
-			name = de_jure_requirement
-			value = required
-		}
-	}
-	
-	immediate = {
-		random_demesne_title = {
-			limit = {
-				higher_tier_than = COUNT
-				is_titular = no
-				is_landless_type_title = no
-				NOT = {
-					title = k_papal_state
-				}
-				NOT = {
-					ROOT = {
-						any_realm_title = {
-							tier = COUNT
-							any_dejure_liege = { title = PREVPREVPREV }
-						}
-					}
-				}
-			}
-			save_event_target_as = title_to_destroy
-		}
-	}
-	
-	option = {
-		name = EVTOPTA_GR_1
-		event_target:title_to_destroy = {
-			destroy_landed_title = THIS
-			add_claim = ROOT
-		}
-	}
+    id = GR.1
+    desc = EVTDESC_GR_1
+    picture = GFX_evt_throne_room
+    
+    is_triggered_only = yes
+    
+    only_playable = yes
+    war = no
+    
+    trigger = {
+        is_merchant_republic = no
+        any_demesne_title = {
+            higher_tier_than = COUNT
+            is_titular = no
+            is_landless_type_title = no
+            NOT = {
+                title = k_papal_state
+            }
+            NOT = {
+                ROOT = {
+                    any_realm_title = {
+                        tier = COUNT
+                        any_dejure_liege = { title = PREVPREVPREV }
+                    }
+                }
+            }
+        }
+        has_game_rule = {
+            name = de_jure_requirement
+            value = required
+        }
+    }
+    
+    immediate = {
+        random_demesne_title = {
+            limit = {
+                higher_tier_than = COUNT
+                is_titular = no
+                is_landless_type_title = no
+                NOT = {
+                    title = k_papal_state
+                }
+                NOT = {
+                    ROOT = {
+                        any_realm_title = {
+                            tier = COUNT
+                            any_dejure_liege = { title = PREVPREVPREV }
+                        }
+                    }
+                }
+            }
+            save_event_target_as = title_to_destroy
+        }
+    }
+    
+    option = {
+        name = EVTOPTA_GR_1
+        event_target:title_to_destroy = {
+            destroy_landed_title = THIS
+            add_claim = ROOT
+        }
+    }
 }
 
 #True cognatic for gender quality rule
 character_event = {
-	id = GR.13
-	hide_window = yes
+    id = GR.13
+    hide_window = yes
 
-	only_playable = yes
+    only_playable = yes
 
-	is_triggered_only = yes
+    is_triggered_only = yes
 
-	trigger = { 
-		has_game_rule = { name = gender value = all } 
-		is_multiplayer_host_character = yes
-		is_save_game = no
-	}
+    trigger = { 
+        has_game_rule = { name = gender value = all } 
+        is_multiplayer_host_character = yes
+        is_save_game = no
+    }
 
-	immediate = {
-		any_title = {
-			limit = { owner = { is_republic = no } }
-			add_law = true_cognatic_succession
-		}
-		any_vassal = {
-			remove_opinion = { who = PREV modifier = good_succ_law_change }
-			remove_opinion = { who = PREV modifier = bad_succ_law_change }
-			remove_opinion = { who = PREV modifier = succ_law_change }
-		}
-		any_playable_ruler = {
-			any_vassal = {
-				remove_opinion = { who = PREV modifier = good_succ_law_change }
-				remove_opinion = { who = PREV modifier = bad_succ_law_change }
-				remove_opinion = { who = PREV modifier = succ_law_change }
-			}
-		}
-	}
+    immediate = {
+        any_title = {
+            limit = { owner = { is_republic = no } }
+            add_law = true_cognatic_succession
+        }
+        any_vassal = {
+            remove_opinion = { who = PREV modifier = good_succ_law_change }
+            remove_opinion = { who = PREV modifier = bad_succ_law_change }
+            remove_opinion = { who = PREV modifier = succ_law_change }
+        }
+        any_playable_ruler = {
+            any_vassal = {
+                remove_opinion = { who = PREV modifier = good_succ_law_change }
+                remove_opinion = { who = PREV modifier = bad_succ_law_change }
+                remove_opinion = { who = PREV modifier = succ_law_change }
+            }
+        }
+    }
 }
 
 

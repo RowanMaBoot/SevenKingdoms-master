@@ -17,7 +17,6 @@ character_event = {
         region = world_westeros_no_beyond_no_isles
         
         NOR = {
-            religion_authority = 0.8
             is_inaccessible_trigger = yes
             region = world_the_wall
         }
@@ -76,14 +75,14 @@ character_event = {
     
     immediate = {
         random_province = { # Fallback
-    		limit = {
+            limit = {
                 owner = { is_within_diplo_range = ROOT }
                 owner = { NOT = { religion = ROOT } }
             }
-    		save_event_target_as = missionary_religion_from
-    	}
-    	random_demesne_province = {
-    		limit = {
+            save_event_target_as = missionary_religion_from
+        }
+        random_demesne_province = {
+            limit = {
                 any_neighbor_province = {
                     NOR = {
                         owner = { character = ROOT }
@@ -91,16 +90,16 @@ character_event = {
                     } 
                 } 
             }
-    		random_neighbor_province = {
-    			limit = {
+            random_neighbor_province = {
+                limit = {
                     NOR = {
                         owner = {character = ROOT }
                         religion = ROOT
                     }
                 }
-    			save_event_target_as = missionary_religion_from
-    		}
-    	}
+                save_event_target_as = missionary_religion_from
+            }
+        }
         random_vassal = {
             limit = { NOT = { religion = ROOT } }
             save_event_target_as = missionary_religion_from
@@ -108,12 +107,25 @@ character_event = {
     }
   
     mean_time_to_happen = {
-        months = 288 # 24 Years
+        months = 576 # 48 Years
+        
         modifier = {
-            factor = 2.0
-      
+            factor = 1.5
             religion_authority = 0.6
         }
+        modifier = {
+            factor = 1.5
+            religion_authority = 0.7
+        }
+        modifier = {
+            factor = 1.5
+            religion_authority = 0.8
+        }
+        modifier = {
+            factor = 2.0
+            religion_authority = 0.9
+        }
+        
         modifier = {
             factor = 1.25
             
@@ -125,15 +137,26 @@ character_event = {
                 religion = moonsingers
             }
         }
+        
+        modifier = {
+            factor = 0.5
+            
+            NOT = { religion_authority = 0.2 }
+        }
         modifier = {
             factor = 0.75
-      
+            
+            NOT = { religion_authority = 0.3 }
+        }
+        modifier = {
+            factor = 0.75
+            
             NOT = { religion_authority = 0.4 }
         }
         modifier = {
             factor = 0.75
-      
-            NOT = { religion_authority = 0.2 }
+            
+            NOT = { religion_authority = 0.5 }
         }
     }
   

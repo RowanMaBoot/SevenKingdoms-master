@@ -3,23 +3,23 @@ namespace = TSK_S
 #From on_character_ask_to_join_society
 character_event = {
     id = TSK_S.1
-	hide_window = yes
+    hide_window = yes
     is_triggered_only = yes
     trigger = {
-    	FROM = { leader = { is_knightly_member_trigger = yes } }
+        FROM = { leader = { is_knightly_member_trigger = yes } }
     }
     immediate = {
-    	FROM = { leader = { character_event = { id = TSK_S.2 } } }
+        FROM = { leader = { character_event = { id = TSK_S.2 } } }
     }
 }
 
 #Ping event
 character_event = {
     id = TSK_S.2
-	hide_window = yes
+    hide_window = yes
     is_triggered_only = yes
     immediate = {
-    	FROM = { letter_event = { id = TSK_S.3 } }
+        FROM = { letter_event = { id = TSK_S.3 } }
     }
 }
 
@@ -30,9 +30,9 @@ letter_event = {
     border = GFX_event_letter_frame_religion
 
     is_triggered_only = yes
-	
-	immediate = { set_character_flag = society_join_block }
-	
+    
+    immediate = { set_character_flag = society_join_block }
+    
     option = { 
         name = EVTOPTA_TSK_S_3
 
@@ -41,10 +41,10 @@ letter_event = {
                 join_prev_monastic_order_society = yes
             }
         }
-		
-		scaled_wealth = -0.25
-		
-		clr_character_flag = society_join_block
+        
+        scaled_wealth = -0.25
+        
+        clr_character_flag = society_join_block
     }
 }
 
@@ -54,43 +54,43 @@ character_event = {
     id = TSK_S.4
     desc = EVTDESC_TSK_S.4
     border = GFX_event_letter_frame_religion
-	
-	hide_window = yes
+    
+    hide_window = yes
 
-	trigger = {
-		has_character_flag = has_sent_request_for_knighthood
-	}
-	
-	is_triggered_only = yes
-	
+    trigger = {
+        has_character_flag = has_sent_request_for_knighthood
+    }
+    
+    is_triggered_only = yes
+    
     immediate = {
-		if = {
-			limit = { is_in_society = yes }
-			random_society_member = {
-				limit = {
-					is_society_grandmaster = yes
-					same_society_as = ROOT
-				}
-				character_event = { id = TSK_S.5 }
-			}
-		}
-		if = {
-			limit = { is_in_society = no }
-			clr_character_flag = has_sent_request_for_knighthood
-		}
-	}
+        if = {
+            limit = { is_in_society = yes }
+            random_society_member = {
+                limit = {
+                    is_society_grandmaster = yes
+                    same_society_as = ROOT
+                }
+                character_event = { id = TSK_S.5 }
+            }
+        }
+        if = {
+            limit = { is_in_society = no }
+            clr_character_flag = has_sent_request_for_knighthood
+        }
+    }
 }
 
 # Grandmaster gets the rank-up request
 character_event = {
-	id = TSK_S.5
-	
-	hide_window = yes
+    id = TSK_S.5
+    
+    hide_window = yes
 
-	is_triggered_only = yes
+    is_triggered_only = yes
 
-	immediate = {
-		if = { # If bad, say no
+    immediate = {
+        if = { # If bad, say no
             limit = {
                 FROMFROM = {
                     OR = {
@@ -106,49 +106,49 @@ character_event = {
         }
         # Otherwise yes.
         event_target:knighthood_target = { letter_event = { id = TSK_S.6 } }
-	}
+    }
 }
 
 #Grand master approves my request
 letter_event = {
-	id = TSK_S.6
-	desc = EVTDESC_TSK_S.6
-	border = GFX_event_letter_frame_intrigue
+    id = TSK_S.6
+    desc = EVTDESC_TSK_S.6
+    border = GFX_event_letter_frame_intrigue
 
-	trigger = {
-		has_character_flag = has_sent_request_for_knighthood
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        has_character_flag = has_sent_request_for_knighthood
+    }
+    
+    is_triggered_only = yes
 
-	#Yes
-	option = {
-		name = {
-			text = EVTOPTA_TSK_S.6
-		}
-		add_trait = knight
+    #Yes
+    option = {
+        name = {
+            text = EVTOPTA_TSK_S.6
+        }
+        add_trait = knight
         give_minor_title = title_generic_ser
-		clr_character_flag = has_sent_request_for_knighthood
-	}
+        clr_character_flag = has_sent_request_for_knighthood
+    }
 }
 
 #Grand master disapproves my request
 letter_event = {
-	id = TSK_S.7
-	desc = EVTDESC_TSK_S.7
-	border = GFX_event_letter_frame_intrigue
+    id = TSK_S.7
+    desc = EVTDESC_TSK_S.7
+    border = GFX_event_letter_frame_intrigue
 
-	trigger = {
-		has_character_flag = has_sent_request_for_knighthood
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        has_character_flag = has_sent_request_for_knighthood
+    }
+    
+    is_triggered_only = yes
 
-	#no
-	option = {
-		name = {
-			text = EVTOPTA_TSK_S.7
-		}
-		clr_character_flag = has_sent_request_for_knighthood
-	}
+    #no
+    option = {
+        name = {
+            text = EVTOPTA_TSK_S.7
+        }
+        clr_character_flag = has_sent_request_for_knighthood
+    }
 }

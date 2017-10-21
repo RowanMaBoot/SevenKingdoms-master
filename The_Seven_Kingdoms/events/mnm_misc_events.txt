@@ -2,7 +2,7 @@
 #                                         #
 # M&M MISC Events                         #
 #                                         #
-# ID MNM.10000 - 10001     	              #
+# ID MNM.10000 - 10001                       #
 #                                         #
 ###########################################
 
@@ -12,70 +12,70 @@ namespace = MNM
 
 # Hidden start: Send the rank-up request to the current Grandmaster (delayed event on self, from decision to rank up)
 character_event = {
-	id = MNM.10002
+    id = MNM.10002
 
-	hide_window = yes
+    hide_window = yes
 
-	trigger = {
-		has_character_flag = has_sent_request_to_rank_up
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        has_character_flag = has_sent_request_to_rank_up
+    }
+    
+    is_triggered_only = yes
 
-	immediate = {
-		if = {
-			limit = { is_in_society = yes }
-			random_society_member = {
-				limit = {
-					is_society_grandmaster = yes
-					same_society_as = ROOT
-				}
-				character_event = { id = MNM.10000 } # send request to Grand Master. Relic rewards also handled by this event
-			}
-		}
-		if = {
-			limit = { is_in_society = no }
-			clr_character_flag = has_sent_request_to_rank_up
-		}
-	}
+    immediate = {
+        if = {
+            limit = { is_in_society = yes }
+            random_society_member = {
+                limit = {
+                    is_society_grandmaster = yes
+                    same_society_as = ROOT
+                }
+                character_event = { id = MNM.10000 } # send request to Grand Master. Relic rewards also handled by this event
+            }
+        }
+        if = {
+            limit = { is_in_society = no }
+            clr_character_flag = has_sent_request_to_rank_up
+        }
+    }
 }
 
 # Grandmaster gets the rank-up request
 character_event = {
-	id = MNM.10000
-	
-	hide_window = yes
+    id = MNM.10000
+    
+    hide_window = yes
 
-	is_triggered_only = yes
+    is_triggered_only = yes
 
-	immediate = {
-		event_target:rank_up_target = { letter_event = { id = MNM.10001 } }
-	}
+    immediate = {
+        event_target:rank_up_target = { letter_event = { id = MNM.10001 } }
+    }
 }
 
 #Grand master approves my request
 letter_event = {
-	id = MNM.10001
-	desc = EVTDESC_MNM_10001_A
-	border = GFX_event_letter_frame_intrigue
+    id = MNM.10001
+    desc = EVTDESC_MNM_10001_A
+    border = GFX_event_letter_frame_intrigue
 
-	trigger = {
-		society_rank < 4
-		has_character_flag = has_sent_request_to_rank_up
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        society_rank < 4
+        has_character_flag = has_sent_request_to_rank_up
+    }
+    
+    is_triggered_only = yes
 
-	#Yes
-	option = {
-		name = {
-			text = EVTOPTA_10001
-		}
-		if = { limit = { society_rank < 4 } #todo: Remember you can rankup to 4 in some societies
-			society_rank_up = 1
-		}
-		clr_character_flag = has_sent_request_to_rank_up
-	}
+    #Yes
+    option = {
+        name = {
+            text = EVTOPTA_10001
+        }
+        if = { limit = { society_rank < 4 } #todo: Remember you can rankup to 4 in some societies
+            society_rank_up = 1
+        }
+        clr_character_flag = has_sent_request_to_rank_up
+    }
 }
 
 #Becoming stressed about keeping a secret
@@ -85,71 +85,71 @@ character_event = {
     border = GFX_event_normal_frame_intrigue
 
     desc = {
-    	trigger = { 
-    		has_dlc = "Mystics" 
-    		trait = paranoid
-    	}
-    	text = EVTDESC_MNM_10020_A
-    	picture = GFX_evt_uncomfortable
+        trigger = { 
+            has_dlc = "Mystics" 
+            trait = paranoid
+        }
+        text = EVTDESC_MNM_10020_A
+        picture = GFX_evt_uncomfortable
     }
 
     desc = {
-    	trigger = { 
-    		NOT = { has_dlc = "Mystics" }
-    		trait = paranoid
-    	}
-    	text = EVTDESC_MNM_10020_A
-    	picture = GFX_evt_shadowy_cabal
+        trigger = { 
+            NOT = { has_dlc = "Mystics" }
+            trait = paranoid
+        }
+        text = EVTDESC_MNM_10020_A
+        picture = GFX_evt_shadowy_cabal
     }
 
     desc = {
-    	trigger = { 
-    		has_dlc = "Mystics" 
-    		NOT = { trait = paranoid }
-    	}
-    	text = EVTDESC_MNM_10020_B
-    	picture = GFX_evt_uncomfortable
+        trigger = { 
+            has_dlc = "Mystics" 
+            NOT = { trait = paranoid }
+        }
+        text = EVTDESC_MNM_10020_B
+        picture = GFX_evt_uncomfortable
     }
 
     desc = {
-    	trigger = { 
-    		NOT = { has_dlc = "Mystics" }
-    		NOT = { trait = paranoid }
-    	}
-    	text = EVTDESC_MNM_10020_B
-    	picture = GFX_evt_shadowy_cabal
+        trigger = { 
+            NOT = { has_dlc = "Mystics" }
+            NOT = { trait = paranoid }
+        }
+        text = EVTDESC_MNM_10020_B
+        picture = GFX_evt_shadowy_cabal
     }
 
-	is_in_society = yes
-	
+    is_in_society = yes
+    
     is_triggered_only = yes
     
     trigger = {
-    	society_is_criminal = yes
-    	NOT = { trait = stressed }
+        society_is_criminal = yes
+        NOT = { trait = stressed }
     }
 
     option = { 
         name = EVTOPTA_MNM_10020
 
-	    add_trait = stressed
+        add_trait = stressed
     }
 }
 
 
 #Excluded from society due to breaking the limitations
 character_event = {
-	id = MNM.10021
-	hide_window = yes
-	is_triggered_only = yes
-	immediate = {
-		society = {
-			random_society_member = { 
-				limit = { is_society_grandmaster = yes } 
-				character_event = { id = MNM.10022 }
-			}
-		}
-	}
+    id = MNM.10021
+    hide_window = yes
+    is_triggered_only = yes
+    immediate = {
+        society = {
+            random_society_member = { 
+                limit = { is_society_grandmaster = yes } 
+                character_event = { id = MNM.10022 }
+            }
+        }
+    }
 }
 
 
@@ -162,40 +162,40 @@ character_event = {
 
 
 letter_event = {
-	id = MNM.10023
-	border = GFX_event_letter_frame_religion
+    id = MNM.10023
+    border = GFX_event_letter_frame_religion
 
-	is_triggered_only = yes
+    is_triggered_only = yes
 
-	desc = {
-		trigger = { society_member_of = knighthood_the_seven }
-		text = EVTDESC_MNM_10023_KNIGHTHOOD_SEVEN
-	}
-	desc = {
-		trigger = { 
-			society_member_of = secret_religious_cult 
-			FROM = { ROOT = { is_openly_of_prevs_secret_religion_trigger = yes } }
-		}
-		text = EVTDESC_MNM_10023_SR_A
-	}
-	desc = {
-		trigger = { 
-			society_member_of = secret_religious_cult 
-			FROM = { ROOT = { is_openly_of_prevs_secret_religion_trigger = no } }
-		}
-		text = EVTDESC_MNM_10023_SR_B
-	}
-	desc = {
-		trigger = { always = no }
-		text = EVTDESC_MNM_10023_HERMETICS
-	}
-	
-	is_triggered_only = yes
-	
-	option = {
-		name = EVTOPTA_MNM_10023
-		leave_society = yes
-	}
+    desc = {
+        trigger = { society_member_of = knighthood_the_seven }
+        text = EVTDESC_MNM_10023_KNIGHTHOOD_SEVEN
+    }
+    desc = {
+        trigger = { 
+            society_member_of = secret_religious_cult 
+            FROM = { ROOT = { is_openly_of_prevs_secret_religion_trigger = yes } }
+        }
+        text = EVTDESC_MNM_10023_SR_A
+    }
+    desc = {
+        trigger = { 
+            society_member_of = secret_religious_cult 
+            FROM = { ROOT = { is_openly_of_prevs_secret_religion_trigger = no } }
+        }
+        text = EVTDESC_MNM_10023_SR_B
+    }
+    desc = {
+        trigger = { always = no }
+        text = EVTDESC_MNM_10023_HERMETICS
+    }
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = EVTOPTA_MNM_10023
+        leave_society = yes
+    }
 }
 
 character_event = {
@@ -214,124 +214,124 @@ character_event = {
 
 # Force join AI characters to societies
 character_event = {
-	id = MNM.10030
-	hide_window = yes
-	
-	only_rulers = yes
-	is_triggered_only = yes
-	
-	has_dlc = "Mystics"
-	
-	immediate = {
-		if = {
-			limit = {
-				ai = yes
-				prisoner = no
-				NOT = { trait = incapable }
-				is_in_society = yes
-				society_rank < 3
-				society_can_rank_up = yes
-			}
-			random_list = {
-				75 = {}
-				25 = {
-					society_rank_up = 1					
-				}
-			}
-		}
-		any_courtier = {
-			limit = {
-				ai = yes
-				prisoner = no
-				NOT = { trait = incapable }
-				is_adult = yes
-				is_in_society = no
-				controls_religion = no
-				block_general_event_trigger = no
-			}
-			character_event = { id = MNM.10031 }
-		}
-		if = {
-			limit = {
-				ai = yes
-				prisoner = no
-				NOT = { trait = incapable }
-				is_adult = yes
-				is_in_society = no
-				controls_religion = no
-				block_general_event_trigger = no
-			}
-			character_event = { id = MNM.10031 }
-		}
-	}
+    id = MNM.10030
+    hide_window = yes
+    
+    only_rulers = yes
+    is_triggered_only = yes
+    
+    has_dlc = "Mystics"
+    
+    immediate = {
+        if = {
+            limit = {
+                ai = yes
+                prisoner = no
+                NOT = { trait = incapable }
+                is_in_society = yes
+                society_rank < 3
+                society_can_rank_up = yes
+            }
+            random_list = {
+                75 = {}
+                25 = {
+                    society_rank_up = 1                    
+                }
+            }
+        }
+        any_courtier = {
+            limit = {
+                ai = yes
+                prisoner = no
+                NOT = { trait = incapable }
+                is_adult = yes
+                is_in_society = no
+                controls_religion = no
+                block_general_event_trigger = no
+            }
+            character_event = { id = MNM.10031 }
+        }
+        if = {
+            limit = {
+                ai = yes
+                prisoner = no
+                NOT = { trait = incapable }
+                is_adult = yes
+                is_in_society = no
+                controls_religion = no
+                block_general_event_trigger = no
+            }
+            character_event = { id = MNM.10031 }
+        }
+    }
 }
 
 character_event = {
-	id = MNM.10031
-	hide_window = yes
-	
-	is_triggered_only = yes
-	
-	immediate = {
-		random_list = {
-			95 = { # do nothing
-			}
-			5 = { # try to join a society
-				modifier = {
-					factor = 2
-					higher_tier_than = BARON
-				}
-				
-				random_list = {
-					800 = { } # Fall back dead weight
-					100 = {
-						trigger = {
-							can_join_society = knighthood_the_seven
-						}
-						modifier = {
-							factor = 3
-							OR = {
-								trait = zealous
-								trait = scholar
-								trait = theologian
-								trait = gardener
+    id = MNM.10031
+    hide_window = yes
+    
+    is_triggered_only = yes
+    
+    immediate = {
+        random_list = {
+            95 = { # do nothing
+            }
+            5 = { # try to join a society
+                modifier = {
+                    factor = 2
+                    higher_tier_than = BARON
+                }
+                
+                random_list = {
+                    800 = { } # Fall back dead weight
+                    100 = {
+                        trigger = {
+                            can_join_society = knighthood_the_seven
+                        }
+                        modifier = {
+                            factor = 3
+                            OR = {
+                                trait = zealous
+                                trait = scholar
+                                trait = theologian
+                                trait = gardener
                                 trait = page
                                 trait = squire
                                 trait = knight
-								martial = 16
+                                martial = 16
                                 is_combat_trained = yes
                                 has_education_martial_trigger = yes
-							}
-						}
-						join_society = knighthood_the_seven
-						random_list = { # Artificially increase society influence for balance purposes
-							75 = {
-								modifier = {
-									factor = 0
-									society_influence >= 30
-								}
-								add_mission_succeed_influence_effect = yes
-							}
-							25 = {
-							}
-						}
-						if = {
-							limit = {
-								NOT = {
-									society = {
-										any_society_member = {
-											is_society_grandmaster = yes
-										}
-									}
-								}
-							}
-							set_society_grandmaster = yes
-						}
-					}
-				}
-			}
-		}
-	}
+                            }
+                        }
+                        join_society = knighthood_the_seven
+                        random_list = { # Artificially increase society influence for balance purposes
+                            75 = {
+                                modifier = {
+                                    factor = 0
+                                    society_influence >= 30
+                                }
+                                add_mission_succeed_influence_effect = yes
+                            }
+                            25 = {
+                            }
+                        }
+                        if = {
+                            limit = {
+                                NOT = {
+                                    society = {
+                                        any_society_member = {
+                                            is_society_grandmaster = yes
+                                        }
+                                    }
+                                }
+                            }
+                            set_society_grandmaster = yes
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 ###Society relationship events###
@@ -342,29 +342,29 @@ character_event = {
     hide_window = yes
     is_triggered_only = yes
     trigger = {
-    	society = {
-    		any_society_member = {
-    			NOT = { reverse_opinion = { who = ROOT value = -20 } }
-    			NOT = { opinion = { who = ROOT value = 0 } }
-    			NOT = { is_rival = ROOT }
-    			NOT = { has_character_flag = ineligible_for_society_rivalry }
-    			ai = yes
-    		}
-    	}
+        society = {
+            any_society_member = {
+                NOT = { reverse_opinion = { who = ROOT value = -20 } }
+                NOT = { opinion = { who = ROOT value = 0 } }
+                NOT = { is_rival = ROOT }
+                NOT = { has_character_flag = ineligible_for_society_rivalry }
+                ai = yes
+            }
+        }
     }
     immediate = {
-    	society = {
-    		random_society_member = {
-    			limit = {
-    				NOT = { reverse_opinion = { who = ROOT value = -20 } }
-	    			NOT = { opinion = { who = ROOT value = 0 } }
-	    			NOT = { is_rival = ROOT }
-	    			NOT = { has_character_flag = ineligible_for_society_rivalry }
-	    			ai = yes
-    			}
-    			character_event = { id = MNM.10041 }
-    		}
-    	}
+        society = {
+            random_society_member = {
+                limit = {
+                    NOT = { reverse_opinion = { who = ROOT value = -20 } }
+                    NOT = { opinion = { who = ROOT value = 0 } }
+                    NOT = { is_rival = ROOT }
+                    NOT = { has_character_flag = ineligible_for_society_rivalry }
+                    ai = yes
+                }
+                character_event = { id = MNM.10041 }
+            }
+        }
     }
 }
 
@@ -374,7 +374,7 @@ character_event = {
     hide_window = yes
     is_triggered_only = yes
     immediate = { FROM = { character_event = { id = MNM.10042 } } }
-}	
+}    
 
 
 character_event = {
@@ -383,8 +383,8 @@ character_event = {
     border = GFX_event_normal_frame_war
 
     desc = {
-    	text = EVTDESC_MNM_10042
-    	picture = GFX_evt_rival_rulers
+        text = EVTDESC_MNM_10042
+        picture = GFX_evt_rival_rulers
     }
 
     is_triggered_only = yes
@@ -395,11 +395,11 @@ character_event = {
         add_rival = FROM
 
         ai_chance = {
-        	factor = 90
-        	modifier = {
-        		has_evil_trait_trigger = yes
-        		factor = 15
-        	}
+            factor = 90
+            modifier = {
+                has_evil_trait_trigger = yes
+                factor = 15
+            }
         }
     }
 
@@ -411,16 +411,16 @@ character_event = {
         detract_society_currency_minor_effect = yes
 
         if = {
-        	limit = { ai = no }
-        	FROM = { set_character_flag = ineligible_for_society_rivalry }
+            limit = { ai = no }
+            FROM = { set_character_flag = ineligible_for_society_rivalry }
         }
 
         ai_chance = {
-        	factor = 10
-        	modifier = {
-        		has_benevolent_trait_trigger = yes
-        		factor = 15
-        	}
+            factor = 10
+            modifier = {
+                has_benevolent_trait_trigger = yes
+                factor = 15
+            }
         }
     }
 }
@@ -432,37 +432,37 @@ character_event = {
     hide_window = yes
     is_triggered_only = yes
     trigger = {
-    	society = {
-    		any_society_member = {
-    			reverse_opinion = { who = ROOT value = 30 }
-    			opinion = { who = ROOT value = 40 }
-    			NOR = {
-    				is_friend = ROOT
-    				is_rival = ROOT
-    				is_close_relative = ROOT
-    			}
-    			NOT = { has_character_flag = ineligible_for_society_friendship }
-    			ai = yes
-    		}
-    	}
+        society = {
+            any_society_member = {
+                reverse_opinion = { who = ROOT value = 30 }
+                opinion = { who = ROOT value = 40 }
+                NOR = {
+                    is_friend = ROOT
+                    is_rival = ROOT
+                    is_close_relative = ROOT
+                }
+                NOT = { has_character_flag = ineligible_for_society_friendship }
+                ai = yes
+            }
+        }
     }
     immediate = {
-    	society = {
-    		random_society_member = {
-    			limit = {
-    				reverse_opinion = { who = ROOT value = 30 }
-	    			opinion = { who = ROOT value = 40 }
-	    			NOR = {
-	    				is_friend = ROOT
-	    				is_rival = ROOT
-	    				is_close_relative = ROOT
-	    			}
-	    			NOT = { has_character_flag = ineligible_for_society_friendship }
-	    			ai = yes
-	    		}
-    			character_event = { id = MNM.10044 }
-    		}
-    	}
+        society = {
+            random_society_member = {
+                limit = {
+                    reverse_opinion = { who = ROOT value = 30 }
+                    opinion = { who = ROOT value = 40 }
+                    NOR = {
+                        is_friend = ROOT
+                        is_rival = ROOT
+                        is_close_relative = ROOT
+                    }
+                    NOT = { has_character_flag = ineligible_for_society_friendship }
+                    ai = yes
+                }
+                character_event = { id = MNM.10044 }
+            }
+        }
     }
 }
 
@@ -471,7 +471,7 @@ character_event = {
     hide_window = yes
     is_triggered_only = yes
     immediate = { FROM = { character_event = { id = MNM.10045 } } }
-}	
+}    
 
 
 character_event = {
@@ -480,8 +480,8 @@ character_event = {
     border = GFX_event_normal_frame_diplomacy
 
     desc = {
-    	text = EVTDESC_MNM_10045
-    	picture = GFX_evt_rival_rulers
+        text = EVTDESC_MNM_10045
+        picture = GFX_evt_rival_rulers
     }
 
     is_triggered_only = yes
@@ -492,40 +492,40 @@ character_event = {
         add_friend = FROM
 
         ai_chance = {
-        	factor = 75
-        	modifier = {
-        		has_pleasant_trait_trigger = yes
-        		factor = 15
-        	}	
+            factor = 75
+            modifier = {
+                has_pleasant_trait_trigger = yes
+                factor = 15
+            }    
         }
     }
 
     #Love?
     option = {
-    	trigger = { FROM = { root_attraction_trigger = yes } }
+        trigger = { FROM = { root_attraction_trigger = yes } }
         name = EVTOPTC_MNM_10045
         custom_tooltip = { text = EVTOPTB_MNM_6903_TT }
 
         hidden_effect = { FROM = { character_event = { id = MNM.6906 days = 3 } } }
 
         if = {
-        	limit = { ai = no }
-        	FROM = { set_character_flag = ineligible_for_society_friendship }
+            limit = { ai = no }
+            FROM = { set_character_flag = ineligible_for_society_friendship }
         }
 
         ai_chance = {
-        	factor = 25
-        	modifier = {
-        		factor = 0
-        		NOR = {
-        			trait = lustful
-        			AND = {
-        				NOT = { any_lover = { is_alive = yes } }
-        				is_married = yes
-        			}
-        			FROM = { has_attractive_trait_trigger = yes }
-        		}
-        	}
+            factor = 25
+            modifier = {
+                factor = 0
+                NOR = {
+                    trait = lustful
+                    AND = {
+                        NOT = { any_lover = { is_alive = yes } }
+                        is_married = yes
+                    }
+                    FROM = { has_attractive_trait_trigger = yes }
+                }
+            }
         }
     }
 
@@ -534,317 +534,317 @@ character_event = {
         name = EVTOPTB_MNM_10045
 
         if = {
-        	limit = { ai = no }
-        	FROM = { set_character_flag = ineligible_for_society_friendship }
+            limit = { ai = no }
+            FROM = { set_character_flag = ineligible_for_society_friendship }
         }
 
         ai_chance = {
-        	factor = 25
-        	modifier = {
-        		has_unpleasant_trait_trigger = yes
-        		factor = 15
-        	}
+            factor = 25
+            modifier = {
+                has_unpleasant_trait_trigger = yes
+                factor = 15
+            }
         }
     }
 }
 
 #clearing secret_societies_interference flag
 character_event = {
-	id = MNM.6661
-	
-	is_triggered_only = yes
-	hide_window = yes
-	
-	immediate = {
-		clr_character_flag = secret_societies_interference 
-	}
+    id = MNM.6661
+    
+    is_triggered_only = yes
+    hide_window = yes
+    
+    immediate = {
+        clr_character_flag = secret_societies_interference 
+    }
 
-	option = {
-		
-	}
+    option = {
+        
+    }
 }
 
 #Suspicion modifiers
 character_event = {
-	id = MNM.6662
-	desc = MNM.6662.d
-	picture = "GFX_evt_uncomfortable"
-	border = GFX_event_normal_frame_religion
+    id = MNM.6662
+    desc = MNM.6662.d
+    picture = "GFX_evt_uncomfortable"
+    border = GFX_event_normal_frame_religion
 
-	trigger = {
-		is_in_society = yes
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        is_in_society = yes
+    }
+    
+    is_triggered_only = yes
 
-	option = {
-		name = MNM.6662.a
-		tooltip = {
-			add_character_modifier = {
-				name = under_suspicion duration = -1
-			}
-		}
-	}
+    option = {
+        name = MNM.6662.a
+        tooltip = {
+            add_character_modifier = {
+                name = under_suspicion duration = -1
+            }
+        }
+    }
 }
 
 character_event = {
-	id = MNM.6663
-	desc = MNM.6662.d
-	picture = "GFX_evt_uncomfortable"
-	border = GFX_event_normal_frame_religion
+    id = MNM.6663
+    desc = MNM.6662.d
+    picture = "GFX_evt_uncomfortable"
+    border = GFX_event_normal_frame_religion
 
-	trigger = {
-		is_in_society = yes
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        is_in_society = yes
+    }
+    
+    is_triggered_only = yes
 
-	option = {
-		name = MNM.6662.a
-		tooltip = {
-			add_character_modifier = {
-				name = highly_suspect duration = -1
-			}
-		}
-	}
+    option = {
+        name = MNM.6662.a
+        tooltip = {
+            add_character_modifier = {
+                name = highly_suspect duration = -1
+            }
+        }
+    }
 }
 
 character_event = {
-	id = MNM.6664
-	desc = MNM.6664.d
-	picture = "GFX_evt_dark_prayer"
-	border = GFX_event_normal_frame_religion
+    id = MNM.6664
+    desc = MNM.6664.d
+    picture = "GFX_evt_dark_prayer"
+    border = GFX_event_normal_frame_religion
 
-	trigger = {
-		is_in_society = yes
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        is_in_society = yes
+    }
+    
+    is_triggered_only = yes
 
-	option = {
-		name = EXCELLENT
-		tooltip = {
-			remove_character_modifier = highly_suspect
-		}
-	}
+    option = {
+        name = EXCELLENT
+        tooltip = {
+            remove_character_modifier = highly_suspect
+        }
+    }
 }
 
 character_event = {
-	id = MNM.6665
-	desc = MNM.6664.d
-	picture = "GFX_evt_dark_prayer"
-	border = GFX_event_normal_frame_religion
+    id = MNM.6665
+    desc = MNM.6664.d
+    picture = "GFX_evt_dark_prayer"
+    border = GFX_event_normal_frame_religion
 
-	trigger = {
-		is_in_society = yes
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        is_in_society = yes
+    }
+    
+    is_triggered_only = yes
 
-	option = {
-		name = EXCELLENT
-		tooltip = {
-			remove_character_modifier = under_suspicion
-		}
-	}
+    option = {
+        name = EXCELLENT
+        tooltip = {
+            remove_character_modifier = under_suspicion
+        }
+    }
 }
 
 #quest modifiers
 character_event = {
-	id = MNM.6666
-	
-	hide_window = yes
+    id = MNM.6666
+    
+    hide_window = yes
 
-	trigger = {
-		is_in_society = yes
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        is_in_society = yes
+    }
+    
+    is_triggered_only = yes
 
-	option = {
-		name = EXCELLENT
-		add_mission_succeed_influence_effect = yes
-	}
+    option = {
+        name = EXCELLENT
+        add_mission_succeed_influence_effect = yes
+    }
 }
 
 character_event = {
-	id = MNM.6667
-	
-	hide_window = yes
+    id = MNM.6667
+    
+    hide_window = yes
 
-	trigger = {
-		is_in_society = yes
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        is_in_society = yes
+    }
+    
+    is_triggered_only = yes
 
-	option = {
-		name = ALAS
-		add_mission_fail_influence_effect = yes
-	}
+    option = {
+        name = ALAS
+        add_mission_fail_influence_effect = yes
+    }
 }
 
 character_event = {
-	id = MNM.6668
-	desc = MNM.6668.d
-	picture = "GFX_evt_dark_prayer"
-	border = GFX_event_normal_frame_religion
+    id = MNM.6668
+    desc = MNM.6668.d
+    picture = "GFX_evt_dark_prayer"
+    border = GFX_event_normal_frame_religion
 
-	trigger = {
-		is_in_society = yes
-	}
-	
-	is_triggered_only = yes
+    trigger = {
+        is_in_society = yes
+    }
+    
+    is_triggered_only = yes
 
-	option = {
-		name = CURSES
-		if = {
-			limit = {
-				is_devil_worshiper_trigger = no
-			}
-			add_character_modifier = {
-				name = accused_apostate
-				duration = -1
-			}
-		}
-		if = {
-			limit = {
-				controls_religion = no
-				OR = {
-					religion_group = the_seven_group
-				}
-			}
-			add_trait = excommunicated
-		}
-	}
+    option = {
+        name = CURSES
+        if = {
+            limit = {
+                is_devil_worshiper_trigger = no
+            }
+            add_character_modifier = {
+                name = accused_apostate
+                duration = -1
+            }
+        }
+        if = {
+            limit = {
+                controls_religion = no
+                OR = {
+                    religion_group = the_seven_group
+                }
+            }
+            add_trait = excommunicated
+        }
+    }
 }
 
 #Cleanup event for dead quest targets
 character_event = {
-	id = MNM.6991
-	hide_window = yes
+    id = MNM.6991
+    hide_window = yes
 
-	is_triggered_only = yes
+    is_triggered_only = yes
 
-	trigger = { is_quest_target = yes }
+    trigger = { is_quest_target = yes }
 
-	immediate = {
-		any_quester_targeting_this = {
-			limit = {
-				has_character_flag = training_protege
-			}
-			character_event = { id = MNM.6260 days = 15 } #Clears protege mission
-		}
-		any_quester_targeting_this = {
-			limit = { NOT = { has_character_flag = training_protege } }
-			if = {
-				limit = {
-					has_quest = quest_the_assassins_assassination
-					ROOT = { killer = { character = PREVPREV } }
-				}
-				character_event = { id = MNM.6950 days = 1 } #Completes assassination mission
-			}
-			if = {
-				limit = {
-					NAND = {
-						has_quest = quest_the_assassins_assassination
-						ROOT = { killer = { character = PREVPREV } }
-					}
-				}
-				character_event = { id = MNM.6992 days = 4 } #Fails all missions
-			}
-		}	
-	}
+    immediate = {
+        any_quester_targeting_this = {
+            limit = {
+                has_character_flag = training_protege
+            }
+            character_event = { id = MNM.6260 days = 15 } #Clears protege mission
+        }
+        any_quester_targeting_this = {
+            limit = { NOT = { has_character_flag = training_protege } }
+            if = {
+                limit = {
+                    has_quest = quest_the_assassins_assassination
+                    ROOT = { killer = { character = PREVPREV } }
+                }
+                character_event = { id = MNM.6950 days = 1 } #Completes assassination mission
+            }
+            if = {
+                limit = {
+                    NAND = {
+                        has_quest = quest_the_assassins_assassination
+                        ROOT = { killer = { character = PREVPREV } }
+                    }
+                }
+                character_event = { id = MNM.6992 days = 4 } #Fails all missions
+            }
+        }    
+    }
 }
 
 
 #Notification of invalid
 character_event = {
-	id = MNM.6992
-	desc = EVTDESC_MNM_6992
-	border = GFX_event_normal_frame_religion
-	picture = GFX_evt_society_joining
+    id = MNM.6992
+    desc = EVTDESC_MNM_6992
+    border = GFX_event_normal_frame_religion
+    picture = GFX_evt_society_joining
 
-	is_triggered_only = yes
+    is_triggered_only = yes
 
-	trigger = {
-		OR = {
-			has_quest = quest_secret_religions_conduct_secret_ceremony
-			has_quest = quest_the_assassins_assassination
-			has_quest = quest_the_assassins_collect_debt
-			has_quest = quest_the_devil_worshipers_demonic_possession
-			has_quest = quest_hermetic_gather_ingredients
-			has_quest = quest_devil_worshipers_corrupt_priest
-			has_quest = quest_hermetics_infiltrate_laboratory
-			has_quest = quest_hermetics_find_text
-			has_quest = quest_devil_worshipers_corrupt_priest
-			has_quest = quest_the_devil_worshipers_demonic_possession
-			has_quest = quest_the_assassins_protege
-			has_quest = quest_hermetics_find_text
-			has_quest = quest_secret_religious_societies_induct_ruler
-			has_quest = quest_secret_religious_societies_sympathy_ruler
-			has_quest = quest_the_devil_worshipers_demonic_impregnation
-		}
-	}
+    trigger = {
+        OR = {
+            has_quest = quest_secret_religions_conduct_secret_ceremony
+            has_quest = quest_the_assassins_assassination
+            has_quest = quest_the_assassins_collect_debt
+            has_quest = quest_the_devil_worshipers_demonic_possession
+            has_quest = quest_hermetic_gather_ingredients
+            has_quest = quest_devil_worshipers_corrupt_priest
+            has_quest = quest_hermetics_infiltrate_laboratory
+            has_quest = quest_hermetics_find_text
+            has_quest = quest_devil_worshipers_corrupt_priest
+            has_quest = quest_the_devil_worshipers_demonic_possession
+            has_quest = quest_the_assassins_protege
+            has_quest = quest_hermetics_find_text
+            has_quest = quest_secret_religious_societies_induct_ruler
+            has_quest = quest_secret_religious_societies_sympathy_ruler
+            has_quest = quest_the_devil_worshipers_demonic_impregnation
+        }
+    }
 
-	option = {		
-		name = ALAS
+    option = {        
+        name = ALAS
 
-		trigger_switch = {
-			on_trigger = has_quest
-			quest_secret_religions_conduct_secret_ceremony = { clr_quest = { id = quest_secret_religions_conduct_secret_ceremony failure = yes } }
-			quest_the_assassins_assassination = 			{ clr_quest = { id = quest_the_assassins_assassination failure = yes } }
-			quest_the_assassins_collect_debt = 				{ clr_quest = { id = quest_the_assassins_collect_debt failure = yes } }
-			quest_hermetic_gather_ingredients = 			{ clr_quest = { id = quest_hermetic_gather_ingredients failure = yes } }
-			quest_hermetics_infiltrate_laboratory =			{ clr_quest = { id = quest_hermetics_infiltrate_laboratory failure = yes } }
-			quest_hermetics_find_text = 					{ clr_quest = { id = quest_hermetics_find_text failure = yes } }
-			quest_devil_worshipers_corrupt_priest =			{ clr_quest = { id = quest_devil_worshipers_corrupt_priest failure = yes } }
-			quest_the_devil_worshipers_demonic_possession = { clr_quest = { id = quest_the_devil_worshipers_demonic_possession failure = yes } }
-			quest_the_assassins_protege = 					{ clr_quest = { id = quest_the_assassins_protege failure = yes } }
-			quest_hermetics_find_text =						{ clr_quest = { id = quest_hermetics_find_text failure = yes } }
-			quest_secret_religious_societies_induct_ruler = { clr_quest = { id = quest_secret_religious_societies_induct_ruler failure = yes } }
-			quest_secret_religious_societies_sympathy_ruler = { clr_quest = { id = quest_secret_religious_societies_sympathy_ruler failure = yes } }
-			quest_the_devil_worshipers_demonic_impregnation = { clr_quest = { id = quest_the_devil_worshipers_demonic_impregnation failure = yes } }
-		}
+        trigger_switch = {
+            on_trigger = has_quest
+            quest_secret_religions_conduct_secret_ceremony = { clr_quest = { id = quest_secret_religions_conduct_secret_ceremony failure = yes } }
+            quest_the_assassins_assassination =             { clr_quest = { id = quest_the_assassins_assassination failure = yes } }
+            quest_the_assassins_collect_debt =                 { clr_quest = { id = quest_the_assassins_collect_debt failure = yes } }
+            quest_hermetic_gather_ingredients =             { clr_quest = { id = quest_hermetic_gather_ingredients failure = yes } }
+            quest_hermetics_infiltrate_laboratory =            { clr_quest = { id = quest_hermetics_infiltrate_laboratory failure = yes } }
+            quest_hermetics_find_text =                     { clr_quest = { id = quest_hermetics_find_text failure = yes } }
+            quest_devil_worshipers_corrupt_priest =            { clr_quest = { id = quest_devil_worshipers_corrupt_priest failure = yes } }
+            quest_the_devil_worshipers_demonic_possession = { clr_quest = { id = quest_the_devil_worshipers_demonic_possession failure = yes } }
+            quest_the_assassins_protege =                     { clr_quest = { id = quest_the_assassins_protege failure = yes } }
+            quest_hermetics_find_text =                        { clr_quest = { id = quest_hermetics_find_text failure = yes } }
+            quest_secret_religious_societies_induct_ruler = { clr_quest = { id = quest_secret_religious_societies_induct_ruler failure = yes } }
+            quest_secret_religious_societies_sympathy_ruler = { clr_quest = { id = quest_secret_religious_societies_sympathy_ruler failure = yes } }
+            quest_the_devil_worshipers_demonic_impregnation = { clr_quest = { id = quest_the_devil_worshipers_demonic_impregnation failure = yes } }
+        }
 
 
-		hidden_effect = {
-			clr_character_flag = A_FAIL
-	    	clr_character_flag = B_FAIL
-	    	clr_character_flag = C_FAIL
-	    	clr_character_flag = D_FAIL
-			clr_character_flag = A_SUCCESS
-    		clr_character_flag = B_SUCCESS
-    		clr_character_flag = C_SUCCESS
-    		clr_character_flag = D_SUCCESS
-    		clr_character_flag = alexandria
-    		clr_character_flag = conduct_secret_ceremony_timer
-			clr_character_flag = do_not_disturb
-			clr_character_flag = bribed_guards
-			clr_character_flag = guards_wake_up
-			clr_character_flag = distraction_failed
-			clr_character_flag = caught_stealing
-			clr_character_flag = caught_destroying
-			clr_character_flag = great_theft
-			clr_character_flag = good_theft
-			clr_character_flag = ok_theft
-			clr_character_flag = lab_destruction
-			clr_character_flag = lab_damage
-			clr_character_flag = lab_explosion_death
-			clr_character_flag = sympathy_argument_friends_family
-			clr_character_flag = sympathy_argument_trauma
-			clr_character_flag = sympathy_argument_profit
-			clr_character_flag = sympathy_argument_personal
-			clr_character_flag = induction_argument_war
-			clr_character_flag = induction_argument_community
-			clr_character_flag = induction_argument_theology
+        hidden_effect = {
+            clr_character_flag = A_FAIL
+            clr_character_flag = B_FAIL
+            clr_character_flag = C_FAIL
+            clr_character_flag = D_FAIL
+            clr_character_flag = A_SUCCESS
+            clr_character_flag = B_SUCCESS
+            clr_character_flag = C_SUCCESS
+            clr_character_flag = D_SUCCESS
+            clr_character_flag = alexandria
+            clr_character_flag = conduct_secret_ceremony_timer
+            clr_character_flag = do_not_disturb
+            clr_character_flag = bribed_guards
+            clr_character_flag = guards_wake_up
+            clr_character_flag = distraction_failed
+            clr_character_flag = caught_stealing
+            clr_character_flag = caught_destroying
+            clr_character_flag = great_theft
+            clr_character_flag = good_theft
+            clr_character_flag = ok_theft
+            clr_character_flag = lab_destruction
+            clr_character_flag = lab_damage
+            clr_character_flag = lab_explosion_death
+            clr_character_flag = sympathy_argument_friends_family
+            clr_character_flag = sympathy_argument_trauma
+            clr_character_flag = sympathy_argument_profit
+            clr_character_flag = sympathy_argument_personal
+            clr_character_flag = induction_argument_war
+            clr_character_flag = induction_argument_community
+            clr_character_flag = induction_argument_theology
             clr_character_flag = induction_argument_stewardship
             clr_character_flag = threaten_personally
             clr_character_flag = threaten_relation
             clr_character_flag = threaten_wealth
             clr_character_flag = collecting_debt
-		}
-	}
+        }
+    }
 }
 
 character_event = { # Fired from on_character_leave_society (meant to clear any society related flags and effects)
@@ -853,7 +853,7 @@ character_event = { # Fired from on_character_leave_society (meant to clear any 
     hide_window = yes
     
     immediate = {
-    	clean_up_after_leaving_society_effect = yes #NOTE: update if more societies are added
+        clean_up_after_leaving_society_effect = yes #NOTE: update if more societies are added
     }
 }
 
@@ -863,73 +863,73 @@ character_event = {
     picture = GFX_evt_ritual_scroll
     border = GFX_event_normal_frame_religion
     is_triggered_only = yes
-	
+    
     trigger = {
-		NOT = { 
-			FROM = {
-				any_society_member = { always = yes }
-			}
-		}
+        NOT = { 
+            FROM = {
+                any_society_member = { always = yes }
+            }
+        }
     }
-	
-	immediate = { set_character_flag = society_join_block }
+    
+    immediate = { set_character_flag = society_join_block }
 
     option = {      
         name = EVTOPTA_MNM_10024
-		join_society = FROM
-		set_society_grandmaster = yes # Set character as Grand Master
-		add_society_currency_massive_effect = yes # Give the Grand Master a start-up capital to induct members
-		clr_character_flag = society_join_block
+        join_society = FROM
+        set_society_grandmaster = yes # Set character as Grand Master
+        add_society_currency_massive_effect = yes # Give the Grand Master a start-up capital to induct members
+        clr_character_flag = society_join_block
     }
-	
-	option = {
-		name = EVTOPTB_MNM_10024
-		clr_character_flag = society_join_block
-	}
+    
+    option = {
+        name = EVTOPTB_MNM_10024
+        clr_character_flag = society_join_block
+    }
 }
 
 character_event = { #Save game conversion of secret_traits to secret religions
-	id = MNM.10025
-	hide_window = yes
-	
-	is_triggered_only = yes
-	
-	ai = no
-	only_playable = yes
-	
-	trigger = {
-		is_multiplayer_host_character = yes
-		is_save_game = yes
-	}
-	
-	immediate = {
-		any_character = {
-			trigger_switch = {
-				on_trigger = trait
-				secretly_the_seven = { set_secret_religion = the_seven remove_trait = secretly_the_seven }
-				secretly_the_seven_gods = { set_secret_religion = the_seven_gods remove_trait = secretly_the_seven_gods }
-				secretly_the_mother = { set_secret_religion = the_mother remove_trait = secretly_the_mother }
-				secretly_the_stranger = { set_secret_religion = the_stranger remove_trait = secretly_the_stranger }
-				secretly_lady_of_the_waves = { set_secret_religion = lady_of_the_waves remove_trait = secretly_lady_of_the_waves }
-				secretly_vulture_god = { set_secret_religion = vulture_god remove_trait = secretly_vulture_god }
-				secretly_old_gods = { set_secret_religion = old_gods remove_trait = secretly_old_gods }
-				secretly_old_gods_beyond = { set_secret_religion = old_gods_beyond remove_trait = secretly_old_gods_beyond }
-				secretly_old_gods_beyond_white = { set_secret_religion = old_gods_beyond_white remove_trait = secretly_old_gods_beyond_white }
-				secretly_drowned_god = { set_secret_religion = drowned_god remove_trait = secretly_drowned_god }
-				secretly_storm_god = { set_secret_religion = storm_god remove_trait = secretly_storm_god }
-				secretly_rhllor = { set_secret_religion = rhllor remove_trait = secretly_rhllor }
-				secretly_moonsingers = { set_secret_religion = moonsingers remove_trait = secretly_moonsingers }
-				secretly_faceless_men = { set_secret_religion = faceless_men remove_trait = secretly_faceless_men }
-				secretly_maiden_of_the_harvest = { set_secret_religion = maiden_of_the_harvest remove_trait = secretly_maiden_of_the_harvest }
-				secretly_bearded_priests = { set_secret_religion = bearded_priests remove_trait = secretly_bearded_priests }
-				secretly_boashi = { set_secret_religion = boashi remove_trait = secretly_boashi }
-				secretly_trios = { set_secret_religion = trios remove_trait = secretly_trios }
-				secretly_valyrian = { set_secret_religion = valyrian remove_trait = secretly_valyrian }
-				secretly_the_dragon_gods = { set_secret_religion = the_dragon_gods remove_trait = secretly_the_dragon_gods }
-				secretly_the_weeping_lady = { set_secret_religion = the_weeping_lady remove_trait = secretly_the_weeping_lady }
-				secretly_lady_of_the_rocks = { set_secret_religion = lady_of_the_rocks remove_trait = secretly_lady_of_the_rocks }
-				secretly_dothraki = { set_secret_religion = dothraki remove_trait = secretly_dothraki }
-			}
-		}
-	}
+    id = MNM.10025
+    hide_window = yes
+    
+    is_triggered_only = yes
+    
+    ai = no
+    only_playable = yes
+    
+    trigger = {
+        is_multiplayer_host_character = yes
+        is_save_game = yes
+    }
+    
+    immediate = {
+        any_character = {
+            trigger_switch = {
+                on_trigger = trait
+                secretly_the_seven = { set_secret_religion = the_seven remove_trait = secretly_the_seven }
+                secretly_the_seven_gods = { set_secret_religion = the_seven_gods remove_trait = secretly_the_seven_gods }
+                secretly_the_mother = { set_secret_religion = the_mother remove_trait = secretly_the_mother }
+                secretly_the_stranger = { set_secret_religion = the_stranger remove_trait = secretly_the_stranger }
+                secretly_lady_of_the_waves = { set_secret_religion = lady_of_the_waves remove_trait = secretly_lady_of_the_waves }
+                secretly_vulture_god = { set_secret_religion = vulture_god remove_trait = secretly_vulture_god }
+                secretly_old_gods = { set_secret_religion = old_gods remove_trait = secretly_old_gods }
+                secretly_old_gods_beyond = { set_secret_religion = old_gods_beyond remove_trait = secretly_old_gods_beyond }
+                secretly_old_gods_beyond_white = { set_secret_religion = old_gods_beyond_white remove_trait = secretly_old_gods_beyond_white }
+                secretly_drowned_god = { set_secret_religion = drowned_god remove_trait = secretly_drowned_god }
+                secretly_storm_god = { set_secret_religion = storm_god remove_trait = secretly_storm_god }
+                secretly_rhllor = { set_secret_religion = rhllor remove_trait = secretly_rhllor }
+                secretly_moonsingers = { set_secret_religion = moonsingers remove_trait = secretly_moonsingers }
+                secretly_faceless_men = { set_secret_religion = faceless_men remove_trait = secretly_faceless_men }
+                secretly_maiden_of_the_harvest = { set_secret_religion = maiden_of_the_harvest remove_trait = secretly_maiden_of_the_harvest }
+                secretly_bearded_priests = { set_secret_religion = bearded_priests remove_trait = secretly_bearded_priests }
+                secretly_boashi = { set_secret_religion = boashi remove_trait = secretly_boashi }
+                secretly_trios = { set_secret_religion = trios remove_trait = secretly_trios }
+                secretly_valyrian = { set_secret_religion = valyrian remove_trait = secretly_valyrian }
+                secretly_the_dragon_gods = { set_secret_religion = the_dragon_gods remove_trait = secretly_the_dragon_gods }
+                secretly_the_weeping_lady = { set_secret_religion = the_weeping_lady remove_trait = secretly_the_weeping_lady }
+                secretly_lady_of_the_rocks = { set_secret_religion = lady_of_the_rocks remove_trait = secretly_lady_of_the_rocks }
+                secretly_dothraki = { set_secret_religion = dothraki remove_trait = secretly_dothraki }
+            }
+        }
+    }
 }
