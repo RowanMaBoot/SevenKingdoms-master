@@ -48,20 +48,34 @@ character_event = {
     }
     
     immediate = {
-        random_province = { 
-    		limit = { owner = { is_within_diplo_range = ROOT } }
+        random_province = { # Fallback
+    		limit = {
+                owner = { is_within_diplo_range = ROOT }
+                owner = { NOT = { religion = ROOT } }
+            }
     		save_event_target_as = religion_from
     	}
     	random_demesne_province = {
-    		limit = { any_neighbor_province = { NOT = { owner = { character = ROOT } } } }
+    		limit = {
+                any_neighbor_province = {
+                    NOR = {
+                        owner = { character = ROOT }
+                        religion = ROOT
+                    } 
+                } 
+            }
     		random_neighbor_province = {
-    			limit = { NOT = { owner = { character = ROOT } } }
+    			limit = {
+                    NOR = {
+                        owner = {character = ROOT }
+                        religion = ROOT
+                    }
+                }
     			save_event_target_as = religion_from
     		}
     	}
         random_vassal = {
             limit = { NOT = { religion = ROOT } }
-            
             save_event_target_as = religion_from
         }
     }
