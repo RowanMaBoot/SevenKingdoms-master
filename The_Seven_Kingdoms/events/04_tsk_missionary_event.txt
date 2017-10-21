@@ -20,36 +20,54 @@ character_event = {
         }
         
         OR = {
-            any_vassal = {
+            any_demesne_title = { # Neighbouring province is foreign religion
+                any_neighbor_province = {
+                    OR = {
+                        NOT = { religion = ROOT }
+                        owner = { NOT = { religion = ROOT } }
+                    }
+                }
+            }
+            any_demesne_title = { # Directly controlling foreign religion provinces
+                tier = count
+                
+                OR = {
+                    NOT = { religion = ROOT }
+                    owner = { NOT = { religion = ROOT } }
+                }
+            }
+            any_vassal = { # Sends missionary to liege
                 NOR = {
                     character = ROOT
                     religion = ROOT
                     trait = incapable
                     is_inaccessible_trigger = yes
                 }
-                save_event_target_as = religion_from
             }
-            any_demesne_title = {
-                any_neighbor_province = {
-                    NOT = {
-                        religion = ROOT
-                        }
-                        save_event_target_as = religion_from
-                }
-            }
-            any_demesne_title = {
-                tier = COUNT
-                
-                NOT = {
-                    religion = ROOT
-                }
-                save_event_target_as = religion_from
-            }
+        }
+    }
+    
+    immediate = {
+        random_province = { 
+    		limit = { owner = { is_within_diplo_range = ROOT } }
+    		save_event_target_as = religion_from
+    	}
+    	random_demesne_province = {
+    		limit = { any_neighbor_province = { NOT = { owner = { character = ROOT } } } }
+    		random_neighbor_province = {
+    			limit = { NOT = { owner = { character = ROOT } } }
+    			save_event_target_as = religion_from
+    		}
+    	}
+        random_vassal = {
+            limit = { NOT = { religion = ROOT } }
+            
+            save_event_target_as = religion_from
         }
     }
   
     mean_time_to_happen = {
-        months = 12 # 9600 # Test value, high rate of event firing.
+        months = 1 # 9600 # Test value, high rate of event firing.
         modifier = {
             factor = 2.0
       
