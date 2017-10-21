@@ -14,17 +14,32 @@ character_event = {
     trigger = {
         can_change_religion = yes
         
+        region = world_westeros_no_beyond_no_isles
+        
         NOR = {
             religion_authority = 0.8
             is_inaccessible_trigger = yes
+            region = world_the_wall
         }
         
         OR = {
             any_demesne_title = { # Neighbouring province is foreign religion
                 any_neighbor_province = {
                     OR = {
-                        NOT = { religion = ROOT }
-                        owner = { NOT = { religion = ROOT } }
+                        AND = {
+                            NOT = { religion = ROOT }
+                            OR = {
+                                religion_group = the_seven_group
+                                religion = rhllor
+                            }
+                        }
+                        owner = {
+                            NOT = { religion = ROOT }
+                            OR = {
+                                religion_group = the_seven_group
+                                religion = rhllor
+                            }
+                        }
                     }
                 }
             }
@@ -32,8 +47,20 @@ character_event = {
                 tier = count
                 
                 OR = {
-                    NOT = { religion = ROOT }
-                    owner = { NOT = { religion = ROOT } }
+                    AND = {
+                        NOT = { religion = ROOT }
+                        OR = {
+                            religion_group = the_seven_group
+                            religion = rhllor
+                        }
+                    }
+                    owner = {
+                        NOT = { religion = ROOT }
+                        OR = {
+                            religion_group = the_seven_group
+                            religion = rhllor
+                        }
+                    }
                 }
             }
             any_vassal = { # Sends missionary to liege
@@ -81,11 +108,22 @@ character_event = {
     }
   
     mean_time_to_happen = {
-        months = 12 # 9600 # Test value, high rate of event firing.
+        months = 288 # 24 Years
         modifier = {
             factor = 2.0
       
             religion_authority = 0.6
+        }
+        modifier = {
+            factor = 1.25
+            
+            OR = {
+                religion = valyrian
+                religion = the_seven
+                religion = rhllor
+                religion = drowned_god
+                religion = moonsingers
+            }
         }
         modifier = {
             factor = 0.75
