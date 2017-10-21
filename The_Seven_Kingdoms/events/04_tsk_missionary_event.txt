@@ -81,7 +81,7 @@ character_event = {
     }
   
     mean_time_to_happen = {
-        months = 1 # 9600 # Test value, high rate of event firing.
+        months = 12 # 9600 # Test value, high rate of event firing.
         modifier = {
             factor = 2.0
       
@@ -103,6 +103,16 @@ character_event = {
     option = {
         name = EVTOPTTSK_MSS_EVT1a
     
+        prestige = 25
+        piety = 25
+        
+        hidden_effect {
+            random_list = {
+                30 = { }
+                70 = { character_event = { id = tsk_missionary_evt.3 } }
+            }
+        }
+        
         ai_chance = {
             factor = 1
             
@@ -121,15 +131,15 @@ character_event = {
                 trait = brave
             }
         }
-        random_list = {
-            30 = { }
-            70 = { character_event = { id = tsk_missionary_evt.3 } }
-        }
     }
     
     # Invite them in
     option = {
         name = EVTOPTTSK_MSS_EVT1b
+    
+        piety = -25
+    
+        character_event = { id = tsk_missionary_evt.2 }
     
         ai_chance = {
             factor = 1
@@ -156,8 +166,6 @@ character_event = {
                 trait = wroth
             }
         }
-        character_event = { id = tsk_missionary_evt.2 }
-        
     }
 }
 
@@ -203,6 +211,15 @@ character_event = {
     option = {
         name = EVTOPTTSK_MSS_EVT2b
         
+        piety = 100
+        
+        hidden_effect = {
+            random_list = {
+                50 = { }
+                50 = { character_event = { id = tsk_missionary_evt.3 } }
+            }
+        }
+        
         ai_chance = {
             factor = 1
             
@@ -217,15 +234,13 @@ character_event = {
                 trait = patient
             }
         }
-
-        random_list = {
-            50 = { }
-            50 = { character_event = { id = tsk_missionary_evt.3 } }
-        }
     }
     # Have them killed (end chain)
     option = {
         name = EVTOPTTSK_MSS_EVT2c
+        
+        piety = 25
+        prestige = 100
         
         if = {
             limit = {
@@ -299,77 +314,76 @@ character_event = {
         piety = 50
         prestige = 50
         
-        capital_scope = {
-            create_character = {
-                random_traits = yes
-                dynasty = none
-                religion = ROOT
-                culture = ROOT
-                female = no
-                age = 25
-                attributes = {
-                    martial = 5
-                }
-                trait = peasant_leader
-                trait = tough_soldier
-            }
-
-            new_character = {
-                create_title = {
-                    tier = DUKE
-                    landless = yes
-                    temporary = yes
-                    rebel = yes
+        hidden_effect = {
+            capital_scope = {
+                create_character = {
+                    random_traits = yes
+                    dynasty = none
+                    religion = ROOT
                     culture = ROOT
-                    name = "PEASANT_REVOLT"
-                    holder = THIS
-                }
-
-                wealth = 100
-
-                spawn_peasant_army_effect = yes
-
-                if = {
-                    limit = {
-                        has_game_rule = {
-                            name = provincial_revolt_strength
-                            value = powerful
-                        }
+                    female = no
+                    age = 25
+                    attributes = {
+                        martial = 5
                     }
-                    spawn_peasant_army_effect = yes
-                    wealth = 150
+                    trait = peasant_leader
+                    trait = tough_soldier
                 }
 
-                if = {
-                    limit = {
-                        has_game_rule = {
-                            name = provincial_revolt_strength
-                            value = very_powerful
-                        }
+                new_character = {
+                    create_title = {
+                        tier = DUKE
+                        landless = yes
+                        temporary = yes
+                        rebel = yes
+                        culture = ROOT
+                        name = "PEASANT_REVOLT"
+                        holder = THIS
                     }
-                    spawn_peasant_army_effect = yes
-                    spawn_peasant_army_effect = yes
-                    spawn_peasant_army_effect = yes
-                    wealth = 250
-                }
 
-                if = {
-                    limit = {
-                        has_game_rule = {
-                            name = provincial_revolt_strength
-                            value = extremely_powerful
+                    wealth = 100
+
+                    spawn_peasant_army_effect = yes
+
+                    if = {
+                        limit = {
+                            has_game_rule = {
+                                name = provincial_revolt_strength
+                                value = powerful
+                            }
                         }
+                        spawn_peasant_army_effect = yes
+                        wealth = 150
                     }
-                    spawn_peasant_army_effect = yes
-                    spawn_peasant_army_effect = yes
-                    spawn_peasant_army_effect = yes
-                    spawn_peasant_army_effect = yes
-                    spawn_peasant_army_effect = yes
-                    wealth = 350
-                }
 
-                # DoW on the province top liege
-                ROOT = {
+                    if = {
+                        limit = {
+                            has_game_rule = {
+                                name = provincial_revolt_strength
+                                value = very_powerful
+                            }
+                        }
+                        spawn_peasant_army_effect = yes
+                        spawn_peasant_army_effect = yes
+                        spawn_peasant_army_effect = yes
+                        wealth = 250
+                    }
+
+                    if = {
+                        limit = {
+                            has_game_rule = {
+                                name = provincial_revolt_strength
+                                value = extremely_powerful
+                            }
+                        }
+                        spawn_peasant_army_effect = yes
+                        spawn_peasant_army_effect = yes
+                        spawn_peasant_army_effect = yes
+                        spawn_peasant_army_effect = yes
+                        spawn_peasant_army_effect = yes
+                        wealth = 350
+                    }
+                    
                     owner = {
                         top_liege = {
                             reverse_war = {
@@ -396,9 +410,11 @@ character_event = {
         piety = 25
         prestige = 25
 
-        random_list = {
-            95 = { }
-            5 = { character_event = { id = tsk_missionary_evt.4 } }
+        hidden_effect = {
+            random_list = {
+                95 = { }
+                5 = { character_event = { id = tsk_missionary_evt.4 } }
+            }
         }
         
         ai_chance = {
@@ -438,9 +454,8 @@ character_event = {
 
     is_triggered_only = yes
 
-    # Deal with it
-    option = {
-        name = EVTOPTTSK_MSS_EVT4a
+    
+    immediate = {
         capital_scope = {
             create_character = {
                 random_traits = yes
@@ -513,24 +528,26 @@ character_event = {
                     spawn_peasant_army_effect = yes
                     wealth = 750
                 }
-
-                # DoW on the province top liege
-                ROOT = {
-                    owner = {
-                        top_liege = {
-                            reverse_war = {
-                                target = PREVPREVPREV
-                                casus_belli = peasant_revolt
-                                thirdparty_title = ROOT
-                            }
-                            reverse_opinion = {
-                                who = PREVPREVPREV
-                                modifier = opinion_evil_tyrant
-                            }
+                
+                owner = {
+                    top_liege = {
+                        reverse_war = {
+                            target = PREVPREVPREV
+                            casus_belli = peasant_revolt
+                            thirdparty_title = ROOT
+                        }
+                        reverse_opinion = {
+                            who = PREVPREVPREV
+                            modifier = opinion_evil_tyrant
                         }
                     }
                 }
             }
         }
+    }
+    
+    # Deal with it
+    option = {
+        name = EVTOPTTSK_MSS_EVT4a
     }
 }
