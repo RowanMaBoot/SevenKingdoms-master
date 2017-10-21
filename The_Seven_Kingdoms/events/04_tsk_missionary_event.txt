@@ -14,11 +14,17 @@ character_event = {
     trigger = {
         can_change_religion = yes
         
-        region = world_westeros_no_beyond_no_isles
+        NOT = {
+            has_game_rule = {
+                name = missionary_system
+                value = missionary_system_disabled
+            }
+        }
         
-        NOR = {
+        is_religion_spread_region_allowed_trigger = yes
+        
+        NOT = {
             is_inaccessible_trigger = yes
-            region = world_the_wall
         }
         
         OR = {
@@ -27,17 +33,11 @@ character_event = {
                     OR = {
                         AND = {
                             NOT = { religion = ROOT }
-                            OR = {
-                                religion_group = the_seven_group
-                                religion = rhllor
-                            }
+                            is_following_spreadable_religion_trigger = yes
                         }
                         owner = {
                             NOT = { religion = ROOT }
-                            OR = {
-                                religion_group = the_seven_group
-                                religion = rhllor
-                            }
+                            is_following_spreadable_religion_trigger = yes
                         }
                     }
                 }
@@ -48,17 +48,11 @@ character_event = {
                 OR = {
                     AND = {
                         NOT = { religion = ROOT }
-                        OR = {
-                            religion_group = the_seven_group
-                            religion = rhllor
-                        }
+                        is_following_spreadable_religion_trigger = yes
                     }
                     owner = {
                         NOT = { religion = ROOT }
-                        OR = {
-                            religion_group = the_seven_group
-                            religion = rhllor
-                        }
+                        is_following_spreadable_religion_trigger = yes
                     }
                 }
             }
@@ -73,11 +67,17 @@ character_event = {
         }
     }
     
+    # Rulers within diplo range can spread as a fallback.
+    # Neighbouring provinces and held provinces can spread even if their owner does not follow that religion.
     immediate = {
         random_province = { # Fallback
             limit = {
                 owner = { is_within_diplo_range = ROOT }
-                owner = { NOT = { religion = ROOT } }
+                owner = {
+                    NOR = { religion = ROOT }
+                    is_following_spreadable_religion_trigger = yes
+                }
+                is_following_spreadable_religion_trigger = yes
             }
             save_event_target_as = missionary_religion_from
         }
@@ -87,7 +87,8 @@ character_event = {
                     NOR = {
                         owner = { character = ROOT }
                         religion = ROOT
-                    } 
+                    }
+                    is_following_spreadable_religion_trigger = yes
                 } 
             }
             random_neighbor_province = {
@@ -96,6 +97,7 @@ character_event = {
                         owner = {character = ROOT }
                         religion = ROOT
                     }
+                    is_following_spreadable_religion_trigger = yes
                 }
                 save_event_target_as = missionary_religion_from
             }
@@ -129,13 +131,7 @@ character_event = {
         modifier = {
             factor = 1.25
             
-            OR = {
-                religion = valyrian
-                religion = the_seven
-                religion = rhllor
-                religion = drowned_god
-                religion = moonsingers
-            }
+            is_resistant_religion_trigger = yes
         }
         
         modifier = {

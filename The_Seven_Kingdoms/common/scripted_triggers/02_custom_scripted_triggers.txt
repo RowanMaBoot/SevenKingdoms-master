@@ -10,6 +10,55 @@ is_knightly_member_trigger = {
     }
 }
 
+is_following_spreadable_religion_trigger = {
+    OR = {
+        religion_group = the_seven_group
+        religion = rhllor
+    }
+}
+
+is_resistant_religion_trigger = {
+    OR = {
+        religion = valyrian
+        religion = the_seven
+        religion = rhllor
+        religion = drowned_god
+        religion = moonsingers
+    }
+}
+
+# Sponsors both a whitelist and a blacklist in case of overlap in region defines.
+# Rules can modify what regions are taken into the system, such as Essos.
+is_religion_spread_region_allowed_trigger = {
+    NOR = {
+        region = world_the_wall
+    }
+    
+    region = world_westeros_no_beyond_no_isles
+    
+    OR = {
+        AND = {
+            has_game_rule = {
+                name = missionary_system
+                value = missionary_system_valyria
+            }
+            
+            region = world_valyria
+        }
+        AND = {
+            has_game_rule = {
+                name = missionary_system
+                value = missionary_system_unrestricted
+            }
+            
+            OR = {
+                region = world_essos
+                region = world_the_iron_islands
+            }
+        }
+    }
+}
+
 # has_education_martial_trigger
 # educator_is_commander = {
     # educator = {
