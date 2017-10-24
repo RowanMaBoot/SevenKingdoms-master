@@ -8,18 +8,27 @@
 # is_player_capital_trigger -
 # is_special_unconquerable_trigger -
 
-is_targeting_other_religion = {
+
+ai_targeting_same_religion = {
     modifier = {
         factor = 1.5
         
-        if = {
-            limit = {
+        ROOT = { religion = FROM }
+    }
+}
+
+ai_targeting_other_religion = {
+    modifier = {
+        factor = 1.5
+        
+        OR = {
+            AND = {
                 ROOT = { religion = the_seven }
                 FROM = { NOT = { religion = the_seven }
             }
         }
-        if = {
-            limit = {
+        OR = {
+            AND = {
                 ROOT = { religion = rhllor }
                 FROM = { NOT = { religion = rhllor }
             }
