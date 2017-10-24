@@ -28,6 +28,29 @@ faction_loyalist = {
         }
     }
     
+    liege = {
+        independent = yes
+        higher_tier_than = DUKE
+        
+        OR = {
+            is_nomadic = no
+            NOT = { has_dlc = "Horse Lords" }
+            liege = {
+                NOT = { has_blood_oath_with = PREV }
+            }
+        }
+        
+        # No independence factions in merchant republics
+        NOT = {
+            AND = {
+                is_merchant_republic = yes
+                liege = {
+                    is_merchant_republic = yes
+                }
+            }
+        }
+    }
+    
     # Requirements to create the faction (checks the title holder/ruler)
     allow = {
         higher_tier_than = DUKE
