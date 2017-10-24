@@ -1,10 +1,8 @@
 namespace = nights_watch
 
-# These events are dedicated to the Black Brothers.
-# It will move any under thirteen characters out of the NW
-
-# Lord Commander and vassals Cleanup
-# This fires for the Lord Commander and their vassals on a regular basis if they are married or lacking our trait
+# nights_watch.1 - hands out the black_brother trait to rulers (baron and up)
+# nights_watch.2 - expels children and spouses from the NW
+# nights_watch.3 - randomises culture and religion of characters on gaining titles in the NW
 
 # Insignificant impact, fired on new holder and twice a year.
 character_event = {
@@ -62,9 +60,6 @@ character_event = {
 # Court cleanup
 # Sends females and children away to relatives, or if lacking, other realms.
 # Split off into second event, so it can be fired less frequently
-# Plus, I think the original event was broken.
-
-# Slightly harsher impact than the first event, but fired yearly
 character_event = {
     id = nights_watch.2
     
@@ -222,6 +217,49 @@ character_event = {
                     }
                 }
             }
+        }
+    }
+}
+
+
+# nights_watch.3 - randomises culture and religion of characters on gaining titles in the NW
+character_event = {
+    id = nights_watch.3
+    
+    hide_window = yes
+    is_triggered_only = yes
+    
+    only_playable = yes
+    
+    trigger = {
+        NOT = { has_character_flag = NW_randomised }
+        OR = {
+            trait = black_brother
+            any_liege = {
+                primary_title = {
+                    OR = {
+                        title = d_the_wall
+                        title = k_the_nights_watch
+                    }
+                }
+            }
+        }
+    }
+    
+    immediate = {
+        set_character_flag = NW_randomised
+        
+        random_list = {
+            10 = { }
+            10 = { }
+            10 = { }
+            10 = { }
+            10 = { }
+            10 = { }
+            10 = { }
+            10 = { }
+            10 = { }
+            10 = { }
         }
     }
 }
