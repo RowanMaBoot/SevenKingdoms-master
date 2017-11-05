@@ -70,11 +70,21 @@ namespace CrusaderKings2Localisation
             //If the user has selected a "*.txt" file, start scanning the lines of said file.
             if (openFileDialog1.ShowDialog() == DialogResult.OK && openFileDialog1.FileName.Contains(".txt"))
             {
+                PopUp clearLoc = new PopUp();
+
+                clearLoc.message = "Do you want to clear the Data Table?";
+                clearLoc.caption = "Confirm";
+                clearLoc.buttons = MessageBoxButtons.YesNo;
+                clearLoc.result = MessageBox.Show(clearLoc.message, clearLoc.caption, clearLoc.buttons);
+
+                if (clearLoc.result == DialogResult.Yes)
+                {
+                    dt.Rows.Clear();
+                    dataGridView1.Refresh();
+                }
                 #region StringsTextSearch
                 int index = 0;
-                char delimiter = '=';
-                string txtStorage1 = "";
-                string txtStorage2 = "";
+                string currentLine;
                 string evtId = "id = ";
                 string evtDesc = "desc = ";
                 string optName = "name = ";
@@ -88,54 +98,58 @@ namespace CrusaderKings2Localisation
                 //Checks if the scanned line contains any of the characters needed to identify which kind of line it is
                 for (int i = 0; i < lines.Length; i++)
                 {
-                    //Stores the currently selected line's index and sets a delimiter
-                    txtStorage1 = lines[i];
-                    delimiter = '#';
+                    //Stores the currently selected line's index
+                    currentLine = lines[i];
 
                     //Filters out all of the Events which do not require localisation
-                    if (txtStorage1.Contains(evtId) & !txtStorage1.Contains(hidTooltip) & !txtStorage1.Contains(chrEvt))
+                    if (currentLine.Contains(evtId) & !currentLine.Contains(hidTooltip) & !currentLine.Contains(chrEvt))
                     {
-                        //Checks if the line contains the delimiter, and if it does it removes the delimiter and any characters behind it before adding the EventID to the DataTable.
-                        if (txtStorage1.Contains(delimiter))
-                        {
-                            index = txtStorage1.IndexOf(delimiter);
-
-                            //Ensures that the delimiter actually has an index, and if it does it switches it to '=', to allow the first part of the EventID to be removed ("ID ="). The line is then added to the DataTable
-                            if (index > 0)
-                            {
-                                delimiter = '=';
-                                txtStorage2 = txtStorage1.Substring(0, index);
-
-                                txtStorage1 = txtStorage2.Substring(txtStorage2.IndexOf(delimiter) + 1);
-                                txtStorage1 = txtStorage1.Replace(" ", String.Empty);
-
-                                dt.Rows.Add(txtStorage1);
-                            }
-                        }
-                        //Removes the first part of the EventID, and then adds the line to the DataTable.
-                        else
-                        {
-                            delimiter = '=';
-                            if (txtStorage1.IndexOf(delimiter) > 0)
-                            {
-                                txtStorage1 = txtStorage1.Substring(txtStorage1.IndexOf(delimiter) + 1);
-                                txtStorage1 = txtStorage1.Replace(" ", String.Empty);
-
-                                dt.Rows.Add(txtStorage1);
-                            }
-                        }
+                        ProcessLines(currentLine, index);
                     }
                     //Unfinished
-                    else if (txtStorage1.Contains(evtDesc))
+                    else if (currentLine.Contains(evtDesc) & !currentLine.Contains('{'))
                     {
-                        txtStorage1 = txtStorage1.Replace(evtDesc, String.Empty);
-
+                        ProcessLines(currentLine, index);
                     }
                     //Unfinished
-                    else if (txtStorage1.Contains(optName))
+                    else if (currentLine.Contains(optName))
                     {
-                        txtStorage1 = txtStorage1.Replace(optName, String.Empty);
+                        ProcessLines(currentLine, index);                        
                     }
+                }
+            }
+        }
+
+        private void ProcessLines(string currentLine, int delimiterIndex)
+        {
+            string tempTxt;
+            char delimiter1 = '=';
+            char delimiter2 = '#';
+
+            if (currentLine.Contains(delimiter2))
+            {
+                delimiterIndex = currentLine.IndexOf(delimiter2);
+
+                //Ensures that the delimiter actually has an index, and if it does it switches it to '=', to allow the first part of the EventID to be removed ("ID ="). The line is then added to the DataTable
+                if (delimiterIndex > 0)
+                {
+                    tempTxt = currentLine.Substring(0, delimiterIndex);
+
+                    currentLine = tempTxt.Substring(tempTxt.IndexOf(delimiter1) + 1);
+                    currentLine = currentLine.Replace(" ", String.Empty);
+
+                    dt.Rows.Add(currentLine);
+                }
+            }
+            //Removes the first part of the EventID, and then adds the line to the DataTable.
+            else
+            {
+                if (currentLine.IndexOf(delimiter1) > 0)
+                {
+                    currentLine = currentLine.Substring(currentLine.IndexOf(delimiter1) + 1);
+                    currentLine = currentLine.Replace(" ", String.Empty);
+
+                    dt.Rows.Add(currentLine);
                 }
             }
         }
