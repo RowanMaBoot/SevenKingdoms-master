@@ -15,30 +15,5 @@ namespace CrusaderKings2Localisation
         public MessageBoxIcon icon;
         public MessageBoxDefaultButton defaultButtons;
         public DialogResult result;
-
-        public void Message(string newMessage)
-        {
-            message = newMessage;
-        }
-        public void Caption(string newCaption)
-        {
-            caption = newCaption;
-        }
-        public void Buttons(MessageBoxButtons newButtons)
-        {
-            buttons = newButtons;
-        }
-        public void Icon(MessageBoxIcon newIcon)
-        {
-            icon = newIcon;
-        }
-        public void DefaultButtons(MessageBoxDefaultButton newDefaultButtons)
-        {
-            defaultButtons = newDefaultButtons;
-        }
-        public void Result(DialogResult newResult)
-        {
-            result = newResult;
-        }
     }
 }
