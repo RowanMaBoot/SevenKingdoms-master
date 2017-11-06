@@ -72,17 +72,17 @@ namespace CrusaderKings2Localisation
             //If the user has selected a "*.txt" file, start scanning the lines of said file.
             if (openFileDialog1.ShowDialog() == DialogResult.OK && openFileDialog1.FileName.Contains(".txt"))
             {
-                PopUp clearLoc = new PopUp();
+                PopUp importPopUp = new PopUp();
 
                 if (dt.Rows.Count > 0)
                 {
-                    clearLoc.message = "Do you want to clear the Data Table?";
-                    clearLoc.caption = "Confirm";
-                    clearLoc.buttons = MessageBoxButtons.YesNo;
-                    clearLoc.result = MessageBox.Show(clearLoc.message, clearLoc.caption, clearLoc.buttons);
+                    importPopUp.message = "Do you want to clear the Data Table?";
+                    importPopUp.caption = "Confirm";
+                    importPopUp.buttons = MessageBoxButtons.YesNo;
+                    importPopUp.result = MessageBox.Show(importPopUp.message, importPopUp.caption, importPopUp.buttons);
                 }
 
-                if (clearLoc.result == DialogResult.Yes)
+                if (importPopUp.result == DialogResult.Yes)
                 {
                     dt.Rows.Clear();
                     dataGridView1.Refresh();
@@ -92,7 +92,8 @@ namespace CrusaderKings2Localisation
                 string currentLine;
                 string evtDesc = "desc = ";
                 string optName = "name = ";
-                string delimiter = "has_";
+                string delimiter1 = "has_";
+                string delimiter2 = " ";
 
                 #endregion
 
@@ -109,15 +110,20 @@ namespace CrusaderKings2Localisation
                     {
                         ProcessLines(currentLine, index);
                     }
-                    else if (currentLine.Contains(optName) && !currentLine.Contains(delimiter) && !currentLine.Contains('{'))
+                    else if (currentLine.Contains(optName) && !currentLine.Contains(delimiter1) && !currentLine.Contains('{'))
                     {
                         ProcessLines(currentLine, index);
                     }
 
-                    clearLoc.message = "";
-
-                    fileLabel2.Text = openFileDialog1.SafeFileName;
                 }
+
+                importPopUp.message = "Your file was successfully imported!";
+                importPopUp.icon = MessageBoxIcon.None;
+                importPopUp.caption = "Success!";
+
+                importPopUp.result = MessageBox.Show(importPopUp.message, importPopUp.caption, importPopUp.buttons);
+
+                fileLabel2.Text = openFileDialog1.SafeFileName;
             }
         }
 
