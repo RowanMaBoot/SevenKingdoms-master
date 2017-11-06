@@ -39,6 +39,9 @@
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.fileLabel1 = new System.Windows.Forms.Label();
             this.fileLabel2 = new System.Windows.Forms.Label();
+            this.forumPostToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deleteRowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
@@ -78,15 +81,17 @@
             // importEventsToolStripMenuItem
             // 
             this.importEventsToolStripMenuItem.Name = "importEventsToolStripMenuItem";
-            this.importEventsToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.importEventsToolStripMenuItem.Text = "Import Events";
+            this.importEventsToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.O)));
+            this.importEventsToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.importEventsToolStripMenuItem.Text = "Import Events...";
             this.importEventsToolStripMenuItem.Click += new System.EventHandler(this.importEventsToolStripMenuItem_Click);
             // 
             // exportLocalisationToolStripMenuItem
             // 
             this.exportLocalisationToolStripMenuItem.Name = "exportLocalisationToolStripMenuItem";
-            this.exportLocalisationToolStripMenuItem.Size = new System.Drawing.Size(173, 22);
-            this.exportLocalisationToolStripMenuItem.Text = "Export Localisation";
+            this.exportLocalisationToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.S)));
+            this.exportLocalisationToolStripMenuItem.Size = new System.Drawing.Size(222, 22);
+            this.exportLocalisationToolStripMenuItem.Text = "Export Localization...";
             this.exportLocalisationToolStripMenuItem.Click += new System.EventHandler(this.exportLocalisationToolStripMenuItem_Click);
             // 
             // exitApplicationToolStripMenuItem
@@ -98,12 +103,17 @@
             // 
             // optionsToolStripMenuItem
             // 
+            this.optionsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.deleteRowToolStripMenuItem,
+            this.settingsToolStripMenuItem});
             this.optionsToolStripMenuItem.Name = "optionsToolStripMenuItem";
-            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.optionsToolStripMenuItem.Text = "Settings";
+            this.optionsToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.optionsToolStripMenuItem.Text = "Edit";
             // 
             // helpToolStripMenuItem
             // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.forumPostToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
             this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
             this.helpToolStripMenuItem.Text = "Help";
@@ -117,18 +127,19 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(11, 46);
+            this.dataGridView1.Location = new System.Drawing.Point(11, 30);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 24;
-            this.dataGridView1.Size = new System.Drawing.Size(1212, 522);
+            this.dataGridView1.Size = new System.Drawing.Size(1212, 542);
             this.dataGridView1.TabIndex = 4;
             // 
             // fileLabel1
             // 
             this.fileLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.fileLabel1.AutoSize = true;
-            this.fileLabel1.Location = new System.Drawing.Point(889, 29);
+            this.fileLabel1.BackColor = System.Drawing.SystemColors.Window;
+            this.fileLabel1.Location = new System.Drawing.Point(968, 9);
             this.fileLabel1.Name = "fileLabel1";
             this.fileLabel1.Size = new System.Drawing.Size(52, 13);
             this.fileLabel1.TabIndex = 6;
@@ -138,12 +149,37 @@
             // 
             this.fileLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.fileLabel2.AutoSize = true;
-            this.fileLabel2.Location = new System.Drawing.Point(947, 29);
+            this.fileLabel2.BackColor = System.Drawing.SystemColors.Window;
+            this.fileLabel2.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.fileLabel2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.fileLabel2.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.fileLabel2.Location = new System.Drawing.Point(1026, 9);
             this.fileLabel2.Name = "fileLabel2";
             this.fileLabel2.Size = new System.Drawing.Size(16, 13);
             this.fileLabel2.TabIndex = 7;
             this.fileLabel2.Text = "...";
             this.fileLabel2.Click += new System.EventHandler(this.fileLabel2_Click);
+            this.fileLabel2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.fileLabel2_MouseDown);
+            // 
+            // forumPostToolStripMenuItem
+            // 
+            this.forumPostToolStripMenuItem.Name = "forumPostToolStripMenuItem";
+            this.forumPostToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.forumPostToolStripMenuItem.Text = "Forum Post";
+            // 
+            // deleteRowToolStripMenuItem
+            // 
+            this.deleteRowToolStripMenuItem.Name = "deleteRowToolStripMenuItem";
+            this.deleteRowToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.Delete;
+            this.deleteRowToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.deleteRowToolStripMenuItem.Text = "Delete Row";
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.settingsToolStripMenuItem.Text = "Settings...";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -179,6 +215,9 @@
         private System.Windows.Forms.ToolStripMenuItem optionsToolStripMenuItem;
         private System.Windows.Forms.Label fileLabel1;
         private System.Windows.Forms.Label fileLabel2;
+        private System.Windows.Forms.ToolStripMenuItem deleteRowToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem forumPostToolStripMenuItem;
     }
 }
 

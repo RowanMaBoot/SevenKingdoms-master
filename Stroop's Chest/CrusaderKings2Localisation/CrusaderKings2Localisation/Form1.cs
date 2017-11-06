@@ -90,20 +90,10 @@ namespace CrusaderKings2Localisation
                 #region StringsTextSearch
                 int index = 0;
                 string currentLine;
-                string evtId = "id = ";
                 string evtDesc = "desc = ";
                 string optName = "name = ";
-                string chrMod = "has_character_modifier";
-                string nickName = "has_nickname";
-                string hidTooltip = "hidden_tooltip";
-                string chrEvt = "character_event";
-                string lChrEvt = "long_character_event";
-                string ltrEvt = "letter_event";
-                string narEvt = "narrative_event";
-                string proEvt = "province_event";
-                string dipEvt = "diploresponse_event";
-                string untEvt = "unit_event";
-                string socEvt = "society_quest_event";
+                string delimiter = "has_";
+
                 #endregion
 
                 //Reads all lines in the file, and puts them in an Array
@@ -115,32 +105,18 @@ namespace CrusaderKings2Localisation
                     //Stores the currently selected line's index
                     currentLine = lines[i];
 
-                    //Filters out all of the Events which do not require localisation
-                    //    if (currentLine.Contains(evtId)& 
-                    //        !currentLine.Contains(hidTooltip)& 
-                    //        !currentLine.Contains(chrEvt)& 
-                    //        !currentLine.Contains(lChrEvt)& 
-                    //        !currentLine.Contains(ltrEvt)& 
-                    //        !currentLine.Contains(narEvt)& 
-                    //        !currentLine.Contains(proEvt)& 
-                    //        !currentLine.Contains(dipEvt)& 
-                    //        !currentLine.Contains(untEvt)& 
-                    //        !currentLine.Contains(socEvt))
-                    //    {
-                    //        ProcessLines(currentLine, index);
-                    //    }
                     if (currentLine.Contains(evtDesc) && !currentLine.Contains('{'))
                     {
                         ProcessLines(currentLine, index);
                     }
-                    else if (!currentLine.Contains(chrMod) && !currentLine.Contains(nickName) && currentLine.Contains(optName))
+                    else if (currentLine.Contains(optName) && !currentLine.Contains(delimiter) && !currentLine.Contains('{'))
                     {
                         ProcessLines(currentLine, index);
                     }
 
                     clearLoc.message = "";
 
-                    fileLabel2.Text = openFileDialog1.FileName;
+                    fileLabel2.Text = openFileDialog1.SafeFileName;
                 }
             }
         }
@@ -314,7 +290,7 @@ namespace CrusaderKings2Localisation
             }
         }
 
-        private void fileLabel2_Click(object sender, EventArgs e)
+        private void openTextFile()
         {
             if ((Control.MouseButtons & MouseButtons.Left) == MouseButtons.Left)
             {
@@ -349,6 +325,49 @@ namespace CrusaderKings2Localisation
                     MessageBox.Show(errorMessage.message, errorMessage.caption, errorMessage.buttons, errorMessage.icon, errorMessage.defaultButtons);
                 }
             }
+        }
+        private void fileLabel2_Click(object sender, EventArgs e)
+        {
+                PopUp errorMessage = new PopUp();
+
+                errorMessage.message = "The File path was invalid!";
+                errorMessage.caption = "Warning!";
+                errorMessage.buttons = MessageBoxButtons.OK;
+                errorMessage.icon = MessageBoxIcon.Error;
+
+                if (Directory.Exists(fileLabel2.Text))
+                {
+                    var fileToOpen = fileLabel2.Text;
+
+                    var process = new Process();
+                    process.StartInfo = new ProcessStartInfo()
+                    {
+                        UseShellExecute = true,
+                        FileName = fileToOpen
+                    };
+
+                    process.Start();
+                }
+                else if (!Directory.Exists(fileLabel2.Text))
+                {
+                    MessageBox.Show(errorMessage.message, errorMessage.caption, errorMessage.buttons, errorMessage.icon, errorMessage.defaultButtons);
+                }
+                else
+                {
+                    errorMessage.message = "CRITICAL ERROR!";
+                    
+                    MessageBox.Show(errorMessage.message, errorMessage.caption, errorMessage.buttons, errorMessage.icon, errorMessage.defaultButtons);
+                }
+            }
+
+        private void fileLabel2_MouseDown(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
