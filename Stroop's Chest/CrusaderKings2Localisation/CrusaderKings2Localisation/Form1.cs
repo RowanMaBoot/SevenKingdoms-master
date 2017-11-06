@@ -9,6 +9,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
+using System.Windows.Input;
 
 //If the word "Event" is mentioned in a comment, it's reffering to a CK2 event.
 
@@ -72,10 +74,13 @@ namespace CrusaderKings2Localisation
             {
                 PopUp clearLoc = new PopUp();
 
-                clearLoc.message = "Do you want to clear the Data Table?";
-                clearLoc.caption = "Confirm";
-                clearLoc.buttons = MessageBoxButtons.YesNo;
-                clearLoc.result = MessageBox.Show(clearLoc.message, clearLoc.caption, clearLoc.buttons);
+                if (dt.Rows.Count > 0)
+                {
+                    clearLoc.message = "Do you want to clear the Data Table?";
+                    clearLoc.caption = "Confirm";
+                    clearLoc.buttons = MessageBoxButtons.YesNo;
+                    clearLoc.result = MessageBox.Show(clearLoc.message, clearLoc.caption, clearLoc.buttons);
+                }
 
                 if (clearLoc.result == DialogResult.Yes)
                 {
@@ -88,8 +93,17 @@ namespace CrusaderKings2Localisation
                 string evtId = "id = ";
                 string evtDesc = "desc = ";
                 string optName = "name = ";
+                string chrMod = "has_character_modifier";
+                string nickName = "has_nickname";
                 string hidTooltip = "hidden_tooltip";
                 string chrEvt = "character_event";
+                string lChrEvt = "long_character_event";
+                string ltrEvt = "letter_event";
+                string narEvt = "narrative_event";
+                string proEvt = "province_event";
+                string dipEvt = "diploresponse_event";
+                string untEvt = "unit_event";
+                string socEvt = "society_quest_event";
                 #endregion
 
                 //Reads all lines in the file, and puts them in an Array
@@ -102,20 +116,31 @@ namespace CrusaderKings2Localisation
                     currentLine = lines[i];
 
                     //Filters out all of the Events which do not require localisation
-                    if (currentLine.Contains(evtId) & !currentLine.Contains(hidTooltip) & !currentLine.Contains(chrEvt))
+                    //    if (currentLine.Contains(evtId)& 
+                    //        !currentLine.Contains(hidTooltip)& 
+                    //        !currentLine.Contains(chrEvt)& 
+                    //        !currentLine.Contains(lChrEvt)& 
+                    //        !currentLine.Contains(ltrEvt)& 
+                    //        !currentLine.Contains(narEvt)& 
+                    //        !currentLine.Contains(proEvt)& 
+                    //        !currentLine.Contains(dipEvt)& 
+                    //        !currentLine.Contains(untEvt)& 
+                    //        !currentLine.Contains(socEvt))
+                    //    {
+                    //        ProcessLines(currentLine, index);
+                    //    }
+                    if (currentLine.Contains(evtDesc) && !currentLine.Contains('{'))
                     {
                         ProcessLines(currentLine, index);
                     }
-                    //Unfinished
-                    else if (currentLine.Contains(evtDesc) & !currentLine.Contains('{'))
+                    else if (!currentLine.Contains(chrMod) && !currentLine.Contains(nickName) && currentLine.Contains(optName))
                     {
                         ProcessLines(currentLine, index);
                     }
-                    //Unfinished
-                    else if (currentLine.Contains(optName))
-                    {
-                        ProcessLines(currentLine, index);                        
-                    }
+
+                    clearLoc.message = "";
+
+                    fileLabel2.Text = openFileDialog1.FileName;
                 }
             }
         }
@@ -156,7 +181,6 @@ namespace CrusaderKings2Localisation
 
         private void exitApplicationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            // DON'T MIND ANY OF THIS, FAAAR FROM FINISHED!!!!(!)
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "CSV Files(.csv)|*.csv";
 
@@ -189,6 +213,18 @@ namespace CrusaderKings2Localisation
                 {
                     this.Close();
                 }
+                else if (exitPopUp.result == DialogResult.No)
+                {
+                    if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+                    {
+                        ExportToCSV(dataGridView1, saveFileDialog1.FileName);
+                    }
+
+                    if (exitPopUp.result == DialogResult.OK)
+                    {
+                        this.Close();
+                    }
+                }
             }
         }
 
@@ -197,32 +233,29 @@ namespace CrusaderKings2Localisation
             //Checks if the DataGridView has any rows, and if it does the saving process is started.
             if (gridIn.RowCount > 0)
             {
+                PopUp exportPopUp = new PopUp();
                 string value = "";
                 DataGridViewRow gridRow = new DataGridViewRow();
-                StreamWriter writeOut = new StreamWriter(outputFilePath);
-
-                //    PopUp exportPopUp = new PopUp();
-                //  exportPopUp.message = "The File was saved sucessfully!";
-                // exportPopUp.caption = "Completed!";
+                StreamWriter export = new StreamWriter(outputFilePath, true);
 
                 //Write header rows to csv
                 for (int i = 0; i <= gridIn.Columns.Count - 1; i++)
                 {
                     if (i > 0)
                     {
-                        writeOut.Write(";");
+                        export.Write(";");
                     }
-                    writeOut.Write(gridIn.Columns[i].HeaderText);
+                    export.Write(gridIn.Columns[i].HeaderText);
                 }
 
-                writeOut.WriteLine();
+                export.WriteLine();
 
                 //Write DataGridView rows to csv
                 for (int j = 0; j <= gridIn.Rows.Count - 1; j++)
                 {
                     if (j > 0)
                     {
-                        writeOut.WriteLine();
+                        export.WriteLine();
                     }
 
                     gridRow = gridIn.Rows[j];
@@ -231,7 +264,7 @@ namespace CrusaderKings2Localisation
                     {
                         if (i > 0)
                         {
-                            writeOut.Write(";");
+                            export.Write(";");
                         }
 
                         //Partly stolen, hence I'm researching exactly what the whole embedded newlines business is about.
@@ -241,20 +274,25 @@ namespace CrusaderKings2Localisation
                         //Replace embedded newlines with spaces
                         value = value.Replace(Environment.NewLine, " ");
 
-                        writeOut.Write(value);
+                        export.Write(value);
                     }
+                }
+                exportPopUp.message = "Your file was successfully exported!";
+                exportPopUp.caption = "Success";
+                exportPopUp.buttons = MessageBoxButtons.OK;
+                exportPopUp.result = MessageBox.Show(exportPopUp.message, exportPopUp.caption, exportPopUp.buttons);
 
-                    writeOut.Close();
-
-                    //MessageBox.Show(exportPopUp.message, exportPopUp.caption, exportPopUp.buttons, exportPopUp.icon, exportPopUp.defaultButtons);
+                if (exportPopUp.result == DialogResult.OK)
+                {
+                    export.Close();
                 }
             }
             else
             {
                 PopUp errorBox = new PopUp();
-                errorBox.Message("The File could not be saved, missing rows");
-                errorBox.Caption("Critical Error");
-                errorBox.Icon(MessageBoxIcon.Error);
+                errorBox.message = ("The File could not be saved, missing rows");
+                errorBox.caption = ("Critical Error");
+                errorBox.icon = (MessageBoxIcon.Error);
 
                 MessageBox.Show(errorBox.message, errorBox.caption, errorBox.buttons, errorBox.icon, errorBox.defaultButtons);
             }
@@ -264,7 +302,7 @@ namespace CrusaderKings2Localisation
         {
             //Initializes the PopUp class and a SaveFileDialog
             PopUp toolStripPopUp = new PopUp();
-            toolStripPopUp.Message("The File was saved succesfully!");
+            toolStripPopUp.message = ("The File was saved succesfully!");
 
             SaveFileDialog saveFileDialog1 = new SaveFileDialog();
             saveFileDialog1.Filter = "CSV Files(.csv)|*.csv";
@@ -273,6 +311,43 @@ namespace CrusaderKings2Localisation
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 ExportToCSV(dataGridView1, saveFileDialog1.FileName);
+            }
+        }
+
+        private void fileLabel2_Click(object sender, EventArgs e)
+        {
+            if ((Control.MouseButtons & MouseButtons.Left) == MouseButtons.Left)
+            {
+                PopUp errorMessage = new PopUp();
+
+                errorMessage.message = "The File path was invalid!";
+                errorMessage.caption = "Warning!";
+                errorMessage.buttons = MessageBoxButtons.OK;
+                errorMessage.icon = MessageBoxIcon.Error;
+
+                if (Directory.Exists(fileLabel2.Text))
+                {
+                    var fileToOpen = fileLabel2.Text;
+
+                    var process = new Process();
+                    process.StartInfo = new ProcessStartInfo()
+                    {
+                        UseShellExecute = true,
+                        FileName = fileToOpen
+                    };
+
+                    process.Start();
+                }
+                else if (!Directory.Exists(fileLabel2.Text))
+                {
+                    MessageBox.Show(errorMessage.message, errorMessage.caption, errorMessage.buttons, errorMessage.icon, errorMessage.defaultButtons);
+                }
+                else
+                {
+                    errorMessage.message = "CRITICAL ERROR!";
+                    
+                    MessageBox.Show(errorMessage.message, errorMessage.caption, errorMessage.buttons, errorMessage.icon, errorMessage.defaultButtons);
+                }
             }
         }
     }
