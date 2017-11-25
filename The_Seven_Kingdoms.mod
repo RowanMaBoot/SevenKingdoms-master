@@ -1,4 +1,4 @@
-name = "The Seven Kingdoms | A9 | CK 2.7.1"
+name = "The Seven Kingdoms | A9 | CK 2.8.0"
 path = "mod/The_Seven_Kingdoms"
 user_dir = "The_Seven_Kingdoms"
 
