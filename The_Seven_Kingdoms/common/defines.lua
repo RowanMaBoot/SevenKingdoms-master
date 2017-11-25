@@ -7,6 +7,7 @@ NDiplomacy = {
 	ATTACKING_SOMEONE_DEFENDING_AGAINST_OTHER_RELIGIOUS_GROUP_PIETY_COST = 100,		-- Piety hit for attacking someone who is defending against other religious group
 	ATTACKER_CALL_DECLINE_COST = 25, 			-- Prestige cost for refusing to join an offensive war
 	DEFENDER_CALL_DECLINE_COST = 100, 			-- Prestige cost for refusing to join a defensive war
+  SUZERAIN_DEFENDER_CALL_DECLINE_COST = 150,	-- Prestige cost for a suzerain refusing to join a defensive war, when they are supposed to alway accept
 	ALLIED_CALL_DECLINE_COST = 200,
 	
 	TRIBAL_VASSAL_CALL_DECLINE_COST_FACTOR = 3.0, -- Prestige cost multiplier for tribal vassals
@@ -100,6 +101,8 @@ NDiplomacy = {
 	MAX_DIPLO_DISTANCE_SAME_CULTURE_GROUP = 100,				-- Bonus to max diplo distance for being of the same culture group
 	GAME_RULE_RESTRICTED_DIPLO_DISTANCE_MULTIPLIER = 0.5,		-- Multiplier to max diplo distance when using the "diplomatic range: restricted" game rule
 	GAME_RULE_PROVINCIAL_REVOLT_RARE_DIVIDER = 2.0,				-- Divider to decrease risk of revolt when using the "provincial revolt: rare" game rule
+	TRIBUTARY_UPRISING_AI_WEAK_MALUS = -50,						-- Malus to chances of accepting a call to arms from another tributary during an uprising, if the total forces of the tributaries are weaker than the forces of the Suzerain. Used as a bonus instead if the tributaries combined are significantly stronger than the Suzerain (TRIBUTARY_UPRISING_AI_STRONG_LEVEL)
+	TRIBUTARY_UPRISING_AI_STRONG_LEVEL = 1.5,					-- Bonus will be applied to chances of accepting a call to arms from another tributary during an uprising, if the total forces of the tributaries are at least this strong compared to the forces of the Suzerain
 	
 	DUKE_POWERFUL_VASSAL_COUNT = 4,				-- The x most powerful vassal will expect a seat in the council
 	KING_POWERFUL_VASSAL_COUNT = 5,				-- The x most powerful vassal will expect a seat in the council
@@ -252,6 +255,7 @@ NDiplomacy = {
 	SEND_GIFT_DIPLOMACY_MULT = 0.5,							-- Diplomacy affects the opinion bonus multiplied with this	
 	SEND_GIFT_NOT_LIEGE_BONUS = 7,							-- Not being the liege of the receiver affects the opinon bonus by this much
 	SEND_GIFT_GREED_MULT = 0.15,							-- Changes how much greed affects the opinion
+	SEND_ARTIFACT_GREED_MULT = 0.05,						-- Changes how much greed affects the opinion
 	
 	OFFER_VASSALIZATION_INTERACTION_MONEY = 0,
 	OFFER_VASSALIZATION_INTERACTION_PIETY = 0,
@@ -979,11 +983,11 @@ NTitle = {
 	EMPEROR_REVOKE_PRESTIGE_COST = 400, -- Unused, impossible
 	
 -- Title Grant Decadence Reduction (Multiplied with current decadence)
-	BARON_GRANT_DECADENCE_RED = 0.01,
-	COUNT_GRANT_DECADENCE_RED = 0.02,
-	DUKE_GRANT_DECADENCE_RED = 0.04,
-	KING_GRANT_DECADENCE_RED = 0.1,
-	EMPEROR_GRANT_DECADENCE_RED = 0.2,
+	BARON_GRANT_DECADENCE_RED = 0.05,
+	COUNT_GRANT_DECADENCE_RED = 0.1,
+	DUKE_GRANT_DECADENCE_RED = 0.15,
+	KING_GRANT_DECADENCE_RED = 0.25,
+	EMPEROR_GRANT_DECADENCE_RED = 0.5,
 	
 	CLAIM_VASSAL_TITLE_COST_MOD = 0.75,
 	CLAIM_DE_JURE_TITLE_COST_MOD = 0.5,
@@ -1101,22 +1105,25 @@ NEconomy = {
 	LOOT_PERCENT_PER_LOOTTICK = 0.04,				-- Percent of max lootable gold that is looted each loot tick
 	TPC_TO_LOOT_MULTIPLIER = 0.1,					-- Max loot in a navy is max troops * this
 	LOOTER_SHIP_MAINT_MULT = 0.1,					-- Religions that have looting have lower ship maintenance costs
+	LOOTER_ARMY_MAINT_MULT = 0.1,					-- Armies set to 'Looter' have lower maintenance (only applies while the Realm is at peace!)
 	LOOT_PRESTIGE_MULT = 1.0,						-- Whenever you gain loot you also get prestige related to the loot
 	LOOT_EVERY_X_DAYS = 4,							-- Loot every this many days
 	LOOT_IDEAL_MIN_TROOPS = 500,					-- Minimum troops for maximum loot, less than this scales down the amount looted
 	BUILDING_COST_MULT = 0.5,						-- Increase to the build cost of all buildings that cost GOLD
 	SILK_ROAD_TP_BUILD_COST_MOT = 0.333,			-- Build cost modifier for non-Merchant republic Trade Posts
+	TRADE_ROUTE_SIEGE_MULTIPLIER = 0.9,				-- Sieges multiply the value of trade routes by this amount downstream
+	TRADE_ROUTE_OCCUPATION_MULTIPLIER = 0.75,		-- Occupied provinces multiply the value of trade routes by this amount downstream. If sieged as well, the lowest of this and TRADE_ROUTE_SIEGE_MULTIPLIER is used
 	FORT_CONSUMED_IN_SETTLEMENT_CONTRUCTION = 1		-- If set to 1 then fort holdings are consumed by the construction of another holding in the province while giving a discount to the construction cost in return.
 },
 
 NDecadence = {
-	BASE_EMPEROR_GAIN = 0.225,
-	BASE_KING_GAIN = 0.18,
-	BASE_DUKE_GAIN = 0.12,
-	BASE_COUNT_GAIN = 0.09,
-	BASE_BARON_GAIN = 0.045,
-	BASE_UNLANDED_GAIN = 0.0225,
-	REALM_SIZE_MULTIPLIER = 0.005,
+	BASE_EMPEROR_GAIN = 0.1,
+	BASE_KING_GAIN = 0.1,
+	BASE_DUKE_GAIN = 0.1,
+	BASE_COUNT_GAIN = 0.1,
+	BASE_BARON_GAIN = 0.1,
+	BASE_UNLANDED_GAIN = 0.1,
+	REALM_SIZE_MULTIPLIER = 0.001,
 	DEMESNE_FRACTION_MULT_POS = 0.5,
 	DEMESNE_FRACTION_MULT_NEG = -0.8,
 	SAFETY_VALUE = 75								-- The limit at where your decadence will give you a risk of decadence revolts
@@ -1189,7 +1196,8 @@ NMilitary = {
 	BATTLE_WARSCORE_WORTH = 75,						-- Warscore from battles are multiplied with this value
 	BATTLE_WARSCORE_DEFENDER_MULTIPLIER = 1.5,		-- Defenders wins are multiplied with this value, which also means they get more prestige for a win
 	BATTLE_WARSCORE_WORTH_MULTIPLIER = 1.25,		-- Multiplier applied to the warscore value of individual battles (doesn't affect prestige)
-	BATTLE_WARSCORE_HOSTS_MULTIPLIER = 2,			-- Multiplier applied to the warscore value of major battle (replaces BATTLE_WORTH_SCORE_MULTIPLIER in that case
+	BATTLE_WARSCORE_HOSTS_MULTIPLIER = 2,			-- Multiplier applied to the warscore value of major battle if the losing side is a claimant adventurer
+	BATTLE_WARSCORE_LANDLESS_MULTIPLIER = 2,		-- Multiplier applied to the warscore value of major battle if the losing side has no holdings
 	BATTLE_MINIMUM_WARSCORE = 0.2,					-- Battles below this value(in actual percentage) are removed from warscore calculations
 	MIN_LEVY_RAISE_OPINION_THRESHOLD = 0,			-- Below this opinion value you'll get the least amount of troops possible
 	MAX_LEVY_RAISE_OPINION_THRESHOLD = 100,			-- Above this opinion value you'll get the max amount of troops possible
@@ -1199,8 +1207,10 @@ NMilitary = {
 	DEFENDER_SIEGE_DAMAGE = 0,						-- Siege attack values are multiplied by this value(when not doing a sally), for defenders
 	PERCENT_OF_GARRISON_DETACHED = 0.1,				-- This percent of the garrison is detached from the winning unit of a siege
 	NUM_DAYS_BETWEEN_SIEGE_MORALE_LOSS = 12,		-- Number of days between morale loss for defender in a siege
-	SIEGE_MORALE_LOSS = 0.2,						-- Monthly morale loss in a siege
-	DAYS_BETWEEN_COMBAT_EVENTS = 10,				-- Combat events will happen every this many days
+	SIEGE_MORALE_LOSS = 0.5,										-- Base monthly morale loss in a siege
+	PAGAN_HOME_SIEGE_MORALE_LOSS_MULT = 0.66,		-- "Defensive Pagan" bonus (multiplier on SIEGE_MORALE_LOSS)
+	FORT_LEVEL_MORALE_LOSS_REDUCTION_MULT = 2.0,	-- Fort Level effect on morale loss (a higher value slows down morale loss)
+	DAYS_BETWEEN_COMBAT_EVENTS = 10,							-- Combat events will happen every this many days
 	BATTLE_PRESTIGE_MULTIPLIER = 10,				-- Total prestige gained in the battle will be this * ( losers losses ) / 1000
 	BATTLE_TECH_MULTIPLIER = 0.5,					-- Military tech gain from battles multiplier.
 	MAINLEADER_PRESTIGE_PART = 0.35,				-- The % of the total prestige gained in the battle that the center flank leader will get
@@ -1224,8 +1234,10 @@ NMilitary = {
 	CONTESTED_TERRITORY_WARSCORE_MULTIPLIER = 1.75,	-- Multiplier for contested settlements
 	DAYS_UNTIL_HOLDER_GETS_WARSCORE = 365,			-- Days until the war score of the title owner starts increasing, if he controls the Holdings
 	DAYS_UNTIL_HOLDER_GETS_WARSCORE_INDEP = 0,		-- Days until the war score of the title owner starts increasing in Independence Wars, if he controls the Holdings
-	CONTESTED_TITLE_OCCUPIED_WARSCORE_BONUS = 15,	-- Amount of warscore per year since attacker/defender started getting the bonus
-	CONTESTED_TITLE_OCCUPIED_WARSCORE_BONUS_INDEP = 20,	-- Amount of warscore per year since attacker/defender started getting the bonus, for independence and tyranny wars (can be overridden separately in religion scripts)
+	CONTESTED_TITLE_OCCUPIED_DEF_WARSCORE_BONUS = 15,	-- Amount of ticking warscore per year since Defender started getting the bonus
+	CONTESTED_TITLE_OCCUPIED_DEF_WARSCORE_BONUS_INDEP = 20,	-- Amount of ticking warscore per year since Defender started getting the bonus, for independence and tyranny wars (can be overridden separately in religion scripts)
+	CONTESTED_TITLE_OCCUPIED_ATT_WARSCORE_BONUS = 40,	-- Amount of ticking warscore per year since Attacker started getting the bonus
+	CONTESTED_TITLE_OCCUPIED_ATT_WARSCORE_BONUS_INDEP = 50,	-- Amount of ticking warscore per year since Attacker started getting the bonus, for independence and tyranny wars (can be overridden separately in religion scripts)
 	MONTHS_UNTIL_REBEL_WIN = 12,					-- Number of days until province is totally conquered by rebels
 	OWN_SETTLEMENT_SUPPLY_BONUS = 0.5,				-- Extra supply from being in home realm
 	NEUTRAL_SETTLEMENT_SUPPLY_BONUS = 0.25,			-- Neutral supply bonus
@@ -1255,7 +1267,7 @@ NMilitary = {
 	NOMAD_PROVINCE_WAR_CONTRIBUTION_MULTIPLIER = 3,	-- War Contribution multiplier for occupied provinces without holdings from nomad holders
 	WAR_CONTRIBUTION_BATTLE_PER_DAY = 0.20,			-- Every day in battle, a participant gets this. (My Troops / Total Friendly Troops) * Total Enemy Troops * WAR_CONTRIBUTION_BATTLE_PER_DAY. Max is [My Troops].
 	WAR_CONTRIBUTION_THEOCRACY_GHW_MULT = 0.25,	-- Holy Orders and other theocracies (notably the Pope) get less war contribution score during Great Holy Wars
-	LOW_DECADENCE_MORALE_MOD = 0.5,					-- Morale Defence Mod when at 0% decadence
+	LOW_DECADENCE_MORALE_MOD = 0.25,					-- Morale Defence Mod when at 0% decadence
 	HIGH_DECADENCE_MORALE_MOD = -0.5,				-- Morale Defence Mod when at 100% decadence
 	CAPTURED_CLOSE_MALE_RELATIVE_WAR_SCORE = 5.0,	-- War score for holding a close male relative prisoner
 	CAPTURED_HEIR_WAR_SCORE = 50.0,					-- War score for holding the heir prisoner
@@ -1457,6 +1469,7 @@ NMilitary = {
 	VASSALS_UNITE_AGAINST_TYRANNY = 1,						-- Will vassal automatically join wars against tyrants (revocation revolts, for example)
 	
 	FAR_CRUSADES_WITHOUT_WEIGHT_MODIFIER = 0.75,			-- War choice modifier for crusade on titles that don't contain a crusade modifier and are not adjacent to territory of our religion
+  FORT_LEVEL_ASSAULT_THRESHOLD = 6						-- The besieging army cannot assault a Holding with a Fort level above this number (unless the Siege Assault Game Rule is 'unlimited')
 },
 
 NTechnology = {
@@ -1521,6 +1534,8 @@ NGraphics = {
 	SEVERE_WINTER_VALUE = 255,
 	TREASURY_MODIFIER_ICON_FRAME = 13,
 	NUMBER_OF_DNA_PROPERTIES = 11,
+	CITY_MAIN_BUILDING_LEVEL_2 = 25,					-- If a main settlement has more building than that, it will use model level 2
+	CITY_MAIN_BUILDING_LEVEL_3 = 35,					-- If a main settlement has more building than that, it will use model level 3
 },
 
 NEngine = {
@@ -1602,8 +1617,9 @@ NAI =
 	
 	COALITION_JOIN_THRESHOLD = 110,							-- AI will join a defensive pact if the defensive pact score is above this value
 	COALITION_LEAVE_THRESHOLD = 70,							-- AI will leave a defensive pact if the defensive pact score is below this value
-	COALITION_TROOP_STRENGTH_THREAT_RATIO = 0.8,			-- AI will consider a realm to be a threat if it has a valid CB against you and the AI is this much smaller in army strength
-	COALITION_SCARY_TROOP_STRENGTH_THREAT_RATIO = 0.2,		-- AI will consider a realm to be a threat if the AI is this much smaller in army strength, regardless of CB's
+	COALITION_TROOP_STRENGTH_THREAT_RATIO = 1.5,			-- AI will consider a realm to be a threat if it has this times as many troops, and is within range (next parameter)
+	COALITION_THREAT_MAX_DISTANCE = 200,					-- AI will only consider realms within this distance a threat, unless they're really large, but still within diplo range (COALITION_SCARY_TROOP_STRENGTH_THREAT_RATIO)
+	COALITION_SCARY_TROOP_STRENGTH_THREAT_RATIO = 5.0,		-- AI will consider a realm to be a threat if the AI is this much larger in army strength, regardless of CB's
 	
 	MARRIAGE_THREATENING_FOR_THEM_MODIFIER = 5,				-- How much AI will pay attention to marriages with realms they have a CB on and are considerably stronger than
 	BETROTHAL_MIN_AGE = 12,									-- AI will not arrange betrothals for children below this age
@@ -1759,6 +1775,7 @@ NRulerDesigner =
 	COST_MARRIED = 2.0,
 	COST_FERTILITY = 20.0,
 	COST_HEALTH = 10.0,
+	COST_COMBAT_RATING = 0.0,
 	COST_MONTHLY_PRESTIGE = 10.0,
 	COST_MONTHLY_PIETY = 20.0,
 	COST_MONTHLY_WEALTH = 10.0,
