@@ -19,6 +19,7 @@ targetted_decisions = {
 		}
 
 		allow = {
+			NOT = { diplomatic_immunity = yes }
 			prisoner = yes
 		}
 
@@ -316,17 +317,19 @@ targetted_decisions = {
 			is_adult = yes
 			prisoner = no
 			NOT = { trait = incapable }
-			OR = {
-				trait = cruel
-				trait = impaler
-				trait = wroth
-				trait = arbitrary
-				AND = {
-					trait = envious
-					trait = ugly
+			AND = {
+				OR = {
+					trait = cruel
+					trait = impaler
+					trait = wroth
+					trait = arbitrary
+					AND = {
+						trait = envious
+						trait = ugly
+					}
 				}
+				NOT = { trait = kind }
 			}
-			NOT = { trait = kind }
 		}
 
 		potential = {
@@ -352,6 +355,7 @@ targetted_decisions = {
 		}
 
 		allow = {
+			NOT = { diplomatic_immunity = yes }
 			prisoner = yes
 		}
 
@@ -587,6 +591,7 @@ targetted_decisions = {
 		}
 
 		allow = {
+			NOT = { diplomatic_immunity = yes }
 			prisoner = yes
 		}
 
@@ -686,6 +691,7 @@ targetted_decisions = {
 			age = 13
 		}
 		allow = {
+			NOT = { diplomatic_immunity = yes }
 			prisoner = yes
 		}
 		effect = {
@@ -916,10 +922,14 @@ targetted_decisions = {
 			OR = {
 				has_character_modifier = cannibal
 				trait = cannibal_trait
+				graphical_culture = beargfx
+				culture = bear
 			}
 			OR = {
 				trait = possessed
 				trait = lunatic
+				graphical_culture = beargfx
+				culture = bear
 			}
 		}
 
@@ -927,6 +937,10 @@ targetted_decisions = {
 			host = { character = FROM }
 			prisoner = yes
 			age = 12
+		}
+		
+		allow = {
+			NOT = { diplomatic_immunity = yes }
 		}
 		
 		ai_will_do = {
@@ -937,6 +951,7 @@ targetted_decisions = {
 			hidden_tooltip = {
 				any_dynasty_member = {
 					limit = {
+						is_offmap_ruler = no
 						is_close_relative = ROOT
 						NOT = { character = FROM }
 					}
@@ -1073,6 +1088,7 @@ targetted_decisions = {
 				death_reason = death_execution_eaten
 				killer = FROM
 			}
+			save_event_target_as = kinslayer_target
 			FROM = {
 				if = {
 					limit = {
@@ -1089,12 +1105,17 @@ targetted_decisions = {
 						duration = -1
 					}
 				}
+				add_kinslayer_trait_effect = yes
+			}
+			hidden_tooltip = {
 				if = {
 					limit = {
-						dynasty = ROOT
-						NOT = { trait = kinslayer }
+						religion = old_gods
+						FROM = { ai = no }
 					}
-					add_trait = kinslayer
+					FROM = {
+						set_character_flag = achievement_bon_appetit
+					}
 				}
 			}
 		}
