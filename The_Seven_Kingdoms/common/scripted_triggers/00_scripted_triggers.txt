@@ -709,6 +709,7 @@ has_secret_religion_trait_trigger = {
 			trait = secretly_faceless_men
 			trait = secretly_maiden_of_the_harvest
 			trait = secretly_bearded_priests
+			trait = secretly_bearded_priests_reformed
 			trait = secretly_boashi
 			trait = secretly_trios
 			trait = secretly_valyrian
@@ -1828,6 +1829,16 @@ true_religion_bearded_priests_trigger = {
 	}
 }
 
+true_religion_bearded_priests_reformed_trigger = {
+	OR = {
+		AND = {
+			religion = bearded_priests_reformed
+			has_secret_religion_trait_trigger = no
+		}
+		trait = secretly_bearded_priests_reformed
+	}
+}
+
 true_religion_boashi_trigger = {
 	OR = {
 		AND = {
@@ -1931,6 +1942,7 @@ true_religion_group_eastern_group_trigger = {
 		true_religion_faceless_men_trigger = yes
 		true_religion_maiden_of_the_harvest_trigger = yes
 		true_religion_bearded_priests_trigger = yes
+		true_religion_bearded_priests_reformed_trigger = yes
         true_religion_boashi_trigger = yes
         true_religion_trios_trigger = yes
 	}
@@ -2382,6 +2394,10 @@ is_openly_of_prevs_secret_religion_trigger = {
 			religion = bearded_priests
 			PREV = { trait = secretly_bearded_priests }
 		}
+		AND = {
+			religion = bearded_priests_reformed
+			PREV = { trait = secretly_bearded_priests_reformed }
+		}
         AND = {
 			religion = boashi
 			PREV = { trait = secretly_boashi }
@@ -2527,6 +2543,10 @@ has_prevs_secret_religion_truly_trigger = {
 		AND = {
 			trait = secretly_bearded_priests
 			PREV = { true_religion_bearded_priests_trigger = yes }
+		}
+		AND = {
+			trait = secretly_bearded_priests_reformed
+			PREV = { true_religion_bearded_priests_reformed_trigger = yes }
 		}
 		AND = {
 			trait = secretly_boashi
@@ -2694,6 +2714,10 @@ shares_prevs_secret_religion_trigger = {
 		AND = {
 			trait = secretly_bearded_priests
 			PREV = { trait = secretly_bearded_priests }
+		}
+		AND = {
+			trait = secretly_bearded_priests_reformed
+			PREV = { trait = secretly_bearded_priests_reformed }
 		}
         AND = {
 			trait = secretly_boashi
@@ -2904,6 +2928,12 @@ has_any_char_old_religion = {
 	    	has_character_flag = character_was_bearded_priests
 	    	any_character = {
 	    		religion = bearded_priests
+	    	}
+	    }
+		AND = { 
+	    	has_character_flag = character_was_bearded_priests_reformed
+	    	any_character = {
+	    		religion = bearded_priests_reformed
 	    	}
 	    }
         AND = { 
