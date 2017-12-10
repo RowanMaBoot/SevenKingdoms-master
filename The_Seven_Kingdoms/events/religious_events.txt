@@ -1158,7 +1158,7 @@ character_event = {
         any_independent_ruler = {
             religion = ROOT
             rightful_religious_head = ROOT
-            trait = kinslayer
+            is_any_kinslayer_trigger = yes
             piety = 100
             reverse_opinion  = { who = ROOT value = 0 }
             NOT = { has_character_flag = kinslaying_offered }
@@ -1173,7 +1173,7 @@ character_event = {
             limit = {
                 religion = ROOT
                 rightful_religious_head = ROOT
-                trait = kinslayer
+                is_any_kinslayer_trigger = yes
                 piety = 100
                 reverse_opinion  = { who = ROOT value = 0 }
             }
@@ -1189,7 +1189,7 @@ character_event = {
             limit = {
                 religion = ROOT
                 rightful_religious_head = ROOT
-                trait = kinslayer
+                is_any_kinslayer_trigger = yes
                 piety = 100
                 reverse_opinion  = { who = ROOT value = 0 }
             }
@@ -1216,9 +1216,24 @@ character_event = {
     option = {
         name = "EVTOPTA39211"
         ai_chance = { factor = 100 }
-        piety = -100
-        wealth = -50
-        remove_trait = kinslayer
+        trigger_switch = {
+            on_trigger = trait
+            kinslayer = {
+                piety = -100
+                wealth = -50
+                remove_trait = kinslayer
+            }
+            familial_kinslayer = {
+                piety = -50
+                wealth = -25
+                remove_trait = familial_kinslayer
+            }
+            dynastic_kinslayer = {
+                piety = -25
+                wealth = -12
+                remove_trait = dynastic_kinslayer
+            }
+        }
         FROM = { character_event = { id = 39212 days = 1 tooltip = EVTTOOLTIP39212 } }
     }
     

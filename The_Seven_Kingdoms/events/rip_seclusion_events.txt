@@ -143,10 +143,12 @@ character_event = {
             }
             modifier = {
                 factor = 0.1
-                capital_scope = {
-                    OR = {
-                        disease = tuberculosis
-                        disease = measles
+                OR = {
+                    capital_scope = {
+                        OR = {
+                            disease = tuberculosis
+                            disease = measles
+                        }
                     }
                 }
             }
@@ -173,6 +175,13 @@ character_event = {
             modifier = {
                 factor = 5
                 trait = paranoid
+            }
+            modifier = {
+                factor = 10
+                OR = {
+                    capital_scope = { disease = bubonic_plague }
+                    location = { disease = bubonic_plague }
+                }
             }
         }
         
@@ -292,6 +301,7 @@ narrative_event = {
     }
 
     option = {
+        tooltip_info = gardener
         trigger = {
             trait = gardener
         }
@@ -679,9 +689,23 @@ character_event = {
             }
         }
         event_target:target_greedy_courtier = {            
-            death = {
-                death_reason = death_execution_eaten
-                killer = ROOT
+            tooltip = {
+                death = {
+                    death_reason = death_execution_eaten
+                    killer = ROOT
+                }
+            }
+            hidden_effect = {
+                death = { death_reason = death_execution_eaten }
+            }
+            hidden_tooltip = {
+                if = {
+                    limit = {
+                        religion = bon
+                        ROOT = { ai = no }
+                    }
+                    ROOT = { set_character_flag = achievement_bon_appetit }
+                }
             }
         }
         change_variable = { which = remaining_food value = 1 }
@@ -743,9 +767,14 @@ character_event = {
                 NOT = { is_child_of = ROOT }
                 has_character_modifier = in_seclusion
             }
-            death = {
-                death_reason = death_execution_eaten
-                killer = ROOT
+            tooltip = {
+                death = {
+                    death_reason = death_execution_eaten
+                    killer = ROOT
+                }
+            }
+            hidden_effect = {
+                death = { death_reason = death_execution_eaten }
             }
         }
         change_variable = { which = remaining_food value = 1 }
@@ -1238,7 +1267,7 @@ character_event = {
                 years = 5
             }
         }
-        event_target:lower_two = {
+        event_target:lover_two = {
             opinion = {
                 who = ROOT
                 modifier = opinion_angry
@@ -1560,6 +1589,11 @@ character_event = {
 
             modifier = {
                 factor = 0.5
+                location = { disease = bubonic_plague }
+            }
+
+            modifier = {
+                factor = 0.5
                 location = { disease = typhoid_fever }
             }
 
@@ -1872,7 +1906,7 @@ character_event = {
         }
         if = {
             limit = {
-                event_target:plague_victim = {
+                event_target:epidemic_victim = {
                     trait = has_bubonic_plague
                 }
                 ai = no
@@ -3204,7 +3238,7 @@ character_event = {
         change_martial = 1
         add_character_modifier = {
             name = crusched_rebels_from_seclusion
-            duration = -1
+            duration = 730
         }
 
         if = {
@@ -5237,6 +5271,9 @@ character_event = {
                     NAND = {
                         host = { character = ROOT }
                         NOT = { has_character_flag = seclusion_piling_corpses }
+                        location = {
+                            disease = bubonic_plague
+                        }
                     }
                 }
                 character_event = { id = RIP.12003 }
@@ -5347,6 +5384,25 @@ character_event = {
                 }
                 character_event = { id = RIP.12012 }
             }
+            # Courtier has the plague
+            100 = {
+                modifier = {
+                    factor = 0
+                    NAND = {
+                        host = { character = ROOT }
+                        location = {
+                            disease = bubonic_plague
+                        }
+                        any_courtier = {
+                            at_location = ROOT
+                            has_character_modifier = in_seclusion
+                            NOT = { is_friend = ROOT }
+                            trait = has_bubonic_plague
+                        }
+                    }
+                }
+                character_event = { id = RIP.12013 }
+            }
             # Child has a peasant lover outside of seclusion
             20 = {
                 modifier = {
@@ -5408,6 +5464,11 @@ character_event = {
                         }
                         ai = yes
                         war = yes
+                        NOT = {
+                            any_realm_province = {
+                                disease = bubonic_plague
+                            }
+                        }
                         has_character_flag = masque_of_red_death
                         has_character_flag = seclusion_events_on
                         has_character_modifier = lucky_to_be_alive
@@ -5487,7 +5548,6 @@ character_event = {
         clr_character_flag = seclusion_events_on
         clr_character_flag = do_not_disturb
         remove_character_modifier = in_seclusion
-        set_character_flag = DEBUG_RIP.12098 #TODO
     }
 }
 

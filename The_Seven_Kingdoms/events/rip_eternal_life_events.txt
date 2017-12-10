@@ -92,6 +92,7 @@ narrative_event = {
                 limit = { 
                     any_courtier = { 
                         sad_example_trigger = yes 
+                        is_inaccessible_trigger = no
                         ai = yes
                     } 
                 }
@@ -99,6 +100,7 @@ narrative_event = {
                 random_courtier = {
                     limit = { 
                         sad_example_trigger = yes 
+                        is_inaccessible_trigger = no
                         ai = yes
                     }
                     
@@ -127,9 +129,11 @@ narrative_event = {
     desc = {
         text = EVTDSC_RIP_21000_MARRIED
         trigger = { 
-            is_married = yes
-            any_spouse = {
-                is_lover = ROOT
+            AND = {
+                is_married = yes
+                any_spouse = {
+                    is_lover = ROOT
+                }
             }
         }
     }
@@ -163,11 +167,13 @@ narrative_event = {
     desc = {
         text = EVTDSC_RIP_21000_MARRIED_NO_LOVE
         trigger = { 
-            is_married = yes
-            trait = kind
-            NOT = {
-                any_spouse = {
-                    is_lover = ROOT
+            AND = {
+                is_married = yes
+                trait = kind
+                NOT = {
+                    any_spouse = {
+                        is_lover = ROOT
+                    }
                 }
             }
         }
@@ -4555,7 +4561,8 @@ character_event = {
         }
         random_dynasty_member = {
             if = {
-                limit = { 
+                limit = {
+                    is_offmap_ruler = no 
                     is_adult = yes
                     prisoner = no
                     NOT = { trait = in_hiding }
