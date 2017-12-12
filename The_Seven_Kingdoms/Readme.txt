@@ -76,4 +76,6 @@ Music
 	Life in Trenches : https://www.jamendo.com/track/1336207/life-in-trenches
 - CH Joy:
 	Inspirational Trailer : https://www.jamendo.com/track/1390798/inspirational-trailer
+- Richard Wagner:
+	Götterdämmerung: Siegfried's Funeral March 
 
