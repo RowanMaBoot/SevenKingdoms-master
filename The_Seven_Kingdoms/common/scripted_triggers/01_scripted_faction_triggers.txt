@@ -490,10 +490,14 @@ is_zealous_different_religion = {
 ################################ HEIR TRIGGERS ################################
 
 heir_positive_rel_1_trigger = {
-    NOT = {
-        trait = sociopath
+    ROOT = {
+      NOR = {
+          trait = sociopath
+          trait = cruel
+          trait = heartless
+      }
     }
-    FROMFROM = {
+    FROM = {
         current_heir = {
             character = ROOT
         }
@@ -510,10 +514,13 @@ heir_positive_rel_1_trigger = {
 }
 
 heir_positive_rel_2_trigger = {
-    NOT = {
-        trait = sociopath
+    ROOT = {
+      NOR = {
+          trait = sociopath
+          trait = heartless
+      }
     }
-    FROMFROM = {
+    FROM = {
         current_heir = {
             character = ROOT
         }
@@ -530,25 +537,29 @@ heir_positive_rel_2_trigger = {
 }
 
 heir_positive_rel_3_trigger = {
-    NOT = {
-        trait = sociopath
+    ROOT = {
+      NOT = {
+          trait = sociopath
+      }
     }
-    FROMFROM = {
+    FROM = {
         current_heir = {
             character = ROOT
         }
     }
-    liege = {
-        reverse_opinion = { who = ROOT value = 30 }
+    FROM = {
+        reverse_opinion = { who = ROOT value = 35 }
     }
 }
 
 # Heir is not of your culture
 heir_not_culture_trigger = {
-    NOT = {
-        culture_group = FROMROM
+    ROOT = {
+      NOT = {
+          culture_group = FROMROM
+      }
     }
-    FROMFROM = {
+    FROM = {
         current_heir = {
             character = ROOT
         }
@@ -557,10 +568,12 @@ heir_not_culture_trigger = {
 
 # Heir is not of your religion
 heir_not_religion_trigger = {
-    NOT = {
-        religion = FROMROM
+    ROOT = {
+      NOT = {
+          religion = FROMROM
+      }
     }
-    FROMFROM = {
+    FROM = {
         current_heir = {
             character = ROOT
         }
@@ -569,11 +582,13 @@ heir_not_religion_trigger = {
 
 # Heir is neither your culture or religion
 heir_not_culture_and_religion_trigger = {
-    NOR = {
-        religion = FROMROM
-        culture_group = FROMROM
+    ROOT = {
+      NOR = {
+          religion = FROMROM
+          culture_group = FROMROM
+      }
     }
-    FROMFROM = {
+    FROM = {
         current_heir = {
             character = ROOT
         }
