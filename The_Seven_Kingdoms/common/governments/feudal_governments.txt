@@ -37,7 +37,7 @@ feudal_governments = {
                 is_government_potential = nights_watch_government      	# Night's Watch Government
                 is_government_potential = wildling_government      	   	# Wildling Government, Tribal
 				is_government_potential = merchant_kingdom_government   # Merchant Kingdom
-		has_landed_title = k_the_arbor
+				is_government_potential = theocratic_kingdom_government # Theocratic Kingdom
             }
             is_patrician = no
         }
@@ -418,6 +418,60 @@ feudal_governments = {
 			global_tax_modifier = -0.30
 			ai_honor = -5
 			dynasty_opinion = -5
+		}
+        
+        capital_move_delay = 600
+    }   
+	
+	theocratic_kingdom_government = {
+        preferred_holdings = { CASTLE }
+        allowed_holdings = { 
+            castle
+            FORT
+            HOSPITAL
+        }
+        accepts_liege_governments = { # Gets the wrong religion modifier instead
+            old_gods_government
+            nights_watch_government         # Although it cannot rule over the NW, the NW can rule over them.
+        }
+        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+            tribal_government
+            wildling_government
+            old_gods_government
+            stepstones_government
+        }
+		potential = {
+            has_landed_title = k_oldtown
+            }
+        frame_suffix = "_oldtown"
+        potential = {
+            # Generic Block, due to presence of other government types
+            NOR = {
+                controls_religion = yes
+                is_government_potential = muslim_government         # Essosi Goverment
+                is_government_potential = old_gods_government       # Old Gods Government
+                is_government_potential = stepstones_government     # Stepstones Government
+                is_government_potential = nights_watch_government   # Night's Watch Government
+                is_government_potential = wildling_government       # Wildling Government, Tribal
+				is_government_potential = feudal_goverment          # Generic Feudal
+            }
+            is_patrician = no
+        }
+        
+        color = { 187 187 187 }
+        
+        dukes_called_kings = no
+        barons_need_dynasty = no
+        can_build_tribal = no
+		no_vassal_tax = { theocracy_government }
+		
+		character_modifier = {
+			learning = 3
+			fertility = -0.1
+			vassal_opinion = 5
+			global_tax_modifier = -0.10
+			ai_honor = 5
+			dynasty_opinion = 5
 		}
         
         capital_move_delay = 600
