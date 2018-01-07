@@ -5,6 +5,7 @@
 # Night's Watch Government is a special Feudal Government for the Night's watch, and accepts no other Governments as a liege.
 # Old Gods Government is the Old Gods Feudal Government, and is specific to Old Gods Characters.
 # Stepstones Feudal is a special Feudal Government for the Stepstones, accepting no valid lieges and is accepted by no other Governments.
+# Merchant Kingdom is a government with the intention of simulating the influence of merchants and other freeholders on a king and his court. (The Arbor)
 
 feudal_governments = {
 
@@ -30,11 +31,13 @@ feudal_governments = {
             # Generic Block, due to presence of other government types
             NOR = {
                 controls_religion = yes
-                is_government_potential = muslim_government         # Essosi Goverment
-                is_government_potential = old_gods_government       # Old Gods Government
-                is_government_potential = stepstones_government     # Stepstones Government
-                is_government_potential = nights_watch_government   # Night's Watch Government
-                is_government_potential = wildling_government       # Wildling Government, Tribal
+                is_government_potential = muslim_government       	    # Essosi Goverment
+                is_government_potential = old_gods_government      	    # Old Gods Government
+                is_government_potential = stepstones_government         # Stepstones Government
+                is_government_potential = nights_watch_government      	# Night's Watch Government
+                is_government_potential = wildling_government      	   	# Wildling Government, Tribal
+				is_government_potential = merchant_kingdom_government   # Merchant Kingdom
+		has_landed_title = k_the_arbor
             }
             is_patrician = no
         }
@@ -366,6 +369,57 @@ feudal_governments = {
         
         capital_move_delay = 600
     }
-    
-    
+	
+	merchant_kingdom_government = {
+        preferred_holdings = { CASTLE }
+        allowed_holdings = { 
+            castle
+            FORT
+            HOSPITAL
+        }
+        accepts_liege_governments = { # Gets the wrong religion modifier instead
+            old_gods_government
+            nights_watch_government         # Although it cannot rule over the NW, the NW can rule over them.
+        }
+        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+            tribal_government
+            wildling_government
+            old_gods_government
+            stepstones_government
+        }
+		potential = {
+            has_landed_title = k_the_arbor
+            }
+        frame_suffix = "_ming"
+        potential = {
+            # Generic Block, due to presence of other government types
+            NOR = {
+                controls_religion = yes
+                is_government_potential = muslim_government         # Essosi Goverment
+                is_government_potential = old_gods_government       # Old Gods Government
+                is_government_potential = stepstones_government     # Stepstones Government
+                is_government_potential = nights_watch_government   # Night's Watch Government
+                is_government_potential = wildling_government       # Wildling Government, Tribal
+				is_government_potential = feudal_goverment          # Generic Feudal
+            }
+            is_patrician = no
+        }
+        
+        color = { 135 70 135 }
+        
+        dukes_called_kings = no
+        barons_need_dynasty = no
+        can_build_tribal = no
+		
+		character_modifier = {
+			stewardship = 3
+			fertility = 0.15
+			vassal_opinion = 5
+			global_tax_modifier = -0.30
+			ai_honor = -5
+			dynasty_opinion = -5
+		}
+        
+        capital_move_delay = 600
+    }   
 }
