@@ -1,39 +1,308 @@
 offmap_freehold = {
-		name = TXT_FREEHOLD	
-		window_name = domestic_offmaps_window
-		buttom_name = icon_offmaps_entry
+	name = TXT_FREEHOLD	
+	window_name = domestic_offmaps_window
+	buttom_name = icon_offmaps_entry
 		
-		currency_name = TXT_FAVOR
-		currency_gain = monthly_favor_gained
-		currency_below_zero = yes
-		currency_reset_on_dynasty_change = yes
-		holder_title = freehold_leader
+	currency_name = TXT_FAVOR
+	currency_gain = monthly_favor_gained
+	currency_below_zero = yes
+	currency_reset_on_dynasty_change = yes
+	holder_title = freehold_leader
 		
-		governor_title = e_valyrian_freehold
+	governor_title = e_valyrian_freehold
 		
-		tier = emperor 
-		coa_religion = valyrian
-		government = freehold_government
-		beginning_of_history = 5850.1.1
-		sound = courtview
-		display_trigger = { has_dlc = "Jade Dragon" }
+	tier = emperor
+	non_aggression_modifier = peace_deal_with_china
+	coa_religion = valyrian
+	government = freehold_government
+	beginning_of_history = 5850.1.1
+	sound = china_interaction_interface
+	display_trigger = { has_dlc = "Jade Dragon" }
 		
-		policies = {
-			freehold_secluded
-			freehold_open
-			freehold_expansionist
+	policies = {
+		freehold_secluded
+		freehold_open
+		freehold_expansionist
+	}
+	statuses = {
+		freehold_stable  
+		freehold_famine  
+		freehold_plague 
+		freehold_civil_war 
+		freehold_slave_rebellion 
+		freehold_internal_purge 
+		freehold_dothraki_invasion 
+		freehold_rhoynish_invasion 
+		freehold_ghiscari_invasion 
+		freehold_renaissance
+		freehold_economic_ruin
+	}
+	
+	buttons = {
+		offmap_gifts = {
+			is_active_trigger = {
+				freehold_offmap_tribute_decisions_enabled_trigger = yes
+			}
 		}
-		statuses = {
-			freehold_stable  
-			freehold_famine  
-			freehold_plague 
-			freehold_civil_war 
-			freehold_slave_rebellion 
-			freehold_internal_purge 
-			freehold_dothraki_invasion 
-			freehold_rhoynish_invasion 
-			freehold_ghiscari_invasion 
-			freehold_renaissance
-			freehold_economic_ruin
+		offmap_boons = {
+			is_active_trigger = {
+				freehold_offmap_boon_decisions_enabled_trigger = yes
+			}
+		}
+		offmap_hostility = {
+			is_active_trigger = {
+				freehold_offmap_hostile_decisions_enabled_trigger = yes
+			}
+			display_trigger = {
+				NOT = { offmap_freehold = { offmap_ruler = { dynasty = FROM } } }
+			}
+		}
+		offmap_hostility2 = {
+			display_trigger = {
+				always = no
+			}
+		}
+	}
+	
+	#These conditions only effect the appearance of the button, it does not actually disable them from being clickable. The same triggers are used in all tribute/boon decisions respectively
+	
+	icon_triggers = {
+		freehold_physician_cd = {
+			frame = 9
+			trigger = {
+				hidden_tooltip = {
+					has_character_flag = freehold_grace_physician_sent
+				}
+			}
+		}
+		freehold_raid_cd = {
+			frame = 8
+			right = yes	
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = freehold_raid_grace_cd
+				}
+			}
+		}
+		freehold_famine_cd = {
+			frame = 7
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = freehold_send_relief
+				}
+			}
+		}
+		freehold_tributary_cd = {
+			frame = 6
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = freehold_grace_tributary_timer
+				}
+			}
+		}
+		freehold_boon_cd = {
+			frame = 5
+			right = yes	
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = jd_freehold_boon_cd
+				}
+			}
+		}
+		freehold_commander_cd = {
+			frame = 4
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = freehold_grace_send_commander_timer
+				}
+			}
+		}
+		freehold_eunuch_cd = {
+			frame = 3
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = freehold_grace_send_eunuch_timer
+				}
+			}
+		}
+		freehold_concubine_cd = {
+			frame = 2
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = freehold_grace_send_concubine_timer
+				}
+			}
+		}
+		freehold_gift_cd = {
+			frame = 1
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = freehold_grace_send_gift_timer
+				}
+			}
+		}
+	}
+	
+	monthly_currency_gain = {
+		offmap_same_dynasty = {
+			value = 10
+			offmap_freehold = { offmap_ruler = { dynasty = FROM } }
+		}
+		offmap_war_with_me = {
+			value = -10
+			war_with = FROM
+		}
+		offmap_likes_me = {
+			value = 1
+			FROM = { is_liked_by_Freehold_trigger = yes }
+			is_within_diplo_range = FROM
+		}
+		offmap_likes_tributaries = {
+			value = 2
+			offmap_freehold = {			
+				offmap_has_like = likes_tributaries
+			}
+			FROM = {
+				is_tributary = {
+					type = offmap
+				}
+			}
+		}
+		vassal_of_WP = {
+			value = 2
+			FROM = {
+				liege = {
+					has_landed_title = e_valyrian_freehold
+				}
+			}
+		}
+		offmap_same_culture_and_religion = {
+			value = 2
+			offmap_ruler = {
+				culture = FROM
+				religion = FROM
+			}
+			is_within_diplo_range = FROM
+		}
+	}
+	
+	temple_names = {
+		{ # Founder names
+			Ageneos
+			Vaelreos
+			Laeraeris
+			Bartalor
+			Calraenos
+			Baraeris
+			Dorennis
+			Caeneneos
+			Qohgyreon
+			Bernaerosozu
+			Laeritheos
+			Valralis
+			Bertaris
+			Taennaris
+			Taranyon
+			Qaraenor
+			Valanyon
+			Lenralis
+			Qarmaereon
+			Laernaris
+			Arinarys
+			Argyreon
+			Meleneos
+			Laenaenor
+			Gonnaris
+		}
+		{ # Successor names - added -ia to the end of above names
+			Ageneosia
+			Vaelreosia
+			Laeraerisia
+			Bartaloria
+			Calraenosia
+			Baraerisia
+			Dorennisia
+			Caeneneosia
+			Qohgyreonia
+			Bernaerosozuia
+			Laeritheosia
+			Valralisia
+			Bertarisia
+			Taennarisia
+			Taranyonia
+			Qaraenoria
+			Valanyonia
+			Lenralisia
+			Qarmaereonia
+			Laernarisia
+			Arinarysia
+			Argyreonia
+			Meleneosia
+			Laenaenoria
+			Gonnarisia
+		}
+	}
+	holder_succession = {
+		is_female = {					# chances of getting a female holder, as a percentage: if the total is >= 100, the new holder will always be female. If the total is <= 0, the new holder will always be male
+			value = 5
+			additive_modifier = {
+				value = 45
+				has_game_rule = {
+					name = gender
+					value = all
+				}
+			}
+		}
+		culture = {
+			high_valyrian = { # default culture for new emperor
+				value = 99 # if any other value reaches 100, it will be picked instead
+			}
+			FROM = { # default culture for new emperor
+								# the left side here (and for culture, religion, graphical_culture and dynasty) can be a right hand side value (FROM, ROOT, a culture name, etc). and the right hand side / inside the brackets is a standard MTTH evaluation. Only the one with the highest weight will be used. If there's a tie, one of the tied values is picked at random
+				value = 0
+				additive_modifier = { #the new emperor will keep current culture if things are great
+					value = 100
+					#freehold_is_fine_trigger = yes
+					FROM = { culture_scope = { always = yes } } # Essentially a check that the previous emperor actually exists
+				}
+			}
+		}
+		
+		graphical_culture = { 
+			FROM = {
+				value = 100
+			}
+		}
+
+		religion = {
+			valyrian = { # default religion for new emperor
+				value = 99 # if any other value reaches 100, it will be picked instead (unless equal, then it will randomize)
+			}
+			FROM = {
+				value = 0
+				additive_modifier = { # the new emperor will keep current religion if things are great
+					value = 100
+					#freehold_is_fine_trigger = yes
+					FROM = { religion_scope = { always = yes } } # Essentially a check that the previous emperor actually exists
+				}
+			}
+		}
+		
+		dynasty = {
+			FROM = { #default dynasty for new emperor
+				value = 99 #might drop from modifiers -- highest value will be picked instead (unless equal, then it will randomize)
+			}
+			actually_culture = {
+				value = 0
+				additive_modifier = {
+					value = 100
+					NOT = { FROM = { character = yes } }
+				}
+				additive_modifier = { #Fix for simulating Chinese history on old save boot-up
+					value = 100
+					random < 12
+					has_game_started = no
+				}
+			}
 		}
 }
