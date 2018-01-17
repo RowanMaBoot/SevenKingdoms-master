@@ -17408,122 +17408,122 @@ raiding_adventurer_war_declaration_effect = {
 #Grace effects
 add_grace_trivial_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = 100
 	}
 }
 
 add_grace_minor_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = 200
 	}
 }
 
 add_grace_medium_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = 300
 	}	
 }
 
 add_grace_major_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = 500
 	}
 }
 
 add_grace_massive_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = 1000
 	}
 }
 
 add_grace_super_huge_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = 2000
 	}
 }
 
 detract_grace_trivial_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = -100
 	}
 }
 
 detract_grace_minor_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = -200
 	}
 }
 
 detract_grace_medium_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = -300
 	}
 }
 
 detract_grace_major_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = -500
 	}
 }
 
 detract_grace_massive_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = -1000
 	}
 }
 
 detract_grace_super_huge_effect = {
 	add_offmap_currency = {
-		offmap = offmap_china
+		offmap = offmap_freehold
 		value = -2000
 	}
 }
 
-set_china_boon_cd_effect = {  #added via tribute to China decisions... Always one year.
+set_freehold_boon_cd_effect = {  #added via tribute to China decisions... Always one year.
 	add_character_modifier = {
 		hidden = yes
-		name = jd_china_boon_cd
+		name = jd_freehold_boon_cd
 		days = 365 #If this is changed, edit  china_offmap_boon_decisions_enabled_trigger_cd_tt
 	}
 }
 
-set_china_tribute_cd_effect = { #added via tribute to China decisions... Always one year.
+set_freehold_tribute_cd_effect = { #added via tribute to China decisions... Always one year.
 	add_character_modifier = {
 		hidden = yes
-		name = jd_china_tribute_cd
+		name = jd_freehold_tribute_cd
 		days = 365
 	}
 }
 
-leave_court_for_china_effect = { # NOTE: this does not set a "killer", meaning if you want them to be ORDERED to go to China, a killer needs to be set (eg: "killer = ROOT")
+leave_court_for_freehold_effect = { # NOTE: this does not set a "killer", meaning if you want them to be ORDERED to go to China, a killer needs to be set (eg: "killer = ROOT")
 	custom_tooltip = {
-		text = will_leave_for_china_tt
+		text = will_leave_for_freehold_tt
 	}
 	set_character_flag = ignore_refund
-	hidden_effect = { death = { death_reason = death_went_to_china } }
+	hidden_effect = { death = { death_reason = death_went_to_freehold } }
 }
 
-return_to_china_effect = { # NOTE: this does not set a "killer", meaning if you want them to be ORDERED to go to China, a killer needs to be set (eg: "killer = ROOT")
+return_to_freehold_effect = { # NOTE: this does not set a "killer", meaning if you want them to be ORDERED to go to China, a killer needs to be set (eg: "killer = ROOT")
 	custom_tooltip = {
-		text = will_return_to_china_tt
+		text = will_return_to_freehold_tt
 	}
 	set_character_flag = ignore_refund
-	hidden_effect = { death = { death_reason = death_went_back_to_china } }
+	hidden_effect = { death = { death_reason = death_went_back_to_freehold } }
 }
 
 # Utilizes china_war_minimum_commander_martial variable on the current scope to spawn characters with at least that amount of martial skill.
-china_spawn_commander_effect = {
+freehold_spawn_commander_effect = {
 	create_random_soldier = {
 		random_traits = yes
 		religion = liege
@@ -17536,7 +17536,7 @@ china_spawn_commander_effect = {
 		unsafe_give_minor_title = title_commander
 		
 		set_variable = {
-			which = china_war_minimum_commander_martial
+			which = freehold_war_minimum_commander_martial
 			which = PREV
 		}
 		if = {
@@ -17549,7 +17549,7 @@ china_spawn_commander_effect = {
 			add_trait = skilled_tactician
 			# Make sure they have a tier 3 or tier 4 education
 		}
-		random_list = { # Give a chance to get Chinese commander traits
+		random_list = { # Give a chance to get freehold commander traits
 			30 = {
 				trigger = {
 					can_have_more_leadership_traits = yes
@@ -17583,7 +17583,7 @@ china_spawn_commander_effect = {
 		while = { # Increase the martial skill with base or martial traits until the minimum is reached
 			limit = {
 				NOT = {
-					martial = china_war_minimum_commander_martial
+					martial = freehold_war_minimum_commander_martial
 				}
 			}
 			random_list = {
@@ -17820,20 +17820,20 @@ china_spawn_commander_effect = {
 	}
 }
 
-china_war_spawn_troops_effect = {
+freehold_war_spawn_troops_effect = {
 	# Requires the current things to function properly:
 	# event_target:spawn_province
-	# variable: china_war_troop_quality
-	# variable: china_war_troop_quantity
+	# variable: freehold_war_troop_quality
+	# variable: freehold_war_troop_quantity
 	while = {
 		limit = {
 			check_variable = {
-				which = china_war_troop_quantity
+				which = freehold_war_troop_quantity
 				value = 1
 			}
 		}
 		change_variable = {	
-			which = china_war_troop_quantity
+			which = freehold_war_troop_quantity
 			value = -1
 		}
 		
@@ -17842,7 +17842,7 @@ china_war_spawn_troops_effect = {
 				trigger = {
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 2
 						}
 					}
@@ -17867,12 +17867,12 @@ china_war_spawn_troops_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 2
 					}
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 3
 						}
 					}
@@ -17897,12 +17897,12 @@ china_war_spawn_troops_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 3
 					}
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 4
 						}
 					}
@@ -17927,12 +17927,12 @@ china_war_spawn_troops_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 4
 					}
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 5
 						}
 					}
@@ -17957,12 +17957,12 @@ china_war_spawn_troops_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 5
 					}
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 6
 						}
 					}
@@ -17987,12 +17987,12 @@ china_war_spawn_troops_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 6
 					}
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 7
 						}
 					}
@@ -18017,7 +18017,7 @@ china_war_spawn_troops_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 7
 					}
 				}
@@ -18042,20 +18042,20 @@ china_war_spawn_troops_effect = {
 	}
 }
 
-china_war_spawn_troops_no_disband_effect = {
+freehold_war_spawn_troops_no_disband_effect = {
 	# Requires the current things to function properly:
 	# event_target:spawn_province
-	# variable: china_war_troop_quality
-	# variable: china_war_troop_quantity
+	# variable: freehold_war_troop_quality
+	# variable: freehold_war_troop_quantity
 	while = {
 		limit = {
 			check_variable = {
-				which = china_war_troop_quantity
+				which = freehold_war_troop_quantity
 				value = 1
 			}
 		}
 		change_variable = {	
-			which = china_war_troop_quantity
+			which = freehold_war_troop_quantity
 			value = -1
 		}
 		
@@ -18064,7 +18064,7 @@ china_war_spawn_troops_no_disband_effect = {
 				trigger = {
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 2
 						}
 					}
@@ -18089,12 +18089,12 @@ china_war_spawn_troops_no_disband_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 2
 					}
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 3
 						}
 					}
@@ -18119,12 +18119,12 @@ china_war_spawn_troops_no_disband_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 3
 					}
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 4
 						}
 					}
@@ -18149,12 +18149,12 @@ china_war_spawn_troops_no_disband_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 4
 					}
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 5
 						}
 					}
@@ -18179,12 +18179,12 @@ china_war_spawn_troops_no_disband_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 5
 					}
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 6
 						}
 					}
@@ -18209,12 +18209,12 @@ china_war_spawn_troops_no_disband_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 6
 					}
 					NOT = {
 						check_variable = {
-							which = china_war_troop_quality
+							which = freehold_war_troop_quality
 							value = 7
 						}
 					}
@@ -18239,7 +18239,7 @@ china_war_spawn_troops_no_disband_effect = {
 			10 = {
 				trigger = {
 					check_variable = {
-						which = china_war_troop_quality
+						which = freehold_war_troop_quality
 						value = 7
 					}
 				}
@@ -18264,73 +18264,75 @@ china_war_spawn_troops_no_disband_effect = {
 	}
 }
 
-china_war_modify_variables_by_status_effect = {
-	# variable: china_war_troop_quality
-	# variable: china_war_troop_quantity
+freehold_war_modify_variables_by_status_effect = {
+	# variable: freehold_war_troop_quality
+	# variable: freehold_war_troop_quantity
 	# variable: china_war_minimum_commander_martial
-	# variable: china_war_target_match_mult
+	# variable: frehold_war_target_match_mult
 	
 	random_list = {
 		1 = {
 			trigger = {
-				offmap_china = { has_status = china_stable }
+				offmap_freehold = { has_status = freehold_stable }
 			}
-			change_variable = { which = china_war_troop_quality value = 1 }
-			change_variable = { which = china_war_minimum_commander_martial value = 3 }
+			change_variable = { which = freehold_war_troop_quality value = 1 }
+			change_variable = { which = freehold_war_minimum_commander_martial value = 3 }
 		}
 		1 = {
 			trigger = {
-				offmap_china = { has_status = china_unrest }
+				offmap_freehold = { has_status = freehold_unrest }
 			}
-			change_variable = { which = china_war_troop_quantity value = -6 }
-			change_variable = { which = china_war_target_match_mult value = -0.15 }
+			change_variable = { which = freehold_war_troop_quantity value = -6 }
+			change_variable = { which = freehold_war_target_match_mult value = -0.15 }
 		}
 		1 = {
 			trigger = {
-				offmap_china = { has_status = china_civil_war }
+				offmap_freehold = { has_status = freehold_war_target_match_mult value }
 			}
-			change_variable = { which = china_war_troop_quantity value = -6 }
-			change_variable = { which = china_war_target_match_mult value = -0.25 }
-			change_variable = { which = china_war_troop_quality value = -1 }
-			change_variable = { which = china_war_minimum_commander_martial value = -6 }
+			change_variable = { which = freehold_war_troop_quantity value = -6 }
+			change_variable = { which = freehold_war_target_match_mult value = -0.25 }
+			change_variable = { which = freehold_war_troop_quality value = -1 }
+			change_variable = { which = freehold_war_minimum_commander_martial value = -6 }
 		}
 		1 = {
 			trigger = {
 				OR = {
-					offmap_china = { has_status = china_jurchen_invasion }
-					offmap_china = { has_status = china_mongol_invasion }
+					offmap_freehold = { has_status = freehold_dothraki_invasion  }
+					offmap_freehold = { has_status = freehold_rhoynish_invasion }
+					offmap_freehold = { has_status = freehold_ghiscari_invasion }
 				}
 			}
-			change_variable = { which = china_war_troop_quantity value = -7 }
-			change_variable = { which = china_war_target_match_mult value = -0.4 }
-			change_variable = { which = china_war_troop_quality value = -1 }
-			change_variable = { which = china_war_minimum_commander_martial value = -2 }
+			change_variable = { which = freehold_war_troop_quantity value = -7 }
+			change_variable = { which = freehold_war_target_match_mult value = -0.4 }
+			change_variable = { which = freehold_war_troop_quality value = -1 }
+			change_variable = { which = freehold_war_minimum_commander_martial value = -2 }
 		}
 		1 = {
 			trigger = {
-				offmap_china = { has_status = china_famine }
+				offmap_freehold = { has_status = freehold_famine }
+				offmap_freehold = { has_status = freehold_economic_ruin }
 			}
-			change_variable = { which = china_war_troop_quantity value = -4 }
-			change_variable = { which = china_war_target_match_mult value = -0.30 }
-			change_variable = { which = china_war_troop_quality value = -2 }
-			change_variable = { which = china_war_minimum_commander_martial value = -2 }
+			change_variable = { which = freehold_war_troop_quantity value = -4 }
+			change_variable = { which = freehold_war_target_match_mult value = -0.30 }
+			change_variable = { which = freehold_war_troop_quality value = -2 }
+			change_variable = { which = freehold_war_minimum_commander_martial value = -2 }
 		}
 		1 = {
 			trigger = {
-				offmap_china = { has_status = china_plague }
+				offmap_freehold = { has_status = freehold_plague }
 			}
-			change_variable = { which = china_war_troop_quantity value = -6 }
-			change_variable = { which = china_war_target_match_mult value = -0.35 }
-			change_variable = { which = china_war_troop_quality value = -1 }
-			change_variable = { which = china_war_minimum_commander_martial value = -4 }
+			change_variable = { which = freehold_war_troop_quantity value = -6 }
+			change_variable = { which = freehold_war_target_match_mult value = -0.35 }
+			change_variable = { which = freehold_war_troop_quality value = -1 }
+			change_variable = { which = freehold_war_minimum_commander_martial value = -4 }
 		}
 		1 = {
 			trigger = {
-				offmap_china = { has_status = china_golden_age }
+				offmap_freehold = { has_status = freehold_golden_age }
 			}
-			change_variable = { which = china_war_target_match_mult value = 0.65 }
-			change_variable = { which = china_war_troop_quality value = 2 }
-			change_variable = { which = china_war_minimum_commander_martial value = 5 }
+			change_variable = { which = freehold_war_target_match_mult value = 0.65 }
+			change_variable = { which = freehold_war_troop_quality value = 2 }
+			change_variable = { which = freehold_war_minimum_commander_martial value = 5 }
 		}
 	}
 }
@@ -18340,9 +18342,9 @@ china_war_modify_variables_by_status_effect = {
 check_likes_or_dislikes_THIS_effect = {
  	if = {  #If the current Emperor LIKES target
         limit = {
-            is_liked_by_China_trigger = yes
+            is_liked_by_Freehold_trigger = yes
         }
-        offmap_china = {
+        offmap_freehold = {
 			show_scope_change = no
             custom_tooltip = { text = emperor_likes_THIS_tt }
         }
@@ -18350,9 +18352,9 @@ check_likes_or_dislikes_THIS_effect = {
 
     if = { #If the current Emperor DISLIKES target
         limit = {
-           is_disliked_by_China_trigger = yes
+           is_disliked_by_Freehold_trigger = yes
         }
-        offmap_china = {
+        offmap_freehold = {
 			show_scope_change = no
 			custom_tooltip = { text = emperor_dislikes_THIS_tt }
         }
@@ -18360,9 +18362,9 @@ check_likes_or_dislikes_THIS_effect = {
 
     if = { #If the current Emperor LIKES *and* DISLIKES target
         limit = {
-            is_liked_and_disliked_by_China = yes
+            is_liked_and_disliked_by_Freehold = yes
         }
-        offmap_china = {
+        offmap_freehold = {
 			show_scope_change = no
             custom_tooltip = { text = emperor_has_ambiguous_feelings_of_THIS_tt }
         }
@@ -18371,9 +18373,9 @@ check_likes_or_dislikes_THIS_effect = {
 
 print_china_status_update_effect = {
 	log = "----------------"
-	log = "China Logging:"
-	log = "China's status of [This.GetPrevStatus] ended after [global_temp_status_years.GetValue] years."
-	log = "China's new status is [This.GetStatus]."
+	log = "Freehold Logging:"
+	log = "Freehold's status of [This.GetPrevStatus] ended after [global_temp_status_years.GetValue] years."
+	log = "Freehold's new status is [This.GetStatus]."
 	log = "----------------"
 	set_variable = {
 		which = global_temp_status_years
@@ -18382,84 +18384,102 @@ print_china_status_update_effect = {
 	random_list = {
 		10 = {
 			trigger = {
-				has_status = china_stable
+				has_status = freehold_stable
 			}
 			change_variable = {
-				which = global_amount_of_times_china_stable
+				which = global_amount_of_times_freehold_stable
 				value = 1
 			}
 		}
 		10 = {
 			trigger = {
-				has_status = china_unrest
+				has_status = freehold_unrest
 			}
 			change_variable = {
-				which = global_amount_of_times_china_unrest
+				which = global_amount_of_times_freehold_unrest
 				value = 1
 			}
 		}
 		10 = {
 			trigger = {
-				has_status = china_civil_war
+				has_status = freehold_war_target_match_mult value
 			}
 			change_variable = {
-				which = global_amount_of_times_china_civil_war
+				which = global_amount_of_times_freehold_war_target_match_mult value
 				value = 1
 			}
 		}
 		10 = {
 			trigger = {
-				has_status = china_mongol_invasion
+				has_status = freehold_dothraki_invasion
 			}
 			change_variable = {
-				which = global_amount_of_times_china_mongol_invasion
+				which = global_amount_of_times_freehold_dothraki_invasion
 				value = 1
 			}
 		}
 		10 = {
 			trigger = {
-				has_status = china_jurchen_invasion
+				has_status = freehold_rhoynish_invasion
 			}
 			change_variable = {
-				which = global_amount_of_times_china_jurchen_invasion
+				which = global_amount_of_times_freehold_rhoynish_invasion
 				value = 1
 			}
 		}
 		10 = {
 			trigger = {
-				has_status = china_famine
+				has_status = freehold_ghiscari_invasion
 			}
 			change_variable = {
-				which = global_amount_of_times_china_famine
+				which = global_amount_of_times_freehold_ghiscari_invasion
 				value = 1
 			}
 		}
 		10 = {
 			trigger = {
-				has_status = china_plague
+				has_status = freehold_famine
 			}
 			change_variable = {
-				which = global_amount_of_times_china_plague
+				which = global_amount_of_times_freehold_famine
 				value = 1
 			}
 		}
 		10 = {
 			trigger = {
-				has_status = china_golden_age
+				has_status = freehold_economic_ruin
+			}
+			change_variable = {
+				which = global_amount_of_times_freehold_economic_ruin
+				value = 1
+			}
+		}
+		10 = {
+			trigger = {
+				has_status = freehold_plague
+			}
+			change_variable = {
+				which = global_amount_of_times_freehold_plague
+				value = 1
+			}
+		}
+		10 = {
+			trigger = {
+				has_status = freehold_golden_age
 				NOT = { has_policy = china_expansionist }
 			}
 			change_variable = {
-				which = global_amount_of_times_china_golden_age
+				which = global_amount_of_times_freehold_golden_age
 				value = 1
 			}
 		}
 		10 = {
 			trigger = {
-				has_status = china_golden_age
+				has_status = freehold_golden_age
 				has_policy = china_expansionist
 			}
 			change_variable = {
-				which = global_amount_of_times_china_golden_age_expansionist
+				which = global_amount_of_times_freehold_golden_age_expansionist
 				value = 1
 			}
 		}
@@ -18468,9 +18488,9 @@ print_china_status_update_effect = {
 
 print_china_policy_update_effect = {
 	log = "----------------"
-	log = "China Logging:"
-	log = "China's policy of [This.GetPrevPolicy] ended after [global_temp_policy_years.GetValue] years."
-	log = "China's new policy is [This.GetPolicy]."
+	log = "Freehold Logging:"
+	log = "Freehold's policy of [This.GetPrevPolicy] ended after [global_temp_policy_years.GetValue] years."
+	log = "Freehold's new policy is [This.GetPolicy]."
 	log = "----------------"
 	set_variable = {
 		which = global_temp_policy_years
@@ -18479,24 +18499,24 @@ print_china_policy_update_effect = {
 	random_list = {
 		10 = {
 			trigger = {
-				has_policy = china_open
+				has_policy = freehold_open
 			}
 		}
 		10 = {
 			trigger = {
-				has_policy = china_isolationist
+				has_policy = freehold_isolationist
 			}
 			change_variable = {
-				which = global_amount_of_times_china_isolationist_policy
+				which = global_amount_of_times_freehold_isolationist_policy
 				value = 1
 			}
 		}
 		10 = {
 			trigger = {
-				has_policy = china_expansionist
+				has_policy = freehold_expansionist
 			}
 			change_variable = {
-				which = global_amount_of_times_china_expansionist_policy
+				which = global_amount_of_times_freehold_expansionist_policy
 				value = 1
 			}
 		}
@@ -18504,100 +18524,100 @@ print_china_policy_update_effect = {
 }
 
 
-china_war_modify_variables_by_century_effect = {
+freehold_war_modify_variables_by_century_effect = {
 	random_list = {
 		10 = {
 			trigger = {
-				year = 700
-				NOT = { year = 800 }
+				year = 5800
+				NOT = { year = 5900 }
 			}
 		}
 		10 = {
 			trigger = {
-				year = 800
-				NOT = { year = 900 }
+				year = 5900
+				NOT = { year = 6000 }
 			}
 			change_variable = {
-				which = china_war_troop_quantity
+				which = freehold_war_troop_quantity
 				value = 2
 			}
 		}
 		10 = {
 			trigger = {
-				year = 900
-				NOT = { year = 1000 }
+				year = 6000
+				NOT = { year = 6100 }
 			}
 			change_variable = {
-				which = china_war_troop_quantity
+				which = freehold_war_troop_quantity
 				value = 3
 			}
 		}
 		10 = {
 			trigger = {
-				year = 1000
-				NOT = { year = 1100 }
+				year = 6100
+				NOT = { year = 6200 }
 			}
 			change_variable = {
-				which = china_war_troop_quantity
+				which = freehold_war_troop_quantity
 				value = 4
 			}
 		}
 		10 = {
 			trigger = {
-				year = 1100
-				NOT = { year = 1200 }
+				year = 6200
+				NOT = { year = 6300 }
 			}
 			change_variable = {
-				which = china_war_troop_quantity
+				which = freehold_war_troop_quantity
 				value = 5
 			}
 			change_variable = {
-				which = china_war_target_match_mult
+				which = frehold_war_target_match_mult
 				value = 0.05
 			}
 		}
 		10 = {
 			trigger = {
-				year = 1200
-				NOT = { year = 1300 }
+				year = 6300
+				NOT = { year = 6400 }
 			}
 			change_variable = {
-				which = china_war_troop_quantity
+				which = freehold_war_troop_quantity
 				value = 7
 			}
 			change_variable = {
-				which = china_war_target_match_mult
+				which = frehold_war_target_match_mult
 				value = 0.05
 			}
 			change_variable = {
-				which = china_war_troop_quality
+				which = freehold_war_troop_quality
 				value = 1
 			}
 		}
 		10 = {
 			trigger = {
-				year = 1300
+				year = 6400
 			}
 			change_variable = {
-				which = china_war_troop_quantity
+				which = freehold_war_troop_quantity
 				value = 8
 			}
 			change_variable = {
-				which = china_war_target_match_mult
+				which = frehold_war_target_match_mult
 				value = 0.05
 			}
 			change_variable = {
-				which = china_war_troop_quality
+				which = freehold_war_troop_quality
 				value = 1
 			}
 		}
 	}
 }
 
-print_china_ruler_update_effect = {
+print_freehold_ruler_update_effect = {
 	log = "----------------"
-	log = "Ruler of China died at the age of [From.GetAgeYears]."
-	log = "New Ruler of China is [Root.GetBestName] ([From.GetCulture], From.GetReligion])."
+	log = "Ruler of Freehold died at the age of [From.GetAgeYears]."
+	log = "New Ruler of Freehold is [Root.GetBestName] ([From.GetCulture], From.GetReligion])."
 	log = "----------------"
 }
 
@@ -18778,7 +18798,7 @@ return_to_travel_tombola_effect = {
 	hidden_effect = {
 		event_target:kow_tow_traveler = {
 			subtract_variable = {
-				which = china_kow_tow_travel_events
+				which = freehold_kow_tow_travel_events
 				value = 1
 			}
 			character_event = {
@@ -18790,11 +18810,11 @@ return_to_travel_tombola_effect = {
 	}
 }
 
-return_to_china_tombola_effect = {
+return_to_freehold_tombola_effect = {
 	hidden_effect = {
 		event_target:kow_tow_traveler = {
 			subtract_variable = {
-				which = china_kow_tow_travel_events
+				which = freehold_kow_tow_travel_events
 				value = 1
 			}
 			character_event = {
@@ -18822,105 +18842,105 @@ clean_up_after_kow_tow_effect = {
 	clr_character_flag = kow_tow_visited_temple
 }
 
-add_chinese_artifact_effect = { #Used in event JD.15016 (possible to use elsewhere!)
+add_freehold_artifact_effect = { #Used in event JD.15016 (possible to use elsewhere!)
 	hidden_effect = {
 		random_list = {
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_artwork } } }
-				add_artifact = chinese_artwork
+				trigger = { ROOT = { NOT = { has_artifact = freehold_artwork } } }
+				add_artifact = freehold_artwork
 				new_artifact = {
-					set_name = chinese_artwork_name
+					set_name = freehold_artwork_name
 				}
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_calligraphy } } }
-				add_artifact = chinese_calligraphy
+				trigger = { ROOT = { NOT = { has_artifact = freehold_calligraphy } } }
+				add_artifact = freehold_calligraphy
 				new_artifact = {
-					set_name = chinese_calligraphy_name
+					set_name = freehold_calligraphy_name
 				}
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_sculpture } } }
-				add_artifact = chinese_sculpture
+				trigger = { ROOT = { NOT = { has_artifact = freehold_sculpture } } }
+				add_artifact = freehold_sculpture
 				new_artifact = {
-					set_name = chinese_sculpture_name
+					set_name = freehold_sculpture_name
 				}
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_ceremonial_robes } } }
-				add_artifact = chinese_ceremonial_robes
+				trigger = { ROOT = { NOT = { has_artifact = freehold_ceremonial_robes } } }
+				add_artifact = freehold_ceremonial_robes
 			}
 			10 = {
-				offmap_china = {
+				offmap_freehold = {
 					offmap_prev_ruler = {
 						save_event_target_as = prev_emperor
 					}
 				}
-				add_artifact = chinese_prev_emperor_sculpture
+				add_artifact = freehold_prev_emperor_sculpture
 				new_artifact = {
-					set_name = chinese_figurine_name
+					set_name = freehold_figurine_name
 				}
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_arm_protector } } }
-				add_artifact = chinese_arm_protector
+				trigger = { ROOT = { NOT = { has_artifact = freehold_arm_protector } } }
+				add_artifact = freehold_arm_protector
 				new_artifact = {
-					set_name = chinese_arm_protector_name
+					set_name = freehold_arm_protector_name
 				}
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_serpent_spear } } }
-				add_artifact = chinese_serpent_spear
+				trigger = { ROOT = { NOT = { has_artifact = freehold_serpent_spear } } }
+				add_artifact = freehold_serpent_spear
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_ji } } }
-				add_artifact = chinese_ji
+				trigger = { ROOT = { NOT = { has_artifact = freehold_ji } } }
+				add_artifact = freehold_ji
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_crossbow } } }
-				add_artifact = chinese_crossbow
+				trigger = { ROOT = { NOT = { has_artifact = freehold_crossbow } } }
+				add_artifact = freehold_crossbow
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_bronze_sculpture } } }
-				add_artifact = chinese_bronze_sculpture
+				trigger = { ROOT = { NOT = { has_artifact = freehold_bronze_sculpture } } }
+				add_artifact = freehold_bronze_sculpture
 				new_artifact = {
-					set_name = chinese_bronze_sculpture_name 
+					set_name = freehold_bronze_sculpture_name 
 				}
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_book_health } } }
-				add_artifact = chinese_book_health
+				trigger = { ROOT = { NOT = { has_artifact = freehold_book_health } } }
+				add_artifact = freehold_book_health
 				new_artifact = {
-					set_name = chinese_book_health_name
+					set_name = freehold_book_health_name
 				}
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_book_law } } }
-				add_artifact = chinese_book_law
+				trigger = { ROOT = { NOT = { has_artifact = freehold_book_law } } }
+				add_artifact = freehold_book_law
 				new_artifact = {
-					set_name = chinese_book_law_name
+					set_name = freehold_book_law_name
 				}
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_book_history } } }
-				add_artifact = chinese_book_history
+				trigger = { ROOT = { NOT = { has_artifact = freehold_book_history } } }
+				add_artifact = freehold_book_history
 				new_artifact = {
-					set_name = chinese_book_history_name
+					set_name = freehold_book_history_name
 				}
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_book_economy } } }
-				add_artifact = chinese_book_economy
+				trigger = { ROOT = { NOT = { has_artifact = freehold_book_economy } } }
+				add_artifact = freehold_book_economy
 				new_artifact = {
-					set_name = chinese_book_economy_name
+					set_name = freehold_book_economy_name
 				}
 			}
 			1 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_painting_of_glitterhoof } } }
-				add_artifact = chinese_painting_of_glitterhoof
+				trigger = { ROOT = { NOT = { has_artifact = freehold_painting_of_glitterhoof } } }
+				add_artifact = freehold_painting_of_glitterhoof
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_tapestry } } }
+				trigger = { ROOT = { NOT = { has_artifact = freehold_tapestry } } }
 				random_independent_ruler = {
 					limit = {
 						any_realm_province = {
@@ -18934,22 +18954,22 @@ add_chinese_artifact_effect = { #Used in event JD.15016 (possible to use elsewhe
 						save_event_target_as = tapestry_target
 					}
 				}
-				add_artifact = chinese_tapestry
+				add_artifact = freehold_tapestry
 				new_artifact = {
-					set_name = chinese_tapestry_name
+					set_name = freehold_tapestry_name
 				}
 			}
 			10 = {
-				trigger = { ROOT = { NOT = { has_artifact = chinese_tapestry_grand } } }
-				add_artifact = chinese_tapestry_grand
+				trigger = { ROOT = { NOT = { has_artifact = freehold_tapestry_grand } } }
+				add_artifact = freehold_tapestry_grand
 				new_artifact = {
-					set_name = chinese_tapestry_grand_name
+					set_name = freehold_tapestry_grand_name
 				}
-				trigger = { ROOT = { NOT = { has_artifact = chinese_tapestry_grand } } }
+				trigger = { ROOT = { NOT = { has_artifact = freehold_tapestry_grand } } }
 			}
 		}
 		new_artifact = {
-			save_event_target_as = chinese_artifact
+			save_event_target_as = freehold_artifact
 		}
 	}
 }
