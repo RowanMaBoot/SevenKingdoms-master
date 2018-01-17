@@ -1543,7 +1543,7 @@ death_execution_trigger = {
 		death_reason = death_execution_boar
 		death_reason = death_execution_eaten
 		death_reason = death_execution_aztec_sacrifice
-		death_reason = death_executed_by_chinese_emperor
+		death_reason = death_executed_by_freehold_emperor
 	}	
 }
 
@@ -4096,116 +4096,119 @@ has_dharmic_religion_trigger = {
 	}
 }
 
-###CHINA TRIGGERS###
+###FREEHOLD TRIGGERS###
 
 #Grace triggers
 has_grace_trivial_trigger = {
-	has_offmap_currency = { offmap = offmap_china value = 10 }
+	has_offmap_currency = { offmap = offmap_freehold value = 10 }
 }
 has_grace_minor_trigger = {
-	has_offmap_currency = { offmap = offmap_china value = 50 }
+	has_offmap_currency = { offmap = offmap_freehold value = 50 }
 }
 has_grace_medium_trigger = {
-	has_offmap_currency = { offmap = offmap_china value = 150 }
+	has_offmap_currency = { offmap = offmap_freehold value = 150 }
 }
 has_grace_major_trigger = {
-	has_offmap_currency = { offmap = offmap_china value = 500 }
+	has_offmap_currency = { offmap = offmap_freehold value = 500 }
 }
 has_grace_massive_trigger = { 
-	has_offmap_currency = { offmap = offmap_china value = 1000 }
+	has_offmap_currency = { offmap = offmap_freehold value = 1000 }
 }
 
 
 #Always put this at the end of your triggers!
-china_diplo_interaction_trigger = { 
-	offmap_china = {
+freehold_diplo_interaction_trigger = { 
+	offmap_freehold = {
 		governor = { 
 			NOT = { war_with = PREVPREV } 
 			is_within_diplo_range = PREVPREV
 		}
-		NOT = { has_policy = china_isolationist }
+		NOT = { has_policy = freehold_isolationist }
 	}
 	conditional_tooltip = { 
-		trigger = { government = chinese_imperial_government }
+		trigger = { government = freehold_government }
 		custom_tooltip = { 
-			text = china_offmap_decisions_pretender_emperor_tt
+			text = freehold_offmap_decisions_pretender_emperor_tt
 			always = no
 		}
 	}
 }
 
-china_is_suffering_trigger = {
-	offmap_china = {
+freehold_is_suffering_trigger = {
+	offmap_freehold = {
 		OR = {
-			has_status = china_unrest
-			has_status = china_civil_war
-			has_status = china_famine
-			has_status = china_plague
-			has_status = china_mongol_invasion
-			has_status = china_jurchen_invasion
+			has_status = freehold_unrest
+			has_status = freehold_civil_war
+			has_status = freehold_famine
+			has_status = freehold_plague
+			has_status = freehold_dothraki_invasion 
+			has_status = freehold_rhoynish_invasion 
+			has_status = freehold_ghiscari_invasion 
+			has_status = freehold_economic_ruin
+			has_status = freehold_internal_purge
 		}
 	}
 }
 
-china_is_fine_trigger = { #"fine", read like "fiii-iine", i.e. China is currently treating the world as their oyster
-	offmap_china = {
+freehold_is_fine_trigger = { #"fine", read like "fiii-iine", i.e. Freehold is currently treating the world as their oyster
+	offmap_freehold = {
 		OR = {
-			has_status = china_golden_age
-			has_status = china_stable
+			has_status = freehold_golden_age
+			has_status = freehold_stable
 		}
 		OR = {
-			has_policy = china_open
-			has_policy = china_expansionist
+			has_policy = freehold_open
+			has_policy = freehold_expansionist
 		}
 	}
 }
 
-china_is_stable_open_trigger = {
-	offmap_china = {
-		has_status = china_stable
-		has_policy = china_open
+freehold_is_stable_open_trigger = {
+	offmap_freehold = {
+		has_status = freehold_stable
+		has_policy = freehold_open
 	}
 }
-china_is_stable_expansionist_trigger = {
-	offmap_china = {
-		has_status = china_stable
-		has_policy = china_expansionist
+freehold_is_stable_expansionist_trigger = {
+	offmap_freehold = {
+		has_status = freehold_stable
+		has_policy = freehold_expansionist
 	}
 }
-china_is_golden_age_open_trigger = {
-	offmap_china = {
-		has_status = china_golden_age
-		has_policy = china_open
+freehold_is_golden_age_open_trigger = {
+	offmap_freehold = {
+		has_status = freehold_golden_age
+		has_policy = freehold_open
 	}
 }
-china_is_golden_age_expansionist_trigger = {
-	offmap_china = {
-		has_status = china_golden_age
-		has_policy = china_expansionist
+freehold_is_golden_age_expansionist_trigger = {
+	offmap_freehold = {
+		has_status = freehold_golden_age
+		has_policy = freehold_expansionist
 	}
 }
 
 
 #Found in the 00_offmap_powers file... and the conditions for the decisions
-china_offmap_boon_decisions_enabled_trigger = {
-	china_offmap_decisions_enabled_trigger = yes
+freehold_offmap_boon_decisions_enabled_trigger = {
+	freehold_offmap_decisions_enabled_trigger = yes
 	custom_tooltip = {
-		text = china_offmap_boon_decisions_enabled_trigger_cd_tt #From is player character
-		FROM = { NOT = { has_character_modifier = jd_china_boon_cd } } #boon cooldown, which is set in each decision (one year!)...
+		text = freehold_offmap_boon_decisions_enabled_trigger_cd_tt #From is player character
+		FROM = { NOT = { has_character_modifier = jd_freehold_boon_cd } } #boon cooldown, which is set in each decision (one year!)...
 	}
 }
 
 #Found in the 00_offmap_powers file... and the conditions for the decisions, use custom tooltip for that decisions cooldown modifier
-china_offmap_tribute_decisions_enabled_trigger = {
-	china_offmap_decisions_enabled_trigger = yes
+freehold_offmap_tribute_decisions_enabled_trigger = {
+	freehold_offmap_decisions_enabled_trigger = yes
 }
 
 #What goes into the two triggers above...
-china_offmap_decisions_enabled_trigger = { 
-	offmap_china = {
-		NOT = { has_policy = china_isolationist }
+freehold_offmap_decisions_enabled_trigger = { 
+	offmap_freehold = {
+		NOT = { has_policy = freehold_isolationist }
 		custom_tooltip = {
-			text = china_offmap_decisions_enabled_trigger_war_tt #"Is at peace with §Y[From.GetTitledFirstName]§!"
+			text = freehold_offmap_decisions_enabled_trigger_war_tt #"Is at peace with §Y[From.GetTitledFirstName]§!"
 			NOT = { governor = { war_with = FROM } }
 		}
 		governor = {
@@ -4215,11 +4218,11 @@ china_offmap_decisions_enabled_trigger = {
 		}
 	}
 	custom_tooltip = {
-		text = china_offmap_boon_decisions_enabled_trigger_raiding_tt
+		text = freehold_offmap_boon_decisions_enabled_trigger_raiding_tt
 		FROM = {
 			NOR = {
-				has_character_modifier = china_raid_active
-				has_character_modifier = china_raid_grace_cd
+				has_character_modifier = freehold_raid_active
+				has_character_modifier = freehold_raid_grace_cd
 			}
 		}
 	}
@@ -4227,24 +4230,24 @@ china_offmap_decisions_enabled_trigger = {
 	conditional_tooltip = { 
 		trigger = { FROM = { primary_title = { has_title_flag = rebel_general_title } } }
 		custom_tooltip = { 
-			text = china_offmap_decisions_pretender_emperor_tt
+			text = freehold_offmap_decisions_pretender_emperor_tt
 			always = no
 		}
 	}
 	conditional_tooltip = { 
-		trigger = { FROM = { has_character_modifier = failed_invasion_of_china } }
+		trigger = { FROM = { has_character_modifier = failed_invasion_of_freehold } }
 		custom_tooltip = { 
-			text = china_offmap_decisions_failed_invasion_tt
+			text = freehold_offmap_decisions_failed_invasion_tt
 			always = no
 		}
 	}
 }
 
-#Found in the 00_offmap_powers file... and the conditions for the force open china decision
-china_offmap_hostile_decisions_enabled_trigger = {
-	offmap_china = {
+#Found in the 00_offmap_powers file... and the conditions for the force open freehold decision
+freehold_offmap_hostile_decisions_enabled_trigger = {
+	offmap_freehold = {
 		custom_tooltip = {
-			text = china_offmap_decisions_enabled_trigger_war_tt #"Is at peace with §Y[From.GetTitledFirstName]§!"
+			text = freehold_offmap_decisions_enabled_trigger_war_tt #"Is at peace with §Y[From.GetTitledFirstName]§!"
 			NOT = { governor = { war_with = FROM } }
 		}
 		governor = {
@@ -4259,7 +4262,7 @@ china_offmap_hostile_decisions_enabled_trigger = {
 	hidden_trigger = { has_dlc = "Jade Dragon" }
 }
 
-#Used with Sending Tribute characters to China...
+#Used with Sending Tribute characters to Freehold...
 local_third_party_score_low_trigger = {
 	NOT = { check_variable = { which = local_third_party_score value = 91 } }
 }
@@ -4271,83 +4274,83 @@ local_third_party_score_great_trigger = {
 	check_variable = { which = local_third_party_score value = 141 }
 }
 
-# For checking the Chinese Emperor's likes & dislikes
-is_liked_by_China_trigger = {
+# For checking the Freehold Emperor's likes & dislikes
+is_liked_by_Freehold_trigger = {
 	liked_by_offmap = {
-        type = offmap_china
+        type = offmap_freehold
     }
     NOT = {
         disliked_by_offmap = {
-            type = offmap_china
+            type = offmap_freehold
         }
     }
-    offmap_china = {
+    offmap_freehold = {
         show_scope_change = no
         custom_tooltip = { text = emperor_likes_THIS_tt }
     }
 }
 
-is_disliked_by_China_trigger = {
+is_disliked_by_Freehold_trigger = {
 	disliked_by_offmap = {
-        type = offmap_china
+        type = offmap_freehold
     }
     NOT = {
 		liked_by_offmap = {
-            type = offmap_china
+            type = offmap_freehold
         }
     }
-    offmap_china = {
+    offmap_freehold = {
         show_scope_change = no
         custom_tooltip = { text = emperor_dislikes_THIS_tt }
     }
 }
 
-is_liked_and_disliked_by_China = {
+is_liked_and_disliked_by_Freehold = {
     disliked_by_offmap = {
-        type = offmap_china
+        type = offmap_freehold
     }
     liked_by_offmap = {
-        type = offmap_china
+        type = offmap_freehold
     }
-    offmap_china = {
+    offmap_freehold = {
         show_scope_change = no
         custom_tooltip = { text = emperor_has_ambiguous_feelings_of_THIS_tt }
     }
 }
 
 #Used in the invasion script...
-valid_offmap_china_target = {
+valid_offmap_freehold_target = {
 	NOT = { character = ROOT }
-	NOT = { has_character_modifier = peace_deal_with_china }
-	NOT = { has_character_flag = defeated_china }
+	NOT = { has_character_modifier = peace_deal_with_freehold }
+	NOT = { has_character_flag = defeated_freehold }
 	NOT = {	is_tributary = { suzerain = ROOT } }
 	in_revolt = no
 	is_within_diplo_range = ROOT
 	is_landed = yes
 	higher_tier_than = BARON
 	NOT = { primary_title = { has_title_flag = rebel_general_title } } #uses special cb to target
-	NOT = { offmap_china = { offmap_ruler = { dynasty = PREVPREV } } }
+	NOT = { offmap_freehold = { offmap_ruler = { dynasty = PREVPREV } } }
 }
 
-valid_offmap_china_target_location = {
+valid_offmap_freehold_target_location = {
 	OR = {
 		any_realm_province = { region = custom_chinese_invasion_target_region }
 		any_neighbor_independent_ruler = {
-			has_landed_title = e_china_west_governor
+			has_landed_title = e_valyrian_freehold
 		}
 	}
 }
 
-valid_offmap_china_target_location_tributary_chain = {
+valid_offmap_freehold_target_location_tributary_chain = {
 	OR = {
 		#any_realm_province = { region = custom_chinese_invasion_target_region }
 		any_neighbor_independent_ruler = {
-			has_landed_title = e_china_west_governor
+			has_landed_title = e_valyrian_freehold
 		}
 		any_neighbor_independent_ruler = {
 			is_tributary = yes
 			suzerain = {
-				has_landed_title = e_china_west_governor
+				has_landed_title = e_valyrian_freehold
 			}
 		}
 	}
@@ -4430,9 +4433,9 @@ has_unsafe_religion = {
 	}
 }
 
-courtier_from_china_trigger = {
+courtier_from_freehold_trigger = {
 	custom_tooltip = {
-		text = courtier_from_china_trigger_tt
+		text = courtier_from_freehold_trigger_tt
 		has_character_flag = originated_from_chinese_court
 	}
 }
@@ -4446,12 +4449,12 @@ using_unimportant_cb = {
 	}
 }
 
-death_in_china_trigger = {
+death_in_freehold_trigger = {
 	OR = {
-		death_reason = death_went_to_china
+		death_reason = death_went_to_freehold
 		death_reason = death_offmap
-		death_reason = death_went_back_to_china
-		death_reason = death_in_china_historic
+		death_reason = death_went_back_to_freehold
+		death_reason = death_in_freehold_historic
 	}
 }
 
