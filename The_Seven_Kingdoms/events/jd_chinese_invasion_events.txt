@@ -1970,7 +1970,7 @@ narrative_event = {
 ### Spawning Dothraki Khal adventurer... (fires for the governor, from jd_chinese_status_and_policy_events file)
 #########################################################################################################
 character_event = {
-    id = JD.10109
+    id = JD.10109a
 
     has_dlc = "Jade Dragon"
 
@@ -2027,6 +2027,126 @@ character_event = {
 }
 
 #########################################################################################################
+### Spawning Rhoynish adventurer... (fires for the governor, from jd_chinese_status_and_policy_events file)
+#########################################################################################################
+character_event = {
+    id = JD.10109b
+
+    has_dlc = "Jade Dragon"
+
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        #is_offmap_tag = offmap_freehold
+    	#NOT = { dynasty = FROM } #for the prince only
+    }
+
+    immediate = {
+		clr_character_flag = spawning_a_displaced_royal
+    	clr_character_flag = spawning_a_dothraki_invader
+		clr_character_flag = spawning_a_rhoynish_invader
+		clr_character_flag = spawning_a_ghiscari_invader
+    	clr_character_flag = spawning_a_rebel_general
+
+    	save_event_target_as = the_protector_general
+
+		random_list = {
+			100 = {
+				create_character = {
+					random_traits = yes
+					religion = rhoynar
+					culture = rhoynish
+					dynasty = actually_culture
+					female = no
+					age = 30
+					trait = tough_soldier
+					historical = yes
+				}
+				new_character = {
+					add_trait = ambitious
+					remove_trait = content
+					remove_trait = craven
+					set_character_flag = is_rhoynish_invader
+					save_event_target_as = rhoynish_invader
+					save_event_target_as = the_freehold_invader #loc based on what flag this target has
+					character_event = { id = JD.10110 }
+					log = "Freehold Logging:"
+					log = "[This.GetFullName] ID [This.GetID] is the Rhoynish Invader"
+				}
+			}
+		}
+		any_player = {
+			limit = {
+				has_offmap_news_enabled = offmap_freehold
+				is_within_diplo_range = ROOT
+			}
+			narrative_event = { id = JD.10108 days = 1 } #News: "A wild adventurer appears" (uses triggered desc to mention it's a prince)
+		}
+    }
+}
+
+#########################################################################################################
+### Spawning Ghiscari adventurer... (fires for the governor, from jd_chinese_status_and_policy_events file)
+#########################################################################################################
+character_event = {
+    id = JD.10109c
+
+    has_dlc = "Jade Dragon"
+
+    hide_window = yes
+    is_triggered_only = yes
+
+    trigger = {
+        #is_offmap_tag = offmap_freehold
+    	#NOT = { dynasty = FROM } #for the prince only
+    }
+
+    immediate = {
+		clr_character_flag = spawning_a_displaced_royal
+    	clr_character_flag = spawning_a_dothraki_invader
+		clr_character_flag = spawning_a_rhoynish_invader
+		clr_character_flag = spawning_a_ghiscari_invader
+    	clr_character_flag = spawning_a_rebel_general
+
+    	save_event_target_as = the_protector_general
+
+		random_list = {
+			100 = {
+				create_character = {
+					random_traits = yes
+					religion = harpy
+					culture = ghiscari
+					dynasty = actually_culture
+					female = no
+					age = 30
+					trait = tough_soldier
+					historical = yes
+				}
+				new_character = {
+					add_trait = ambitious
+					remove_trait = content
+					remove_trait = craven
+					set_character_flag = is_ghiscari_invader
+					save_event_target_as = ghiscari_invader
+					save_event_target_as = the_freehold_invader #loc based on what flag this target has
+					character_event = { id = JD.10110 }
+					log = "Freehold Logging:"
+					log = "[This.GetFullName] ID [This.GetID] is the Ghiscari Invader"
+				}
+			}
+		}
+		any_player = {
+			limit = {
+				has_offmap_news_enabled = offmap_freehold
+				is_within_diplo_range = ROOT
+			}
+			narrative_event = { id = JD.10108 days = 1 } #News: "A wild adventurer appears" (uses triggered desc to mention it's a prince)
+		}
+    }
+}
+
+#########################################################################################################
 ### Spawning Displaced Prince - Only in case of dynasty change...  (fires for the governor, from JD.50300, jd_chinese_status_and_policy_events file )
 #########################################################################################################
 character_event = {
@@ -2044,7 +2164,9 @@ character_event = {
 
     immediate = {
     	clr_character_flag = spawning_a_displaced_royal
-    	clr_character_flag = spawning_a_jurchen_invader
+    	clr_character_flag = spawning_a_dothraki_invader
+		clr_character_flag = spawning_a_rhoynish_invader
+		clr_character_flag = spawning_a_ghiscari_invader
     	clr_character_flag = spawning_a_rebel_general
 
     	save_event_target_as = the_protector_general
@@ -2057,7 +2179,7 @@ character_event = {
 
     	create_character = {
 			random_traits = yes
-			religion = taoist
+			religion = valyrian
 			culture = event_target:previousEmperor 
 			dynasty = event_target:previousEmperor
 			female = no
@@ -2186,7 +2308,7 @@ character_event = {
 }
 
 #########################################################################################################
-# An ambitious Jurchen General/Displaced Prince begins to plan an adventure for a foreign title
+# An ambitious Valyrian General/Displaced Prince begins to plan an adventure for a foreign title
 #########################################################################################################
 character_event = {
 	id = JD.10110
@@ -2222,24 +2344,12 @@ character_event = {
 			base_title = THIS
 		}
 
-		if = {
-			limit = { has_character_flag = is_jurchen_invader }
-			set_character_flag = raiding_adventurer_nomad
-		}
-
 		set_character_flag = raiding_adventurer
-		change_variable = { which = global_raiding_adventurer_spawn_by_jurchen_invasion value = 1 }
-
-		if = {
-			limit = { has_character_flag = is_jurchen_invader }
-			1457 = { #Karabalgasun
-				save_event_target_as = target_province
-			}
-		}
+		change_variable = { which = global_raiding_adventurer_spawn_by_displaced_prince value = 1 }
 
 		if = {
 			limit = { has_character_flag = is_displaced_prince }
-			1513 = { #Jiuquan
+			389 = { #Iklad
 				save_event_target_as = target_province
 			}
 		}
@@ -2304,62 +2414,6 @@ character_event = {
 			}
 		}
 
-		if = { limit = { has_character_flag = is_jurchen_invader } 
-			random_list = {
-				30 = {
-					spawn_unit = {
-						province = event_target:target_province
-						home = event_target:target_province
-						owner = ROOT
-						attrition = 0
-						reinforces = yes
-						is_looter = yes
-						can_toggle_looting = no
-						cannot_inherit = yes
-						merge = yes
-						troops = {
-							light_cavalry = { 1000 1000 }
-							horse_archers = { 800 800 }
-						}
-					}
-				}
-				30 = {
-					spawn_unit = {
-						province = event_target:target_province
-						home = event_target:target_province
-						owner = ROOT
-						attrition = 0
-						reinforces = yes
-						is_looter = yes
-						can_toggle_looting = no
-						cannot_inherit = yes
-						merge = yes
-						troops = {
-							light_cavalry = { 1500 1500 }
-							horse_archers = { 1200 1200 }
-						}
-					}
-				}
-				30 = {
-					spawn_unit = {
-						province = event_target:target_province
-						home = event_target:target_province
-						owner = ROOT
-						attrition = 0
-						reinforces = yes
-						is_looter = yes
-						can_toggle_looting = no
-						cannot_inherit = yes
-						merge = yes
-						troops = {
-							light_cavalry = { 2000 2000 }
-							horse_archers = { 1600 1600 }
-						}
-					}
-				}
-			}
-		}
-
 		#Characters to command the new troops...
 		create_random_soldier = {
 			random_traits = yes
@@ -2399,7 +2453,7 @@ character_event = {  # Checks ready to settle (declare war or negotiate) or cont
 	}
 	
 	immediate = {
-		log = "Event JD.10111 for raiding altaic adventurer: [Root.GetBestName] - approach someone or continue raiding?"
+		log = "Event JD.10111 for raiding Valyrian adventurer: [Root.GetBestName] - approach someone or continue raiding?"
 		if = {
 			limit = {
 				OR = { #If rich enough or has been adventuring for so long...
@@ -2708,7 +2762,7 @@ character_event = {
 	immediate = {
 		log = "-------------------------------------"
 		log = "Freehold Logging:"
-		log = "The Western Protectorate has gained [Root.WP_nomad_provinces.GetValue] nomad provinces from the war."
+		log = "The Western Viceroy has gained [Root.WP_nomad_provinces.GetValue] nomad provinces from the war."
 		log = "The amount of gold that shall recieved is 200 per nomad province modified by the current status of Freehold"
 		set_variable = { which = "WP_nomad_gold_from_freehold" which = "WP_nomad_provinces" }
 		multiply_variable = { which = "WP_nomad_gold_from_freehold" value = 200 } #cost is about 400 to build so this slows it down a bit
@@ -2749,7 +2803,9 @@ character_event = {
 
     immediate = {
     	clr_character_flag = spawning_a_displaced_royal
-    	clr_character_flag = spawning_a_jurchen_invader
+    	clr_character_flag = spawning_a_dothraki_invader
+		clr_character_flag = spawning_a_rhoynish_invader
+		clr_character_flag = spawning_a_ghiscari_invader
     	clr_character_flag = spawning_a_rebel_general
 
     	save_event_target_as = the_protector_general
@@ -2761,8 +2817,8 @@ character_event = {
 					age = 27
 					random_traits = yes
 					female = no
-					religion = taoist
-					culture = han
+					religion = valyrian
+					culture = high_valyrian
 					dynasty = actually_culture
 					trait = brilliant_strategist
 					martial = 8
@@ -2775,8 +2831,8 @@ character_event = {
 					age = 36
 					random_traits = yes
 					female = no
-					religion = taoist
-					culture = han
+					religion = valyrian
+					culture = high_valyrian
 					dynasty = actually_culture
 					trait = brilliant_strategist
 					martial = 10
@@ -2789,8 +2845,8 @@ character_event = {
 					age = 52
 					random_traits = yes
 					female = no
-					religion = taoist
-					culture = han
+					religion = valyrian
+					culture = high_valyrian
 					dynasty = actually_culture
 					trait = brilliant_strategist
 					martial = 12
@@ -2982,8 +3038,8 @@ character_event = {
 					age = 24
 					random_traits = yes
 					female = yes
-					religion = taoist
-					culture = han
+					religion = valyrian
+					culture = high_valyrian
 					historical = yes
 				}
 				new_character = {
@@ -2992,8 +3048,8 @@ character_event = {
 						age = 6
 						random_traits = yes
 						female = 50
-						religion = taoist
-						culture = han
+						religion = valyrian
+						culture = high_valyrian
 						genetic_father = ROOT
 						genetic_mother = PREV
 						historical = yes
@@ -3007,8 +3063,8 @@ character_event = {
 						age = 6
 						random_traits = yes
 						female = 50
-						religion = taoist
-						culture = han
+						religion = valyrian
+						culture = high_valyrian
 						genetic_father = ROOT
 						genetic_mother = PREV
 						historical = yes
@@ -3025,8 +3081,8 @@ character_event = {
 					age = 32
 					random_traits = yes
 					female = yes
-					religion = taoist
-					culture = han
+					religion = valyrian
+					culture = high_valyrian
 					historical = yes
 				}
 				new_character = {
@@ -3035,8 +3091,8 @@ character_event = {
 						age = 7
 						random_traits = yes
 						female = 50
-						religion = taoist
-						culture = han
+						religion = valyrian
+						culture = high_valyrian
 						genetic_father = ROOT
 						genetic_mother = PREV
 						historical = yes
@@ -3050,8 +3106,8 @@ character_event = {
 						age = 10
 						random_traits = yes
 						female = 50
-						religion = taoist
-						culture = han
+						religion = valyrian
+						culture = high_valyrian
 						genetic_father = ROOT
 						genetic_mother = PREV
 						historical = yes
@@ -3065,8 +3121,8 @@ character_event = {
 						age = 13
 						random_traits = yes
 						female = 50
-						religion = taoist
-						culture = han
+						religion = valyrian
+						culture = high_valyrian
 						genetic_father = ROOT
 						genetic_mother = PREV
 						historical = yes
@@ -3083,8 +3139,8 @@ character_event = {
 					age = 48
 					random_traits = yes
 					female = yes
-					religion = taoist
-					culture = han
+					religion = valyrian
+					culture = high_valyrian
 					historical = yes
 				}
 				new_character = {
@@ -3093,8 +3149,8 @@ character_event = {
 						age = 4
 						random_traits = yes
 						female = 50
-						religion = taoist
-						culture = han
+						religion = valyrian
+						culture = high_valyrian
 						genetic_father = ROOT
 						genetic_mother = PREV
 						historical = yes
@@ -3108,8 +3164,8 @@ character_event = {
 						age = 9
 						random_traits = yes
 						female = 50
-						religion = taoist
-						culture = han
+						religion = valyrian
+						culture = high_valyrian
 						genetic_father = ROOT
 						genetic_mother = PREV
 						historical = yes
@@ -3123,8 +3179,8 @@ character_event = {
 						age = 14
 						random_traits = yes
 						female = 50
-						religion = taoist
-						culture = han
+						religion = valyrian
+						culture = high_valyrian
 						genetic_father = ROOT
 						genetic_mother = PREV
 						historical = yes
@@ -3138,8 +3194,8 @@ character_event = {
 						age = 18
 						random_traits = yes
 						female = 50
-						religion = taoist
-						culture = han
+						religion = valyrian
+						culture = high_valyrian
 						genetic_father = ROOT
 						genetic_mother = PREV
 						historical = yes
@@ -3153,8 +3209,8 @@ character_event = {
 						age = 21
 						random_traits = yes
 						female = 50
-						religion = taoist
-						culture = han
+						religion = valyrian
+						culture = high_valyrian
 						genetic_father = ROOT
 						genetic_mother = PREV
 						historical = yes
@@ -3319,7 +3375,7 @@ character_event = {
 	immediate = {
 		if = { #Chinese Imperial but not Chinese/Altaic, let convert culture
 			limit = { 
-				has_character_flag = chinese_imperial_government_preserve
+				has_character_flag = freehold_government_preserve
 			}
 			repeat_event = { id = JD.60212 days = 1 }
 			break = yes
@@ -3329,13 +3385,31 @@ character_event = {
 			limit = { NOT = { dynasty = FROMFROM } }
 			random_list = {
 				1 = { set_name = Gaozu }
-				1 = { set_name = Taizu }
-				1 = { set_name = Shizu }
-				1 = { set_name = Zhaozu }
-				1 = { set_name = Jingzu }
-				1 = { set_name = Xianzu }
-				1 = { set_name = Liezu }
-				1 = { set_name = Chengzu }
+				1 = { set_name = Ageneos }
+				1 = { set_name = Vaelreos }
+				1 = { set_name = Laeraeris }
+				1 = { set_name = Bartalor }
+				1 = { set_name = Calraenos }
+				1 = { set_name = Baraeris }
+				1 = { set_name = Dorennis }
+				1 = { set_name = Caeneneos }
+				1 = { set_name = Qohgyreon }
+				1 = { set_name = Bernaerosozu }
+				1 = { set_name = Laeritheos }
+				1 = { set_name = Valralis }
+				1 = { set_name = Bertaris }
+				1 = { set_name = Taennaris }
+				1 = { set_name = Taranyon }
+				1 = { set_name = Qaraenor }
+				1 = { set_name = Valanyon }
+				1 = { set_name = Lenralis }
+				1 = { set_name = Qarmaereon }
+				1 = { set_name = Laernaris }
+				1 = { set_name = Arinarys }
+				1 = { set_name = Argyreon }
+				1 = { set_name = Meleneos }
+				1 = { set_name = Laenaenor }
+				1 = { set_name = Gonnaris }
 			}
 			set_character_flag = given_temple_name_by_script
 			event_target:temple_name_title = { #Random Empire name that Freehold doesn't have
@@ -3343,124 +3417,34 @@ character_event = {
 				clear_flags_with_prefix = freehold_name_
 				random_list = {
 					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = tang_freehold } } }
-						set_name = "Tang Empire"
-						set_title_flag = freehold_name_Tang
+						trigger = { NOT = { offmap_freehold = { has_offmap_name = tolos_freehold } } }
+						set_name = "Tolos Empire"
+						set_title_flag = freehold_name_Tolos
 					}
 					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = jin_freehold } } }
-						set_name = "Jin Empire"
-						set_title_flag = freehold_name_Jin
+						trigger = { NOT = { offmap_freehold = { has_offmap_name = elyria_freehold } } }
+						set_name = "Elyria Empire"
+						set_title_flag = freehold_name_Elyria
 					}
 					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = wei_freehold } } }
-						set_name = "Wei Empire"
-						set_title_flag = freehold_name_Wei
+						trigger = { NOT = { offmap_freehold = { has_offmap_name = mantarys_freehold } } }
+						set_name = "Mantarys Empire"
+						set_title_flag = freehold_name_Mantarys
 					}
 					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = qi_freehold } } }
-						set_name = "Qi Empire"
-						set_title_flag = freehold_name_Qi
+						trigger = { NOT = { offmap_freehold = { has_offmap_name = oros_freehold } } }
+						set_name = "Oros Empire"
+						set_title_flag = freehold_name_Oros
 					}
 					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = zhou_freehold } } }
-						set_name = "Zhou Empire"
-						set_title_flag = freehold_name_Zhou
+						trigger = { NOT = { offmap_freehold = { has_offmap_name = rhyos_freehold } } }
+						set_name = "Rhyos Empire"
+						set_title_flag = freehold_name_Rhyos
 					}
 					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = han_freehold } } }
-						set_name = "Han Empire"
-						set_title_flag = freehold_name_Han
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = qin_freehold } } }
-						set_name = "Qin Empire"
-						set_title_flag = freehold_name_Qin
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = yan_freehold } } }
-						set_name = "Yan Empire"
-						set_title_flag = freehold_name_Yan
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = zhao_freehold } } }
-						set_name = "Zhao Empire"
-						set_title_flag = freehold_name_Zhao
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = liao_freehold } } }
-						set_name = "Liao Empire"
-						set_title_flag = freehold_name_Liao
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = yuan_freehold } } }
-						set_name = "Yuan Empire"
-						set_title_flag = freehold_name_Yuan
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = xia_freehold } } }
-						set_name = "Xia Empire"
-						set_title_flag = freehold_name_Xia
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = qing_freehold } } }
-						set_name = "Qing Empire"
-						set_title_flag = freehold_name_Qing
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = dai_freehold } } }
-						set_name = "Dai Empire"
-						set_title_flag = freehold_name_Dai
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = cheng_freehold } } }
-						set_name = "Cheng Empire"
-						set_title_flag = freehold_name_Cheng
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = liang_freehold } } }
-						set_name = "Liang Empire"
-						set_title_flag = freehold_name_Liang
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = song_freehold } } }
-						set_name = "Song Empire"
-						set_title_flag = freehold_name_Song
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = ming_freehold } } }
-						set_name = "Ming Empire"
-						set_title_flag = freehold_name_Ming
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = shu_freehold } } }
-						set_name = "Shu Empire"
-						set_title_flag = freehold_name_Shu
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = wu_freehold } } }
-						set_name = "Wu Empire"
-						set_title_flag = freehold_name_Wu
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = chu_freehold } } }
-						set_name = "Chu Empire"
-						set_title_flag = freehold_name_Chu
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = yue_freehold } } }
-						set_name = "Yue Empire"
-						set_title_flag = freehold_name_Yue
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = yin_freehold } } }
-						set_name = "Yin Empire"
-						set_title_flag = freehold_name_Yin
-					}
-					1 = { 
-						trigger = { NOT = { offmap_freehold = { has_offmap_name = shun_freehold } } }
-						set_name = "Shun Empire"
-						set_title_flag = freehold_name_Shun
+						trigger = { NOT = { offmap_freehold = { has_offmap_name = tyria_freehold } } }
+						set_name = "Tyria Empire"
+						set_title_flag = freehold_name_Tyria
 					}
 				}
 			}
@@ -3469,62 +3453,31 @@ character_event = {
 		if = { #We somehow used every single one of the 56 temple names... clear them out then continue
 			limit = { 
 				event_target:temple_name_title = {
-					has_title_flag = temple_name_Zhenzong
-					has_title_flag = temple_name_Renzong
-					has_title_flag = temple_name_Zhongzong
-					has_title_flag = temple_name_Yingzong
-					has_title_flag = temple_name_Shenzong
-					has_title_flag = temple_name_Zhezhong
-					has_title_flag = temple_name_Huizong
-					has_title_flag = temple_name_Qinzong
-					has_title_flag = temple_name_Xiaozong
-					has_title_flag = temple_name_Guangzong
-					has_title_flag = temple_name_Ningzong
-					has_title_flag = temple_name_Lizong
-					has_title_flag = temple_name_Duzong
-					has_title_flag = temple_name_Duanzong
-					has_title_flag = temple_name_Xuanzong
-					has_title_flag = temple_name_Suzong
-					has_title_flag = temple_name_Daizong
-					has_title_flag = temple_name_Muzong
-					has_title_flag = temple_name_Jingzong
-					has_title_flag = temple_name_Wenzong
-					has_title_flag = temple_name_Wuzong
-					has_title_flag = temple_name_Zhaozong
-					has_title_flag = temple_name_Xizong
-					has_title_flag = temple_name_Xuanzong
-					has_title_flag = temple_name_Shizong
-					has_title_flag = temple_name_Zhangzong
-					has_title_flag = temple_name_Ruizong
-					has_title_flag = temple_name_Dingzong
-					has_title_flag = temple_name_Xianzong
-					has_title_flag = temple_name_Chengzong
-					has_title_flag = temple_name_Mingzong
-					has_title_flag = temple_name_Jinzong
-					has_title_flag = temple_name_Yizong
-					has_title_flag = temple_name_Xiangzong
-					has_title_flag = temple_name_Huanzong
-					has_title_flag = temple_name_Chongzong
-					has_title_flag = temple_name_Daozong
-					has_title_flag = temple_name_Liezong
-					has_title_flag = temple_name_Aizong
-					has_title_flag = temple_name_Zhangzong
-					has_title_flag = temple_name_Dezong
-					has_title_flag = temple_name_Shengzong
-					has_title_flag = temple_name_Xingzong
-					has_title_flag = temple_name_Kangzong
-					has_title_flag = temple_name_Zhuangzong
-					has_title_flag = temple_name_Pingzong
-					has_title_flag = temple_name_Sizong
-					has_title_flag = temple_name_Anzong
-					has_title_flag = temple_name_Yangzong
-					has_title_flag = temple_name_Shangzong
-					has_title_flag = temple_name_Shunzong
-					has_title_flag = temple_name_Zhizong
-					has_title_flag = temple_name_Chuangzong
-					has_title_flag = temple_name_Shaozong
-					has_title_flag = temple_name_Gongzong
-					has_title_flag = temple_name_Yingzong
+					has_title_flag = temple_name_Ageneos
+					has_title_flag = temple_name_Vaelreos
+					has_title_flag = temple_name_Laeraeris
+					has_title_flag = temple_name_Bartalor
+					has_title_flag = temple_name_Calraenos
+					has_title_flag = temple_name_Baraeris
+					has_title_flag = temple_name_Dorennis
+					has_title_flag = temple_name_Caeneneos
+					has_title_flag = temple_name_Qohgyreon
+					has_title_flag = temple_name_Bernaerosozu
+					has_title_flag = temple_name_Laeritheos
+					has_title_flag = temple_name_Valralis
+					has_title_flag = temple_name_Bertaris
+					has_title_flag = temple_name_Taennaris
+					has_title_flag = temple_name_Taranyon
+					has_title_flag = temple_name_Qaraenor
+					has_title_flag = temple_name_Valanyon
+					has_title_flag = temple_name_Lenralis
+					has_title_flag = temple_name_Qarmaereon
+					has_title_flag = temple_name_Laernaris
+					has_title_flag = temple_name_Arinarys
+					has_title_flag = temple_name_Argyreon
+					has_title_flag = temple_name_Meleneos
+					has_title_flag = temple_name_Laenaenor
+					has_title_flag = temple_name_Gonnaris
 				}
 			}
 			event_target:temple_name_title = {
@@ -3533,605 +3486,23 @@ character_event = {
 		}
 		random_list = { #Now continue with successor names
 			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Zhenzong } } }
-				set_name = "Zhenzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Zhenzong }
+				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Ageneosia } } }
+				set_name = "Ageneosia"
+				event_target:temple_name_title = { set_title_flag = temple_name_Ageneosia }
 				set_character_flag = given_temple_name_by_script
 			}
 			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Renzong } } }
-				set_name = "Renzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Renzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Zhongzong } } }
-				set_name = "Zhongzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Zhongzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Yingzong } } }
-				set_name = "Yingzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Yingzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Shenzong } } }
-				set_name = "Shenzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Shenzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Zhezhong } } }
-				set_name = "Zhezhong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Zhezhong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Huizong } } }
-				set_name = "Huizong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Huizong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Qinzong } } }
-				set_name = "Qinzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Qinzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Xiaozong } } }
-				set_name = "Xiaozong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Xiaozong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Guangzong } } }
-				set_name = "Guangzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Guangzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Ningzong } } }
-				set_name = "Ningzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Ningzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Lizong } } }
-				set_name = "Lizong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Lizong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Duzong } } }
-				set_name = "Duzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Duzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Duanzong } } }
-				set_name = "Duanzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Duanzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Xuanzong } } }
-				set_name = "Xuanzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Xuanzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Suzong } } }
-				set_name = "Suzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Suzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Daizong } } }
-				set_name = "Daizong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Daizong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Muzong } } }
-				set_name = "Muzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Muzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Jingzong } } }
-				set_name = "Jingzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Jingzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Wenzong } } }
-				set_name = "Wenzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Wenzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Wuzong } } }
-				set_name = "Wuzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Wuzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Zhaozong } } }
-				set_name = "Zhaozong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Zhaozong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Xizong } } }
-				set_name = "Xizong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Xizong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Xuanzong } } }
-				set_name = "Xuanzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Xuanzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Shizong } } }
-				set_name = "Shizong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Shizong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Zhangzong } } }
-				set_name = "Zhangzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Zhangzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Ruizong } } }
-				set_name = "Ruizong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Ruizong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Dingzong } } }
-				set_name = "Dingzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Dingzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Xianzong } } }
-				set_name = "Xianzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Xianzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Chengzong } } }
-				set_name = "Chengzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Chengzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Mingzong } } }
-				set_name = "Mingzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Mingzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Jinzong } } }
-				set_name = "Jinzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Jinzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Yizong } } }
-				set_name = "Yizong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Yizong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Xiangzong } } }
-				set_name = "Xiangzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Xiangzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Huanzong } } }
-				set_name = "Huanzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Huanzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Chongzong } } }
-				set_name = "Chongzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Chongzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Daozong } } }
-				set_name = "Daozong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Daozong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Liezong } } }
-				set_name = "Liezong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Liezong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Aizong } } }
-				set_name = "Aizong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Aizong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Zhangzong } } }
-				set_name = "Zhangzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Zhangzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Dezong } } }
-				set_name = "Dezong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Dezong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Shengzong } } }
-				set_name = "Shengzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Shengzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Xingzong } } }
-				set_name = "Xingzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Xingzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Kangzong } } }
-				set_name = "Kangzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Kangzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Zhuangzong } } }
-				set_name = "Zhuangzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Zhuangzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Pingzong } } }
-				set_name = "Pingzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Pingzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Sizong } } }
-				set_name = "Sizong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Sizong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Anzong } } }
-				set_name = "Anzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Anzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Yangzong } } }
-				set_name = "Yangzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Yangzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Shangzong } } }
-				set_name = "Shangzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Shangzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Shunzong } } }
-				set_name = "Shunzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Shunzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Zhizong } } }
-				set_name = "Zhizong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Zhizong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Chuangzong } } }
-				set_name = "Chuangzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Chuangzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Shaozong } } }
-				set_name = "Shaozong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Shaozong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Gongzong } } }
-				set_name = "Gongzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Gongzong }
-				set_character_flag = given_temple_name_by_script
-			}
-			1 = {
-				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Yingzong } } }
-				set_name = "Yingzong"
-				event_target:temple_name_title = { set_title_flag = temple_name_Yingzong }
+				trigger = { NOT = { event_target:temple_name_title = { has_title_flag = temple_name_Vaelreosia } } }
+				set_name = "Vaelreosia"
+				event_target:temple_name_title = { set_title_flag = temple_name_Vaelreosia }
 				set_character_flag = given_temple_name_by_script
 			}
 		}
 	}
 }
 
-#EU4 conversion, prepare on map Freehold for conversion
-character_event = {
-	id = JD.60205
-	hide_window = yes
-	is_triggered_only = yes
-
-    has_dlc = "Jade Dragon"
-
-	immediate = {
-		if = { 
-			limit = { government = chinese_imperial_government }
-			primary_title = {
-				trigger_switch = { #Ensure naming convention 
-					on_trigger = has_title_flag
-					freehold_name_Tang = { set_name = "Tang" }
-					freehold_name_Jin = { set_name = "Jin" }
-					freehold_name_Wei = { set_name = "Wei" }
-					freehold_name_Qi = { set_name = "Qi" }
-					freehold_name_Zhou = { set_name = "Zhou" }
-					freehold_name_Han = { set_name = "Han" }
-					freehold_name_Qin = { set_name = "Qin" }
-					freehold_name_Yan = { set_name = "Yan" }
-					freehold_name_Zhao = { set_name = "Zhao" }
-					freehold_name_Liao = { set_name = "Liao" }
-					freehold_name_Yuan = { set_name = "Yuan" }
-					freehold_name_Xia = { set_name = "Xia" }
-					freehold_name_Qing = { set_name = "Qing" }
-					freehold_name_Dai = { set_name = "Dai" }
-					freehold_name_Cheng = { set_name = "Cheng" }
-					freehold_name_Liang = { set_name = "Liang" }
-					freehold_name_Song = { set_name = "Song" }
-					freehold_name_Ming = { set_name = "Ming" }
-					freehold_name_Shu = { set_name = "Shu" }
-					freehold_name_Wu = { set_name = "Wu" }
-					freehold_name_Chu = { set_name = "Chu" }
-					freehold_name_Yue = { set_name = "Yue" }
-					freehold_name_Yin = { set_name = "Yin" }
-					freehold_name_Shun = { set_name = "Shun" }
-				}
-				if = { #Ensure will be an Emperor level government
-					limit = { 
-						has_dlc = "Conclave"
-						NOT = { has_law = ze_administration_laws_2 }
-					}
-					trigger_switch = {
-						on_trigger = has_law
-						ze_administration_laws_1 = { set_title_flag = has_ze_administration_laws_1 }
-						ze_administration_laws_0 = { set_title_flag = has_ze_administration_laws_0 }
-					}
-					add_law = {
-						law = ze_administration_laws_2
-						cooldown = no
-						opinion_effect = no
-					}
-				}
-				if = {
-					limit = { 
-						NOT = { has_dlc = "Conclave" }
-						NOT = { has_law = imperial_administration }
-					}
-					if = {
-						limit = { has_law = feudal_administration }
-						set_title_flag = has_feudal_administration
-					}
-					add_law = {
-						law = imperial_administration
-						cooldown = no
-						opinion_effect = no
-					}
-				}
-			}
-		}
-		any_playable_ruler = {
-			limit = { government = chinese_imperial_government }
-			primary_title = {
-				trigger_switch = {
-					on_trigger = has_title_flag
-					freehold_name_Tang = { set_name = "Tang" }
-					freehold_name_Jin = { set_name = "Jin" }
-					freehold_name_Wei = { set_name = "Wei" }
-					freehold_name_Qi = { set_name = "Qi" }
-					freehold_name_Zhou = { set_name = "Zhou" }
-					freehold_name_Han = { set_name = "Han" }
-					freehold_name_Qin = { set_name = "Qin" }
-					freehold_name_Yan = { set_name = "Yan" }
-					freehold_name_Zhao = { set_name = "Zhao" }
-					freehold_name_Liao = { set_name = "Liao" }
-					freehold_name_Yuan = { set_name = "Yuan" }
-					freehold_name_Xia = { set_name = "Xia" }
-					freehold_name_Qing = { set_name = "Qing" }
-					freehold_name_Dai = { set_name = "Dai" }
-					freehold_name_Cheng = { set_name = "Cheng" }
-					freehold_name_Liang = { set_name = "Liang" }
-					freehold_name_Song = { set_name = "Song" }
-					freehold_name_Ming = { set_name = "Ming" }
-					freehold_name_Shu = { set_name = "Shu" }
-					freehold_name_Wu = { set_name = "Wu" }
-					freehold_name_Chu = { set_name = "Chu" }
-					freehold_name_Yue = { set_name = "Yue" }
-					freehold_name_Yin = { set_name = "Yin" }
-					freehold_name_Shun = { set_name = "Shun" }
-				}
-				if = {
-					limit = { 
-						has_dlc = "Conclave"
-						NOT = { has_law = ze_administration_laws_2 }
-					}
-					trigger_switch = {
-						on_trigger = has_law
-						ze_administration_laws_1 = { set_title_flag = has_ze_administration_laws_1 }
-						ze_administration_laws_0 = { set_title_flag = has_ze_administration_laws_0 }
-					}
-					add_law = {
-						law = ze_administration_laws_2
-						cooldown = no
-						opinion_effect = no
-					}
-				}
-				if = {
-					limit = { 
-						NOT = { has_dlc = "Conclave" }
-						NOT = { has_law = imperial_administration }
-					}
-					if = {
-						limit = { has_law = feudal_administration }
-						set_title_flag = has_feudal_administration
-					}
-					add_law = {
-						law = imperial_administration
-						cooldown = no
-						opinion_effect = no
-					}
-				}
-			}
-		}
-	}
-}
-#EU4 conversion, restore on map Freehold after conversion
-character_event = {
-	id = JD.60206
-	hide_window = yes
-	is_triggered_only = yes
-
-    has_dlc = "Jade Dragon"
-
-	immediate = {
-		if = {
-			limit = { government = chinese_imperial_government }
-			primary_title = {
-				trigger_switch = {
-					on_trigger = has_title_flag
-					freehold_name_Tang = { set_name = "Tang Empire" }
-					freehold_name_Jin = { set_name = "Jin Empire" }
-					freehold_name_Wei = { set_name = "Wei Empire" }
-					freehold_name_Qi = { set_name = "Qi Empire" }
-					freehold_name_Zhou = { set_name = "Zhou Empire" }
-					freehold_name_Han = { set_name = "Han Empire" }
-					freehold_name_Qin = { set_name = "Qin Empire" }
-					freehold_name_Yan = { set_name = "Yan Empire" }
-					freehold_name_Zhao = { set_name = "Zhao Empire" }
-					freehold_name_Liao = { set_name = "Liao Empire" }
-					freehold_name_Yuan = { set_name = "Yuan Empire" }
-					freehold_name_Xia = { set_name = "Xia Empire" }
-					freehold_name_Qing = { set_name = "Qing Empire" }
-					freehold_name_Dai = { set_name = "Dai Empire" }
-					freehold_name_Cheng = { set_name = "Cheng Empire" }
-					freehold_name_Liang = { set_name = "Liang Empire" }
-					freehold_name_Song = { set_name = "Song Empire" }
-					freehold_name_Ming = { set_name = "Ming Empire" }
-					freehold_name_Shu = { set_name = "Shu Empire" }
-					freehold_name_Wu = { set_name = "Wu Empire" }
-					freehold_name_Chu = { set_name = "Chu Empire" }
-					freehold_name_Yue = { set_name = "Yue Empire" }
-					freehold_name_Yin = { set_name = "Yin Empire" }
-					freehold_name_Shun = { set_name = "Shun Empire" }
-				}
-				trigger_switch = {
-					on_trigger = has_title_flag
-					has_ze_administration_laws_1 = { 
-						add_law = {
-							law = ze_administration_laws_1
-							cooldown = no
-							opinion_effect = no
-						}
-					}
-					has_ze_administration_laws_0 = { 
-						add_law = {
-							law = ze_administration_laws_0
-							cooldown = no
-							opinion_effect = no
-						}
-					}
-					has_feudal_administration = { 
-						add_law = {
-							law = feudal_administration
-							cooldown = no
-							opinion_effect = no
-						}
-					}
-				}
-			}
-		}
-		any_playable_ruler = {
-			limit = { government = chinese_imperial_government }
-			primary_title = {
-				trigger_switch = {
-					on_trigger = has_title_flag
-					freehold_name_Tang = { set_name = "Tang Empire" }
-					freehold_name_Jin = { set_name = "Jin Empire" }
-					freehold_name_Wei = { set_name = "Wei Empire" }
-					freehold_name_Qi = { set_name = "Qi Empire" }
-					freehold_name_Zhou = { set_name = "Zhou Empire" }
-					freehold_name_Han = { set_name = "Han Empire" }
-					freehold_name_Qin = { set_name = "Qin Empire" }
-					freehold_name_Yan = { set_name = "Yan Empire" }
-					freehold_name_Zhao = { set_name = "Zhao Empire" }
-					freehold_name_Liao = { set_name = "Liao Empire" }
-					freehold_name_Yuan = { set_name = "Yuan Empire" }
-					freehold_name_Xia = { set_name = "Xia Empire" }
-					freehold_name_Qing = { set_name = "Qing Empire" }
-					freehold_name_Dai = { set_name = "Dai Empire" }
-					freehold_name_Cheng = { set_name = "Cheng Empire" }
-					freehold_name_Liang = { set_name = "Liang Empire" }
-					freehold_name_Song = { set_name = "Song Empire" }
-					freehold_name_Ming = { set_name = "Ming Empire" }
-					freehold_name_Shu = { set_name = "Shu Empire" }
-					freehold_name_Wu = { set_name = "Wu Empire" }
-					freehold_name_Chu = { set_name = "Chu Empire" }
-					freehold_name_Yue = { set_name = "Yue Empire" }
-					freehold_name_Yin = { set_name = "Yin Empire" }
-					freehold_name_Shun = { set_name = "Shun Empire" }
-				}
-				trigger_switch = {
-					on_trigger = has_title_flag
-					has_ze_administration_laws_1 = { 
-						add_law = {
-							law = ze_administration_laws_1
-							cooldown = no
-							opinion_effect = no
-						}
-					}
-					has_ze_administration_laws_0 = { 
-						add_law = {
-							law = ze_administration_laws_0
-							cooldown = no
-							opinion_effect = no
-						}
-					}
-					has_feudal_administration = { 
-						add_law = {
-							law = feudal_administration
-							cooldown = no
-							opinion_effect = no
-						}
-					}
-				}
-			}
-		}
-	}
-}
+#EU4 conversion, prepare on map Freehold for conversion - removed
+#EU4 conversion, restore on map Freehold after conversion - removed
 
 #Inform Rebel General died so no invasion
 character_event = {
@@ -4266,7 +3637,7 @@ character_event = {
     has_dlc = "Jade Dragon"
 
 	trigger = {
-		government = chinese_imperial_government
+		government = freehold_government
 		current_heir = { 
 			NOR = {
 				culture_group = chinese_group
@@ -4338,7 +3709,7 @@ character_event = {
 					}
 				}
 				current_heir = { 
-					set_character_flag = chinese_imperial_government_preserve
+					set_character_flag = freehold_government_preserve
 				}
 			}
 			else = { #Else rename Empire and lose government type
@@ -4394,7 +3765,7 @@ character_event = {
 	option = { #Convert culture
 		name = EVT_OPTA_JD_60212
 		culture = FROMFROM
-		clr_character_flag = chinese_imperial_government_preserve
+		clr_character_flag = freehold_government_preserve
 		repeat_event = { id = JD.60204 }
 	}
 	option = { #Do not, let the Empire die
@@ -4427,7 +3798,7 @@ character_event = {
 		else = {
 			set_government_type = feudal_government
 		}
-		clr_character_flag = chinese_imperial_government_preserve
+		clr_character_flag = freehold_government_preserve
 	}
 }
 
