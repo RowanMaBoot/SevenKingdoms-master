@@ -1887,6 +1887,13 @@ character_event = {
 					log = "Freehold Logging:"
 					log = "Attempting to spawn a Rhoynish Invader, via monthly pulse fallback event (since the old governor left office). Character should spawn in 15 days."
 				}
+				waiting_to_spawn_a_ghiscari_invader = {
+					governor = {
+						character_event = { id =  JD.10109 days = 15 } #Spawns a Ghiscari leader...
+					}
+					log = "Freehold Logging:"
+					log = "Attempting to spawn a Ghiscari Invader, via monthly pulse fallback event (since the old governor left office). Character should spawn in 15 days."
+				}
 				waiting_to_spawn_a_rebel_general = {
 					governor = {
 						character_event = { id = JD.60200 days = 15 } #Spawns a Rebel General
@@ -1896,19 +1903,21 @@ character_event = {
 				}
 			}
 			clr_offmap_flag = waiting_to_spawn_a_displaced_royal
-			clr_offmap_flag = waiting_to_spawn_a_jurchen_invader
+			clr_offmap_flag = waiting_to_spawn_a_dothraki_invader
+			clr_offmap_flag = waiting_to_spawn_a_ghiscari_invader
+			clr_offmap_flag = waiting_to_spawn_a_rhoynish_invader
 			clr_offmap_flag = waiting_to_spawn_a_rebel_general
 		}
     }
 }
 
 ############################################################################################################################
-#News event for Jurchen tribe/Displaced prince invasion/adventurer (stand-alone, fired further down, from JD.10109)
+#News event for Dothraki/Rhoynish/Ghiscari Invasion/Displaced prince invasion/adventurer (stand-alone, fired further down, from JD.10109)
 ############################################################################################################################
 narrative_event = {
     id = JD.10108
 	has_dlc = "Jade Dragon"
-    title = NEWS_FROM_CHINA
+    title = NEWS_FROM_FREEHOLD
 	picture = GFX_evt_freehold_rebel_general
 	portrait = offmap_freehold
 	window = EventWindowOffmap
@@ -1916,28 +1925,40 @@ narrative_event = {
     is_triggered_only = yes
 
     desc = {
-    	text = EVTDESC_JD_10108_JURCHEN
+    	text = EVTDESC_JD_10108_DOTHRAKI
     	trigger = {
-			event_target:the_chinese_invader = { has_character_flag = is_jurchen_invader }
+			event_target:the_freehold_invader = { has_character_flag = is_dothraki_invader }
+    	}
+    }
+	desc = {
+    	text = EVTDESC_JD_10108_RHOYNISH
+    	trigger = {
+			event_target:the_freehold_invader = { has_character_flag = is_rhoynish_invader }
+    	}
+    }
+	desc = {
+    	text = EVTDESC_JD_10108_GHISCARI
+    	trigger = {
+			event_target:the_freehold_invader = { has_character_flag = is_ghiscari_invader }
     	}
     }
     desc = {
     	text = EVTDESC_JD_10108_DISPLACED_PRINCE
     	trigger = {
-			event_target:the_chinese_invader = { has_character_flag = is_displaced_prince }
+			event_target:the_freehold_invader = { has_character_flag = is_displaced_prince }
     	}
     }
     desc = {
     	text = EVTDESC_JD_10108_REBEL_GENERAL
     	trigger = {
-			event_target:the_chinese_invader = { has_character_flag = is_rebel_general }
+			event_target:the_freehold_invader = { has_character_flag = is_rebel_general }
     	}
     }
 
     has_dlc = "Jade Dragon"
 
     trigger = {
-    	event_target:the_chinese_invader = { is_alive = yes }
+    	event_target:the_freehold_invader = { is_alive = yes }
     }
 
     option = {
@@ -1946,7 +1967,7 @@ narrative_event = {
 }
 
 #########################################################################################################
-### Spawning Altaic Tribe adventurer... (fires for the governor, from jd_chinese_status_and_policy_events file)
+### Spawning Dothraki Khal adventurer... (fires for the governor, from jd_chinese_status_and_policy_events file)
 #########################################################################################################
 character_event = {
     id = JD.10109
@@ -1963,17 +1984,19 @@ character_event = {
 
     immediate = {
 		clr_character_flag = spawning_a_displaced_royal
-    	clr_character_flag = spawning_a_jurchen_invader
+    	clr_character_flag = spawning_a_dothraki_invader
+		clr_character_flag = spawning_a_rhoynish_invader
+		clr_character_flag = spawning_a_ghiscari_invader
     	clr_character_flag = spawning_a_rebel_general
 
     	save_event_target_as = the_protector_general
 
 		random_list = {
-			50 = {
+			100 = {
 				create_character = {
 					random_traits = yes
-					religion = taoist
-					culture = jurchen
+					religion = dothraki
+					culture = dothraki
 					dynasty = actually_culture
 					female = no
 					age = 30
@@ -1984,35 +2007,12 @@ character_event = {
 					add_trait = ambitious
 					remove_trait = content
 					remove_trait = craven
-					set_character_flag = is_jurchen_invader
-					save_event_target_as = jurchen_invader
-					save_event_target_as = the_chinese_invader #loc based on what flag this target has
+					set_character_flag = is_dothraki_invader
+					save_event_target_as = dothraki_invader
+					save_event_target_as = the_freehold_invader #loc based on what flag this target has
 					character_event = { id = JD.10110 }
 					log = "Freehold Logging:"
-					log = "[This.GetFullName] ID [This.GetID] is the Jurchen Invader"
-				}
-			}
-			50 = {
-				create_character = {
-					random_traits = yes
-					religion = taoist
-					culture = khitan
-					dynasty = actually_culture
-					female = no
-					age = 30
-					trait = tough_soldier
-					historical = yes
-				}
-				new_character = {
-					add_trait = ambitious
-					remove_trait = content
-					remove_trait = craven
-					set_character_flag = is_jurchen_invader
-					save_event_target_as = jurchen_invader
-					save_event_target_as = the_chinese_invader #loc based on what flag this target has
-					character_event = { id = JD.10110 }
-					log = "Freehold Logging:"
-					log = "[This.GetFullName] ID [This.GetID] is the Jurchen Invader"
+					log = "[This.GetFullName] ID [This.GetID] is the Dothraki Invader"
 				}
 			}
 		}
@@ -2169,7 +2169,7 @@ character_event = {
                 name = jd_prince
                 duration = -1
             }
-			save_event_target_as = the_chinese_invader #loc based on what flag this target has
+			save_event_target_as = the_freehold_invader #loc based on what flag this target has
 			wealth = 1000
 			character_event = { id = JD.10110 }
 			log = "Freehold Logging:"
@@ -2835,7 +2835,7 @@ character_event = {
 			}
 			set_character_flag = is_rebel_general
 			save_event_target_as = rebel_general
-			save_event_target_as = the_chinese_invader #loc based on what flag this target has
+			save_event_target_as = the_freehold_invader #loc based on what flag this target has
 			wealth = 200
 			log = "Freehold Logging:"
 			log = "[This.GetFullName] ID [This.GetID] is the Rebel General"
