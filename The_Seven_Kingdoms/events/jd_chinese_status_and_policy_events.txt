@@ -847,7 +847,7 @@ character_event = {
 		FROM = {
 			is_offmap_tag = offmap_freehold
 			NOR = {
-				has_status = china_unrest
+				has_status = freehold_unrest
 				has_status = freehold_ghiscari_invasion # Resolution handled by JD.50160
 				has_status = freehold_rhoynish_invasion # Resolution handled by JD.50200
 				has_status = freehold_dothraki_invasion # Resolution handled by JD.50200
@@ -1174,11 +1174,11 @@ character_event = {
 		}
 		modifier = {
 			factor = 0.25
-			FROM = { has_offmap_flag = freehold_ghiscari_won_won_2 }
+			FROM = { has_offmap_flag = freehold_ghiscari_won_2 }
 		}
 		modifier = {
 			factor = 0.1
-			FROM = { has_offmap_flag = freehold_ghiscari_won_won_3 }
+			FROM = { has_offmap_flag = freehold_ghiscari_won_3 }
 		}
 	}
 	
@@ -1199,10 +1199,10 @@ character_event = {
 	}
 }
 
-# News from China: Mongol Invasion
+# News from Freehold: Ghiscari Invasion
 narrative_event = {
 	id = JD.50141
-	title = NEWS_FROM_CHINA
+	title = NEWS_FROM_FREEHOLD
 	picture = GFX_evt_mongols
 	portrait = offmap_china
 	window = EventWindowOffmap
@@ -1212,9 +1212,11 @@ narrative_event = {
 		trigger = {
 			FROMFROM = {
 				OR = {
-					prev_status = china_famine
-					prev_status = china_unrest
-					prev_status = china_plague
+					prev_status = freehold_famine
+					prev_status = freehold_unrest
+					prev_status = freehold_plague
+					prev_status = freehold_internal_purge
+					prev_status = freehold_economic_ruin
 				}
 			}
 		}
@@ -1223,7 +1225,7 @@ narrative_event = {
 	desc = {
 		trigger = {
 			FROMFROM = {
-				prev_status = china_golden_age
+				prev_status = freehold_golden_age
 			}
 		}
 		text = EVTDESC_JD_50141_PENALTY
@@ -1232,14 +1234,16 @@ narrative_event = {
 		trigger = {
 			FROMFROM = {
 				NOR = {
-					prev_status = china_famine
-					prev_status = china_unrest
-					prev_status = china_plague
-					prev_status = china_golden_age
+					prev_status = freehold_famine
+					prev_status = freehold_unrest
+					prev_status = freehold_plague
+					prev_status = freehold_golden_age
+					prev_status = freehold_internal_purge
+					prev_status = freehold_economic_ruin
 				}
 			}
 		}
-		text = EVTDESC_JD_50031_MONGOLS # Can be the same as the standard status change notification
+		text = EVTDESC_JD_50031_GHISCARI # Can be the same as the standard status change notification
 	}
 
 	has_dlc = "Jade Dragon"
@@ -1262,7 +1266,7 @@ narrative_event = {
 	}
 }
 
-# Chance for an end to the 'Mongol Invasion' Status
+# Chance for an end to the 'Ghiscari Invasion' Status
 # Hidden. Fired from on_offmap_yearly_pulse
 # Root = Governor
 # From = Offmap
@@ -1277,7 +1281,7 @@ character_event = {
 	trigger = {
 		FROM = {
 			is_offmap_tag = offmap_freehold
-			has_status = china_mongol_invasion
+			has_status = freehold_ghiscari_invasion
 		}
 	}
 	
@@ -1285,50 +1289,50 @@ character_event = {
 		factor = 1
 		modifier = {
 			factor = 2
-			FROM = { had_offmap_tmp_flag = { flag = china_mongol_invasion years = 2 } }
+			FROM = { had_offmap_tmp_flag = { flag = freehold_ghiscari_invasion years = 2 } }
 		}
 		modifier = {
 			factor = 2
-			FROM = { had_offmap_tmp_flag = { flag = china_mongol_invasion years = 4 } }
+			FROM = { had_offmap_tmp_flag = { flag = freehold_ghiscari_invasion years = 4 } }
 		}
 		modifier = {
 			factor = 2
-			FROM = { had_offmap_tmp_flag = { flag = china_mongol_invasion years = 8 } }
+			FROM = { had_offmap_tmp_flag = { flag = freehold_ghiscari_invasion years = 8 } }
 		}
 		modifier = {
 			factor = 5
-			FROM = { had_offmap_tmp_flag = { flag = china_mongol_invasion years = 10 } }
+			FROM = { had_offmap_tmp_flag = { flag = freehold_ghiscari_invasion years = 10 } }
 		}
 	}
 	
 	immediate = {
 		random_list = {
-			100 = { # China won!
+			100 = { # Freehold won!
 				modifier = {
 					factor = 3
 					FROM = {
-						prev_status = china_golden_age
+						prev_status = freehold_golden_age
 					}
 				}
 				
 				FROM = {
 					set_offmap_flag = no_status_news
-					set_status = china_stable
+					set_status = freehold_stable
 					clr_offmap_flag = no_status_news
 					
 					if = {
-						limit = { has_offmap_flag = china_badly_beaten_1 }
-						clr_offmap_flag = china_badly_beaten_1
+						limit = { has_offmap_flag = freehold_badly_beaten_1 }
+						clr_offmap_flag = freehold_badly_beaten_1
 					}
 					if = {
-						limit = { has_offmap_flag = china_badly_beaten_2 }
-						clr_offmap_flag = china_badly_beaten_2
-						set_offmap_flag = china_badly_beaten_1
+						limit = { has_offmap_flag = freehold_badly_beaten_2 }
+						clr_offmap_flag = freehold_badly_beaten_2
+						set_offmap_flag = freehold_badly_beaten_1
 					}
 					if = {
-						limit = { has_offmap_flag = china_badly_beaten_3 }
-						clr_offmap_flag = china_badly_beaten_3
-						set_offmap_flag = china_badly_beaten_2
+						limit = { has_offmap_flag = freehold_badly_beaten_3 }
+						clr_offmap_flag = freehold_badly_beaten_3
+						set_offmap_flag = freehold_badly_beaten_2
 					}
 				}
 				
@@ -1340,98 +1344,59 @@ character_event = {
 					narrative_event = { id = JD.50161 }
 				}
 			}
-			100 = { # Mongols won!
+			100 = { # Ghiscari won!
 				modifier = {
 					factor = 3
 					FROM = {
 						OR = {
-							prev_status = china_unrest
-							prev_status = china_famine
-							prev_status = china_plague
+							prev_status = freehold_unrest
+							prev_status = freehold_famine
+							prev_status = freehold_plague
+							prev_status = freehold_economic_ruin
+							prev_status = freehold_internal_purge
 						}
-					}
-				}
-				modifier = { # The Borjigins are more likely to win
-					factor = 5
-					NOT = {
-						has_global_flag = borjigin_china
-					}
-					any_independent_ruler = {
-						OR = {
-							dynasty = 11100
-							dynasty = 1051210
-						}
-						has_landed_title = e_mongol_empire
-						ai = yes
 					}
 				}
 				
 				FROM = {
 					set_offmap_flag = no_status_news
-					set_status = china_unrest
-					set_offmap_flag = china_had_unrest
+					set_status = freehold_unrest
+					set_offmap_flag = freehold_had_unrest
 					clr_offmap_flag = no_status_news
 				
-					set_offmap_flag = china_expansionist_trend # Likely for the new ruler to pick Expansionist policy
-					clr_offmap_flag = china_badly_beaten_3
-					clr_offmap_flag = china_badly_beaten_2
-					clr_offmap_flag = china_badly_beaten_1
+					set_offmap_flag = freehold_expansionist_trend # Likely for the new ruler to pick Expansionist policy
+					clr_offmap_flag = freehold_badly_beaten_3
+					clr_offmap_flag = freehold_badly_beaten_2
+					clr_offmap_flag = freehold_badly_beaten_1
 					
 					if = {
 						limit = {
-							has_offmap_flag = china_mongols_won_2
+							has_offmap_flag = freehold_ghiscari_won_2
 						}
-						set_offmap_flag = china_mongols_won_3
-						clr_offmap_flag = china_mongols_won_2
+						set_offmap_flag = freehold_ghiscari_won_3
+						clr_offmap_flag = freehold_ghiscari_won_2
 					}
 					
 					if = {
 						limit = {
-							has_offmap_flag = china_mongols_won_1
+							has_offmap_flag = freehold_ghiscari_won_1
 						}
-						set_offmap_flag = china_mongols_won_2
-						clr_offmap_flag = china_mongols_won_1
+						set_offmap_flag = freehold_ghiscari_won_2
+						clr_offmap_flag = freehold_ghiscari_won_1
 					}
 					
 					if = {
 						limit = {
 							NOR = {
-								has_offmap_flag = china_mongols_won_1
-								has_offmap_flag = china_mongols_won_2
-								has_offmap_flag = china_mongols_won_3
+								has_offmap_flag = freehold_ghiscari_won_1
+								has_offmap_flag = freehold_ghiscari_won_2
+								has_offmap_flag = freehold_ghiscari_won_3
 							}
 						}
-						set_offmap_flag = china_mongols_won_1
+						set_offmap_flag = freehold_ghiscari_won_1
 					}
 					
 					set_offmap_flag = no_succession_news
-				}
-				
-				if = { # If the Borjigin's are around, it's guaranteed to be a Borjigin emperor
-					limit = {
-						NOT = {
-							has_global_flag = borjigin_china
-						}
-						any_independent_ruler = {
-							OR = {
-								dynasty = 11100
-								dynasty = 1051210
-							}
-							has_landed_title = e_mongol_empire
-							ai = yes
-						}
-					}
-					random_independent_ruler = {
-						limit = {
-							OR = {
-								dynasty = 11100
-								dynasty = 1051210
-							}
-							has_landed_title = e_mongol_empire
-							ai = yes
-						}
-						save_event_target_as = mongol_china_invader
-					}
 				}
 				
 				# A new ruler ascends to the Dragon Throne. The fallout is handled by JD.10005 and JD.50000 (from 'on_offmap_ruler_changed')
@@ -1439,209 +1404,9 @@ character_event = {
 					100 = {
 						modifier = {
 							factor = 2
-							year = 1200
+							year = 6800
 						}
-						if = { # Borjigin Emperor if they are around
-							limit = {
-								NOT = {
-									has_global_flag = borjigin_china
-								}
-								event_target:mongol_china_invader = {
-									is_alive = yes
-								}
-							}
-							random_list = {
-								0 = {
-									additive_modifier = {
-										value = 50
-										has_game_rule = {
-											name = gender
-											value = all
-										}
-									}
-									create_character = {
-										age = 20
-										random_traits = yes
-										female = yes
-										religion = event_target:mongol_china_invader
-										culture = event_target:mongol_china_invader
-										dynasty = event_target:mongol_china_invader
-										trait = brilliant_strategist
-										martial = 10
-									}
-								}
-								50 = {
-									create_character = {
-										age = 20
-										random_traits = yes
-										female = no
-										religion = event_target:mongol_china_invader
-										culture = event_target:mongol_china_invader
-										dynasty = event_target:mongol_china_invader
-										trait = brilliant_strategist
-										martial = 10
-									}
-								}
-							}
-							new_character = {
-								if = {
-									limit = {
-										event_target:mongol_china_invader = {
-											age = 36
-										}
-									}
-									set_father = event_target:mongol_china_invader
-								}
-								else_if = {
-									limit = {
-										event_target:mongol_china_invader = {
-											NOT = { age = 36 }
-											father_even_if_dead = {
-												age = 36
-											}
-										}
-									}
-									event_target:mongol_china_invader = {
-										father_even_if_dead = {
-											save_event_target_as = mongol_china_invader_father
-										}
-									}
-									set_father = event_target:mongol_china_invader_father
-								}
-								else = {
-									create_character = {
-										age = 60
-										random_traits = yes
-										female = no
-										religion = event_target:mongol_china_invader
-										culture = event_target:mongol_china_invader
-										dynasty = event_target:mongol_china_invader
-									}
-									new_character = {
-										death = { death_reason = death_in_china_historic }
-										save_event_target_as = new_china_ruler_father
-									}
-									set_father = event_target:new_china_ruler_father
-								}
-								FROM = {
-									set_offmap_holder = PREV
-								}
-							}
-							offmap_freehold = { # Mongols take all western protectorate lands for themselves
-								governor = {
-									any_vassal = {
-										set_defacto_liege = event_target:mongol_china_invader
-									}
-									any_demesne_title = {
-										limit = {
-											NOT = {
-												tier = EMPEROR
-											}
-										}
-										grant_title = event_target:mongol_china_invader
-									}
-								}
-							}
-							event_target:mongol_china_invader = { # The Borjigin who invaded China gets a bunch of Grace, Prestige, Gold, a Peace Deal and a few Siege Engineers when winning
-								wealth = 1000
-								prestige = 1000
-								add_offmap_currency = {
-									offmap = offmap_freehold
-									value = 5000
-								}
-								add_character_modifier = {
-									inherit = yes
-									name = peace_deal_with_china
-									years = 50
-								}
-								create_random_soldier = {
-									age = 30
-									dynasty = actually_culture
-									religion = ROOT
-									culture = ROOT
-									female = no
-									random_traits = yes
-									attributes = {
-										diplomacy = 2
-										learning = 2
-										stewardship = 2
-										intrigue = 2
-										martial = 12
-									}
-								}
-								new_character = {
-									set_character_flag = originated_from_chinese_court
-									set_character_flag = no_court_invites
-									set_character_flag = taught_chinese_strategy
-									
-									remove_trait = weak
-									remove_trait = slow
-									remove_trait = imbecile
-									remove_trait = dull
-									remove_trait = craven
-									
-									add_trait = sapper
-								}
-								create_random_soldier = {
-									age = 30
-									dynasty = actually_culture
-									religion = ROOT
-									culture = ROOT
-									female = no
-									random_traits = yes
-									attributes = {
-										diplomacy = 2
-										learning = 2
-										stewardship = 2
-										intrigue = 2
-										martial = 12
-									}
-								}
-								new_character = {
-									set_character_flag = originated_from_chinese_court
-									set_character_flag = no_court_invites
-									set_character_flag = taught_chinese_strategy
-									
-									remove_trait = weak
-									remove_trait = slow
-									remove_trait = imbecile
-									remove_trait = dull
-									remove_trait = craven
-									
-									add_trait = sapper
-								}
-								create_random_soldier = {
-									age = 30
-									dynasty = actually_culture
-									religion = ROOT
-									culture = ROOT
-									female = no
-									random_traits = yes
-									attributes = {
-										diplomacy = 2
-										learning = 2
-										stewardship = 2
-										intrigue = 2
-										martial = 12
-									}
-								}
-								new_character = {
-									set_character_flag = originated_from_chinese_court
-									set_character_flag = no_court_invites
-									set_character_flag = taught_chinese_strategy
-									
-									remove_trait = weak
-									remove_trait = slow
-									remove_trait = imbecile
-									remove_trait = dull
-									remove_trait = craven
-									
-									add_trait = sapper
-								}
-							}
-							set_global_flag = borjigin_china
-						}
-						else = { # If no Borjigins, business as usual
+						if = { # If no Borjigins, business as usual
 							random_list = {
 								0 = {
 									additive_modifier = {
@@ -1655,8 +1420,8 @@ character_event = {
 										age = 35
 										random_traits = yes
 										female = yes
-										religion = taoist # A bit strange, but necessary
-										culture = mongol
+										religion = harpy # A bit strange, but necessary
+										culture = ghiscari
 										dynasty = actually_culture
 										trait = brilliant_strategist
 										martial = 10
@@ -1667,8 +1432,8 @@ character_event = {
 										age = 35
 										random_traits = yes
 										female = no
-										religion = taoist # A bit strange, but necessary
-										culture = mongol
+										religion = harpy # A bit strange, but necessary
+										culture = ghiscari
 										dynasty = actually_culture
 										trait = brilliant_strategist
 										martial = 10
@@ -1685,261 +1450,15 @@ character_event = {
 									dynasty = THIS
 								}
 								new_character = {
-									death = { death_reason = death_in_china_historic }
-									save_event_target_as = new_china_ruler_father
+									death = { death_reason = death_in_freehold_historic }
+									save_event_target_as = new_freehold_ruler_father
 								}
-								set_father = event_target:new_china_ruler_father
+								set_father = event_target:new_freehold_ruler_father
 								FROM = {
 									set_offmap_holder = PREV
 								}
 								random_list = {
-									100 = {
-									
-									}
-									10 = {
-										religion = tengri_pagan
-									}
-									10 = {
-										religion = buddhist
-									}
-									5 = {
-										religion = nestorian
-									}
-									5 = {
-										religion = sunni
-									}
-								}
-							}
-						}
-					}
-					35 = {
-						modifier = {
-							factor = 3
-							NOT = { year = 1200 }
-						}
-						modifier = {
-							factor = 0
-							event_target:mongol_china_invader = {
-								is_alive = yes
-							}
-						}
-						random_list = {
-							0 = {
-								additive_modifier = {
-									value = 50
-									has_game_rule = {
-										name = gender
-										value = all
-									}
-								}
-								create_character = {
-									age = 35
-									random_traits = yes
-									female = yes
-									religion = taoist # A bit strange, but necessary
-									culture = khitan
-									dynasty = actually_culture
-									trait = brilliant_strategist
-									martial = 10
-								}
-							}
-							50 = {
-								create_character = {
-									age = 35
-									random_traits = yes
-									female = no
-									religion = taoist # A bit strange, but necessary
-									culture = khitan
-									dynasty = actually_culture
-									trait = brilliant_strategist
-									martial = 10
-								}
-							}
-						}
-						new_character = {
-							create_character = {
-								age = 60
-								random_traits = yes
-								female = no
-								religion = THIS
-								culture = THIS
-								dynasty = THIS
-							}
-							new_character = {
-								death = { death_reason = death_in_china_historic }
-								save_event_target_as = new_china_ruler_father
-							}
-							set_father = event_target:new_china_ruler_father
-							FROM = {
-								set_offmap_holder = PREV
-							}
-							random_list = {
-								100 = {
-								
-								}
-								10 = {
-									religion = tengri_pagan
-								}
-								10 = {
-									religion = buddhist
-								}
-								5 = {
-									religion = nestorian
-								}
-								5 = {
-									religion = sunni
-								}
-							}
-						}
-					}
-					25 = {
-						modifier = {
-							factor = 0
-							event_target:mongol_china_invader = {
-								is_alive = yes
-							}
-						}
-						random_list = {
-							0 = {
-								additive_modifier = {
-									value = 50
-									has_game_rule = {
-										name = gender
-										value = all
-									}
-								}
-								create_character = {
-									age = 35
-									random_traits = yes
-									female = yes
-									religion = taoist # A bit strange, but necessary
-									culture = uyghur
-									dynasty = actually_culture
-									trait = brilliant_strategist
-									martial = 10
-								}
-							}
-							50 = {
-								create_character = {
-									age = 35
-									random_traits = yes
-									female = no
-									religion = taoist # A bit strange, but necessary
-									culture = uyghur
-									dynasty = actually_culture
-									trait = brilliant_strategist
-									martial = 10
-								}
-							}
-						}
-						new_character = {
-							create_character = {
-								age = 60
-								random_traits = yes
-								female = no
-								religion = THIS
-								culture = THIS
-								dynasty = THIS
-							}
-							new_character = {
-								death = { death_reason = death_in_china_historic }
-								save_event_target_as = new_china_ruler_father
-							}
-							set_father = event_target:new_china_ruler_father
-							FROM = {
-								set_offmap_holder = PREV
-							}
-							random_list = {
-								100 = {
-								
-								}
-								10 = {
-									religion = tengri_pagan
-								}
-								10 = {
-									religion = buddhist
-								}
-								5 = {
-									religion = nestorian
-								}
-								5 = {
-									religion = sunni
-								}
-							}
-						}
-					}
-					25 = {
-						modifier = {
-							factor = 0
-							event_target:mongol_china_invader = {
-								is_alive = yes
-							}
-						}
-						random_list = {
-							0 = {
-								additive_modifier = {
-									value = 50
-									has_game_rule = {
-										name = gender
-										value = all
-									}
-								}
-								create_character = {
-									age = 35
-									random_traits = yes
-									female = yes
-									religion = taoist # A bit strange, but necessary
-									culture = kirghiz
-									dynasty = actually_culture
-									trait = brilliant_strategist
-									martial = 10
-								}
-							}
-							50 = {
-								create_character = {
-									age = 35
-									random_traits = yes
-									female = no
-									religion = taoist # A bit strange, but necessary
-									culture = kirghiz
-									dynasty = actually_culture
-									trait = brilliant_strategist
-									martial = 10
-								}
-							}
-						}
-						new_character = {
-							create_character = {
-								age = 60
-								random_traits = yes
-								female = no
-								religion = THIS
-								culture = THIS
-								dynasty = THIS
-							}
-							new_character = {
-								death = { death_reason = death_in_china_historic }
-								save_event_target_as = new_china_ruler_father
-							}
-							set_father = event_target:new_china_ruler_father
-							FROM = {
-								set_offmap_holder = PREV
-							}
-							random_list = {
-								100 = {
-								
-								}
-								10 = {
-									religion = tengri_pagan
-								}
-								10 = {
-									religion = buddhist
-								}
-								5 = {
-									religion = nestorian
-								}
-								5 = {
-									religion = sunni
+									100 = {}
 								}
 							}
 						}
@@ -1959,27 +1478,27 @@ character_event = {
 						modifier = {
 							factor = 0
 							has_game_rule = {
-								name = chinese_invasions
+								name = freehold_invasions
 								value = none
 							}
 						}
 						character_event = { id = JD.10113 days = 15 } #Spawns a Displaced Prince adventurer...
 						set_character_flag = spawning_a_displaced_royal
-						log = "China Logging:"
-						log = "Attempting to spawn a Displaced Prince, as aftermath to event JD.50160 (end of Being Invaded by Mongols). Character should spawn in 15 days."
+						log = "Freehold Logging:"
+						log = "Attempting to spawn a Displaced Prince, as aftermath to event JD.50160 (end of Being Invaded by Ghiscari). Character should spawn in 15 days."
 					}
 					50 = {
 						modifier = {
 							factor = 0
 							has_game_rule = {
-								name = chinese_invasions
+								name = freehold_invasions
 								value = none
 							}
 						}
-						character_event = { id =  JD.10109 days = 15 } #Spawns a Jurchen tribe leader...
-						set_character_flag = spawning_a_jurchen_invader
-						log = "China Logging:"
-						log = "Attempting to spawn a Jurchen Invader, as aftermath to event JD.50160 (end of Being Invaded by Mongols). Character should spawn in 15 days."
+						character_event = { id =  JD.10109 days = 15 } #Spawns a Ghiscari leader...
+						set_character_flag = spawning_a_ghiscari_invader
+						log = "Freehold Logging:"
+						log = "Attempting to spawn a Jurchen Invader, as aftermath to event JD.50160 (end of Being Invaded by Ghiscari). Character should spawn in 15 days."
 					}
 				}
 			}
@@ -1987,10 +1506,10 @@ character_event = {
 	}
 }
 
-# News from China: Mongol Invasion Fails
+# News from Freehold: Ghiscari Invasion Fails
 narrative_event = {
 	id = JD.50161
-	title = NEWS_FROM_CHINA
+	title = NEWS_FROM_FREEHOLD
 	picture = GFX_evt_china_mongols_invade
 	portrait = offmap_china
 	desc = EVTDESC_JD_50161
@@ -2017,10 +1536,10 @@ narrative_event = {
 	}
 }
 
-# News from China: Mongol Invasion Succeeds
+# News from Freehold: Ghiscari Invasion Succeeds
 narrative_event = {
 	id = JD.50162
-	title = NEWS_FROM_CHINA
+	title = NEWS_FROM_FREEHOLD
 	picture = GFX_evt_tengri_throneroom_oldgods
 	portrait = offmap_china
 	desc = EVTDESC_JD_50162
@@ -2044,27 +1563,27 @@ narrative_event = {
 	
 	option = {
 		trigger = {
-			NOT = { has_character_modifier = peace_deal_with_china }
+			NOT = { has_character_modifier = peace_deal_with_freehold }
 		}
 		name = EVTOPT_JD_50162
 	}
 	
 	option = {
 		trigger = {
-			has_character_modifier = peace_deal_with_china
+			has_character_modifier = peace_deal_with_freehold
 		}
 		name = EVTOPT_JD_50302_BROKEN_PEACE_DEAL
 		
-		remove_character_modifier = peace_deal_with_china
+		remove_character_modifier = peace_deal_with_freehold
 	}
 }
 
-# Status changes to 'Jurchen Invasion'
+# Status changes to 'Rhoynish Invasion'
 # Hidden. Fired from on_offmap_yearly_pulse.
 # Root = Governor
 # From = Offmap
 character_event = {
-	id = JD.50180
+	id = JD.50180a
 
 	has_dlc = "Jade Dragon"
 
@@ -2075,13 +1594,14 @@ character_event = {
 		FROM = {
 			is_offmap_tag = offmap_freehold
 			NOR = {
-				has_status = china_mongol_invasion # Resolution handled by JD.50160
-				has_status = china_jurchen_invasion # Resolution handled by JD.50200
-				has_status = china_civil_war # Resolution handled by JD.50300
+				has_status = freehold_ghiscari_invasion # Resolution handled by JD.50160
+				has_status = freehold_rhoynish_invasion # Resolution handled by JD.50200
+				has_status = freehold_dothraki_invasion # Resolution handled by JD.50200
+				has_status = freehold_civil_war # Resolution handled by JD.50300
 			}
 			OR = {
-				NOT = { has_offmap_flag = china_invaded_player_dynasty }
-				had_offmap_tmp_flag = { flag = china_invaded_player_dynasty years = 200 }
+				NOT = { has_offmap_flag = freehold_invaded_player_dynasty }
+				had_offmap_tmp_flag = { flag = freehold_invaded_player_dynasty years = 200 }
 			}
 		}
 	}
@@ -2091,126 +1611,166 @@ character_event = {
 		modifier = { # Unrest increases the chance of an invasion
 			factor = 3
 			FROM = {
-				has_status = china_unrest
-				has_offmap_flag = china_had_unrest
-				had_offmap_tmp_flag = { flag = china_had_unrest years = 2 }
+				has_status = freehold_unrest
+				has_offmap_flag = freehold_had_unrest
+				had_offmap_tmp_flag = { flag = freehold_had_unrest years = 2 }
 			}
 		}
 		modifier = {
 			factor = 1.5
 			FROM = {
-				has_status = china_unrest
-				has_offmap_flag = china_had_unrest
-				had_offmap_tmp_flag = { flag = china_had_unrest years = 4 }
+				has_status = freehold_unrest
+				has_offmap_flag = freehold_had_unrest
+				had_offmap_tmp_flag = { flag = freehold_had_unrest years = 4 }
 			}
 		}
 		modifier = {
 			factor = 1.5
 			FROM = {
-				has_status = china_unrest
-				has_offmap_flag = china_had_unrest
-				had_offmap_tmp_flag = { flag = china_had_unrest years = 6 }
+				has_status = freehold_unrest
+				has_offmap_flag = freehold_had_unrest
+				had_offmap_tmp_flag = { flag = freehold_had_unrest years = 6 }
 			}
 		}
 		modifier = { # Famines last for at least 4 years
 			factor = 0
 			FROM = {
-				has_status = china_famine
-				has_offmap_flag = china_had_famine
+				has_status = freehold_famine
+				has_offmap_flag = freehold_had_famine
 				NOT = {
-					had_offmap_tmp_flag = { flag = china_had_famine years = 2 }
+					had_offmap_tmp_flag = { flag = freehold_had_famine years = 4 }
 				}
 			}
 		}
 		modifier = { # Plagues last for at least 2 years
 			factor = 0
 			FROM = {
-				has_status = china_plague
-				has_offmap_flag = china_had_plague
+				has_status = freehold_plague
+				has_offmap_flag = freehold_had_plague
 				NOT = {
-					had_offmap_tmp_flag = { flag = china_had_plague years = 2 }
+					had_offmap_tmp_flag = { flag = freehold_had_plague years = 2 }
+				}
+			}
+		}
+		modifier = { # Economic ruins last for at least 3 years
+			factor = 0
+			FROM = {
+				has_status = freehold_economic_ruin
+				has_offmap_flag = freehold_had_economic_ruin
+				NOT = {
+					had_offmap_tmp_flag = { flag = freehold_had_economic_ruin years = 3 }
 				}
 			}
 		}
 		modifier = {
 			factor = 1.25
 			FROM = {
-				has_status = china_famine
-				has_offmap_flag = china_had_famine
-				had_offmap_tmp_flag = { flag = china_had_famine years = 6 }
+				has_status = freehold_famine
+				has_offmap_flag = freehold_had_famine
+				had_offmap_tmp_flag = { flag = freehold_had_famine years = 6 }
 			}
 		}
 		modifier = {
 			factor = 1.25
 			FROM = {
-				has_status = china_plague
-				has_offmap_flag = china_had_plague
-				had_offmap_tmp_flag = { flag = china_had_plague years = 3 }
+				has_status = freehold_plague
+				has_offmap_flag = freehold_had_plague
+				had_offmap_tmp_flag = { flag = freehold_had_plague years = 3 }
+			}
+		}
+		modifier = {
+			factor = 1.25
+			FROM = {
+				has_status = freehold_economic_ruin
+				has_offmap_flag = freehold_had_economic_ruin
+				NOT = {
+					had_offmap_tmp_flag = { flag = freehold_had_economic_ruin years = 6 }
+				}
 			}
 		}
 		modifier = {
 			factor = 1.5
 			FROM = {
-				has_status = china_famine
-				has_offmap_flag = china_had_famine
-				had_offmap_tmp_flag = { flag = china_had_famine years = 8 }
+				has_status = freehold_famine
+				has_offmap_flag = freehold_had_famine
+				had_offmap_tmp_flag = { flag = freehold_had_famine years = 8 }
 			}
 		}
 		modifier = {
 			factor = 1.5
 			FROM = {
-				has_status = china_plague
-				has_offmap_flag = china_had_plague
-				had_offmap_tmp_flag = { flag = china_had_plague years = 5 }
+				has_status = freehold_plague
+				has_offmap_flag = freehold_had_plague
+				had_offmap_tmp_flag = { flag = freehold_had_plague years = 5 }
+			}
+		}
+		modifier = {
+			factor = 1.5
+			FROM = {
+				has_status = freehold_economic_ruin
+				has_offmap_flag = freehold_had_economic_ruin
+				NOT = {
+					had_offmap_tmp_flag = { flag = freehold_had_economic_ruin years = 9 }
+				}
 			}
 		}
 		modifier = {
 			factor = 2
 			FROM = {
-				has_status = china_famine
-				has_offmap_flag = china_had_famine
-				had_offmap_tmp_flag = { flag = china_had_famine years = 10 }
+				has_status = freehold_famine
+				has_offmap_flag = freehold_had_famine
+				had_offmap_tmp_flag = { flag = freehold_had_famine years = 10 }
 			}
 		}
 		modifier = {
 			factor = 2
 			FROM = {
-				has_status = china_plague
-				has_offmap_flag = china_had_plague
-				had_offmap_tmp_flag = { flag = china_had_plague years = 7 }
+				has_status = freehold_plague
+				has_offmap_flag = freehold_had_plague
+				had_offmap_tmp_flag = { flag = freehold_had_plague years = 7 }
+			}
+		}
+		modifier = {
+			factor = 2
+			FROM = {
+				has_status = freehold_economic_ruin
+				has_offmap_flag = freehold_had_economic_ruin
+				NOT = {
+					had_offmap_tmp_flag = { flag = freehold_had_economic_ruin years = 12 }
+				}
 			}
 		}
 		modifier = {
 			factor = 0
 			FROM = {
 				offmap_ruler = {
-					culture = jurchen
+					culture = rhoynish
 				}
 			}
 		}
 		modifier = {
 			factor = 0.5
-			FROM = { has_status = china_golden_age }
+			FROM = { has_status = freehold_golden_age }
 		}
 		modifier = {
 			factor = 0.5
-			FROM = { has_offmap_flag = china_mongols_won_1 }
+			FROM = { has_offmap_flag = freehold_ghiscari_won_1 }
 		}
 		modifier = {
 			factor = 0.25
-			FROM = { has_offmap_flag = china_mongols_won_2 }
+			FROM = { has_offmap_flag = freehold_ghiscari_won_2 }
 		}
 		modifier = {
 			factor = 0.1
-			FROM = { has_offmap_flag = china_mongols_won_3 }
+			FROM = { has_offmap_flag = freehold_ghiscari_won_3 }
 		}
 	}
 	
 	immediate = {
 		FROM = {
 			set_offmap_flag = no_status_news
-			set_status = china_jurchen_invasion
-			set_offmap_flag = china_jurchen_invasion
+			set_status = freehold_rhoynish_invasion
+			set_offmap_flag = freehold_rhoynish_invasion
 			clr_offmap_flag = no_status_news
 		}
 		any_player = {
@@ -2223,10 +1783,10 @@ character_event = {
 	}
 }
 
-# News from China: Jurchen Invasion
+# News from Freehold: Rhoynish Invasion
 narrative_event = {
-	id = JD.50181
-	title = NEWS_FROM_CHINA
+	id = JD.50181a
+	title = NEWS_FROM_FREEHOLD
 	picture = GFX_evt_china_mongols_invade
 	portrait = offmap_china
 	window = EventWindowOffmap
@@ -2236,34 +1796,38 @@ narrative_event = {
 		trigger = {
 			FROMFROM = {
 				OR = {
-					prev_status = china_famine
-					prev_status = china_unrest
-					prev_status = china_plague
+					prev_status = freehold_famine
+					prev_status = freehold_unrest
+					prev_status = freehold_plague
+					prev_status = freehold_internal_purge
+					prev_status = freehold_economic_ruin
 				}
 			}
 		}
-		text = EVTDESC_JD_50181_BOOST
+		text = EVTDESC_JD_50181a_BOOST
 	}
 	desc = {
 		trigger = {
 			FROMFROM = {
-				prev_status = china_golden_age
+				prev_status = freehold_golden_age
 			}
 		}
-		text = EVTDESC_JD_50181_PENALTY
+		text = EVTDESC_JD_50181a_PENALTY
 	}
 	desc = {
 		trigger = {
 			FROMFROM = {
 				NOR = {
-					prev_status = china_famine
-					prev_status = china_unrest
-					prev_status = china_plague
-					prev_status = china_golden_age
+					prev_status = freehold_famine
+					prev_status = freehold_unrest
+					prev_status = freehold_plague
+					prev_status = freehold_internal_purge
+					prev_status = freehold_economic_ruin
+					prev_status = freehold_golden_age
 				}
 			}
 		}
-		text = EVTDESC_JD_50031_JURCHENS # Can be the same as the standard status change notification
+		text = EVTDESC_JD_50031_RHOYNISH # Can be the same as the standard status change notification
 	}
 
 	has_dlc = "Jade Dragon"
@@ -2285,12 +1849,12 @@ narrative_event = {
 	}
 }
 
-# Chance for an end to the 'Jurchen Invasion' Status
+# Chance for an end to the 'Rhoynish Invasion' Status
 # Hidden. Fired from on_offmap_yearly_pulse
 # Root = Governor
 # From = Offmap
 character_event = {
-	id = JD.50200
+	id = JD.50200a
 
 	has_dlc = "Jade Dragon"
 
@@ -2300,7 +1864,7 @@ character_event = {
 	trigger = {
 		FROM = {
 			is_offmap_tag = offmap_freehold
-			has_status = china_jurchen_invasion
+			has_status = freehold_rhoynish_invasion
 		}
 	}
 	
@@ -2308,51 +1872,51 @@ character_event = {
 		factor = 1
 		modifier = {
 			factor = 2
-			FROM = { had_offmap_tmp_flag = { flag = china_jurchen_invasion years = 2 } }
+			FROM = { had_offmap_tmp_flag = { flag = freehold_rhoynish_invasion years = 2 } }
 		}
 		modifier = {
 			factor = 2
-			FROM = { had_offmap_tmp_flag = { flag = china_jurchen_invasion years = 4 } }
+			FROM = { had_offmap_tmp_flag = { flag = freehold_rhoynish_invasion years = 4 } }
 		}
 		modifier = {
 			factor = 2
-			FROM = { had_offmap_tmp_flag = { flag = china_jurchen_invasion years = 8 } }
+			FROM = { had_offmap_tmp_flag = { flag = freehold_rhoynish_invasion years = 8 } }
 		}
 		modifier = {
 			factor = 5
-			FROM = { had_offmap_tmp_flag = { flag = china_jurchen_invasion years = 10 } }
+			FROM = { had_offmap_tmp_flag = { flag = freehold_rhoynish_invasion years = 10 } }
 		}
 	}
 	
 	immediate = {
 		random_list = {
-			100 = { # China won!
+			100 = { # Freehold won!
 				#trigger = { always = no }
 				modifier = {
 					factor = 3
 					FROM = {
-						prev_status = china_golden_age
+						prev_status = freehold_golden_age
 					}
 				}
 				
 				FROM = {
 					set_offmap_flag = no_status_news
-					set_status = china_stable
+					set_status = freehold_stable
 					clr_offmap_flag = no_status_news
 					
 					if = {
-						limit = { has_offmap_flag = china_badly_beaten_1 }
-						clr_offmap_flag = china_badly_beaten_1
+						limit = { has_offmap_flag = freehold_badly_beaten_1 }
+						clr_offmap_flag = freehold_badly_beaten_1
 					}
 					if = {
-						limit = { has_offmap_flag = china_badly_beaten_2 }
-						clr_offmap_flag = china_badly_beaten_2
-						set_offmap_flag = china_badly_beaten_1
+						limit = { has_offmap_flag = freehold_badly_beaten_2 }
+						clr_offmap_flag = freehold_badly_beaten_2
+						set_offmap_flag = freehold_badly_beaten_1
 					}
 					if = {
-						limit = { has_offmap_flag = china_badly_beaten_3 }
-						clr_offmap_flag = china_badly_beaten_3
-						set_offmap_flag = china_badly_beaten_2
+						limit = { has_offmap_flag = freehold_badly_beaten_3 }
+						clr_offmap_flag = freehold_badly_beaten_3
+						set_offmap_flag = freehold_badly_beaten_2
 					}
 				}
 				
@@ -2361,56 +1925,58 @@ character_event = {
 						has_offmap_news_enabled = FROM
 						is_within_diplo_range = ROOT
 					}
-					narrative_event = { id = JD.50201 }
+					narrative_event = { id = JD.50201a }
 				}
 			}
-			100 = { # Jurchen won!
+			100 = { # Rhoynish won!
 				modifier = {
 					factor = 3
 					FROM = {
 						OR = {
-							prev_status = china_unrest
-							prev_status = china_famine
-							prev_status = china_plague
+							prev_status = freehold_unrest
+							prev_status = freehold_famine
+							prev_status = freehold_plague
+							prev_status = freehold_internal_purge
+							prev_status = freehold_economic_ruin
 						}
 					}
 				}
 				
 				FROM = {
 					set_offmap_flag = no_status_news
-					set_status = china_unrest
-					set_offmap_flag = china_had_unrest
+					set_status = freehold_unrest
+					set_offmap_flag = freehold_had_unrest
 					clr_offmap_flag = no_status_news
 				
-					clr_offmap_flag = china_badly_beaten_3
-					clr_offmap_flag = china_badly_beaten_2
-					clr_offmap_flag = china_badly_beaten_1
+					clr_offmap_flag = freehold_badly_beaten_3
+					clr_offmap_flag = freehold_badly_beaten_2
+					clr_offmap_flag = freehold_badly_beaten_1
 					
 					if = {
 						limit = {
-							has_offmap_flag = china_mongols_won_2
+							has_offmap_flag = freehold_rhoynish_won_2
 						}
-						set_offmap_flag = china_mongols_won_3
-						clr_offmap_flag = china_mongols_won_2
+						set_offmap_flag = freehold_rhoynish_won_3
+						clr_offmap_flag = freehold_rhoynish_won_2
 					}
 					
 					if = {
 						limit = {
-							has_offmap_flag = china_mongols_won_1
+							has_offmap_flag = freehold_rhoynish_won_1
 						}
-						set_offmap_flag = china_mongols_won_2
-						clr_offmap_flag = china_mongols_won_1
+						set_offmap_flag = freehold_rhoynish_won_2
+						clr_offmap_flag = freehold_rhoynish_won_1
 					}
 					
 					if = {
 						limit = {
 							NOR = {
-								has_offmap_flag = china_mongols_won_1
-								has_offmap_flag = china_mongols_won_2
-								has_offmap_flag = china_mongols_won_3
+								has_offmap_flag = freehold_rhoynish_won_1
+								has_offmap_flag = freehold_rhoynish_won_2
+								has_offmap_flag = freehold_rhoynish_won_3
 							}
 						}
-						set_offmap_flag = china_mongols_won_1
+						set_offmap_flag = freehold_rhoynish_won_1
 					}
 					
 					set_offmap_flag = no_succession_news
@@ -2422,12 +1988,12 @@ character_event = {
 					random_traits = yes
 					female = no
 					religion = THIS
-					culture = jurchen
+					culture = rhoynish
 					dynasty = THIS
 				}
 				new_character = {
 					PREV = { set_father = PREV }
-					death = { death_reason = death_in_china_historic }
+					death = { death_reason = death_in_freehold_historic }
 				}
 				random_list = {
 					0 = {
@@ -2442,8 +2008,8 @@ character_event = {
 							age = 30
 							random_traits = yes
 							female = yes
-							religion = taoist # A bit strange, but necessary
-							culture = jurchen
+							religion = rhoynar # A bit strange, but necessary
+							culture = rhoynish
 							dynasty = actually_culture
 							trait = brilliant_strategist
 							martial = 10
@@ -2454,8 +2020,8 @@ character_event = {
 							age = 30
 							random_traits = yes
 							female = no
-							religion = taoist # A bit strange, but necessary
-							culture = jurchen
+							religion = rhoynar # A bit strange, but necessary
+							culture = rhoynish
 							dynasty = actually_culture
 							trait = brilliant_strategist
 							martial = 10
@@ -2472,29 +2038,598 @@ character_event = {
 						dynasty = THIS
 					}
 					new_character = {
-						death = { death_reason = death_in_china_historic }
-						save_event_target_as = new_china_ruler_father
+						death = { death_reason = death_in_freehold_historic }
+						save_event_target_as = new_freehold_ruler_father
 					}
-					set_father = event_target:new_china_ruler_father
+					set_father = event_target:new_freehold_ruler_father
 					FROM = {
 						set_offmap_holder = PREV
 					}
 					random_list = {
-						100 = {
-						
+						100 = {}
+					}
+				}
+  			
+				any_player = {
+					limit = {
+						has_offmap_news_enabled = FROM
+						is_within_diplo_range = ROOT
+					}
+					narrative_event = { id = JD.50202a }
+				}
+				
+				random_list = {
+					50 = {
+						modifier = {
+							factor = 0
+							has_game_rule = {
+								name = freehold_invasions
+								value = none
+							}
 						}
-						10 = {
-							religion = tengri_pagan
+						character_event = { id = JD.10113 days = 15 } #Spawns a Displaced Prince adventurer...
+						set_character_flag = spawning_a_displaced_royal
+						log = "Freehold Logging:"
+						log = "Attempting to spawn a Displaced Prince, as aftermath to event JD.50200 (end of Being Invaded by Jurchens). Character should spawn in 15 days."
+					}
+					50 = {
+						modifier = {
+							factor = 0
+							has_game_rule = {
+								name = freehold_invasions
+								value = none
+							}
 						}
-						10 = {
-							religion = buddhist
+						character_event = { id =  JD.10109a days = 15 } #Spawns a Rhoynish leader...
+						set_character_flag = spawning_a_rhoynish_invader
+						log = "Freehold Logging:"
+						log = "Attempting to spawn a Rhoynish Invader, as aftermath to event JD.50200 (end of Being Invaded by Mongols). Character should spawn in 15 days."
+					}
+				}
+			}
+		}
+	}
+}
+
+# News from Freehold: Rhoynish Invasion Fails
+narrative_event = {
+	id = JD.50201a
+	title = NEWS_FROM_FREEHOLD
+	picture = GFX_evt_china_mongols_invade
+	portrait = offmap_china
+	desc = EVTDESC_JD_50201a
+	window = EventWindowOffmap
+	background = GFX_event_window_news_from_china
+
+	has_dlc = "Jade Dragon"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		offmap_freehold = {
+			ruler = {
+				save_event_target_as = portrait_target
+			}
+		}
+	}
+	
+	portrait = event_target:portrait_target
+	
+	option = {
+		name = EVTOPT_JD_50201a
+	}
+}
+
+# News from Freehold: Rhoynish Invasion Succeeds
+narrative_event = {
+	id = JD.50202a
+	title = NEWS_FROM_FREEHOLD
+	picture = GFX_evt_tengri_throneroom_oldgods
+	portrait = offmap_china
+	desc = EVTDESC_JD_50202a
+	window = EventWindowOffmap
+	background = GFX_event_window_news_from_china
+
+	has_dlc = "Jade Dragon"
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		offmap_freehold = {
+			ruler = {
+				save_event_target_as = portrait_target
+			}
+		}
+	}
+	
+	portrait = event_target:portrait_target
+	
+	option = {
+		trigger = {
+			NOT = { has_character_modifier = peace_deal_with_freehold }
+		}
+		name = EVTOPT_JD_50202a
+	}
+	
+	option = {
+		trigger = {
+			has_character_modifier = peace_deal_with_freehold
+		}
+		name = EVTOPT_JD_50302a_BROKEN_PEACE_DEAL
+		
+		remove_character_modifier = peace_deal_with_freehold
+	}
+}
+
+# Status changes to 'Dothraki Invasion'
+# Hidden. Fired from on_offmap_yearly_pulse.
+# Root = Governor
+# From = Offmap
+character_event = {
+	id = JD.50180b
+
+	has_dlc = "Jade Dragon"
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = {
+		FROM = {
+			is_offmap_tag = offmap_freehold
+			NOR = {
+				has_status = freehold_ghiscari_invasion # Resolution handled by JD.50160
+				has_status = freehold_rhoynish_invasion # Resolution handled by JD.50200
+				has_status = freehold_dothraki_invasion # Resolution handled by JD.50200
+				has_status = freehold_civil_war # Resolution handled by JD.50300
+			}
+			OR = {
+				NOT = { has_offmap_flag = freehold_invaded_player_dynasty }
+				had_offmap_tmp_flag = { flag = freehold_invaded_player_dynasty years = 200 }
+			}
+		}
+	}
+	
+	weight_multiplier = {
+		factor = 1
+		modifier = { # Unrest increases the chance of an invasion
+			factor = 3
+			FROM = {
+				has_status = freehold_unrest
+				has_offmap_flag = freehold_had_unrest
+				had_offmap_tmp_flag = { flag = freehold_had_unrest years = 2 }
+			}
+		}
+		modifier = {
+			factor = 1.5
+			FROM = {
+				has_status = freehold_unrest
+				has_offmap_flag = freehold_had_unrest
+				had_offmap_tmp_flag = { flag = freehold_had_unrest years = 4 }
+			}
+		}
+		modifier = {
+			factor = 1.5
+			FROM = {
+				has_status = freehold_unrest
+				has_offmap_flag = freehold_had_unrest
+				had_offmap_tmp_flag = { flag = freehold_had_unrest years = 6 }
+			}
+		}
+		modifier = { # Famines last for at least 4 years
+			factor = 0
+			FROM = {
+				has_status = freehold_famine
+				has_offmap_flag = freehold_had_famine
+				NOT = {
+					had_offmap_tmp_flag = { flag = freehold_had_famine years = 4 }
+				}
+			}
+		}
+		modifier = { # Plagues last for at least 2 years
+			factor = 0
+			FROM = {
+				has_status = freehold_plague
+				has_offmap_flag = freehold_had_plague
+				NOT = {
+					had_offmap_tmp_flag = { flag = freehold_had_plague years = 2 }
+				}
+			}
+		}
+		modifier = { # Economic ruins last for at least 3 years
+			factor = 0
+			FROM = {
+				has_status = freehold_economic_ruin
+				has_offmap_flag = freehold_had_economic_ruin
+				NOT = {
+					had_offmap_tmp_flag = { flag = freehold_had_economic_ruin years = 3 }
+				}
+			}
+		}
+		modifier = {
+			factor = 1.25
+			FROM = {
+				has_status = freehold_famine
+				has_offmap_flag = freehold_had_famine
+				had_offmap_tmp_flag = { flag = freehold_had_famine years = 6 }
+			}
+		}
+		modifier = {
+			factor = 1.25
+			FROM = {
+				has_status = freehold_plague
+				has_offmap_flag = freehold_had_plague
+				had_offmap_tmp_flag = { flag = freehold_had_plague years = 3 }
+			}
+		}
+		modifier = {
+			factor = 1.25
+			FROM = {
+				has_status = freehold_economic_ruin
+				has_offmap_flag = freehold_had_economic_ruin
+				NOT = {
+					had_offmap_tmp_flag = { flag = freehold_had_economic_ruin years = 6 }
+				}
+			}
+		}
+		modifier = {
+			factor = 1.5
+			FROM = {
+				has_status = freehold_famine
+				has_offmap_flag = freehold_had_famine
+				had_offmap_tmp_flag = { flag = freehold_had_famine years = 8 }
+			}
+		}
+		modifier = {
+			factor = 1.5
+			FROM = {
+				has_status = freehold_plague
+				has_offmap_flag = freehold_had_plague
+				had_offmap_tmp_flag = { flag = freehold_had_plague years = 5 }
+			}
+		}
+		modifier = {
+			factor = 1.5
+			FROM = {
+				has_status = freehold_economic_ruin
+				has_offmap_flag = freehold_had_economic_ruin
+				NOT = {
+					had_offmap_tmp_flag = { flag = freehold_had_economic_ruin years = 9 }
+				}
+			}
+		}
+		modifier = {
+			factor = 2
+			FROM = {
+				has_status = freehold_famine
+				has_offmap_flag = freehold_had_famine
+				had_offmap_tmp_flag = { flag = freehold_had_famine years = 10 }
+			}
+		}
+		modifier = {
+			factor = 2
+			FROM = {
+				has_status = freehold_plague
+				has_offmap_flag = freehold_had_plague
+				had_offmap_tmp_flag = { flag = freehold_had_plague years = 7 }
+			}
+		}
+		modifier = {
+			factor = 2
+			FROM = {
+				has_status = freehold_economic_ruin
+				has_offmap_flag = freehold_had_economic_ruin
+				NOT = {
+					had_offmap_tmp_flag = { flag = freehold_had_economic_ruin years = 12 }
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			FROM = {
+				offmap_ruler = {
+					culture = dothraki
+				}
+			}
+		}
+		modifier = {
+			factor = 0.5
+			FROM = { has_status = freehold_golden_age }
+		}
+		modifier = {
+			factor = 0.5
+			FROM = { has_offmap_flag = freehold_ghiscari_won_1 }
+		}
+		modifier = {
+			factor = 0.25
+			FROM = { has_offmap_flag = freehold_ghiscari_won_2 }
+		}
+		modifier = {
+			factor = 0.1
+			FROM = { has_offmap_flag = freehold_ghiscari_won_3 }
+		}
+	}
+	
+	immediate = {
+		FROM = {
+			set_offmap_flag = no_status_news
+			set_status = freehold_dothraki_invasion
+			set_offmap_flag = freehold_dothraki_invasion
+			clr_offmap_flag = no_status_news
+		}
+		any_player = {
+			limit = {
+				has_offmap_news_enabled = FROM
+				is_within_diplo_range = ROOT
+			}
+			narrative_event = { id = JD.50181b }
+		}
+	}
+}
+
+# News from Freehold: Dothraki Invasion
+narrative_event = {
+	id = JD.50181b
+	title = NEWS_FROM_FREEHOLD
+	picture = GFX_evt_china_mongols_invade
+	portrait = offmap_china
+	window = EventWindowOffmap
+	background = GFX_event_window_news_from_china
+
+	desc = {
+		trigger = {
+			FROMFROM = {
+				OR = {
+					prev_status = freehold_famine
+					prev_status = freehold_unrest
+					prev_status = freehold_plague
+					prev_status = freehold_internal_purge
+					prev_status = freehold_economic_ruin
+				}
+			}
+		}
+		text = EVTDESC_JD_50181b_BOOST
+	}
+	desc = {
+		trigger = {
+			FROMFROM = {
+				prev_status = freehold_golden_age
+			}
+		}
+		text = EVTDESC_JD_50181b_PENALTY
+	}
+	desc = {
+		trigger = {
+			FROMFROM = {
+				NOR = {
+					prev_status = freehold_famine
+					prev_status = freehold_unrest
+					prev_status = freehold_plague
+					prev_status = freehold_internal_purge
+					prev_status = freehold_economic_ruin
+					prev_status = freehold_golden_age
+				}
+			}
+		}
+		text = EVTDESC_JD_50031_DOTHRAKI # Can be the same as the standard status change notification
+	}
+
+	has_dlc = "Jade Dragon"
+
+	is_triggered_only = yes
+	
+	immediate = {
+		offmap_freehold = {
+			ruler = {
+				save_event_target_as = portrait_target
+			}
+		}
+	}
+	
+	portrait = event_target:portrait_target
+	
+	option = {
+		name = EVTOPT_JD_50141b
+	}
+}
+
+# Chance for an end to the 'Dothraki Invasion' Status
+# Hidden. Fired from on_offmap_yearly_pulse
+# Root = Governor
+# From = Offmap
+character_event = {
+	id = JD.50200b
+
+	has_dlc = "Jade Dragon"
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = {
+		FROM = {
+			is_offmap_tag = offmap_freehold
+			has_status = freehold_dothraki_invasion
+		}
+	}
+	
+	weight_multiplier = {
+		factor = 1
+		modifier = {
+			factor = 2
+			FROM = { had_offmap_tmp_flag = { flag = freehold_dothraki_invasion years = 2 } }
+		}
+		modifier = {
+			factor = 2
+			FROM = { had_offmap_tmp_flag = { flag = freehold_dothraki_invasion years = 4 } }
+		}
+		modifier = {
+			factor = 2
+			FROM = { had_offmap_tmp_flag = { flag = freehold_dothraki_invasion years = 8 } }
+		}
+		modifier = {
+			factor = 5
+			FROM = { had_offmap_tmp_flag = { flag = freehold_dothraki_invasion years = 10 } }
+		}
+	}
+	
+	immediate = {
+		random_list = {
+			100 = { # Freehold won!
+				#trigger = { always = no }
+				modifier = {
+					factor = 3
+					FROM = {
+						prev_status = freehold_golden_age
+					}
+				}
+				
+				FROM = {
+					set_offmap_flag = no_status_news
+					set_status = freehold_stable
+					clr_offmap_flag = no_status_news
+					
+					if = {
+						limit = { has_offmap_flag = freehold_badly_beaten_1 }
+						clr_offmap_flag = freehold_badly_beaten_1
+					}
+					if = {
+						limit = { has_offmap_flag = freehold_badly_beaten_2 }
+						clr_offmap_flag = freehold_badly_beaten_2
+						set_offmap_flag = freehold_badly_beaten_1
+					}
+					if = {
+						limit = { has_offmap_flag = freehold_badly_beaten_3 }
+						clr_offmap_flag = freehold_badly_beaten_3
+						set_offmap_flag = freehold_badly_beaten_2
+					}
+				}
+				
+				any_player = {
+					limit = {
+						has_offmap_news_enabled = FROM
+						is_within_diplo_range = ROOT
+					}
+					narrative_event = { id = JD.50201 }
+				}
+			}
+			100 = { # Dothraki won!
+				modifier = {
+					factor = 3
+					FROM = {
+						OR = {
+							prev_status = freehold_unrest
+							prev_status = freehold_famine
+							prev_status = freehold_plague
+							prev_status = freehold_internal_purge
+							prev_status = freehold_economic_ruin
 						}
-						5 = {
-							religion = nestorian
+					}
+				}
+				
+				FROM = {
+					set_offmap_flag = no_status_news
+					set_status = freehold_unrest
+					set_offmap_flag = freehold_had_unrest
+					clr_offmap_flag = no_status_news
+				
+					clr_offmap_flag = freehold_badly_beaten_3
+					clr_offmap_flag = freehold_badly_beaten_2
+					clr_offmap_flag = freehold_badly_beaten_1
+					
+					if = {
+						limit = {
+							has_offmap_flag = freehold_dothraki_won_2
 						}
-						5 = {
-							religion = sunni
+						set_offmap_flag = freehold_dothraki_won_3
+						clr_offmap_flag = freehold_dothraki_won_2
+					}
+					
+					if = {
+						limit = {
+							has_offmap_flag = freehold_dothraki_won_1
 						}
+						set_offmap_flag = freehold_dothraki_won_2
+						clr_offmap_flag = freehold_dothraki_won_1
+					}
+					
+					if = {
+						limit = {
+							NOR = {
+								has_offmap_flag = freehold_dothraki_won_1
+								has_offmap_flag = freehold_dothraki_won_2
+								has_offmap_flag = freehold_dothraki_won_3
+							}
+						}
+						set_offmap_flag = freehold_dothraki_won_1
+					}
+					
+					set_offmap_flag = no_succession_news
+				}
+				
+				# A new ruler ascends to the Dragon Throne. The fallout is handled by JD.10005 and JD.50000 (from 'on_offmap_ruler_changed')
+				create_character = { #The father
+					age = 60
+					random_traits = yes
+					female = no
+					religion = THIS
+					culture = dothraki
+					dynasty = THIS
+				}
+				new_character = {
+					PREV = { set_father = PREV }
+					death = { death_reason = death_in_freehold_historic }
+				}
+				random_list = {
+					0 = {
+						additive_modifier = {
+							value = 50
+							has_game_rule = {
+								name = gender
+								value = all
+							}
+						}
+						create_character = {
+							age = 30
+							random_traits = yes
+							female = yes
+							religion = dothraki # A bit strange, but necessary
+							culture = dothraki
+							dynasty = actually_culture
+							trait = brilliant_strategist
+							martial = 10
+						}
+					}
+					50 = {
+						create_character = {
+							age = 30
+							random_traits = yes
+							female = no
+							religion = dothraki # A bit strange, but necessary
+							culture = dothraki
+							dynasty = actually_culture
+							trait = brilliant_strategist
+							martial = 10
+						}
+					}
+				}
+				new_character = {
+					create_character = {
+						age = 60
+						random_traits = yes
+						female = no
+						religion = THIS
+						culture = THIS
+						dynasty = THIS
+					}
+					new_character = {
+						death = { death_reason = death_in_freehold_historic }
+						save_event_target_as = new_freehold_ruler_father
+					}
+					set_father = event_target:new_freehold_ruler_father
+					FROM = {
+						set_offmap_holder = PREV
+					}
+					random_list = {
+						100 = {}
 					}
 				}
   			
@@ -2511,27 +2646,27 @@ character_event = {
 						modifier = {
 							factor = 0
 							has_game_rule = {
-								name = chinese_invasions
+								name = freehold_invasions
 								value = none
 							}
 						}
 						character_event = { id = JD.10113 days = 15 } #Spawns a Displaced Prince adventurer...
 						set_character_flag = spawning_a_displaced_royal
-						log = "China Logging:"
+						log = "Freehold Logging:"
 						log = "Attempting to spawn a Displaced Prince, as aftermath to event JD.50200 (end of Being Invaded by Jurchens). Character should spawn in 15 days."
 					}
 					50 = {
 						modifier = {
 							factor = 0
 							has_game_rule = {
-								name = chinese_invasions
+								name = freehold_invasions
 								value = none
 							}
 						}
-						character_event = { id =  JD.10109 days = 15 } #Spawns a Jurchen tribe leader...
-						set_character_flag = spawning_a_jurchen_invader
-						log = "China Logging:"
-						log = "Attempting to spawn a Jurchen Invader, as aftermath to event JD.50200 (end of Being Invaded by Mongols). Character should spawn in 15 days."
+						character_event = { id =  JD.10109b days = 15 } #Spawns a Dothraki Khal...
+						set_character_flag = spawning_a_dothraki_invader
+						log = "Freehold Logging:"
+						log = "Attempting to spawn a Dothraki Invader, as aftermath to event JD.50200 (end of Being Invaded by Mongols). Character should spawn in 15 days."
 					}
 				}
 			}
@@ -2539,13 +2674,13 @@ character_event = {
 	}
 }
 
-# News from China: Jurchen Invasion Fails
+# News from Freehold: Dothraki Invasion Fails
 narrative_event = {
-	id = JD.50201
-	title = NEWS_FROM_CHINA
+	id = JD.50201b
+	title = NEWS_FROM_FREEHOLD
 	picture = GFX_evt_china_mongols_invade
 	portrait = offmap_china
-	desc = EVTDESC_JD_50201
+	desc = EVTDESC_JD_50201b
 	window = EventWindowOffmap
 	background = GFX_event_window_news_from_china
 
@@ -2564,17 +2699,17 @@ narrative_event = {
 	portrait = event_target:portrait_target
 	
 	option = {
-		name = EVTOPT_JD_50201
+		name = EVTOPT_JD_50201b
 	}
 }
 
-# News from China: Jurchen Invasion Succeeds
+# News from Freehold: Dothraki Invasion Succeeds
 narrative_event = {
-	id = JD.50202
-	title = NEWS_FROM_CHINA
+	id = JD.50202b
+	title = NEWS_FROM_FREEHOLD
 	picture = GFX_evt_tengri_throneroom_oldgods
 	portrait = offmap_china
-	desc = EVTDESC_JD_50202
+	desc = EVTDESC_JD_50202b
 	window = EventWindowOffmap
 	background = GFX_event_window_news_from_china
 
@@ -2594,18 +2729,18 @@ narrative_event = {
 	
 	option = {
 		trigger = {
-			NOT = { has_character_modifier = peace_deal_with_china }
+			NOT = { has_character_modifier = peace_deal_with_freehold }
 		}
-		name = EVTOPT_JD_50202
+		name = EVTOPT_JD_50202b
 	}
 	
 	option = {
 		trigger = {
-			has_character_modifier = peace_deal_with_china
+			has_character_modifier = peace_deal_with_freehold
 		}
 		name = EVTOPT_JD_50302_BROKEN_PEACE_DEAL
 		
-		remove_character_modifier = peace_deal_with_china
+		remove_character_modifier = peace_deal_with_freehold
 	}
 }
 
@@ -2625,10 +2760,11 @@ character_event = {
 		FROM = {
 			is_offmap_tag = offmap_freehold
 			NOR = {
-				has_status = china_famine
-				has_status = china_mongol_invasion # Resolution handled by JD.50160
-				has_status = china_jurchen_invasion # Resolution handled by JD.50200
-				has_status = china_civil_war # Resolution handled by JD.50300
+				has_status = freehold_famine
+				has_status = freehold_ghiscari_invasion # Resolution handled by JD.50160
+				has_status = freehold_rhoynish_invasion # Resolution handled by JD.50200
+				has_status = freehold_dothraki_invasion # Resolution handled by JD.50200
+				has_status = freehold_civil_war # Resolution handled by JD.50300
 			}
 		}
 	}
@@ -2638,19 +2774,19 @@ character_event = {
 		modifier = { # Famines don't tend to happen too close to each other
 			factor = 0
 			FROM = {
-				has_offmap_flag = china_had_famine
+				has_offmap_flag = freehold_had_famine
 				NOT = {
-					had_offmap_tmp_flag = { flag = china_had_famine years = 90 }
+					had_offmap_tmp_flag = { flag = freehold_had_famine years = 90 }
 				}
 			}
 		}
 		modifier = { # Golden Ages tend to not end with a Famine or Plague
 			factor = 0
 			FROM = {
-				has_status = china_golden_age
-				has_offmap_flag = china_had_golden_age
+				has_status = freehold_golden_age
+				has_offmap_flag = freehold_had_golden_age
 				NOT = {
-					had_offmap_tmp_flag = { flag = china_had_golden_age years = 50 }
+					had_offmap_tmp_flag = { flag = freehold_had_golden_age years = 50 }
 				}
 			}
 		}
@@ -2658,8 +2794,8 @@ character_event = {
 			factor = 0.75
 			FROM = {
 				OR = {
-					has_status = china_stable
-					has_status = china_golden_age
+					has_status = freehold_stable
+					has_status = freehold_golden_age
 				}
 			}
 		}
@@ -2667,8 +2803,8 @@ character_event = {
     
 	immediate = {
 		FROM = {
-			set_offmap_flag = china_had_famine
-			set_status = china_famine # Players will be notified by JD.50030
+			set_offmap_flag = freehold_had_famine
+			set_status = freehold_famine # Players will be notified by JD.50030
 		}
 	}
 }
@@ -2968,7 +3104,7 @@ character_event = {
 						modifier = {
 							factor = 0
 							has_game_rule = {
-								name = chinese_invasions
+								name = freehold_invasions
 								value = none
 							}
 						}
@@ -2987,7 +3123,7 @@ character_event = {
 						modifier = {
 							factor = 0
 							has_game_rule = {
-								name = chinese_invasions
+								name = freehold_invasions
 								value = none
 							}
 						}
@@ -3096,7 +3232,7 @@ character_event = {
 						modifier = {
 							factor = 0
 							has_game_rule = {
-								name = chinese_invasions
+								name = freehold_invasions
 								value = none
 							}
 						}
@@ -3109,7 +3245,7 @@ character_event = {
 						modifier = {
 							factor = 0
 							has_game_rule = {
-								name = chinese_invasions
+								name = freehold_invasions
 								value = none
 							}
 						}
@@ -3155,7 +3291,7 @@ character_event = {
 						modifier = {
 							factor = 0
 							has_game_rule = {
-								name = chinese_invasions
+								name = freehold_invasions
 								value = none
 							}
 						}
