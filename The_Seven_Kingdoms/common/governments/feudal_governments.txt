@@ -38,9 +38,10 @@ feudal_governments = {
               is_government_potential = wildling_government           # Wildling Government, Tribal
               is_government_potential = merchant_kingdom_government   # Merchant Kingdom
               is_government_potential = theocratic_kingdom_government # Theocratic Kingdom
-              is_government_potential = march_government	      # Royal March 
-	      is_government_potential = council_government	      # Council		
-	      is_government_potential = storm_kingdom_government      # Storm Kingdom
+              is_government_potential = march_government	          # Royal March 
+			  is_government_potential = council_government	          # Council		
+			  is_government_potential = storm_kingdom_government      # Storm Kingdom
+			  is_government_potential = vale_government     		  # Knights of the Vale
           }
           is_patrician = no
       }
@@ -260,6 +261,17 @@ feudal_governments = {
               religion = old_gods_beyond_white
           }
           NOT = { culture_group = free_folk }
+		  NOR = {
+			  is_government_potential = stepstones_government         # Stepstones Government
+              is_government_potential = nights_watch_government       # Night's Watch Government
+              is_government_potential = wildling_government           # Wildling Government, Tribal
+              is_government_potential = merchant_kingdom_government   # Merchant Kingdom
+              is_government_potential = theocratic_kingdom_government # Theocratic Kingdom
+              is_government_potential = march_government	          # Royal March 
+			  is_government_potential = council_government	          # Council		
+			  is_government_potential = storm_kingdom_government      # Storm Kingdom
+			  is_government_potential = vale_government    			  # Knights of the Vale
+			  }
           is_patrician = no
       }
       
@@ -487,16 +499,16 @@ feudal_governments = {
             }
             primary_title = { 
               OR = { 
-                title = k_starpike
-                title = k_the_northmarch
-                title = k_the_westmarch
-                title = k_the_eastmarch	
-              }
+					title = k_starpike
+					title = k_the_northmarch
+					title = k_the_westmarch
+					title = k_the_eastmarch	
+				}
             }
             is_patrician = no
         }
         
-        color = { 55 120 35 }
+        color = { 80 125 105 }
         
         dukes_called_kings = no
         barons_need_dynasty = yes
@@ -584,14 +596,58 @@ feudal_governments = {
           is_patrician = no
         }
         
-        color = { 245 210 0 }
+        color = { 170 170 100 }
         
         dukes_called_kings = no
-        barons_need_dynasty = no
+        barons_need_dynasty = yes
         can_build_tribal = no
 		
         character_modifier = {
           vassal_opinion = 10
+        }
+        
+        capital_move_delay = 600
+    }   
+	
+	vale_government = {
+        preferred_holdings = { CASTLE }
+        allowed_holdings = { 
+            CASTLE
+            FORT
+            HOSPITAL
+        }
+        accepts_liege_governments = { # Gets the wrong religion modifier instead
+            old_gods_government
+            nights_watch_government         # Although it cannot rule over the NW, the NW can rule over them.
+        }
+        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+            tribal_government
+            wildling_government
+            old_gods_government
+            stepstones_government
+        }
+        frame_suffix = "_vale"
+        potential = {
+          NOT = {
+            controls_religion = yes
+          }
+          primary_title = { 
+            title = e_the_vale
+          }
+          is_patrician = no
+        }
+        
+        color = { 60 135 135 }
+        
+        dukes_called_kings = no
+        barons_need_dynasty = yes
+        can_build_tribal = no
+		
+        character_modifier = {
+          vassal_opinion = 15
+		  ai_honor = 10
+		  martial = 1
+		  diplomacy = 1
         }
         
         capital_move_delay = 600
