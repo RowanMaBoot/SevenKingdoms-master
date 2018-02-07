@@ -42,6 +42,7 @@ feudal_governments = {
 			  is_government_potential = council_government	          # Council		
 			  is_government_potential = storm_kingdom_government      # Storm Kingdom
 			  is_government_potential = vale_government     		  # Knights of the Vale
+			  is_government_potential = west_government     		  # Western Kingdom
           }
           is_patrician = no
       }
@@ -271,6 +272,7 @@ feudal_governments = {
 			  is_government_potential = council_government	          # Council		
 			  is_government_potential = storm_kingdom_government      # Storm Kingdom
 			  is_government_potential = vale_government    			  # Knights of the Vale
+			  is_government_potential = west_government   			  # Western Kingdom
 			  }
           is_patrician = no
       }
@@ -648,6 +650,48 @@ theocratic_kingdom_government = {
 		  ai_honor = 10
 		  martial = 1
 		  diplomacy = 1
+        }
+        
+        capital_move_delay = 600
+    }   
+	
+	west_government = {
+        preferred_holdings = { CASTLE }
+        allowed_holdings = { 
+            CASTLE
+            FORT
+            HOSPITAL
+        }
+        accepts_liege_governments = { # Gets the wrong religion modifier instead
+            old_gods_government
+            nights_watch_government         # Although it cannot rule over the NW, the NW can rule over them.
+        }
+        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+            tribal_government
+            wildling_government
+            old_gods_government
+            stepstones_government
+        }
+        frame_suffix = "_west"
+        potential = {
+          NOT = {
+            controls_religion = yes
+          }
+          primary_title = { 
+            title = e_the_westerlands
+          }
+          is_patrician = no
+        }
+        
+        color = { 60 0 0 }
+        
+        dukes_called_kings = no
+        barons_need_dynasty = yes
+        can_build_tribal = no
+		
+        character_modifier = {
+          vassal_opinion = 15
+		  stewardship = 2
         }
         
         capital_move_delay = 600
