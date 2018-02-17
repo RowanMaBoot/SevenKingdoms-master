@@ -1,0 +1,51 @@
+###general event### hidden event
+character_event = {
+	id = 45333
+	desc = "EVTDESC45333"
+	picture = "GFX_evt_death"
+	
+	hide_window = yes
+	
+	only_men = yes
+	capable_only = yes
+	
+	trigger = {
+		min_age = 16
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+			if = { 
+				limit = { 
+					is_ruler = yes
+					NOT = { trait = dorimi_general  }
+					in_command = yes
+					is_alive = yes
+					war = yes
+				}
+				add_trait = dorimi_general
+			}
+			if = { 
+				limit = { 
+					is_ruler = yes
+					trait = dorimi_general
+					in_command = no
+					is_alive = yes
+					war = yes
+				}
+				remove_trait = dorimi_general
+			}
+			if = { 
+				limit = { 
+					is_ruler = yes
+					trait = dorimi_general
+					is_alive = yes
+					war = no
+				}
+				remove_trait = dorimi_general
+			}
+	}
+}
