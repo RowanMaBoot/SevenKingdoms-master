@@ -59,3 +59,104 @@ title_generic_ser = {
 
     message = no
 }
+
+title_kings_justice = {
+	dignity = 0
+	realm_in_name = yes
+	grant_limit = 1
+	opinion_effect = 4
+	show_as_title = yes
+	monthly_salary = 0.025
+	monthly_prestige = 0.1
+	
+	is_unique = yes
+	
+	allowed_to_hold = {
+		age = 30
+		is_female = no	
+		is_ruler = no
+		NOT = { trait = kind }
+		NOT = { trait = craven }
+		NOT = { trait = incapable }
+		NOT = { culture = northmen }
+		NOT = { has_job_title = job_castellan }	
+		NOT = { has_job_title = job_chancellor }	
+		NOT = { has_job_title = job_marshal }	
+		NOT = { has_job_title = job_treasurer }	
+		NOT = { has_job_title = job_spymaster }	
+	}
+	allowed_to_grant = {
+		real_tier = emperor 
+		NOT = { culture = northmen }
+		NOT = { regent = { character = ROOT } }
+	}
+}
+
+title_knight_of_the_greenhand = {
+	dignity = 0.3
+	grant_limit = 100
+	realm_in_name = no
+	
+	monthly_prestige = 0.25
+	monthly_salary = 0
+	
+	allowed_to_hold = {
+		trait = knight	
+	}
+	allowed_to_grant = {
+		tier = EMPEROR
+		OR = {
+			AND = {
+				capital_scope = { region = world_reach }
+				culture_group = andal
+			}
+			dynasty = 604 # Gardener
+			has_landed_title = e_the_reach
+		}
+	}
+	
+	gain_effect = { }
+	lose_effect = { }
+
+	message = no
+}
+
+title_captain_of_guard = {
+	dignity = 0.2
+	show_as_title = yes
+	realm_in_name = no
+	grant_limit = 1
+	is_high_prio = yes
+	
+	opinion_effect = 5
+	monthly_salary = 0.1
+	monthly_prestige = 0.1
+	
+	allowed_to_hold = {	
+		is_ruler = no
+		is_adult = yes
+		OR = {
+			is_councillor  = no
+			has_job_title = job_marshal
+		}	
+		combat_rating = 4
+		OR = {
+			combat_rating = 5.17
+			NOT = { is_close_relative = FROM }
+		}
+		NOT = { has_severe_disability_trigger = yes }
+	}
+	allowed_to_grant = {
+		ai = no
+		is_ruler = yes
+		demesne_size = 1
+	}
+
+	gain_effect = {
+		prestige = 50
+	}
+	lose_effect = {
+	}
+	
+	message = no
+}
