@@ -298,7 +298,7 @@ plot_gain_vassal_title = {
 			temporary = no
 		}
 		NOT = { trait = incapable }
-		NOT = { trait = imbecile }
+		NOT = { has_landed_title = e_valyrian_freehold }
 		
 		OR = {
 			ai = no
@@ -399,6 +399,7 @@ plot_gain_vassal_title = {
 			NOT = { has_non_aggression_pact_with = FROM }
 			NOT = { reverse_has_truce = FROM }
 		}
+		FROM = { in_revolt = no }
 	}
 	
 	chance = {
@@ -594,6 +595,7 @@ plot_gain_vassal_title = {
 				OR = {
 					is_playable = no
 					trait = incapable
+					in_revolt = yes
 				}
 			}
 			holder_scope = {
@@ -640,10 +642,12 @@ plot_kill_character = {
 			society_member_of = the_assassins
 			society_rank >= 2
 		}
-        ROOT = {
-            has_quest = quest_the_assassins_assassination
-            quest_target = { character = FROM }
-        }
+		OR = {
+			ROOT = {
+				has_quest = quest_the_assassins_assassination
+				quest_target = { character = FROM }
+			}
+		}
 	}
 	
 	# Plotter scope
@@ -725,6 +729,7 @@ plot_kill_character = {
 		NOT = { is_child_of = FROM } # Not my own children
 		is_within_diplo_range = FROM
 		NOT = { has_blood_oath_with = FROM }
+		assassination_interaction_trigger = yes
 	}
 	
 	target_potential = {
@@ -1001,7 +1006,7 @@ plot_kill_character = {
 		}
 		
 		modifier = {
-			factor = 4.0
+			factor = 2.0
 			plot_target_char = {
 				sibling = FROM
 				ai = yes
@@ -1013,25 +1018,12 @@ plot_kill_character = {
 			}
 		}
 		modifier = {
-			factor = 2.0
+			factor = 1.5
 			plot_target_char = {
 				sibling = FROM
 				ai = yes
 				top_liege = { character = father }
 				is_landed = no
-			}
-			FROM = {
-				religion_group = the_seven_group
-				top_liege = { character = father }
-			}
-		}
-        
-        modifier = {
-			factor = 1.5
-			plot_target_char = {
-				sibling = FROM
-				ai = no
-				top_liege = { character = father }
 			}
 			FROM = {
 				religion_group = the_seven_group
@@ -1073,8 +1065,12 @@ plot_kill_spouse = {
 			society_member_of = the_assassins
 			society_rank >= 2
 		}
-        has_quest = quest_the_assassins_assassination
-        quest_target = { character = FROM }
+		OR = {
+			ROOT = {
+				has_quest = quest_the_assassins_assassination
+				quest_target = { character = FROM }
+			}
+		}
 	}
 	
 	# Plotter scope
@@ -1099,7 +1095,8 @@ plot_kill_spouse = {
 	
 	# Target allow trigger for when players target a specific character in the GUI
 	player_allow = {
-		always = yes
+		NOT = { is_lover = FROM }
+		assassination_interaction_trigger = yes
 	}
 	
 	# Target character scope
@@ -1782,8 +1779,8 @@ plot_gain_liege_title = {
 				character = FROM
 			}
 			has_holder = no
+			holder_scope = { is_playable = no }
 		}
-		is_playable = no
 	}
 	abort_effect = {
 		FROM = {
