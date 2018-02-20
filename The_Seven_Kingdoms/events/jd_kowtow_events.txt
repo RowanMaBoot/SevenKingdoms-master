@@ -249,14 +249,18 @@ character_event = { # Travel Tombola
 		                ai = yes
 		                mercenary = yes
 		                OR = {
-		                	culture = han
+		                	culture = high_valyrian
 		                	AND = {
-		                		offmap_china = { has_status = china_jurchen_invasion }
-		                		culture = jurchen
+		                		offmap_freehold = { has_status = freehold_dothraki_invasion }
+		                		culture = dothraki
 		                	}
 		                	AND = {
-		                		offmap_china = { has_status = china_mongol_invasion }
-		                		culture = mongol
+		                		offmap_freehold = { has_status = freehold_rhoynish_invasion }
+		                		culture = rhoynish
+		                	}
+							AND = {
+		                		offmap_freehold = { has_status = freehold_ghiscari_invasion }
+		                		culture = ghiscari
 		                	}
 		                }
 						primary_title = {
@@ -486,9 +490,6 @@ character_event = { # Messenger invites you to the Lords keep, travel time > 2
 					tier = COUNT
 					tier = DUKE
 				}
-				capital_scope = {
-					region = custom_eastern_access
-				}
 				NOT = {
 					num_of_friends = 3
 				}
@@ -504,9 +505,6 @@ character_event = { # Messenger invites you to the Lords keep, travel time > 2
 				OR = {
 					tier = COUNT
 					tier = DUKE
-				}
-				capital_scope = {
-					region = custom_eastern_access
 				}
 				NOT = { block_general_event_trigger = yes }
 				is_rival = ROOT
@@ -1081,7 +1079,7 @@ character_event = {
 	}
 	
 	after = {
-		return_to_china_tombola_effect = yes
+		return_to_freehold_tombola_effect = yes
 	}
 }
 
@@ -1107,10 +1105,10 @@ character_event = {
 		trigger = {
 			NOR = {
 				trait = zealous
-				religion_group = indian_group # Eastern religion group
+				religion_group = valyrian_group
 			}
 		}
-		add_trait = sympathy_indian # Sympathy for eastern religions
+		add_trait = sympathy_valyrian # Sympathy for eastern religions
 	}
 	
 	option = { # Join in the ceremony
@@ -1119,7 +1117,7 @@ character_event = {
 		if = {
 			limit = {
 				trait = zealous
-				NOT = { religion_group = indian_group } # Eastern religion group 
+				NOT = { religion_group = valyrian_group } # Eastern religion group 
 			}
 			remove_trait = zealous
 		}
@@ -1142,7 +1140,7 @@ character_event = {
 		name = EVTOPTC_JD_32216
 		trigger = {
 			trait = zealous
-			NOT = { religion_group = indian_group } # Eastern religion group 
+			NOT = { religion_group = valyrian_group } # Eastern religion group 
 		}
 		
 		piety = 30
@@ -1166,7 +1164,7 @@ character_event = {
 	}
 	
 	after = {
-		return_to_china_tombola_effect = yes
+		return_to_freehold_tombola_effect = yes
 	}
 }
 
@@ -1442,7 +1440,7 @@ character_event = { # audience w/ the Emperor
 		}
 		add_trait = kow_tow_completed_tier_1
 		add_offmap_currency = {
-			offmap = offmap_china
+			offmap = offmap_freehold
 			value = 100
 		}
 		if = {
@@ -1475,7 +1473,7 @@ character_event = { # audience w/ the Emperor
 		}
 		add_trait = kow_tow_completed_tier_2
 		add_offmap_currency = {
-			offmap = offmap_china
+			offmap = offmap_freehold
 			value = 100
 		}
 		if = {
@@ -1501,7 +1499,7 @@ character_event = { # audience w/ the Emperor
 		}
 		add_trait = kow_tow_completed_tier_3
 		add_offmap_currency = {
-			offmap = offmap_china
+			offmap = offmap_freehold
 			value = 100
 		}
 		if = {
@@ -1554,15 +1552,19 @@ character_event = {
                 #is_landed = yes
                 mercenary = yes
                 OR = {
-                	culture = han
+                	culture = high_valyrian
                 	AND = {
-                		offmap_china = { has_status = china_jurchen_invasion }
-                		culture = jurchen
-                	}
-                	AND = {
-                		offmap_china = { has_status = china_mongol_invasion }
-                		culture = mongol
-                	}
+		                offmap_freehold = { has_status = freehold_dothraki_invasion }
+		                culture = dothraki
+		            }
+		            AND = {
+		                offmap_freehold = { has_status = freehold_rhoynish_invasion }
+		                culture = rhoynish
+		            }
+					AND = {
+		                offmap_freehold = { has_status = freehold_ghiscari_invasion }
+		                culture = ghiscari
+		            }
                 }
 				primary_title = {
 					NOT = { has_raised_standing_troops = yes }
@@ -1571,17 +1573,20 @@ character_event = {
             save_event_target_as = other_ruler
         }
         
-        offmap_china = {
+        offmap_freehold = {
             trigger_switch = {
                 on_trigger = has_status
-                china_stable = { ROOT = { set_character_flag = china_stable } }
-                china_unrest = { ROOT = { set_character_flag = china_unrest } }
-                china_civil_war = { ROOT = { set_character_flag = china_civil_war } }
-                china_mongol_invasion = { ROOT = { set_character_flag = china_mongol_invasion } }
-                china_jurchen_invasion = { ROOT = { set_character_flag = china_jurchen_invasion } }
-                china_famine = { ROOT = { set_character_flag = china_famine } }
-                china_plague = { ROOT = { set_character_flag = china_plague } }
-                china_golden_age = { ROOT = { set_character_flag = china_golden_age } }
+                freehold_stable = { ROOT = { set_character_flag = freehold_stable } }
+                freehold_unrest = { ROOT = { set_character_flag = freehold_unrest } }
+				freehold_internal_purge = { ROOT = { set_character_flag = freehold_internal_purge } }
+                freehold_civil_war = { ROOT = { set_character_flag = freehold_civil_war } }
+                freehold_dothraki_invasion = { ROOT = { set_character_flag = freehold_dothraki_invasion } }
+                freehold_rhoynish_invasion = { ROOT = { set_character_flag = freehold_rhoynish_invasion } }
+                freehold_ghiscari_invasion = { ROOT = { set_character_flag = freehold_ghiscari_invasion } }
+				freehold_famine = { ROOT = { set_character_flag = freehold_famine } }
+                freehold_plague = { ROOT = { set_character_flag = freehold_plague } }
+                freehold_golden_age = { ROOT = { set_character_flag = freehold_golden_age } }
+				freehold_economic_ruin = { ROOT = { set_character_flag = freehold_economic_ruin } }
             }
         }
 
@@ -1603,10 +1608,13 @@ character_event = { #PING EVENT for the Mercenary leader...
     				character_event = { id = JD.15002 } #Mercenaries wants root to pay a "bridge fee"...
     				trigger = {
 						OR = {
-				    		has_character_flag = china_unrest
-				    		has_character_flag = china_civil_war
-				    		has_character_flag = china_mongol_invasion
-				    		has_character_flag = china_jurchen_invasion
+				    		has_character_flag = freehold_unrest
+				    		has_character_flag = freehold_civil_war
+				    		has_character_flag = freehold_dothraki_invasion
+				    		has_character_flag = freehold_rhoynish_invasion
+							has_character_flag = freehold_ghiscari_invasion
+							has_character_flag = freehold_internal_purge
+							has_character_flag = freehold_economic_ruin
 			    		}
     				}
     			}
@@ -1614,9 +1622,11 @@ character_event = { #PING EVENT for the Mercenary leader...
     				character_event = { id = JD.15003 } #Mercenaries are here to escort root...
     				trigger = {
 						OR = {
-				    		has_character_flag = china_stable
-				    		has_character_flag = china_golden_age
-				    		has_character_flag = china_unrest
+				    		has_character_flag = freehold_stable
+				    		has_character_flag = freehold_golden_age
+				    		has_character_flag = freehold_unrest
+							has_character_flag = freehold_internal_purge
+							has_character_flag = freehold_economic_ruin
 			    		}
     				}
     			}
@@ -1624,8 +1634,10 @@ character_event = { #PING EVENT for the Mercenary leader...
     				character_event = { id = JD.15004 } #Meet a starving mercenary band...
     				trigger = {
 						OR = {
-				    		has_character_flag = china_famine
-				    		has_character_flag = china_plague
+				    		has_character_flag = freehold_famine
+				    		has_character_flag = freehold_plague
+							has_character_flag = freehold_internal_purge
+							has_character_flag = freehold_economic_ruin
 			    		}
     				}
     			}
@@ -1703,14 +1715,17 @@ character_event = { #Mercenaries wants root to pay a "bridge fee"...
    	}
 
     after = {
-        clr_character_flag = china_stable
-        clr_character_flag = china_unrest
-        clr_character_flag = china_civil_war
-        clr_character_flag = china_mongol_invasion
-        clr_character_flag = china_jurchen_invasion
-        clr_character_flag = china_famine
-        clr_character_flag = china_plague
-        clr_character_flag = china_golden_age
+        clr_character_flag = freehold_stable
+        clr_character_flag = freehold_unrest
+        clr_character_flag = freehold_civil_war
+        clr_character_flag = freehold_famine
+        clr_character_flag = freehold_plague
+        clr_character_flag = freehold_golden_age
+		clr_character_flag = freehold_dothraki_invasion
+		clr_character_flag = freehold_rhoynish_invasion
+		clr_character_flag = freehold_ghiscari_invasion
+		clr_character_flag = freehold_internal_purge
+		clr_character_flag = freehold_economic_ruin
         return_to_travel_tombola_effect = yes
     }
 }
@@ -1748,14 +1763,17 @@ character_event = { #Mercenaries: "We're here to escort you!"
     }
 
     after = {
-        clr_character_flag = china_stable
-        clr_character_flag = china_unrest
-        clr_character_flag = china_civil_war
-        clr_character_flag = china_mongol_invasion
-        clr_character_flag = china_jurchen_invasion
-        clr_character_flag = china_famine
-        clr_character_flag = china_plague
-        clr_character_flag = china_golden_age
+        clr_character_flag = freehold_stable
+        clr_character_flag = freehold_unrest
+        clr_character_flag = freehold_civil_war
+        clr_character_flag = freehold_famine
+        clr_character_flag = freehold_plague
+        clr_character_flag = freehold_golden_age
+		clr_character_flag = freehold_dothraki_invasion
+		clr_character_flag = freehold_rhoynish_invasion
+		clr_character_flag = freehold_ghiscari_invasion
+		clr_character_flag = freehold_internal_purge
+		clr_character_flag = freehold_economic_ruin
 		return_to_travel_tombola_effect = yes
     }
 }
@@ -1834,14 +1852,17 @@ character_event = { #We see starving people...
     }
 	
 	after = {
-        clr_character_flag = china_stable
-        clr_character_flag = china_unrest
-        clr_character_flag = china_civil_war
-        clr_character_flag = china_mongol_invasion
-        clr_character_flag = china_jurchen_invasion
-        clr_character_flag = china_famine
-        clr_character_flag = china_plague
-        clr_character_flag = china_golden_age
+        clr_character_flag = freehold_stable
+        clr_character_flag = freehold_unrest
+        clr_character_flag = freehold_civil_war
+        clr_character_flag = freehold_famine
+        clr_character_flag = freehold_plague
+        clr_character_flag = freehold_golden_age
+		clr_character_flag = freehold_dothraki_invasion
+		clr_character_flag = freehold_rhoynish_invasion
+		clr_character_flag = freehold_ghiscari_invasion
+		clr_character_flag = freehold_internal_purge
+		clr_character_flag = freehold_economic_ruin
         return_to_travel_tombola_effect = yes
     }
 }
@@ -2192,7 +2213,7 @@ character_event = { #Learn about political philosophy or attempt to impress pret
 		}
     }
     after = {
-    	return_to_china_tombola_effect = yes
+    	return_to_freehold_tombola_effect = yes
     }
 }
 
@@ -2210,7 +2231,7 @@ character_event = { #Visit the market
     immediate = {
     	set_character_flag = visited_market
     	hidden_effect = {
-	    	offmap_china = {
+	    	offmap_freehold = {
 				governor = {
 					create_random_steward  = {
 						age = 45
@@ -2223,9 +2244,9 @@ character_event = { #Visit the market
 						health = 10
 					}
 					new_character = {
-						save_event_target_as = chinese_trader
+						save_event_target_as = freehold_trader
 						give_nickname = nick_the_trader
-	    				add_chinese_artifact_effect = yes
+	    				add_freehold_artifact_effect = yes
 					}
 				}
 			}
@@ -2257,8 +2278,8 @@ character_event = { #Visit the market
 		scaled_wealth = { value = -0.6 min = -200 }
 
         hidden_effect = {
-	        event_target:chinese_trader = {
-	        	event_target:chinese_artifact = {
+	        event_target:freehold_trader = {
+	        	event_target:freehold_artifact = {
 		        	transfer_artifact = {
 						from = PREV
 						to = PREVPREV
@@ -2303,8 +2324,8 @@ character_event = { #Visit the market
 		}
 
         hidden_effect = {
-	        event_target:chinese_trader = {
-	        	event_target:chinese_artifact = {
+	        event_target:freehold_trader = {
+	        	event_target:freehold_artifact = {
 		        	transfer_artifact = {
 						from = PREV
 						to = PREVPREV
@@ -2325,9 +2346,9 @@ character_event = { #Visit the market
     }
 
     after = {
-    	return_to_china_tombola_effect = yes
+    	return_to_freehold_tombola_effect = yes
     	hidden_effect = {
-	        event_target:chinese_trader = { #removes the trader from the game, along with their artifact (if you didn't trade)...
+	        event_target:freehold_trader = { #removes the trader from the game, along with their artifact (if you didn't trade)...
 	        	any_artifact = { destroy_artifact = yes }
 	        	death = { death_reason =  death_missing }
 	        }
@@ -2344,12 +2365,12 @@ character_event = { #Encounter a merchant..!
     picture = GFX_evt_china_stable
     border = GFX_event_normal_frame_diplomacy
     is_triggered_only = yes
-   	portrait = event_target:chinese_trader
+   	portrait = event_target:freehold_trader
     
     immediate = {
     	set_character_flag = met_traveling_merchant
 		hidden_effect = {
-	    	offmap_china = {
+	    	offmap_freehold = {
 				governor = {
 					create_random_intriguer  = {
 						age = 25
@@ -2362,8 +2383,8 @@ character_event = { #Encounter a merchant..!
 					}
 					new_character = {
 						upgrade_education_effect = yes
-						save_event_target_as = chinese_trader
-	    				add_chinese_artifact_effect = yes
+						save_event_target_as = freehold_trader
+	    				add_freehold_artifact_effect = yes
 					}
 				}
 			}
@@ -2377,8 +2398,8 @@ character_event = { #Encounter a merchant..!
 		scaled_wealth = { value = -0.4 min = -150 }
 
         hidden_effect = {
-	        event_target:chinese_trader = {
-	        	event_target:chinese_artifact = {
+	        event_target:freehold_trader = {
+	        	event_target:freehold_artifact = {
 		        	transfer_artifact = {
 						from = PREV
 						to = PREVPREV
@@ -2392,7 +2413,7 @@ character_event = { #Encounter a merchant..!
         name = EVTOPTB_JD_15017
         custom_tooltip = { text = EVTOPTB_JD_15017_TT }
         hidden_effect = {
-	        event_target:chinese_trader = {
+	        event_target:freehold_trader = {
 	        	show_scope_change = no
 	        	move_character = ROOT
 	        }
@@ -2405,14 +2426,14 @@ character_event = { #Encounter a merchant..!
         name = EVTOPTC_JD_15017 #Guards! Cut this man/woman down.
         custom_tooltip = { text = EVTOPTC_JD_15017_TT } #You steal the artifact.
 
-        event_target:chinese_trader = {
+        event_target:freehold_trader = {
         	show_scope_change = no
         	death = { death_reason = death_murder }
         }
         custom_tooltip = { text = EVTOPTA_JD_15017_TT } #it's transfered to you.
 		hidden_effect = { #Steal the artifact
-	        event_target:chinese_trader = {
-	        	event_target:chinese_artifact = {
+	        event_target:freehold_trader = {
+	        	event_target:freehold_artifact = {
 		        	transfer_artifact = {
 						from = PREV
 						to = PREVPREV
@@ -2428,7 +2449,7 @@ character_event = { #Encounter a merchant..!
         name = EVTOPTD_JD_15017 #I have no use of whatever that is.
         custom_tooltip = { text = EVTOPTD_JD_15017_TT }
         hidden_effect = {
-	        event_target:chinese_trader = { #removes the trader from the game, along with their artifact (if you didn't trade)...
+	        event_target:freehold_trader = { #removes the trader from the game, along with their artifact (if you didn't trade)...
 	        	any_artifact = { destroy_artifact = yes }
 	        	death = { death_reason =  death_missing }
 	        }
@@ -2449,7 +2470,7 @@ character_event = {
 	
 	trigger = {
 		FROM = {
-			has_policy = china_isolationist
+			has_policy = freehold_isolationist
 		}
 	}
 	
