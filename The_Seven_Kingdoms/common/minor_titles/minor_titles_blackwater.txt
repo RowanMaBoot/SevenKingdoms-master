@@ -1,0 +1,259 @@
+########################################################
+# MINOR TITLES
+# Characters can have any number of these
+########################################################
+#	grant_limit: Max number of holders.
+#	realm_in_name: Append the name of the country after the title (Queen [of Sweden])
+#	allowed_to_hold: conditions for the character to hold the title
+#	allowed_to_grant: conditions for a ruler to grant the title
+#	regent: This is the title for regents (not really "minor")
+#	gain_effect: fires when the title is granted
+#	lose_effect: fires when a title is lost if dismissal_trigger evaluates to false
+#	message: should fire a message to the its owner when set
+#	The other fields are all character modifiers.
+
+title_leaderminister = {
+	dignity = 10.0
+	grant_limit = 1
+	opinion_effect = 25
+	monthly_salary = 0.05
+	monthly_prestige = 0.50
+	is_voter = yes
+        realm_in_name = yes
+	
+	allowed_to_grant = {
+		higher_tier_than = DUKE
+                has_landed_title = k_blackwater
+		primary_title = { has_law = law_voting_power_1 }
+	}
+	
+	allowed_to_hold = {
+		OR = {
+			primary_title = { temporary = no }
+			NOT = {
+				primary_title = {
+					always = yes
+				}
+			}
+		}
+		can_be_councilmember_king_trigger = yes
+	}
+	revoke_trigger = {
+		FROM = {
+			primary_title = {
+				NOT = { 
+					AND = {
+						has_law = succession_voting_power_1
+						ROOT = { is_powerful_vassal = yes }
+					}
+				}
+			}
+		}
+	}
+	gain_effect = {
+	}
+	lose_effect = {
+		opinion = { who = FROM modifier = opinion_fired_from_council }
+		opinion = { who = FROM modifier = opinion_recently_fired }
+	}
+	retire_effect = {
+	}
+
+	message = yes
+}
+
+title_memberofparliament = {
+	dignity = 5.0
+	grant_limit = 10
+	opinion_effect = 20
+	monthly_salary = 0.05
+	monthly_prestige = 0.25
+	is_voter = yes
+        realm_in_name = yes
+	
+	allowed_to_grant = {
+		higher_tier_than = DUKE
+                has_landed_title = k_blackwater
+		primary_title = { has_law = law_voting_power_1 }
+	}
+	
+	allowed_to_hold = {
+		OR = {
+			primary_title = { temporary = no }
+			NOT = {
+				primary_title = {
+					always = yes
+				}
+			}
+		}
+		can_be_councilmember_king_trigger = yes
+	}
+	revoke_trigger = {
+		FROM = {
+			primary_title = {
+				NOT = { 
+					AND = {
+						has_law = succession_voting_power_1
+						ROOT = { is_powerful_vassal = yes }
+					}
+				}
+			}
+		}
+	}
+	gain_effect = {
+	}
+	lose_effect = {
+		opinion = { who = FROM modifier = opinion_fired_from_council }
+		opinion = { who = FROM modifier = opinion_recently_fired }
+	}
+	retire_effect = {
+	}
+
+	message = yes
+}
+
+title_leaderlord = {
+	dignity = 10.0
+	grant_limit = 1
+	opinion_effect = 25
+	monthly_salary = 0.08
+	monthly_prestige = 0.60
+	is_voter = yes
+        realm_in_name = yes
+	
+	allowed_to_grant = {
+		higher_tier_than = DUKE
+                has_landed_title = k_blackwater
+	}
+	
+	allowed_to_hold = {
+                higher_tier_than = COUNT
+		OR = {
+			primary_title = { temporary = no }
+			NOT = {
+				primary_title = {
+					always = yes
+				}
+			}
+		}
+		can_be_councilmember_king_trigger = yes
+	}
+	revoke_trigger = {
+		FROM = {
+			primary_title = {
+				NOT = { 
+					AND = {
+						has_law = succession_voting_power_1
+						ROOT = { is_powerful_vassal = yes }
+					}
+				}
+			}
+		}
+	}
+	gain_effect = {
+	}
+	lose_effect = {
+		opinion = { who = FROM modifier = opinion_fired_from_council }
+		opinion = { who = FROM modifier = opinion_recently_fired }
+	}
+	retire_effect = {
+	}
+
+	message = yes
+}
+
+title_lordprivy = {
+	dignity = 9.0
+	grant_limit = 1
+	opinion_effect = 20
+	monthly_salary = 0.5
+	monthly_prestige = 0.60
+        show_as_title = yes
+        make_primary_title = yes
+
+	
+	allowed_to_grant = {
+		higher_tier_than = DUKE
+                has_landed_title = k_blackwater
+
+	}
+	
+	allowed_to_hold = {
+         is_female = no
+         is_adult = yes
+        }
+
+	message = yes
+}
+
+title_lordchamberlain = {
+	dignity = 9.0
+	grant_limit = 1
+	opinion_effect = 30
+	monthly_salary = 0.7
+	monthly_prestige = 0.90
+        show_as_title = yes
+        make_primary_title = yes
+
+	
+	allowed_to_grant = {
+		higher_tier_than = DUKE
+                has_landed_title = k_blackwater
+
+	}
+	
+	allowed_to_hold = {
+         is_female = no
+         is_adult = yes
+        }
+
+	message = yes
+}
+
+title_lordpresident = {
+	dignity = 9.0
+	grant_limit = 1
+	opinion_effect = 25
+	monthly_salary = 0.6
+	monthly_prestige = 0.70
+        show_as_title = yes
+        make_primary_title = yes
+
+	
+	allowed_to_grant = {
+		higher_tier_than = DUKE
+                has_landed_title = k_blackwater
+
+	}
+	
+	allowed_to_hold = {
+         is_female = no
+         is_adult = yes
+        }
+
+	message = yes
+}
+
+title_lordhighadmiral = {
+	dignity = 9.0
+	grant_limit = 1
+	opinion_effect = 25
+	monthly_salary = 0.8
+	monthly_prestige = 0.80
+        show_as_title = yes
+        make_primary_title = yes
+
+	
+	allowed_to_grant = {
+		higher_tier_than = DUKE
+                has_landed_title = k_blackwater
+
+	}
+	
+	allowed_to_hold = {
+         is_female = no
+         is_adult = yes
+        }
+
+	message = yes
+}
