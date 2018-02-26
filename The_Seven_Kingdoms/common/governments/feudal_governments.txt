@@ -46,6 +46,7 @@ feudal_governments = {
 			  is_government_potential = reach_government   			  # The Reach
 			  is_government_potential = ironborn_government   	      # Ironborn Kingdom
 			  is_government_potential = prince_government   	      # Principality
+			  is_government_potential = winter_government   	      # Kingdom of Winter
           }
           is_patrician = no
       }
@@ -279,6 +280,7 @@ feudal_governments = {
 			  is_government_potential = reach_government   			  # The Reach
 			  is_government_potential = ironborn_government   	      # Ironborn Kingdom
 			  is_government_potential = prince_government   	      # Principality
+			  is_government_potential = winter_government   	      # Kingdom of Winter
 			  }
           is_patrician = no
       }
@@ -884,6 +886,57 @@ prince_government = {
 		  stewardship = 2
 		  diplomacy = 2
 		  fertility = 0.05
+        }
+        
+        capital_move_delay = 600
+	}
+	
+	winter_government = {
+        preferred_holdings = { CASTLE }
+        allowed_holdings = { 
+            CASTLE
+            FORT
+            HOSPITAL
+        }
+        accepts_liege_governments = { # Gets the wrong religion modifier instead
+            old_gods_government
+            nights_watch_government         # Although it cannot rule over the NW, the NW can rule over them.
+			feudal_government
+        }
+        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+            tribal_government
+            wildling_government
+            stepstones_government
+        }
+        frame_suffix = "_stark"
+        potential = {
+          NOT = {
+            controls_religion = yes
+          }
+		  OR = {
+			primary_title = { 
+				OR = {
+					title = k_winterfell
+					title = e_the_north
+					title = k_the_north
+					}
+				}
+			top_liege = { government = winter_government }
+		  }
+          is_patrician = no
+        }
+        
+        color = { 195 195 170 }
+
+        dukes_called_kings = no
+        barons_need_dynasty = no
+        can_build_tribal = no
+		
+        character_modifier = {
+          vassal_opinion = 20
+		  intrigue = -3
+		  diplomacy = 3
+		  fertility = -0.15
         }
         
         capital_move_delay = 600
