@@ -95,7 +95,10 @@ character_event = {
                 modifier = {
                     factor = 0
                     AND = {
-                        religion_group = muslim
+                        AND = {
+							religion_group = valyrian_group
+							religion_group = eastern_group
+						}
                         has_artifact = staff_of_moses
                         has_artifact = davids_harp
                         has_artifact = seal_of_mohammad
@@ -121,10 +124,9 @@ character_event = {
                 modifier = {
                     factor = 0
                     AND = {
-                        OR = {
-                            religion = norse_pagan
-                            religion = norse_pagan_reformed
-                        }
+                        AND = {
+                                religion_group = drowned_god_group
+                            }
                         has_artifact = mjolnir
                         has_artifact = andvaranaut
                     }
@@ -218,7 +220,10 @@ character_event = {
                 modifier = {
                     factor = 0
                     AND = {
-                        religion_group = muslim
+                        AND = {
+							religion_group = valyrian_group
+							religion_group = eastern_group
+						}
                         has_artifact = seal_of_solomon
                         has_artifact = sword_of_mohammad
                         has_artifact = letter_of_mohammad
@@ -247,10 +252,9 @@ character_event = {
                 modifier = {
                     factor = 0
                     AND = {
-                        OR = {
-                            religion = norse_pagan
-                            religion = norse_pagan_reformed
-                        }
+                        AND = {
+                                religion_group = drowned_god_group
+                            }
                         has_artifact = gjallarhorn
                     }
                 }
@@ -260,7 +264,10 @@ character_event = {
                 modifier = { 
                     factor = 0 
                     AND = {
-                        religion_group = pagan_group 
+                        OR = {
+							religion_group = eastern_pagan
+							religion_group = westerosi_pagan_group
+						}
                         has_artifact = famous_head
                         has_artifact = famous_tongue
                         has_artifact = infamous_tongue
@@ -306,7 +313,10 @@ character_event = {
                 modifier = {
                     factor = 0
                     AND = {
-                        religion_group = muslim
+                        AND = {
+							religion_group = valyrian_group
+							religion_group = eastern_group
+						}
                         has_artifact = mohammads_beard
                         OR = {
                             has_artifact = blessed_mantle #safeguard so you don't end up with two waters
@@ -7942,7 +7952,10 @@ character_event = {
                 NOR = {
                     wealth = 25
                     yearly_income = 5
-                    religion_group = pagan_group
+                    OR = {
+						religion_group = eastern_pagan
+						religion_group = westerosi_pagan_group
+					}
                 }
                 factor = 0
             }
@@ -8031,10 +8044,9 @@ character_event = {
         }
         else_if = {
             limit = { 
-                OR = {
-                    religion_group = muslim 
-                    religion = west_african_pagan
-                    religion = west_african_pagan_reformed
+                AND = {
+                    religion_group = valyrian_group
+					religion_group = eastern_group
                 }
             }
             add_artifact = dagger_of_glory
@@ -8063,10 +8075,9 @@ character_event = {
         }
         else_if = {
             limit = {
-                OR = {
-                    religion = norse_pagan
-                    religion = norse_pagan_reformed
-                }
+                AND = {
+                                religion_group = drowned_god_group
+                            }
             }
             add_artifact = crown_of_crows
             add_artifact = sword_of_heroes
@@ -8128,10 +8139,9 @@ character_event = {
         }
         else_if = {
             limit = { 
-                OR = {
-                    religion_group = muslim 
-                    religion = west_african_pagan
-                    religion = west_african_pagan_reformed
+                AND = {
+                    religion_group = valyrian_group
+					religion_group = eastern_group
                 }
             }
             add_artifact = bejeweled_dagger
@@ -8160,10 +8170,9 @@ character_event = {
         }
         else_if = {
             limit = { 
-                OR = {
-                    religion = norse_pagan
-                    religion = norse_pagan_reformed
-                }
+                AND = {
+					religion_group = drowned_god_group
+				}
             }
             add_artifact = crown_of_the_sea
             add_artifact = golden_sword
@@ -8215,10 +8224,9 @@ character_event = {
         }
         else_if = {
             limit = {
-                OR = {
-                    religion_group = muslim 
-                    religion = west_african_pagan
-                    religion = west_african_pagan_reformed
+                AND = {
+                    religion_group = valyrian_group
+					religion_group = eastern_group
                 }
             }
             add_artifact = engraved_dagger
@@ -8247,9 +8255,8 @@ character_event = {
         }
         else_if = {
             limit = {
-                OR = {
-                    religion = norse_pagan
-                    religion = norse_pagan_reformed
+				AND = {
+					religion_group = drowned_god_group
                 }
             }
             add_artifact = iron_crown
@@ -8652,7 +8659,7 @@ character_event = {
 
     #Sword
     option = { 
-        trigger = { NOR = { religion_group = muslim has_dharmic_religion_trigger = yes } has_character_flag = weaponsmith }
+        trigger = { NOR = { AND = { religion_group = valyrian_group religion_group = eastern_group } has_dharmic_religion_trigger = yes } has_character_flag = weaponsmith }
         name = EVTOPTA_MNM_9118
         custom_tooltip = { text = EVTOPTA_MNM_9118_TT }
         hidden_tooltip = { FROM = { set_character_flag = weapon_sword } }
@@ -8661,7 +8668,7 @@ character_event = {
 
     #Scimitar
     option = {
-        trigger = { OR = { religion_group = muslim has_dharmic_religion_trigger = yes } has_character_flag = weaponsmith }
+        trigger = { OR = { AND = { religion_group = valyrian_group religion_group = eastern_group } has_dharmic_religion_trigger = yes } has_character_flag = weaponsmith }
         name = EVTOPTB_MNM_9118
         custom_tooltip = { text = EVTOPTB_MNM_9118_TT }
         hidden_tooltip = { FROM = { set_character_flag = weapon_scimitar } }
@@ -8700,8 +8707,7 @@ character_event = {
         hidden_tooltip = { FROM = { set_character_flag = weapon_mace } }
         ai_chance = { 
             factor = 1
-            modifier = { religion = norse_pagan factor = 5 }
-            modifier = { religion = norse_pagan_reformed factor = 5 }
+            modifier = { religion_group = drowned_god_group factor = 5 }
         }
     }
 
@@ -9026,7 +9032,10 @@ character_event = {
                 NAND = {
                     wealth = 75
                     yearly_income = 7.5
-                    religion_group = pagan_group
+					OR = {
+						religion_group = eastern_pagan
+						religion_group = westerosi_pagan_group
+					}
                 }
                 factor = 0
             }
@@ -9727,11 +9736,10 @@ character_event = {
                 else_if = {
                     limit = { 
                         FROM = {
-                            OR = {
-                                religion_group = muslim 
-                                religion = west_african_pagan
-                                religion = west_african_pagan_reformed
-                            }
+                            AND = {
+								religion_group = valyrian_group
+								religion_group = eastern_group
+							}
                         }
                     }
                     add_artifact = dagger_of_glory
@@ -9771,9 +9779,8 @@ character_event = {
                 else_if = {
                     limit = {
                         FROM = {
-                            OR = {
-                                religion = norse_pagan
-                                religion = norse_pagan_reformed
+                            AND = {
+                                religion_group = drowned_god_group
                             }
                         }
                     }
@@ -9809,11 +9816,10 @@ character_event = {
                 else_if = {
                     limit = { 
                         FROM = {
-                            OR = {
-                                religion_group = muslim 
-                                religion = west_african_pagan
-                                religion = west_african_pagan_reformed
-                            }
+                            AND = {
+								religion_group = valyrian_group
+								religion_group = eastern_group
+							}
                         }
                     }
                     add_artifact = bejeweled_dagger
@@ -9853,9 +9859,8 @@ character_event = {
                 else_if = {
                     limit = { 
                         FROM = {
-                            OR = {
-                                religion = norse_pagan
-                                religion = norse_pagan_reformed
+                            AND = {
+                                religion_group = drowned_god_group
                             }
                         }
                     }
@@ -9891,11 +9896,10 @@ character_event = {
                 else_if = {
                     limit = {
                         FROM = {
-                            OR = {
-                                religion_group = muslim 
-                                religion = west_african_pagan
-                                religion = west_african_pagan_reformed
-                            }
+                            AND = {
+								religion_group = valyrian_group
+								religion_group = eastern_group
+							}
                         }
                     }
                     add_artifact = engraved_dagger
@@ -9935,9 +9939,8 @@ character_event = {
                 else_if = {
                     limit = {
                         FROM = {
-                            OR = {
-                                religion = norse_pagan
-                                religion = norse_pagan_reformed
+                            AND = {
+                                religion_group = drowned_god_group
                             }
                         }
                     }
