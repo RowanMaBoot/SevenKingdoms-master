@@ -1,0 +1,24 @@
+#Apply or remove the army leader modifier. Check if the character is in command during a war and if yes then apply or remove the modifier.
+LMM_apply_remove_army_leader_modifier_effect = {
+	if = {
+		limit = {
+			NOT = { has_character_modifier = LMMIAL_army_leader_m }
+			in_command = yes
+			war = yes
+		}
+		add_character_modifier = { 
+			name = LMMIAL_army_leader_m
+			duration = -1
+		}
+	}
+	else_if = {
+		limit = { 
+			has_character_modifier = LMMIAL_army_leader_m
+			OR = {
+				in_command = no
+				war = no
+			}
+		}
+		remove_character_modifier = LMMIAL_army_leader_m
+	}
+}
