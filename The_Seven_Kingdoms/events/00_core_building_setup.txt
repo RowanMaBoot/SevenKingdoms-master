@@ -1,0 +1,48 @@
+namespace = core_building_setup
+# Created by Rowan
+
+###################
+### INFORMATION ###
+###################
+###################
+
+# This event chain assigns buildings to every single province on game start.
+
+# This is a character event, and fires for capital holdings only.
+# Secondary events can be fired to assign buildings to baronies.
+
+# Terrain structures are also assigned in this event chain.
+# Example: Mountains increase fort defence; a mountain dummy structure is assigned to capitals here.
+
+
+#################
+### THE EVENT ###
+#################
+#################
+
+character_event = { 
+  id = core_building_setup.1
+  hide_window = yes
+  is_triggered_only = yes # Triggered from on_startup
+  
+  # Event should fire for owned provinces of all landed characters.
+  only_playable = yes
+  
+  trigger = {
+    NOT = { has_character_flag = core_building_setup_complete }
+    has_character_flag = core_resource_setup_complete
+  }
+    
+  immediate = {
+    set_character_flag = core_building_setup_complete
+  }
+  
+  any_demesne_province = {
+    if = {
+      limit = {
+        
+        capital = yes
+      }
+    }
+  }
+}
