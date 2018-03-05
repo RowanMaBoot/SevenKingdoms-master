@@ -1,0 +1,116 @@
+namespace = tsk_leadership
+
+# Fire bi-yearly.
+character_event = {
+  id = tsk_leadership.1
+  
+  hide_window = yes
+  
+  prisoner = no
+  only_playable = yes
+  only_capable = yes
+  min_age = 16
+  
+  war = yes
+  
+  trigger = {
+    OR = {
+      AND = {
+        independent = yes
+        ai = no
+      }
+      AND = {
+        independent = yes
+        higher_tier_than = COUNT
+      }
+      higher_tier_than = DUKE
+    }
+    OR = {
+      AND = {
+        in_command = no
+        has_character_modifier = tsk_war_leader_1
+      }
+      AND = {
+        in_command = yes
+        has_character_modifier = tsk_war_leader_2
+      }
+    }
+  }
+  
+  immediate = {
+    set_character_flag = tsk_war_leader_assigned
+    if = {
+      limit = {
+        in_command = yes
+        NOR = {
+          has_character_modifier = tsk_war_leader_1
+          has_character_modifier = tsk_war_leader_2
+        }
+      }
+      add_trait = tsk_war_leader_1
+    }
+    else_if = {
+      limit = {
+        in_command = no
+        NOR = {
+          has_character_modifier = tsk_war_leader_1
+          has_character_modifier = tsk_war_leader_2
+        }
+      }
+      add_trait = tsk_war_leader_2
+    }
+    else_if = {
+      limit = {
+        in_command = yes
+        has_character_modifier = tsk_war_leader_2
+      }
+      remove_trait = tsk_war_leader_2
+      add_trait = tsk_war_leader_1
+    }
+    else_if = {
+      limit = {
+        in_command = no
+        has_character_modifier = tsk_war_leader_1
+      }
+      remove_trait = tsk_war_leader_1
+      add_trait = tsk_war_leader_2
+    }
+  }
+}
+
+# Cleanup
+# Fired biyearly
+character_event = {
+  id = tsk_leadership.2
+  
+  hide_window = yes
+  
+  is_triggered_only = yes
+  
+  has_character_flag = tsk_war_leader_assigned
+  
+  only_playable = yes
+  min_age = 16
+  war = no
+  
+  trigger = {
+    OR = {
+      AND = {
+        independent = yes
+        ai = no
+      }
+      AND = {
+        independent = yes
+        higher_tier_than = COUNT
+      }
+      higher_tier_than = DUKE
+    }
+  }
+  
+  immediate = {
+    clr_character_flag = tsk_war_leader_assigned
+    
+    remove_character_modifier = tsk_leadership_1
+    remove_character_modifier = tsk_leadership_2
+  }
+}
