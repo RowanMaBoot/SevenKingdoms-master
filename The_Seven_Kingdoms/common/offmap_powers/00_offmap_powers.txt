@@ -4,9 +4,10 @@ offmap_freehold = {
 	button_name = icon_offmaps_entry
 	currency_name = TXT_FAVOR
 	currency_gain = monthly_favor_gained
+	currency_below_zero = yes
 	currency_reset_on_dynasty_change = yes
 	holder_title = freehold_leader
-	governor_title = e_freehold_west_governor
+	governor_title = e_valyrian_freehold
 	tier = emperor
 	non_aggression_modifier = peace_deal_with_freehold
 	coa_religion = valyrian
@@ -455,17 +456,17 @@ offmap_freehold = {
 		
 		dislikes = {
 			likes_concubines = {
-				value = 100
+				value = 300
 				modifier = {
-					factor = 5.0
+					factor = 0.1
 					FROMFROM = { is_female = yes }
 				}
 			}
 			likes_eunuchs = {
-				value = 100
+				value = 300
 			}
 			likes_wealth = {
-				value = 100
+				value = 300
 			}
 			likes_tributaries = {
 				value = 100
@@ -481,10 +482,16 @@ offmap_freehold = {
 						}
 					}
 				}
+			}
+			likes_essosi = {
+				value = 100
 				modifier = {
 					factor = 0
-					FROMFROM = {
-						culture_group = essos_group
+					NOT = {
+						any_province = {
+							culture_group = essos_group
+							is_within_diplo_range = offmap_freehold
+						}
 					}
 				}
 			}
@@ -572,7 +579,7 @@ offmap_freehold = {
 					}
 				}
 				modifier = {
-					factor = 0
+					factor = 0.5
 					FROMFROM = { religion_group = the_seven_group }
 				}
 			}
@@ -588,7 +595,7 @@ offmap_freehold = {
 					}
 				}
 				modifier = {
-					factor = 0
+					factor = 0.5
 					FROMFROM = { religion_group = westerosi_pagan_group }
 				}
 			}
@@ -604,7 +611,7 @@ offmap_freehold = {
 					}
 				}
 				modifier = {
-					factor = 0
+					factor = 0.5
 					FROMFROM = { religion_group = drowned_god_group }
 				}
 			}
@@ -620,7 +627,7 @@ offmap_freehold = {
 					}
 				}
 				modifier = {
-					factor = 0
+					factor = 0.5
 					FROMFROM = { religion_group = eastern_group }
 				}
 			}
@@ -636,7 +643,7 @@ offmap_freehold = {
 					}
 				}
 				modifier = {
-					factor = 0
+					factor = 0.5
 					FROMFROM = { religion_group = valyrian_group }
 				}
 			}
@@ -652,7 +659,7 @@ offmap_freehold = {
 					}
 				}
 				modifier = {
-					factor = 0
+					factor = 0.5
 					FROMFROM = { religion_group = eastern_pagan_group }
 				}
 			}
@@ -667,14 +674,14 @@ offmap_freehold = {
 			}
 			top_liege = {
 				suzerain = {
-					has_landed_title = e_freehold_west_governor
+					has_landed_title = e_valyrian_freehold
 				}
 			}
 			any_neighbor_independent_ruler = {
 				OR = {
-					has_landed_title = e_freehold_west_governor
+					has_landed_title = e_valyrian_freehold
 					suzerain = {
-						has_landed_title = e_freehold_west_governor
+						has_landed_title = e_valyrian_freehold
 					}
 				}
 			}

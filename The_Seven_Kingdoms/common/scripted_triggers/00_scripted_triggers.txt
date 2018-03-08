@@ -195,13 +195,6 @@ has_unpleasant_personality_trigger = {
 
 has_impious_trait_trigger = {
 	OR = {
-		trait = bad_priest_the_seven
-		trait = bad_priest_westerosi_pagan
-		trait = bad_priest_drowned_god
-		trait = bad_priest_eastern
-		trait = bad_priest_eastern_pagan
-		trait = bad_priest_valyrian
-		trait = bad_priest_other
 		trait = cynical
 		trait = hedonist
 		trait = lustful
@@ -275,6 +268,7 @@ has_unattractive_trait_trigger = {
 		trait = cruel
 		trait = sociopath # TSK Added
 		trait = stubborn
+		trait = eunuch
 		trait = blinded
 		trait = horse
 		trait = one_eyed
@@ -1329,7 +1323,6 @@ is_inaccessible_trigger = { #Remember to write this "is_inaccessible_trigger = n
 				trait = in_hiding
 				trait = on_hajj
 				trait = on_pilgrimage
-				trait = kow_tow_travels
 				has_character_modifier = in_seclusion
 				has_character_modifier = in_meditation
 				has_character_modifier = doing_penance
@@ -2681,8 +2674,12 @@ has_common_devilworship_prerequisites = {
 has_satanists_prerequisites = {
 	has_common_devilworship_prerequisites = yes
 	OR = {
-		religion_group = eastern_pagan_group
-		religion_group = eastern_group
+		religion_group = christian
+		religion_group = muslim
+		religion_group = dothraki_group
+		religion_group = the_weeping_lady_group
+		religion = zun_pagan
+		religion = zun_pagan_reformed
 	}
 }
 
@@ -3969,7 +3966,7 @@ freehold_diplo_interaction_trigger = {
 		NOT = { has_policy = freehold_isolationist }
 	}
 	conditional_tooltip = { 
-		trigger = { government = chinese_imperial_government }
+		trigger = { government = freehold_government }
 		custom_tooltip = { 
 			text = freehold_offmap_decisions_pretender_emperor_tt
 			always = no
@@ -4179,7 +4176,7 @@ valid_offmap_freehold_target_location = {
 	OR = {
 		any_realm_province = { region = custom_chinese_invasion_target_region }
 		any_neighbor_independent_ruler = {
-			has_landed_title = e_freehold_west_governor
+			has_landed_title = e_valyrian_freehold
 		}
 	}
 }
@@ -4188,12 +4185,12 @@ valid_offmap_freehold_target_location_tributary_chain = {
 	OR = {
 		#any_realm_province = { region = custom_chinese_invasion_target_region }
 		any_neighbor_independent_ruler = {
-			has_landed_title = e_freehold_west_governor
+			has_landed_title = e_valyrian_freehold
 		}
 		any_neighbor_independent_ruler = {
 			is_tributary = yes
 			suzerain = {
-				has_landed_title = e_freehold_west_governor
+				has_landed_title = e_valyrian_freehold
 			}
 		}
 	}
@@ -4265,12 +4262,12 @@ has_unsafe_religion = {
 		AND = {
 			NOT = { has_dlc = "The Old Gods" }
 			OR = {
-				religion = old_gods_beyond
-				religion = old_gods_beyond_white
-				religion = drowned_god
-				religion = storm_god
-        		religion = vulture_god
-        		religion = lady_of_the_waves
+				secret_religion = old_gods_beyond
+				secret_religion = old_gods_beyond_white
+				secret_religion = drowned_god
+				secret_religion = storm_god
+        secret_religion = vulture_god
+        secret_religion = lady_of_the_waves
 			}
 		}
 	}
