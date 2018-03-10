@@ -1,6 +1,6 @@
 ################################################
 #
-# Events for Pope vs Free Investiture
+# Events for high_septon vs Free Investiture
 #
 # ID 67000 - 67999 are reserved
 #
@@ -8,7 +8,7 @@
 # Written by Johan Andersson
 
 
-# The Pope singles out a Kingdom with Free Investiture (unless he has already targetted one)
+# The high_septon singles out a Kingdom with Free Investiture (unless he has already targetted one)
 character_event = {
     id = 67000
     desc = EVTDESC67000
@@ -27,12 +27,12 @@ character_event = {
         religion = the_seven
         controls_religion = yes
         religion_authority = 0.35
-        NOT = {    has_character_flag = pope_currently_demanding    }
+        NOT = {    has_character_flag = high_septon_currently_demanding    }
         any_independent_ruler = {
             religion = ROOT
             rightful_religious_head = ROOT
-            NOT = {    has_character_flag = pope_wants_our_law_changed }
-            NOT = {    has_character_flag = pope_respects_our_law }
+            NOT = {    has_character_flag = high_septon_wants_our_law_changed }
+            NOT = {    has_character_flag = high_septon_respects_our_law }
             primary_title = {
                 OR = {
                     tier = KING
@@ -58,8 +58,8 @@ character_event = {
             limit = {
                 religion = ROOT
                 rightful_religious_head = ROOT
-                NOT = {    has_character_flag = pope_wants_our_law_changed }
-                NOT = {    has_character_flag = pope_respects_our_law }
+                NOT = {    has_character_flag = high_septon_wants_our_law_changed }
+                NOT = {    has_character_flag = high_septon_respects_our_law }
                 primary_title = {
                     OR = {
                         tier = KING
@@ -69,9 +69,9 @@ character_event = {
                 }
             }
             character_event = { id = 67001 days = 14 tooltip = EVTTOOLTIP67001 }
-            set_character_flag = pope_wants_our_law_changed
+            set_character_flag = high_septon_wants_our_law_changed
         }
-        set_character_flag = pope_currently_demanding
+        set_character_flag = high_septon_currently_demanding
     }
 
     option = {
@@ -105,7 +105,7 @@ character_event = {
             }
         }
         
-        FROM = { clr_character_flag = pope_currently_demanding }
+        FROM = { clr_character_flag = high_septon_currently_demanding }
         
         primary_title = {
             revoke_law = investiture_law_1
@@ -113,15 +113,15 @@ character_event = {
         }
         piety = 25
         religion_authority = {
-            modifier = ruler_bowed_to_pope
+            modifier = ruler_bowed_to_high_septon
             years = 10
         }
         
-        clr_character_flag = pope_wants_our_law_changed
+        clr_character_flag = high_septon_wants_our_law_changed
         
         FROM = {
             opinion = {
-                modifier = pope_invest_approve
+                modifier = high_septon_invest_approve
                 who = ROOT
                 years = 4
             }
@@ -151,15 +151,15 @@ character_event = {
         }
         piety = -25
         religion_authority = {
-            modifier = ruler_defied_pope
+            modifier = ruler_defied_high_septon
             years = 10
         }
         
-        set_character_flag = pope_we_refuse_law_changed
+        set_character_flag = high_septon_we_refuse_law_changed
         
         FROM = {
             opinion = {
-                modifier = pope_invest_dislike
+                modifier = high_septon_invest_dislike
                 who = ROOT
                 years = 5
             }
@@ -171,7 +171,7 @@ character_event = {
     }
     
     option = {
-        name = EVTOPTC67001 # Give gold to Pope
+        name = EVTOPTC67001 # Give gold to high_septon
         trigger = {
             wealth = 200
         }
@@ -189,9 +189,9 @@ character_event = {
         }
         
         wealth = -200
-        FROM = { clr_character_flag = pope_currently_demanding }
-        set_character_flag = pope_respects_our_law
-        clr_character_flag = pope_wants_our_law_changed
+        FROM = { clr_character_flag = high_septon_currently_demanding }
+        set_character_flag = high_septon_respects_our_law
+        clr_character_flag = high_septon_wants_our_law_changed
         hidden_tooltip = {
             FROM = { character_event = { id = 67004  } }
         }        
@@ -207,9 +207,9 @@ character_event = {
             factor = 5
         }
         piety = 1
-        FROM = { clr_character_flag = pope_currently_demanding }
-        set_character_flag = pope_respects_our_law
-        clr_character_flag = pope_wants_our_law_changed
+        FROM = { clr_character_flag = high_septon_currently_demanding }
+        set_character_flag = high_septon_respects_our_law
+        clr_character_flag = high_septon_wants_our_law_changed
         hidden_tooltip = {
             FROM = {  character_event = { id = 67005 } }
         }    
@@ -266,7 +266,7 @@ character_event = {
         }
         prestige = -50
         opinion = {
-            modifier = pope_invest_dislike
+            modifier = high_septon_invest_dislike
             who = FROM
         }
     }
@@ -306,7 +306,7 @@ character_event = {
         }
         prestige = -5
         opinion = {
-            modifier = pope_invest_dislike
+            modifier = high_septon_invest_dislike
             who = FROM
         }
         tooltip = {
@@ -350,7 +350,7 @@ character_event = {
     }
 }
 
-# The Pope sends a delegate to a Bishop whose top liege has refused to change investiture Law
+# The high_septon sends a delegate to a Bishop whose top liege has refused to change investiture Law
 character_event = {
     id = 67010
     desc = EVTDESC67010
@@ -365,7 +365,7 @@ character_event = {
     only_capable = yes
     war = no
     
-    has_character_flag = pope_currently_demanding
+    has_character_flag = high_septon_currently_demanding
     
     trigger = {
         religion = the_seven
@@ -375,7 +375,7 @@ character_event = {
         any_independent_ruler = {
             religion = ROOT
             rightful_religious_head = ROOT
-            has_character_flag = pope_we_refuse_law_changed
+            has_character_flag = high_septon_we_refuse_law_changed
             primary_title = {
                 OR = {
                     tier = KING
@@ -385,7 +385,7 @@ character_event = {
             }
             any_realm_lord = {
                 is_theocracy = yes
-                NOT = { has_character_flag = pope_bribing }
+                NOT = { has_character_flag = high_septon_bribing }
             }
         }
     }
@@ -405,7 +405,7 @@ character_event = {
             limit = {
                 religion = ROOT
                 rightful_religious_head = ROOT
-                has_character_flag = pope_we_refuse_law_changed
+                has_character_flag = high_septon_we_refuse_law_changed
                 primary_title = {
                     OR = {
                         tier = KING
@@ -417,9 +417,9 @@ character_event = {
             random_realm_lord = {
                 limit = {
                     is_theocracy = yes
-                    NOT = { has_character_flag = pope_bribing }                
+                    NOT = { has_character_flag = high_septon_bribing }                
                 }
-                set_character_flag = pope_bribing
+                set_character_flag = high_septon_bribing
             
                 character_event = { id = 67011 days = 14 tooltip = EVTTOOLTIP67011 }
             }
@@ -433,11 +433,11 @@ character_event = {
             limit = {
                 religion = ROOT
                 rightful_religious_head = ROOT
-                has_character_flag = pope_we_refuse_law_changed
+                has_character_flag = high_septon_we_refuse_law_changed
             }
-            clr_character_flag = pope_we_refuse_law_changed
+            clr_character_flag = high_septon_we_refuse_law_changed
         }
-        clr_character_flag = pope_currently_demanding
+        clr_character_flag = high_septon_currently_demanding
     }
 
 }
@@ -455,7 +455,7 @@ character_event = {
         name = EVTOPTA67011
         wealth = 20
         opinion = {
-            modifier = bishop_bribed_by_pope
+            modifier = bishop_bribed_by_high_septon
             who = FROM
             years = 5
         }
@@ -517,7 +517,7 @@ character_event = {
     }
 }
 
-# The Pope contacts a powerful (preferably rebellious) vassal of a liege who has refused to change investiture Law
+# The high_septon contacts a powerful (preferably rebellious) vassal of a liege who has refused to change investiture Law
 character_event = {
     id = 67020
     desc = EVTDESC67020
@@ -531,7 +531,7 @@ character_event = {
     prisoner = no
     only_capable = yes
     war = no    
-    has_character_flag = pope_currently_demanding
+    has_character_flag = high_septon_currently_demanding
     
     trigger = {
         religion = the_seven
@@ -540,14 +540,14 @@ character_event = {
         any_independent_ruler = {
             religion = ROOT
             rightful_religious_head = ROOT
-            has_character_flag = pope_we_refuse_law_changed
+            has_character_flag = high_septon_we_refuse_law_changed
             primary_title = {
                 OR = { tier = KING tier = EMPEROR }
                 has_law = investiture_law_1 
             }
             any_realm_lord = {
                 OR = { tier = KING tier = DUKE    }
-                NOT = { has_character_flag = pope_vassal_approached }
+                NOT = { has_character_flag = high_septon_vassal_approached }
                 religion = ROOT
                 relative_power_to_liege = 0.05
             }
@@ -569,7 +569,7 @@ character_event = {
             limit = {
                 religion = ROOT
                 rightful_religious_head = ROOT
-                has_character_flag = pope_we_refuse_law_changed
+                has_character_flag = high_septon_we_refuse_law_changed
                 primary_title = {
                     OR = { tier = KING tier = EMPEROR }
                     has_law = investiture_law_1 
@@ -578,16 +578,16 @@ character_event = {
             random_realm_lord = {
                 limit = {
                     OR = { tier = KING tier = DUKE }
-                    NOT = { has_character_flag = pope_vassal_approached }
+                    NOT = { has_character_flag = high_septon_vassal_approached }
                     religion = ROOT
                     relative_power_to_liege = 0.05
                 }    
             
-                set_character_flag = pope_vassal_approached 
+                set_character_flag = high_septon_vassal_approached 
                 character_event = { id = 67021 days = 14 tooltip = EVTTOOLTIP67021 }
             }
         }
-        clr_character_flag = pope_currently_demanding
+        clr_character_flag = high_septon_currently_demanding
     }
 }
 
@@ -604,7 +604,7 @@ character_event = {
     option = {
         name = "EVTOPTA67021"
         opinion = {
-            modifier = bishop_bribed_by_pope
+            modifier = bishop_bribed_by_high_septon
             who = FROM
             years = 5
         }
@@ -647,7 +647,7 @@ character_event = {
         }
         piety = -20
         opinion = {
-            modifier = loyal_vassal_against_pope
+            modifier = loyal_vassal_against_high_septon
             who = top_liege
             years = 5
         }
@@ -666,13 +666,13 @@ character_event = {
         name = EVTOPTA67022
         prestige = -5
         opinion = {
-            modifier = my_vassal_bribed_by_pope
+            modifier = my_vassal_bribed_by_high_septon
             who = FROM
             years = 5
         }
         FROM = {
             opinion = {
-                modifier = my_vassal_bribed_by_pope
+                modifier = my_vassal_bribed_by_high_septon
                 who = ROOT
                 years = 5
             }

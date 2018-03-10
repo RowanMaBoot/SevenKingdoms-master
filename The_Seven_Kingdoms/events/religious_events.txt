@@ -173,7 +173,7 @@ character_event = {
     }
 }
 
-# Pope disappointed about allowing heresy
+# high_septon disappointed about allowing heresy
 character_event = {
     id = 39401
     desc = "EVTDESC39401"
@@ -241,7 +241,7 @@ character_event = {
     }
 }
 
-# Message from the Pope
+# Message from the high_septon
 province_event = {
     id = 39402
     desc = "EVTDESC39402"
@@ -255,7 +255,7 @@ province_event = {
         owner = {
             religion_head = {
                 opinion = {
-                    modifier = pope_disappointed_over_heretic_province
+                    modifier = high_septon_disappointed_over_heretic_province
                     who = PREV
                     months = 60
                 }
@@ -264,7 +264,7 @@ province_event = {
     }
 }
 
-# Pope urges to root out heresy in province
+# high_septon urges to root out heresy in province
 character_event = {
     id = 39403
     desc = "EVTDESC39403"
@@ -325,7 +325,7 @@ character_event = {
     }
 }
 
-# Message from the Pope
+# Message from the high_septon
 province_event = {
     id = 39404
     desc = "EVTDESC39404"
@@ -348,7 +348,7 @@ province_event = {
     }
 }
 
-# Pope learns that a catholic ruler has a heretic advisor
+# high_septon learns that a catholic ruler has a heretic advisor
 character_event = {
     id = 39410
     desc = "EVTDESC39410"
@@ -415,7 +415,7 @@ character_event = {
     }
 }
 
-# Letter from the pope
+# Letter from the high_septon
 letter_event = {
     id = 39441
     desc = "EVTDESC39441"
@@ -456,7 +456,7 @@ letter_event = {
                 FROM = {
                     NOT = {
                         has_opinion_modifier = {
-                            modifier = pope_heretic_removal_approve
+                            modifier = high_septon_heretic_removal_approve
                             who = ROOT
                         }
                     }
@@ -464,7 +464,7 @@ letter_event = {
             }
             FROM = {
                 opinion = {
-                    modifier = pope_heretic_removal_approve
+                    modifier = high_septon_heretic_removal_approve
                     who = ROOT
                     months = 36
                 }
@@ -472,7 +472,7 @@ letter_event = {
         }
     }
     option = {
-        name = "EVTOPTB39441"    #Ignore Pope
+        name = "EVTOPTB39441"    #Ignore high_septon
         ai_chance = {
             factor = 10
             modifier = {
@@ -485,7 +485,7 @@ letter_event = {
         }
         FROM = {
             opinion = {
-                modifier = pope_heretic_removal_disapprove
+                modifier = high_septon_heretic_removal_disapprove
                 who = ROOT
                 months = 36
             }
@@ -1021,7 +1021,7 @@ character_event = {
 # PAPAL EVENTS
 ########################################
 
-# The Pope gives money to someone fighting the Infidel
+# The high_septon gives money to someone fighting the Infidel
 character_event = {
     id = 39200
     desc = "EVTDESC39200"
@@ -1051,12 +1051,12 @@ character_event = {
             NOT = { war_with = ROOT }
             reverse_opinion = { who = ROOT value = 0 }
             OR = {
-                NOT = { has_character_flag = money_from_the_pope }
+                NOT = { has_character_flag = money_from_the_high_septon }
                 OR = {
-                    had_character_flag = { flag = money_from_the_pope days = 730 }
+                    had_character_flag = { flag = money_from_the_high_septon days = 730 }
                     AND = {
                         ai = yes
-                        had_character_flag = { flag = money_from_the_pope days = 365 }
+                        had_character_flag = { flag = money_from_the_high_septon days = 365 }
                         any_war = {
                             using_cb = religious
                             OR = {
@@ -1131,13 +1131,13 @@ letter_event = {
     option = {
         name = "EVTOPTA39201"
         wealth = 200
-        set_character_flag = money_from_the_pope
+        set_character_flag = money_from_the_high_septon
     }
 }
 
 
 
-#Pope offers absolution for Kinslaying
+#high_septon offers absolution for Kinslaying
 character_event = {
     id = 39210
     desc = "EVTDESC39210"
@@ -1199,7 +1199,7 @@ character_event = {
     }
     
     option = {
-        name = "EVTOPTB39210"    #incase someone plays the pope.. players will mod it in, so might as well give them a fun option here..
+        name = "EVTOPTB39210"    #incase someone plays the high_septon.. players will mod it in, so might as well give them a fun option here..
         ai_chance = { factor = 0 }
     }
 }
@@ -1282,7 +1282,7 @@ character_event = {
 #CATHOLIC CHAIN
 character_event = {
     id = 39220
-    desc = "EVTDESC39220"    #Bishops in prison whine to pope..        
+    desc = "EVTDESC39220"    #Bishops in prison whine to high_septon..        
     picture = GFX_evt_into_the_dungeon
     border = "GFX_event_normal_frame_religion"
     
@@ -1300,10 +1300,10 @@ character_event = {
         host = { religion = ROOT }
         NOT = { rightful_religious_head = ROOT }
         religion_head = {
-            reverse_opinion = { who = ROOT value = 25 }        #not grovel if we dont like the pope.
+            reverse_opinion = { who = ROOT value = 25 }        #not grovel if we dont like the high_septon.
         }
         NOT = {
-            has_character_flag = nag_pope_to_help_me
+            has_character_flag = nag_high_septon_to_help_me
         }
     }
 
@@ -1330,12 +1330,12 @@ character_event = {
     }    
 
     immediate = {
-        set_character_flag = nag_pope_to_help_me
+        set_character_flag = nag_high_septon_to_help_me
     }
 
     
     option = {
-        name = "EVTOPTA39220" # Write a letter to the pope.
+        name = "EVTOPTA39220" # Write a letter to the high_septon.
         religion_head = { character_event = { id = 39221 days = 5 random = 10 tooltip = EVTTOOLTIP39221 } }
         if = {
             limit = {
@@ -1357,7 +1357,7 @@ character_event = {
     }    
 }    
 
-#Pope gets letter.
+#high_septon gets letter.
 character_event = {
     id = 39221
     desc = "EVTDESC39221"
@@ -1390,7 +1390,7 @@ character_event = {
 }
 
 
-#We discover bishop writing to pope
+#We discover bishop writing to high_septon
 character_event = {
     id = 39222
     desc = "EVTDESC39222"
@@ -1456,7 +1456,7 @@ character_event = {
         piety = 10
         FROM = { 
             prisoner = no 
-            clr_character_flag = nag_pope_to_help_me
+            clr_character_flag = nag_high_septon_to_help_me
         }
     }    
     option = {
@@ -1468,7 +1468,7 @@ character_event = {
     }    
 }
 
-#bishop hears pope is helping him.
+#bishop hears high_septon is helping him.
 character_event = {
     id = 39224
     desc = "EVTDESC39224"
@@ -1486,7 +1486,7 @@ character_event = {
     }    
 }
 
-#bad news, pope tells you no
+#bad news, high_septon tells you no
 character_event = {
     id = 39225
     desc = "EVTDESC39225"
@@ -1526,11 +1526,11 @@ character_event = {
         }
         FROM = { 
             prisoner = no 
-            clr_character_flag = nag_pope_to_help_me
+            clr_character_flag = nag_high_septon_to_help_me
         }
         piety = 10
         religion_authority = {
-            modifier = ruler_bowed_to_pope
+            modifier = ruler_bowed_to_high_septon
             years = 10
         }
     }    
@@ -1552,7 +1552,7 @@ character_event = {
         }
         piety = -25
         religion_authority = {
-            modifier = ruler_defied_pope
+            modifier = ruler_defied_high_septon
             years = 10
         }
         religion_head = {
@@ -1572,7 +1572,7 @@ character_event = {
 
 character_event = {
     id = 39240
-    desc = "EVTDESC39240"    #Pope asks a ruler that they should not have heathens employed.
+    desc = "EVTDESC39240"    #high_septon asks a ruler that they should not have heathens employed.
     picture = GFX_evt_heretic
     border = GFX_event_normal_frame_religion
     
@@ -1593,7 +1593,7 @@ character_event = {
         any_playable_ruler = {
             religion = ROOT
             rightful_religious_head = ROOT
-            NOT = { has_character_flag = pope_dislikes_heathen_employed }
+            NOT = { has_character_flag = high_septon_dislikes_heathen_employed }
             any_courtier = {
                 prisoner = no
                 OR = {
@@ -1626,7 +1626,7 @@ character_event = {
             limit = {
                 religion = ROOT
                 rightful_religious_head = ROOT
-                NOT = { has_character_flag = pope_dislikes_heathen_employed }
+                NOT = { has_character_flag = high_septon_dislikes_heathen_employed }
 
                 any_courtier = {
                     prisoner = no
@@ -1644,7 +1644,7 @@ character_event = {
                 }
             }
             character_event = { id = 39241 days = 14 tooltip = EVTTOOLTIP392401 }
-            set_character_flag = pope_dislikes_heathen_employed
+            set_character_flag = high_septon_dislikes_heathen_employed
         }
     }
 
@@ -1700,7 +1700,7 @@ character_event = {
         }
         FROM = {
             opinion = {
-                modifier = pope_heathen_removal_approve_2
+                modifier = high_septon_heathen_removal_approve_2
                 who = ROOT
                 months = 36
             }
@@ -1708,10 +1708,10 @@ character_event = {
         hidden_tooltip = {
             FROM = {  character_event = { id = 39243 days = 1  } }
         }    
-        clr_character_flag = pope_dislikes_heathen_employed
+        clr_character_flag = high_septon_dislikes_heathen_employed
     }
     option = {
-        name = "EVTOPTC39241"    #Ignore Pope
+        name = "EVTOPTC39241"    #Ignore high_septon
         ai_chance = {
             factor = 1
             modifier = {
@@ -2126,7 +2126,7 @@ character_event = {
 }
 
 #####################################################################################
-# You have a bishop as your vassal, and the the vassal likes you more than the pope.
+# You have a bishop as your vassal, and the the vassal likes you more than the high_septon.
 #####################################################################################
 
 character_event = {
