@@ -754,9 +754,9 @@ can_be_mercenary_leader_potential_trigger = {
 			}
 		}
 		AND = {
-			religion = the_stranger
+			religion = the_mother
 			FROM = {
-				religion = the_stranger
+				religion = the_mother
 			}
 		}
 		FROM = {
@@ -1687,6 +1687,10 @@ true_religion_the_stranger_trigger = {
 	true_religion = the_stranger
 }
 
+true_religion_the_smith_trigger = {
+	true_religion = the_smith
+}
+
 true_religion_lady_of_the_waves_trigger = {
 	true_religion = lady_of_the_waves
 }
@@ -1775,6 +1779,14 @@ true_religion_dothraki_trigger = {
 	true_religion = dothraki
 }
 
+true_religion_rhoynar_trigger = {
+	true_religion = rhoynar
+}
+
+true_religion_harpy_trigger = {
+	true_religion = harpy
+}
+
 true_religion_group_the_seven_group_trigger = {
 	true_religion_group = the_seven_group
 }
@@ -1797,6 +1809,10 @@ true_religion_group_valyrian_group_trigger = {
 
 true_religion_group_eastern_pagan_group_trigger = {
 	true_religion_group = eastern_pagan_group
+}
+
+true_religion_group_other_group_trigger = {
+	true_religion_group = other_group
 }
 
 relationship_with_root_trigger = {
@@ -2123,6 +2139,11 @@ is_the_eastern_pagan_group_secret_religious_society_member_trigger = {
 	secret_religion_group = eastern_group
 }
 
+is_the_other_group_secret_religious_society_member_trigger = {
+	society_member_of = secret_religious_cult
+	secret_religion_group = other_group
+}
+
 is_openly_of_prevs_secret_religion_trigger = {
 	religion = { target = PREV target_type = secret }
 }
@@ -2286,6 +2307,10 @@ is_in_prevs_interesting_society_trigger = {
 			PREV = { interested_in_society = secret_religious_society_the_stranger }
 		}
 		AND = {
+			society_member_of = secret_religious_society_the_smith
+			PREV = { interested_in_society = secret_religious_society_the_smith }
+		}
+		AND = {
 			society_member_of = secret_religious_society_lady_of_the_waves
 			PREV = { interested_in_society = secret_religious_society_lady_of_the_waves }
 		}
@@ -2444,6 +2469,12 @@ has_any_char_old_religion = {
 			has_character_flag = character_was_the_stranger
 	    	any_character = {
 	    		religion = the_stranger
+	    	}
+	    }
+		AND = {
+			has_character_flag = character_was_the_smith
+	    	any_character = {
+	    		religion = the_smith
 	    	}
 	    }
 		AND = {
@@ -2795,6 +2826,13 @@ looting_artifact_event_religious_artifacts_trigger = {
 				has_artifact_flag = looted_artifact_tooltip_1
 				has_artifact_flag = the_stranger
 				ROOT = { religion = the_stranger }
+			}
+		}
+		NAND = {
+			any_artifact = {
+				has_artifact_flag = looted_artifact_tooltip_1
+				has_artifact_flag = the_smith
+				ROOT = { religion = the_smith }
 			}
 		}
 		NAND = {
