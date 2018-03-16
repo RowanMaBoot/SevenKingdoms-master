@@ -1,0 +1,191 @@
+namespace = DEAD
+
+# The Osric's Glorious Return
+character_event = {
+    id = DEAD.1
+    desc = "EVTDESCDEAD1"
+    picture = GFX_evt_large_army
+    border = GFX_event_normal_frame_intrigue
+    #picture = GFX_evt_large_army
+    
+    
+    is_triggered_only = yes
+    
+    trigger = {
+        has_character_flag = osric_the_old
+    }
+    option = {
+        name = "EVTOPTA8157"
+        if = {
+            limit = {
+                is_alive = yes
+            }
+			hidden_tooltip = {
+				current_heir = { character_event = { id = DEAD.2 days = 60 tooltip = "EVTTOOLTIP8161" } }
+            }
+			k_runestone = { destroy_landed_title = THIS }
+			death = {
+                death_reason = death_murder_unknown_arrow
+               # killer = FROMFROM 
+            }
+        }
+    }
+}
+
+# Roland's Choice
+character_event = {
+    id = DEAD.2
+    desc = "EVTDESCDEAD2"
+    picture = GFX_evt_large_army
+    border = GFX_event_normal_frame_intrigue
+    
+    
+    is_triggered_only = yes
+    
+    trigger = { 
+        has_landed_title = e_the_vale
+    }
+    option = {
+        name = "EVTOPTADEAD2"
+        unsafe_war = { target = k_darry casus_belli = tsk_kingdom_conquest thirdparty_title = k_darry }
+		hidden_tooltip = {
+			prestige = 1500
+			set_character_flag = roland_the_ambitious
+		}
+    }
+	option = {
+        name = "EVTOPTBDEAD2"
+    }
+}
+character_event = {
+    id = DEAD.3
+    desc = "EVTDESCDEAD3"
+    picture = GFX_evt_large_army
+    border = GFX_event_normal_frame_intrigue
+    #hide_window = yes
+    
+    is_triggered_only = yes
+    
+    trigger = { 
+        ROOT = {
+			has_character_flag = roland_the_bright
+			has_character_flag = roland_the_ambitious
+		}
+		FROM = { 
+			tier = KING 
+		}
+		FROMFROM = {
+			has_landed_title = c_darry
+		}
+    }
+	#option = {
+	#	name = "EVTOPTADEAD2"
+	#	unsafe_war = { target = k_rivers_and_hills casus_belli = tsk_kingdom_conquest thirdparty_title = k_rivers_and_hills }
+	#	hidden_tooltip = {
+	#		prestige = 1500
+	#	}
+	#}
+	option = {
+       name = "EVTOPTBDEAD3"
+	   k_darry = { destroy_landed_title = THIS }
+		any_independent_ruler = {
+			limit = {
+				has_landed_title = k_rivers_and_hills
+			}
+			character_event = { id = DEAD.4 }
+		}
+	clr_character_flag = roland_the_ambitious
+   }
+}
+#Mudds Retake Darry
+character_event = {
+    id = DEAD.4
+    desc = "EVTDESCDEAD4"
+    picture = GFX_evt_large_army
+    border = GFX_event_normal_frame_intrigue
+    
+    
+    is_triggered_only = yes
+	#immediate = { k_darry = { add_alliance = { who = k_rivers_and_hills } } }
+    
+    option = {
+        name = "EVTOPTADEAD4"
+        add_claim = d_chiltern
+		add_claim = d_darry
+    }
+}
+
+# Bronzeman Rebellion Wins
+character_event = {
+    id = DEAD.6
+    desc = "EVTDESCDEAD6"
+    picture = GFX_evt_large_army
+    border = GFX_event_normal_frame_intrigue
+    #picture = GFX_evt_large_army
+    
+    
+    is_triggered_only = yes
+    
+    trigger = {
+        has_character_flag = andar_royce
+    }
+    option = {
+        name = "EVTOPTADEAD6"
+        if = {
+           limit = {
+                FROMFROM = { is_alive = yes }
+            }
+			FROMFROM = {
+				current_heir = { character_event = { id = DEAD.7 days = 14 tooltip = "EVTTOOLTIP8161" } }
+				death = {
+					death_reason = death_execution
+					killer = ROOT
+				}
+			}
+        }
+    }
+    option = {
+        name = "EVTOPTBDEAD6"
+        if = {
+            limit = {
+                FROMFROM = { is_alive = yes }
+            }
+			FROMFROM = {
+				current_heir = { character_event = { id = DEAD.7 days = 14 tooltip = "EVTTOOLTIP8161" } }
+				death = {
+					death_reason = death_execution
+					killer = ROOT
+				}
+			}
+        }
+    }
+}
+
+# Roland's Choice 2
+character_event = {
+    id = DEAD.7
+    desc = "EVTDESCDEAD7"
+    picture = GFX_evt_large_army
+    border = GFX_event_normal_frame_intrigue
+    
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = "EVTOPTADEAD7"
+		k_the_mountains_and_moon = { destroy_landed_title = THIS }
+		c_mountain_of_the_moon = { usurp_title = FROMFROM }
+		d_the_eyrie = { usurp_title = FROMFROM }
+    }
+	option = {
+        name = "EVTOPTBDEAD7"
+		death = {
+			death_reason = death_execution
+			killer = FROMFROM
+		}
+		k_the_mountains_and_moon = { destroy_landed_title = THIS }
+		c_mountain_of_the_moon = { usurp_title = FROMFROM }
+		c_gates_of_the_moon = { usurp_title = FROMFROM }
+		d_the_eyrie = { usurp_title = FROMFROM }
+    }
+}
