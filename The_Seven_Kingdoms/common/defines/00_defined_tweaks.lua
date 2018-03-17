@@ -46,22 +46,22 @@ NDefines.NCharacter.PORTRAIT_OLD_AGE_THRESHOLD = 50
 
 NDefines.NCharacter.AGE_OF_ADULTHOOD_MALE = 16
 NDefines.NCharacter.AGE_OF_ADULTHOOD_FEMALE = 16
-NDefines.NCharacter.AGE_OF_MARRIAGE_MALE = 14
-NDefines.NCharacter.AGE_OF_MARRIAGE_FEMALE = 14
+NDefines.NCharacter.AGE_OF_MARRIAGE_MALE = 16
+NDefines.NCharacter.AGE_OF_MARRIAGE_FEMALE = 16
 
 NDefines.NCharacter.AGE_ADOLESCENT = 12
 NDefines.NCharacter.AGE_YOUNG = 20
-NDefines.NCharacter.AGE_ADULT = 34
-NDefines.NCharacter.AGE_OLD = 58
+NDefines.NCharacter.AGE_ADULT = 32
+NDefines.NCharacter.AGE_OLD = 55
 NDefines.NCharacter.AGE_VERY_OLD = 70
 
-NDefines.NCharacter.MAX_CHILD_BIRTH_AGE = 48
-
-NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_50 = 45
-NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_60 = 100
-NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_70 = 500
-NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_80 = 1500
-NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_90 = 4000
+NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_40 = 45
+NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_50 = 83
+NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_60 = 200
+NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_70 = 750
+NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_80 = 2250
+NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_90 = 5000
+NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_100 = 9000
 
 NDefines.NCharacter.INFANT_DEATH_CHANCE = 0.03
 
@@ -177,41 +177,3 @@ NDefines.NGraphics.CITY_SPRAWL_AMOUNT = 1.4
 -- AI
 NDefines.NAI.RAID_MAX_REALM_SIZE = 48 -- from 24
 NDefines.NAI.RAID_AGGRESSION = 30 -- from 18, then 20, fewer raids
-
--- Ruler Designer
-NDefines.NRulerDesigner.MAX_AGE = 70
-NDefines.NRulerDesigner.BASE_ATTRIB = 5
-NDefines.NRulerDesigner.BASE_AGE = 16
-NDefines.NRulerDesigner.BASE_FERTILITY = 0.5
-NDefines.NRulerDesigner.BASE_HEALTH = 5.0
-NDefines.NRulerDesigner.COST_ATTRIB = 0.0
-NDefines.NRulerDesigner.COST_SON = 0.0
-NDefines.NRulerDesigner.COST_DAUGHTER = 0.0
-NDefines.NRulerDesigner.COST_MARRIED = 0.0
-NDefines.NRulerDesigner.COST_FERTILITY = 0.0
-NDefines.NRulerDesigner.COST_HEALTH = 0.0
-NDefines.NRulerDesigner.COST_MONTHLY_PRESTIGE = 0.0
-NDefines.NRulerDesigner.COST_MONTHLY_PIETY = 0.0
-NDefines.NRulerDesigner.COST_MONTHLY_WEALTH = 0.0
-NDefines.NRulerDesigner.COST_GLOBAL_TAX = 0.0
-NDefines.NRulerDesigner.COST_CHURCH_OPINION = 0.0
-NDefines.NRulerDesigner.COST_SPOUCE_OPINION = 0.0
-NDefines.NRulerDesigner.COST_SEXAPPEAL_OPINION = 0.0
-NDefines.NRulerDesigner.COST_DYNASTY_OPINION = 0.0
-NDefines.NRulerDesigner.COST_VASSAL_OPINION = 0.0
-NDefines.NRulerDesigner.COST_LIEGE_OPINION = 0.0
-NDefines.NRulerDesigner.COST_INFIDEL_OPINION = 0.0
-NDefines.NRulerDesigner.COST_OPPOSITE_TRAIT_OPINION = 0.0
-NDefines.NRulerDesigner.COST_SAME_TRAIT_OPINION = 0.0
-NDefines.NRulerDesigner.COST_SAME_RELIGION_OPINION = 0.0
-NDefines.NRulerDesigner.COST_AMBITION_OPINION = 0.0
-NDefines.NRulerDesigner.COST_TRIBAL_OPINION = 0.0
-NDefines.NRulerDesigner.COST_UNREFORMED_TRIBAL_OPINION = 0.0
-NDefines.NRulerDesigner.COST_GENERAL_OPINION = 0.0
-NDefines.NRulerDesigner.COST_MUSLIM_OPINION = 0.0
-NDefines.NRulerDesigner.COST_JEWISH_OPINION = 0.0
-NDefines.NRulerDesigner.COST_CHRISTIAN_OPINION = 0.0
-NDefines.NRulerDesigner.COST_ZOROASTRIAN_OPINION = 0.0
-NDefines.NRulerDesigner.COST_MORALE_OFFENCE = 0.0
-NDefines.NRulerDesigner.COST_MORALE_DEFENCE = 0.0
-NDefines.NRulerDesigner.COST_DEFENCE = 0.0
