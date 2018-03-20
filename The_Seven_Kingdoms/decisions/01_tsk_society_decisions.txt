@@ -2,313 +2,267 @@
 #
 # filter = [self/court/home_court/vassals/sub_realm/realm/dynasty/all] ('self' MUST be set for decisions targetting only the taker, the other filter types can be set to lessen CPU load)
 # ai_target_filter = [self/court/home_court/vassals/sub_realm/realm/dynasty/all] (which characters for which the AI evaluates the decision.)
-#    court: all characters in the AI's host court, including prisoners, and characters currently away (wards, prisoners, etc)
-#    home_court: all characters in the AI's home court, including prisoners, and characters currently away (wards, prisoners, etc)
-#    vassals: direct vassal rulers of the AI's employer
-#    sub_realm: all characters below the AI's employer
-#    realm: all characters in the same top realm as the AI
-#    dynasty: all members of the same dynasty
-#    rivals: your rivals plus any character you have an opinion modifier with 'crime = yes' set (the same set of characters the 'is_foe' trigger evaluates)
-#    all: all living characters (Avoid if possible. VERY CPU-HEAVY!)
-#    
+#  court: all characters in the AI's host court, including prisoners, and characters currently away (wards, prisoners, etc)
+#  home_court: all characters in the AI's home court, including prisoners, and characters currently away (wards, prisoners, etc)
+#  vassals: direct vassal rulers of the AI's employer
+#  sub_realm: all characters below the AI's employer
+#  realm: all characters in the same top realm as the AI
+#  dynasty: all members of the same dynasty
+#  rivals: your rivals plus any character you have an opinion modifier with 'crime = yes' set (the same set of characters the 'is_foe' trigger evaluates)
+#  all: all living characters (Avoid if possible. VERY CPU-HEAVY!)
+#  
 
 
 # Request Knighthood, Rank 1 Onwards
-# Establish a ward as a page from 10, at 15 let your page become a squire.
 
 society_decisions = {
-    request_knighthood = {
-        only_playable = yes
-        is_high_prio = yes
-        
-        potential = {
-            society_member_of = knighthood_the_seven
-            society_rank == 2
-            is_playable = yes
-            block_general_event_trigger = no
-            NOR = {
-                trait = knight
-                trait = red_knight
-                trait = dragon_knight
-                trait = hedge_knight
-            }
-        }
-        allow = {
-            wealth = 200
-            society_currency >= 500
-            days_in_society > 730
-        }
-        effect = {
-            # Event for Knighthood
-            hidden_tooltip = {
-                save_event_target_as = knighthood_target
-                set_character_flag = has_sent_request_for_knighthood
-                character_event = { id = TSK_S.4 days = 20 random = 10 } # sends hidden delayed event to self, which then sends request to Leader of the society
-            }
-        }
-        revoke_allowed = {
-            always = no
-        }
-        ai_will_do = {
-            factor = 1
-            
-            modifier = {
-                factor = 0
-                NOT = { wealth = 250 }
-            }
-            
-            modifier = {
-                factor = 0.1
-                NOT = { age = 26 }
-            }
-            
-            modifier = {
-                factor = 10
-                age = 40
-            }
-        }
+  request_knighthood = {
+    only_playable = yes
+    is_high_prio = yes
+    
+    potential = {
+      society_member_of = knighthood_the_seven
+      society_rank == 2
+      is_playable = yes
+      block_general_event_trigger = no
+      NOR = {
+        trait = knight
+        trait = red_knight
+        trait = dragon_knight
+        trait = hedge_knight
+        has_character_flag = has_sent_request_for_knighthood
+      }
     }
+    allow = {
+      scaled_wealth = 0.50
+      society_currency >= 500
+      days_in_society > 730
+    }
+    effect = {
+      # Event for Knighthood
+      hidden_tooltip = {
+        save_event_target_as = knighthood_target
+        set_character_flag = has_sent_request_for_knighthood
+        character_event = { id = TSK_S.4 days = 20 random = 10 } # sends hidden delayed event to self, which then sends request to Leader of the society
+      }
+    }
+    revoke_allowed = {
+      always = no
+    }
+    ai_will_do = {
+      factor = 1
+      
+      modifier = {
+        factor = 0
+        NOT = { scaled_wealth = 0.75 }
+      }
+      
+      modifier = {
+        factor = 0.1
+        NOT = { age = 26 }
+      }
+      
+      modifier = {
+        factor = 10
+        age = 40
+      }
+    }
+  }
 }
 
 # Allows members of the Seven group to Knight members of their court for 300 prestige a piece.
 
 targetted_decisions = {
-    knight_target = {
-        filter = court
-        ai_target_filter = court
-        
-        from_potential = {
-            ai = no
-            OR = {
-                trait = knight
-                trait = red_knight
-                trait = dragon_knight
-                trait = hedge_knight
-            }
-        }
-        potential = {
-            NOR = {
-                trait = knight
-                trait = red_knight
-                trait = dragon_knight
-                trait = hedge_knight
-            }
-        }
-        allow = {
-            is_combat_trained = yes # Need a reason to Knight them
-            age = 15
-            
-            scaled_wealth = 0.10
-            FROM = {
-                prestige = 300
-            }
-        }
-        
-        effect = {
-            scaled_wealth = -0.10
-            
-            if = {
-                limit = {
-                    age = 10
-                    NOT = {
-                        age = 16
-                    }
-                }
-                random_list = {
-                    100 = { }
-                    5 = { give_nickname = nick_the_young_ser }
-                }
-            }
-            
-            # Remove prestige based on their current trait.
-            # If they are a page or squire, it will be cheaper.
-            if = {
-                limit = {
-                    trait = page
-                }
-                FROM = {
-                    prestige = -200
-                }
-            }
-            if = {
-                limit = {
-                    trait = squire
-                }
-                FROM = {
-                    prestige = -150
-                }
-            }
-            if = {
-                limit = {
-                    NOR = {
-                        trait = page
-                        trait = squire
-                    }
-                }
-                FROM = {
-                    prestige = -300
-                }
-            }
-            
-            # Give them the Knighthood, be it Knight or Hedge if they are not right faith/trait combo
-            if = {
-                limit = {
-                    FROM = {
-                        religion = the_seven
-                        trait = knight
-                    }
-                }
-                add_trait = knight
-                give_minor_title = title_generic_ser
-                break = yes
-            }
-            if = {
-                limit = {
-                    FROM = {
-                        religion = rhllor
-                        trait = red_knight
-                    }
-                }
-                add_trait = red_knight
-                give_minor_title = title_generic_ser
-                break = yes
-            }
-            if = {
-                limit = {
-                    FROM = {
-                        religion = valyrian
-                        trait = dragon_knight
-                    }
-                }
-                add_trait = dragon_knight
-                give_minor_title = title_generic_ser
-                break = yes
-            }
-            add_trait = hedge_knight # Fallback
-            give_minor_title = title_generic_ser
-        }
-        revoke_allowed = {
-            always = no
-        }
-        ai_will_do = {
-            factor = 0
-        }
+  knight_target = {
+    filter = court
+    ai_target_filter = court
+    
+    from_potential = {
+      prestige = 500
+      
+      OR = {
+        trait = knight
+        trait = red_knight
+        trait = dragon_knight
+        trait = hedge_knight
+      }
+    }
+    potential = {
+      religion = FROM
+      
+      NOR = {
+        trait = knight
+        trait = red_knight
+        trait = dragon_knight
+        trait = hedge_knight
+      }
+    }
+    allow = {
+      is_combat_trained = yes # Need a reason to Knight them
+      age = 14
+      
+      scaled_wealth = 0.10
+      FROM = {
+        prestige = 300
+      }
     }
     
-    name_page_target = {
-        filter = court
-        ai_target_filter = court
+    effect = {
+      FROM = { prestige -300 }
+      
+      # Assign 'The Young Ser' to characters 17 and below.
+      if = {
+        limit = { NOT = { age = 18 } }
+        random_list = {
+          100 = { }
+          5 = { give_nickname = nick_the_young_ser }
+        }
+      }
+      
+      # Remove prestige for naming a woman a Knight
+      trigger_switch = {
+        on_trigger = is_female
         
-        from_potential = {
-            ai = no
-            OR = {
-                trait = knight
-                trait = red_knight
-                trait = dragon_knight
-                trait = hedge_knight
-            }
-        }
-        potential = {
-            NOR = {
-                trait = page
-                trait = squire
-                trait = knight
-                trait = red_knight
-                trait = dragon_knight
-                trait = hedge_knight
-            }
-            
-        }
-        allow = {
-            age = 6
-            NOT = {
-                age = 10
-            }
-            
-            FROM = {
-                scaled_wealth = 0.10
-                prestige = 50
-            }
+        yes = { FROM = { prestige = -200 } }
+        no = {  }
+      }
+      
+      # Add some prestige back if they have appropriate traits
+      trigger_switch = {
+        on_trigger = trait
+        
+        page = { FROM = { prestige = 100 } }
+        squire = { FROM = { prestige = 150 } }
+      }
+      
+      # Award trait based on whether or not FROM is a hedge or not.
+      if = {
+        limit = {
+          NOT = { FROM = { trait = hedge_knight } }
         }
         
-        effect = {
-            FROM = {
-                prestige = -50
-                scaled_wealth = -0.10
-            }
-            
-            add_trait = page
+        trigger_switch = {
+          on_trigger = religion
+          
+          the_seven = { add_trait = knight }
+          rhllor = { add_trait = red_knight }
+          valyrian = { add_trait = dragon_knight }
         }
-        revoke_allowed = {
-            always = no
+      }
+      else_if = {
+        limit = {
+          FROM = { trait = hedge_knight }
         }
-        ai_will_do = {
-            factor = 0
-        }
+        
+        add_trait = hedge_knight
+      }
+      give_minor_title = title_generic_ser
+    }
+    revoke_allowed = {
+      always = no
+    }
+    ai_will_do = {
+      factor = 0
+    }
+  }
+  
+  name_page_target = {
+    filter = court
+    ai_target_filter = court
+    
+    from_potential = {
+      prestige = 50
+      
+      OR = {
+        trait = knight
+        trait = red_knight
+        trait = dragon_knight
+        trait = hedge_knight
+      }
+    }
+    potential = {
+      NOR = {
+        trait = page
+        trait = squire
+        trait = knight
+        trait = red_knight
+        trait = dragon_knight
+        trait = hedge_knight
+      }
+      
+    }
+    allow = {
+      age = 6
+      
+      FROM = {
+        prestige = 50
+      }
     }
     
-    name_squire_target = {
-        filter = court
-        ai_target_filter = court
-        
-        from_potential = {
-            ai = no
-            OR = {
-                trait = knight
-                trait = red_knight
-                trait = dragon_knight
-                trait = hedge_knight
-            }
-        }
-        potential = {
-            NOR = {
-                trait = squire
-                trait = knight
-                trait = red_knight
-                trait = dragon_knight
-                trait = hedge_knight
-            }
-        }
-        allow = {
-            age = 10
-            
-            FROM = {
-                scaled_wealth = 0.10
-                prestige = 75
-            }
-        }
-        
-        effect = {            
-            # If they are already a page, reduce costs.
-            if = {
-                limit = {
-                    trait = page
-                }
-                
-                FROM = {
-                    prestige = -25
-                    scaled_wealth = -0.05
-                }
-                
-                remove_trait = page
-                add_trait = squire
-                
-                break = yes
-            }
-            
-            # If they are not a page, full cost.
-            FROM = {
-                prestige = -75
-                scaled_wealth = -0.10
-            }
-            
-            add_trait = squire
-        }
-        revoke_allowed = {
-            always = no
-        }
-        ai_will_do = {
-            factor = 0
-        }
+    effect = {
+      FROM = {
+        prestige = -50
+      }
+      
+      add_trait = page
     }
+    revoke_allowed = {
+      always = no
+    }
+    ai_will_do = {
+      factor = 0
+    }
+  }
+  
+  name_squire_target = {
+    filter = court
+    ai_target_filter = court
+    
+    from_potential = {
+      prestige = 100
+      
+      OR = {
+        trait = knight
+        trait = red_knight
+        trait = dragon_knight
+        trait = hedge_knight
+      }
+    }
+    potential = {
+      NOR = {
+        trait = squire
+        trait = knight
+        trait = red_knight
+        trait = dragon_knight
+        trait = hedge_knight
+      }
+    }
+    allow = {
+      age = 10
+      
+      FROM = {
+        scaled_wealth = 0.10
+        prestige = 75
+      }
+    }
+    
+    effect = {      
+      FROM = { prestige = -100 }
+      
+      # If they are already a page, add back some of the lost prestige
+      trigger_switch = {
+        on_trigger = trait
+        
+        page = { FROM = { prestige = 50 } }
+      }
+      
+      add_trait = squire
+    }
+    revoke_allowed = {
+      always = no
+    }
+    ai_will_do = {
+      factor = 0
+    }
+  }
 }
