@@ -11,6 +11,19 @@ province_event = {
     border = GFX_event_normal_frame_war
 
     trigger = {
+      owner = {
+        top_liege = {
+          any_realm_province = {
+            NOT = { province_id = ROOT }
+          }
+        }
+      }
+      owner = {
+        in_revolt = no
+        capital_scope = {
+          NOT = { province = ROOT }
+        }
+      }
       NOT = {
         has_game_rule = {
           name = uprising_system
@@ -36,17 +49,13 @@ province_event = {
           OR = {
             AND = {
               owner = {
-                top_liege = {
-                  culture = pirate
-                }
+                culture = pirate
               }
               culture = pirate
             }
             AND = {
               owner = {
-                top_liege = {
-                  culture_group = free_folk
-                }
+                culture_group = free_folk
               }
               culture_group = free_folk
             }
@@ -56,6 +65,14 @@ province_event = {
         modifier = {
           factor = 0.75
 
+          owner = {
+            trait = proud
+          }
+        }
+        
+        modifier = {
+          factor = 0.75
+          
           owner = {
             NOT = { diplomacy = 8 }
           }
@@ -74,7 +91,7 @@ province_event = {
             NOT = { combat_rating = 3 }
           }
         }
-      modifier = {
+        modifier = {
           factor = 1.25
 
           owner = {
@@ -100,13 +117,6 @@ province_event = {
 
           owner = {
             trait = brave
-          }
-        }
-        modifier = {
-          factor = 0.5
-
-          owner = {
-            trait = proud
           }
         }
         modifier = {
@@ -136,11 +146,6 @@ province_event = {
           owner = {
             trait = greensight_awakened
           }
-        }
-        modifier = {
-          factor = 3
-          
-          is_capital = yes
         }
         modifier = {
           factor = 4
