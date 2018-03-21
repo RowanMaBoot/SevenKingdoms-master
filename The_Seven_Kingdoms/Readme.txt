@@ -41,9 +41,11 @@ ZeroFighterR - Nicknames, Lore Advice
 #############################################################
 Content:
 #############################################################
-Velho e Bom Joe - for the Culturally Different Cities mod, which has been partially integrated.
+Velho e Bom Joe - For the Culturally Different Cities mod, which has been partially integrated.
 Marc Simonetti - For his excellent Game of Thrones artwork, which is being used in our mod: http://art.marcsimonetti.com/grr-martin-a-song-of-ice-and-fire
 Silverino - For allowing us to use some of his portraits from the excelent CPR+ mod. *Many assets were used extensively by Vierwood to create unique cultures - many thanks!
+The Warhammer Geheimnisnacht Team - For lending us access to all of the graphics assets.
+The Winter King Team - For allowing us to use their gfx flags and music.
 
 #############################################################
 Other Credits:
@@ -60,22 +62,8 @@ Paradox CK2 Dev Team - For providing a cool game with awesome modding support!
 #############################################################
 Music										
 #############################################################
-- Christopher Thorstenson:
-	Dragon Wars : https://www.jamendo.com/track/1057094/dragon-wars
-	Lighthouse : https://www.jamendo.com/track/1057092/lighthouse
-- Marc Teichert: 
-	The Beginning Of The Adventure : https://www.jamendo.com/track/589413/the-beginning-of-the-adventure
-	Anonymous : https://www.jamendo.com/track/1191321/anonymous
-	Cracking the Code: https://www.jamendo.com/track/1191325/cracking-the-code
-	Mission Briefing: https://www.jamendo.com/track/477312/mission-briefing
-	The Hollows: https://www.jamendo.com/track/866707/the-hollows
-	Revealings: https://www.jamendo.com/track/736786/revealings
-- Grégoire Lourme:
-	Legends : https://www.jamendo.com/track/1376555/legends  
-	Asgard has Fallen : https://www.jamendo.com/track/1376562/asgard-has-fallen 
-	Life in Trenches : https://www.jamendo.com/track/1336207/life-in-trenches
-- CH Joy:
-	Inspirational Trailer : https://www.jamendo.com/track/1390798/inspirational-trailer
 - Cantus Gregorius:
 	Hallelujah 
+- All other music has been provided to us by the Winter King Team, most of the music is by the Spanish conductor Jordi Savall.
+
 
