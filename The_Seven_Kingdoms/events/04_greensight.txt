@@ -1,0 +1,205 @@
+namespace = GRNST
+
+# greensight_unconcious
+# greensight_awakening
+# greensight_awakened
+# greenseer
+
+# falls under mystical game rule, if completely disabled then no green dreams.
+# available even with light fantasy rule (GoT lore)
+
+# greensight.1
+# Generic dreams, flavour event. Can award a GDS or change attributes and traits for better or for worse.
+
+# greensight.2
+# Unconcious sight
+# This event is fairly rare, and occurs in younger characters.
+# Depending on their opinion of their guardian, they may or may not communicate these dreams.
+
+# greensight.3
+# Ping event to parent, notifying them that their child has been having dreams - dreams that could well be green dreams.
+# AI much more likely to use this option if they have gained the green dreams trait, are of a fearful personality AND have a high enough opinion of guardian.
+# guardian will have the option to suppress green dreams if they are not of westerosi pagan, awarding a flag, prevents development.
+
+# greensight.5
+# further dreaming for unconcious dreamers, can result in awakening.
+# grant events where they see through the eyes of other characters or animals. which affects what abilities they are granted.
+# awakening means more random dreams, and greater chance of more powerful effects.
+
+# greensight.10
+# further dreaming for awakening dreamers, can result in awakened.
+# visit weirwood trees remotely, offer a chance to grant a sacrifice - what it should be varies based on character traits.
+# obtain familiar or a magical ability based on results of event 4
+# awakened grants much more powerful effects, and results in no chance of no effect.
+
+character_event = {
+    id = GRNST.1
+    title = EVTTITLE_GRNST.1
+    desc = EVTDESC_GRNST.1
+    
+    trigger = {
+        OR = {
+            trait = greensight_unconcious
+            trait = greensight_awakening
+            trait = greensight_awakened
+        }
+    }
+    
+    mean_time_to_happen = {
+        months = 120 # 10 Years
+        
+        modifier = {
+            factor = 0.75
+            trait = greensight_awakening
+        }
+        modifier = {
+            factor = 0.50
+            trait = greensight_awakened
+        }
+    }
+    
+    # Good chance of naught, but can modify attributes or change character.
+    
+    option = {
+        name = OPTA_GRNST.1 # What does it mean?
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    option = {
+        name = OPTB_GRNST.1 # Discussing with parent if they have the sight, friend or partner.
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+character_event = {
+    id = GRNST.2
+    title = EVTTITLE_GRNST.2
+    desc = EVTDESC_GRNST.2
+    
+    is_triggered_only = yes # on_action event
+    
+    trigger = {
+        NOR = {
+            trait = greensight_unconcious
+            trait = greensight_awakening
+            trait = greensight_awakened
+        }
+    }
+    
+    immediate = {
+        if = {
+            limit = {
+                has_character_flag = has_dreamed_before
+            }
+            random_list = {
+                40 = { add_trait = greensight_unconcious }
+                60 = { }
+            }
+        }
+        else = {
+            random_list = {
+                20 = { add_trait = greensight_unconcious }
+                80 = { set_character_flag = has_dreamed_before }
+                set_character_flag = has_dreamed_before
+            }
+        }
+        
+        
+    }
+    
+    option = {
+        name = OPTA_GRNST.2 # What does it mean?
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    option = {
+        trigger = {
+        
+        }
+        name = OPTB_GRNST.2 # I should speak to my Guardian about this
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+# Ping Guardian
+character_event = {
+    id = GRNST.3
+    title = EVTTITLE_GRNST.3
+    desc = EVTDESC_GRNST.3
+    
+    is_triggered_only = yes
+    
+    # For guardians with the sight
+    option = {
+        name = OPTA_GRNST.3 # They must have been touched by the sight.
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    # Generic
+    option = {
+        name = OPTB_GRNST.3 # What does it mean?
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    # Non pagan
+    option = {
+        name = OPTC_GRNST.3 # Suppress their dreams
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+# Awakening event chain
+character_event = {
+    id = GRNST.5
+    title = EVTTITLE_GRNST.5
+    desc = EVTDESC_GRNST.5
+    
+    trigger = {
+        trait = greensight_unconcious
+    }
+    
+    option = {
+        name = OPTA_GRNST.5 # They must have been touched by the sight.
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+# Awakened event chain
+character_event = {
+    id = GRNST.10
+    title = EVTTITLE_GRNST.10
+    desc = EVTDESC_GRNST.10
+    
+    trigger = {
+        trait = greensight_awakening
+    }
+    
+    # Generic
+    option = {
+        name = OPTA_GRNST.10 # What does it mean?
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
