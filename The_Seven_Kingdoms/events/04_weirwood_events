@@ -1,0 +1,346 @@
+namespace = WERWD
+
+# WERWD.1
+# Planting a Weirwood
+# Event allows planting of Weirwood - creates a Weirdwood structure that can be improved.
+
+# WERWD.5
+# Burning a Weirwood
+# If a holding you control has a Weirwood, and you are of either the Seven or Rhllor faiths, burn it.
+# Destroys the structure, offering a big piety boon.
+# Can result in an uprising, which is assured if province is old gods.
+
+# WERWD.10
+# Visting a Weirwood
+# Event to visit a Weirwood, granting a small piety boon.
+# If you have the greensight, can result in an event chain.
+
+# Greenseer arrives with seed.
+character_event = {
+    id = WERWD.1
+    title = EVTTITLE_WERWD.1
+    desc = EVTDESC_WERWD.1
+    
+    trigger = {
+        religion_group = westerosi_pagan_group
+        NOT = {
+            trait = cynical
+        }
+    }
+    
+    option = {
+        name = OPTA_WERWD.1 # Accept it, start planting
+        
+        character_event = { id = WERWD.3 days = 14 }
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    option = {
+        name = OPTB_WERWD.1 # Refuse the offer
+        
+        piety = -50
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+# Greenseer begins planting. They have a request; a blood sacrifice.
+character_event = {
+    id = WERWD.2
+    title = EVTTITLE_WERWD.2
+    desc = EVTDESC_WERWD.2
+    
+    is_triggered_only = yes
+    
+    # Sacrifice your youngest child
+    option = {
+        name = OPTA_WERWD.2
+        
+        character_event = { id = WERWD.3 days = 7 }
+        
+        piety = 300
+        
+        set_character_flag = kin_sacrificed
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    # Sacrifice a random courtier
+    option = {
+        name = OPTB_WERWD.2
+        
+        character_event = { id = WERWD.3 days = 7 }
+        
+        piety = 150
+        
+        set_character_flag = courtier_sacrificed
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    # Sacrifice animals
+    option = {
+        name = OPTC_WERWD.2
+        
+        character_event = { id = WERWD.3 days = 7 }
+        
+        piety = 25
+        
+        set_character_flag = animals_sacrificed
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    option = {
+        name = OPTD_WERWD.2
+        
+        piety = -75
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+# Tree is planted
+# Chance of greenseer joining court
+character_event = {
+    id = WERWD.3
+    title = EVTTITLE_WERWD.3
+    desc = EVTDESC_WERWD.3
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = OPTA_WERWD.3
+        
+        if = {
+            limit = { has_character_flag = kin_sacrificed }
+            
+            random_list = {
+                80 = { character_event = { id = WERWD.3A days = 300 } } # Large tree
+                40 = { character_event = { id = WERWD.3B days = 300 } } # Medium Tree
+                20 = { character_event = { id = WERWD.3C days = 300 } } # Small tree
+            }
+        }
+        else_if = {
+            limit = { has__character_flag = courtier_sacrificed }
+            
+            random_list = {
+                30 = { character_event = { id = WERWD.3A days = 300 } } # Large tree
+                85 = { character_event = { id = WERWD.3B days = 300 } } # Medium Tree
+                25 = { character_event = { id = WERWD.3C days = 300 } } # Small tree
+            }
+        }
+        else_if = {
+            limit = { has__character_flag = animals_sacrificed }
+            
+            random_list = {
+                20 = { character_event = { id = WERWD.3A days = 300 } } # Large Tree
+                40 = { character_event = { id = WERWD.3B days = 300 } } # Medium Tree
+                80 = { character_event = { id = WERWD.3C days = 300 } } # Small tree
+            }
+        }
+        else = {
+            # Something went wrong
+        }
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+# Large Tree
+character_event = {
+    id = WERWD.3A
+    title = EVTTITLE_WERWD.3A
+    desc = EVTDESC_WERWD.3A
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = OPTA_WERWD.3A
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+# Medium Tree
+character_event = {
+    id = WERWD.3B
+    title = EVTTITLE_WERWD.3B
+    desc = EVTDESC_WERWD.3B
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = OPTA_WERWD.3B
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+# Small Tree
+character_event = {
+    id = WERWD.3C
+    title = EVTTITLE_WERWD.3C
+    desc = EVTDESC_WERWD.3C
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = OPTA_WERWD.3C
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+###########################################################################
+##################################
+
+# Burning a Weirwood
+character_event = {
+    id = WERWD.5
+    title = EVTTITLE_WERWD.5
+    desc = EVTDESC_WERWD.5
+    
+    trigger = {
+        OR = {
+            religion_group = the_seven_group
+            religion = rhllor
+            AND = {
+                NOR = {
+                    religion = old_gods
+                    religion = old_gods_beyond
+                    religion = old_gods_beyond_white
+                }
+                trait = zealous
+            }
+        }
+    }
+    
+    option = {
+        name = OPTA_WERWD.5 # Burn it
+        
+        character_event = { id = WERWD.6 days = 3 }
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    
+    option = {
+        name = OPTB_WERWD.5 # Don't burn it
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+# Watch the flames consume it
+character_event = {
+    id = WERWD.6
+    title = EVTTITLE_WERWD.6
+    desc = EVTDESC_WERWD.6
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = OPTA_WERWD.6
+        
+        random_list = {
+            50 = { # Nothing }
+            50 = { # Rise up in target holding }
+            1 = { character_event = { id = WERWD.8 } }
+        }
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+# Locals rise up
+character_event = {
+    id = WERWD.7
+    title = EVTTITLE_WERWD.7
+    desc = EVTDESC_WERWD.7
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = OPTA_WERWD.7 # Insufferable creatures
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+# Very rare - one of the children of the forest go after you
+character_event = {
+    id = WERWD.8
+    title = EVTTITLE_WERWD.8
+    desc = EVTDESC_WERWD.8
+    
+    is_triggered_only = yes
+    
+    option = {
+        name = OPTA_WERWD.8 # Destroy it! For strong zealots
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    option = {
+        name = OPTB_WERWD.8 # Pray! For weak gonnadieanyway zealots
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+    option = {
+        name = OPTC_WERWD.8 # Beg for forgiveness! For cowards and the sort, incredibly slim chance of free conversion and survival.
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
+
+###########################################################################
+##################################
+
+# Visiting a Weirdwood
+character_event = {
+    id = WERWD.10
+    title = EVTTITLE_WERWD.10
+    desc = EVTDESC_WERWD.10
+    
+    trigger = {
+        religion_group = westerosi_pagan_group
+        NOT = {
+            trait = cynical
+        }
+    }
+    
+    option = {
+        name = OPTA_WERWD.10
+        
+        ai_chance = {
+            factor = 1
+        }
+    }
+}
