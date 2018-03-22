@@ -1,4 +1,4 @@
-# SevenKingdoms-master
+# CK2 The Seven Kingdoms / GoT | The Seven Kingdoms
 Seven Kingdoms for Crusader Kings 2 Master
 
 Current State: Alpha
