@@ -1,0 +1,507 @@
+###################################
+#
+# ANCIENT RELIGIONS
+# - Celtic Flavor Events
+#
+# Event IDs ancrel.0150 - 0151 
+#			ancrel.1252 - 1253
+#			ancrel.0208 - 0210
+#			ancrel.0256
+#
+###################################
+
+# Written by Patrick Marchand
+
+namespace = ancrel
+
+# Meeting a Bard
+character_event = {
+	id = ancrel.0150
+	desc = EVTDESCancrel.0150
+	picture = GFX_evt_thebard
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	only_capable = yes
+	culture_group = first_men
+	religion_group = westerosi_pagan_group
+	
+	trigger = {
+		OR = {
+			religion = old_gods
+			religion = old_gods_beyond
+			religion = vulture_god
+			religion = lady_of_the_waves
+			religion = old_gods_beyond_white
+			religion = drowned_god
+		}
+		is_landed = yes
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 750
+		modifier = {
+			factor = 0.5
+			trait = zealous
+		}
+		modifier = {
+			factor = 2.0
+			trait = cynical
+		}
+		modifier = {
+			factor = 0.5
+			trait = paranoid
+		}
+		modifier = {
+			factor = 0.5
+			trait = mystic
+		}
+		modifier = {
+			factor = 0.5
+			trait = ambitious
+		}
+		modifier = {
+			factor = 1.5
+			trait = content
+		}
+	}
+	
+	option = {
+		name = EVTOPTAancrel.0150
+		piety = 25
+
+		random_list = {
+			10 = {
+				change_learning = 1
+			}
+			90 = {}
+		}
+	}
+	
+	option = {
+		name = EVTOPTBancrel.0150
+		trigger = {
+			trait = poet
+		}
+		tooltip_info = poet
+		custom_tooltip = {
+			text = sing_poetry
+			piety = 25
+			prestige = 25
+			random_list = {
+				50 = {
+					change_learning = 2
+				}
+				50 = {}
+			}
+		}
+	}
+}
+
+# The sea monster
+character_event = {
+	id = ancrel.0151
+	desc = EVTDESCancrel.0151
+	picture = GFX_evt_lakeside
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	only_capable = yes
+	culture_group = first_men
+	religion_group = westerosi_pagan_group
+	
+	trigger = {
+		OR = {
+			religion = old_gods
+			religion = old_gods_beyond
+			religion = vulture_god
+			religion = lady_of_the_waves
+			religion = old_gods_beyond_white
+			religion = drowned_god
+		}
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 1000
+
+		modifier = {
+			factor = 0.4
+			trait = zealous
+		}
+		modifier = {
+			factor = 2.0
+			trait = cynical
+		}
+		modifier = {
+			factor = 0.3
+			trait = paranoid
+		}
+		modifier = {
+			factor = 0.6
+			trait = brave
+		}
+		modifier = {
+			factor = 0.5
+			trait = proud
+		}
+		modifier = {
+			factor = 1.8
+			trait = content
+		}
+		modifier = {
+			factor = 0.5
+			is_ill = yes
+		}
+	}
+	
+	option = {
+		name = EVTOPTAancrel.0151
+		piety = 20
+		prestige = 20
+		random_list = {
+			20 = {
+				add_trait = brave
+			}
+			20 = {
+				add_trait = wounded
+			}
+			5 = {
+				add_maimed_trait_effect = yes
+			}
+			5 = {
+				death = {
+					death_reason = death_accident
+				}
+			}
+			50 = { prestige = 20 }
+		}
+	}
+	option = {
+		name = EVTOPTBancrel.0151
+		piety = 20
+		prestige = -25
+		remove_trait = brave
+	}
+}
+
+# The stranger
+character_event = {
+	id = ancrel.1252
+	desc = EVTDESCancrel.1252
+	picture = GFX_evt_banshee
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	only_capable = yes
+	culture_group = andal
+	religion_group = the_seven_group
+	
+	trigger = {
+		OR = {
+			religion = the_seven
+			religion = the_seven_gods
+			religion = the_mother
+			religion = the_stranger
+			religion = old_gods
+			religion = the_smith
+		}
+		is_landed = yes
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 1000
+
+		modifier = {
+			factor = 0.5
+			trait = zealous
+		}
+		modifier = {
+			factor = 2.0
+			trait = cynical
+		}
+		modifier = {
+			factor = 0.5
+			trait = paranoid
+		}
+		modifier = {
+			factor = 0.5
+			trait = brave
+		}
+		modifier = {
+			factor = 0.5
+			trait = humble
+		}
+		modifier = {
+			factor = 1.5
+			trait = content
+		}
+		modifier = {
+			factor = 0.4
+			trait = wounded
+		}
+		modifier = {
+			factor = 0.4
+			is_ill = yes
+		}
+	}
+	
+	option = {
+		name = EVTOPTAancrel.1252
+		piety = 75
+		random_list = {
+			10 = {
+				add_trait = depressed
+			}
+			10 = {
+				add_trait = stressed
+			}
+			10 = {
+				remove_trait = cynical
+			}
+			70 = {}
+		}
+		hidden_tooltip = {
+			health = -1
+		}
+	}
+	option = {
+		name = EVTOPTBancrel.1252
+		prestige = 50
+		random_list = {
+			20 = {
+				remove_trait = zealous
+			}
+			80 = {}
+		}
+		hidden_tooltip = {
+			health = -1
+		}
+	}
+}
+
+
+# Bran's Voyage
+character_event = {
+	id = ancrel.1253
+	desc = EVTDESCancrel.1253
+	picture = GFX_evt_boatcoast
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	only_capable = yes
+	culture_group = iron_islander
+	religion_group = drowned_god_group
+	
+	trigger = {
+		OR = {
+			religion = storm_god
+			religion = drowned_god
+		}
+		is_landed = yes
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 750
+		modifier = {
+			factor = 0.5
+			trait = zealous
+		}
+		modifier = {
+			factor = 2.0
+			trait = cynical
+		}
+		modifier = {
+			factor = 0.5
+			trait = paranoid
+		}
+		modifier = {
+			factor = 0.5
+			trait = mystic
+		}
+		modifier = {
+			factor = 0.5
+			trait = ambitious
+		}
+		modifier = {
+			factor = 1.5
+			trait = content
+		}
+	}
+	
+	option = {
+		name = EVTOPTAancrel.1253
+		piety = 20
+		prestige = 25
+		random_list = {
+			10 = {
+				change_learning = 1
+			}
+			90 = {}
+		}
+	}
+}
+
+#######################################
+#
+# - Journey to St Kilda
+#
+#######################################
+
+# Written by Jacob Hodge
+
+#Character Sick, Rumor of First Men on the Gods Eye
+
+character_event = {
+	id = ancrel.0208
+	desc = EVTDESCancrel.0208
+	picture = GFX_evt_whispering_in_ear
+	border = GFX_event_normal_frame_religion
+
+	only_rulers = yes
+	min_age = 15
+	prisoner = no
+	culture_group = celtic
+
+	trigger = {
+		has_dlc = "The Old Gods"
+		is_ruler = yes
+		is_ill = yes
+		completely_controls = d_duskendale
+		NOT = { religion_group = westerosi_pagan_group }
+		culture_group = first_men
+		#OR = {
+		#	has_game_rule = {
+		#		name = acr_ai_revival
+		#		value = on
+		#	}
+			ai = no
+		#}
+	}
+
+	mean_time_to_happen = {
+		months = 40
+		modifier = {
+			factor = 0.5
+			has_landed_title = d_duskendale
+		}
+		modifier = {
+			factor = 2.0
+			trait = cynical
+		}
+		modifier = {
+			factor = 2.0
+			trait = zealous
+		}
+		modifier = {
+			factor = 0.7
+			trait = tolerant
+		}
+		# modifier = {
+			# factor = 10
+			# has_game_rule = {
+				# name = acr_ai_revival
+				# value = reduced
+			# }
+			# ai = yes
+		# }
+	}
+
+	option = {
+		name = EVTOPTAancrel.0208
+		ai_chance = {
+			factor = 50
+		}
+		custom_tooltip = {
+			text = travel_island
+			hidden_tooltip = {
+				character_event = { id = ancrel.0209 days = 5 }
+			}
+		}
+	}
+	option = {
+		name = EVTOPTBancrel.0208
+		ai_chance = {
+			factor = 50
+		}
+		custom_tooltip = {
+			text = ignore_rumors
+		}
+	}	
+}
+
+# Arrival at the Gods Eye
+character_event = {
+	id = ancrel.0209
+	desc = EVTDESCancrel.0209
+	picture = GFX_evt_merchant_ship_at_sea_republic
+
+	min_age = 15
+	prisoner = no
+
+	is_triggered_only = yes
+
+	option = {	 #Accept the healing/conversion
+		name = EVTOPTAancrel.0209
+		ai_chance = {
+			factor = 5
+		}
+		hidden_tooltip = {
+			character_event = { id = ancrel.0210 days = 10 }
+		}
+	}
+	option = {
+		name = EVTOPTBancrel.0209
+		ai_chance = {
+			factor = 95
+		}
+		if = {
+			limit = {
+				NOT = { trait = zealous }
+				NOT = { trait = cynical }
+			}
+			add_trait = zealous 
+		}
+	}
+}
+
+#Accept their faith
+character_event = {
+	id = ancrel.0210
+	desc = EVTDESCancrel.0210
+	picture = GFX_evt_Pagan_dolmen
+
+	min_age = 15
+	prisoner = no
+
+	is_triggered_only = yes
+
+	option = { #Character healed/converted
+		name = EVTOPTAancrel.0210
+		if = {
+			limit = { religion = the_seven }
+			religion = old_gods
+		}
+		custom_tooltip = {
+			text = MIRACLE_STKILDA
+			cure_illness = yes
+			hidden_tooltip = {
+				any_vassal = {
+					character_event = { id = ancrel.0300 days = 2 }
+				}
+				any_courtier = {
+					limit = {
+						is_landed = no # don't want to get landed councilors twice!
+						liege = {
+							character = ROOT # or prisoners
+						}
+					}
+					character_event = { id = ancrel.0300 days = 2 }
+				}
+			}
+		}
+	}
+}
