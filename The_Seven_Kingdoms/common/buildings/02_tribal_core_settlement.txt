@@ -1,0 +1,278 @@
+###########################################################################################
+######################################### REMEMBER ########################################
+# THE BONUS GRANTED IS ADDITIVE. ALL PREVIOUS UPGRADES ARE INCLUDED IN THE OVERALL VALUE! #
+###########################################################################################
+
+# Settlements have a number of levels. Levels are improved simply through building, but however require a high standard of development in that province.
+# We could rename holdings to: Urban regions, Rural Regions, Tribal Regions and Religious Distritbs.
+# OK. Those are kinda bad, but it gets the point across.
+
+##############################################
+####### CITY CORE SETTLEMENT REFERENCE #######
+##############################################
+##############################################
+
+#<tag> = {
+#	desc = description used in the tooltip of the building
+#	trigger = used for tech requirement of the building, set to 0 if no requirement so it can be build automatically on new games
+#	gold_cost = cost to build the building
+#	build_time = time to build, in days
+#	
+#	ai_creation_fatbor = weight that the AI uses to determine what building to build
+#	extra_tech_building_start = when starting a new game this building will be pre-built if the province has higher tech than the requirement + this + random 0-1
+#}
+
+# For example, you will first build the most basic building in a new city holding; a hamlet.
+
+# City Holding Core Settlement Levels
+# These upgrades may be difficult or borderline unfeasible to obtain. The very high levels should require a lot of prestige and gold to achieve, as well as a large number of upgrades.
+# In other words, many of these levels may be specific to certain holdings.
+
+# tb_core_level_1	|   Dispersed Nomadic Camps | This region is dominated by sparse groups of tribals, living predominately nomadic lifestyles in small camps.
+# tb_core_level_2	|	Semi-permanent Camps | With a growing population, access to food and water becomes more difficult for those living in this region, and so many establish semi-permanent camps on fertile grounds and near clean water.
+# tb_core_level_3	|	Small Permanent Settlements | Due to more population, permanent settlements have been established in the region. Although the materials used are often primitive, this settlement resembles a fort.
+# tb_core_level_4	|	Small Stone Settlement	| A further increase in population has led the people to construct a completely stone-buillt settlement for protection.
+# tb_core_level_5	|	Stone Settlement	| The settlement has grown as new population builds more housing and expands the small town.
+# tb_core_level_6	|	Town	|	The town, although smaller than a city, provides local government and offers small jobs for its people.
+# tb_core_level_7	|	Small City	|	As the town grows, its people expand past the walls of the old town center.
+# tb_core_level_8	|	City	|	The small city has started to attract people to the new sources of entertainment provided by the local chieftain.
+# tb_core_level_9	|	Large City	|	The city has became one of the largest of the region, and its economy is flourishing, with the first traders becoming active and roads being built to and from the city.
+# tb_core_level_10	|	Extremely Large City	|	This city has no equal in the tribal world, and its chieftain is rich beyond his means, blessing the people with large festivals and hoping for their support in times of war.
+
+# Nothing can be built without the base level one building. It is, in essence, required to use the holding.
+# It will cost virtually nothing and takes very little time to build. The AI will build it very quickly.
+# Level 4 and above will require same amount of prestige as three, to avoid making it impossible, i.e., a very strong and great leader should be able to construct these.
+
+###########################################
+####### CITY CORE SETTLEMENT LEVELS #######
+###########################################
+###########################################
+
+tribal = {
+    tb_core_level_1 = {
+		desc = tb_core_level_1_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 0.0 # We want this building to always be assigned.
+		
+		ai_creation_factor = 150 # Super high priority.
+		
+		prestige_cost = 250
+		build_time = 365
+		
+		light_infantry = 25
+		archers = 10
+		
+		fort_level = 0.05
+		tax_income = 0.15
+		
+		levy_size = 0.02
+	}
+	
+	tb_core_level_2 = {
+		desc = tb_core_level_2_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 0.8 # We want this building to still always be assigned.
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_1
+		
+		prestige_cost = 500
+		build_time = 453
+		
+		light_infantry = 30
+		archers = 15
+		
+		fort_level = 0.05
+		tax_income = 0.75
+		
+		retinuesize = 50
+		
+		local_tax_modifier = -0.02
+	}
+	
+	tb_core_level_3 = {
+		desc = tb_core_level_3_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 1.8 # We want it to be assigned, but not very often.
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_2
+		
+		prestige_cost = 800
+		build_time = 558
+		
+		light_infantry = 35
+		archers = 20
+		
+		fort_level = 0.05
+		tax_income = 0.75
+		
+		retinuesize = 50
+		
+		levy_size = -0.01
+		local_tax_modifier = -0.02
+	}
+	
+	tb_core_level_4 = {
+		desc = tb_core_level_4_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 2.8 # Very rare to be assigned.
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_3
+		
+		prestige_cost = 800
+		build_time = 558
+		
+		light_infantry = 50
+		archers = 30
+		
+		fort_level = 0.1
+		tax_income = 0.85
+		
+		retinuesize = 75
+		
+		local_tax_modifier = -0.03
+	}
+	
+	tb_core_level_5 = {
+		desc = tb_core_level_5_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 3.8 # Extremely rare to be assigned
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_4
+		
+		prestige_cost = 800
+		build_time = 558
+		
+		light_infantry = 65
+		archers = 40
+		
+		fort_level = 0.15
+		tax_income = 0.95
+		
+		retinuesize = 85
+		
+		local_tax_modifier = -0.04
+	}
+	
+	tb_core_level_6 = {
+		desc = tb_core_level_6_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 4.8 # Should not be assigned at start.
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_5
+		
+		prestige_cost = 800
+		build_time = 558
+		
+		light_infantry = 80
+		archers = 60
+		
+		fort_level = 0.2
+		tax_income = 1.05
+		
+		retinuesize = 95
+		
+		local_tax_modifier = -0.05
+	}
+	
+	tb_core_level_7 = {
+		desc = tb_core_level_7_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 5.8 # Should not be assigned at start.
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_6
+		
+		prestige_cost = 800
+		build_time = 558
+		
+		light_infantry = 100
+		archers = 85
+		
+		fort_level = 0.25
+		tax_income = 1.15
+		
+		retinuesize = 105
+		
+		local_tax_modifier = -0.06
+	}
+	
+	tb_core_level_8 = {
+		desc = tb_core_level_8_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 6.8 # Should not be assigned at start.
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_7
+		
+		prestige_cost = 800
+		build_time = 558
+		
+		light_infantry = 100
+		archers = 100
+		
+		fort_level = 0.3
+		tax_income = 1.25
+		
+		retinuesize = 115
+		
+		local_tax_modifier = -0.07
+	}
+	
+	tb_core_level_9 = {
+		desc = tb_core_level_9_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 7.8 # Should not be assigned at start.
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_8
+		
+		prestige_cost = 800
+		build_time = 558
+		
+		light_infantry = 125
+		archers = 100
+		
+		fort_level = 0.35
+		tax_income = 1.35
+		
+		retinuesize = 125
+		
+		local_tax_modifier = -0.08
+	}
+	
+	tb_core_level_10 = {
+		desc = tb_core_level_10_desc
+		trigger = { TECH_FORTIFICATIONS_CONSTRUCTION = 0 }
+		extra_tech_building_start = 8.8 # Should not be assigned at start.
+		
+		ai_creation_factor = 100
+		
+		upgrades_from = tb_core_level_9
+		
+		prestige_cost = 800
+		build_time = 558
+		
+		light_infantry = 175
+		archers = 135
+		
+		fort_level = 0.4
+		tax_income = 1.45
+		
+		retinuesize = 135
+		
+		local_tax_modifier = -0.1
+	}
+}
