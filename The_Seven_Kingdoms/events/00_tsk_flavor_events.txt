@@ -8,9 +8,13 @@
 #			tsk.0102 # Bountiful Harvest
 #			tsk.0103 # Influx of Trade
 #			tsk.0104-107 # Mountain Clansmen Ambush
-#
-#
-#
+#			
+#			tsk.0108 # You trip and fall 
+#			tsk.0109 # You respect your men's sense of justness
+#			tsk.0110-0113 # You go out to a tavern
+#			tsk.0114 # You are robbed 
+#			tsk.0115 # You attempt to either become physically or mentally stronger
+#		
 ###################################
 
 namespace = tsk
@@ -79,8 +83,8 @@ character_event = {
 	
 	trigger = {
 		OR = {
-			completely_controls = c_casterly_rock
-			completely_controls = c_castamere
+			has_landed_title = c_casterly_rock
+			has_landed_title = c_castamere
 		}
 		is_landed = yes
 		is_abroad = no
@@ -121,20 +125,20 @@ character_event = {
 	
 	trigger = {
 		OR = {
-			completely_controls = c_oldtown
-			completely_controls = c_highgarden
-			completely_controls = c_duskendale
-			completely_controls = c_riverrun
-			completely_controls = c_oldstones
-			completely_controls = c_lannisfield
-			completely_controls = c_lys
-			completely_controls = c_pentos
-			completely_controls = c_tyrosh
-			completely_controls = c_myr
-			completely_controls = c_rosby
-			completely_controls = c_coldmoat
-			completely_controls = c_tumbleton
-			completely_controls = c_goldengrove
+			has_landed_title = c_oldtown
+			has_landed_title = c_highgarden
+			has_landed_title = c_duskendale
+			has_landed_title = c_riverrun
+			has_landed_title = c_oldstones
+			has_landed_title = c_lannisfield
+			has_landed_title = c_lys
+			has_landed_title = c_pentos
+			has_landed_title = c_tyrosh
+			has_landed_title = c_myr
+			has_landed_title = c_rosby
+			has_landed_title = c_coldmoat
+			has_landed_title = c_tumbleton
+			has_landed_title = c_goldengrove
 		}
 		is_landed = yes
 		is_abroad = no
@@ -175,18 +179,18 @@ character_event = {
 	
 	trigger = {
 		OR = {
-			completely_controls = c_oldtown
-			completely_controls = c_the_arbor
-			completely_controls = c_lannisport
-			completely_controls = c_dun_port
-			completely_controls = c_rosby
-			completely_controls = c_gulltown
-			completely_controls = c_the_white_knife
-			completely_controls = c_lys
-			completely_controls = c_tyrosh
-			completely_controls = c_myr
-			completely_controls = c_pentos
-			completely_controls = c_braavos
+			has_landed_title = c_oldtown
+			has_landed_title = c_the_arbor
+			has_landed_title = c_lannisport
+			has_landed_title = c_dun_port
+			has_landed_title = c_rosby
+			has_landed_title = c_gulltown
+			has_landed_title = c_the_white_knife
+			has_landed_title = c_lys
+			has_landed_title = c_tyrosh
+			has_landed_title = c_myr
+			has_landed_title = c_pentos
+			has_landed_title = c_braavos
 		}
 		is_landed = yes
 		is_abroad = no
@@ -238,7 +242,7 @@ character_event = {
 	}
 	
 	mean_time_to_happen = {
-		months = 400
+		months = 500
 		modifier = {
 			factor = 0.50
 			trait = zealous
@@ -324,7 +328,7 @@ character_event = {
 			25 = { add_trait = brave }
 			25 = { change_martial = 2 }
 			25 = { }
-			prestige = 100
+			prestige = 200
 			}
 		}
 	}
@@ -344,6 +348,200 @@ character_event = {
 		death = { death_reason = death_battle }
 		custom_tooltip = {
 		text = you_are_slain
+		}
+	}
+}
+
+# You trip and fall
+character_event = {
+	id = tsk.0108
+	desc = EVTDESCtsk.0108
+	picture = GFX_evt_selfish
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	only_capable = yes
+	prisoner = no
+	
+	trigger = {
+		is_landed = yes
+	}
+	
+	mean_time_to_happen = {
+		months = 900
+		modifier = {
+			factor = 0.50
+			trait = drunkard
+		}
+	}
+
+	option = {
+		name = EVTOPTAtsk.0108 # Ouch
+		custom_tooltip = {
+		text = watch_myself
+			random_list = {
+			25 = { add_trait = wounded }
+			75 = { }
+			}
+		}
+	}
+}
+
+# You respect your men's sense of justness
+character_event = {
+	id = tsk.0109
+	desc = EVTDESCtsk.0109
+	picture = GFX_evt_knight
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	only_capable = yes
+	prisoner = no
+	
+	trigger = {
+		is_landed = yes
+	}
+	
+	mean_time_to_happen = {
+		months = 900
+		modifier = {
+			factor = 2
+			trait = just
+		}
+	}
+
+	option = {
+		name = EVTOPTAtsk.0109 # Perhaps I can learn
+		custom_tooltip = {
+		text = learnto_bejust
+			random_list = {
+			25 = { add_trait = just }
+			75 = { }
+			}
+		}
+	}
+	option = {
+		name = EVTOPTBtsk.0109 # Who cares
+		custom_tooltip = {
+		text = be_arbitrary
+			random_list = {
+			25 = { add_trait = arbitrary }
+			75 = { }
+			}
+		}
+	}
+}
+
+# You go out to a tavern
+character_event = {
+	id = tsk.0110
+	desc = EVTDESCtsk.0110
+	picture = GFX_evt_library
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	only_capable = yes
+	prisoner = no
+	
+	trigger = {
+		is_landed = yes
+	}
+	
+	mean_time_to_happen = {
+		months = 900
+		modifier = {
+			factor = 2
+			trait = drunkard
+		}
+	}
+
+	option = {
+		name = EVTOPTAtsk.0110 # I'll head to the local tavern
+		hidden_tooltip = {
+			character_event = { id = tsk.0111 } 
+			}
+	}
+	option = {
+		name = EVTOPTBtsk.0110 # I'll read a book
+		random_list = {
+		25 = { change_learning = 2 }
+		50 = { change_learning = 1 }
+		10 = { add_trait = stressed }
+		15 = { }
+		}
+	}
+}
+
+# You garrive at the tavern
+character_event = {
+	id = tsk.0111
+	desc = EVTDESCtsk.0111
+	picture = GFX_evt_feast
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTAtsk.0111 # Drink some more!
+		hidden_tooltip = {
+			character_event = { id = tsk.0112 } 
+			}
+	}
+	option = {
+		name = EVTOPTBtsk.0111 # I think I'll leave now...
+		custom_tooltip = {
+			text = you_leave
+			random_list = {
+			20 = { add_trait = stressed }
+			80 = { }
+			}
+		}
+	}
+}
+
+# You stay awhile and get really drunk
+character_event = {
+	id = tsk.0112
+	desc = EVTDESCtsk.0112
+	picture = GFX_evt_feast
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTAtsk.0112 # I dont feel good
+		hidden_tooltip = {
+		character_event = { id = tsk.0113 } 
+		}
+		custom_tooltip = {
+		text = dont_feel_good
+		random_list = {
+			20 = { add_trait = drunkard }
+			20 = { add_trait = lustful }
+			20 = { add_trait = hedonist }
+			20 = { add_trait = ill }
+			20 = { }
+			}
+		}
+	}
+}
+
+# You wake up cold and robbed
+character_event = {
+	id = tsk.0113
+	desc = EVTDESCtsk.0113
+	picture = GFX_evt_drunk
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTAtsk.0113 # Robbed!
+		wealth = -25
+		prestige = -50
+		piety = -25
+		custom_tooltip = {
+		text = how_embarrassing
 		}
 	}
 }
