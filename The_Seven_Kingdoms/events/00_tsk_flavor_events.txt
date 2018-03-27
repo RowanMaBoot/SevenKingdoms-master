@@ -1,0 +1,349 @@
+###################################
+#
+# The Seven Kingdoms 
+# - Flavor Events
+#
+# Event IDs tsk.0100 # You encounter a Hedge Knight
+#			tsk.0101 # Gold and Silver found in Casterly Rock
+#			tsk.0102 # Bountiful Harvest
+#			tsk.0103 # Influx of Trade
+#			tsk.0104-107 # Mountain Clansmen Ambush
+#
+#
+#
+###################################
+
+namespace = tsk
+
+# You encounter an aged warrior
+character_event = {
+	id = tsk.0100
+	desc = EVTDESCtsk.0100
+	picture = GFX_evt_hillwarrior
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	only_capable = yes
+	prisoner = no
+	
+	
+	trigger = {
+		OR = {
+			religion = old_gods
+			religion = the_seven
+		}
+		is_landed = yes
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 750
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0100 # ignore him
+			custom_tooltip = {
+				text = dont_need_him
+			}
+	}
+	
+	option = {
+		name = EVTOPTBtsk.0100
+		custom_tooltip = {
+			text = any_advice
+			piety = 25
+			prestige = 25
+			random_list = {
+				80 = {
+					change_martial = 1
+				}
+				10 = {
+					add_trait = brave
+				}
+				10 = {
+					add_trait = patient
+				}
+			}
+		}
+	}
+}
+
+# A New Gold and Silver vein found in Casterly Rock or Castamere
+character_event = {
+	id = tsk.0101
+	desc = EVTDESCtsk.0101
+	picture = GFX_evt_lannister
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	
+	trigger = {
+		OR = {
+			completely_controls = c_casterly_rock
+			completely_controls = c_castamere
+		}
+		is_landed = yes
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 200
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0101 # Wonderful
+		prestige = 25
+		random_list = {
+			25 = {
+				wealth = 50
+			}
+			25 = {
+				wealth = 100
+			}
+			25 = {
+				wealth = 150
+			}
+			25 = {
+				wealth = 200
+			}
+		}
+	}
+}
+
+# A Bountiful Harvest
+character_event = {
+	id = tsk.0102
+	desc = EVTDESCtsk.0102
+	picture = GFX_evt_market
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	
+	trigger = {
+		OR = {
+			completely_controls = c_oldtown
+			completely_controls = c_highgarden
+			completely_controls = c_duskendale
+			completely_controls = c_riverrun
+			completely_controls = c_oldstones
+			completely_controls = c_lannisfield
+			completely_controls = c_lys
+			completely_controls = c_pentos
+			completely_controls = c_tyrosh
+			completely_controls = c_myr
+			completely_controls = c_rosby
+			completely_controls = c_coldmoat
+			completely_controls = c_tumbleton
+			completely_controls = c_goldengrove
+		}
+		is_landed = yes
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 300
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0102 # Wonderful
+		prestige = 25
+		random_list = {
+			25 = {
+				wealth = 25
+			}
+			25 = {
+				wealth = 50
+			}
+			25 = {
+				wealth = 75
+			}
+			25 = {
+				wealth = 100
+			}
+		}
+	}
+}
+
+# Influx of Trade
+character_event = {
+	id = tsk.0103
+	desc = EVTDESCtsk.0103
+	picture = GFX_evt_market
+	border = GFX_event_normal_frame_religion
+	
+	only_rulers = yes
+	
+	trigger = {
+		OR = {
+			completely_controls = c_oldtown
+			completely_controls = c_the_arbor
+			completely_controls = c_lannisport
+			completely_controls = c_dun_port
+			completely_controls = c_rosby
+			completely_controls = c_gulltown
+			completely_controls = c_the_white_knife
+			completely_controls = c_lys
+			completely_controls = c_tyrosh
+			completely_controls = c_myr
+			completely_controls = c_pentos
+			completely_controls = c_braavos
+		}
+		is_landed = yes
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 300
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0103 # Wonderful
+		prestige = 50
+		random_list = {
+			25 = {
+				wealth = 75
+			}
+			25 = {
+				wealth = 150
+			}
+			25 = {
+				wealth = 225
+			}
+			25 = {
+				wealth = 300
+			}
+		}
+	}
+}
+
+# Mountain Clansmen Ambush 
+character_event = {
+	id = tsk.0104
+	desc = EVTDESCtsk.0104
+	picture = GFX_evt_arryn2
+	border = GFX_event_normal_frame_religion
+	
+	min_age = 16
+	only_rulers = yes
+	only_capable = yes
+	prisoner = no
+	
+	trigger = {
+		is_landed = yes
+		is_abroad = no
+		OR = {
+			has_landed_title = e_the_vale
+			religion_group = the_seven_group
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 400
+		modifier = {
+			factor = 0.50
+			trait = zealous
+		}
+		modifier = {
+			factor = 0.25
+			trait = wroth
+		}
+		modifier = {
+			factor = 0.25
+			trait = cruel
+		}
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0104 # I will hunt them down
+		ai_chance = {
+			factor = 50
+		}
+		prestige = 50
+		custom_tooltip = {
+			text = hunt_them_down
+			hidden_tooltip = {
+				character_event = { id = tsk.0105 days = 5 }
+			}
+		}
+	}
+	option = {
+		name = EVTOPTBtsk.0104 # That sounds dangerous
+		ai_chance = {
+			factor = 50
+		}
+		prestige = -50
+		add_trait = craven
+	}
+}
+
+# Mountain Clansmen Ambush / The Actual Ambush
+character_event = {
+	id = tsk.0105
+	desc = EVTDESCtsk.0105
+	picture = GFX_evt_battle_smoke
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0105 # Ambush!
+		prestige = 100
+		custom_tooltip = {
+			text = fight_your_way_out
+			random_list = {
+				80 = {
+					hidden_tooltip = {
+					character_event = { id = tsk.0106 } # You escape 
+					}	
+				}
+				20 = {
+					hidden_tooltip = {
+					character_event = { id = tsk.0107 } # You are killed in battle
+					}
+				}
+			}
+		}
+	}
+}
+
+# Mountain Clansmen Ambush / You Escape Wounded / Unwounded
+character_event = {
+	id = tsk.0106
+	desc = EVTDESCtsk.0106
+	picture = GFX_evt_warrior_banners
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0106 # I'm Alive
+		custom_tooltip = {
+			text = alive_good
+			random_list = {
+			25 = { add_trait = wounded }
+			25 = { add_trait = brave }
+			25 = { change_martial = 2 }
+			25 = { }
+			prestige = 100
+			}
+		}
+	}
+}
+
+# Mountain Clansmen Ambush / You are slain
+character_event = {
+	id = tsk.0107
+	desc = EVTDESCtsk.0107
+	picture = GFX_evt_ambush
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0107 # I am slain!
+		death = { death_reason = death_battle }
+		custom_tooltip = {
+		text = you_are_slain
+		}
+	}
+}
