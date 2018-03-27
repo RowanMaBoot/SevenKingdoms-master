@@ -12,8 +12,8 @@
 #			tsk.0108 # You trip and fall 
 #			tsk.0109 # You respect your men's sense of justness
 #			tsk.0110-0113 # You go out to a tavern
-#			tsk.0114 # You are robbed 
-#			tsk.0115 # You attempt to either become physically or mentally stronger
+#			tsk.0114 # Destroy the Goldengrove
+#			
 #		
 ###################################
 
@@ -534,4 +534,39 @@ character_event = {
 		text = how_embarrassing
 		}
 	}
+}
+
+# Destroy the Golden Grove
+character_event = {
+    id = tsk.0114
+    desc = "EVTDESCtsk.0114"
+    picture = GFX_evt_tyrell
+    border = GFX_event_normal_frame_intrigue
+    #picture = GFX_evt_large_army
+    
+    
+    trigger = {
+			NOT = { has_character_flag = allows_other_kings }
+				OR = {
+					AND = {
+						has_landed_title = e_the_reach
+						any_vassal = { has_landed_title = k_the_golden_grove 
+						}
+					}
+			AND = {
+				has_landed_title = e_the_reach
+				has_landed_title = k_the_golden_grove 
+			}
+		}
+    }
+    option = {
+        name = "EVTOPTAtsk.0114" # Destroy the barbaric title
+		k_the_golden_grove = { destroy_landed_title = THIS }
+    }
+	option = {
+        name = "EVTOPTBtsk.0114" # They may ratain their royal style
+		hidden_tooltip = {
+			set_character_flag = allows_other_kings
+		}
+    }
 }
