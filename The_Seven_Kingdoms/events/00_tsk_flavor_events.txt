@@ -26,9 +26,9 @@ character_event = {
 	picture = GFX_evt_hillwarrior
 	border = GFX_event_normal_frame_religion
 	
-	only_rulers = yes
-	only_capable = yes
-	prisoner = no
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
 	
 	
 	trigger = {
@@ -36,7 +36,6 @@ character_event = {
 			religion = old_gods
 			religion = the_seven
 		}
-		is_landed = yes
 		is_abroad = no
 	}
 	
@@ -79,14 +78,18 @@ character_event = {
 	picture = GFX_evt_lannister
 	border = GFX_event_normal_frame_religion
 	
-	only_rulers = yes
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
 	
 	trigger = {
-		OR = {
-			has_landed_title = c_casterly_rock
-			has_landed_title = c_castamere
+		any_demesne_province = {
+            is_capital = yes
+            OR = {
+			    has_province_modifier = silver
+			    has_province_modiifer = gold
+            }
 		}
-		is_landed = yes
 		is_abroad = no
 	}
 	
@@ -121,26 +124,18 @@ character_event = {
 	picture = GFX_evt_market
 	border = GFX_event_normal_frame_religion
 	
-	only_rulers = yes
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
 	
 	trigger = {
-		OR = {
-			has_landed_title = c_oldtown
-			has_landed_title = c_highgarden
-			has_landed_title = c_duskendale
-			has_landed_title = c_riverrun
-			has_landed_title = c_oldstones
-			has_landed_title = c_lannisfield
-			has_landed_title = c_lys
-			has_landed_title = c_pentos
-			has_landed_title = c_tyrosh
-			has_landed_title = c_myr
-			has_landed_title = c_rosby
-			has_landed_title = c_coldmoat
-			has_landed_title = c_tumbleton
-			has_landed_title = c_goldengrove
+		any_demesne_province = {
+            is_capital = yes
+            OR = {
+			    has_province_modifier = grain
+			    has_province_modiifer = fish
+            }
 		}
-		is_landed = yes
 		is_abroad = no
 	}
 	
@@ -175,24 +170,18 @@ character_event = {
 	picture = GFX_evt_market
 	border = GFX_event_normal_frame_religion
 	
-	only_rulers = yes
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
 	
 	trigger = {
-		OR = {
-			has_landed_title = c_oldtown
-			has_landed_title = c_the_arbor
-			has_landed_title = c_lannisport
-			has_landed_title = c_dun_port
-			has_landed_title = c_rosby
-			has_landed_title = c_gulltown
-			has_landed_title = c_the_white_knife
-			has_landed_title = c_lys
-			has_landed_title = c_tyrosh
-			has_landed_title = c_myr
-			has_landed_title = c_pentos
-			has_landed_title = c_braavos
+        any_demesne_province = {
+            is_capital = yes
+            OR = {
+			    has_province_modifier = tsk_minor_centre_of_trade
+			    has_province_modiifer = tsk_centre_of_trade
+            }
 		}
-		is_landed = yes
 		is_abroad = no
 	}
 	
@@ -228,17 +217,18 @@ character_event = {
 	border = GFX_event_normal_frame_religion
 	
 	min_age = 16
-	only_rulers = yes
-	only_capable = yes
-	prisoner = no
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
 	
 	trigger = {
-		is_landed = yes
 		is_abroad = no
-		OR = {
-			has_landed_title = e_the_vale
-			religion_group = the_seven_group
-		}
+        any_demesne_province = {
+            region = world_the_vale
+        }
+        NOT = {
+            culture = mountain_clansmen
+        }
 	}
 	
 	mean_time_to_happen = {
@@ -359,12 +349,12 @@ character_event = {
 	picture = GFX_evt_selfish
 	border = GFX_event_normal_frame_religion
 	
-	only_rulers = yes
-	only_capable = yes
-	prisoner = no
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
 	
 	trigger = {
-		is_landed = yes
+		in_command = no
 	}
 	
 	mean_time_to_happen = {
@@ -380,8 +370,8 @@ character_event = {
 		custom_tooltip = {
 		text = watch_myself
 			random_list = {
-			25 = { add_trait = wounded }
-			75 = { }
+			    25 = { add_trait = wounded }
+			    75 = { }
 			}
 		}
 	}
@@ -394,12 +384,12 @@ character_event = {
 	picture = GFX_evt_knight
 	border = GFX_event_normal_frame_religion
 	
-	only_rulers = yes
-	only_capable = yes
-	prisoner = no
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
 	
 	trigger = {
-		is_landed = yes
+		in_command = no
 	}
 	
 	mean_time_to_happen = {
@@ -415,8 +405,8 @@ character_event = {
 		custom_tooltip = {
 		text = learnto_bejust
 			random_list = {
-			25 = { add_trait = just }
-			75 = { }
+			    25 = { add_trait = just }
+			    75 = { }
 			}
 		}
 	}
@@ -425,8 +415,8 @@ character_event = {
 		custom_tooltip = {
 		text = be_arbitrary
 			random_list = {
-			25 = { add_trait = arbitrary }
-			75 = { }
+			    25 = { add_trait = arbitrary }
+			    75 = { }
 			}
 		}
 	}
@@ -440,11 +430,11 @@ character_event = {
 	border = GFX_event_normal_frame_religion
 	
 	only_rulers = yes
-	only_capable = yes
-	prisoner = no
+    capable_only = yes
+    prisoner = no
 	
 	trigger = {
-		is_landed = yes
+		in_command = no
 	}
 	
 	mean_time_to_happen = {
