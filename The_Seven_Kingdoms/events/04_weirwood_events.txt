@@ -4,41 +4,54 @@ namespace = WERWD
 # Planting a Weirwood
 # Event allows planting of Weirwood - creates a Weirdwood structure that can be improved.
 
-# WERWD.5
+# WERWD.2
 # Burning a Weirwood
 # If a holding you control has a Weirwood, and you are of either the Seven or Rhllor faiths, burn it.
 # Destroys the structure, offering a big piety boon.
 # Can result in an uprising, which is assured if province is old gods.
 
-# WERWD.10
+# WERWD.3
 # Visting a Weirwood
 # Event to visit a Weirwood, granting a small piety boon.
 # If you have the greensight, can result in an event chain.
 
 # Greenseer arrives with seed.
 character_event = {
-    id = WERWD.1
-    title = EVTTITLE_WERWD.1
-    desc = EVTDESC_WERWD.1
+    id = WERWD.10
+    title = EVTTITLE_WERWD.10
+    desc = EVTDESC_WERWD.10
     
     trigger = {
         religion_group = westerosi_pagan_group
         NOT = {
             trait = cynical
         }
+        capital_holding = {
+            NOR = {
+                has_building = ca_weirwood_tree_1
+                has_building = ca_weirwood_tree_2
+                has_building = ca_weirwood_tree_3
+                has_building = ct_weirwood_tree_1
+                has_building = ct_weirwood_tree_2
+                has_building = ct_weirwood_tree_3
+                has_building = tp_weirwood_tree_1
+                has_building = tp_weirwood_tree_2
+                has_building = tp_weirwood_tree_3
+            }
+        }
     }
     
     option = {
-        name = OPTA_WERWD.1 # Accept it, start planting
+        name = OPTA_WERWD.10 # Accept it, start planting
         
-        character_event = { id = WERWD.3 days = 14 }
+        character_event = { id = WERWD.12 days = 14 }
         
         ai_chance = {
             factor = 1
         }
     }
     option = {
-        name = OPTB_WERWD.1 # Refuse the offer
+        name = OPTB_WERWD.10 # Refuse the offer
         
         piety = -50
         
@@ -49,17 +62,17 @@ character_event = {
 }
 # Greenseer begins planting. They have a request; a blood sacrifice.
 character_event = {
-    id = WERWD.2
-    title = EVTTITLE_WERWD.2
-    desc = EVTDESC_WERWD.2
+    id = WERWD.12
+    title = EVTTITLE_WERWD.12
+    desc = EVTDESC_WERWD.12
     
     is_triggered_only = yes
     
     # Sacrifice your youngest child
     option = {
-        name = OPTA_WERWD.2
+        name = OPTA_WERWD.12
         
-        character_event = { id = WERWD.3 days = 7 }
+        character_event = { id = WERWD.13 days = 7 }
         
         piety = 300
         
@@ -71,9 +84,9 @@ character_event = {
     }
     # Sacrifice a random courtier
     option = {
-        name = OPTB_WERWD.2
+        name = OPTB_WERWD.12
         
-        character_event = { id = WERWD.3 days = 7 }
+        character_event = { id = WERWD.13 days = 7 }
         
         piety = 150
         
@@ -85,9 +98,9 @@ character_event = {
     }
     # Sacrifice animals
     option = {
-        name = OPTC_WERWD.2
+        name = OPTC_WERWD.12
         
-        character_event = { id = WERWD.3 days = 7 }
+        character_event = { id = WERWD.13 days = 7 }
         
         piety = 25
         
@@ -98,7 +111,7 @@ character_event = {
         }
     }
     option = {
-        name = OPTD_WERWD.2
+        name = OPTD_WERWD.12
         
         piety = -75
         
@@ -111,14 +124,14 @@ character_event = {
 # Tree is planted
 # Chance of greenseer joining court
 character_event = {
-    id = WERWD.3
-    title = EVTTITLE_WERWD.3
-    desc = EVTDESC_WERWD.3
+    id = WERWD.13
+    title = EVTTITLE_WERWD.13
+    desc = EVTDESC_WERWD.13
     
     is_triggered_only = yes
     
     option = {
-        name = OPTA_WERWD.3
+        name = OPTA_WERWD.13
         
         if = {
             limit = { has_character_flag = kin_sacrificed }
@@ -159,14 +172,14 @@ character_event = {
 
 # Large Tree
 character_event = {
-    id = WERWD.3A
-    title = EVTTITLE_WERWD.3A
-    desc = EVTDESC_WERWD.3A
+    id = WERWD.131
+    title = EVTTITLE_WERWD.131
+    desc = EVTDESC_WERWD.131
     
     is_triggered_only = yes
     
     option = {
-        name = OPTA_WERWD.3A
+        name = OPTA_WERWD.131
         
         ai_chance = {
             factor = 1
@@ -175,14 +188,14 @@ character_event = {
 }
 # Medium Tree
 character_event = {
-    id = WERWD.3B
-    title = EVTTITLE_WERWD.3B
-    desc = EVTDESC_WERWD.3B
+    id = WERWD.132
+    title = EVTTITLE_WERWD.132
+    desc = EVTDESC_WERWD.132
     
     is_triggered_only = yes
     
     option = {
-        name = OPTA_WERWD.3B
+        name = OPTA_WERWD.132
         
         ai_chance = {
             factor = 1
@@ -191,14 +204,14 @@ character_event = {
 }
 # Small Tree
 character_event = {
-    id = WERWD.3C
-    title = EVTTITLE_WERWD.3C
-    desc = EVTDESC_WERWD.3C
+    id = WERWD.133
+    title = EVTTITLE_WERWD.133
+    desc = EVTDESC_WERWD.133
     
     is_triggered_only = yes
     
     option = {
-        name = OPTA_WERWD.3C
+        name = OPTA_WERWD.133
         
         ai_chance = {
             factor = 1
@@ -211,27 +224,38 @@ character_event = {
 
 # Burning a Weirwood
 character_event = {
-    id = WERWD.5
-    title = EVTTITLE_WERWD.5
-    desc = EVTDESC_WERWD.5
+    id = WERWD.20
+    title = EVTTITLE_WERWD.20
+    desc = EVTDESC_WERWD.20
     
     trigger = {
         OR = {
             religion_group = the_seven_group
             religion = rhllor
             AND = {
-                NOR = {
-                    religion = old_gods
-                    religion = old_gods_beyond
-                    religion = old_gods_beyond_white
+                NOT = {
+                    religion_group = westerosi_pagan_group
                 }
                 trait = zealous
+            }
+        }
+        capital_holding = {
+            OR = {
+                has_building = ca_weirwood_tree_1
+                has_building = ca_weirwood_tree_2
+                has_building = ca_weirwood_tree_3
+                has_building = ct_weirwood_tree_1
+                has_building = ct_weirwood_tree_2
+                has_building = ct_weirwood_tree_3
+                has_building = tp_weirwood_tree_1
+                has_building = tp_weirwood_tree_2
+                has_building = tp_weirwood_tree_3
             }
         }
     }
     
     option = {
-        name = OPTA_WERWD.5 # Burn it
+        name = OPTA_WERWD.20 # Burn it
         
         character_event = { id = WERWD.6 days = 3 }
         
@@ -241,7 +265,7 @@ character_event = {
     }
     
     option = {
-        name = OPTB_WERWD.5 # Don't burn it
+        name = OPTB_WERWD.20 # Don't burn it
         
         ai_chance = {
             factor = 1
@@ -251,19 +275,35 @@ character_event = {
 
 # Watch the flames consume it
 character_event = {
-    id = WERWD.6
-    title = EVTTITLE_WERWD.6
-    desc = EVTDESC_WERWD.6
+    id = WERWD.21
+    title = EVTTITLE_WERWD.21
+    desc = EVTDESC_WERWD.21
     
     is_triggered_only = yes
     
+    immediate = {
+        capital_holding = {
+            OR = {
+                remove_building = ca_weirwood_tree_1
+                remove_building = ca_weirwood_tree_2
+                remove_building = ca_weirwood_tree_3
+                remove_building = ct_weirwood_tree_1
+                remove_building = ct_weirwood_tree_2
+                remove_building = ct_weirwood_tree_3
+                remove_building = tp_weirwood_tree_1
+                remove_building = tp_weirwood_tree_2
+                remove_building = tp_weirwood_tree_3
+            }
+        }
+    }
+    
     option = {
-        name = OPTA_WERWD.6
+        name = OPTA_WERWD.21
         
         random_list = {
             50 = { # Nothing }
             50 = { # Rise up in target holding }
-            1 = { character_event = { id = WERWD.8 } }
+            1 = { character_event = { id = WERWD.23 } }
         }
         
         ai_chance = {
@@ -274,14 +314,14 @@ character_event = {
 
 # Locals rise up
 character_event = {
-    id = WERWD.7
-    title = EVTTITLE_WERWD.7
-    desc = EVTDESC_WERWD.7
+    id = WERWD.23
+    title = EVTTITLE_WERWD.23
+    desc = EVTDESC_WERWD.23
     
     is_triggered_only = yes
     
     option = {
-        name = OPTA_WERWD.7 # Insufferable creatures
+        name = OPTA_WERWD.23 # Insufferable creatures
         
         ai_chance = {
             factor = 1
@@ -291,28 +331,28 @@ character_event = {
 
 # Very rare - one of the children of the forest go after you
 character_event = {
-    id = WERWD.8
-    title = EVTTITLE_WERWD.8
-    desc = EVTDESC_WERWD.8
+    id = WERWD.24
+    title = EVTTITLE_WERWD.24
+    desc = EVTDESC_WERWD.24
     
     is_triggered_only = yes
     
     option = {
-        name = OPTA_WERWD.8 # Destroy it! For strong zealots
+        name = OPTA_WERWD.24 # Destroy it! For strong zealots
         
         ai_chance = {
             factor = 1
         }
     }
     option = {
-        name = OPTB_WERWD.8 # Pray! For weak gonnadieanyway zealots
+        name = OPTB_WERWD.24 # Pray! For weak gonnadieanyway zealots
         
         ai_chance = {
             factor = 1
         }
     }
     option = {
-        name = OPTC_WERWD.8 # Beg for forgiveness! For cowards and the sort, incredibly slim chance of free conversion and survival.
+        name = OPTC_WERWD.24 # Beg for forgiveness! For cowards and the sort, incredibly slim chance of free conversion and survival.
         
         ai_chance = {
             factor = 1
@@ -323,21 +363,36 @@ character_event = {
 ###########################################################################
 ##################################
 
+# if visiting during childhood, assign a character flag for visiting during childhood.
+# if revisting later in life, remind player of childhood visit - chance of finding a few coins or even an artefact
+
 # Visiting a Weirdwood
 character_event = {
-    id = WERWD.10
-    title = EVTTITLE_WERWD.10
-    desc = EVTDESC_WERWD.10
+    id = WERWD.30
+    title = EVTTITLE_WERWD.30
+    desc = EVTDESC_WERWD.30
+    
+    is_triggered_only = yes
     
     trigger = {
         religion_group = westerosi_pagan_group
-        NOT = {
-            trait = cynical
+        capital_holding = {
+            OR = {
+                has_building = ca_weirwood_tree_1
+                has_building = ca_weirwood_tree_2
+                has_building = ca_weirwood_tree_3
+                has_building = ct_weirwood_tree_1
+                has_building = ct_weirwood_tree_2
+                has_building = ct_weirwood_tree_3
+                has_building = tp_weirwood_tree_1
+                has_building = tp_weirwood_tree_2
+                has_building = tp_weirwood_tree_3
+            }
         }
     }
     
     option = {
-        name = OPTA_WERWD.10
+        name = OPTA_WERWD.30
         
         ai_chance = {
             factor = 1
