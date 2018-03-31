@@ -660,38 +660,40 @@ succession_laws = {
         }
     }
     succ_catholic_bishopric = {
-        potential = {
-            is_landless_type_title = no
-            OR = {
-                AND = {
-                    tier = baron
-                    is_theocracy = yes
-                }
-                holder_scope = { is_theocracy = yes }
-            }
-            
-            holder_scope = {
-                religion = the_seven
-                is_merchant_republic = no
-                OR = {
-                    independent = yes
-                    is_feudal = no
-                    NOT = {
-                        any_liege = {
-                            holy_order = yes
-                        }
-                    }
-                }
-            }
-            is_primary_type_title = no
-        }
-        effect = {
-            succession = catholic_bishopric
-        }
-        revoke_allowed = {
-            always = no
-        }            
-    }
+		potential = {
+			is_landless_type_title = no
+			
+			OR = {
+				AND = {
+					tier = baron
+					is_theocracy = yes
+				}
+				holder_scope = { is_theocracy = yes }
+			}
+			
+			holder_scope = {
+				religion = the_seven 
+				is_merchant_republic = no
+				OR = {
+					independent = yes
+					is_feudal = no
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+				}
+				NOT = { government = nights_watch_government }
+			}
+			is_primary_type_title = no
+		}
+		effect = {
+			succession = catholic_bishopric
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
     
     succ_patrician_elective = {
         potential = {
