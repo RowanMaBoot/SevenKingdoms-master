@@ -1532,7 +1532,7 @@ NDefines = {
     NORMAL_WINTER_VALUE = 145,
     SEVERE_WINTER_VALUE = 255,
     TREASURY_MODIFIER_ICON_FRAME = 13,
-    NUMBER_OF_DNA_PROPERTIES = 11,
+    NUMBER_OF_DNA_PROPERTIES = 21,
     CITY_MAIN_BUILDING_LEVEL_2 = 25,          -- If a main settlement has more building than that, it will use model level 2
     CITY_MAIN_BUILDING_LEVEL_3 = 35,          -- If a main settlement has more building than that, it will use model level 3
   },
