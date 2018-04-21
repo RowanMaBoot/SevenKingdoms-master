@@ -157,7 +157,7 @@ NDefines.NMilitary.ARCHERS_PHASE_MELEE_DEFENSE = 1 -- Halved, formerly 2.0
 NDefines.NMilitary.ARCHERS_PHASE_PURSUE_DEFENSE = 2.5 -- Buffed, formerly 2.0
 
 -- Technology, removed
-NDefines.NTechnology.DONT_EXECUTE_TECH_BEFORE = 6000
+NDefines.NTechnology.DONT_EXECUTE_TECH_BEFORE = 1
 NDefines.NTechnology.POINTS_PER_ATTRIBUTE = 0.00
 NDefines.NTechnology.BASE_NEIGHBOUR_SPREAD_BONUS = 0.00
 NDefines.NTechnology.NEIGHBOUR_SAME_RELIGON_GROUP_MULT = 0.0
@@ -177,3 +177,42 @@ NDefines.NGraphics.CITY_SPRAWL_AMOUNT = 1.4
 -- AI
 NDefines.NAI.RAID_MAX_REALM_SIZE = 48 -- from 24
 NDefines.NAI.RAID_AGGRESSION = 30 -- from 18, then 20, fewer raids
+
+-- Ruler Designer
+NDefines.NRulerDesigner.BASE_ATTRIB = 5
+NDefines.NRulerDesigner.BASE_AGE = 16
+NDefines.NRulerDesigner.BASE_FERTILITY = 0.3
+NDefines.NRulerDesigner.BASE_HEALTH = 5.0
+NDefines.NRulerDesigner.COST_ATTRIB = 1.0
+NDefines.NRulerDesigner.COST_SON = 0.0
+NDefines.NRulerDesigner.COST_DAUGHTER = 0.0
+NDefines.NRulerDesigner.COST_MARRIED = 0.0
+NDefines.NRulerDesigner.COST_FERTILITY = 0.0
+NDefines.NRulerDesigner.COST_HEALTH = 0.0
+NDefines.NRulerDesigner.COST_COMBAT_RATING = 0.0
+NDefines.NRulerDesigner.COST_MONTHLY_PRESTIGE = 0.0
+NDefines.NRulerDesigner.COST_MONTHLY_PIETY = 0.0
+NDefines.NRulerDesigner.COST_MONTHLY_WEALTH = 0.0
+NDefines.NRulerDesigner.COST_GLOBAL_TAX = 0.0
+NDefines.NRulerDesigner.COST_CHURCH_OPINION = 0.0
+NDefines.NRulerDesigner.COST_SPOUCE_OPINION = 0.0
+NDefines.NRulerDesigner.COST_SEXAPPEAL_OPINION = 0.0
+NDefines.NRulerDesigner.COST_DYNASTY_OPINION = 0.0
+NDefines.NRulerDesigner.COST_VASSAL_OPINION = 0.0
+NDefines.NRulerDesigner.COST_LIEGE_OPINION = 0.0
+NDefines.NRulerDesigner.COST_INFIDEL_OPINION = 0.0
+NDefines.NRulerDesigner.COST_OPPOSITE_TRAIT_OPINION = 0.0
+NDefines.NRulerDesigner.COST_SAME_TRAIT_OPINION = 0.0
+NDefines.NRulerDesigner.COST_SAME_RELIGION_OPINION = 0.0
+NDefines.NRulerDesigner.COST_AMBITION_OPINION = 0.0
+NDefines.NRulerDesigner.COST_TRIBAL_OPINION = 0.0
+NDefines.NRulerDesigner.COST_UNREFORMED_TRIBAL_OPINION = 0.0
+NDefines.NRulerDesigner.COST_GENERAL_OPINION = 0.0
+NDefines.NRulerDesigner.COST_MUSLIM_OPINION = 0.0
+NDefines.NRulerDesigner.COST_JEWISH_OPINION = 0.0
+NDefines.NRulerDesigner.COST_CHRISTIAN_OPINION = 0.0
+NDefines.NRulerDesigner.COST_ZOROASTRIAN_OPINION = 0.0
+NDefines.NRulerDesigner.COST_MORALE_OFFENCE = 0.0
+NDefines.NRulerDesigner.COST_MORALE_DEFENCE = 0.0
+NDefines.NRulerDesigner.COST_DEFENCE = 0.0
+NDefines.NRulerDesigner.MAX_AGE = 60
