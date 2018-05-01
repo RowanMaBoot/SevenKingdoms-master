@@ -8,14 +8,17 @@
 #			tsk.0102 # Bountiful Harvest
 #			tsk.0103 # Influx of Trade
 #			tsk.0104-107 # Mountain Clansmen Ambush
-#			
 #			tsk.0108 # You trip and fall 
 #			tsk.0109 # You respect your men's sense of justness
 #			tsk.0110-0113 # You go out to a tavern
 #			tsk.0114 # Destroy the Goldengrove ###### Will be expanded to encompass every Kingdom
 #			tsk.0115 # Bastard Nickname event
 #			tsk.0116 # Knight Minor Title
-#		
+#			tsk.0117-120 # The Shadow of Duskendale
+#			
+#
+#
+#
 ###################################
 
 namespace = tsk
@@ -627,4 +630,124 @@ character_event = {
     option = {
         name = EVTOPTAtsk.0116
     }
+}
+################################
+### The Shadow of Duskendale ###
+################################
+
+character_event = {
+    id = tsk.0117
+    desc = "EVTDESCtsk.0117"
+    picture = GFX_evt_idealistic
+    border = GFX_event_normal_frame_religion
+   
+	
+    trigger = {
+		AND = {
+			dynasty = 900
+			has_landed_title = d_duskendale
+		}
+	}
+	mean_time_to_happen = {
+		months = 1500
+	}
+	
+    option = {
+        name = "EVTOPTAtsk.0117" # I shall investigate
+		hidden_tooltip = {
+				character_event = { id = tsk.0118 days = 3 }
+		}	
+    }
+	option = {
+        name = "EVTOPTBtsk.0117" # Just rumors
+		custom_tooltip = {
+			text = tooltip_right # Right?
+			piety = -10
+			prestige = -20
+			random_list = {
+				50 = {
+					add_trait = craven
+				}
+				50 = {
+	
+				}
+			}
+		}
+    }
+}
+
+character_event = { ### You encounter the Legendary Shadow
+    id = tsk.0118
+    desc = "EVTDESCtsk.0118"
+    picture = GFX_evt_melee
+    border = GFX_event_normal_frame_religion
+    is_triggered_only = yes
+    
+	
+    option = {
+        name = "EVTOPTAtsk.0118" # Fight!
+		hidden_tooltip = {
+				character_event = { id = tsk.0119 }		
+				add_trait = brave
+		}
+		
+    }
+	option = {
+        name = "EVTOPTBtsk.0118" # Flee!
+		custom_tooltip = {
+			text = tooltip_flee_attempt  # He may catch you
+			piety = -10
+			prestige = -20
+			random_list = {
+				75 = {
+					add_trait = craven
+				}
+				25 = {
+					death = death_murder
+				}
+			}
+		}
+    }
+}
+
+character_event = { ### You fight and 'kill' the Shadow
+    id = tsk.0119
+    desc = "EVTDESCtsk.0119"
+    picture = GFX_evt_melee
+    border = GFX_event_normal_frame_religion
+    is_triggered_only = yes
+    
+	
+    option = {
+        name = "EVTOPTAtsk.0119" # Thrust!
+		character_event = { id = tsk.0120 }
+	}	
+}
+
+character_event = { ### You kill the shadow
+    id = tsk.0120
+    desc = "EVTDESCtsk.0120"
+    picture = GFX_evt_melee
+    border = GFX_event_normal_frame_religion
+    is_triggered_only = yes
+    
+	
+    option = {
+        name = "EVTOPTAtsk.0120" # A heavy price	
+		prestige = 250
+		random_list = {
+			25 = {
+				add_trait = possessed
+			}
+			25 = {
+				add_trait = ill
+			}
+			25 = {
+				add_trait = lunatic
+			}
+			25 = {
+				add_trait = infirm
+			}
+		}
+	}	
 }
