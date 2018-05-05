@@ -37,6 +37,7 @@ Feliprinsss - Some oceans names, suggestions, tweaks and tidbits
 Godman - Tweaks, Characters, Dueling System, King's Guard Events and other little tidbits.
 Moen - Flags, dynasty flags & other GFX tidbits
 ZeroFighterR - Nicknames, Lore Advice
+BladedQueen - Dorne terrain upgrade
 
 #############################################################
 Content:
