@@ -18,6 +18,9 @@
 #			tsk.0121 # Kingdom of the Claw AOPK message
 #			tsk.0122 # Celtigar AOPK opening
 #			tsk.0123 # Velaryon AOPK opening
+#			tsk.0124 # Landed priest is assigned trait
+#
+#
 #
 ###################################
 
@@ -795,4 +798,38 @@ character_event = {
 	option = {
         name = "EVTOPTAtsk.0123" # I will secure a new kingdom
 	}		
+}
+
+#######################################
+### Landed Priest is Assigned Trait ###
+#######################################
+
+character_event = {
+	id = tsk.0124
+	desc = "EVTDESCtsk.0124"
+	
+	only_rulers = yes
+	
+	trigger = {
+		demesne_size = 1
+		is_theocracy = yes	
+		OR = {
+			AND = {
+				religion = drowned_god
+				is_female = no
+			}	
+			religion = the_seven
+			religion = rhllor
+			religion = bearded_priests
+		}
+		NOT = {
+			has_priest_trait_trigger = yes
+		}
+	}
+
+	option = {
+		name = "EVTOPTAtsk.0124"
+		add_priest_trait_effect = yes
+		recalc_succession = yes
+	}
 }
