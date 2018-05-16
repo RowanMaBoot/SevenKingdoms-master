@@ -196,6 +196,14 @@ has_unpleasant_personality_trigger = {
 has_impious_trait_trigger = {
 	OR = {
 		trait = cynical
+		bad_priest_the_seven
+		bad_priest_westerosi_pagan
+		bad_priest_drowned_god
+		bad_priest_eastern
+		bad_priest_valyrian
+		bad_priest_eastern_pagan
+		bad_priest_other
+		bad_priest_far_east
 		trait = hedonist
 		trait = lustful
 		trait = cannibal_trait
@@ -813,6 +821,13 @@ replace_mercenary_captain_allow_trigger = {
 #Used with character interaction to swap council job. DO NOT REMOVE
 change_council_job_potential_trigger = {
 	liege = { character = FROM }
+	NOT = {
+		AND = {
+			has_job_title = job_spiritual
+			liege = { religion_group = eastern_group }
+			religion = FROM
+		}
+	}
 	OR = {
 		AND = {
 			OR = {
@@ -826,6 +841,7 @@ change_council_job_potential_trigger = {
 				can_be_spymaster_trigger = yes
 				AND = {
 					can_be_spiritual_trigger = yes
+					ROOT = { NOT = { religion_group = eastern_group } }
 				}
 			}
 		}
@@ -1152,6 +1168,7 @@ can_be_spiritual_trigger = {
 			liege = { is_tribal = yes }
 			is_ruler = no
 		}
+		liege = { religion_group = eastern_group }
 		AND = {
 			clan = yes
 			liege = {
@@ -1172,6 +1189,8 @@ can_be_spiritual_trigger = {
 	}
 	
 	OR = {
+		NOT = { religion_group = eastern_group }
+		NOT = { liege = { religion_group = eastern_group } }
 		trait = detached_priest
 		trait = martial_cleric
 		trait = scholarly_theologian
@@ -1320,6 +1339,7 @@ is_inaccessible_trigger = { #Remember to write this "is_inaccessible_trigger = n
 				trait = in_hiding
 				#trait = on_hajj
 				#trait = on_pilgrimage
+				trait = kow_tow_travels
 				has_character_modifier = in_seclusion
 				has_character_modifier = in_meditation
 				has_character_modifier = doing_penance
@@ -1927,6 +1947,14 @@ sibling_in_law_of_root_trigger = {
 	}
 }
 
+relative_in_law_of_root_trigger = {
+	OR = {
+		any_child = { any_spouse = { character = ROOT } }
+		#any_spouse = { mother_even_if_dead = { any_child = { any_spouse = { character = ROOT } } } }
+		#any_spouse = { father_even_if_dead = { any_child = { any_spouse = { character = ROOT } } } }
+	}
+}
+
 is_murder_quest_target_of_prev_trigger = {
 	PREVPREV = {
 		has_quest = quest_the_assassins_assassination
@@ -2055,14 +2083,14 @@ is_ill_trigger = {
 	}
 }
 
-is_devil_worshiper_trigger = {
-	custom_tooltip = {
-		text = IS_DEVIL_WORSHIPPER_TRIGGER
-		OR = {
-			religion = old_gods_beyond_white
-		}
-	}
-}
+#is_devil_worshiper_trigger = {
+#	custom_tooltip = {
+#		text = IS_DEVIL_WORSHIPPER_TRIGGER
+#		OR = {
+#			religion = old_gods_beyond_white
+#		}
+#	}
+#}
 
 has_negative_congenital_trigger = {
 	OR = {
@@ -4730,6 +4758,14 @@ the_hunt_for_an_artifact_has_made_enough_progress_trigger = {
 			event_target:relic_ruler = { check_variable = { which = relic_score value = 20 } } #40 } } old value
 			event_target:relic_ruler = { has_character_modifier = relic_rumor_major } 
 		}
+	}
+}
+
+is_inaccessible_or_incapable_trigger = {
+	OR = {  
+		is_inaccessible_trigger = yes
+		trait = incapable
+		prisoner = yes
 	}
 }
 
