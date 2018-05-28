@@ -46,6 +46,7 @@ targetted_decisions = {
 		only_playable = yes
 		
 		ai_target_filter = realm
+		ai_check_interval = 3
 	
 		from_potential = {
 			has_focus = focus_seduction
@@ -204,7 +205,7 @@ targetted_decisions = {
 		ai_will_do = {
 			factor = 1 		# 1 = 100% chance every month (for each allowed target!)
 			modifier = {
-				factor = 0.05
+				factor = 0.15
 			}
 			modifier = {
 				factor = 0
@@ -463,9 +464,9 @@ targetted_decisions = {
 			}
 			modifier = {
 				factor = 0
-				NOT = { is_rival = FROM }
-				NOT = { is_married = FROM }
-				NOR = {
+				NOR = { 
+					is_rival = FROM
+					is_married = FROM
 					AND = {
 						OR = {
 							is_ruler = yes
@@ -574,7 +575,6 @@ targetted_decisions = {
 		only_playable = yes
 		is_high_prio = yes
 	
-		filter = sub_realm
 		ai_target_filter = dynasty
 		
 		from_potential = {
@@ -692,6 +692,7 @@ targetted_decisions = {
 				}
 			}
 			FROM = {
+				
 				war = no
 				NOT = { has_character_modifier = party_timer }
 			}
@@ -722,6 +723,9 @@ targetted_decisions = {
 		ai_will_do = {
 			factor = 1
 
+			modifier = {
+				factor = 0.5 #Slow it down
+			}
 			modifier = {
 				factor = 0
 				FROM = { has_character_modifier = organizing_party } # AI will only invite one person
@@ -1005,7 +1009,7 @@ targetted_decisions = {
 								}
 								opinion = {
 									modifier = opinion_dishonorable_duel
-									who = FROM
+									who = PREV
 									months = 36
 								}
 							}
