@@ -19,7 +19,9 @@
 #			tsk.0122 # Celtigar AOPK opening
 #			tsk.0123 # Velaryon AOPK opening
 #			tsk.0124 # Landed priest is assigned trait
-#
+#			tsk.0125-128 # Maiden in the hills
+#			tsk.0129-131 # A bard comes to your court
+#			tsk.0132-135 # You fall off a cliff
 #
 #
 ###################################
@@ -831,5 +833,288 @@ character_event = {
 		name = "EVTOPTAtsk.0124"
 		add_priest_trait_effect = yes
 		recalc_succession = yes
+	}
+}
+
+#########################################
+### You spot a maiden in the distance ###
+#########################################
+
+character_event = {
+	id = tsk.0125
+	desc = EVTDESCtsk.0125
+	picture = GFX_evt_greekwoman
+	
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
+	
+	trigger = {
+		OR = {
+			religion = old_gods
+			religion = the_seven
+			religion = rhllor
+		}
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 750
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0125 # Ignore her
+		random_list = {
+			50 = {
+				add_trait = chaste
+			}
+			50 = {
+			
+			}
+		}
+	}
+	
+	option = {
+		name = EVTOPTBtsk.0125 # Go to the maiden
+		hidden_tooltip = {
+			random_list = {
+				50 = {
+					character_event = { id = tsk.0126 }
+				}
+				50 = {
+					character_event = { id = tsk.0127 }
+				}
+			}
+		}
+	}
+}
+
+### What a nice lass
+
+character_event = {
+	id = tsk.0126
+	desc = EVTDESCtsk.0126
+	picture = GFX_evt_maiden
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0126 # What a nice lass
+		random_list = {
+			50 = {
+				add_trait = lustful
+			}
+			50 = {
+			
+			}
+		}
+	}
+}
+
+### She bites!
+
+character_event = {
+	id = tsk.0127
+	desc = EVTDESCtsk.0127
+	picture = GFX_evt_pisces_season
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0127 # Go after her!
+		custom_tooltip = {
+				text = after_her
+			}
+		add_trait = lustful
+		add_trait = wroth
+		hidden_tooltip = {
+			character_event = { id = tsk.0128 }
+		}
+	}
+	option = {
+		name = EVTOPTBtsk.0127 # Lesson learned
+		random_list = {
+			50 = {
+				add_trait = chaste
+			}
+			50 = {
+			
+			}
+		}
+	}
+}
+
+### You're a piece of work
+
+character_event = {
+	id = tsk.0128
+	desc = EVTDESCtsk.0128
+	picture = GFX_evt_rude
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0128 # Good riddance
+		custom_tooltip = {
+				text = piece_of_work
+			}
+		add_trait = heartless
+	}
+}
+
+##################################
+### A bard comes to your court ###
+##################################
+
+character_event = {
+	id = tsk.0129
+	desc = EVTDESCtsk.0129
+	picture = GFX_evt_blackadder
+	
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
+	
+	trigger = {
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 750
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0129 # Play me a tune aobut my life!
+		hidden_tooltip = {
+			random_list = {
+				50 = {
+					character_event = { id = tsk.0130 } # A wounderful tune!
+				}
+				50 = {
+					character_event = { id = tsk.0131 } # Absolutely terrible! Have him thrown out!
+				}
+			}
+		}		
+	}
+	
+	option = {
+		name = EVTOPTBtsk.0129 # Be gone!
+		prestige = -25
+	}
+}
+
+### A wonderful tune!
+
+character_event = {
+	id = tsk.0130
+	desc = EVTDESCtsk.0130
+	picture = GFX_evt_noble
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0130 # A wonderful tune!
+		prestige = 300
+	}
+}
+
+### Absolutely terrible! Have him thrown out!
+
+character_event = {
+	id = tsk.0131
+	desc = EVTDESCtsk.0131
+	picture = GFX_evt_old
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0131 # Absolutely terrible! Have him thrown out!
+		prestige = -300
+	}
+}
+
+############################
+### You fall off a cliff ###
+############################
+
+character_event = {
+	id = tsk.0132
+	desc = EVTDESCtsk.0132
+	picture = GFX_evt_pisces_season
+	
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
+	
+	trigger = {
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 1250
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0132 # Ahhh!
+		hidden_tooltip = {
+			random_list = {
+				40 = {
+					character_event = { id = tsk.0133 } # You survive unharmed
+				}
+				40 = {
+					character_event = { id = tsk.0134 } # You survive, but are wounded
+				}
+				20 = {
+					character_event = { id = tsk.0135 } # You die
+				}
+			}
+		}		
+	}
+}
+
+# You survive unharmed
+
+character_event = {
+	id = tsk.0133
+	desc = EVTDESCtsk.0133
+	picture = GFX_evt_doctor
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0133 # I'm alive!		
+		prestige = 300
+		piety = 100
+	}
+}
+
+# You survive, but are wounded
+
+character_event = {
+	id = tsk.0134
+	desc = EVTDESCtsk.0134
+	picture = GFX_evt_doctor
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0134 # That hurt.
+		add_trait = wounded
+		prestige = 50
+	}
+}
+
+# You die
+
+character_event = {
+	id = tsk.0135
+	desc = EVTDESCtsk.0135
+	picture = GFX_evt_lakeside
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk.0135 # Ahh!
+		death = { death_reason = death_accident }
 	}
 }
