@@ -10,7 +10,7 @@
 #			tsk.0104-107 # Mountain Clansmen Ambush
 #			tsk.0108 # You trip and fall 
 #			tsk.0109 # You respect your men's sense of justness
-#			tsk.0110-0113 # You go out to a tavern
+#			tsk.0110-113 # You go out to a tavern
 #			tsk.0114 # Destroy the Goldengrove ###### Will be expanded to encompass every Kingdom
 #			tsk.0115 # Bastard Nickname event
 #			tsk.0116 # Knight Minor Title
@@ -22,7 +22,7 @@
 #			tsk.0125-128 # Maiden in the hills
 #			tsk.0129-131 # A bard comes to your court
 #			tsk.0132-135 # You fall off a cliff
-#
+#			tsk.0136 # Pray to an aspect of the faith
 #
 ###################################
 
@@ -1118,3 +1118,69 @@ character_event = {
 		death = { death_reason = death_accident }
 	}
 }
+
+######################################
+### Pray to an aspect of the faith ###
+######################################
+
+character_event = {
+	id = tsk.0136
+	desc = EVTDESCtsk.0136
+	picture = GFX_evt_hillwarrior
+	border = GFX_event_normal_frame_religion
+	
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
+	
+	
+	trigger = {
+		religion = the_seven
+		is_abroad = no
+			NOT = {
+				trait = cynical
+			}
+	}
+	
+	mean_time_to_happen = {
+		months = 750
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0136 # The Warrior
+		wealth = -50
+		random_list = {
+			50 = { add_trait = brave }
+			50 = { change_martial = 1 }
+		}
+	}
+	option = {
+		name = EVTOPTBtsk.0136 # The Smith
+		wealth = -50
+		random_list = {
+			50 = { add_trait = just }
+			50 = { change_stewardship = 1 }
+		}
+	}
+	option = {
+		name = EVTOPTCtsk.0136 # The Maid
+		wealth = -25
+		random_list = {
+			50 = { add_trait = chaste }
+			50 = { change_learning = 1 }
+		}
+	}
+	option = {
+		name = EVTOPTDtsk.0136 # The Stranger
+		wealth = -25
+		random_list = {
+			50 = { add_trait = deceitful }
+			50 = { change_intrigue = 1 }
+		}
+	}
+}
+
+
+
+
+
