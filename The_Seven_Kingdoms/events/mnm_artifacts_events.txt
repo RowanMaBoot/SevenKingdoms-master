@@ -7375,6 +7375,7 @@ character_event = {
                         set_character_flag = ai_flag_refuse_marriage
                         set_character_flag = ai_flag_refuse_concubinage
                         set_character_flag = cannot_marry
+			set_character_flag = no_court_invites
                         will_not_marry_effect = yes
                     }
                 } 
@@ -7393,6 +7394,7 @@ character_event = {
                         save_event_target_as = smith
                         set_character_flag = ai_flag_refuse_marriage
                         set_character_flag = cannot_marry
+			set_character_flag = no_court_invites
                         will_not_marry_effect = yes
                     }
                 }
@@ -7466,6 +7468,7 @@ character_event = {
     immediate = { event_target:smith_employer = { character_event = { id = MNM.9103 } } }
 }
 
+#How much will I spend on the crown jewels?
 character_event = {
     id = MNM.9103
     desc = EVTDESC_MNM_9103
@@ -7484,12 +7487,12 @@ character_event = {
     #The best money can buy
     option = {
         name = EVTOPTA_MNM_9103
-        trigger = { prestige = 2000 }
-        tooltip_info = yes
-        custom_tooltip = { text = available_due_to_prestige_tt }
+        trigger = { 
+        	tier = EMPEROR
+        }
         custom_tooltip = { text = EVTOPTA_MNM_9103_TT }
 
-        scaled_wealth = { value = -5 min = -300 }
+        scaled_wealth = { value = -3.5 min = -300 max = -2000 }
 
         hidden_effect = {
             event_target:smith = { set_character_flag = expensive_jewels }
@@ -7553,10 +7556,36 @@ character_event = {
 
     #Something nice
     option = {
-        name = EVTOPTB_MNM_9103
-        custom_tooltip = { text = EVTOPTB_MNM_9103_TT }
+        name = {
+        	trigger = {
+        		tier = EMPEROR
+        	}
+        	text = EVTOPTB_MNM_9103
+        }
+        name = {
+        	trigger = {
+        		tier = KING
+        	}
+        	text = EVTOPTB_MNM_9103_KING
+        }
 
-        scaled_wealth = { value = -2.5 min = -150 }
+        trigger = {
+        	higher_tier_than = DUKE
+        }
+        if = {
+        	limit = {
+        		tier = EMPEROR
+        	}
+        	custom_tooltip = { text = EVTOPTB_MNM_9103_TT }
+        }
+        else_if = {
+        	limit = {
+        		tier = KING
+        	}
+        	custom_tooltip = { text = EVTOPTB_MNM_9103_TT_KING }
+        }
+
+        scaled_wealth = { value = -2 min = -150 max = -500 }
 
         hidden_effect = {
             event_target:smith = { set_character_flag = good_jewels }
@@ -7624,10 +7653,45 @@ character_event = {
    
        #I can't afford that much 
     option = {
-        name = EVTOPTC_MNM_9103
-        custom_tooltip = { text = EVTOPTC_MNM_9103_TT }
+        name = {
+        	trigger = {
+        		tier = EMPEROR
+        	}
+			text = EVTOPTC_MNM_9103
+		}
+		name = {
+			trigger = {
+				tier = KING
+			}
+			text = EVTOPTC_MNM_9103_KING
+		}
+		name = {
+			trigger = {
+				NAND = {
+					tier = EMPEROR
+					tier = KING
+				}
+			}
+			text = EVTOPTC_MNM_9103_GENERIC
+        }
 
-        scaled_wealth = { value = -1 min = -50 }
+        if = {
+        	limit = {
+        		tier = EMPEROR
+        	}
+        	custom_tooltip = { text = EVTOPTC_MNM_9103_TT }
+        }
+        else_if = {
+        	limit = {
+        		tier = KING
+        	}
+        	custom_tooltip = { text = EVTOPTC_MNM_9103_TT_KING }
+        }
+        else = {
+        	custom_tooltip = { text = EVTOPTC_MNM_9103_TT_GENERIC }
+        }
+
+        scaled_wealth = { value = -1 min = -50 max = -100 }
 
         hidden_effect = {
             event_target:smith = { set_character_flag = cheap_jewels }
@@ -7709,14 +7773,85 @@ character_event = {
     
         trigger_switch = {
             on_trigger = has_character_flag
+	    amazing_jewels		= { event_target:smith_employer = { character_event = { id = MNM.40001 } } }
             expensive_jewels    = { event_target:smith_employer = { character_event = { id = MNM.9105 } } }
             good_jewels            = { event_target:smith_employer = { character_event = { id = MNM.9106 } } }
             cheap_jewels        = { event_target:smith_employer = { character_event = { id = MNM.9107 } } }
         }
     }
 }
+#Amazing Crown Jewels
+character_event = {
+    id = MNM.40001
+    desc = EVTDESC_MNM_40001
+    picture = GFX_evt_treasure_chamber
+    border = GFX_event_normal_frame_economy
+    is_triggered_only = yes
+    trigger = {
+    	OR = {
+    		has_dlc = "Mystics"
+    		has_dlc = "Jade Dragon"
+    	}
+    }
 
-#Amazing crown jewels
+    immediate = {
+
+    }
+
+    option = { 
+        name = EVTOPTA_MNM_9105
+
+        if = {
+            limit = { 
+                religion_group = the_seven_group
+        	}
+        	add_artifact = crown_of_majesty_2
+        	add_artifact = emerald_scepter_2
+        	add_artifact = sword_of_heroes_2
+        }
+        else_if = {
+            limit = { 
+                religion_group = valyrian_group
+        	}
+        	add_artifact = dagger_of_glory_2
+        	add_artifact = ruby_bracelets_2
+        }
+        else_if = {
+            limit = { 
+                religion_group = eastern_group
+        	}
+        	add_artifact = dagger_of_glory_2
+        	add_artifact = celestial_necklace_2
+        }
+        else_if = {
+            limit = { 
+                religion_group = far_east_group
+			}
+        	add_artifact = circlet_of_the_heavens_2
+        	add_artifact = staff_of_majesty_2
+        }
+        else_if = {
+            limit = {
+                religion_group = drowned_god_group
+        	}
+        	add_artifact = crown_of_crows_2
+        	add_artifact = sword_of_heroes_2
+        }
+        else = {
+        	add_artifact = heros_crown_2
+        	add_artifact = axe_of_the_ancestors_2
+        }
+
+        hidden_effect = { 
+        	event_target:smith = { character_event = { id = MNM.9110 days = 5 } } 
+        	clr_character_flag = amazing_jewels
+        	clr_character_flag = expensive_jewels
+			clr_character_flag = good_jewels
+			clr_character_flag = cheap_jewels
+        }
+    }
+}
+#Expensive crown jewels
 character_event = {
     id = MNM.9105
     picture = GFX_evt_treasure_chamber
@@ -7878,7 +8013,24 @@ character_event = {
 #Okay crown jewels
 character_event = {
     id = MNM.9107
-    desc = EVTDESC_MNM_9107
+    desc = {
+    	trigger = {
+    		tier = EMPEROR
+    	}
+    	text = EVTDESC_MNM_9107
+    } 
+    desc = {
+    	trigger = {
+    		tier = KING
+    	}
+    	text = EVTDESC_MNM_9107_KING
+    }
+    desc = {
+    	trigger = {
+    		lower_tier_than = KING
+    	}
+    	text = EVTDESC_MNM_9107_GENERIC
+    }
     picture = GFX_evt_weaponsmith
     border = GFX_event_normal_frame_economy
 
@@ -7972,7 +8124,7 @@ character_event = {
 #Problems
 character_event = {
     id = MNM.9109
-    desc = EVTDESC_MNM_9109
+    desc = EVTDESC_MNM_9109_NEW
     picture = GFX_evt_merchant_caravan
     border = GFX_event_normal_frame_economy
 
@@ -7989,50 +8141,51 @@ character_event = {
     option = {
         trigger = { FROM  = { has_character_flag = expensive_jewels } }
         name = EVTOPTA_MNM_9109
-        custom_tooltip = { text = EVTOPTA_MNM_9109_TT }
+        custom_tooltip = { text = EVTOPTA_MNM_9109_TT_NEW }
 
-        scaled_wealth = { value = -3 min = -150 }
+        scaled_wealth = { value = -3 min = -150 max = -1000}
+
+
+        hidden_effect = {
+        	FROM = {
+	        	clr_character_flag = expensive_jewels
+	        	set_character_flag = amazing_jewels
+        	}
+        	clr_character_flag = expensive_jewels
+        	set_character_flag = amazing_jewels
+    	}
     }
 
     #Settle for less expensive stuff
     option = {
         trigger = { FROM  = { has_character_flag = expensive_jewels } }
         name = EVTOPTB_MNM_9109
-        custom_tooltip = { text = EVTOPTB_MNM_9109_TT }
-
-        hidden_effect = {
-            FROM = {
-                clr_character_flag = expensive_jewels
-                set_character_flag = good_jewels
-            }
-            clr_character_flag = expensive_jewels
-            set_character_flag = good_jewels
-        }
+        custom_tooltip = { text = EVTOPTB_MNM_9109_TT_NEW }
     }
 
     #I want my good stuff
     option = {
         trigger = { FROM  = { has_character_flag = good_jewels } }
         name = EVTOPTC_MNM_9109
-        custom_tooltip = { text = EVTOPTC_MNM_9109_TT }
+        custom_tooltip = { text = EVTOPTC_MNM_9109_TT_NEW }
 
-        scaled_wealth = { value = -1.5 min = -100 }
+        scaled_wealth = { value = -1.5 min = -100 max = -500}
+
+        hidden_effect = {
+        	FROM = {
+	        	clr_character_flag = good_jewels
+	        	set_character_flag = expensive_jewels
+			}
+        	clr_character_flag = good_jewels
+        	set_character_flag = expensive_jewels
+        }
     }
 
     #Settle for less good stuff
     option = {
         trigger = { FROM  = { has_character_flag = good_jewels } }
         name = EVTOPTD_MNM_9109
-        custom_tooltip = { text = EVTOPTD_MNM_9109_TT }
-
-        hidden_effect = {
-            FROM = {
-                clr_character_flag = good_jewels
-                set_character_flag = cheap_jewels
-            }
-            clr_character_flag = good_jewels
-            set_character_flag = cheap_jewels
-        }
+        custom_tooltip = { text = EVTOPTD_MNM_9109_TT_NEW }
     }
 
     after = { 
@@ -8140,6 +8293,7 @@ character_event = {
         scaled_wealth = { value = 0.5 min = 25 }
     }
     after = {
+    	clr_character_flag = amazing_jewels
         clr_character_flag = expensive_jewels
         clr_character_flag = good_jewels
         clr_character_flag = cheap_jewels
