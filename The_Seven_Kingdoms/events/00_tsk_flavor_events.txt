@@ -23,6 +23,7 @@
 #			tsk.0129-131 # A bard comes to your court
 #			tsk.0132-135 # You fall off a cliff
 #			tsk.0136 # Pray to an aspect of the faith
+#			tsk.0137-138 # Meet a beggar along the road
 #
 ###################################
 
@@ -1180,7 +1181,72 @@ character_event = {
 	}
 }
 
+####################################
+### Meet a beggar along the road ###
+####################################
 
+character_event = {
+	id = tsk.0137
+	desc = EVTDESCtsk.0137
+	picture = GFX_evt_energetic
+	border = GFX_event_normal_frame_religion
+	
+	only_playable = yes
+    capable_only = yes
+    prisoner = no
+	
+	
+	trigger = {
+		religion = the_seven
+		is_abroad = no
+	}
+	
+	mean_time_to_happen = {
+		months = 1500
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0137 # ignore him
+		piety = -10
+		prestige = 30
+	}
+	
+	option = {
+		name = EVTOPTBtsk.0137 # Give him a handful of silver stags
+		wealth = -10
+		hidden_tooltip = {
+			character_event = { id = tsk.0138 } # The Father! 
+			add_trait = charitable
+		}
+	}
+}
 
+### The Father!
+
+character_event = {
+	id = tsk.0138
+	desc = EVTDESCtsk.0138
+	picture = GFX_evt_energetic
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+	
+	mean_time_to_happen = {
+		months = 1000
+	}
+	
+	option = {
+		name = EVTOPTAtsk.0138 # What?
+		prestige = 20
+		piety = -20
+	}
+	
+	option = {
+		name = EVTOPTBtsk.0138 # Blessed by the father
+		piety = 20
+		prestige = -20
+		if = { limit = { has_trait = cynical } remove_trait = cynical }
+	}
+}
 
 
