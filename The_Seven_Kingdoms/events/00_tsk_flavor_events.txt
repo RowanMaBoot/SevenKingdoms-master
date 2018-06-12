@@ -24,6 +24,10 @@
 #			tsk.0132-135 # You fall off a cliff
 #			tsk.0136 # Pray to an aspect of the faith
 #			tsk.0137-138 # Meet a beggar along the road
+#			tsk.0139 # Destroy Runestone
+#			tsk.0140 # Destroy The Blackwood Vale
+#
+#
 #
 ###################################
 
@@ -1248,5 +1252,74 @@ character_event = {
 		if = { limit = { has_trait = cynical } remove_trait = cynical }
 	}
 }
+####################################
+### Destroy Kingdom of Runestone ###
+####################################
 
+character_event = {
+    id = tsk.0139
+    desc = "EVTDESCtsk.0139"
+    picture = GFX_evt_knight
+    
+    trigger = {
+			NOT = { has_character_flag = allows_other_kings }
+				OR = {
+					AND = {
+						has_landed_title = e_the_vale
+						any_vassal = { has_landed_title = k_runestone
+						}
+					}
+			AND = {
+				has_landed_title = e_the_vale
+				has_landed_title = k_runestone
+			}
+		}
+    }
+    option = {
+        name = "EVTOPTAtsk.0139" # Destroy the barbaric title
+		k_runestone = { destroy_landed_title = THIS }
+    }
+	option = {
+        name = "EVTOPTBtsk.0139" # They may ratain their royal style
+		hidden_tooltip = {
+			set_character_flag = allows_other_kings
+		}
+    }
+}
 
+#########################################
+### Destroy Kingdom of Blackwood Vale ###
+#########################################
+
+character_event = {
+    id = tsk.0140
+    desc = "EVTDESCtsk.0140"
+    picture = GFX_evt_knight
+    
+    trigger = {
+			NOT = { has_character_flag = allows_other_kings }
+				OR = {
+					AND = {
+						has_landed_title = k_wayfarers_rest
+						any_vassal = { has_landed_title = k_the_blackwood_vale
+						}
+					}
+			AND = {
+				has_landed_title = k_wayfarers_rest
+				has_landed_title = k_the_blackwood_vale
+			}
+		}
+    }
+    option = {
+        name = "EVTOPTAtsk.0140" # Destroy the barbaric title
+		k_the_blackwood_vale = { destroy_landed_title = THIS }
+		prestige = 100
+    }
+	option = {
+        name = "EVTOPTBtsk.0140" # They may ratain their royal style
+		piety = -25
+		hidden_tooltip = {
+			set_character_flag = allows_other_kings
+		}
+    }
+}
