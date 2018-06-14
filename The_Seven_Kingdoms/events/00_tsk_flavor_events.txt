@@ -26,7 +26,7 @@
 #			tsk.0137-138 # Meet a beggar along the road
 #			tsk.0139 # Destroy Runestone
 #			tsk.0140 # Destroy The Blackwood Vale
-#
+#			tsk.0141-142 # "Ser" minor title cleanup
 #
 #
 ###################################
@@ -633,7 +633,7 @@ character_event = {
               trait = dragon_knight
             }
           }   
-          give_minor_title = title_generic_ser
+          knight_character_effect = yes
         }
    }
 
@@ -1322,4 +1322,61 @@ character_event = {
 			set_character_flag = allows_other_kings
 		}
     }
+}
+
+
+### Remove "Ser" title when character becomes landed
+character_event = {
+	id = tsk.0141
+	desc = "EVTDESCknight.17"
+	picture = "GFX_knight"
+	
+	is_triggered_only = yes
+	hide_window = yes
+	#only_men = yes
+	
+	trigger = { 
+	    OR = {
+			trait = knight
+			trait = hedge_knight
+			trait = red_knight
+			trait = dragon_knight
+		}
+	}
+	
+	option = {
+		name = "Fine"
+		remove_special_character_title = title_generic_ser
+		remove_special_character_title = title_generic_lady
+	}
+	
+}
+# Add "Ser" title when character becomes unlanded
+character_event = {
+	id = tsk.0142
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = { 
+		OR = {
+			trait = knight
+			trait = hedge_knight
+			trait = red_knight
+			trait = dragon_knight
+		}
+	}
+	
+	option = {
+		name = "Fine"
+		if = {
+			limit = { is_female = no }
+			set_special_character_title = title_generic_ser
+		}
+		if = {
+			limit = { is_female = yes }
+			set_special_character_title = title_generic_lady
+		}
+	}
+	
 }

@@ -491,3 +491,29 @@ add_priest_trait_effect = {
 		add_trait = septon
 	}
 }
+
+knight_character_effect = {
+	if = {
+		limit = { trait = squire }
+		remove_trait = squire
+	}	
+	add_trait = knight
+	hidden_tooltip = { 
+		if = {
+			limit = { 
+				is_ruler = no 
+				NOT = { has_minor_title = title_prince }
+				NOT = { has_minor_title = title_queen_mother }
+				NOT = { has_minor_title = title_ruler_consort }
+			}
+			if = {
+				limit = { is_female = no } 
+				set_special_character_title = title_generic_ser
+			}
+			if = {
+				limit = { is_female = yes }
+				set_special_character_title = title_generic_lady	
+			}
+		}	
+	}
+}
