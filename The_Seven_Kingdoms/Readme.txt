@@ -26,6 +26,7 @@ tsf4 - Master of names, History, titles, cultural buildings, characters, barony 
 ZeroFighterR - Still searching for his pigeons.
 Amr - Artifact gfx, events and decisions.
 GrandiSlayer - Religion Descriptions, History
+Hart - GUI, Art and other GFX
 
 Contributors (Prior members or small-time contributors):
 

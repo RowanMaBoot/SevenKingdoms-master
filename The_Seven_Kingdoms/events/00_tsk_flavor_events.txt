@@ -27,7 +27,8 @@
 #			tsk.0139 # Destroy Runestone
 #			tsk.0140 # Destroy The Blackwood Vale
 #			tsk.0141-142 # "Ser" minor title cleanup
-#
+#			tsk.0143 # Remove Septon title from High Septon
+#			tsk.0144 # Durrandon Opening/Conversion Event
 #
 ###################################
 
@@ -1328,7 +1329,7 @@ character_event = {
 ### Remove "Ser" title when character becomes landed
 character_event = {
 	id = tsk.0141
-	desc = "EVTDESCknight.17"
+	desc = "EVTDESCtsk.0141"
 	picture = "GFX_knight"
 	
 	is_triggered_only = yes
@@ -1377,6 +1378,53 @@ character_event = {
 			limit = { is_female = yes }
 			set_special_character_title = title_generic_lady
 		}
+	}
+	
+}
+
+### Remove Septon title when character becomes High Septon
+character_event = {
+	id = tsk.0143
+	desc = "EVTDESCtsk.0143"
+	picture = "GFX_knight"
+	
+	is_triggered_only = yes
+	hide_window = yes
+	#only_men = yes
+	
+	trigger = { 
+	    OR = {
+			trait = septon
+			trait = septa
+		}
+	}
+	
+	option = {
+		name = "Fine"
+		remove_special_character_title = title_septon
+		remove_special_character_title = title_septa
+	}	
+}
+
+### Durrandon Opening/Conversion
+long_character_event = {
+	id = tsk.0144
+	desc = "EVTDESCtsk.0144"
+	picture = "GFX_evt_baratheon"
+	border = GFX_event_long_frame_religion
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTAtsk.0144"
+		religion = the_seven
+		piety = -100
+		add_trait = knight
+	}
+	option = {
+		name = "EVTOPTBtsk.0144"
+		prestige = 100
+		add_trait = zealous
 	}
 	
 }
