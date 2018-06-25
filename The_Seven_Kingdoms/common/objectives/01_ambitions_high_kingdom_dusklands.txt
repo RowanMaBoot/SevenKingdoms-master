@@ -1,0 +1,89 @@
+# Become High King of the Dusklands
+obj_become_high_king_dusklands = {
+	type = character
+	
+	can_cancel = no
+
+	potential = {
+		is_adult = yes
+		is_playable = yes
+		is_landed = yes
+		tier = KING
+		independent = yes
+		trait = ambitious
+		NOT = { trait = incapable }
+		martial = 13
+		stewardship = 11
+		diplomacy = 10		
+		capital_scope = { region = world_the_blackwater }
+		e_the_dusklands = { has_holder = no }
+	}
+	
+	allow = {
+		OR = { 
+			culture = dusklander
+			culture = crackclawmen
+			culture = blackwaterman
+		}
+	}
+	
+	chance = {
+		factor = 100
+		
+		modifier = {
+			factor = 3.0
+			trait = ambitious
+		}
+		modifier = {
+			factor = 4.0
+			e_the_riverlands = { has_holder = no }
+		}
+		modifier = {
+			factor = 2.0
+			trait = brave
+		}
+		modifier = {
+			factor = 0.1
+			trait = craven
+		}
+		modifier = {
+			factor = 0.01
+			trait = content
+		}
+		modifier = {
+			factor = 0.01
+			trait = slothful
+		}
+		modifier = {
+			factor = 0.1
+			tier = COUNT
+		}
+	}
+	
+	success = {
+		has_landed_title = e_the_dusklands
+	}
+	
+	abort = {
+		OR = {
+			trait = incapable
+			is_playable = no
+			is_landed = no
+			AND = {
+				higher_tier_than = KING
+				NOT = { primary_title = e_the_dusklands }
+			}
+			any_heir_title = {
+				higher_tier_than = KING
+				temporary = no
+			}
+		}
+	}
+	
+	abort_effect = {
+	}
+	
+	effect = {
+		ROOT = { prestige = 500 }
+	}
+}
