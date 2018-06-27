@@ -509,3 +509,203 @@ obj_become_high_king_dorne = {
 		prestige = 2000
 	}
 }
+
+# Become King of the Iron Islands
+obj_become_high_king_iron_islands = {
+	type = character
+	
+	can_cancel = no
+
+	potential = {
+		is_adult = yes
+		is_playable = yes
+		is_landed = yes
+		tier = KING
+		independent = yes
+		trait = ambitious
+		NOT = { trait = incapable }
+		martial = 13
+		stewardship = 11
+		diplomacy = 10	
+		capital_scope = { region = world_the_iron_islands }
+		e_the_iron_islands = { has_holder = no }
+	}
+	
+	allow = {
+		OR = { 
+			culture = pykem
+			culture = harlawn
+			culture = iron_islander
+		}
+	}
+	
+	chance = {
+		factor = 100
+
+		modifier = {
+			factor = 3.0
+			trait = ambitious
+		}
+		modifier = {
+			factor = 4.0
+			e_the_iron_islands = { has_holder = no }
+		}
+		modifier = {
+			factor = 2.0
+			trait = brave
+		}
+		modifier = {
+			factor = 0.1
+			trait = craven
+		}
+		modifier = {
+			factor = 0.01
+			trait = content
+		}
+		modifier = {
+			factor = 0.01
+			trait = slothful
+		}
+		modifier = {
+			factor = 0.1
+			tier = COUNT
+		}
+	}
+	
+	success = {
+		OR = {
+			AND = {
+				has_landed_title = k_seastone_isles
+				has_landed_title = k_orkmont
+				has_landed_title = k_great_wyk
+				has_landed_title = k_harlaw
+			}
+			has_landed_title = k_the_iron_islands
+			has_landed_title = e_the_iron_islands
+		}
+	}
+	
+	abort = {
+		OR = {
+			trait = incapable
+			is_playable = no
+			is_landed = no
+			higher_tier_than = KING
+			any_heir_title = {
+				higher_tier_than = KING
+				temporary = no
+			}
+		}
+	}
+	
+	abort_effect = {
+	}
+	
+	effect = {
+		prestige = 2000
+	}
+}
+
+# Become the King Beyond the Wall
+obj_become_high_king_beyond_the_wall = {
+	type = character
+	
+	can_cancel = no
+
+	potential = {
+		is_adult = yes
+		is_playable = yes
+		is_landed = yes
+		tier = KING
+		independent = yes
+		trait = ambitious
+		NOT = { trait = incapable }
+		martial = 13
+		stewardship = 11
+		diplomacy = 10	
+		capital_scope = { region = world_beyond_the_wall }
+		e_beyond_the_wall = { has_holder = no }
+	}
+
+		#has_landed_title = k_winterhold
+		#has_landed_title = k_frostfangs
+		#has_landed_title = k_haunted_lands
+		#has_landed_title = k_frozen_lands
+		#has_landed_title = k_the_hartlands
+		#has_landed_title = k_northern_highlands
+
+	
+	allow = {
+		OR = { 
+			culture = thenn
+			culture = nightrunners
+			culture = frozen_shore
+			culture = ice_rivermen
+			culture = hornfoots
+			culture = cavemen
+			culture = gildlic
+			culture = dumhic
+			culture = hartenn
+			culture = saliosi
+			culture = harishic
+			culture = wildling
+		}
+	}
+	
+	chance = {
+		factor = 100
+
+		modifier = {
+			factor = 3.0
+			trait = ambitious
+		}
+		modifier = {
+			factor = 4.0
+			e_beyond_the_wall = { has_holder = no }
+		}
+		modifier = {
+			factor = 2.0
+			trait = brave
+		}
+		modifier = {
+			factor = 0.1
+			trait = craven
+		}
+		modifier = {
+			factor = 0.01
+			trait = content
+		}
+		modifier = {
+			factor = 0.01
+			trait = slothful
+		}
+		modifier = {
+			factor = 0.1
+			tier = COUNT
+		}
+	}
+	
+	success = {
+		has_landed_title = e_beyond_the_wall
+	}
+	
+	abort = {
+		OR = {
+			trait = incapable
+			is_playable = no
+			is_landed = no
+			higher_tier_than = KING
+			any_heir_title = {
+				higher_tier_than = KING
+				temporary = no
+			}
+		}
+	}
+	
+	abort_effect = {
+	}
+	
+	effect = {
+		prestige = 2000
+	}
+}
