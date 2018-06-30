@@ -267,6 +267,19 @@ PdxMeshTextureAtlasSkinned = {
  ShaderModel = 3;
 }
 
+-- Shields
+StaticTabard = {
+	VertexShader = "VertexPdxMeshStandardBillboard";
+	PixelShader = "PixelPdxMeshStandardTabard";
+	ShaderModel = 3;
+}
+
+StaticStandardShield = {
+	VertexShader = "VertexPdxMeshStandardBillboard";
+	PixelShader = "PixelPdxMeshStandardShield";
+	ShaderModel = 3;
+}
+
 --[[
 ------------------------------------------------------------
 -- Vertex shaders
@@ -340,6 +353,54 @@ VS_OUTPUT_PDXMESHSTANDARD main( const VS_INPUT_PDXMESHSTANDARD v )
 
 ]] )
 
+
+DeclareShader( "VertexPdxMeshStandardBillboard", [[
+
+VS_OUTPUT_PDXMESHSTANDARD main( const VS_INPUT_PDXMESHSTANDARD v )
+{
+  	VS_OUTPUT_PDXMESHSTANDARD Out;
+			
+	Out.vPosition = float4(v.vPosition.xyz * 0.55f * clamp( 0.35f + ( vCamPos.y / 500.0f ), 0.45f, 2.2f ), 1.0);
+	//Out.vPosition = float4( v.vPosition.xyz, 1.0f );
+	
+#	ifdef PDX_OPENGL
+
+	float4x4 Rot = float4x4( ViewMatrix[0][0], ViewMatrix[1][0], ViewMatrix[2][0], 0.0f,
+                     ViewMatrix[0][1], ViewMatrix[1][1], ViewMatrix[2][1], 0.0f,
+                     ViewMatrix[0][2], ViewMatrix[1][2], ViewMatrix[2][2], 0.0f,
+                     0.0f, 0.0f, 0.0f, 1.0f );
+#	else
+
+	float4x4 Rot = { ViewMatrix._m00_m10_m20, 0.0f,
+                     ViewMatrix._m01_m11_m21, 0.0f,
+					 ViewMatrix._m02_m12_m22, 0.0f,
+					 0.0f, 0.0f, 0.0f, 1.0f }; 
+#	endif
+	
+	Out.vPosition = mul( Out.vPosition, Rot );
+	Out.vPosition = mul( Out.vPosition, WorldMatrix );	
+	
+	Out.vPos = Out.vPosition;
+	Out.vPosition = mul( Out.vPosition, ViewProjectionMatrix );	
+	
+	Out.vUV0 = v.vUV0;
+	Out.vUV1 = v.vUV1;
+		
+#	ifdef PDX_OPENGL
+	Out.vNormal = normalize( mul( v.vNormal.xyz, float3x3(WorldMatrix) ) );
+	Out.vTangent = normalize( mul( v.vTangent.xyz, float3x3(WorldMatrix) ) ) * v.vTangent.w;
+#	else
+	Out.vNormal = normalize( mul( v.vNormal.xyz, (float3x3)WorldMatrix ) );
+	Out.vTangent = normalize( mul( v.vTangent.xyz, (float3x3)WorldMatrix ) ) * v.vTangent.w;
+#	endif
+
+	Out.vBitangent = normalize( cross( Out.vNormal, Out.vTangent ) * v.vTangent.w );
+
+	
+	return Out;
+}
+
+]] )
 
 
 --[[
@@ -476,6 +537,64 @@ float4 main( VS_OUTPUT_PDXMESHSTANDARD In ) : COLOR
 	return float4( vFinal.rgb, 1.0f );
 }
 
+]] )
+
+
+DeclareShader( "PixelPdxMeshStandardTabard", [[
+	
+float4 main( VS_OUTPUT_PDXMESHSTANDARD In ) : COLOR
+{
+	float4 vColor = tex2D( DiffuseMap, In.vUV0 );
+	float3 vSpecColor = tex2D( SpecularMap, In.vUV0 ).rgb;
+	float3 vTabardColor = tex2D( FlagMap, GetTexCoordsInAtlas( In.vUV1 ) ).rgb;
+	float3 vNormal = normalize( In.vNormal );
+	float3 vTangent = normalize( In.vTangent );
+	float3 vBitangent = cross( vTangent, vNormal );
+
+	float3 vNormalSample = normalize( tex2D( NormalMap, In.vUV0 ).rbg );
+	float3x3 TNB = float3x3( vTangent, vNormal, vBitangent );
+	vNormal = mul( vNormalSample, TNB );
+	vNormal = vNormalSample;
+	
+	float3 vFinal = vColor.rgb * ( 1 - vColor.a ) + vColor.rgb * vColor.a * vTabardColor;
+
+	vFinal = CalculateLighting( vFinal, vNormal );
+	
+	float3 vPos = In.vPos.xyz / In.vPos.w;
+	float vFoW = GetFoW( vPos, FoWTexture, FoWDiffuse );
+	vFinal = ApplyDistanceFog( vFinal, vPos ) * vFoW;
+	
+	vFinal = ComposeSpecular( vFinal, CalculateSpecular( vPos, vNormal, vSpecColor.r ) ); // * vFoW );
+
+	return float4( vFinal, 1 );
+}
+	
+]] )
+
+
+DeclareShader( "PixelPdxMeshStandardShield", [[
+	
+float4 main( VS_OUTPUT_PDXMESHSTANDARD In ) : COLOR
+{
+	
+	float4 vColor = tex2D( DiffuseMap, In.vUV0 );
+	float4 vSpecColor = tex2D( SpecularMap, In.vUV0 );
+	
+	float3 vNormalSample = UnpackNormal( NormalMap, In.vUV0 );
+	float3x3 TBN = Create3x3( normalize( In.vTangent ), normalize( In.vBitangent ), normalize( In.vNormal ) );
+	float3 vNormal = mul( vNormalSample, TBN );
+
+	vColor.rgb = CalculateLighting( vColor.rgb, vNormal );
+	
+	float3 vPos = In.vPos.xyz / In.vPos.w;
+	float vFoW = GetFoW( vPos, FoWTexture, FoWDiffuse );
+	vColor.rgb = ApplyDistanceFog( vColor.rgb, vPos ) * vFoW;
+	
+	vColor.rgb = ComposeSpecular( vColor.rgb, CalculateSpecular( vPos, vNormal, (vSpecColor.a * 2.0 ) ) * vFoW );
+	
+	return vColor;
+}
+	
 ]] )
 
 
