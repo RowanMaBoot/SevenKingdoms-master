@@ -4,9 +4,6 @@ namespace = emf_culture
 
 #### GENERIC CUSTOM CULTURE CONVERSION EVENTS ####
 
-# NOTE: currently includes northlander melting pot as a holdover from PB, but that will be refactored and moved to emf_melt
-# (someday soon hopefully?)
-
 # Province culture changes
 province_event = {
 	id = emf_culture.0
@@ -119,6 +116,30 @@ province_event = {
 		modifier = {
 			factor = 0.84
 			owner = { stewardship = 13 }
+		}
+		modifier = { # Giving the melting pot events time to fire
+			factor = 7
+			region = world_the_north
+			owner = { 
+				culture_group = andal 
+				NOT = { culture = northlander }
+			}
+		}
+		modifier = { # Giving the melting pot events time to fire
+			factor = 7
+			region = world_the_reach
+			owner = { 
+				culture_group = andal 
+				NOT = { culture = andal_reachman }
+			}
+		}
+		modifier = { # Giving the melting pot events time to fire
+			factor = 7
+			region = world_the_westerlands
+			owner = { 
+				culture_group = andal 
+				NOT = { culture = andal_westerlander }
+			}
 		}
 		modifier = {
 			factor = 0.95
@@ -524,21 +545,16 @@ character_event = {
 }
 
 
-##### New andalconquest cultures #####
+##### New andal conquest cultures #####
 
-namespace = emf_northlander
-
-#######################################
-# NORMAN EVENTS
-# Written by Rylock
-#######################################
+namespace = emf_andal_melt_pot
 
 ### NORTHLANDER MELTING POT
 
 # The Northlander Melting Pot
 character_event = {
-	id = emf_northlander.1
-	desc = EVTDESC_emf_adventurer_2500
+	id = emf_andal_melt_pot.1
+	desc = EVTDESC_emf_andal_melt_pot.1
 	picture = GFX_evt_throne_room
 
 	only_rulers = yes
@@ -740,7 +756,7 @@ character_event = {
 	}
 
 	option = {
-		name = EVTOPTA_emf_adventurer_2500
+		name = EVTOPTA_emf_andal_melt_pot.1
 		culture = norman
 		any_courtier = {
 			limit = {
@@ -760,7 +776,7 @@ character_event = {
 		}
 	}
 	option = {
-		name = EVTOPTB_emf_adventurer_2500
+		name = EVTOPTB_emf_andal_melt_pot.1
 		trigger = { ai = no }
 		set_character_flag = no_melting_pot
 	}
@@ -768,8 +784,8 @@ character_event = {
 
 # It's spreading
 province_event = {
-	id = emf_northlander.2
-	desc = EVTDESC_emf_adventurer_2501
+	id = emf_andal_melt_pot.2
+	desc = EVTDESC_emf_andal_melt_pot.2
 	picture = GFX_evt_throne_room
 
 	trigger = {
@@ -823,10 +839,10 @@ province_event = {
 	}
 }
 
-# Make my court speak Norman
+# Make my court Northlander
 character_event = {
-	id = emf_northlander.3
-	desc = EVTDESC_emf_adventurer_2502
+	id = emf_andal_melt_pot.3
+	desc = EVTDESC_emf_andal_melt_pot.3
 	picture = GFX_evt_throne_room
 
 	only_rulers = yes
@@ -868,6 +884,684 @@ character_event = {
 				}
 			}
 			culture = northlander
+		}
+	}
+}
+
+### ANDAL WESTERLANDER MELTING POT
+
+# The Andal Westerlander Melting Pot
+character_event = {
+	id = emf_andal_melt_pot.4
+	desc = EVTDESC_emf_andal_melt_pot.4
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+
+	trigger = {
+		capital_scope = { region = world_the_westerlands}
+		OR = {
+			culture_group = andal
+			culture_group = first_men
+		}
+		any_demesne_province = {
+			num_of_settlements = 1
+			region = world_the_westerlands
+			any_province_holding = { NOT = { holding_type = nomad } }
+			OR = {
+				AND = {
+					ROOT = { culture_group = andal }
+					culture_group = first_men
+				}
+				AND = {
+					culture_group = andal
+					ROOT = { culture_group = first_men }
+				}
+			}
+		}
+		NOR = {
+			has_character_flag = no_melting_pot
+			any_liege = { has_character_flag = no_melting_pot }
+			has_game_rule = { name = adventurers value = none }
+			has_game_rule = { name = culture_conversion value = disabled }
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 500
+		modifier = {
+			factor = 1.5
+			independent = no
+			NOT = { any_liege = { culture = andal_westerlander } }
+		}
+		modifier = {
+			factor = 0.25
+			any_liege = { culture = andal_westerlander }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 1 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 2 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 3 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 4 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 5 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 6 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 7 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 8 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 9 }
+		}
+		modifier = {
+			factor = 0.95
+			learning = 11
+		}
+		modifier = {
+			factor = 0.95
+			learning = 12
+		}
+		modifier = {
+			factor = 0.95
+			learning = 13
+		}
+		modifier = {
+			factor = 0.95
+			learning = 14
+		}
+		modifier = {
+			factor = 0.95
+			learning = 15
+		}
+		modifier = {
+			factor = 0.95
+			learning = 16
+		}
+		modifier = {
+			factor = 0.95
+			learning = 17
+		}
+		modifier = {
+			factor = 0.95
+			learning = 18
+		}
+		modifier = {
+			factor = 0.95
+			learning = 19
+		}
+		modifier = {
+			factor = 0.95
+			learning = 20
+		}
+		modifier = {
+			factor = 0.95
+			learning = 21
+		}
+		modifier = {
+			factor = 0.95
+			learning = 22
+		}
+		modifier = {
+			factor = 0.95
+			learning = 23
+		}
+		modifier = {
+			factor = 0.95
+			learning = 24
+		}
+		modifier = {
+			factor = 0.95
+			learning = 25
+		}
+		modifier = {
+			factor = 0.3
+			OR = {
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots
+				}
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots_and_slower_normal
+				}
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				capital_scope = {
+					num_of_settlements = 1
+					region = world_the_westerlands
+					any_province_holding = { NOT = { holding_type = nomad } }
+					OR = {
+						AND = {
+							ROOT = { culture_group = andal }
+							culture_group = first_men
+						}
+						AND = {
+							culture = culture_group = andal
+							ROOT = { culture_group = first_men }
+						}
+					}
+				}
+			}
+			capital_scope = { save_event_target_as = melting_pot_province }
+			break = yes
+		}
+		random_demesne_province = {
+			limit = {
+				num_of_settlements = 1
+				region = world_the_westerlands
+				any_province_holding = { NOT = { holding_type = nomad } }
+				OR = {
+					AND = {
+						ROOT = { culture_group = andal }
+						culture = culture_group = first_men
+					}
+					AND = {
+						culture_group = andal
+						ROOT = { culture_group = first_men }
+					}
+				}
+			}
+			save_event_target_as = melting_pot_province
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_andal_melt_pot.4
+		culture = norman
+		any_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				dynasty = ROOT
+				OR = {
+					culture_group = andal
+					culture_group = first_men
+				}
+			}
+			culture = andal_westerlander
+		}
+		event_target:melting_pot_province = {
+			culture = norman
+			set_province_flag = melting_pot
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_adventurer_2500
+		trigger = { ai = no }
+		set_character_flag = no_melting_pot
+	}
+}
+
+# It's spreading
+province_event = {
+	id = emf_andal_melt_pot.5
+	desc = EVTDESC_emf_adventurer_2501
+	picture = GFX_evt_throne_room
+
+	trigger = {
+		region = world_the_westerlands
+		owner = { 
+			top_liege = { culture = andal_westerlander } 
+			NOT = { has_game_rule = { name = culture_conversion value = disabled } }
+		}
+		OR = {
+			culture_group = andal
+			culture_group = first_men
+		}
+		OR = {
+			owner = { culture = andal_westerlander }
+			AND = {
+				any_neighbor_province = { culture = andal_westerlander }
+				owner = { top_liege = { culture = andal_westerlander } }
+			}
+		}
+		num_of_settlements = 1
+		any_province_holding = { NOT = { holding_type = nomad } }
+		NOT = { has_province_flag = melting_pot }
+	}
+
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.75
+			owner = { culture = andal_westerlander }
+			any_neighbor_province = { culture = andal_westerlander }
+		}
+	}
+
+	immediate = {
+		owner = {
+			top_liege = { save_event_target_as = new_culture }
+		}
+	}
+
+	option = {
+		name = I_SEE
+		culture = andal_westerlander
+		set_province_flag = melting_pot
+		hidden_tooltip = {
+			save_event_target_as = emf_province
+			owner = {
+				character_event = { id = emf_ambitions.1 }
+				any_liege = { character_event = { id = emf_ambitions.1 } }
+			}
+		}
+	}
+}
+
+# Make my court Andal Westerlander
+character_event = {
+	id = emf_andal_melt_pot.6
+	desc = EVTDESC_emf_adventurer_2502
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+	culture = norman
+
+	trigger = {
+		capital_scope = { region = world_the_westerlands }
+		any_courtier = {
+			is_ruler = no
+			prisoner = no
+			OR = {
+				culture_group = andal
+				culture_group = first_men
+			}
+		}
+		NOT = { has_game_rule = { name = culture_conversion value = disabled } }
+	}
+
+	mean_time_to_happen = {
+		months = 60
+		#modifier = {
+		#	factor = 0.5
+		#	year = 1000
+		#}
+	}
+
+	option = {
+		name = OK
+		random_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				OR = {
+					culture_group = andal
+					culture_group = first_men
+				}
+			}
+			culture = andal_westerlander
+		}
+	}
+}
+
+### ANDAL REACHMAN MELTING POT
+
+# The Andal Reachman Melting Pot
+character_event = {
+	id = emf_andal_melt_pot.7
+	desc = EVTDESC_emf_andal_melt_pot.7
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+
+	trigger = {
+		capital_scope = { region = world_the_reach}
+		OR = {
+			culture_group = andal
+			culture_group = first_men
+		}
+		any_demesne_province = {
+			num_of_settlements = 1
+			region = world_the_reach
+			any_province_holding = { NOT = { holding_type = nomad } }
+			OR = {
+				AND = {
+					ROOT = { culture_group = andal }
+					culture_group = first_men
+				}
+				AND = {
+					culture_group = andal
+					ROOT = { culture_group = first_men }
+				}
+			}
+		}
+		NOR = {
+			has_character_flag = no_melting_pot
+			any_liege = { has_character_flag = no_melting_pot }
+			has_game_rule = { name = adventurers value = none }
+			has_game_rule = { name = culture_conversion value = disabled }
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 500
+		modifier = {
+			factor = 1.5
+			independent = no
+			NOT = { any_liege = { culture = andal_reachman } }
+		}
+		modifier = {
+			factor = 0.25
+			any_liege = { culture = andal_reachman }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 1 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 2 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 3 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 4 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 5 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 6 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 7 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 8 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 9 }
+		}
+		modifier = {
+			factor = 0.95
+			learning = 11
+		}
+		modifier = {
+			factor = 0.95
+			learning = 12
+		}
+		modifier = {
+			factor = 0.95
+			learning = 13
+		}
+		modifier = {
+			factor = 0.95
+			learning = 14
+		}
+		modifier = {
+			factor = 0.95
+			learning = 15
+		}
+		modifier = {
+			factor = 0.95
+			learning = 16
+		}
+		modifier = {
+			factor = 0.95
+			learning = 17
+		}
+		modifier = {
+			factor = 0.95
+			learning = 18
+		}
+		modifier = {
+			factor = 0.95
+			learning = 19
+		}
+		modifier = {
+			factor = 0.95
+			learning = 20
+		}
+		modifier = {
+			factor = 0.95
+			learning = 21
+		}
+		modifier = {
+			factor = 0.95
+			learning = 22
+		}
+		modifier = {
+			factor = 0.95
+			learning = 23
+		}
+		modifier = {
+			factor = 0.95
+			learning = 24
+		}
+		modifier = {
+			factor = 0.95
+			learning = 25
+		}
+		modifier = {
+			factor = 0.3
+			OR = {
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots
+				}
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots_and_slower_normal
+				}
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				capital_scope = {
+					num_of_settlements = 1
+					region = world_the_reach
+					any_province_holding = { NOT = { holding_type = nomad } }
+					OR = {
+						AND = {
+							ROOT = { culture_group = andal }
+							culture_group = first_men
+						}
+						AND = {
+							culture = culture_group = andal
+							ROOT = { culture_group = first_men }
+						}
+					}
+				}
+			}
+			capital_scope = { save_event_target_as = melting_pot_province }
+			break = yes
+		}
+		random_demesne_province = {
+			limit = {
+				num_of_settlements = 1
+				region = world_the_reach
+				any_province_holding = { NOT = { holding_type = nomad } }
+				OR = {
+					AND = {
+						ROOT = { culture_group = andal }
+						culture = culture_group = first_men
+					}
+					AND = {
+						culture_group = andal
+						ROOT = { culture_group = first_men }
+					}
+				}
+			}
+			save_event_target_as = melting_pot_province
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_andal_melt_pot.7
+		culture = norman
+		any_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				dynasty = ROOT
+				OR = {
+					culture_group = andal
+					culture_group = first_men
+				}
+			}
+			culture = andal_reachman
+		}
+		event_target:melting_pot_province = {
+			culture = norman
+			set_province_flag = melting_pot
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_adventurer_2500
+		trigger = { ai = no }
+		set_character_flag = no_melting_pot
+	}
+}
+
+# It's spreading
+province_event = {
+	id = emf_andal_melt_pot.8
+	desc = EVTDESC_emf_adventurer_2501
+	picture = GFX_evt_throne_room
+
+	trigger = {
+		region = world_the_reach
+		owner = { 
+			top_liege = { culture = andal_reachman } 
+			NOT = { has_game_rule = { name = culture_conversion value = disabled } }
+		}
+		OR = {
+			culture_group = andal
+			culture_group = first_men
+		}
+		OR = {
+			owner = { culture = andal_reachman }
+			AND = {
+				any_neighbor_province = { culture = andal_reachman }
+				owner = { top_liege = { culture = andal_reachman } }
+			}
+		}
+		num_of_settlements = 1
+		any_province_holding = { NOT = { holding_type = nomad } }
+		NOT = { has_province_flag = melting_pot }
+	}
+
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.75
+			owner = { culture = andal_reachman }
+			any_neighbor_province = { culture = andal_reachman }
+		}
+	}
+
+	immediate = {
+		owner = {
+			top_liege = { save_event_target_as = new_culture }
+		}
+	}
+
+	option = {
+		name = I_SEE
+		culture = andal_reachman
+		set_province_flag = melting_pot
+		hidden_tooltip = {
+			save_event_target_as = emf_province
+			owner = {
+				character_event = { id = emf_ambitions.1 }
+				any_liege = { character_event = { id = emf_ambitions.1 } }
+			}
+		}
+	}
+}
+
+# Make my court andal_reachman
+character_event = {
+	id = emf_andal_melt_pot.9
+	desc = EVTDESC_emf_adventurer_2502
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+	culture = norman
+
+	trigger = {
+		capital_scope = { region = world_the_reach }
+		any_courtier = {
+			is_ruler = no
+			prisoner = no
+			OR = {
+				culture_group = andal
+				culture_group = first_men
+			}
+		}
+		NOT = { has_game_rule = { name = culture_conversion value = disabled } }
+	}
+
+	mean_time_to_happen = {
+		months = 60
+		#modifier = {
+		#	factor = 0.5
+		#	year = 1000
+		#}
+	}
+
+	option = {
+		name = OK
+		random_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				OR = {
+					culture_group = andal
+					culture_group = first_men
+				}
+			}
+			culture = andal_reachman
 		}
 	}
 }
