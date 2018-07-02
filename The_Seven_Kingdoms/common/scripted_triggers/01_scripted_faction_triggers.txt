@@ -240,20 +240,33 @@ is_culture_group_same = {
     }
 }
 
-is_different_culture_same_group = {
-    liege = {
-        NOT = {
-            culture = ROOT
-        }
-        culture_group = ROOT
-    }
-}
-
 is_different_culture_group = {
     liege = {
         NOT = {
             culture_group = ROOT
         }
+    }
+}
+
+# For cultures that do not like being ruled by anyone, including own group.
+is_independent_culture = {
+    OR = {
+        culture = mountain_clansmen
+        culture = pirate
+    }
+    liege = {
+        culture = ROOT
+    }
+}
+
+# For cultures that are OK with being ruled by the same group.
+is_independent_culture_same_group = {
+    OR = {
+        culture_group = free_folk
+        culture_group = iron_islander
+    }
+    liege = {
+        culture_group = ROOT
     }
 }
 
