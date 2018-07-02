@@ -15,6 +15,8 @@ decisions = {
 			has_horde_culture = no
 			is_nomadic = no
 			NOR = {
+				emf_uses_valyrian_coronation = yes
+				emf_uses_old_gods_hk_coronation = yes
 				emf_uses_the_seven_hk_coronation = yes
 				has_character_flag = planning_coronation
 			}
@@ -62,7 +64,135 @@ decisions = {
 			factor = 1
 		}
 	}
+	
+	emf_valyrian_coronation = {
+		only_independent = yes
+		is_high_prio = yes
 
+		potential = {
+			emf_uses_valyrian_emperor_coronation = yes
+			NOT = { government = march_government }
+			independent = yes
+			tier = EMPEROR
+			trait = uncrowned
+			is_feudal = yes
+			is_landed = yes
+			has_horde_culture = no
+			is_nomadic = no
+			NOR = {
+				emf_uses_old_gods_hk_coronation = yes
+				emf_uses_the_seven_hk_coronation = yes
+				has_character_flag = planning_coronation
+			}
+			#emf_hiprio_decision_basic_potential = yes
+		}
+		allow = {
+			war = no
+			has_regent = no
+			is_adult = yes
+			scaled_wealth = 1.0
+			piety = 25
+			NOT = { trait = excommunicated }
+			custom_tooltip = {
+				text = HAS_BISHOP_WILLING_TO_CORONATE
+				hidden_tooltip = {
+					any_realm_lord = {
+						capital_holding = { holding_type = temple }
+						is_ruler = yes
+						is_adult = yes
+						religion = ROOT
+						prisoner = no
+						is_incapable = no
+						NOT = { is_inaccessible_trigger = yes }
+					}
+				}
+			}
+			custom_tooltip = {
+				text = IS_NOT_BUSY
+				hidden_tooltip = {
+					emf_can_disturb = yes
+					NOT = { is_inaccessible_trigger = yes }
+				}
+			}
+		}
+		effect = {
+			set_character_flag = planning_coronation
+			scaled_wealth = -1.0
+			character_event = { id = emf_coronation.1200 } # send invitations
+			hidden_tooltip = {
+				emf_do_not_disturb = yes
+				narrative_event = { id = emf_coronation.1483 days = 30 } # coronation start
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
+	emf_old_gods_coronation = {
+		only_independent = yes
+		is_high_prio = yes
+
+		potential = {
+			NOT = { government = march_government }
+			independent = yes
+			tier = EMPEROR
+			trait = uncrowned
+			is_feudal = yes
+			is_landed = yes
+			has_horde_culture = no
+			is_nomadic = no
+			emf_uses_old_gods_hk_coronation = yes
+			NOR = {
+				emf_uses_valyrian_coronation = yes
+				emf_uses_the_seven_hk_coronation = yes
+				has_character_flag = planning_coronation
+			}
+			#emf_hiprio_decision_basic_potential = yes
+		}
+		allow = {
+			war = no
+			has_regent = no
+			is_adult = yes
+			scaled_wealth = 1.0
+			piety = 25
+			NOT = { trait = excommunicated }
+			custom_tooltip = {
+				text = HAS_BISHOP_WILLING_TO_CORONATE
+				hidden_tooltip = {
+					any_realm_lord = {
+						capital_holding = { holding_type = temple }
+						is_ruler = yes
+						is_adult = yes
+						religion = ROOT
+						prisoner = no
+						is_incapable = no
+						NOT = { is_inaccessible_trigger = yes }
+					}
+				}
+			}
+			custom_tooltip = {
+				text = IS_NOT_BUSY
+				hidden_tooltip = {
+					emf_can_disturb = yes
+					NOT = { is_inaccessible_trigger = yes }
+				}
+			}
+		}
+		effect = {
+			set_character_flag = planning_coronation
+			scaled_wealth = -1.0
+			character_event = { id = emf_coronation.1200 } # send invitations
+			hidden_tooltip = {
+				emf_do_not_disturb = yes
+				narrative_event = { id = emf_coronation.1482 days = 30 } # coronation start
+			}
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+	
 	emf_request_byzantine_coronation = {
 		only_independent = yes
 		is_high_prio = yes
@@ -111,6 +241,8 @@ decisions = {
 			independent = yes
 			emf_uses_the_seven_hk_coronation = yes
 			NOR = {
+				emf_uses_valyrian_coronation = yes
+				emf_uses_old_gods_hk_coronation = yes
 				trait = crowned_the_seven_high_king
 				has_character_flag = wants_coronation
 				has_character_flag = planning_coronation

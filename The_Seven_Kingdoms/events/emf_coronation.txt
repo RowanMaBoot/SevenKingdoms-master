@@ -5137,3 +5137,106 @@ narrative_event = {
 	}
 }
 
+# Old gods coronation
+narrative_event = {
+	id = emf_coronation.1483
+	title = EVTNAME_emf_coronation_1486
+	desc = EVTDESC_emf_coronation_1486
+	picture = GFX_evt_coronation
+	border = GFX_event_narrative_frame_religion
+
+	major = yes
+	is_triggered_only = yes
+	hide_from = yes
+	show_ROOT = yes
+
+	trigger = {
+		has_character_flag = planning_coronation
+	}
+
+	option = {
+		name = EVTOPTA_emf_coronation_1481 # This is the happiest day of my life
+		trigger = {
+			character = ROOT
+		}
+		piety = 100
+		prestige = 250
+		add_trait = crowned_valyrian_emperor
+
+		if = {
+			limit = { trait = humble }
+			random = {
+				chance = 50
+				remove_trait = humble
+			}
+		}
+		if = {
+			limit = {
+				NOT = { trait = humble }
+				NOT = { trait = proud }
+			}
+			random = {
+				chance = 50
+				add_trait = proud
+				hidden_tooltip = { character_event = { id = 38261 } } # notify proud
+			}
+		}
+
+		pf_court_plus2_effect = yes
+		pf_tradition_plus2_effect = yes
+		emf_imperial_decay_minus_2 = yes
+
+		hidden_tooltip = {
+			character_event = { id = emf_coronation.1216 days = 1 } # the feast begins
+		}
+
+		if = {
+			limit = { ai = no }
+			chronicle = {
+				entry = CHRONICLE_OLD_GODS_CORONATION
+				portrait = [Root.GetID]
+				picture = GFX_evt_holy_emperor
+			}
+		}
+	}
+	option = {
+		name = EVTOPTA_emf_coronation_1482
+		trigger = {
+			NOT = { character = ROOT }
+			has_opinion_modifier = { who = ROOT modifier = attending_coronation }
+		}
+		if = {
+			limit = { ai = no }
+			chronicle = {
+				entry = CHRONICLE_PAPAL_CORONATION_NEWS
+				portrait = [From.GetID]
+				picture = GFX_evt_holy_emperor
+			}
+		}
+	}
+	option = {
+		name = EVTDESC_emf_coronation_1483
+		trigger = {
+			NOT = { character = ROOT }
+			NOT = { has_opinion_modifier = { who = ROOT modifier = attending_coronation } }
+			same_realm = ROOT
+		}
+		if = {
+			limit = { ai = no }
+			chronicle = {
+				entry = CHRONICLE_PAPAL_CORONATION_NEWS
+				portrait = [From.GetID]
+				picture = GFX_evt_holy_emperor
+			}
+		}
+	}
+	option = {
+		name = OK
+		trigger = {
+			NOT = { character = ROOT }
+			NOT = { has_opinion_modifier = { who = ROOT modifier = attending_coronation } }
+			NOT = { same_realm = ROOT }
+		}
+	}
+}
+
