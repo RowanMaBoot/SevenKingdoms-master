@@ -76,6 +76,10 @@ province_event = {
 			}
 		}
 		modifier = {
+			factor = 0.2
+			owner = { culture_group = valyrian }
+		}
+		modifier = {
 			factor = 0.75
 			port = yes
 		}
@@ -332,6 +336,10 @@ province_event = {
 			}
 		}
 		modifier = {
+			factor = 0.2
+			owner = { culture_group = valyrian }
+		}
+		modifier = {
 			factor = 1.5
 			owner = { NOT = { stewardship = 2 } }
 		}
@@ -564,17 +572,17 @@ character_event = {
 
 	trigger = {
 		capital_scope = { region = world_the_north}
-		OR = {
-			culture_group = andal
-			culture_group = first_men
-		}
+		culture_group = andal
 		any_demesne_province = {
 			num_of_settlements = 1
 			region = world_the_north
 			any_province_holding = { NOT = { holding_type = nomad } }
 			OR = {
 				AND = {
-					ROOT = { culture_group = andal }
+					ROOT = { 
+						culture_group = andal 
+						religion_group = the_seven_group
+					}
 					culture_group = first_men
 				}
 				AND = {
@@ -586,8 +594,8 @@ character_event = {
 		NOR = {
 			has_character_flag = no_melting_pot
 			any_liege = { has_character_flag = no_melting_pot }
-			has_game_rule = { name = adventurers value = none }
-			has_game_rule = { name = culture_conversion value = disabled }
+			has_game_rule = { name = adventurers value = none }	
+			has_game_rule = { name = culture_melting_pots value = disabled }
 		}
 	}
 
@@ -792,12 +800,12 @@ province_event = {
 		region = world_the_north
 		owner = { 
 			top_liege = { culture = northlander } 
-			NOT = { has_game_rule = { name = culture_conversion value = disabled } }
+			NOR = { 
+				has_game_rule = { name = culture_conversion value = disabled } 	
+				has_game_rule = { name = culture_melting_pots value = disabled }
+			}
 		}
-		OR = {
-			culture_group = andal
-			culture_group = first_men
-		}
+		culture_group = andal
 		OR = {
 			owner = { culture = northlander }
 			AND = {
@@ -849,7 +857,7 @@ character_event = {
 	min_age = 16
 	capable_only = yes
 	prisoner = no
-	culture = norman
+	culture = northlander
 
 	trigger = {
 		capital_scope = { region = world_the_north }
@@ -861,7 +869,10 @@ character_event = {
 				culture_group = first_men
 			}
 		}
-		NOT = { has_game_rule = { name = culture_conversion value = disabled } }
+		NOR = { 
+			has_game_rule = { name = culture_conversion value = disabled } 	
+			has_game_rule = { name = culture_melting_pots value = disabled }
+		}
 	}
 
 	mean_time_to_happen = {
@@ -903,10 +914,7 @@ character_event = {
 
 	trigger = {
 		capital_scope = { region = world_westerlands}
-		OR = {
-			culture_group = andal
-			culture_group = first_men
-		}
+		culture_group = andal
 		any_demesne_province = {
 			num_of_settlements = 1
 			region = world_westerlands
@@ -926,7 +934,8 @@ character_event = {
 			has_character_flag = no_melting_pot
 			any_liege = { has_character_flag = no_melting_pot }
 			has_game_rule = { name = adventurers value = none }
-			has_game_rule = { name = culture_conversion value = disabled }
+			has_game_rule = { name = culture_conversion value = disabled }	
+			has_game_rule = { name = culture_melting_pots value = disabled }
 		}
 	}
 
@@ -1131,12 +1140,12 @@ province_event = {
 		region = world_westerlands
 		owner = { 
 			top_liege = { culture = andal_westerlander } 
-			NOT = { has_game_rule = { name = culture_conversion value = disabled } }
+			NOR = { 
+				has_game_rule = { name = culture_conversion value = disabled } 	
+				has_game_rule = { name = culture_melting_pots value = disabled }
+			}
 		}
-		OR = {
-			culture_group = andal
-			culture_group = first_men
-		}
+		culture_group = andal
 		OR = {
 			owner = { culture = andal_westerlander }
 			AND = {
@@ -1188,19 +1197,19 @@ character_event = {
 	min_age = 16
 	capable_only = yes
 	prisoner = no
-	culture = norman
+	culture = andal_westerlander
 
 	trigger = {
 		capital_scope = { region = world_westerlands }
 		any_courtier = {
 			is_ruler = no
 			prisoner = no
-			OR = {
-				culture_group = andal
-				culture_group = first_men
-			}
+			culture_group = andal
 		}
-		NOT = { has_game_rule = { name = culture_conversion value = disabled } }
+		NOR = { 
+			has_game_rule = { name = culture_conversion value = disabled } 	
+			has_game_rule = { name = culture_melting_pots value = disabled }
+		}
 	}
 
 	mean_time_to_happen = {
@@ -1242,10 +1251,7 @@ character_event = {
 
 	trigger = {
 		capital_scope = { region = world_the_reach}
-		OR = {
-			culture_group = andal
-			culture_group = first_men
-		}
+		culture_group = andal
 		any_demesne_province = {
 			num_of_settlements = 1
 			region = world_the_reach
@@ -1265,7 +1271,8 @@ character_event = {
 			has_character_flag = no_melting_pot
 			any_liege = { has_character_flag = no_melting_pot }
 			has_game_rule = { name = adventurers value = none }
-			has_game_rule = { name = culture_conversion value = disabled }
+			has_game_rule = { name = culture_conversion value = disabled } 	
+			has_game_rule = { name = culture_melting_pots value = disabled }
 		}
 	}
 
@@ -1470,12 +1477,12 @@ province_event = {
 		region = world_the_reach
 		owner = { 
 			top_liege = { culture = andal_reachman } 
-			NOT = { has_game_rule = { name = culture_conversion value = disabled } }
+			NOR = { 
+				has_game_rule = { name = culture_conversion value = disabled } 	
+				has_game_rule = { name = culture_melting_pots value = disabled }
+			}
 		}
-		OR = {
-			culture_group = andal
-			culture_group = first_men
-		}
+		culture_group = andal
 		OR = {
 			owner = { culture = andal_reachman }
 			AND = {
@@ -1527,7 +1534,7 @@ character_event = {
 	min_age = 16
 	capable_only = yes
 	prisoner = no
-	culture = norman
+	culture = andal_reachman
 
 	trigger = {
 		capital_scope = { region = world_the_reach }
@@ -1539,7 +1546,11 @@ character_event = {
 				culture_group = first_men
 			}
 		}
-		NOT = { has_game_rule = { name = culture_conversion value = disabled } }
+		NOR = { 
+			has_game_rule = { name = culture_conversion value = disabled } 	
+			has_game_rule = { name = culture_melting_pots value = disabled }
+		} 
+		
 	}
 
 	mean_time_to_happen = {
