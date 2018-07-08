@@ -23,10 +23,9 @@ character_event = {
 				higher_real_tier_than = DUKE
 				is_adult = yes
 				is_feudal = yes
-				NOT = { government = march_government }
+				emf_allowed_coronation = yes
 				has_horde_culture = no
 				is_nomadic = no
-				#is_tributary = no 		Vassal kings should be coronated!!!!!!!!!!!!
 				primary_title = { is_vice_royalty = no }
 				#OR = {
 				#	emf_imperial_government = no
@@ -67,7 +66,7 @@ character_event = {
 			limit = {
 				higher_real_tier_than = DUKE
 				is_feudal = yes
-				NOT = { government = march_government }
+				emf_allowed_coronation = yes
 				has_horde_culture = no
 				is_nomadic = no
 				#is_tributary = no
@@ -107,6 +106,7 @@ character_event = {
 	hide_window = yes
 
 	trigger = {
+		emf_allowed_coronation = yes
 		FROM = {
 			higher_tier_than = DUKE
 			temporary = no
@@ -115,7 +115,12 @@ character_event = {
 	}
 
 	immediate = {
-		character_event = { id = emf_coronation.1103 days = 1 } # check for Uncrowned
+		if = {
+			limit = { 
+				emf_allowed_coronation = yes
+			}
+			character_event = { id = emf_coronation.1103 days = 1 } # check for Uncrowned
+		}
 
 		# Remove old ruler's coronation traits, if necessary
 		FROMFROM = {
@@ -191,6 +196,7 @@ character_event = {
 	hide_window = yes
 
 	trigger = {
+		emf_allowed_coronation = yes
 		FROM = {
 			higher_tier_than = DUKE
 			temporary = no
