@@ -47,8 +47,60 @@ character_event = {
 					religion_group = the_seven_group
 					NOT = { culture_group = andal }
 				}
-				culture = andal_reachman
+				culture = culture = andal_reachman
 			}
+		}
+	}
+}
+
+character_event = {
+	id = melt_pot_culture_init.1
+
+	#is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		OR = {
+			AND = {
+				culture = low_valyrian
+				NOT = { dynasty = none }
+			}
+			AND = {
+				culture = high_valyrian
+				dynasty = none
+				NOT = { has_trait = physician }
+			}
+			AND = {
+				culture = low_valyrian
+				dynasty = none
+				has_trait = physician
+			}
+		}
+	}
+	
+	immediate = {
+		if = { 
+			limit ={
+				culture = low_valyrian
+				NOT = { dynasty = none }
+			}
+			culture = high_valyrian
+		}
+		if = { 
+			limit ={
+				culture = high_valyrian
+				dynasty = none
+				NOT = { has_trait = physician }
+			}
+			culture = low_valyrian
+		}
+		if = { 
+			limit ={
+				culture = low_valyrian
+				dynasty = none
+				has_trait = physician
+			}
+			culture = high_valyrian
 		}
 	}
 }
