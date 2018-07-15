@@ -7,28 +7,129 @@
 	0 = { # castle 1
 		factor = 1
 		modifier = {
-			factor = 0
-			NOT = { religion_group = the_seven_group }
+			factor = 2
+			location = {
+				region = world_westeros
+			}
 		}
 		modifier = {
 			factor = 0
-			is_nomadic = yes
+			location = {
+				NOR = {
+					location= { region = world_westeros }
+					AND = {
+						region = world_braavos 
+						location = { culture_group = andal }
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				is_landed = yes
+				spouse = { is_landed = yes }
+				AND = {
+					liege = { family = ROOT }
+					is_landed = no
+				}
+			}
+			NOT = { is_theocracy = yes }
+			NOT = { government = theocracy_government }
+		}
+		modifier = {
+			factor = 0
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
+		}
+		modifier = {
+			factor = 0
+			NOR = {
+				is_feudal = yes
+				is_theocracy = yes
+				is_republic = yes
+				AND = {
+					liege = {
+						OR = {
+							is_feudal = yes
+							is_theocracy = yes
+							is_republic = yes
+						}
+					}
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			liege = {
+				OR = {
+					is_tribal = yes
+					is_nomadic = yes
+				}
+			}
+			OR = {
+				is_landed = no
+				AND = {
+					is_landed = yes
+					has_job_title = yes
+				}
+			}
 		}
 	}
 
 	1 = { #throne room
-		factor = 50
+		factor = 30
+		modifier = {
+			factor = 0
+			OR = {
+				location = { culture_group = valyrian }
+				location = { culture_group = dornish }
+			}	
+		}
 		modifier = {
 			factor = 0
 			NOT = { real_tier = king }
 			NOT = { real_tier = emperor }
+			NOT = { is_offmap_tag_including_dead = offmap_freehold }
 		}
 		modifier = {
 			factor = 0
-			OR = {
-				is_nomadic = yes
-				is_tribal = yes
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
+			NOT = { is_offmap_tag_including_dead = offmap_freehold }
+		}
+		modifier = {
+			factor = 0
+			#location = {
+			#	NOT = {
+			#		holding_type = castle
+			#	}
+			#}
+			NOT = {
+				is_feudal = yes
 			}
+			NOT = { is_offmap_tag_including_dead = offmap_freehold }
+		}
+		modifier = {
+			factor = 0
+			trait = in_hiding
+		}
+		modifier = {
+			factor = 0
+			liege = {
+				OR = {
+					is_tribal = yes
+					is_nomadic = yes
+				}
+			}
+			has_job_title = yes
 		}
 	}
 
@@ -36,25 +137,97 @@
 		factor = 100
 		modifier = {
 			factor = 0
-			prisoner = no
-			NOT = { death_reason = death_dungeon }
+			is_alive = yes
+			OR = {
+				prisoner = no
+				AND = {
+					prisoner = yes
+					has_character_modifier = house_arrest
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			NOR = {
+				death_reason = death_dungeon
+				death_execution_trigger = yes
+				death_sacrificed_trigger = yes
+			}
+		}
+		modifier = {
+			factor = 0
+			trait = saint
+			has_global_flag = EMF
+		}
+		modifier = {
+			factor = 0
+			NOT = { has_global_flag = EMF }
+			is_alive = no
+			OR = {
+				has_nickname = nick_the_saint
+				has_nickname = nick_the_martyr
+				has_nickname = nick_the_apostle
+				
+			}
 		}
 	}
 
 	3 = { # forest
-		factor = 1
+				factor = 1
 		modifier = {
 			factor = 0
-			religion_group = valyrian_group
+			location = {
+				NOR = {
+					region = world_westeros_north_south
+					region = world_essos
+				}
+			}
 		}
 		modifier = {
-			factor = 0.01
-			is_nomadic = yes
+			factor = 0
+			location = {
+				OR = {
+					terrain = marsh
+					terrain = desert
+					terrain = arctic
+					terrain = plains
+					terrain = steppe
+				}
+			}
 		}
 		modifier = {
-			factor = 10
-			is_tribal = yes
+			factor = 2
+			location = {
+				OR = {
+					terrain = woods
+					terrain = forest
+				}
+			}
 		}
+		modifier = {
+			factor = 0
+			siege = { is_attacker = no }
+		}
+		modifier = {
+			factor = 0
+			has_character_modifier = in_seclusion
+		}
+		#modifier = {
+		#	factor = 0.01
+		#	is_feudal = no
+		#	is_theocracy = no
+		#	is_republic = no
+		#	location = {
+		#		any_province_holding = {
+		#			holding_type = nomad
+		#		}
+		#	}
+		#}
+		#modifier = {
+		#	factor = 2
+		#	is_tribal = yes
+		#}
 	}
 
 	4 = { # bed
@@ -62,11 +235,24 @@
 		modifier = {
 			factor = 0
 			is_alive = yes
-			NOT = { trait = incapable }
-			NOT = { trait = infirm }
+			NOR = {
+				trait = incapable
+				AND = {
+					trait = infirm
+					prisoner = no
+				}
+				AND = {
+					prisoner = yes
+					has_character_modifier = house_arrest
+				}
+			}
 		}
 		modifier = {
-			factor = 0.001
+			factor = 0
+			in_command = yes
+		}
+		modifier = {
+			factor = 0
 			OR = {
 				death_sacrificed_trigger = yes
 				death_reason = death_battle
@@ -74,10 +260,26 @@
 				death_reason = death_dungeon
 			}
 		}
+		#modifier = {
+		#	factor = 0
+		#	trait = infirm
+		#	prisoner = yes
+		#}
 		modifier = {
-			factor = 0.02
-			trait = infirm
-			is_alive = yes
+			factor = 0
+			trait = saint
+			has_global_flag = EMF
+		}
+		modifier = {
+			factor = 0
+			NOT = { has_global_flag = EMF }
+			is_alive = no
+			OR = {
+				has_nickname = nick_the_saint
+				has_nickname = nick_the_martyr
+				has_nickname = nick_the_apostle
+				
+			}
 		}
 	}
 	
@@ -93,6 +295,10 @@
 				}
 			}
 		}
+		modifier = {
+			factor = 0
+			is_tribal = yes
+		}
 	}
 	
 	6 = { # military camp
@@ -102,8 +308,9 @@
 			OR = {
 				AND = {
 					is_alive = yes
-					in_command = no
-					NOT = { has_job_title  = job_marshal }
+					#in_command = no
+					NOT = { siege = { is_attacker = yes } }
+					#NOT = { has_job_title  = job_marshal }
 				}
 				AND = {
 					is_alive = no
@@ -112,24 +319,105 @@
 			}
 		}
 		modifier = {
-			factor = 0.02
-			has_job_title = job_marshal
+			factor = 0
+			trait = saint
+			has_global_flag = EMF
 		}
-	}
-	
-	7 = { # Dolmen
-		factor = 5
 		modifier = {
 			factor = 0
-			NOT = { religion_group = westerosi_pagan_group }
-		}
-		modifier = {
-			factor = 100
+			NOT = { has_global_flag = EMF }
 			is_alive = no
+			OR = {
+				has_nickname = nick_the_saint
+				has_nickname = nick_the_martyr
+				has_nickname = nick_the_apostle
+				
+			}
+		}
+		#modifier = {
+		#	factor = 0
+		#	OR = {
+		#		is_nomadic = yes
+		#		AND = {
+		#			liege = { is_nomadic = yes }
+		#			is_landed = no
+		#		}
+		#	}
+		#	war = no
+		#}
+		#modifier = {
+		#	factor = 0.02
+		#	in_command = no
+		#	has_job_title = job_marshal
+		#}
+	}
+	
+	7 = { # Wildling Encampement (former Dolmen)
+		factor = 1
+		modifier = {
+			factor = 1.5
+			is_tribal = yes
 		}
 		modifier = {
-			factor = 2
-			is_priest = yes
+			factor = 5
+			OR = {
+				is_landed = yes
+				spouse = { is_landed = yes }
+				AND = {
+					liege = { family = ROOT }
+					is_landed = no
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
+		}
+		modifier = {
+			factor = 0
+			NOR = {
+				is_tribal = yes
+				is_nomadic = yes
+				AND = {
+					liege = {
+						OR = {
+							is_tribal = yes
+							is_nomadic = yes
+						}
+					}
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+				AND = {
+					is_theocracy = yes
+					OR = {
+						religion = old_gods_beyond
+						religion = old_gods_beyond_white
+					}
+				}
+				AND = {
+					liege = {
+						is_theocracy = yes
+						OR = {
+							religion = old_gods_beyond
+							religion = old_gods_beyond_white
+						}
+					}
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+			}
 		}
 	}
 	
@@ -142,7 +430,7 @@
 			NOT = { death_execution_trigger = yes }
 		}
 		modifier = {
-			factor = 20
+			factor = 1.7
 			OR = {
 				trait = impaler
 				death_execution_trigger = yes
@@ -151,25 +439,115 @@
 	}
 	
 	9 = { # Church
-		factor = 100
+		factor = 1
 		modifier = {
 			factor = 0
 			NOT = { religion_group = the_seven_group }
 		}
+		#modifier = {
+		#	factor = 0
+		#	is_landed = no
+		#}
+		modifier = {
+			factor = 0
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
+		}
 		modifier = {
 			factor = 0
 			OR = {
-				is_ruler = no
-				is_theocracy = no
+				is_nomadic = yes
+				is_tribal = yes
+				AND = {
+					liege = {
+						OR = {
+							is_nomadic = yes
+							is_tribal = yes
+						}
+					}
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
 			}
 		}
+		modifier = {
+			factor = 2
+			OR = {
+				trait = septon
+				trait = septa
+				trait = silent_sister
+				trait = theologian
+				is_priest = yes
+			}
+		}
+		modifier = {
+			factor = 10
+			government = theocracy_government
+			is_landed = yes
+		}
+		#modifier = {
+		#	factor = 3
+		#	liege = { is_theocracy = yes }
+		#	OR = {
+		#		is_landed = no
+		#		AND = {
+		#			is_landed = yes
+		#			has_job_title = yes
+		#		}
+		#	}
+		#}
 	}
 	
 	10 = { # Desert
-		factor = 5
+		factor = 1
 		modifier = {
 			factor = 0
-			NOT = { culture_group = dornish }
+			location = { NOT = { region = world_dorne } }
+			location = { NOT = { terrain = desert } }
+		}
+		modifier = {
+			factor = 2
+			location = { terrain = desert }
+		}
+		modifier = {
+			factor = 0
+			location = { terrain = marsh }
+		}
+		modifier = {
+			factor = 0
+			siege = { is_attacker = no }
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				is_nomadic = yes
+				AND = {
+					liege = { is_nomadic = yes }
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+			}
+		}
+		#modifier = {
+		#	factor = 10
+		#	OR = {
+		#		trait = desert_father
+		#		trait = desert_mother
+		#	}
+		#}
+		modifier = {
+			factor = 0
+			has_character_modifier = in_seclusion
 		}
 	}
 	
@@ -191,19 +569,89 @@
 	}
 	
 	12 = { # Ocean w ships
-		factor = 10
+		factor = 1
 		modifier = {
 			factor = 0
-			is_patrician = no
+			culture_group = iron_islander
+		}
+		modifier = {
+			factor = 0
+			location = {
+				NOR = {
+					port = yes
+					is_land = no
+					NOT = { region = world_beyond_the_wall }
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				is_nomadic = yes
+				AND = {
+					liege = { is_nomadic = yes }
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+		}
+		modifier = {
+			factor = 0
+			has_character_modifier = in_seclusion
 		}
 	}
 	
-	13 = { # Muslim interior
-		factor = 2
+	13 = { # Ocean w ships for Ironborn (former Muslim interior)
+		factor = 1
 		modifier = {
 			factor = 0
-			NOT = { religion_group = valyrian_group }
-			NOT = { religion_group = eastern_group }
+			NOT = { culture_group = iron_islander }
+		}
+		modifier = {
+			factor = 2.5
+			culture_group = iron_islander
+		}
+		modifier = {
+			factor = 0
+			location = {
+				NOR = {
+					port = yes
+					is_land = no
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				is_nomadic = yes
+				AND = {
+					liege = { is_nomadic = yes }
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+		}
+		modifier = {
+			factor = 0
+			has_character_modifier = in_seclusion
 		}
 	}
 	
@@ -223,27 +671,197 @@
 		}
 	}
 	
-	15 = { # Muslim interior 2
-		factor = 5
+	15 = { # Dornish throne room (former Muslim interior 2)
+		factor = 30
 		modifier = {
 			factor = 0
-			NOT = { religion_group = valyrian_group }
+			NOT = { location = { culture_group = dornish } }
+		}
+		modifier = {
+			factor = 0
+			NOT = { real_tier = king }
+			NOT = { real_tier = emperor }
+			NOT = { is_offmap_tag_including_dead = offmap_freehold }
+		}
+		modifier = {
+			factor = 0
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
+			NOT = { is_offmap_tag_including_dead = offmap_freehold }
+		}
+		modifier = {
+			factor = 0
+			#location = {
+			#	NOT = {
+			#		holding_type = castle
+			#	}
+			#}
+			NOT = {
+				is_feudal = yes
+			}
+			NOT = { is_offmap_tag_including_dead = offmap_freehold }
+		}
+		modifier = {
+			factor = 0
+			trait = in_hiding
+		}
+		modifier = {
+			factor = 0
+			liege = {
+				OR = {
+					is_tribal = yes
+					is_nomadic = yes
+				}
+			}
+			has_job_title = yes
 		}
 	}
 
 	16 = { # Mongol camp 1
-		factor = 1
+		factor = 2
 		modifier = {
 			factor = 0
-			NOT = { religion_group = eastern_group }
+			NOR = {
+				is_nomadic = yes
+				AND = {
+					liege = { is_nomadic = yes }
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			NOT = { siege = { is_attacker = no } }
+			location = {
+				OR = {
+				#	terrain = arctic
+					terrain = mountain
+					terrain = desert
+				#	terrain = jungle
+				#	terrain = marsh
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			location = {
+				region = world_africa
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				is_landed = yes
+				spouse = { is_landed = yes }
+				AND = {
+					liege = { family = ROOT }
+					is_landed = no
+				}
+				AND = {
+					liege = { is_nomadic = yes }
+					has_job_title = yes
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			NOR = {
+				is_nomadic = yes
+				AND = {
+					liege = { is_nomadic = yes }
+					is_ruler = no
+				}
+			}
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				is_nomadic = yes
+				AND = {
+					liege = { is_nomadic = yes }
+					is_ruler = no
+				}
+			}
+			war = yes
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
 		}
 	}
 
-	17 = { # Mongol camp 2
+	17 = { # Tribal Interior (former Mongol camp 2)
 		factor = 1
 		modifier = {
+			factor = 2
+			is_tribal = yes
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				is_landed = yes
+				spouse = { is_landed = yes }
+				AND = {
+					liege = { family = ROOT }
+					is_landed = no
+				}
+			}
+		}
+		modifier = {
 			factor = 0
-			NOT = { religion_group = eastern_group }
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
+		}
+		modifier = {
+			factor = 0
+			NOR = {
+				is_tribal = yes
+				is_nomadic = yes
+				AND = {
+					liege = {
+						OR = {
+							is_tribal = yes
+							is_nomadic = yes
+						}
+					}
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+				AND = {
+					is_theocracy = yes
+					OR = {
+						religion = old_gods_beyond
+						religion = old_gods_beyond_white
+					}
+				}
+				AND = {
+					liege = {
+						is_theocracy = yes
+						OR = {
+							religion = old_gods_beyond
+							religion = old_gods_beyond_white
+						}
+					}
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+			}
 		}
 	}
 
@@ -256,37 +874,393 @@
 		}
 	}
 
-	19 = { # Muslim mosque
-		factor = 100
-		modifier = {
-			factor = 0
-			NOT = { religion_group = valyrian_group }
-			NOT = { religion_group = eastern_group }
-		}
-		modifier = {
-			factor = 0
-			OR = {
-				is_ruler = no
-				is_theocracy = no
-			}
-		}
-	}
-
-	20 = { # Pagan human sacrifice
+	19 = { # "Meadow" (former Muslim mosque)
 		factor = 1
 		modifier = {
 			factor = 0
-			NOT = { religion_group = westerosi_pagan_group }
-			NOT = { death_sacrificed_trigger = yes }
+			location = {
+				NOR = {
+					region = world_the_reach
+					region = world_the_riverlands
+					region = world_the_blackwater
+				}
+			}
 		}
 		modifier = {
-			factor = 1000
-			death_sacrificed_trigger = yes
+			factor = 0
+			location = {
+				OR = {
+					terrain = arctic
+					terrain = desert
+					terrain = steppe
+					terrain = mountain
+				}
+			}
 		}
 		modifier = {
-			factor = 10
-			is_priest = yes
+			factor = 2
+			location = {
+				OR = {
+					terrain = plains
+					terrain = woods
+				}
+			}
 		}
+		modifier = {
+			factor = 0
+			siege = { is_attacker = no }
+		}
+		modifier = {
+			factor = 0
+			has_character_modifier = in_seclusion
+		}
+	}
+
+	20 = { # Weirwoodtree
+		factor = 75
+		modifier = {
+			factor = 0
+			NOR = { 
+				religion = old_gods
+				religion = old_gods_beyond
+				religion = old_gods_beyond_white
+			}
+		}
+		modifier = {
+			factor = 0
+			is_priest = no
+		}
+	}
+	
+	21 = { # Valyrian Hall
+		factor = 2
+		modifier = {
+			factor = 0
+			location = { NOT = { region = world_essos } }
+		}
+		#modifier = {
+		#	factor = 0.5
+		#	NOT = { culture_group = valyrian }
+		#}
+		modifier = {
+			factor = 2
+			location = { culture_group = valyrian }
+			OR = {
+				is_landed = yes
+				spouse = { is_landed = yes }
+				AND = {
+					liege = { family = ROOT }
+					is_landed = no
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			has_character_modifier = in_seclusion
+		}
+	}
+	
+	22 = { # Valyrian Estate Interior
+		factor = 1
+		modifier = {
+			factor = 2
+			location = {
+				region = world_essos
+			}
+		}
+		modifier = {
+			factor = 0
+			location = {
+				NAND = {
+					location= { region = world_essos }
+					location = { culture_group = valyrian }
+				}
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				is_landed = yes
+				spouse = { is_landed = yes }
+				AND = {
+					liege = { family = ROOT }
+					is_landed = no
+				}
+			}
+			NOT = { is_theocracy = yes }
+			NOT = { government = theocracy_government }
+		}
+		modifier = {
+			factor = 0
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
+		}
+		modifier = {
+			factor = 0
+			NOR = {
+				is_feudal = yes
+				is_theocracy = yes
+				is_republic = yes
+				AND = {
+					liege = {
+						OR = {
+							is_feudal = yes
+							is_theocracy = yes
+							is_republic = yes
+						}
+					}
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			liege = {
+				OR = {
+					is_tribal = yes
+					is_nomadic = yes
+				}
+			}
+			OR = {
+				is_landed = no
+				AND = {
+					is_landed = yes
+					has_job_title = yes
+				}
+			}
+		}
+	}
+	
+	23 = { # Valyrian Estate Interior
+		factor = 1
+		modifier = {
+			factor = 2
+			location = {
+				region = world_essos
+			}
+		}
+		modifier = {
+			factor = 0
+			location = {
+				NAND = {
+					location= { region = world_essos }
+					location = { culture_group = valyrian }
+				}
+			}
+		}
+		modifier = {
+			factor = 5
+			OR = {
+				is_landed = yes
+				spouse = { is_landed = yes }
+				AND = {
+					liege = { family = ROOT }
+					is_landed = no
+				}
+			}
+			NOT = { is_theocracy = yes }
+			NOT = { government = theocracy_government }
+		}
+		modifier = {
+			factor = 0
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
+		}
+		modifier = {
+			factor = 0
+			NOR = {
+				is_feudal = yes
+				is_theocracy = yes
+				is_republic = yes
+				AND = {
+					liege = {
+						OR = {
+							is_feudal = yes
+							is_theocracy = yes
+							is_republic = yes
+						}
+					}
+					OR = {
+						is_landed = no
+						AND = {
+							is_landed = yes
+							has_job_title = yes
+						}
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			liege = {
+				OR = {
+					is_tribal = yes
+					is_nomadic = yes
+				}
+			}
+			OR = {
+				is_landed = no
+				AND = {
+					is_landed = yes
+					has_job_title = yes
+				}
+			}
+		}
+	}
+	
+	24 = { # Winter Forest (Winterwald)
+		factor = 2
+		modifier = {
+			factor = 0
+			location = {
+				NOT	= { region = world_beyond_the_wall }
+			}
+		}
+		modifier = {
+			factor = 2
+			location = {
+				region = world_beyond_the_wall
+			}
+		}
+		modifier = {
+			factor = 1.5
+			location = { terrain = arctic }
+		}
+		modifier = {
+			factor = 0
+			location = {
+				OR = {
+					region = world_steppe_tarim
+					terrain = steppe
+					terrain = plains
+					terrain = farmlands
+					terrain = desert
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			siege = { is_attacker = no }
+		}
+		modifier = {
+			factor = 0
+			has_character_modifier = in_seclusion
+		}
+	}
+	
+	25 = { # Valyrian throne room
+		factor = 30
+		modifier = {
+			factor = 0
+			NOT = { location = { culture_group = valyrian } }
+		}
+		modifier = {
+			factor = 0
+			NOT = { real_tier = king }
+			NOT = { real_tier = emperor }
+			NOT = { is_offmap_tag_including_dead = offmap_freehold }
+		}
+		modifier = {
+			factor = 0
+			in_command = yes
+			NOT = { siege = { is_attacker = no } }
+			NOT = { is_offmap_tag_including_dead = offmap_freehold }
+		}
+		modifier = {
+			factor = 0
+			#location = {
+			#	NOT = {
+			#		holding_type = castle
+			#	}
+			#}
+			NOT = {
+				is_feudal = yes
+			}
+			NOT = { is_offmap_tag_including_dead = offmap_freehold }
+		}
+		modifier = {
+			factor = 0
+			trait = in_hiding
+		}
+		modifier = {
+			factor = 0
+			liege = {
+				OR = {
+					is_tribal = yes
+					is_nomadic = yes
+				}
+			}
+			has_job_title = yes
+		}
+	}
+	
+	26 = { # Faceless Men catacombs		so far unused would work great with a society
+		factor = 0
+		#modifier = {
+		#	factor = 0
+		#	NOT = { religion = faceless_men }
+		#}
+		#modifier = {
+		#	factor = 0
+		#	NOT = { location = c_braavos }
+		#}
+		#modifier = {
+		#	factor = 0
+		#	is_landed = no
+		#}
+		#modifier = {
+		#	factor = 0
+		#	in_command = yes
+		#	NOT = { siege = { is_attacker = no } }
+		#}
+		#modifier = {
+		#	factor = 0
+		#	OR = {
+		#		is_nomadic = yes
+		#		is_tribal = yes
+		#		AND = {
+		#			liege = {
+		#				OR = {
+		#					is_nomadic = yes
+		#					is_tribal = yes
+		#				}
+		#			}
+		#			OR = {
+		#				is_landed = no
+		#				AND = {
+		#					is_landed = yes
+		#					has_job_title = yes
+		#				}
+		#			}
+		#		}
+		#	}
+		#}
+		#modifier = {
+		#	factor = 2
+		#		is_priest = yes
+		#}
+		#modifier = {
+		#	factor = 10
+		#	government = theocracy_government
+		#	is_landed = yes
+		#}
+		#modifier = {
+		#	factor = 3
+		#	liege = { is_theocracy = yes }
+		#	OR = {
+		#		is_landed = no
+		#		AND = {
+		#			is_landed = yes
+		#			has_job_title = yes
+		#		}
+		#	}
+		#}
 	}
 }
 
