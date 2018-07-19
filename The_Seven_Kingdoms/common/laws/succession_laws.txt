@@ -805,47 +805,46 @@ succession_laws = {
 	
 	succ_open_elective = {
 		potential = {
-			#NOT = { title = k_papal_state }
-            NOT = { title = k_the_most_devout }
 			temporary = no
 			OR = {
 				is_primary_type_title = yes
 				holy_order = yes
 				AND = {
+					is_landless_type_title = yes
+					is_tribal_type_title = no
+				}
+				AND = {
 					tier = baron
 					OR = {
 						is_republic = yes
-						#AND = {
-							is_theocracy = yes
-							#NOT = { holder_scope = { religion_group = muslim } }
-						#}
+						is_theocracy = yes
 					}
 				}
-				holder_scope = {
+				holder_scope = { 
 					OR = {
 						is_republic = yes
-						#AND = {
-							is_theocracy = yes
-							#NOT = { religion_group = muslim }
-						#}
+						is_theocracy = yes
+						AND = {
+							government = nights_watch_government
+							independent = yes
+						}	
 					}
 				}
 			}
 			OR = {
 				is_landless_type_title = yes
-				holder_scope = { is_theocracy = no }
-				holder_scope = { 
-					NOT = { religion = the_seven }
-                    #NOT = { religion = catholic }
-					#NOT = { religion = fraticelli }
-				}
+				holder_scope = { is_republic = yes }
+				holder_scope = { NOT = { religion = the_seven } }
 			}
 			holder_scope = { 
 				is_patrician = no
 				is_merchant_republic = no
+				is_nomadic = no
+				# is_military_command_trigger = no
 				OR = {
 					independent = yes
-					is_feudal = no
+					is_feudal = yes
+					is_tribal = yes
 					NOT = {
 						any_liege = {
 							holy_order = yes
@@ -853,20 +852,35 @@ succession_laws = {
 					}
 				}
 			}
-			NAND = { 
-				has_law = succession_voting_power_1
-				has_law = succ_feudal_elective
-			}
-			NOT = { holder_scope = { government = confucian_bureaucracy } }
-			NOT = { holder_scope = { government = chinese_imperial_government } }
 		}
-		
 		effect = {
 			succession = open_elective
 		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+			}
+			modifier = {
+				factor = 0	
+				holder_scope = {
+					is_republic = no					
+				}	
+			}
+			modifier = {
+				factor = 0
+				holder_scope = {
+					OR = {
+						war = yes
+						NOT = { age = 16 }
+						current_heir = { NOT = { is_liege_of = PREV } }
+					}
+				}	
+			}
+		}		
 		revoke_allowed = {
 			always = no
-		}
+		}			
 	}
 	succ_catholic_bishopric = {
 		potential = {
