@@ -1,0 +1,712 @@
+namespace = dragon
+
+#calculates the dragon's stength
+character_event = {
+	id = dragon.1
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		is_dragon = yes
+	}
+	
+	immediate = {
+		ROOT = { 
+			export_to_variable = { which = comratvar value = combat_rating }
+			export_to_variable = { which = healthvar value = health }
+			export_to_variable = { which = sizeforlocvar value = martial }
+			export_to_variable = { which = sizevar value = martial }
+			export_to_variable = { which = drastrvar value = martial }
+			divide_variable = { which = sizevar value = 10 }
+			divide_variable = { which = drastrvar value = 10 }
+			multiply_variable = { which = comratvar which = healthvar }
+			change_variable = { which = drastrvar which = comratvar }
+			#divide_variable = { which = drastrvar value = 10 }
+			if = {
+				limit = { is_tamed_dragon = yes }
+				set_variable = { wich = dragon_status value = 2 }
+			}
+		}
+		repeat_event = { id = dragon.1 days = 31 }
+	}
+}
+
+#simulates the dragons growth
+character_event = {
+	id = dragon.2
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		is_dragon = yes
+	}
+	
+	immediate = {
+		change_martial = 1
+		random = {
+			chance = 25
+			modifier = {
+				factor = 2
+				trait = dragon_strong
+			}
+			change_martial = 1
+		}
+	}
+}
+
+#kills the dragon
+character_event = {
+	id = dragon.3
+
+	#is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		is_dragon = yes
+		age = 110
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	immediate = {
+		random = {
+			chance = 30
+			modifier = {
+				factor = 0
+				age < 110
+			}
+			modifier = {
+				factor = 1.2
+				age <= 120
+				NOT = { age <= 110 }
+			}
+			modifier = {
+				factor = 1.4
+				age <= 130
+				NOT = { age <= 120 }
+			}
+			modifier = {
+				factor = 1.6
+				age <= 140
+				NOT = { age <= 130 }
+			}
+			modifier = {
+				factor = 1.8
+				age <= 150
+				NOT = { age <= 140 }
+			}
+			modifier = {
+				factor = 2.2
+				age <= 160
+				NOT = { age <= 150 }
+			}
+			death = { death_reason = death_natural } 
+		}
+	}
+}
+
+#spawns dragon eggs
+character_event = {
+	id = dragon.4
+
+	#is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		#is_dragon = yes
+		#age = 110
+		always = no
+	}
+
+	#mean_time_to_happen = {
+	#	months = 11
+	#}
+	
+	immediate = {
+		random = {
+			chance = 20
+			#age modifiers
+			modifier = {
+				factor = 0
+				age < 80
+			}
+			modifier = {
+				factor = 0.5
+				age <= 80
+				NOT = { age < 70 }
+			}
+			modifier = {
+				factor = 0.6
+				age <= 90
+				NOT = { age < 80 }
+			}
+			modifier = {
+				factor = 0.7
+				age <= 100
+				NOT = { age < 90 }
+			}
+			modifier = {
+				factor = 1.2
+				age <= 110
+				NOT = { age < 100 }
+			}
+			modifier = {
+				factor = 1.6
+				age <= 120
+				NOT = { age < 110 }
+			}
+			modifier = {
+				factor = 1.8
+				age <= 130
+				NOT = { age < 120 }
+			}
+			modifier = {
+				factor = 2
+				age <= 140
+				NOT = { age < 130 }
+			}
+			modifier = {
+				factor = 3.3
+				age <= 150
+				NOT = { age < 140 }
+			}
+			#modifier = {
+			#	factor = 1
+			#	num_of_children <= 1
+			#}
+			modifier = {
+				factor = 0.8
+				num_of_children <= 2
+				NOT = { num_of_children < 1 }
+			}
+			modifier = {
+				factor = 0.6
+				num_of_children <= 3
+				NOT = { num_of_children < 2 }
+			}
+			create_character = {
+				random_traits = no
+				name = "Dragon egg"
+				dynasty = none
+				religion = dragon_religion
+				culture = dragon_egg_culture
+				female = no
+				age = 0
+				attributes = {
+					martial = 0
+					diplomacy = 0
+					stewardship = 0
+					intrigue = 0
+					learning = 0
+				}
+				immortal_age = 0
+				trait = "dragonegg"
+				trait = "dragon_base_trait"
+				trait = "dragon_trait"
+			}
+			new_character = {
+				set_father = ROOT
+			}
+		}
+	}
+}
+
+#use dragon battle
+character_event = {
+	id = dragon.5
+
+	#is_triggered_only = yes
+	#hide_window = yes
+	
+	trigger = {
+		use_dragon_in_battle_potential = yes
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {	
+		any_current_enemy =  {
+			any_realm_character = {
+				limit = {
+					in_command = yes
+					prisoner = no
+					NOT = { character = ROOT }
+					is_dragon_rider = no
+					at_location = ROOT
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 15 } 
+								NOT = { check_variable = { which = drastrvar value < 10 } } 
+							}
+						}
+					}
+					troops = -0.02
+					morale = -0.15
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 20 } 
+								NOT = { check_variable = { which = drastrvar value < 15 } } 
+							}
+						}
+					}
+					troops = -0.05
+					morale = -0.19
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 25 } 
+								NOT = { check_variable = { which = drastrvar value < 20 } } 
+							}
+						}
+					}
+					troops = -0.09
+					morale = -0.22
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 30 } 
+								NOT = { check_variable = { which = drastrvar value < 25 } } 
+							}
+						}
+					}
+					troops = -0.12
+					morale = -0.27
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 35 } 
+								NOT = { check_variable = { which = drastrvar value < 30 } } 
+							}
+						}
+					}
+					troops = -0.16
+					morale = -0.31
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 40 } 
+								NOT = { check_variable = { which = drastrvar value < 35 } } 
+							}
+						}
+					}
+					troops = -0.2
+					morale = -0.39
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 45 } 
+								NOT = { check_variable = { which = drastrvar value < 40 } } 
+							}
+						}
+					}
+					troops = -0.25
+					morale = -0.44
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 50 } 
+								NOT = { check_variable = { which = drastrvar value < 45 } } 
+							}
+						}
+					}
+					troops = -0.3
+					morale = -0.50
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 55 } 
+								NOT = { check_variable = { which = drastrvar value < 50 } } 
+							}
+						}
+					}
+					troops = -0.35
+					morale = -0.56
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 60 } 
+								NOT = { check_variable = { which = drastrvar value < 55 } } 
+							}
+						}
+					}
+					troops = -0.4
+					morale = -0.62
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 65 } 
+								NOT = { check_variable = { which = drastrvar value < 60 } } 
+							}
+						}
+					}
+					troops = -0.45
+					morale = -0.68
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 70 } 
+								NOT = { check_variable = { which = drastrvar value < 65 } } 
+							}
+						}
+					}
+					troops = -0.5
+					morale = -0.73
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 75 } 
+								NOT = { check_variable = { which = drastrvar value < 70 } } 
+							}
+						}
+					}
+					troops = -0.55
+					morale = -0.80
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 80 } 
+								NOT = { check_variable = { which = drastrvar value < 75 } } 
+							}
+						}
+					}
+					troops = -0.65
+					morale = -0.92
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 85 } 
+								NOT = { check_variable = { which = drastrvar value < 80 } } 
+							}
+						}
+					}
+					troops = -0.7
+					morale = -0.97
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 90 } 
+								NOT = { check_variable = { which = drastrvar value < 85 } } 
+							}
+						}
+					}
+					troops = -0.75
+					morale = -0.98
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 95 } 
+								NOT = { check_variable = { which = drastrvar value < 90 } } 
+							}
+						}
+					}
+					troops = -0.99
+					morale = -0.99
+				}
+			}
+		}
+	}
+}
+
+#Use dragon siege
+character_event = {
+	id = dragon.6
+
+	#is_triggered_only = yes
+
+	trigger = {
+		use_dragon_in_siege_potential = yes
+	}
+	
+	mean_time_to_happen = { days = 1 }
+	
+	option = {
+		siege =  {
+			enemy = {
+				limit = {
+					in_command = yes
+					#is_defender = yes
+					#prisoner = no
+					NOT = { character = ROOT }
+					is_dragon_rider = no
+					at_location = ROOT
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 15 } 
+								NOT = { check_variable = { which = drastrvar value < 10 } } 
+							}
+						}
+					}
+					troops = -0.02
+					morale = -0.15
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 20 } 
+								NOT = { check_variable = { which = drastrvar value < 15 } } 
+							}
+						}
+					}
+					troops = -0.05
+					morale = -0.19
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 25 } 
+								NOT = { check_variable = { which = drastrvar value < 20 } } 
+							}
+						}
+					}
+					troops = -0.09
+					morale = -0.22
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 30 } 
+								NOT = { check_variable = { which = drastrvar value < 25 } } 
+							}
+						}
+					}
+					troops = -0.12
+					morale = -0.27
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 35 } 
+								NOT = { check_variable = { which = drastrvar value < 30 } } 
+							}
+						}
+					}
+					troops = -0.16
+					morale = -0.31
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 40 } 
+								NOT = { check_variable = { which = drastrvar value < 35 } } 
+							}
+						}
+					}
+					troops = -0.2
+					morale = -0.39
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 45 } 
+								NOT = { check_variable = { which = drastrvar value < 40 } } 
+							}
+						}
+					}
+					troops = -0.25
+					morale = -0.44
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 50 } 
+								NOT = { check_variable = { which = drastrvar value < 45 } } 
+							}
+						}
+					}
+					troops = -0.3
+					morale = -0.50
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 55 } 
+								NOT = { check_variable = { which = drastrvar value < 50 } } 
+							}
+						}
+					}
+					troops = -0.35
+					morale = -0.56
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 60 } 
+								NOT = { check_variable = { which = drastrvar value < 55 } } 
+							}
+						}
+					}
+					troops = -0.4
+					morale = -0.62
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 65 } 
+								NOT = { check_variable = { which = drastrvar value < 60 } } 
+							}
+						}
+					}
+					troops = -0.45
+					morale = -0.68
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 70 } 
+								NOT = { check_variable = { which = drastrvar value < 65 } } 
+							}
+						}
+					}
+					troops = -0.5
+					morale = -0.73
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 75 } 
+								NOT = { check_variable = { which = drastrvar value < 70 } } 
+							}
+						}
+					}
+					troops = -0.55
+					morale = -0.80
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 80 } 
+								NOT = { check_variable = { which = drastrvar value < 75 } } 
+							}
+						}
+					}
+					troops = -0.65
+					morale = -0.92
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 85 } 
+								NOT = { check_variable = { which = drastrvar value < 80 } } 
+							}
+						}
+					}
+					troops = -0.7
+					morale = -0.97
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 90 } 
+								NOT = { check_variable = { which = drastrvar value < 85 } } 
+							}
+						}
+					}
+					troops = -0.75
+					morale = -0.98
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value <= 95 } 
+								NOT = { check_variable = { which = drastrvar value < 90 } } 
+							}
+						}
+					}
+					troops = -0.99
+					morale = -0.99
+				}
+			}
+		}
+	}
+}
