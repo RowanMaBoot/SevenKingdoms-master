@@ -22,7 +22,6 @@ New society: The Western Dragon Riders. It grants boons and its leader is always
 Maybe a decision based trigger for the siege and battle event.
 Localisation
 
-
 #############################
 Information:
 #############################
