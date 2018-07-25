@@ -2295,22 +2295,18 @@
 
 	# Blank
 	11 = {
-		factor = 3
+		factor = 3	
 		modifier = {
-			factor = 20000
-			trait = shieldmaiden
-			NOT = { has_minor_title = title_commander }
-		}
-		modifier = {
-			factor = 0
+			factor = 100	
 			OR = {
-				real_tier = emperor
-				real_tier = king
-				real_tier = duke
-				has_minor_title = title_prince
-				spouse = { real_tier = emperor }
-				spouse = { real_tier = king }
-				spouse = { real_tier = duke }
+				prisoner = yes
+				AND = {
+					in_command = no
+					OR =  {
+						has_job_title  = job_marshal
+						primary_title = { OR = { mercenary = yes holy_order = yes } }
+					}
+				}
 			}
 		}
 	}
