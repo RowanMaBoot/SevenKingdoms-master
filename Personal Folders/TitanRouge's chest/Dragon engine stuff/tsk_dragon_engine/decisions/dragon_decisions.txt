@@ -1,5 +1,5 @@
-#dislpays dragon's stats
 targetted_decisions = {
+	#dislpays dragon's stats
 	show_dragon_stats = {
 		only_playable = yes
 		#filter = home_court
@@ -13,6 +13,76 @@ targetted_decisions = {
 		}
 		effect = {
 
+		}
+	}
+	
+	#field of fire
+	use_dragon_in_combat = {
+		only_playable = yes
+		filter = self
+		#ai_target_filter = home_court
+		
+		potential = {
+			use_dragon_in_battle_potential = yes
+			had_character_flag = { flag = used_dragon_for_battle days = 12 }
+		}
+		
+		allow = {
+		}
+		effect = {
+			hidden_tooltip = {
+				ROOT = { set_character_flag = used_dragon_for_battle }
+				any_friend = {
+					limit = { is_dragon = yes } 
+					# Dragon stat Calculation
+					export_to_variable = { which = comratvar value = combat_rating }
+					export_to_variable = { which = healthvar value = health }
+					export_to_variable = { which = sizeforlocvar value = martial }
+					export_to_variable = { which = sizevar value = martial }
+					export_to_variable = { which = drastrvar value = martial }
+					divide_variable = { which = sizevar value = 10 }
+					divide_variable = { which = drastrvar value = 10 }
+					multiply_variable = { which = comratvar which = healthvar }
+					change_variable = { which = drastrvar which = comratvar }
+					#divide_variable = { which = drastrvar value = 10 }
+				}
+				character_event = { id = dragon.5 }
+			}
+		}
+	}
+	
+	#siege of fire
+	use_dragon_in_siege = {
+		only_playable = yes
+		filter = self
+		#ai_target_filter = home_court
+		
+		potential = {
+			use_dragon_in_siege_potential = yes
+			had_character_flag = { flag = used_dragon_for_siege days = 12 }
+		}
+		
+		allow = {
+		}
+		effect = {
+			hidden_tooltip = {
+				ROOT = { set_character_flag = used_dragon_for_siege}
+				any_friend = {
+					limit = { is_dragon = yes }
+					# Dragon stat Calculation
+					export_to_variable = { which = comratvar value = combat_rating }
+					export_to_variable = { which = healthvar value = health }
+					export_to_variable = { which = sizeforlocvar value = martial }
+					export_to_variable = { which = sizevar value = martial }
+					export_to_variable = { which = drastrvar value = martial }
+					divide_variable = { which = sizevar value = 10 }
+					divide_variable = { which = drastrvar value = 10 }
+					multiply_variable = { which = comratvar which = healthvar }
+					change_variable = { which = drastrvar which = comratvar }
+					#divide_variable = { which = drastrvar value = 10 }
+				}
+				character_event = { id = dragon.6 }
+			}
 		}
 	}
 }
