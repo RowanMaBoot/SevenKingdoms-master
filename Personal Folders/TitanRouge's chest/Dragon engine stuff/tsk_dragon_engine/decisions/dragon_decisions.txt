@@ -17,21 +17,29 @@ targetted_decisions = {
 	}
 	
 	#field of fire
-	use_dragon_in_combat = {
+	use_dragon_in_battle = {
 		only_playable = yes
 		filter = self
 		#ai_target_filter = home_court
 		
 		potential = {
-			use_dragon_in_battle_potential = yes
-			had_character_flag = { flag = used_dragon_for_battle days = 12 }
+			ROOT = { is_dragon_rider = yes }
 		}
 		
 		allow = {
+			custom_tooltip = {
+				text = USE_DRAGON_IN_BATTLE_CUSTOM_TOOLTIP
+				hidden_tooltip = {
+					ROOT = {
+						use_dragon_in_battle_potential = yes
+						NOT = { has_character_modifier = used_dragon_in_battle_hidden }
+					}
+				}
+			}
 		}
 		effect = {
 			hidden_tooltip = {
-				ROOT = { set_character_flag = used_dragon_for_battle }
+				ROOT = { add_character_modifier = { modifier = used_dragon_in_battle_hidden duration = 12 } }
 				any_friend = {
 					limit = { is_dragon = yes } 
 					# Dragon stat Calculation
@@ -58,15 +66,23 @@ targetted_decisions = {
 		#ai_target_filter = home_court
 		
 		potential = {
-			use_dragon_in_siege_potential = yes
-			had_character_flag = { flag = used_dragon_for_siege days = 12 }
+			ROOT = { is_dragon_rider = yes }
 		}
 		
 		allow = {
+			custom_tooltip = {
+				text = USE_DRAGON_IN_SIEGE_CUSTOM_TOOLTIP
+				hidden_tooltip = {
+					ROOT = { 
+						use_dragon_in_siege_potential = yes
+						NOT = { has_character_modifier = used_dragon_in_siege_hidden }
+					}
+				}
+			}
 		}
 		effect = {
 			hidden_tooltip = {
-				ROOT = { set_character_flag = used_dragon_for_siege}
+				ROOT = { add_character_modifier = { modifier = used_dragon_in_siege_hidden duration = 12 } }
 				any_friend = {
 					limit = { is_dragon = yes }
 					# Dragon stat Calculation

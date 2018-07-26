@@ -19,11 +19,8 @@ character_event = {
 			export_to_variable = { which = sizeforlocvar value = martial }
 			export_to_variable = { which = sizevar value = martial }
 			export_to_variable = { which = drastrvar value = martial }
-			divide_variable = { which = sizevar value = 10 }
-			divide_variable = { which = drastrvar value = 10 }
 			multiply_variable = { which = comratvar which = healthvar }
 			change_variable = { which = drastrvar which = comratvar }
-			#divide_variable = { which = drastrvar value = 10 }
 			
 			# taming chance
 			set_variable = { wich = dratamchavar value = 1 }
@@ -149,7 +146,7 @@ character_event = {
 character_event = {
 	id = dragon.5
 	desc = EVTDESCdragon5
-	picture = GFX_evt_battle_byzantine
+	picture = GFX_evt_Battle_Dragon
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
@@ -179,6 +176,7 @@ character_event = {
 					is_dragon_rider = no
 					at_location = ROOT
 				}
+				opinion = { modifier = used_dragon_against_me who = ROOT years = 6 }
 				if = {
 					limit = { 
 						ROOT = {
@@ -392,7 +390,7 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 95 } 
+								check_variable = { which = drastrvar value = 95 } 
 								NOT = { check_variable = { which = drastrvar value < 90 } } 
 							}
 						}
@@ -430,16 +428,67 @@ character_event = {
 	option = { #Let these stones be their graves
 		name = EVTOPTAdragon6
 		
+		ROOT = {
+			any_friend = {
+				#limit = { is_tamed_dragon = yes }
+				random = {
+					chance = 20
+					
+					modifier = {
+						factor = 0.9
+						check_variable = { which = drastrvar value <= 20 } 
+					}
+					modifier = {
+						factor = 0.9
+						check_variable = { which = drastrvar value <= 25 } 
+					}
+					modifier = {
+						factor = 0.9
+						check_variable = { which = drastrvar value <= 30 } 
+					}
+					modifier = {
+						factor = 0.9
+						check_variable = { which = drastrvar value <= 35 } 
+					}
+					modifier = {
+						factor = 0.9
+						check_variable = { which = drastrvar value <= 40 } 
+					}
+					modifier = {
+						factor = 0.9
+						check_variable = { which = drastrvar value <= 45 } 
+					}
+					modifier = {
+						factor = 0.9
+						check_variable = { which = drastrvar value <= 50 } 
+					}
+					modifier = {
+						factor = 0.9
+						check_variable = { which = drastrvar value <= 55 } 
+					}
+					modifier = {
+						factor = 0.9
+						check_variable = { which = drastrvar value <= 60 } 
+					}
+					modifier = {
+						factor = 0.9
+						check_variable = { which = drastrvar value <= 65 } 
+					}
+				}
+			}
+		}	
+		
 		siege =  {
 			enemy = {
 				limit = {
 					in_command = yes
 					#is_defender = yes
-					#prisoner = no
+					prisoner = no
 					NOT = { character = ROOT }
 					is_dragon_rider = no
 					at_location = ROOT
 				}
+				opinion = { modifier = used_dragon_against_me who = ROOT years = 6 }
 				if = {
 					limit = { 
 						ROOT = {
@@ -653,7 +702,7 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 95 } 
+								check_variable = { which = drastrvar value = 95 } 
 								NOT = { check_variable = { which = drastrvar value < 90 } } 
 							}
 						}
