@@ -12,7 +12,7 @@ character_event = {
 	}
 	
 	immediate = {
-		ROOT = { 
+		#ROOT = { 
 			# Dragon stat Calculation
 			export_to_variable = { which = comratvar value = combat_rating }
 			export_to_variable = { which = healthvar value = health }
@@ -20,6 +20,7 @@ character_event = {
 			export_to_variable = { which = sizevar value = martial }
 			export_to_variable = { which = drastrvar value = martial }
 			multiply_variable = { which = comratvar which = healthvar }
+			divide_variable = { which = comratvar value = 10 }
 			change_variable = { which = drastrvar which = comratvar }
 			
 			# taming chance
@@ -31,30 +32,30 @@ character_event = {
 			}
 			if = {
 				limit = { trait = dragon_maimed }
-				set_variable = { wich = dratamchavar value = 2 }
+				change_variable = { wich = dratamchavar value = 2 }
 			}
 			if = {
 				limit = { trait = dragon_slothful }
-				set_variable = { wich = dratamchavar value = 0.5 }
+				change_variable = { wich = dratamchavar value = 0.5 }
 			}
 			if = {
 				limit = { trait = dragon_humble }
-				set_variable = { wich = dratamchavar value = 1 }
+				change_variable = { wich = dratamchavar value = 1 }
 			}
 			if = {
 				limit = { trait = dragon_friendly }
-				set_variable = { wich = dratamchavar value = 1.5 }
+				change_variable = { wich = dratamchavar value = 1.5 }
 			}
-			# decreased
+			#decreased
 			if = {
 				limit = { trait = dragon_wroth }
 				multiply_variable = { which = dratamchavar value = 0.75 }
 			}
 			if = {
-				limit = { trait = dragon_proud }
+				limit = { trait = dragon_proud } 
 				multiply_variable = { which = dratamchavar value = 0.75 }
 			}
-		}
+		#}
 		repeat_event = { id = dragon.1 days = 31 }
 	}
 }
@@ -175,6 +176,7 @@ character_event = {
 					NOT = { character = ROOT }
 					is_dragon_rider = no
 					at_location = ROOT
+					#has_siege = no
 				}
 				opinion = { modifier = used_dragon_against_me who = ROOT years = 6 }
 				if = {
@@ -182,8 +184,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 15 } 
-								NOT = { check_variable = { which = drastrvar value < 10 } } 
+								check_variable = { which = drastrvar value <= 30 } 
+								NOT = { check_variable = { which = drastrvar value < 20 } } 
 							}
 						}
 					}
@@ -195,8 +197,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 20 } 
-								NOT = { check_variable = { which = drastrvar value < 15 } } 
+								check_variable = { which = drastrvar value <= 40 } 
+								NOT = { check_variable = { which = drastrvar value < 30 } } 
 							}
 						}
 					}
@@ -208,8 +210,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 25 } 
-								NOT = { check_variable = { which = drastrvar value < 20 } } 
+								check_variable = { which = drastrvar value <= 50 } 
+								NOT = { check_variable = { which = drastrvar value < 40 } } 
 							}
 						}
 					}
@@ -221,8 +223,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 30 } 
-								NOT = { check_variable = { which = drastrvar value < 25 } } 
+								check_variable = { which = drastrvar value <= 60 } 
+								NOT = { check_variable = { which = drastrvar value < 50 } } 
 							}
 						}
 					}
@@ -234,8 +236,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 35 } 
-								NOT = { check_variable = { which = drastrvar value < 30 } } 
+								check_variable = { which = drastrvar value <= 70 } 
+								NOT = { check_variable = { which = drastrvar value < 60 } } 
 							}
 						}
 					}
@@ -247,8 +249,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 40 } 
-								NOT = { check_variable = { which = drastrvar value < 35 } } 
+								check_variable = { which = drastrvar value <= 80 } 
+								NOT = { check_variable = { which = drastrvar value < 70 } } 
 							}
 						}
 					}
@@ -260,8 +262,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 45 } 
-								NOT = { check_variable = { which = drastrvar value < 40 } } 
+								check_variable = { which = drastrvar value <= 90 } 
+								NOT = { check_variable = { which = drastrvar value < 80 } } 
 							}
 						}
 					}
@@ -273,8 +275,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 50 } 
-								NOT = { check_variable = { which = drastrvar value < 45 } } 
+								check_variable = { which = drastrvar value <= 100 } 
+								NOT = { check_variable = { which = drastrvar value < 90 } } 
 							}
 						}
 					}
@@ -286,8 +288,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 55 } 
-								NOT = { check_variable = { which = drastrvar value < 50 } } 
+								check_variable = { which = drastrvar value <= 110 } 
+								NOT = { check_variable = { which = drastrvar value < 100 } } 
 							}
 						}
 					}
@@ -299,8 +301,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 60 } 
-								NOT = { check_variable = { which = drastrvar value < 55 } } 
+								check_variable = { which = drastrvar value <= 120 } 
+								NOT = { check_variable = { which = drastrvar value < 110 } } 
 							}
 						}
 					}
@@ -312,8 +314,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 65 } 
-								NOT = { check_variable = { which = drastrvar value < 60 } } 
+								check_variable = { which = drastrvar value <= 130 } 
+								NOT = { check_variable = { which = drastrvar value < 120 } } 
 							}
 						}
 					}
@@ -325,8 +327,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 70 } 
-								NOT = { check_variable = { which = drastrvar value < 65 } } 
+								check_variable = { which = drastrvar value <= 140 } 
+								NOT = { check_variable = { which = drastrvar value < 130 } } 
 							}
 						}
 					}
@@ -338,8 +340,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 75 } 
-								NOT = { check_variable = { which = drastrvar value < 70 } } 
+								check_variable = { which = drastrvar value <= 150 } 
+								NOT = { check_variable = { which = drastrvar value < 140 } } 
 							}
 						}
 					}
@@ -351,8 +353,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 80 } 
-								NOT = { check_variable = { which = drastrvar value < 75 } } 
+								check_variable = { which = drastrvar value <= 160 } 
+								NOT = { check_variable = { which = drastrvar value < 150 } } 
 							}
 						}
 					}
@@ -364,8 +366,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 85 } 
-								NOT = { check_variable = { which = drastrvar value < 80 } } 
+								check_variable = { which = drastrvar value <= 170 } 
+								NOT = { check_variable = { which = drastrvar value < 160 } } 
 							}
 						}
 					}
@@ -377,8 +379,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 90 } 
-								NOT = { check_variable = { which = drastrvar value < 85 } } 
+								check_variable = { which = drastrvar value <= 180 } 
+								NOT = { check_variable = { which = drastrvar value < 170 } } 
 							}
 						}
 					}
@@ -390,13 +392,26 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value = 95 } 
-								NOT = { check_variable = { which = drastrvar value < 90 } } 
+								check_variable = { which = drastrvar value = 190 } 
+								NOT = { check_variable = { which = drastrvar value < 180 } } 
 							}
 						}
 					}
 					troops = -0.99
 					morale = -0.99
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value = 190 } 
+								NOT = { check_variable = { which = drastrvar value < 180 } } 
+							}
+						}
+					}
+					troops = -1
+					morale = -1
 				}
 			}
 		}
@@ -407,7 +422,7 @@ character_event = {
 character_event = {
 	id = dragon.6
 	desc = EVTDESCdragon6
-	picture = GFX_evt_siege
+	picture = GFX_evt_battle_dragon_two
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
@@ -481,12 +496,15 @@ character_event = {
 		siege =  {
 			enemy = {
 				limit = {
-					in_command = yes
-					#is_defender = yes
-					prisoner = no
-					NOT = { character = ROOT }
-					is_dragon_rider = no
-					at_location = ROOT
+					hidden_tooltip = {
+						in_command = yes
+						battle = no
+						#is_defender = yes
+						prisoner = no
+						NOT = { character = ROOT }
+						is_dragon_rider = no
+						at_location = ROOT
+					}
 				}
 				opinion = { modifier = used_dragon_against_me who = ROOT years = 6 }
 				if = {
@@ -494,8 +512,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 15 } 
-								NOT = { check_variable = { which = drastrvar value < 10 } } 
+								check_variable = { which = drastrvar value <= 30 } 
+								NOT = { check_variable = { which = drastrvar value < 20 } } 
 							}
 						}
 					}
@@ -507,8 +525,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 20 } 
-								NOT = { check_variable = { which = drastrvar value < 15 } } 
+								check_variable = { which = drastrvar value <= 40 } 
+								NOT = { check_variable = { which = drastrvar value < 30 } } 
 							}
 						}
 					}
@@ -520,8 +538,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 25 } 
-								NOT = { check_variable = { which = drastrvar value < 20 } } 
+								check_variable = { which = drastrvar value <= 50 } 
+								NOT = { check_variable = { which = drastrvar value < 40 } } 
 							}
 						}
 					}
@@ -533,8 +551,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 30 } 
-								NOT = { check_variable = { which = drastrvar value < 25 } } 
+								check_variable = { which = drastrvar value <= 60 } 
+								NOT = { check_variable = { which = drastrvar value < 50 } } 
 							}
 						}
 					}
@@ -546,8 +564,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 35 } 
-								NOT = { check_variable = { which = drastrvar value < 30 } } 
+								check_variable = { which = drastrvar value <= 70 } 
+								NOT = { check_variable = { which = drastrvar value < 60 } } 
 							}
 						}
 					}
@@ -559,8 +577,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 40 } 
-								NOT = { check_variable = { which = drastrvar value < 35 } } 
+								check_variable = { which = drastrvar value <= 80 } 
+								NOT = { check_variable = { which = drastrvar value < 70 } } 
 							}
 						}
 					}
@@ -572,8 +590,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 45 } 
-								NOT = { check_variable = { which = drastrvar value < 40 } } 
+								check_variable = { which = drastrvar value <= 90 } 
+								NOT = { check_variable = { which = drastrvar value < 80 } } 
 							}
 						}
 					}
@@ -585,8 +603,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 50 } 
-								NOT = { check_variable = { which = drastrvar value < 45 } } 
+								check_variable = { which = drastrvar value <= 100 } 
+								NOT = { check_variable = { which = drastrvar value < 90 } } 
 							}
 						}
 					}
@@ -598,8 +616,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 55 } 
-								NOT = { check_variable = { which = drastrvar value < 50 } } 
+								check_variable = { which = drastrvar value <= 110 } 
+								NOT = { check_variable = { which = drastrvar value < 100 } } 
 							}
 						}
 					}
@@ -611,8 +629,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 60 } 
-								NOT = { check_variable = { which = drastrvar value < 55 } } 
+								check_variable = { which = drastrvar value <= 120 } 
+								NOT = { check_variable = { which = drastrvar value < 110 } } 
 							}
 						}
 					}
@@ -624,8 +642,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 65 } 
-								NOT = { check_variable = { which = drastrvar value < 60 } } 
+								check_variable = { which = drastrvar value <= 130 } 
+								NOT = { check_variable = { which = drastrvar value < 120 } } 
 							}
 						}
 					}
@@ -637,8 +655,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 70 } 
-								NOT = { check_variable = { which = drastrvar value < 65 } } 
+								check_variable = { which = drastrvar value <= 140 } 
+								NOT = { check_variable = { which = drastrvar value < 130 } } 
 							}
 						}
 					}
@@ -650,8 +668,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 75 } 
-								NOT = { check_variable = { which = drastrvar value < 70 } } 
+								check_variable = { which = drastrvar value <= 150 } 
+								NOT = { check_variable = { which = drastrvar value < 140 } } 
 							}
 						}
 					}
@@ -663,8 +681,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 80 } 
-								NOT = { check_variable = { which = drastrvar value < 75 } } 
+								check_variable = { which = drastrvar value <= 160 } 
+								NOT = { check_variable = { which = drastrvar value < 150 } } 
 							}
 						}
 					}
@@ -676,8 +694,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 85 } 
-								NOT = { check_variable = { which = drastrvar value < 80 } } 
+								check_variable = { which = drastrvar value <= 170 } 
+								NOT = { check_variable = { which = drastrvar value < 160 } } 
 							}
 						}
 					}
@@ -689,8 +707,8 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value <= 90 } 
-								NOT = { check_variable = { which = drastrvar value < 85 } } 
+								check_variable = { which = drastrvar value <= 180 } 
+								NOT = { check_variable = { which = drastrvar value < 170 } } 
 							}
 						}
 					}
@@ -702,13 +720,26 @@ character_event = {
 						ROOT = {
 							any_friend = {
 								#limit = { is_tamed_dragon = yes }
-								check_variable = { which = drastrvar value = 95 } 
-								NOT = { check_variable = { which = drastrvar value < 90 } } 
+								check_variable = { which = drastrvar value = 190 } 
+								NOT = { check_variable = { which = drastrvar value < 180 } } 
 							}
 						}
 					}
 					troops = -0.99
 					morale = -0.99
+				}
+				if = {
+					limit = { 
+						ROOT = {
+							any_friend = {
+								#limit = { is_tamed_dragon = yes }
+								check_variable = { which = drastrvar value = 190 } 
+								NOT = { check_variable = { which = drastrvar value < 180 } } 
+							}
+						}
+					}
+					troops = -1
+					morale = -1
 				}
 			}
 		}
