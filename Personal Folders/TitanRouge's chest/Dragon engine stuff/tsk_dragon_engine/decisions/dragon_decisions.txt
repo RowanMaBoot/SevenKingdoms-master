@@ -1,5 +1,5 @@
 targetted_decisions = {
-	#dislpays dragon's stats
+	#	Dislpays dragon's stats
 	show_dragon_stats = {
 		only_playable = yes
 		#filter = home_court
@@ -12,11 +12,14 @@ targetted_decisions = {
 		allow = {
 		}
 		effect = {
-
+			# Dragon stat Calculation
+			hidden_tooltip = {
+				dragon_stat_calculation = yes
+			}
 		}
 	}
 	
-	#field of fire
+	#	Field of fire
 	use_dragon_in_battle = {
 		only_playable = yes
 		is_high_prio = yes
@@ -25,11 +28,12 @@ targetted_decisions = {
 		
 		potential = {
 			ROOT = { is_dragon_rider = yes }
+			FROM = { dragon_not_ready_for_battle = no }
 		}
 		
 		allow = {
 			custom_tooltip = {
-				text = USE_DRAGON_IN_BATTLE_CUSTOM_TOOLTIP
+				text = TOOLTIP_USE_DRAGON_IN_BATTLE
 				hidden_tooltip = {
 					ROOT = {
 						use_dragon_in_battle_potential = yes
@@ -44,21 +48,14 @@ targetted_decisions = {
 				any_friend = {
 					limit = { is_dragon = yes } 
 					# Dragon stat Calculation
-					export_to_variable = { which = comratvar value = combat_rating }
-					export_to_variable = { which = healthvar value = health }
-					export_to_variable = { which = sizeforlocvar value = martial }
-					export_to_variable = { which = sizevar value = martial }
-					export_to_variable = { which = drastrvar value = martial }
-					multiply_variable = { which = comratvar which = healthvar }
-					divide_variable = { which = comratvar value = 10 }
-					change_variable = { which = drastrvar which = comratvar }
+					dragon_stat_calculation = yes
 				}
 				character_event = { id = dragon.5 }
 			}
 		}
 	}
 	
-	#siege of fire
+	#	Siege of fire
 	use_dragon_in_siege = {
 		only_playable = yes
 		is_high_prio = yes
@@ -67,11 +64,12 @@ targetted_decisions = {
 		
 		potential = {
 			ROOT = { is_dragon_rider = yes }
+			FROM = { dragon_not_ready_for_battle = no }
 		}
 		
 		allow = {
 			custom_tooltip = {
-				text = USE_DRAGON_IN_SIEGE_CUSTOM_TOOLTIP
+				text = TOOLTIP_USE_DRAGON_IN_SIEGE
 				hidden_tooltip = {
 					ROOT = { 
 						use_dragon_in_siege_potential = yes
@@ -86,17 +84,43 @@ targetted_decisions = {
 				any_friend = {
 					limit = { is_dragon = yes }
 					# Dragon stat Calculation
-					export_to_variable = { which = comratvar value = combat_rating }
-					export_to_variable = { which = healthvar value = health }
-					export_to_variable = { which = sizeforlocvar value = martial }
-					export_to_variable = { which = sizevar value = martial }
-					export_to_variable = { which = drastrvar value = martial }
-					multiply_variable = { which = comratvar which = healthvar }
-					divide_variable = { which = comratvar value = 10 }
-					change_variable = { which = drastrvar which = comratvar }
+					dragon_stat_calculation = yes
 				}
 				character_event = { id = dragon.6 }
 			}
+		}
+	}
+	
+	#	Face the dragon
+	tame_untamed_dragon = {
+		only_playable = yes
+		is_high_prio = yes
+		#filter = self
+		#ai_target_filter = home_court
+		
+		potential = {
+			FROM = { is_dragon_rider = no }
+			ROOT = { 
+				is_wild_dragon = yes 
+				#has_character_flag = is_wild_dragon
+				at_location = ROOT
+			}
+		}
+		
+		allow = {
+			custom_tooltip = {
+				text = TOOLTIP_TAME_UNTAMED_DRAGON
+				FROM = { is_dragon_rider = no }
+				ROOT = { 
+					is_wild_dragon = yes 
+					#has_character_flag = is_wild_dragon
+					at_location = ROOT
+				}
+			}
+		}
+		effect = {
+			ROOT = { save_event_target_as = targetted_dragon_for_taming }
+			FROM = { character_event = { id = dragon.8 } }
 		}
 	}
 }
