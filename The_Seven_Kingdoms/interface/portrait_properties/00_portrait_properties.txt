@@ -1634,31 +1634,6 @@
 			NOT = { has_minor_title = title_prince }
 			NOT = { is_offmap_tag_including_dead = offmap_freehold }
 		}
-		modifier = {
-            factor = 0
-            OR = {
-                has_landed_title = k_the_nights_watch
-                government = nights_watch_government
-				primary_title = { title = k_the_white_knife }
-				primary_title = { title = k_karhold } 
-                AND = {
-                    OR = {
-                        primary_title = { title = k_the_eastmarch }
-                        primary_title = { title = k_the_northmarch }
-                        primary_title = { title = k_the_westmarch }
-						primary_title = { title = k_starpike }
-						primary_title = { title = k_talltrees }
-						primary_title = { title = k_the_mander }
-						primary_title = { title = k_redroost }
-						primary_title = { title = k_kingswood }
-                    }
-					OR = {
-						government = march_government
-						government = storm_kingdom_government
-					}
-                }
-            }
-        }
 	}
 	
 	1 = { # Royal clothes 2
@@ -2076,6 +2051,7 @@
 			OR = { 
 				primary_title = { title = k_the_eastmarch }
 				primary_title = { title = k_talltrees }
+				primary_title = { title = k_the_white_knife }
 				primary_title = { title = k_the_nights_watch }
 			}
         }
@@ -2113,6 +2089,7 @@
 			OR = { 
 				primary_title = { title = k_the_eastmarch }
 				primary_title = { title = k_talltrees }
+				primary_title = { title = k_the_white_knife }
 				primary_title = { title = k_the_nights_watch }
 			}
         }
@@ -2150,6 +2127,7 @@
 			OR = { 
 				primary_title = { title = k_the_eastmarch }
 				primary_title = { title = k_talltrees }
+				primary_title = { title = k_the_white_knife }
 				primary_title = { title = k_the_nights_watch }
 			}
         }
@@ -2159,11 +2137,26 @@
 	4 = {
 		factor = 1
 		modifier = {
+			factor = 1000
+			OR = { 
+				AND = { 
+					real_tier = emperor 
+					trait = humble
+				}
+				AND = {
+					real_tier = king
+					trait = humble
+				}
+			}	
+		}
+		modifier = {
 			factor = 0
 			is_feudal = yes
-			NOT = { real_tier = duke }
-			NOT = { spouse = { real_tier = duke } }
-			NOT = { has_minor_title = title_prince }
+			OR = {
+				real_tier = duke 
+				spouse = { real_tier = duke } 
+				has_minor_title = title_prince 
+			}
 		}
 		modifier = {
 			factor = 0
@@ -2171,15 +2164,9 @@
 			NOT = { real_tier = duke }
 			NOT = { real_tier = king }
 			NOT = { real_tier = emperor }
-			NOT = { has_minor_title = title_prince }
 			NOT = { spouse = { real_tier = emperor } }
 			NOT = { spouse = { real_tier = king } }
 			NOT = { spouse = { real_tier = duke } }
-		}
-		modifier = {
-			factor = 0
-			is_feudal = yes
-			real_tier = king
 		}
 		modifier = {
 			factor = 0
@@ -2369,6 +2356,7 @@
 			OR = { 
 				primary_title = { title = k_the_eastmarch }
 				primary_title = { title = k_talltrees }
+				primary_title = { title = k_the_white_knife }
 				primary_title = { title = k_the_nights_watch }
 			}
         }
