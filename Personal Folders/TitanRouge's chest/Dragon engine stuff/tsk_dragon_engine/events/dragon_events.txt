@@ -1,6 +1,26 @@
+##########################
+###DRAGON ENGINE EVENTS###
+##########################
+
+##Basic dragon engine events 0-99 ##
+#Initialize dragon stat calculation 0
+#Sets dragon's status 1 
+#Simulates the dragon's growth 2
+#Kills the dragon 3
+##Dragon in combat events 100-199##
+#Use your dragon battle 100
+#Use your dragon in siege 101
+#Enemy gets wounded or dies in battle
+#Enemy gets wounded or dies in siege
+#Dislpays wounded/maimed/severely injured and killed characters in battle/siege
+#Destroy the enemy's fortification
+##Dragon flavor events##
+#Face the dragon
+#Taming successful!
+#Taming failed!
 namespace = dragon
 
-#	Initialize 
+#	Initialize dragon stat calculation
 character_event = {
 	id = dragon.0
 
@@ -19,7 +39,7 @@ character_event = {
 	}
 }
 
-#	Sets dragon status
+#	Sets dragon's status
 character_event = {
 	id = dragon.1
 
@@ -46,7 +66,7 @@ character_event = {
 	}
 }
 
-#	Simulates the dragons growth
+#	Simulates the dragon's growth
 character_event = {
 	id = dragon.2
 
@@ -70,7 +90,7 @@ character_event = {
 	}
 }
 
-#kills the dragon
+#	Kills the dragon
 character_event = {
 	id = dragon.3
 
@@ -129,11 +149,11 @@ character_event = {
 #	hide_window = yes
 #}
 
-#use dragon battle
+#	Use your dragon battle
 character_event = {
-	id = dragon.5
-	desc = EVTDESCdragon5
-	picture = GFX_evt_Battle_Dragon
+	id = dragon.100
+	desc = EVTDESCdragon100
+	picture = GFX_evt_battle_dragon
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
@@ -152,7 +172,8 @@ character_event = {
 	}
 	
 	option = {	#Burn them all!
-		name = EVTOPTAdragon5
+		name = EVTOPTAdragon100
+		tooltip_info = dragon_rider
 		
 		any_current_enemy =  {
 			any_realm_character = {
@@ -166,16 +187,17 @@ character_event = {
 				}
 				opinion = { modifier = used_dragon_against_me who = ROOT years = 6 }
 				troop_damage_by_dragon = yes
-				character_event = { id = dragon.7 }
+				character_event = { id = dragon.102 }
 			}
 		}
+		character_event = { id = dragon.104 days = 1 }
 	}
 }
 
-#Use dragon siege
+#	Use your dragon in siege
 character_event = {
-	id = dragon.6
-	desc = EVTDESCdragon6
+	id = dragon.101
+	desc = EVTDESCdragon101
 	picture = GFX_evt_battle_dragon_two
 	#border = GFX_event_normal_frame_martial
 
@@ -195,11 +217,12 @@ character_event = {
 	}
 	
 	option = { #Let these stones be their graves
-		name = EVTOPTAdragon6
+		name = EVTOPTAdragon101
+		tooltip_info = dragon_rider
 		
 		ROOT = {
 			any_friend = {
-				#limit = { is_tamed_dragon = yes }
+				limit = { is_tamed_dragon = yes }
 				random = {
 					chance = 20
 					
@@ -249,30 +272,26 @@ character_event = {
 		
 		siege =  {
 			enemy = {
-				limit = {
-					hidden_tooltip = {
-						in_command = yes
-						battle = no
-						#is_defender = yes
-						prisoner = no
-						NOT = { character = ROOT }
-						is_dragon_rider = no
-						at_location = ROOT
-					}
-				}
-				opinion = { modifier = used_dragon_against_me who = ROOT years = 6 }
 				troop_damage_by_dragon = yes
-				character_event = { id = dragon.7 }
 			}
 		}
+		any_current_enemy = {
+			any_courtier = {
+			limit = { at_location = ROOT }
+			opinion = { modifier = used_dragon_against_me who = ROOT years = 6 }
+			character_event = { id = dragon.103 days = 1 }
+			}
+		}
+		character_event = { id = dragon.104 days = 1 }
+		character_event = { id = dragon.105 }
 	}
 }
 
-#	Enemy gets wounded or dies in battle/siege
+#	Enemy gets wounded or dies in battle
 character_event = {
-	id = dragon.7
-	desc = EVTDESCdragon7
-	picture = GFX_evt_battle_dragon_two
+	id = dragon.102
+	desc = EVTDESCdragon102
+	picture = GFX_evt_dragon_body_burned
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
@@ -281,39 +300,240 @@ character_event = {
 		at_location = FROM
 	}
 	
-	option = {
-		name = EVTOPTAdragon9
+	immediate = {
 		random_list = {
-			30 = {
-				death = { death_reason = death_dragon_fire1 killer = event_target:your_dragon }
-			}
-			15 = {
-				add_trait = maimed
-			}
-			15 = {
-				add_trait = severely_injured
+			10 = {
 			}
 			30 = {	
-				add_trait = wounded
+				set_character_flag = wounded_by_dragon
 			}
+			15 = {
+				set_character_flag = maimed_by_dragon
+			}
+			15 = {
+				set_character_flag = severely_injured_by_dragon
+			}
+			30 = {
+				set_character_flag = killed_by_dragon
+			}
+		}
+	}
+	
+	option = {
+		name= {
+			text = EVTOPTAdragon102
+			trigger = { has_character_flag = wounded_by_dragon }
+		}
+		name= {
+			text = EVTOPTBdragon102
+			trigger = { has_character_flag = maimed_by_dragon }
+		}
+		name= {
+			text = EVTOPTCdragon102
+			trigger = { has_character_flag = severely_injured_by_dragon }
+		}
+		name= {
+			text = EVTOPTCdragon102
+			trigger = { has_character_flag = killed_by_dragon }
+		}
+	}
+}
+
+#	Enemy gets wounded or dies in siege
+character_event = {
+	id = dragon.103
+	desc = EVTDESCdragon103
+	picture = GFX_evt_dragon_body_burned
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	#trigger = {
+	#	at_location = FROM
+	#}
+	
+	immediate = {
+		name = EVTOPTAdragon103
+
+		random_list = {
 			10 = {
-			
+			}
+			20 = {	
+				set_character_flag = wounded_by_dragon
+			}
+			20 = {
+				set_character_flag = maimed_by_dragon
+			}
+			20 = {
+				set_character_flag = severely_injured_by_dragon
+			}
+			30 = {
+				set_character_flag = killed_by_dragon
+			}
+		}
+	}
+	
+	option = {
+		name= {
+			text = EVTOPTAdragon103
+			trigger = { has_character_flag = wounded_by_dragon }
+		}
+		name= {
+			text = EVTOPTBdragon103
+			trigger = { has_character_flag = maimed_by_dragon }
+		}
+		name= {
+			text = EVTOPTCdragon103
+			trigger = { has_character_flag = severely_injured_by_dragon }
+		}
+		name= {
+			text = EVTOPTCdragon103
+			trigger = { has_character_flag = killed_by_dragon }
+		}
+	}
+}
+
+#	Dislpays wounded/maimed/severely injured and killed characters in battle/siege
+character_event = {
+	id = dragon.104
+	desc = {
+		trigger = {
+			in_battle = yes
+		}
+		text = EVTDESCAdragon104
+	}
+	desc = {
+		trigger = {
+			in_siege = yes
+		}
+		text = EVTDESCBdragon104
+	}
+	picture = GFX_evt_dragon_spoils_of_war
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAdragon104
+		
+		any_current_enemy = {
+			any_realm_character = {
+				if = { 
+					limit = { has_character_flag = wounded_by_dragon }
+					add_trait = wounded
+					clr_character_flag = wounded_by_dragon
+				}
+				if = { 
+					limit = { has_character_flag = maimed_by_dragon }
+					add_trait = maimed
+					clr_character_flag = maimed_by_dragon
+				}
+				if = { 
+					limit = { has_character_flag = severely_injured_by_dragon }
+					add_trait = severely_injured
+					add_trait = disfigured_by_dragon
+					clr_character_flag = severely_injured_by_dragon
+				}
+				if = { 
+					limit = { has_character_flag = killed_by_dragon }
+					death = { death_reason = death_dragon_fire1 killer = event_target:your_dragon }
+					clr_character_flag = burnt_by_dragon
+				}
 			}
 		}
 	}
 }
 
+#	Destroy the enemy's fortification
+character_event = {
+	id = dragon.105
+	desc = EVTDESCdragon105
+	picture = GFX_evt_burning_city_andreas_rocha
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	#ROOT = {
+	#	any_friend = {
+	#		limit = { is_tamed_dragon = yes }
+	#		check_variable = { which = drastrvar value < 90 } 
+	#	}
+	#}
+	
+	# Burn the walls only
+	option = {
+		name = EVTOPTAdragon105
+		tooltip_info = dragon_rider
+		
+		location = {
+			random_province_holding = { 
+				limit = { has_siege = yes }
+				destroy_random_building = yes
+				add_holding_modifier = { modifier = burnt_fortifications duration = 1095 }
+			}
+		}
+	}
+	
+	# Burn the holding
+	option = {
+		name = EVTOPTBdragon105
+		tooltip_info = dragon_rider
+		
+		location = {
+			random_province_holding = { 
+				limit = { has_siege = yes }
+				destroy_random_building = yes
+				destroy_random_building = yes
+				add_holding_modifier = { modifier = devastated_fort duration = 2190 }
+			}
+		}
+		prestige = -250
+	}
+	
+	# Give them fire
+	option = {
+		name = EVTOPTCdragon105
+		tooltip_info = dragon_rider
+		
+		location = {
+			custom_tooltip = {
+				text = TOOLTIP_DRAGON105
+				random_province_holding = { 
+					limit = { has_siege = yes }
+					set_variable = { which = count value = 15 }
+					while = {
+						limit = { check_variable = { which = count value = 1 } }    
+						subtract_variable = { which = count value = 1 }
+						destroy_random_building = yes
+					}
+					opinion = { modifier = used_dragon_against_me who = ROOT years = 6 }
+					add_holding_modifier = { modifier = destroyed_holding duration = 7300 }
+				}
+			}
+		}
+		prestige = -750
+		add_trait = commited_mass_killing
+	}
+	
+	# Let it go
+	option = {
+		name = EVTOPTDdragon105
+	}
+}
+
 #	Face the dragon
 character_event = {
-	id = dragon.8
-	desc = EVTDESCdragon8
+	id = dragon.200
+	desc = EVTDESCdragon200
 	picture = GFX_evt_battle_dragon_two
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
 	
 	option = {
-		name = EVTOPTAdragon8
+		name = EVTOPTAdragon200
+		tooltip_info = dragon_rider
+		
 		random_list = {
 			50 = {
 				# increased taming chance
@@ -359,12 +579,12 @@ character_event = {
 					event_target:targetted_dragon_for_taming = {
 						add_friend = ROOT
 					}
-					#character_event = { id = dragon.9 }
+					character_event = { id = dragon.201 }
 				}
 			}
 			50 = {
 				custom_tooltip = {
-					text = TOOLTIP_DRAGON8_B
+					text = TOOLTIP_DRAGON200_B
 					death = { death_reason = death_dragon_fire2 killer = event_target:targetted_dragon_for_taming }
 				}
 			}
@@ -374,29 +594,30 @@ character_event = {
 
 #	Taming successful!
 character_event = {
-	id = dragon.9
-	desc = EVTDESCdragon9
+	id = dragon.201
+	desc = EVTDESCdragon201
 	picture = GFX_evt_battle_dragon_two
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
 	
 	option = {
-		name = EVTOPTAdragon9
-
+		name = EVTOPTAdragon201
+		
+		add_trait = dragon_rider
 	}
 }
 
 #	Taming failed!
 character_event = {
-	id = dragon.10
-	desc = EVTDESCdragon10
+	id = dragon.202
+	desc = EVTDESCdragon202
 	picture = GFX_evt_battle_dragon_two
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
 	
 	option = {
-		name = EVTOPTAdragon10
+		name = EVTOPTAdragon202
 	}
 }
