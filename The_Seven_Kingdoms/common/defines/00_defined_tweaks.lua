@@ -41,13 +41,13 @@ NDefines.NCharacter.PRESTIGE_FROM_DYNASTY_ON_MARRIAGE_DIV = 15
 NDefines.NCharacter.PORTRAIT_ADULT_MALE_AGE_THRESHOLD = 15
 NDefines.NCharacter.PORTRAIT_ADULT_FEMALE_AGE_THRESHOLD = 15
 
-NDefines.NCharacter.PORTRAIT_MID_AGE_THRESHOLD = 30
-NDefines.NCharacter.PORTRAIT_OLD_AGE_THRESHOLD = 50
+NDefines.NCharacter.PORTRAIT_MID_AGE_THRESHOLD = 35
+NDefines.NCharacter.PORTRAIT_OLD_AGE_THRESHOLD = 55
 
 NDefines.NCharacter.AGE_OF_ADULTHOOD_MALE = 16
 NDefines.NCharacter.AGE_OF_ADULTHOOD_FEMALE = 16
-NDefines.NCharacter.AGE_OF_MARRIAGE_MALE = 16
-NDefines.NCharacter.AGE_OF_MARRIAGE_FEMALE = 16
+NDefines.NCharacter.AGE_OF_MARRIAGE_MALE = 14
+NDefines.NCharacter.AGE_OF_MARRIAGE_FEMALE = 14
 
 NDefines.NCharacter.AGE_ADOLESCENT = 12
 NDefines.NCharacter.AGE_YOUNG = 20
@@ -63,7 +63,7 @@ NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_80 = 2250
 NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_90 = 5000
 NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_100 = 9000
 
-NDefines.NCharacter.INFANT_DEATH_CHANCE = 0.03
+NDefines.NCharacter.INFANT_DEATH_CHANCE = 0.10
 
 NDefines.NCharacter.FEMALE_ATTRACTION_CUTOFF = 48
 
@@ -90,8 +90,8 @@ NDefines.NMilitary.ATTRITION_LEVEL_FACTOR = 0.5 -- Increased from 0.5
 NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_50_OVER = 1.0 -- Increased from 1.0
 NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_100_OVER = 2.0 -- Increased from 2.0
 
-NDefines.NMilitary.ARMY_MOVEMENT_SPEED = 4 -- Originally 3
-NDefines.NMilitary.NAVY_MOVEMENT_SPEED = 12 -- Originally 15, 3x Faster than Foot rather than 5x, due to cost changes.
+NDefines.NMilitary.ARMY_MOVEMENT_SPEED = 6 -- Originally 3
+NDefines.NMilitary.NAVY_MOVEMENT_SPEED = 18 -- Originally 15, 3x Faster than Foot rather than 5x, due to cost changes.
 
 NDefines.NMilitary.GALLEYS_MAINTENANCE = 50 -- Reduced from 300
 
