@@ -326,6 +326,50 @@ character_event = {
                             set_society_grandmaster = yes
                         }
                     }
+					100 = {
+						trigger = {
+							can_join_society = the_mystics
+						}
+						modifier = {
+							factor = 5
+							is_dumb_trigger = no
+							OR = { 
+								learning = 12
+								trait = scholar
+								trait = erudite
+								trait = genius
+								trait = mystic
+							}
+						}
+						modifier = {
+							factor = 0
+							is_landed = no
+						}
+						join_society = the_mystics
+						random_list = { # Artificially increase society influence for balance purposes
+							75 = {
+								modifier = {
+									factor = 0
+									society_influence >= 30
+								}
+								add_mission_succeed_influence_effect = yes
+							}
+							25 = {
+							}
+						}
+						if = {
+							limit = {
+								NOT = {
+									society = {
+										any_society_member = {
+											is_society_grandmaster = yes
+										}
+									}
+								}
+							}
+							set_society_grandmaster = yes
+						}
+					}
                 }
             }
         }
@@ -731,7 +775,7 @@ character_event = {
             is_quest_target = yes 
             any_opinion_modifier_target = {
                 reverse_has_opinion_modifier = { who = ROOT modifier = opinion_infiltration_companion }
-                has_quest = quest_hermetics_infiltrate_laboratory
+                has_quest = quest_the_mystics_infiltrate_laboratory
             }
         }
     }
@@ -740,7 +784,7 @@ character_event = {
         any_opinion_modifier_target = {
             limit = {
                 reverse_has_opinion_modifier = { who = ROOT modifier = opinion_infiltration_companion }
-                has_quest = quest_hermetics_infiltrate_laboratory
+                has_quest = quest_the_mystics_infiltrate_laboratory
             }
             reverse_remove_opinion = { who = ROOT modifier = opinion_infiltration_companion }
             character_event = { id = MNM.6992 days = 2 }
@@ -791,8 +835,8 @@ character_event = {
             has_quest = quest_the_devil_worshipers_demonic_possession
             has_quest = quest_hermetic_gather_ingredients
             has_quest = quest_devil_worshipers_corrupt_priest
-            has_quest = quest_hermetics_infiltrate_laboratory
-            has_quest = quest_hermetics_find_text
+            has_quest = quest_the_mystics_infiltrate_laboratory
+            has_quest = quest_the_mystics_find_text
             has_quest = quest_the_assassins_protege
             has_quest = quest_secret_religious_societies_induct_ruler
             has_quest = quest_secret_religious_societies_sympathy_ruler
@@ -809,8 +853,8 @@ character_event = {
             quest_the_assassins_assassination =             { clr_quest = { id = quest_the_assassins_assassination failure = yes } }
             quest_the_assassins_collect_debt =                 { clr_quest = { id = quest_the_assassins_collect_debt failure = yes } }
             quest_hermetic_gather_ingredients =             { clr_quest = { id = quest_hermetic_gather_ingredients failure = yes } }
-            quest_hermetics_infiltrate_laboratory =            { clr_quest = { id = quest_hermetics_infiltrate_laboratory failure = yes } }
-            quest_hermetics_find_text =                     { clr_quest = { id = quest_hermetics_find_text failure = yes } }
+            quest_the_mystics_infiltrate_laboratory =            { clr_quest = { id = quest_the_mystics_infiltrate_laboratory failure = yes } }
+            quest_the_mystics_find_text =                     { clr_quest = { id = quest_the_mystics_find_text failure = yes } }
             quest_devil_worshipers_corrupt_priest =            { clr_quest = { id = quest_devil_worshipers_corrupt_priest failure = yes } }
             quest_the_devil_worshipers_demonic_possession = { clr_quest = { id = quest_the_devil_worshipers_demonic_possession failure = yes } }
             quest_the_assassins_protege =                     { clr_quest = { id = quest_the_assassins_protege failure = yes } }
