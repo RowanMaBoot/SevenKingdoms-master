@@ -1,23 +1,34 @@
-##########################
-###DRAGON ENGINE EVENTS###
-##########################
+###################
+###DRAGON ENGINE###
+###################
 
-##Basic dragon engine events 0-99 ##
+####Basic dragon engine events 0-99 ####
 #Initialize dragon stat calculation 0
 #Sets dragon's status 1 
 #Simulates the dragon's growth 2
 #Kills the dragon 3
-##Dragon in combat events 100-199##
+#Decreases the infamy gained in sieges/battles when behaving peacufully 4
+#Adds dragon egg to dragon to set dragon as FROM for renaming 5
+
+####Dragon in combat events 100-199####
 #Use your dragon battle 100
 #Use your dragon in siege 101
 #Enemy gets wounded or dies in battle 102
 #Enemy gets wounded or dies in siege 103
 #Dislpays wounded/maimed/severely injured and killed characters in battle/siege 104
 #Destroy the enemy's fortification 105
-##Dragon flavor events 200##
-#Face the dragon 201
-#Taming successful! 202
-#Taming failed! 203
+#Enemy troops decide to join you 106
+
+####Dragon flavor events 200####
+#Face the dragon 200
+#Taming successful! 201
+#Taming failed! 202
+#Dragon rider gets his dragon's egg 203
+#Black dragon egg hatched 204
+#Blue dragon egg hatched 205
+#Green dragon egg hatched 206 
+#Red dragon egg hatched 207
+#White dragon egg hatched 208
 
 namespace = dragon
 
@@ -142,13 +153,127 @@ character_event = {
 	}
 }
 
-#spawns dragon eggs
-#character_event = {
-#	id = dragon.4
+#	Decreases the infamy gained in sieges/battles when behaving peacufully
+character_event = {
+	id = dragon.4
 
-#	is_triggered_only = yes
-#	hide_window = yes
-#}
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		is_dragon_rider = yes
+		NOT = { has_character_modifier = used_dragon_in_battle_siege_hidden }
+	}
+	
+	immediate = {
+		change_infamy = {
+			value = -2
+			localisation = dragon_infamy
+		}
+	}
+}
+
+#	Adds dragon egg to dragon to set dragon as FROM for renaming
+character_event = {
+	id = dragon.5
+	
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		is_dragon = yes
+	}
+	
+	immediate = { 
+		random_list = {
+			20 = {
+				random = {
+					chance = 10
+					add_artifact = black_dragon_egg
+					new_artifact = {
+						save_event_target_as = created_dragon_egg
+						set_name = "[From.GetFirstName]'s egg"
+						set_artifact_original_owner = ROOT
+					}
+					if = {
+						limit = { any_friend = { is_dragon_rider = yes } }
+						random_friend = {
+							character_event = { id = dragon.203 }
+						}
+					}
+				}
+			}
+			20 = {
+				random = {
+					chance = 10
+					add_artifact = blue_dragon_egg
+					new_artifact = {
+						save_event_target_as = created_dragon_egg
+						set_name = "[From.GetFirstName]'s egg"
+						set_artifact_original_owner = ROOT
+					}
+					if = {
+						limit = { any_friend = { is_dragon_rider = yes } }
+						random_friend = {
+							character_event = { id = dragon.203 }
+						}
+					}
+				}
+			}
+			20 = {
+				random = {
+					chance = 10
+					add_artifact = green_dragon_egg
+					new_artifact = {
+						save_event_target_as = created_dragon_egg
+						set_name = "[From.GetFirstName]'s egg"
+						set_artifact_original_owner = ROOT
+					}
+					if = {
+						limit = { any_friend = { is_dragon_rider = yes } }
+						random_friend = {
+							character_event = { id = dragon.203 }
+						}
+					}
+				}
+			}
+			20 = {
+				random = {
+					chance = 10
+					add_artifact = red_dragon_egg
+					new_artifact = {
+						save_event_target_as = created_dragon_egg
+						set_name = "[From.GetFirstName]'s egg"
+						set_artifact_original_owner = ROOT
+					}
+					if = {
+						limit = { any_friend = { is_dragon_rider = yes } }
+						random_friend = {
+							character_event = { id = dragon.203 }
+						}
+					}
+				}
+			}
+			20 = {
+				random = {
+					chance = 10
+					add_artifact = white_dragon_egg
+					new_artifact = {
+						save_event_target_as = created_dragon_egg
+						set_name = "[From.GetFirstName]'s egg"
+						set_artifact_original_owner = ROOT
+					}
+					if = {
+						limit = { any_friend = { is_dragon_rider = yes } }
+						random_friend = {
+							character_event = { id = dragon.203 }
+						}
+					}
+				}
+			}
+		}
+	}
+}
 
 #	Use your dragon battle
 character_event = {
@@ -190,6 +315,11 @@ character_event = {
 				troop_damage_by_dragon = yes
 				character_event = { id = dragon.102 }
 			}
+		}
+		add_character_modifier = { modifier = used_dragon_in_battle_siege_hidden duration = 970 }
+		change_infamy = {
+			value = 3
+			localisation = dragon_infamy
 		}
 		character_event = { id = dragon.104 days = 1 }
 	}
@@ -284,7 +414,13 @@ character_event = {
 			}
 		}
 		character_event = { id = dragon.104 days = 1 }
+		add_character_modifier = { modifier = used_dragon_in_battle_siege_hidden duration = 970 }
+		change_infamy = {
+			value = 3
+			localisation = dragon_infamy
+		}
 		character_event = { id = dragon.105 }
+		
 	}
 }
 
@@ -445,7 +581,7 @@ character_event = {
 	}
 }
 
-#	Destroy the enemy's fortification
+#	Destroy the enemy's fortification | dragon
 character_event = {
 	id = dragon.105
 	desc = EVTDESCdragon105
@@ -453,13 +589,6 @@ character_event = {
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
-	
-	#ROOT = {
-	#	any_friend = {
-	#		limit = { is_tamed_dragon = yes }
-	#		check_variable = { which = drastrvar value < 90 } 
-	#	}
-	#}
 	
 	# Burn the walls only
 	option = {
@@ -488,6 +617,11 @@ character_event = {
 				add_holding_modifier = { modifier = devastated_fort duration = 2190 }
 			}
 		}
+		add_character_modifier = { modifier = used_dragon_in_battle_siege_hidden duration = 970 }
+		change_infamy = {
+			value = 10
+			localisation = dragon_infamy
+		}
 		prestige = -250
 	}
 	
@@ -512,6 +646,11 @@ character_event = {
 				}
 			}
 		}
+		add_character_modifier = { modifier = used_dragon_in_battle_siege_hidden duration = 970 }
+		change_infamy = {
+			value = 25
+			localisation = dragon_infamy
+		}
 		prestige = -750
 		add_trait = commited_mass_killing
 	}
@@ -519,6 +658,27 @@ character_event = {
 	# Let it go
 	option = {
 		name = EVTOPTDdragon105
+	}
+}
+
+#	Enemy troops decide to join you
+character_event = {
+	id = dragon.106
+	desc = EVTDESCdragon106
+	picture = GFX_enemy_troops_pledge_fealty
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAdragon106
+		
+		custom_tooltip = {
+			text = TOOLTIP_DRAGON106
+			any_army = {
+				troops = 0.09
+			}	
+		}
 	}
 }
 
@@ -620,5 +780,103 @@ character_event = {
 	
 	option = {
 		name = EVTOPTAdragon202
+	}
+}
+
+#	Dragon rider gets his dragon's egg
+character_event = {
+	id = dragon.203
+	desc = EVTDESCdragon203
+	picture = GFX_dragon_eggs_chest
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAdragon203
+		
+		event_target:created_dragon_egg = {
+			transfer_artifact = { from = FROM to = ROOT }
+		}
+	}
+}
+
+#	Black dragon egg hatched
+character_event = {
+	id = dragon.204
+	desc = EVTDESCdragon204
+	picture = GFX_evt_black_dragon_egg_bg
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAdragon204
+		
+		destroy_artifact = black_dragon_egg
+	}
+}
+
+#	Blue dragon egg hatched
+character_event = {
+	id = dragon.205
+	desc = EVTDESCdragon205
+	picture = GFX_evt_blue_dragon_egg_bg
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAdragon205
+		
+		destroy_artifact = blue_dragon_egg
+	}
+}
+
+#	Green dragon egg hatched
+character_event = {
+	id = dragon.206
+	desc = EVTDESCdragon206
+	picture = GFX_evt_green_dragon_egg_bg
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAdragon206
+		
+		destroy_artifact = green_dragon_egg
+	}
+}
+
+#	Red dragon egg hatched
+character_event = {
+	id = dragon.207
+	desc = EVTDESCdragon207
+	picture = GFX_evt_red_dragon_egg_bg
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAdragon207
+		
+		destroy_artifact = red_dragon_egg
+	}
+}
+
+#	White dragon egg hatched
+character_event = {
+	id = dragon.208
+	desc = EVTDESCdragon208
+	picture = GFX_evt_white_dragon_egg_bg
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAdragon208
+		
+		destroy_artifact = white_dragon_egg
 	}
 }
