@@ -11,105 +11,105 @@
 #	death_effect: fires when a title is lost due to the character dying
 #	The other fields are all character modifiers.
 
-job_castellan = {
-	#is_treasurer = yes
-	attribute = stewardship
-	dignity = 0.5
-	is_voter = yes
-	opinion_effect = 15
+# job_castellan = {
+	# #is_treasurer = yes
+	# attribute = stewardship
+	# dignity = 0.5
+	# is_voter = yes
+	# opinion_effect = 15
 	
-	monthly_salary = 0.2
-	monthly_prestige = 0.2
+	# monthly_salary = 0.2
+	# monthly_prestige = 0.2
 	
-	allow = {
-		can_be_chancellor_trigger = yes
-	}
+	# allow = {
+		# can_be_chancellor_trigger = yes
+	# }
 
-	gain_effect = {
-		if = {
-			limit = { has_opinion_modifier = { who = FROM modifier = opinion_fired_from_council } }
-			remove_opinion = { who = FROM modifier = opinion_fired_from_council }
-			#opinion = { who = FROM modifier = opinion_job_security_concerns }
-		}
-		any_opinion_modifier_target = { #Sponsors like promotion
-			limit = { 
-				reverse_has_opinion_modifier = { who = ROOT modifier = opinion_former_council_sponsor } 
-				is_liege_or_above = FROM
-				NOT = { character = FROM }
-			}
-			remove_opinion = { who = FROM modifier = opinion_replaced_council_candidate }
-			opinion = { who = FROM modifier = opinion_approved_council_candidate }
-			reverse_opinion = { who = ROOT modifier = opinion_council_sponsor }
-			reverse_remove_opinion = { who = ROOT modifier = opinion_former_council_sponsor }
-		}
+	# gain_effect = {
+		# if = {
+			# limit = { has_opinion_modifier = { who = FROM modifier = opinion_fired_from_council } }
+			# remove_opinion = { who = FROM modifier = opinion_fired_from_council }
+			# #opinion = { who = FROM modifier = opinion_job_security_concerns }
+		# }
+		# any_opinion_modifier_target = { #Sponsors like promotion
+			# limit = { 
+				# reverse_has_opinion_modifier = { who = ROOT modifier = opinion_former_council_sponsor } 
+				# is_liege_or_above = FROM
+				# NOT = { character = FROM }
+			# }
+			# remove_opinion = { who = FROM modifier = opinion_replaced_council_candidate }
+			# opinion = { who = FROM modifier = opinion_approved_council_candidate }
+			# reverse_opinion = { who = ROOT modifier = opinion_council_sponsor }
+			# reverse_remove_opinion = { who = ROOT modifier = opinion_former_council_sponsor }
+		# }
 		
-		if = {
-			limit = { ai = no }
-			character_event = { id = CM.11501 days = 1 } #chronicle  #to allow time for getjobtitle to work
-		}
-		if = { #Hand of the King Chronicle
-			limit = { FROM = { tier = EMPEROR } }
-			event_target:chronicle_player = {
-				if = { #Record Emperor's Hands of the King
-					limit = {
-						character = FROM
-					}
-					character_event = { id = CM.11502 days = 1 }
-				}
-				if = { #Inform fellow Dynasts
-					limit = {
-						dynasty = ROOT
-						NOT = { dynasty = FROM }
-						NOT = { character = ROOT }
-					}
-					character_event = { id = CM.11500 days = 1 }
-				}
-			}
-		}
-	}
-	lose_effect = {		
-		if = {
-			limit = { 
-				liege = { character = FROM } 
-				NAND = {
-					in_command = yes
-					is_looting = yes
-				}
-				is_incapable = no
-				prisoner = no
-				NOT = { is_inaccessible_trigger = yes }
-			}
-			if = {
-				limit = { ai = no }
-				letter_event = { id = 45344 } #inform
-			}
-			opinion = { who = FROM modifier = opinion_fired_from_council }
-			if = {
-				limit = {
-					any_opinion_modifier_target = {
-						reverse_has_opinion_modifier = { who = ROOT modifier = opinion_council_sponsor } 
-						is_liege_or_above = FROM
-						NOT = { character = FROM }
-					}
-				}
-				FROM = { character_event = { id = council_plot.54 } }
-			}	
-		}		
-	}
-	retire_effect = {	
-	}
+		# if = {
+			# limit = { ai = no }
+			# character_event = { id = CM.11501 days = 1 } #chronicle  #to allow time for getjobtitle to work
+		# }
+		# if = { #Hand of the King Chronicle
+			# limit = { FROM = { tier = EMPEROR } }
+			# event_target:chronicle_player = {
+				# if = { #Record Emperor's Hands of the King
+					# limit = {
+						# character = FROM
+					# }
+					# character_event = { id = CM.11502 days = 1 }
+				# }
+				# if = { #Inform fellow Dynasts
+					# limit = {
+						# dynasty = ROOT
+						# NOT = { dynasty = FROM }
+						# NOT = { character = ROOT }
+					# }
+					# character_event = { id = CM.11500 days = 1 }
+				# }
+			# }
+		# }
+	# }
+	# lose_effect = {		
+		# if = {
+			# limit = { 
+				# liege = { character = FROM } 
+				# NAND = {
+					# in_command = yes
+					# is_looting = yes
+				# }
+				# is_incapable = no
+				# prisoner = no
+				# NOT = { is_inaccessible_trigger = yes }
+			# }
+			# if = {
+				# limit = { ai = no }
+				# letter_event = { id = 45344 } #inform
+			# }
+			# opinion = { who = FROM modifier = opinion_fired_from_council }
+			# if = {
+				# limit = {
+					# any_opinion_modifier_target = {
+						# reverse_has_opinion_modifier = { who = ROOT modifier = opinion_council_sponsor } 
+						# is_liege_or_above = FROM
+						# NOT = { character = FROM }
+					# }
+				# }
+				# FROM = { character_event = { id = council_plot.54 } }
+			# }	
+		# }		
+	# }
+	# retire_effect = {	
+	# }
 	
-	# action = action_oversee_province
-	# action = action_oversee_province_nomadic
-	# action = action_pacify_province
+	# # action = action_oversee_province
+	# # action = action_oversee_province_nomadic
+	# # action = action_pacify_province
 	
-	# actions a Castellan usually did in history
-	# action = action_improve_defenses #took care of garrison for lord
-	# action = action_assist_arrest #often helped lords bring justice to their castle
-	# action = action_charity #often helped people of the local area
+	# # actions a Castellan usually did in history
+	# # action = action_improve_defenses #took care of garrison for lord
+	# # action = action_assist_arrest #often helped lords bring justice to their castle
+	# # action = action_charity #often helped people of the local area
 
-	lift_fow = yes
-}
+	# lift_fow = yes
+# }
 
 job_chancellor = {
 	is_chancellor = yes
@@ -425,10 +425,6 @@ job_spiritual = {
 	}
 	dismiss_trigger = {
 		FROM = {
-			OR = {
-				#NOT = { religion_group = muslim }
-				NOT = { religion = ROOT }
-			}
 			NOT = { 
 				AND = {
 					has_law = succession_voting_power_1
