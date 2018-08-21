@@ -391,7 +391,7 @@ character_event = {
 							using_cb = emf_faction_succ_ultimogeniture
 						}
 					}
-					# trait = pf_rebel
+					trait = pf_rebel
 				}
 			}
 			break = yes
@@ -561,7 +561,7 @@ character_event = {
 			# Transfer loyalist/neutral TOMs
 			any_vassal = { # Those loyal to me
 				limit = {
-					# trait = pf_loyalist
+					trait = pf_loyalist
 					NOR = {
 						character = event_target:heir
 						reverse_has_opinion_modifier = {
@@ -581,7 +581,7 @@ character_event = {
 			}
 			any_vassal = { # Those neutral to me
 				limit = {
-					# trait = pf_neutral
+					trait = pf_neutral
 					NOR = {
 						character = event_target:heir
 						reverse_has_opinion_modifier = {
@@ -667,7 +667,7 @@ character_event = {
 		}
 
 		if = {
-			limit = { NOT = { # trait = pf_rebel } }
+			limit = { NOT = { trait = pf_rebel } }
 			log = ">>>>>"
 			break = yes
 		}
@@ -690,7 +690,7 @@ character_event = {
 							character = ROOT
 							is_liege_of = ROOT
 							AND = {
-								# trait = pf_rebel
+								trait = pf_rebel
 								any_opinion_modifier_target = {
 									reverse_has_opinion_modifier = {
 										who = PREV
@@ -701,8 +701,8 @@ character_event = {
 							}
 							AND = {
 								OR = {
-									# trait = pf_loyalist
-									# trait = pf_neutral
+									trait = pf_loyalist
+									trait = pf_neutral
 								}
 								vassal_of = PREV
 							}
@@ -715,18 +715,18 @@ character_event = {
 			
 			event_target:heir = {
 				if = {
-					limit = { # trait = pf_loyalist }
+					limit = { trait = pf_loyalist }
 					log = "clearing heir's unrelated loyalist status"
 					remove_opinion = { who = LIEGE modifier = pf_loyal_toward }
 					reverse_remove_opinion = { who = LIEGE modifier = pf_loyal_to_me }
 				}
 				if = {
-					limit = { # trait = pf_neutral }
+					limit = { trait = pf_neutral }
 					log = "clearing heir's unrelated neutral status"
 					remove_opinion = { who = LIEGE modifier = pf_neutral_toward }
 					reverse_remove_opinion = { who = LIEGE modifier = pf_neutral_to_me }
 				}
-				#add_# trait = pf_rebel
+				#add_trait = pf_rebel
 			}
 			
 			if = {
@@ -864,7 +864,7 @@ character_event = {
 			limit = {
 				event_target:pf_war_liege = {
 					event_target:heir = {
-						# trait = pf_rebel
+						trait = pf_rebel
 						any_opinion_modifier_target = {
 							reverse_has_opinion_modifier = {
 								who = PREV
@@ -882,8 +882,8 @@ character_event = {
 				event_target:pf_war_liege = {
 					event_target:heir = {
 						OR = {
-							# trait = pf_loyalist
-							# trait = pf_neutral
+							trait = pf_loyalist
+							trait = pf_neutral
 						}
 						vassal_of = PREV
 					}
@@ -3070,13 +3070,13 @@ character_event = {
 				limit = { reverse_has_opinion_modifier = { who = PREV modifier = pf_loyal_to_me } }
 				reverse_remove_opinion = { who = PREV modifier = pf_loyal_to_me }
 				remove_opinion = { who = PREV modifier = pf_loyal_toward }
-				#remove_# trait = pf_loyalist
+				#remove_trait = pf_loyalist
 			}
 			any_opinion_modifier_target = { # Those that were neutral in FROMFROM's civil war
 				limit = { reverse_has_opinion_modifier = { who = PREV modifier = pf_neutral_to_me } }
 				reverse_remove_opinion = { who = PREV modifier = pf_neutral_to_me }
 				remove_opinion = { who = PREV modifier = pf_neutral_toward }
-				#remove_# trait = pf_neutral
+				#remove_trait = pf_neutral
 			}
 			
 			# Transfer war flags
@@ -3176,7 +3176,7 @@ character_event = {
 
 	trigger = {
 		FROMFROM = {
-			# trait = pf_rebel
+			trait = pf_rebel
 			OR = {
 				is_ruler = no
 				in_revolt = no
@@ -3218,7 +3218,7 @@ character_event = {
 			is_primary_holder_title = yes
 			temporary = no
 		}
-		# trait = pf_rebel
+		trait = pf_rebel
 		any_opinion_modifier_target = { # Old civil war liege
 			reverse_has_opinion_modifier = { who = PREV modifier = revolting_against }
 			in_revolt = yes
@@ -3276,11 +3276,11 @@ character_event = {
 		primary_title = { title = FROM }
 		OR = {
 			AND = {
-				# trait = pf_neutral
+				trait = pf_neutral
 				NOT = { has_opinion_modifier = { who = LIEGE modifier = pf_neutral_toward } }
 			}
 			AND = {
-				# trait = pf_loyalist
+				trait = pf_loyalist
 				NOT = { has_opinion_modifier = { who = LIEGE modifier = pf_loyal_toward } }
 			}
 		}
@@ -3289,7 +3289,7 @@ character_event = {
 
 	immediate = {
 		if = {
-			limit = { # trait = pf_loyalist }
+			limit = { trait = pf_loyalist }
 			log = "INFO: loyalist's liege changed due to gaining title [From.GetID] ([From.GetFullName]): interim state pre-cleanup:"
 			pf_log_state_effect = yes
 			pf_teardown_loyalist_effect = yes
@@ -3297,7 +3297,7 @@ character_event = {
 			pf_log_state_effect = yes
 		}
 		if = {
-			limit = { # trait = pf_neutral }
+			limit = { trait = pf_neutral }
 			log = "INFO: neutral's liege changed due to gaining title [From.GetID] ([From.GetFullName]): interim state pre-cleanup:"
 			pf_log_state_effect = yes
 			pf_teardown_neutral_effect = yes
@@ -3320,8 +3320,8 @@ character_event = {
 	trigger = {
 		is_dying = no # This is handled directly on_death by PlusFaction.205
 		OR = {
-			# trait = pf_loyalist
-			# trait = pf_neutral
+			trait = pf_loyalist
+			trait = pf_neutral
 		}
 		has_game_started = yes
 		NOT = { has_global_flag = pf_teardown_lock }
@@ -3329,7 +3329,7 @@ character_event = {
 
 	immediate = {
 		if = {
-			limit = { # trait = pf_loyalist }
+			limit = { trait = pf_loyalist }
 			log = "INFO: loyalist unlanded. interim state pre-cleanup:"
 			pf_log_state_effect = yes
 			pf_teardown_loyalist_effect = yes
@@ -3337,7 +3337,7 @@ character_event = {
 			pf_log_state_effect = yes
 		}
 		if = {
-			limit = { # trait = pf_neutral }
+			limit = { trait = pf_neutral }
 			log = "INFO: neutral unlanded. interim state pre-cleanup:"
 			pf_log_state_effect = yes
 			pf_teardown_neutral_effect = yes
