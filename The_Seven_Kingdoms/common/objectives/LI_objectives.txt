@@ -418,3 +418,115 @@ obj_gain_estates_5 = {
 		set_character_flag = obj_gain_estates
 	}
 }
+
+obj_live_to_old_age = {
+	type = character
+	
+	allow = {
+		age = 32
+		NOT = { age = 55 }
+		NOT = { has_character_modifier = old_age }
+	}
+	chance = {
+		factor = 100
+		
+		modifier = {
+			factor = 0.25
+			trait = content
+		}
+		modifier = {
+			factor = 0.25
+			age = 32
+		}
+		modifier = {
+			factor = 0.5
+			age = 35
+		}
+		modifier = {
+			factor = 1.5
+			trait = strong
+		}
+		modifier = {
+			factor = 1.5
+			age = 40
+		}
+		modifier = {
+			factor = 2.0
+			trait = ambitious
+		}
+		modifier = {
+			factor = 2.0
+			age = 45
+		}
+		modifier = {
+			factor = 2.5
+			age = 50
+		}
+	}
+	success = {
+		OR = {
+			age = 60
+			has_character_modifier = old_age
+		}
+	}
+	abort = {
+		trait = incapable
+	}
+	abort_effect = {
+	}
+	effect = {
+		prestige = 50
+	}
+}
+
+obj_live_to_very_old_age = {
+	type = character
+	
+	allow = {
+		age = 55
+		NOT = { age = 70 }
+		NOT = { has_character_modifier = very_old_age }
+	}
+	chance = {
+		factor = 100
+		
+		modifier = {
+			factor = 0.25
+			trait = content
+		}
+		modifier = {
+			factor = 0.25
+			age = 55
+		}
+		modifier = {
+			factor = 0.5
+			age = 60
+		}
+		modifier = {
+			factor = 1.5
+			trait = strong
+		}
+		modifier = {
+			factor = 1.5
+			age = 65
+		}
+		modifier = {
+			factor = 2.0
+			trait = ambitious
+		}
+	}
+	success = {
+		OR = {
+			age = 70
+			has_character_modifier = very_old_age
+		}
+	}
+	abort = {
+		trait = incapable
+	}
+	abort_effect = {
+	}
+	effect = {
+		prestige = 100
+	}
+}
