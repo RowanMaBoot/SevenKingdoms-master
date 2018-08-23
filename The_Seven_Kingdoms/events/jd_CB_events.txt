@@ -692,32 +692,44 @@ character_event = {
 	option = { #We shall surrender now and save our people
 		name = EVT_OPTA_JD_2500
 		ai_chance = {
-			factor = 40
+			factor = 10
 			modifier = {
 				factor = 0
 				OR = {
 					trait = lunatic
 					trait = possessed
+					trait = proud
+					trait = stubborn
+					is_tributary = yes
+					relative_power_including_allies_defender = {
+						who = event_target:tribute_war_suzerain
+						power = 1.5
+					}
+					event_target:tribute_war_suzerain = {
+						any_war = {
+							NOT = {
+								any_attacker = {
+									character = ROOT
+								}
+							}
+							NOT = {
+								any_defender = {
+									character = ROOT
+								}
+							}
+						}
+					}
 				}
 			}
 			modifier = {
-				factor = 0
-				trait = proud
-			}
-			modifier = {
 				factor = 2
-				trait = humble
+				OR = {
+					trait = craven
+					trait = content
+				}
 			}
 			modifier = {
-				factor = 2
-				trait = content
-			}
-			modifier = {
-				factor = 2
-				is_smart_trigger = yes
-			}
-			modifier = {
-				factor = 5
+				factor = 1.5
 				NOT = {
 					relative_power_including_allies_defender = {
 						who = event_target:tribute_war_suzerain
@@ -726,7 +738,7 @@ character_event = {
 				}
 			}
 			modifier = {
-				factor = 2
+				factor = 1.5
 				NOT = {
 					relative_power_including_allies_defender = {
 						who = event_target:tribute_war_suzerain
@@ -735,19 +747,21 @@ character_event = {
 				}
 			}
 			modifier = {
-				factor = 2
+				factor = 1.5
 				NOT = {
 					relative_power_including_allies_defender = {
 						who = event_target:tribute_war_suzerain
-						power = 1.5
+						power = 0.75
 					}
 				}
 			}
 			modifier = {
-				factor = 0
-				relative_power_including_allies_defender = {
-					who = event_target:tribute_war_suzerain
-					power = 3
+				factor = 1.5
+				NOT = {
+					relative_power_including_allies_defender = {
+						who = event_target:tribute_war_suzerain
+						power = 0.9
+					}
 				}
 			}
 		}
@@ -756,7 +770,7 @@ character_event = {
 	option = { #We will not give in so easily!
 		name = EVT_OPTB_JD_2500
 		ai_chance = {
-			factor = 60
+			factor = 90
 		}
 	}
 }

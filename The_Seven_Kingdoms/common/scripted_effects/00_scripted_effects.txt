@@ -1436,8 +1436,10 @@ add_maimed_trait_effect = {
 	}
 	if = {
 		limit = {
-			has_dlc = "Reapers"
-			NOT = { trait = severely_injured }
+			AND = {
+				has_dlc = "Reapers"
+				NOT = { trait = severely_injured }
+			}
 		}
 		add_trait = severely_injured
 		hidden_tooltip = {
@@ -4014,9 +4016,9 @@ add_cat_effect = {
 	# }
 # }
 
-# remove_secret_religion_trait_effect = {
-	# clear_secret_religion = yes
-# }
+remove_secret_religion_trait_effect = {
+	clear_secret_religion = yes
+}
 
 # pay_back_assassins_effect = {
 	# if = {
@@ -19236,8 +19238,8 @@ freehold_war_spawn_troops_no_disband_effect = {
 						light_cavalry = { 41 41 }
 						knights = { 0 0 }
 					}
-					#attrition = 1
-					disband_on_peace = yes
+					attrition = 0.1
+					disband_on_peace = no
 					merge = yes
 				}
 			}
@@ -19266,8 +19268,8 @@ freehold_war_spawn_troops_no_disband_effect = {
 						light_cavalry = { 81 81 }
 						knights = { 0 0 }
 					}
-					#attrition = 1
-					disband_on_peace = yes
+					attrition = 0.1
+					disband_on_peace = no
 					merge = yes
 				}
 			}
@@ -19296,8 +19298,8 @@ freehold_war_spawn_troops_no_disband_effect = {
 						light_cavalry = { 79 79 }
 						knights = { 0 0 }
 					}
-					#attrition = 1
-					disband_on_peace = yes
+					attrition = 0.1
+					disband_on_peace = no
 					merge = yes
 				}
 			}
@@ -19326,8 +19328,8 @@ freehold_war_spawn_troops_no_disband_effect = {
 						light_cavalry = { 61 61 }
 						knights = { 0 0 }
 					}
-					#attrition = 1
-					disband_on_peace = yes
+					attrition = 0.1
+					disband_on_peace = no
 					merge = yes
 				}
 			}
@@ -19356,8 +19358,8 @@ freehold_war_spawn_troops_no_disband_effect = {
 						light_cavalry = { 80 80 }
 						knights = { 0 0 }
 					}
-					#attrition = 1
-					disband_on_peace = yes
+					attrition = 0.1
+					disband_on_peace = no
 					merge = yes
 				}
 			}
@@ -19423,7 +19425,7 @@ freehold_war_modify_variables_by_status_effect = {
 	# variable: freehold_war_troop_quality
 	# variable: freehold_war_troop_quantity
 	# variable: freehold_war_minimum_commander_martial
-	# variable: frehold_war_target_match_mult
+	# variable: freehold_war_target_match_mult
 	
 	random_list = {
 		1 = {
@@ -20120,6 +20122,7 @@ add_freehold_artifact_effect = { #Used in event JD.15016 (possible to use elsewh
 				new_artifact = {
 					set_name = freehold_tapestry_grand_name
 				}
+				trigger = { ROOT = { NOT = { has_artifact = freehold_tapestry_grand } } }
 			}
 		}
 		new_artifact = {

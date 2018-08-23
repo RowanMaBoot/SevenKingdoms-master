@@ -3718,3 +3718,44 @@ character_event =  {
 		print_freehold_ruler_update_effect = yes
 	}
 }
+
+character_event =  { # Clean up living members of the chinese dynasty
+	id = JD.30504
+	
+	hide_window = yes
+	is_triggered_only = yes
+	
+	only_playable = yes
+
+	trigger = { 
+		is_offmap_governor = yes
+		is_save_game = no
+	}
+	
+	immediate = {
+		offmap_freehold = {
+			offmap_ruler = {
+				any_dynasty_member = {
+					limit = {
+						NOR = {
+							is_offmap_ruler = yes
+							is_ruler = yes
+						}
+					}
+					death = { death_reason = death_went_back_to_freehold }
+				}
+			}
+			offmap_prev_ruler = {
+				any_dynasty_member = {
+					limit = {
+						NOR = {
+							is_offmap_ruler = yes
+							is_ruler = yes
+						}
+					}
+					death = { death_reason = death_went_back_to_freehold }
+				}
+			}
+		}
+	}
+}
