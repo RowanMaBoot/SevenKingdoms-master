@@ -1,0 +1,963 @@
+# -*- ck2.events -*-
+
+namespace = emf_tsk_melting_pot
+
+###################################################################
+# ANDAL AND FIRST MEN MELTING POT EVENTS						  #
+# Written by Rylock and adopted and expanded for TSK by TitanRogue#
+###################################################################
+
+# The Stormlander Melting Pot
+character_event = {
+	id = emf_tsk_melting_pot.1
+	desc = EVTDESC_emf_tsk_melting_pot_1
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+	culture_group = andal
+
+	trigger = {
+		any_demesne_province = {
+			any_province_holding = { NOT = { holding_type = nomad } }
+			num_of_settlements = 1
+		}
+		#################################
+		### Add new melting pots here ###
+		#################################
+		OR = {
+			AND = { # Stormlander
+				capital_scope = { culture = stormmen }
+				NOT = { culture = stormlander }
+				any_demesne_province = {
+					culture = stormmen
+				}
+			}
+			AND = { # Westerlander
+				capital_scope = { culture = westerlander }
+				NOT = { culture = westermen }
+				any_demesne_province = {
+					culture = westerlander
+				}
+			}
+			AND = { # Watermen
+				capital_scope = { 
+					OR = {
+						culture = wendmen
+						culture = hookmen
+					}
+				}
+				NOT = { culture = waterman }
+				any_demesne_province = {
+					culture = waterman
+					OR = {
+						culture = wendmen
+						culture = hookmen
+					}
+				}
+			}
+			AND = { # Riverlander
+				capital_scope = { culture = rivermen }
+				NOT = { culture = riverlander }
+				any_demesne_province = {
+					culture = rivermen
+				}
+			}
+			AND = { # Marcher
+				capital_scope = { culture = marchmen }
+				NOT = { culture = marcher }
+				any_demesne_province = {
+					culture = marchmen
+				}
+			}
+			AND = { # Wynelander
+				capital_scope = { culture = wynemen }
+				NOT = { culture = wynelander }
+				any_demesne_province = {
+					culture = wynemen
+				}
+			}
+			AND = { # Shieldmen
+				capital_scope = { culture = shieldislander }
+				NOT = { culture = shieldmen }
+				any_demesne_province = {
+					culture = shieldislander
+				}
+			}
+			AND = { # Cornmen
+				capital_scope = { culture = cornlander }
+				NOT = { culture = cornmen }
+				any_demesne_province = {
+					culture = cornlander
+				}
+			}
+			AND = { # Grovelander
+				capital_scope = { 
+					region = world_goldengrove
+					culture = north_marcher 
+				}
+				NOT = { culture = grovelander }
+				any_demesne_province = {
+					region = world_goldengrove
+					culture = north_marcher
+				}
+			}
+		}
+		#################################
+		NOR = {
+			has_character_flag = no_melting_pot
+			any_liege = { has_character_flag = no_melting_pot }
+			#has_game_rule = { name = adventurers value = none }
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+		#months = 500
+		modifier = {
+			factor = 1.5
+			independent = no
+			#################################
+			### Add new melting pots here ###
+			#################################
+			OR = {
+				NOT = { any_liege = { culture = stormlander } }
+				NOT = { any_liege = { culture = westermen } }
+				NOT = { any_liege = { culture = waterman } }
+				NOT = { any_liege = { culture = riverlander } }
+				NOT = { any_liege = { culture = marcher } }
+				NOT = { any_liege = { culture = wynelander } }
+				NOT = { any_liege = { culture = shieldmen } }
+				NOT = { any_liege = { culture = cornmen } }
+				NOT = { any_liege = { culture = grovelander } }
+			}
+			#################################
+		}
+		modifier = {
+			factor = 0.25
+			#################################
+			### Add new melting pots here ###
+			#################################
+			OR = {
+				any_liege = { culture = stormlander }
+				any_liege = { culture = westermen }
+				any_liege = { culture = waterman }
+				any_liege = { culture = riverlander }
+				any_liege = { culture = marcher }
+				any_liege = { culture = wynelander }
+				any_liege = { culture = shieldmen }
+				any_liege = { culture = cornmen }
+				any_liege = { culture = grovelander }
+			}
+			#################################
+		}
+		modifier = {
+			factor = 0.5
+			year = 1000
+		}
+		modifier = {
+			factor = 0.5
+			year = 1100
+		}
+		modifier = {
+			factor = 0.5
+			year = 1200
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 1 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 2 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 3 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 4 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 5 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 6 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 7 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 8 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 9 }
+		}
+		modifier = {
+			factor = 0.95
+			learning = 11
+		}
+		modifier = {
+			factor = 0.95
+			learning = 12
+		}
+		modifier = {
+			factor = 0.95
+			learning = 13
+		}
+		modifier = {
+			factor = 0.95
+			learning = 14
+		}
+		modifier = {
+			factor = 0.95
+			learning = 15
+		}
+		modifier = {
+			factor = 0.95
+			learning = 16
+		}
+		modifier = {
+			factor = 0.95
+			learning = 17
+		}
+		modifier = {
+			factor = 0.95
+			learning = 18
+		}
+		modifier = {
+			factor = 0.95
+			learning = 19
+		}
+		modifier = {
+			factor = 0.95
+			learning = 20
+		}
+		modifier = {
+			factor = 0.95
+			learning = 21
+		}
+		modifier = {
+			factor = 0.95
+			learning = 22
+		}
+		modifier = {
+			factor = 0.95
+			learning = 23
+		}
+		modifier = {
+			factor = 0.95
+			learning = 24
+		}
+		modifier = {
+			factor = 0.95
+			learning = 25
+		}
+		modifier = {
+			factor = 0.3
+			OR = {
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots
+				}
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots_and_slower_normal
+				}
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				ROOT = { culture_group = andal }
+				capital_scope = {
+					num_of_settlements = 1
+					any_province_holding = { NOT = { holding_type = nomad } }
+					#################################
+					### Add new melting pots here ###
+					#################################
+					OR = {
+						AND = { # Stormlander
+							culture = stormmen
+						}
+						AND = { # Westerlander
+							culture = westerlander
+						}
+						AND = { # Watermen
+							culture = waterman
+							OR = {
+								culture = wendmen
+								culture = hookmen
+							}
+						}
+						AND = { # Riverlander
+							culture = rivermen
+						}
+						AND = { # Marcher
+							culture = marchmen
+						}
+						AND = { # Wynelander
+							culture = wynemen
+						}
+						AND = { # Shieldmen
+							culture = shieldislander
+						}
+						AND = { # Cornmen
+							culture = cornlander
+						}
+						AND = { # Grovelander
+							region = world_goldengrove
+							culture = grovelander
+						}
+					}
+					#################################
+				}
+			}
+			
+			capital_scope = { save_event_target_as = melting_pot_province }
+			break = yes
+		}
+		random_demesne_province = {
+			limit = {
+				num_of_settlements = 1
+				any_province_holding = { NOT = { holding_type = nomad } }
+				ROOT = { culture_group = andal }
+				#################################
+				### Add new melting pots here ###
+				#################################
+				OR = {
+					AND = { # Stormlander
+						culture = stormmen
+					}
+					AND = { # Westerlander
+						culture = westerlander
+					}
+					AND = { # Watermen
+						OR = {
+							culture = wendmen
+							culture = hookmen
+						}
+					}
+					AND = { # Riverlander
+						culture = rivermen
+					}
+					AND = { # Marcher
+						culture = marchmen
+					}
+					AND = { # Wynelander
+						culture = wynemen
+					}
+					AND = { # Shieldmen
+						culture = shieldislander
+					}
+					AND = { # Cornmen
+						culture = cornlander
+					}
+					AND = { # Grovelander
+						region = world_goldengrove
+						culture = grovelander
+					}
+				}
+				#################################
+			}
+			save_event_target_as = melting_pot_province
+			stormlander = { save_event_target_as = melting_pot_culture }
+		}
+		stormlander = {
+			#if = {
+			#	limit = { event_target:melting_pot_province = { culture = stormmen } }
+				save_event_target_as = melting_pot_culture
+			#}
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_tsk_melting_pot_1
+		#################################
+		### Add new melting pots here ###
+		#################################
+		if = { # Stormlander
+			limit = { location = { culture = stormmen } }
+			culture = stormlander
+		}
+		if = { # Westerlander
+			limit = { location = { culture = westerlander } }
+			culture = westermen
+		}
+		if = { # Watermen
+			limit = { 
+				location = { 
+					OR = {
+						culture = wendmen
+						culture = hookmen
+					} 
+				}
+			}
+			culture = waterman
+		}
+		if = { # Riverlander
+			limit = { location = { culture = rivermen } }
+			culture = riverlander
+		}
+		if = { # Marcher
+			limit = { location = { culture = marchmen } }
+			culture = marcher
+		}
+		if = { # Marcher
+			limit = { location = { culture = wynemen } }
+			culture = wynelander
+		}
+		if = { # Shieldmen
+			limit = { location = { culture = shieldislander } }
+			culture = shieldmen
+		}
+		if = { # Cornmen
+			limit = { location = { culture = cornlander } }
+			culture = cornmen
+		}
+		if = { # Grovelander
+			limit = { 
+				location = { 
+					region = world_goldengrove
+					culture = north_marcher 
+				} 
+			}
+			culture = grovelander
+		}
+		#################################
+		any_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				dynasty = ROOT
+			}
+			#################################
+			### Add new melting pots here ###
+			#################################
+			if = { # Stormlander
+				limit = { culture = stormmen }
+				culture = stormlander
+			}
+			if = { # Westerlander
+				limit = { culture = westerlander }
+				culture = westermen
+			}
+			if = { # Watermen
+				limit = { 
+					OR = {
+						culture = wendmen
+						culture = hookmen
+					}
+				}
+				culture = waterman
+			}
+			if = { # Riverlander
+				limit = { culture = rivermen }
+				culture = riverlander
+			}
+			if = { # Marcher
+				limit = { culture = marchmen }
+				culture = marcher
+			}
+			if = { # Wynelander
+				limit = { culture = wynemen }
+				culture = wynelander
+			}
+			if = { # Shieldmen
+				limit = { culture = shieldislander }
+				culture = shieldmen
+			}
+			if = { # Cornmen
+				limit = { culture = cornlander }
+				culture = cornmen
+			}
+			if = { # Grovelander
+				limit = { 
+					location = { region = world_goldengrove }
+					culture = north_marcher 
+				}
+				culture = grovelander
+			}
+			#################################
+		}
+		event_target:melting_pot_province = {
+			#################################
+			### Add new melting pots here ###
+			#################################
+			if = { # Stormlander
+				limit = { culture = stormmen }
+				culture = stormlander
+				set_province_flag = melting_pot
+			}
+			if = { # Westerlander
+				limit = { culture = westerlander }
+				culture = westermen
+				set_province_flag = melting_pot
+			}
+			if = { # Westerlander
+				limit = {
+					OR = {
+						culture = wendmen
+						culture = hookmen
+					}
+				}
+				culture = waterman
+				set_province_flag = melting_pot
+			}
+			if = { # Riverlander
+				limit = { culture = rivermen }
+				culture = riverlander
+				set_province_flag = melting_pot
+			}
+			if = { # Marcher
+				limit = { culture = marchmen }
+				culture = marcher
+				set_province_flag = melting_pot
+			}
+			if = { # Wynelander
+				limit = { culture = wynemen }
+				culture = wynelander
+				set_province_flag = melting_pot
+			}
+			if = { # Shieldmen
+				limit = { culture = shieldislander }
+				culture = shieldmen
+				set_province_flag = melting_pot
+			}
+			if = { # Cornmen
+				limit = { culture = cornlander }
+				culture = cornmen
+				set_province_flag = melting_pot
+			}
+			if = { # Grovelander
+				limit = { 
+					region = world_goldengrove
+					culture = north_marcher 
+				}
+				culture = grovelander
+				set_province_flag = melting_pot
+			}
+			#################################
+		}
+	}	
+	option = {
+		name = EVTOPTB_emf_tsk_melting_pot_1
+		trigger = { ai = no }
+		set_character_flag = no_melting_pot
+	}
+}
+
+# It's spreading
+province_event = {
+	id = emf_tsk_melting_pot.2
+	desc = EVTDESC_emf_tsk_melting_pot_2
+	picture = GFX_evt_throne_room
+
+	trigger = {
+		num_of_settlements = 1
+		any_province_holding = { NOT = { holding_type = nomad } }
+		NOT = { has_province_flag = melting_pot }
+		#################################
+		### Add new melting pots here ###
+		#################################
+		OR = { # Stormlander trigger
+			owner = { culture = stormlander }
+			AND = {
+				any_neighbor_province = { culture = stormlander }
+				owner = { top_liege = { culture = stormlander } }
+			}
+		}
+		OR = { # Westerlander trigger
+			owner = { culture = westermen }
+			AND = {
+				any_neighbor_province = { culture = westermen }
+				owner = { top_liege = { culture = westermen } }
+			}
+		}
+		OR = { # Watermen trigger
+			owner = { culture = waterman }
+			AND = {
+				any_neighbor_province = { culture = waterman }
+				owner = { top_liege = { culture = waterman } }
+			}
+		}
+		OR = { # Riverlander trigger
+			owner = { culture = riverlander }
+			AND = {
+				any_neighbor_province = { culture = riverlander }
+				owner = { top_liege = { culture = riverlander } }
+			}
+		}
+		OR = { # Marcher trigger
+			owner = { culture = marcher }
+			AND = {
+				any_neighbor_province = { culture = marcher }
+				owner = { top_liege = { culture = marcher } }
+			}
+		}
+		OR = { # Wynelander trigger
+			owner = { culture = wynelander }
+			AND = {
+				any_neighbor_province = { culture = wynelander }
+				owner = { top_liege = { culture = wynelander } }
+			}
+		}
+		OR = { # Shieldmen trigger
+			owner = { culture = shieldmen }
+			AND = {
+				any_neighbor_province = { culture = shieldmen }
+				owner = { top_liege = { culture = shieldmen } }
+			}
+		}
+		OR = { # Cornmen trigger
+			owner = { culture = cornmen }
+			AND = {
+				any_neighbor_province = { culture = cornmen }
+				owner = { top_liege = { culture = cornmen } }
+			}
+		}
+		OR = { # Grovelander trigger
+			owner = { culture = grovelander }
+			AND = {
+				any_neighbor_province = { culture = grovelander }
+				owner = { top_liege = { culture = grovelander } }
+				region = world_goldengrove
+			}
+		}
+		#################################
+	}
+
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.75
+			#################################
+			### Add new melting pots here ###
+			#################################
+			OR= {
+				AND = { # Stormlander modifier
+					owner = { culture = stormlander }
+					any_neighbor_province = { culture = stormlander }
+				}
+				AND = { # Westerlander modifier
+					owner = { culture = westermen }
+					any_neighbor_province = { culture = westermen }
+				}
+				AND = { # Watermen modifier
+					owner = { culture = waterman }
+					any_neighbor_province = { culture = waterman }
+				}
+				AND = { # Riverlander modifier
+					owner = { culture = riverlander }
+					any_neighbor_province = { culture = riverlander }
+				}
+				AND = { # Marcher modifier
+					owner = { culture = marcher }
+					any_neighbor_province = { culture = marcher }
+				}
+				AND = { # Wynelander modifier
+					owner = { culture = wynelander }
+					any_neighbor_province = { culture = wynelander }
+				}
+				AND = { # Shieldmen modifier
+					owner = { culture = shieldmen }
+					any_neighbor_province = { culture = shieldmen }
+				}
+				AND = { # Cornmen modifier
+					owner = { culture = cornmen }
+					any_neighbor_province = { culture = cornmen }
+				}
+				AND = { # Grovelander modifier
+					owner = { culture = grovelander }
+					any_neighbor_province = { culture = grovelander }
+				}
+			}
+			#################################
+		}
+		modifier = {
+			factor = 0.5
+			year = 1000
+		}
+		modifier = {
+			factor = 0.5
+			year = 1100
+		}
+		modifier = {
+			factor = 0.5
+			year = 1200
+		}
+	}
+
+	immediate = {
+		owner = {
+			top_liege = { save_event_target_as = new_culture }
+		}
+	}
+
+	option = {
+		name = I_SEE
+		#################################
+		### Add new melting pots here ###
+		#################################
+		if = { # Stormlander
+			limit = { culture = stormmen }
+			culture = stormlander
+		}
+		if = { # Westerlander
+			limit = { culture = westerlander }
+			culture = westermen
+		}
+		if = { # Watermen
+			limit = {
+				OR = {
+					culture = wendmen
+					culture = hookmen
+				}
+			}
+			culture = waterman
+		}
+		if = { # Riverlander
+			limit = { culture = rivermen }
+			culture = riverlander
+		}
+		if = { # Marcher
+			limit = { culture = marchmen }
+			culture = marcher
+		}
+		if = { # Wynelander
+			limit = { culture = wynemen }
+			culture = wynelander
+		}
+		if = { # Shieldmen
+			limit = { culture = shieldislander }
+			culture = shieldmen
+		}
+		if = { # Cornmen
+			limit = { culture = cornlander }
+			culture = cornmen
+		}
+		if = { # Grovelander
+			limit = { 
+				region = world_goldengrove
+				culture = north_marcher 
+			}
+			culture = grovelander
+		}
+		#################################
+		set_province_flag = melting_pot
+		hidden_tooltip = {
+			save_event_target_as = emf_province
+			owner = {
+				character_event = { id = emf_ambitions.1 }
+				any_liege = { character_event = { id = emf_ambitions.1 } }
+			}
+		}
+	}
+}
+
+# Make my court Andal
+character_event = {
+	id = emf_tsk_melting_pot.3
+	desc = EVTDESC_emf_tsk_melting_pot_3
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+
+	trigger = {
+		any_courtier = {
+			is_ruler = no
+			prisoner = no
+			#################################
+			### Add new melting pots here ###
+			#################################
+			OR = {
+				AND = { # Stormlander trigger
+					liege = { capital_scope = { culture = stormmen } }
+					culture = stormmen
+				}
+				AND = { # Westerlander trigger
+					liege = { capital_scope = { culture = westerlander } }
+					culture = westerlander
+				}
+				AND = { # Watermen trigger
+					liege = { 
+						capital_scope = {
+							OR = {
+								culture = wendmen
+								culture = hookmen
+							}
+						}
+					}
+					OR = {
+						culture = wendmen
+						culture = hookmen
+					}
+				}
+				AND = { # Riverlander trigger
+					liege = { capital_scope = { culture = rivermen } }
+					culture = rivermen
+				}
+				AND = { # Marcher trigger
+					liege = { capital_scope = { culture = marchmen } }
+					culture = marchmen
+				}
+				AND = { # Wynelander trigger
+					liege = { capital_scope = { culture = wynemen } }
+					culture = wynemen
+				}
+				AND = { # Shieldmen trigger
+					liege = { capital_scope = { culture = shieldislander } }
+					culture = shieldislander
+				}
+				AND = { # Cornmen trigger
+					liege = { capital_scope = { culture = cornlander } }
+					culture = cornlander
+				}
+				AND = { # Grovelander trigger
+					liege = { 
+						capital_scope = { 
+							region = world_goldengrove
+							culture = north_marcher 
+						}
+					}
+					culture = north_marcher
+				}
+			}
+			#################################
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 60
+		modifier = {
+			factor = 0.5
+			year = 6566
+		}
+		#modifier = {
+		#	factor = 0.5
+		#	year = 1100
+		#}
+		#modifier = {
+		#	factor = 0.5
+		#	year = 1200
+		#}
+	}
+
+	option = {
+		name = OK
+		random_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				is_councillor = yes
+				### Add new melting pots here ###
+				OR = {
+					AND = { # Stormlander trigger
+						liege = { capital_scope = { culture = stormmen } }
+						culture = stormmen
+					}
+					AND = { # Westerlander trigger
+						liege = { capital_scope = { culture = westerlander } }
+						culture = westerlander
+					}
+					AND = { # Watermen trigger
+						liege = { capital_scope = { culture = waterman } }
+						OR = {
+							culture = wendmen
+							culture = hookmen
+						}
+					}
+					AND = { # Riverlander trigger
+						liege = { capital_scope = { culture = rivermen } }
+						culture = rivermen
+					}
+					AND = { # Marcher trigger
+						liege = { capital_scope = { culture = marchmen } }
+						culture = marchmen
+					}
+					AND = { # Wynelander trigger
+						liege = { capital_scope = { culture = wynemen } }
+						culture = wynemen
+					}
+					AND = { # Shieldmen trigger
+						liege = { capital_scope = { culture = shieldislander } }
+						culture = shieldislander
+					}
+					AND = { # Cornmen trigger
+						liege = { capital_scope = { culture = cornlander } }
+						culture = cornlander
+					}
+					AND = { # Grovelander trigger
+						liege = { 
+							capital_scope = { 
+								region = world_goldengrove
+								culture = north_marcher 
+							}
+						}
+						culture = north_marcher
+					}
+				}
+			}
+			#################################
+			### Add new melting pots here ###
+			#################################
+			if = { # Stormlander
+				limit = { liege = { capital_scope = { culture = stormmen } } }
+				culture = stormlander
+			}
+			if = { # Westerlander
+				limit = { liege = { capital_scope = { culture = westerlander } } }
+				culture = westermen
+			}
+			if = { # Watermen
+				limit = { liege = { capital_scope = { culture = waterman } } }
+				culture = waterman
+			}
+			if = { # Riverlander
+				limit = { liege = { capital_scope = { culture = rivermen } } }
+				culture = riverlander
+			}
+			if = { # Marcher
+				limit = { liege = { capital_scope = { culture = marchmen } } }
+				culture = marcher
+			}
+			if = { # Wynelander
+				limit = { liege = { capital_scope = { culture = wynemen } } }
+				culture = wynelander
+			}
+			if = { # Shieldmen
+				limit = { liege = { capital_scope = { culture = shieldislander } } }
+				culture = shieldmen
+			}
+			if = { # Cornmen
+				limit = { liege = { capital_scope = { culture = cornlander } } }
+				culture = cornmen
+			}
+			if = { # Grovelander
+				limit = { 
+					liege = { 
+						capital_scope = { 
+							region = world_goldengrove
+							culture = north_marcher 
+						} 
+					}
+				}
+				culture = grovelander
+			}
+			#################################
+		}
+	}
+}
