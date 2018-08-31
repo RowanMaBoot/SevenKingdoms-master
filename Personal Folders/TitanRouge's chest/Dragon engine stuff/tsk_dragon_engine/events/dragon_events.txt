@@ -2,33 +2,34 @@
 ###DRAGON ENGINE###
 ###################
 
-####Basic dragon engine events 0-99 ####
-#Initialize dragon stat calculation 0
-#Sets dragon's status 1 
-#Simulates the dragon's growth 2
-#Kills the dragon 3
-#Decreases the infamy gained in sieges/battles when behaving peacufully 4
-#Adds dragon egg to dragon to set dragon as FROM for renaming 5
+####Basic dragon engine events 000-099 ####
+#000	Initialize dragon stat calculation
+#001	Sets dragon's status
+#002	Simulates the dragon's growth
+#003	Kills the dragon
+#004	Decreases the infamy gained in sieges/battles when behaving peacufully
+#005	Adds dragon egg to dragon to set dragon as FROM for renaming
 
 ####Dragon in combat events 100-199####
-#Use your dragon battle 100
-#Use your dragon in siege 101
-#Enemy gets wounded or dies in battle 102
-#Enemy gets wounded or dies in siege 103
-#Dislpays wounded/maimed/severely injured and killed characters in battle/siege 104
-#Destroy the enemy's fortification 105
-#Enemy troops decide to join you 106
+#100	Use your dragon battle
+#101	Use your dragon in siege
+#102	Enemy gets wounded or dies in battle
+#103	Enemy gets wounded or dies in siege
+#104	Dislpays wounded/maimed/severely injured and killed characters in battle/siege
+#105	Destroy the enemy's fortification
+#106	Enemy troops decide to join you
 
 ####Dragon flavor events 200####
-#Face the dragon 200
-#Taming successful! 201
-#Taming failed! 202
-#Dragon rider gets his dragon's egg 203
-#Black dragon egg hatched 204
-#Blue dragon egg hatched 205
-#Green dragon egg hatched 206 
-#Red dragon egg hatched 207
-#White dragon egg hatched 208
+#200	Face the dragon
+#201	Taming successful!
+#202	Taming failed!
+#203	Dragon rider gets his dragon's egg
+#204	Dragon egg hatched
+#205	Black dragon egg transfered
+#206	Blue dragon egg transfered
+#207	Green dragon egg transfered
+#208	Red dragon egg transfered
+#209	White dragon egg transfered
 
 namespace = dragon
 
@@ -184,7 +185,7 @@ character_event = {
 		is_dragon = yes
 	}
 	
-	immediate = { 
+	immediate = {
 		random_list = {
 			20 = {
 				random = {
@@ -198,7 +199,7 @@ character_event = {
 					if = {
 						limit = { any_friend = { is_dragon_rider = yes } }
 						random_friend = {
-							character_event = { id = dragon.203 }
+							character_event = { id = dragon.205 }
 						}
 					}
 				}
@@ -215,7 +216,7 @@ character_event = {
 					if = {
 						limit = { any_friend = { is_dragon_rider = yes } }
 						random_friend = {
-							character_event = { id = dragon.203 }
+							character_event = { id = dragon.206 }
 						}
 					}
 				}
@@ -232,7 +233,7 @@ character_event = {
 					if = {
 						limit = { any_friend = { is_dragon_rider = yes } }
 						random_friend = {
-							character_event = { id = dragon.203 }
+							character_event = { id = dragon.207 }
 						}
 					}
 				}
@@ -249,7 +250,7 @@ character_event = {
 					if = {
 						limit = { any_friend = { is_dragon_rider = yes } }
 						random_friend = {
-							character_event = { id = dragon.203 }
+							character_event = { id = dragon.208 }
 						}
 					}
 				}
@@ -266,7 +267,7 @@ character_event = {
 					if = {
 						limit = { any_friend = { is_dragon_rider = yes } }
 						random_friend = {
-							character_event = { id = dragon.203 }
+							character_event = { id = dragon.209 }
 						}
 					}
 				}
@@ -665,13 +666,13 @@ character_event = {
 character_event = {
 	id = dragon.106
 	desc = EVTDESCdragon106
-	picture = GFX_enemy_troops_pledge_fealty
+	picture = GFX_evt_enemy_troops_pledge_fealty
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
 	
 	option = {
-		name = EVTOPTAdragon106
+		name = "Great!"
 		
 		custom_tooltip = {
 			text = TOOLTIP_DRAGON106
@@ -766,6 +767,15 @@ character_event = {
 		name = EVTOPTAdragon201
 		
 		add_trait = dragon_rider
+		random_courtier = { give_minor_title = title_dragon_lord }
+		change_infamy = {
+			value = 10
+			localisation = dragon_infamy
+		}
+		chronicle = { 
+			entry = CHRONICLE_TAMED_DRAGON
+			portrait = [targetted_dragon_for_taming.GetID]
+		}
 	}
 }
 
@@ -783,100 +793,209 @@ character_event = {
 	}
 }
 
-#	Dragon rider gets his dragon's egg
+#	You really want to hatch?
 character_event = {
 	id = dragon.203
-	desc = EVTDESCdragon203
-	picture = GFX_dragon_eggs_chest
+	desc = EVTDESCdragon203 
+	picture = GFX_evt_dragon_eggs_chest
+	
+	is_triggered_only = yes
+	
+	option = { 
+		name = EVTOPTAdragon203
+		
+		character_event = { id = dragon.204 }
+	}
+	
+	option = { 
+		name = EVTOPTBdragon203
+	}
+}
+
+#	Dragon egg hatched
+character_event = {
+	id = dragon.204
+	desc = EVTDESCdragon204
+	picture = GFX_evt_dragon_egg_in_fire
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
 	
-	option = {
-		name = EVTOPTAdragon203
+	immediate = {
+		random_artifact = {
+			limit = { is_artifact_equipped = yes }
+			original_artifact_owner = {
+				save_event_target_as = dragon_parent
+			}
+		}
+		create_character = {
+			random_traits = no
+			dynasty = NONE
+			religion = dragon_religion
+			culture = dragon_culture
+			female = no
+			age = 0
+			historical = yes
+		}
+		new_character = {
+			add_trait = dragon_trait
+			add_trait = dragon_base_trait
+			set_father = event_target:dragon_parent
+			save_event_target_as = hatchling
+			random_list = {
+				1 = { add_trait = dragon1 }
+				1 = { add_trait = dragon2 }
+				1 = { add_trait = dragon3 }
+				1 = { add_trait = dragon4 }
+				1 = { add_trait = dragon5 }
+				1 = { add_trait = dragon6 }
+				1 = { add_trait = dragon7 }
+				1 = { add_trait = dragon8 }
+				1 = { add_trait = dragon9 }
+				1 = { add_trait = dragon10 }
+				1 = { add_trait = dragon11 }
+				1 = { add_trait = dragon12 }
+				1 = { add_trait = dragon13 }
+				1 = { add_trait = dragon14 }
+				1 = { add_trait = dragon15 }
+			}
+		}
+		clear_event_target = dragon_parent
+		hidden_tooltip = {
+			random_artifact = {
+				limit = { is_artifact_equipped = yes }
+				if = {
+					limit = { artifact_type = black_dragon_egg }
+					artifact_owner = { destroy_artifact = black_dragon_egg }
+				}
+				if = {
+					limit = { artifact_type = blue_dragon_egg }
+					artifact_owner = { destroy_artifact = blue_dragon_egg }
+				}
+				if = {
+					limit = { artifact_type = green_dragon_egg }
+					artifact_owner = { destroy_artifact = green_dragon_egg }
+				}
+				if = {
+					limit = { artifact_type = red_dragon_egg }
+					artifact_owner = { destroy_artifact = red_dragon_egg }
+				}
+				if = {
+					limit = { artifact_type = white_dragon_egg }
+					artifact_owner = { destroy_artifact = white_dragon_egg }
+				}
+			}
+		}
+	}
+	
+	option = { 
+		name = "Great!"
 		
-		event_target:created_dragon_egg = {
-			transfer_artifact = { from = FROM to = ROOT }
+		change_infamy = {
+			value = 2
+			localisation = dragon_infamy
+		}
+		chronicle = { 
+			entry = CHRONICLE_HATCHED_DRAGON
+			portrait = [hatchling.GetID]
 		}
 	}
 }
 
-#	Black dragon egg hatched
+#	Black dragon egg transfered
 character_event = {
-	id = dragon.204
-	desc = EVTDESCdragon204
+	id = dragon.205
+	desc = EVTDESCdragoneggtransferred
 	picture = GFX_evt_black_dragon_egg_bg
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
 	
 	option = {
-		name = EVTOPTAdragon204
+		name = "Great!"
 		
-		destroy_artifact = black_dragon_egg
+		event_target:created_dragon_egg = {
+			transfer_artifact = { from = FROM to = ROOT }
+		}
+		clear_event_target = created_dragon_egg
 	}
 }
 
-#	Blue dragon egg hatched
+#	Blue dragon egg transfered
 character_event = {
-	id = dragon.205
-	desc = EVTDESCdragon205
+	id = dragon.206
+	desc = EVTDESCdragoneggtransferred
 	picture = GFX_evt_blue_dragon_egg_bg
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
 	
 	option = {
-		name = EVTOPTAdragon205
+		name = "Great!"
 		
-		destroy_artifact = blue_dragon_egg
+		event_target:created_dragon_egg = {
+			transfer_artifact = { from = FROM to = ROOT }
+		}
+		clear_event_target = created_dragon_egg
 	}
 }
 
-#	Green dragon egg hatched
+#	Green dragon egg transfered
 character_event = {
-	id = dragon.206
-	desc = EVTDESCdragon206
+	id = dragon.207
+	desc = EVTDESCdragoneggtransferred
 	picture = GFX_evt_green_dragon_egg_bg
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
 	
 	option = {
-		name = EVTOPTAdragon206
+		name = "Great!"
 		
-		destroy_artifact = green_dragon_egg
+		event_target:created_dragon_egg = {
+			transfer_artifact = { from = FROM to = ROOT }
+		}
+		clear_event_target = created_dragon_egg
 	}
 }
 
-#	Red dragon egg hatched
+#	Red dragon egg transfered
 character_event = {
-	id = dragon.207
-	desc = EVTDESCdragon207
+	id = dragon.208
+	desc = EVTDESCdragoneggtransferred
 	picture = GFX_evt_red_dragon_egg_bg
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
 	
 	option = {
-		name = EVTOPTAdragon207
+		name = "Great!"
 		
-		destroy_artifact = red_dragon_egg
+		event_target:created_dragon_egg = {
+			transfer_artifact = { from = FROM to = ROOT }
+		}
+		clear_event_target = created_dragon_egg
 	}
 }
 
-#	White dragon egg hatched
+#	White dragon egg transfered
 character_event = {
-	id = dragon.208
-	desc = EVTDESCdragon208
+	id = dragon.209
+	desc = EVTDESCdragoneggtransferred
 	picture = GFX_evt_white_dragon_egg_bg
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
 	
 	option = {
-		name = EVTOPTAdragon208
+		name = "Great!"
 		
-		destroy_artifact = white_dragon_egg
+		event_target:created_dragon_egg = {
+			transfer_artifact = { from = FROM to = ROOT }
+		}
+		clear_event_target = created_dragon_egg
 	}
 }
+
+
+#tooltip = { show_portrait = yes }
