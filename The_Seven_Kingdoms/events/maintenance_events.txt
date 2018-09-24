@@ -1,5 +1,189 @@
 namespace = maintenance
 
+### STARTUP Event ###
+character_event = {			# STARTUP Event (called by character 666)
+	id = 3120312
+	desc = "You're not supposed to see this..."
+	picture = "GFX_evt_council"	
+	
+	hide_window = yes
+	
+	hide_from = yes
+	
+	only_playable = yes
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { has_global_flag = startup }
+	}
+	
+	option = {
+		name = "OK"
+		set_global_flag = maintenance_pulse
+		set_global_flag = maintenance_year_pulse
+		set_global_flag = startup
+		
+		any_playable_ruler = {
+			set_variable = { which = "years_of_peace" value = 0 }
+		}
+	}
+}
+
+### Long Period of Peace ###
+character_event = {		# 10 Years
+	id = 319050
+	desc = "EVTDESC319050"
+	picture = "GFX_evt_royal_court"
+	
+	min_age = 15
+	capable_only = yes
+	prisoner = no
+	only_playable = yes
+	
+	trigger = {
+		higher_tier_than = baron
+		ruled_years = 10
+		check_variable = { which = "years_of_peace" value = 9.5 }
+		war = no
+		NOT = { has_character_flag = 10_years_of_peace_flag }
+	}
+	
+	mean_time_to_happen = {
+		days = 1		
+	}
+	
+	immediate = {
+		set_character_flag = 10_years_of_peace_flag
+	}
+	
+	option = {
+		name = "EVTOPTA319050"
+		ROOT = {
+			change_martial = -1
+			change_diplomacy = 1
+			change_intrigue = 1
+			if = {
+				limit = { religion_group = the_seven_group }
+				piety = 25
+			}
+		}
+		hidden_tooltip = {
+			any_vassal = {
+				change_martial = -1
+				change_diplomacy = 1
+				change_intrigue = 1
+			}
+		}
+	}
+}
+character_event = {		# 15 Years
+	id = 319051
+	desc = "EVTDESC319051"
+	picture = "GFX_evt_royal_court"
+	
+	min_age = 15
+	capable_only = yes
+	prisoner = no
+	only_playable = yes
+	
+	trigger = {
+		higher_tier_than = baron
+		ruled_years = 15
+		check_variable = { which = "years_of_peace" value = 14.5 }
+		war = no
+		NOT = { has_character_flag = 15_years_of_peace_flag }
+	}
+	
+	mean_time_to_happen = {
+		days = 1		
+	}
+	
+	immediate = {
+		set_character_flag = 15_years_of_peace_flag
+	}
+	
+	option = {
+		name = "EVTOPTA319051"
+		ROOT = {
+			change_martial = -1
+			change_stewardship = 1
+			change_intrigue = 1
+			if = {
+				limit = { religion_group = the_seven_group }
+				piety = 50
+			}
+		}
+		hidden_tooltip = {
+			any_vassal = {
+				change_martial = -1
+				change_stewardship = 1
+				change_intrigue = 1
+			}
+		}
+	}
+}
+character_event = {		# 20 Years
+	id = 319052
+	desc = "EVTDESC319052"
+	picture = "GFX_evt_royal_court"
+	
+	min_age = 15
+	capable_only = yes
+	prisoner = no
+	only_playable = yes
+	
+	trigger = {
+		higher_tier_than = baron
+		ruled_years = 20
+		check_variable = { which = "years_of_peace" value = 19.5 }
+		war = no
+		NOT = { has_character_flag = 20_years_of_peace_flag }
+	}
+	
+	mean_time_to_happen = {
+		days = 1		
+	}
+	
+	immediate = {
+		set_character_flag = 20_years_of_peace_flag
+	}
+	
+	option = {
+		name = "EVTOPTA319052"
+		ROOT = {
+			change_martial = -1
+			change_stewardship = 1
+			change_diplomacy = 1
+			if = {
+				limit = { religion_group = the_seven_group }
+				piety = 100
+			}
+			if = {
+				limit = {
+					independent = yes
+					OR = {
+						trait = kind
+						trait = just
+						piety = 250
+					}
+					NOT = { trait = cruel }
+					NOT = { trait = impaler }
+					NOT = { trait = ruthless }
+				}
+				give_nickname = nick_the_peaceful
+			}
+		}
+		hidden_tooltip = {
+			any_vassal = {
+				change_martial = -1
+				change_stewardship = 1
+				change_diplomacy = 1
+			}
+		}
+	}
+}
+
 #maintenance.31	#Auto adding honourary titles
 
 #Auto adding honourary titles

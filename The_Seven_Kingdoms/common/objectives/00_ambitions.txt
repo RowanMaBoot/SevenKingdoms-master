@@ -633,7 +633,45 @@ obj_amass_wealth = {
 }
 
 
-obj_become_paragon_of_virtue = {
+obj_peace_10_year = {
+	type = character
+	
+	allow = {
+		independent = yes
+		is_ruler = yes
+		higher_tier_than = baron
+		is_adult = yes
+		prisoner = no
+		NOT = { trait = incapable }
+		check_variable = { which = "years_of_peace" value = 0.5 }
+		NOT = { check_variable = { which = "years_of_peace" value = 9.5 } }
+		war = no
+	}
+	chance = {
+		factor = 0
+	}
+	
+	success = {
+		custom_tooltip = {  
+			text = 10_years_peace_TT
+			hidden_tooltip = { 
+				check_variable = { which = "years_of_peace" value = 9.5 }
+			}
+		}	
+	}
+	
+	abort = {
+		war = yes
+	}
+	
+	effect = {
+		change_stewardship = 1
+		change_diplomacy = 1
+		piety = 50
+	}
+}
+
+ obj_become_paragon_of_virtue = {
 	type = character
 	
 	potential = {

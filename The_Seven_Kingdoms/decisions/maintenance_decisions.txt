@@ -1,0 +1,44 @@
+decisions = {
+	ai_maintenance_year = {			# Every 1 Year
+		only_rulers = yes
+		potential = {
+			has_landed_title = k_the_most_devout
+			had_global_flag = {
+				flag = maintenance_year_pulse
+				days = 365
+			}
+		}
+		allow = { }
+		effect = {
+			clr_global_flag = maintenance_year_pulse
+			set_global_flag = maintenance_year_pulse
+			
+			# Years of Peace
+			any_playable_ruler = {
+				if = {
+					limit = {
+						OR = { 
+							war = yes
+							top_liege = {
+								war = yes
+							}
+						}
+					}
+					set_variable = { which = "years_of_peace" value = 0 }
+				}					
+				if = {
+					limit = {
+						war = no
+						top_liege = {
+							war = no
+						}
+					}
+					change_variable = { which = "years_of_peace" value = 1 }
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 10000000
+		}
+	}	
+}
