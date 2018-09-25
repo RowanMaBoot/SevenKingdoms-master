@@ -167,8 +167,8 @@ character_event = {
 					#is_within_diplo_range = ROOT
 					is_society_grandmaster = no
 				}
-				save_event_target_as = dark_ones_recruiter
-				character_event = { id = MNM.10013 }
+				save_event_target_as = satanists_recruiter
+				character_event = { id = MNM.10014 }
 			}
 		}
 		#Secret religious society
@@ -356,17 +356,50 @@ character_event = {
 
 #Excluded from society due to breaking the limitations
 character_event = {
-    id = MNM.10021
-    hide_window = yes
-    is_triggered_only = yes
-    immediate = {
-        society = {
-            random_society_member = { 
-                limit = { is_society_grandmaster = yes } 
-                character_event = { id = MNM.10022 }
-            }
-        }
-    }
+	id = MNM.10021
+	hide_window = yes
+	is_triggered_only = yes
+	immediate = {
+		if = {
+			limit = { #If YOU are the grandmaster and there are others in the society...
+				OR = {
+					is_society_grandmaster = yes
+					society_rank == 4
+				}
+				any_society_member = {
+					NOT = { character = ROOT }
+					same_society_as = ROOT
+				}
+			}
+			society = {
+				random_society_member = {
+					limit = { NOT = { character = ROOT } }
+					character_event = { id = MNM.10022 } #Have some rando send the kick-out letter!
+				}
+			}
+		}
+		if = {
+			limit = { #If you are NOT the grandmaster/a leader...
+				NOT = { society_rank == 4 }
+			}
+			society = {
+				random_society_member = {
+					limit = {
+						OR = {
+							is_society_grandmaster = yes
+							society_rank == 4
+						}
+					}
+					character_event = { id = MNM.10022 } #Have the Grand Master send the kick-out letter!
+				}
+			}
+		}
+		else = { #If you are the last of your kind...
+			ROOT = {
+				leave_society = yes
+			}
+		}
+	}
 }
 
 
@@ -721,8 +754,24 @@ character_event = {
     border = GFX_event_normal_frame_war
 
     desc = {
-        text = EVTDESC_MNM_10042
-        picture = GFX_evt_rival_rulers
+    	trigger = { 
+    		NOR = {
+    			is_devil_worshiper_trigger = yes
+    			society_member_of = hermetics
+    		}
+    	}
+    	text = EVTDESC_MNM_10042
+    	picture = GFX_evt_rival_rulers
+    }
+    desc = {
+    	trigger = { is_devil_worshiper_trigger = yes }
+    	text = EVTDESC_MNM_10042
+    	picture = GFX_evt_shadowy_cabal
+    }
+    desc = {
+    	trigger = { society_member_of = hermetics }
+    	text = EVTDESC_MNM_10042
+    	picture = GFX_evt_gathering_of_minds
     }
 
     is_triggered_only = yes
