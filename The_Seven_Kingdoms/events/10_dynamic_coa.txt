@@ -3,9 +3,6 @@ namespace = dynamic_coa
 #	Set CoA
 character_event = {
 	id = dynamic_coa.0
-	desc = EVTDESCcta1
-	picture = GFX_evt_battle_dragon_two
-	#border = GFX_event_normal_frame_martial
 
 	hide_window = yes
 	is_triggered_only = yes
@@ -15,8 +12,26 @@ character_event = {
 	}
 	
 	option = {
-		name = EVTOPTActa1
-		
 		set_dynamic_coa = yes
+	}
+}
+
+#	Reset CoA if no match on new holder/on death
+character_event = {
+	id = dynamic_coa.1
+
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		is_dynamic_coa = yes
+		is_dynasty_with_special_coa = no
+	}
+	
+	option = {
+		any_demesne_title = {
+			reset_coa = PREV
+			clear_title_flag = is_dynamic_coa
+		}
 	}
 }
