@@ -1,0 +1,83 @@
+namespace = nds
+# written by TitanRogue
+
+## Non-dynastical succession ##
+
+character_event = {
+	id = nds.0
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = { #the trigger is taken from emf_core
+		has_game_rule = { name = non_dynastic_succession value = on }
+		is_nomadic = no
+		is_merchant_republic = no
+		ai = no
+		OR = {
+			capital_scope = {
+				county = {
+					holder = ROOT
+					current_heir = {
+						ai = yes
+						NOT = { dynasty = ROOT }
+					}
+				}
+			}
+			AND = {
+				OR = {
+					mercenary = yes
+					holy_order = yes
+				}
+				current_heir = {
+					ai = yes
+					NOT = { dynasty = ROOT }
+				}
+			}
+		}
+	}
+	
+	immediate = {
+		current_heir = { 
+			save_event_target_as = my_heir
+			create_character = {
+				name = "testdude"
+				father = THIS
+				dynasty = THIS
+				religion = THIS
+				culture = THIS
+			}
+			dynasty = ROOT
+			new_character = {
+				save_event_target_as = parked_dynasty
+				event_target:my_heir = { character_event = { id = nds.1 days = 1 } }
+			}
+		}
+	}
+	
+	option = { }
+}
+
+#
+character_event = {
+	id = nds.1
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	immediate = {
+		dynasty = event_target:parked_dynasty 
+		character_event = { id = dynamic_coa.0 }
+		event_target:parked_dynasty = {  #usually saved in emf_core_effects in common/scripted_effects as emf_vanish_character
+			dynasty = none
+			set_father = 0
+			set_mother = 0
+			if = {
+				limit = { is_alive = yes }
+				death = { death_reason = death_missing }
+			}
+		}
+	}
+	
+	option = { }
+}
