@@ -1,0 +1,200 @@
+namespace = the_doom
+
+# Fires the event
+character_event = {
+    id = the_doom.0
+    
+	hide_window = yes
+    is_triggered_only = yes
+    
+    #trigger = {
+	#	has_landed_title = c_dragonstone
+    #}
+    
+	immediate = {
+		if = {
+			limit = { independent = no }
+			top_liege = {
+				character_event = { id = the_doom.1 }
+			}
+		}
+		else = {
+			character_event = { id = the_doom.1 }
+		}
+	}
+	
+	option = {
+	}
+}
+
+# Aenar arrives
+character_event = {
+    id = the_doom.1
+	desc = EVTDESCthe_doom.1
+	picture = GFX_evt_targaryen
+    
+    is_triggered_only = yes
+    
+	immediate = {
+		create_character = {
+			random_traits = no
+			name = "Aenar"
+			has_nickname = "nick_the_exile"
+			dynasty = 1634
+			culture = high_valyrian
+			religion = valyrian
+			female = no
+			age = 44
+			dna = mmlzfphkxscgmahqcfaru
+			attributes = {
+				martial = 6
+				diplomacy = 8
+				stewardship = 9
+				intrigue = 12
+				learning = 12
+			}
+			health = 6
+			fertility = 0.8
+			trait = fortune_builder
+			trait = shrewd
+			trait = zealous
+			trait = lustful
+			trait = kind
+			trait = dragon_rider
+		}
+		new_character = {
+			save_event_target_as = aenar
+		}
+		create_character = {
+			random_traits = no
+			name = "Jaehaera"
+			dynasty = none
+			culture = high_valyrian
+			religion = valyrian
+			female = yes
+			age = 36
+			dna = kndminkfjbk
+			attributes = {
+				martial = 6
+				diplomacy = 8
+				stewardship = 9
+				intrigue = 12
+				learning = 12
+			}
+			health = 6
+			fertility = 0.8
+			trait = grey_eminence
+			trait = patient
+			trait = zealous
+			trait = scholar
+			trait = trusting
+			trait = temperate
+		}
+		new_character = {
+			save_event_target_as = jaehaera
+			add_spouse = event_target:aenar
+		}
+		create_character = {
+			random_traits = no
+			name = "Gaemon"
+			dynasty = 1634
+			culture = high_valyrian
+			religion = valyrian
+			female = no
+			age = 18
+			dna = sptgomfasoxttudfdjtpy
+			attributes = {
+				martial = 6
+				diplomacy = 8
+				stewardship = 9
+				intrigue = 12
+				learning = 12
+			}
+			health = 6
+			fertility = 0.8
+			trait = skilled_tactician
+			trait = patient
+			trait = cynical
+			trait = dueling_expert
+			trait = diligent
+		}
+		new_character = {
+			set_father = event_target:aenar
+			set_mother = event_target:jaehaera
+		}
+		create_character = {
+			random_traits = no
+			name = "Daenys"
+			dynasty = 1634
+			culture = high_valyrian
+			religion = valyrian
+			female = yes
+			age = 16
+			dna = cjggcvgcaaxpzwxttjzcx
+			attributes = {
+				martial = 6
+				diplomacy = 8
+				stewardship = 9
+				intrigue = 12
+				learning = 12
+			}
+			health = 6
+			fertility = 0.8
+			trait = midas_touched
+			trait = patient
+			trait = brave
+			trait = mystic
+			trait = fertile
+			trait = temperate
+		}
+		new_character = {
+			set_father = event_target:aenar
+			set_mother = event_target:jaehaera
+		}
+		create_character = {
+			random_traits = no
+			name = "Visenyx"
+			dynasty = none
+			culture = dragon_culture
+			religion = dragon_religion
+			age = 76
+			attributes = {
+				martial = 76
+			}
+			health = 5
+			trait = dragon_base_trait
+			trait = dragon_trait
+			trait = dragon_proud
+			trait = dragon_wroth
+			trait = dragon13
+		}
+		new_character = {
+			save_event_target_as = visenyx
+			add_friend = event_target:aenar
+			add_artifact = black_dragon_egg
+			new_artifact = {
+				set_name = "Visenyx' egg"
+				set_artifact_original_owner = PREV
+				transfer_artifact = { from = PREVPREV to = event_target:aenar }
+			}
+		}
+	}
+	
+	option = {
+		name = EVTOPTAthe_doom1
+	
+		c_dragonstone = {
+			gain_title = event_target:aenar
+		}
+		d_dragonstone = {
+			gain_title = event_target:aenar
+		}
+		if = {
+			limit = { k_dragonstone = { is_title_active = yes } }
+			k_dragonstone = { destroy_landed_title = THIS }
+		}
+		event_target:visenyx = {
+			move_character = event_target:aenar
+		}
+	}
+}
