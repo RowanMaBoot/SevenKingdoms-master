@@ -1,0 +1,927 @@
+# -*- ck2.events -*-
+
+namespace = DragonDuel
+# New events by Galle
+# Updated/extended by 'jordarkelf'
+### Pre-Battlefield-Duel Events
+# DragonDuel.500	Begin Battlefield Duel Chain
+# DragonDuel.501	Defender: Fight or Run?
+# DragonDuel.502	Attacker: Fight or Run? (Begin Duel)
+# DragonDuel.503	Defender Runs
+# DragonDuel.504	Attacker Runs
+# DragonDuel.505	Someone flees mid-duel
+### Post-Battlefield-Duel Events
+# DragonDuel.510	(End Duel) Victor Killed Opponent
+# DragonDuel.511	(End Duel) Victor Takes Opponent Hostage
+# DragonDuel.512	Opponent Imprisoned
+
+character_event = { # Battlefield Duel Start
+	id = DragonDuel.500
+	desc = "EVTDESC_DragonDuel_500"
+	border = "GFX_event_normal_frame_war"
+	picture = GFX_evt_battle
+
+	is_triggered_only = yes
+
+	trigger = {
+		is_dragon_rider = yes
+		# Avoid crossing targets
+		NOT = { has_character_modifier = battlefield_fight }
+		OR = {
+			AND = {
+				liege = { war = yes }
+				war = no
+			}
+			AND = {
+				war = yes
+				liege = {
+					OR = {
+						war = no
+						character = ROOT
+					}
+				}
+			}
+		}
+		OR = {
+			AND = {
+				is_ruler = yes
+				war = yes
+				any_playable_ruler = {
+					war_with = ROOT
+					OR = {
+						AND = {
+							is_dragon_rider = yes
+							in_battle = yes
+							at_location = ROOT
+							prisoner = no
+							is_alive = yes
+							NOT = { character = ROOT }
+							NOT = { has_character_modifier = battlefield_fight }
+						}
+						any_realm_character = {
+							is_dragon_rider = yes
+							in_battle = yes
+							at_location = ROOT
+							prisoner = no
+							is_alive = yes
+							NOT = { character = ROOT }
+							NOT = { has_character_modifier = battlefield_fight }
+						}
+					}
+				}
+			}
+			AND = {
+				war = no
+				liege = {
+					any_playable_ruler = {
+						war_with = PREV
+						OR = {
+							AND = {
+								is_dragon_rider = yes
+								in_battle = yes
+								at_location = ROOT
+								prisoner = no
+								is_alive = yes
+								NOT = { character = ROOT }
+								NOT = { has_character_modifier = battlefield_fight }
+							}
+							any_realm_character = {
+								in_battle = yes
+								at_location = ROOT
+								prisoner = no
+								is_alive = yes
+								NOT = { character = ROOT }
+								NOT = { has_character_modifier = battlefield_fight }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		add_character_modifier = {
+			name = battlefield_fight
+			duration = 20
+		}
+		# Target lock
+		if = {
+			limit = {
+				is_dragon_rider = yes
+				war = yes
+				liege = {
+					OR = {
+						war = no
+						character = ROOT
+					}
+				}
+			}
+			random_playable_ruler = {
+				limit = {
+					war_with = ROOT
+					OR = {
+						AND = {
+							is_dragon_rider = yes
+							in_battle = yes
+							at_location = ROOT
+							prisoner = no
+							is_alive = yes
+							NOT = { character = ROOT }
+							NOT = { has_character_modifier = battlefield_fight }
+						}
+						any_realm_character = {
+							is_dragon_rider = yes
+							in_battle = yes
+							at_location = ROOT
+							prisoner = no
+							is_alive = yes
+							NOT = { character = ROOT }
+							NOT = { has_character_modifier = battlefield_fight }
+						}
+					}
+				}
+				if = {
+					limit = {
+						is_dragon_rider = yes
+						in_battle = yes
+						at_location = ROOT
+						prisoner = no
+						is_alive = yes
+						NOT = { character = ROOT }
+						NOT = { has_character_modifier = battlefield_fight }
+					}
+					add_character_modifier = {
+						name = battlefield_fight
+						duration = 20
+					}
+					opinion = { who = ROOT modifier = opinion_battle_duel_target }
+					reverse_opinion = { who = ROOT modifier = opinion_battle_duel_target }
+				}
+				if = {
+					limit = { NOT = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } } }
+					random_realm_character = {
+						limit = {
+							is_dragon_rider = yes
+							in_battle = yes
+							at_location = ROOT
+							prisoner = no
+							is_alive = yes
+							NOT = { character = ROOT }
+							NOT = { has_character_modifier = battlefield_fight }
+						}
+						add_character_modifier = {
+							name = battlefield_fight
+							duration = 20
+						}
+						opinion = { who = ROOT modifier = opinion_battle_duel_target }
+						reverse_opinion = { who = ROOT modifier = opinion_battle_duel_target }
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				war = no
+				liege = { war = yes }
+			}
+			liege = {
+				random_playable_ruler = {
+					limit = {
+						war_with = PREV
+						OR = {
+							AND = {
+								is_dragon_rider = yes
+								in_battle = yes
+								at_location = ROOT
+								prisoner = no
+								is_alive = yes
+								NOT = { character = ROOT }
+								NOT = { has_character_modifier = battlefield_fight }
+							}
+							any_realm_character = {
+								is_dragon_rider = yes
+								in_battle = yes
+								at_location = ROOT
+								prisoner = no
+								is_alive = yes
+								NOT = { character = ROOT }
+								NOT = { has_character_modifier = battlefield_fight }
+							}
+						}
+					}
+					if = {
+						limit = {
+							is_dragon_rider = yes
+							in_battle = yes
+							at_location = ROOT
+							prisoner = no
+							is_alive = yes
+							NOT = { character = ROOT }
+							NOT = { has_character_modifier = battlefield_fight }
+						}
+						add_character_modifier = {
+							name = battlefield_fight
+							duration = 20
+						}
+						opinion = { who = ROOT modifier = opinion_battle_duel_target }
+						reverse_opinion = { who = ROOT modifier = opinion_battle_duel_target }
+					}
+					if = {
+						limit = { NOT = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } } }
+						random_realm_character = {
+							limit = {
+								is_dragon_rider = yes
+								in_battle = yes
+								at_location = ROOT
+								prisoner = no
+								is_alive = yes
+								NOT = { character = ROOT }
+								NOT = { has_character_modifier = battlefield_fight }
+							}
+							add_character_modifier = {
+								name = battlefield_fight
+								duration = 20
+							}
+							opinion = { who = ROOT modifier = opinion_battle_duel_target }
+							reverse_opinion = { who = ROOT modifier = opinion_battle_duel_target }
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = "EVTOPTA_DragonDuel_500"
+		if = {
+			limit = {
+				war = yes
+				liege = {
+					OR = {
+						war = no
+						character = ROOT
+					}
+				}
+			}
+			random_playable_ruler = {
+				limit = {
+					is_dragon_rider = yes
+					war_with = ROOT
+					OR = {
+						has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target }
+						any_realm_character = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } }
+					}
+				}
+				if = {
+					limit = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } }
+					hidden_tooltip = { character_event = { id = DragonDuel.501 } }
+				}
+				random_realm_character = {
+					limit = {
+						is_dragon_rider = yes
+						has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target }
+						NOT = { character = PREV }
+					}
+					hidden_tooltip = { character_event = { id = DragonDuel.501 } }
+				}
+			}
+		}
+		if = {
+			limit = {
+				war = no
+				liege = { war = yes }
+			}
+			liege = {
+				random_playable_ruler = {
+					limit = {
+						is_dragon_rider = yes
+						war_with = PREV
+						OR = {
+							has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target }
+							any_realm_character = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } }
+						}
+					}
+					if = {
+						limit = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } }
+						hidden_tooltip = { character_event = { id = DragonDuel.501 } }
+					}
+					random_realm_character = {
+						limit = {
+							has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target }
+							NOT = { character = PREV }
+						}
+						hidden_tooltip = { character_event = { id = DragonDuel.501 } }
+					}
+				}
+			}
+		}
+	}
+}
+
+character_event = {
+	id = DragonDuel.501
+	desc = "EVTDESC_DragonDuel_501"
+	picture = GFX_evt_battle
+	border = "GFX_event_normal_frame_war"
+	is_triggered_only = yes
+
+	immediate = {
+		# Remove targeting information
+		remove_opinion = { who = FROM modifier = opinion_battle_duel_target }
+		reverse_remove_opinion = { who = FROM modifier = opinion_battle_duel_target }
+	}
+
+	option = {
+		name = "EVTOPTA_DragonDuel_501"
+		FROM = { character_event = { id = DragonDuel.502 tooltip = "EVTTOOLTIP_DragonDuel_502" } }
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 3
+				trait = poor_warrior
+			}
+			modifier = {
+				factor = 5
+				trait = trained_warrior
+			}
+			modifier = {
+				factor = 7
+				trait = skilled_warrior
+			}
+			modifier = {
+				factor = 9
+				trait = master_warrior
+			}
+			modifier = {
+				factor = 3
+				trait = duelist
+			}
+			modifier = {
+				factor = 10
+				trait = brave
+			}
+			modifier = {
+				factor = 5
+				trait = proud
+			}
+			modifier = {
+				factor = 1.5
+				trait = wroth
+			}
+			modifier = {
+				factor = 1.5
+				is_strong_trigger = yes
+			}
+		}
+	}
+
+	option = {
+		name = "EVTOPTB_DragonDuel_501"
+		hidden_tooltip = { FROM = { character_event = { id = DragonDuel.503 } } }
+		if = {
+			limit = {
+				FROM = {
+					NOT = { trait = poor_warrior }
+					NOT = { trait = trained_warrior }
+					NOT = { trait = skilled_warrior }
+					NOT = { trait = master_warrior }
+				}
+				NOT = { trait = craven }
+			}
+			random = {
+				chance = 25
+				add_trait = craven
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					trait = poor_warrior
+				}
+				NOT = { trait = craven }
+			}
+			random = {
+				chance = 20
+				add_trait = craven
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					trait = trained_warrior
+				}
+				NOT = { trait = craven }
+			}
+			random = {
+				chance = 15
+				add_trait = craven
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					trait = skilled_warrior
+				}
+				NOT = { trait = craven }
+			}
+			random = {
+				chance = 10
+				add_trait = craven
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					trait = master_warrior
+				}
+				NOT = { trait = craven }
+			}
+			random = {
+				chance = 5
+				add_trait = craven
+			}
+		}
+		morale = -0.1
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 2
+				FROM = { trait = poor_warrior }
+			}
+			modifier = {
+				factor = 3
+				FROM = { trait = trained_warrior }
+			}
+			modifier = {
+				factor = 4
+				FROM = { trait = skilled_warrior }
+			}
+			modifier = {
+				factor = 5
+				FROM = { trait = master_warrior }
+			}
+			modifier = {
+				factor = 3
+				FROM = { trait = duelist }
+			}
+			modifier = {
+				factor = 2
+				FROM = { is_strong_trigger = yes }
+			}
+			modifier = {
+				factor = 10
+				trait = craven
+			}
+			modifier = {
+				factor = 2
+				trait = paranoid
+			}
+			modifier = {
+				factor = 2
+				is_weak_trigger = yes
+			}
+			modifier = {
+				factor = 2
+				trait = dwarf
+			}
+			modifier = {
+				factor = 2
+				trait = hunchback
+			}
+			modifier = {
+				factor = 2
+				trait = leper
+			}
+			modifier = {
+				factor = 2
+				has_injury_trigger = yes
+				NOT = { trait = lunatic }
+				NOT = { trait = brave }
+				NOT = { trait = proud }
+				NOT = { trait = wroth }
+			}
+			modifier = {
+				factor = 4
+				is_maimed_trigger = yes
+				NOT = { trait = lunatic }
+				NOT = { trait = brave }
+				NOT = { trait = proud }
+				NOT = { trait = wroth }
+			}
+			modifier = {
+				factor = 10
+				trait = blinded
+				NOT = { trait = lunatic }
+				NOT = { trait = brave }
+				NOT = { trait = proud }
+				NOT = { trait = wroth }
+			}
+		}
+	}
+}
+
+character_event = {
+	id = DragonDuel.502
+	desc = "EVTDESC_DragonDuel_502"
+	picture = GFX_evt_battle
+	border = "GFX_event_normal_frame_war"
+
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTA_DragonDuel_502"
+
+		# Set context flags for duel
+		set_character_flag = flag_battlefield_duel
+		FROM = { set_character_flag = flag_battlefield_duel }
+
+		# Begin duel
+		hidden_tooltip = { e_rebels = { holder_scope = { character_event = { id = DragonDuel.0 } } } }
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 3
+				trait = poor_warrior
+			}
+			modifier = {
+				factor = 5
+				trait = trained_warrior
+			}
+			modifier = {
+				factor = 7
+				trait = skilled_warrior
+			}
+			modifier = {
+				factor = 9
+				trait = master_warrior
+			}
+			modifier = {
+				factor = 3
+				trait = duelist
+			}
+			modifier = {
+				factor = 10
+				trait = brave
+			}
+			modifier = {
+				factor = 5
+				trait = proud
+			}
+			modifier = {
+				factor = 1.5
+				trait = wroth
+			}
+			modifier = {
+				factor = 1.5
+				is_strong_trigger = yes
+			}
+		}
+	}
+
+	option = {
+		name = "EVTOPTB_DragonDuel_502"
+		hidden_tooltip = { FROM = { character_event = { id = DragonDuel.504 } } }
+		if = {
+			limit = {
+				FROM = {
+					NOT = { trait = poor_warrior }
+					NOT = { trait = trained_warrior }
+					NOT = { trait = skilled_warrior }
+					NOT = { trait = master_warrior }
+				}
+				NOT = { trait = craven }
+			}
+			random = {
+				chance = 25
+				add_trait = craven
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					trait = poor_warrior
+				}
+				NOT = { trait = craven }
+			}
+			random = {
+				chance = 20
+				add_trait = craven
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					trait = trained_warrior
+				}
+				NOT = { trait = craven }
+			}
+			random = {
+				chance = 15
+				add_trait = craven
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					trait = skilled_warrior
+				}
+				NOT = { trait = craven }
+			}
+			random = {
+				chance = 10
+				add_trait = craven
+			}
+		}
+		if = {
+			limit = {
+				FROM = {
+					trait = master_warrior
+				}
+				NOT = { trait = craven }
+			}
+			random = {
+				chance = 5
+				add_trait = craven
+			}
+		}
+		morale = -0.1
+		ai_chance = {
+			factor = 100
+			modifier = {
+				factor = 2
+				FROM = { trait = poor_warrior }
+			}
+			modifier = {
+				factor = 3
+				FROM = { trait = trained_warrior }
+			}
+			modifier = {
+				factor = 4
+				FROM = { trait = skilled_warrior }
+			}
+			modifier = {
+				factor = 5
+				FROM = { trait = master_warrior }
+			}
+			modifier = {
+				factor = 3
+				FROM = { trait = duelist }
+			}
+			modifier = {
+				factor = 2
+				FROM = { is_strong_trigger = yes }
+			}
+			modifier = {
+				factor = 10
+				trait = craven
+			}
+			modifier = {
+				factor = 2
+				trait = paranoid
+			}
+			modifier = {
+				factor = 2
+				is_weak_trigger = yes
+			}
+			modifier = {
+				factor = 2
+				trait = dwarf
+			}
+			modifier = {
+				factor = 2
+				trait = hunchback
+			}
+			modifier = {
+				factor = 2
+				trait = leper
+			}
+			modifier = {
+				factor = 2
+				has_injury_trigger = yes
+				NOT = { trait = lunatic }
+				NOT = { trait = brave }
+				NOT = { trait = proud }
+				NOT = { trait = wroth }
+			}
+			modifier = {
+				factor = 4
+				is_maimed_trigger = yes
+				NOT = { trait = lunatic }
+				NOT = { trait = brave }
+				NOT = { trait = proud }
+				NOT = { trait = wroth }
+			}
+			modifier = {
+				factor = 10
+				trait = blinded
+				NOT = { trait = lunatic }
+				NOT = { trait = brave }
+				NOT = { trait = proud }
+				NOT = { trait = wroth }
+			}
+		}
+	}
+}
+
+# DragonDuel.503	Defender Runs
+character_event = {
+	id = DragonDuel.503
+	desc = "EVTDESC_DragonDuel_503"
+	picture = GFX_evt_battle
+	border = "GFX_event_normal_frame_war"
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTA_DragonDuel_503"
+		remove_character_modifier = battlefield_fight
+		morale = 0.1
+	}
+}
+
+# DragonDuel.504	Attacker Runs
+character_event = {
+	id = DragonDuel.504
+	desc = "EVTDESC_DragonDuel_504"
+	picture = GFX_evt_battle
+	border = "GFX_event_normal_frame_war"
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTA_DragonDuel_504"
+		remove_character_modifier = battlefield_fight
+		morale = 0.1
+	}
+}
+
+character_event = { #run away mid-fight
+	id = DragonDuel.505
+	desc = "EVTDESC_DragonDuel_505"
+	picture = GFX_evt_battle
+	border = "GFX_event_normal_frame_war"
+	is_triggered_only = yes
+
+	desc = {
+		trigger = { is_incapable = yes }
+		text = "EVTDESCB_DragonDuel_505"
+	}
+
+	option = {
+		name = {
+			text = "EVTOPTA_DragonDuel_505"
+			trigger = {
+				is_incapable = no
+			}
+		}
+		name = {
+			text = "EVTOPTB_DragonDuel_505"
+			trigger = {
+				is_incapable = yes
+			}
+		}
+
+		if = {
+			limit = { is_incapable = no }
+			if = {
+				limit = {
+					FROM = {
+						NOT = { trait = poor_warrior }
+						NOT = { trait = trained_warrior }
+						NOT = { trait = skilled_warrior }
+						NOT = { trait = master_warrior }
+					}
+					NOT = { trait = craven }
+				}
+				random = {
+					chance = 25
+					add_trait = craven
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						trait = poor_warrior
+					}
+					NOT = { trait = craven }
+				}
+				random = {
+					chance = 20
+					add_trait = craven
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						trait = trained_warrior
+					}
+					NOT = { trait = craven }
+				}
+				random = {
+					chance = 15
+					add_trait = craven
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						trait = skilled_warrior
+					}
+					NOT = { trait = craven }
+				}
+				random = {
+					chance = 10
+					add_trait = craven
+				}
+			}
+			if = {
+				limit = {
+					FROM = {
+						trait = master_warrior
+					}
+					NOT = { trait = craven }
+				}
+				random = {
+					chance = 5
+					add_trait = craven
+				}
+			}
+		}
+		if = {
+			limit = { NOT = { at_location = FROM } }
+			FROM = { morale = 0.2 }
+			break = yes
+		}
+		morale = -0.2
+	}
+}
+
+# Battlefield duel end
+character_event = {
+	id = DragonDuel.510
+	desc = "EVTDESC_DragonDuel_510"
+	picture = GFX_evt_battle
+	border = "GFX_event_normal_frame_war"
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTA_DragonDuel_510"
+		if = {
+			limit = { FROMFROM = { at_location = ROOT } }
+			FROMFROM = { morale = -0.2 }
+		}
+		if = {
+			limit = { FROMFROM = { NOT = { at_location = ROOT } } }
+			morale = 0.2
+		}
+	}
+}
+
+character_event = {
+	id = DragonDuel.511
+	desc = "EVTDESC_DragonDuel_511"
+	picture = GFX_evt_battle
+	border = "GFX_event_normal_frame_war"
+	is_triggered_only = yes
+
+	desc = {
+		text = "EVTDESCB_DragonDuel_511"
+		trigger = {
+			FROMFROM = { is_incapable = yes }
+		}
+	}
+
+	option = {
+		name = "EVTOPTA_DragonDuel_511"
+
+		name = {
+			text = "EVTOPTB_DragonDuel_511"
+			trigger = {
+				FROMFROM = { is_incapable = yes }
+			}
+		}
+		hidden_tooltip = {
+			FROMFROM = { character_event = { id = DragonDuel.512 } }
+		}
+	}
+}
+
+character_event = {
+	id = DragonDuel.512
+	desc = "EVTDESC_DragonDuel_512"
+	picture = GFX_evt_battle
+	border = "GFX_event_normal_frame_war"
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTA_DragonDuel_512"
+		imprison = FROM
+		#set_character_flag = captured_in_battle
+		hidden_tooltip = {
+			FROM = {
+				character_event = {
+					id = 50020 # "imprisoned_events.txt"
+				}
+			}
+		}
+	}
+}

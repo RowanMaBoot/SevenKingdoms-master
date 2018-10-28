@@ -10,6 +10,66 @@ dragon_stat_calculation = {
 	change_variable = { which = drastrvar which = comratvar }
 }
 
+set_stats_for_dragon_duel_combatant1 = {
+	### Sets Dragon A ###
+	random_friend = {
+		limit = { is_tamed_dragon = yes }
+		set_character_flag = is_in_dragon_duel
+		dragon_stat_calculation = yes
+		save_event_target_as = Dragon_A
+		set_character_flag = debug_scoped
+		
+		set_variable = { which = global_RdrastrvarA which = drastrvar }
+	}
+	### Calculates Dragon Rider A's Maneuver | combat rating + martial ###
+	#export_to_variable = { which = RcomratvarA value = combat_rating who = event_target:combatant_1 }
+	#export_to_variable = { which = RmaneuvarA value = martial who = event_target:combatant_1 }
+	#change_variable = { which = RmaneuvarA which = RcomratvarA }
+		
+	### Adds Dragon strength A to Rider A ###
+	#export_to_variable = { which = RcomratvarA value = combat_rating who = event_target:Dragon_A }
+	#export_to_variable = { which = RhealthvarA value = health who = event_target:Dragon_A }
+	#export_to_variable = { which = RsizevarA value = martial who = event_target:Dragon_A }
+	#export_to_variable = { which = RdrastrvarA value = martial who = event_target:Dragon_A }
+	#multiply_variable = { which = RcomratvarA which = RhealthvarA }
+	#divide_variable = { which = RcomratvarA value = 10 }
+	#change_variable = { which = RdrastrvarA which = BcomratvarA }
+		
+	### Calculates final strength of Dragon and Rider A
+	#subtract_variable = { which = RdrastrvarB which = RmaneuvarA }
+	#set_variable = { which = global_RdrastrvarA which = RdrastrvarA }
+}
+
+set_stats_for_dragon_duel_combatant2 = {
+	### Sets Dragon B ###
+	random_friend = {
+		limit = { is_tamed_dragon = yes }
+		set_character_flag = is_in_dragon_duel
+		dragon_stat_calculation = yes
+		save_event_target_as = Dragon_B
+		set_character_flag = debug_scoped
+		
+		set_variable = { which = global_RdrastrvarA which = drastrvar }
+	}
+	### Calculates Dragon Rider A's Maneuver | combat rating + martial ###
+	#export_to_variable = { which = RcomratvarA value = combat_rating who = event_target:combatant_2 }
+	#export_to_variable = { which = RmaneuvarA value = martial who = event_target:combatant_2 }
+	#change_variable = { which = RmaneuvarA which = RcomratvarA }
+		
+	### Adds Dragon strength B to Rider B ###
+	#export_to_variable = { which = RcomratvarB value = combat_rating who = event_target:Dragon_B }
+	#export_to_variable = { which = RhealthvarB value = health who = event_target:Dragon_B }
+	#export_to_variable = { which = RsizevarB value = martial who = event_target:Dragon_B }
+	#export_to_variable = { which = RdrastrvarB value = martial who = event_target:Dragon_B }
+	#multiply_variable = { which = RcomratvarB which = RhealthvarB }
+	#divide_variable = { which = RcomratvarB value = 10 }
+	#change_variable = { which = RdrastrvarB which = BcomratvarB }
+		
+	### Calculates final strength of Dragon and Rider B
+	#subtract_variable = { which = RdrastrvarB which = RmaneuvarA }
+	#set_variable = { which = global_RdrastrvarB which = RdrastrvarB }
+}
+
 set_your_dragon = {
 	ROOT = {
 		any_friend = {

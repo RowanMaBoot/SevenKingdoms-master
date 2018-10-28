@@ -21,6 +21,7 @@ character_event = {
 		else = {
 			character_event = { id = the_doom.1 }
 		}
+		c_999999 = { character_event = { id = the_doom.2 days = 4380 } }
 	}
 	
 	option = {
@@ -30,16 +31,17 @@ character_event = {
 # Aenar arrives
 character_event = {
     id = the_doom.1
-	desc = EVTDESCthe_doom.1
+	desc = EVTDESCthe_doom1
 	picture = GFX_evt_targaryen
     
     is_triggered_only = yes
+	#major = yes
     
 	immediate = {
 		create_character = {
 			random_traits = no
 			name = "Aenar"
-			has_nickname = "nick_the_exile"
+			has_nickname = nick_the_exile
 			dynasty = 1634
 			culture = high_valyrian
 			religion = valyrian
@@ -183,18 +185,36 @@ character_event = {
 	option = {
 		name = EVTOPTAthe_doom1
 	
-		c_dragonstone = {
-			gain_title = event_target:aenar
+		event_target:aenar = {
+			c_dragonstone = { gain_title = PREV }
+			d_dragonstone = { gain_title = PREV }
 		}
-		d_dragonstone = {
-			gain_title = event_target:aenar
+		hidden_tooltip = {
+			if = {
+				limit = { k_dragonstone = { is_title_active = yes } }
+				k_dragonstone = { destroy_landed_title = THIS }
+			}
+			event_target:visenyx = {
+				move_character = event_target:aenar
+			}
 		}
-		if = {
-			limit = { k_dragonstone = { is_title_active = yes } }
-			k_dragonstone = { destroy_landed_title = THIS }
-		}
-		event_target:visenyx = {
-			move_character = event_target:aenar
-		}
+	}
+}
+
+# The Doom
+narrative_event = {
+    id = the_doom.2
+	desc = EVTDESCthe_doom2
+	picture = GFX_evt_targaryen
+    
+    is_triggered_only = yes
+	major = yes
+    
+	immediate = {
+		
+	}
+	
+	option = {
+		name = EVTOPTAthe_doom2
 	}
 }
