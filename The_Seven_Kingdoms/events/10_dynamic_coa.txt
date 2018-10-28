@@ -18,11 +18,20 @@ character_event = {
 			}
 			is_nomadic = yes
 		}
-		is_dynasty_with_special_coa = yes
+		#is_dynasty_with_special_coa = yes
 	}
 	
 	option = {
-		set_dynamic_coa = yes
+		if = {
+			limit = { is_dynasty_with_special_coa = yes }
+			set_dynamic_coa = yes
+		}
+		else = {
+			any_demesne_title = {
+				reset_coa = PREV
+				clear_title_flag = is_dynamic_coa
+			}
+		}
 	}
 }
 
