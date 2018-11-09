@@ -114,8 +114,8 @@ character_event = {
 	}
 
 	mean_time_to_happen = {
-		days = 1
-		#months = 500
+		#days = 1
+		months = 500
 		modifier = {
 			factor = 1.5
 			independent = no
@@ -958,3 +958,989 @@ character_event = {
 	}
 }
 
+
+### DORNISH MELTING POT
+
+# The Salt Dornish Melting Pot
+character_event = {
+	id = emf_tsk_melting_pot.4
+	desc = EVTDESC_emf_tsk_melting_pot_2500
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+
+	trigger = {
+		capital_scope = { region = custom_sand_dornish }
+		OR = {
+			culture = salt_dornish
+			culture = andal_dornish
+			culture = spearmen
+			culture = scourgemen
+		}
+		any_demesne_province = {
+			num_of_settlements = 1
+			region = custom_sand_dornish
+			any_province_holding = { NOT = { holding_type = nomad } }
+			AND = {
+				ROOT = { culture = salt_dornish }
+				OR = {
+					culture = andal_dornish
+					culture = spearmen
+					culture = scourgemen
+				}
+			}
+		}
+		NOR = {
+			has_character_flag = no_melting_pot
+			any_liege = { has_character_flag = no_melting_pot }
+			has_game_rule = { name = adventurers value = none }
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 500
+		modifier = {
+			factor = 1.5
+			independent = no
+			NOT = { any_liege = { culture = salt_dornish } }
+		}
+		modifier = {
+			factor = 0.25
+			any_liege = { culture = salt_dornish }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 1 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 2 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 3 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 4 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 5 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 6 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 7 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 8 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 9 }
+		}
+		modifier = {
+			factor = 0.95
+			learning = 11
+		}
+		modifier = {
+			factor = 0.95
+			learning = 12
+		}
+		modifier = {
+			factor = 0.95
+			learning = 13
+		}
+		modifier = {
+			factor = 0.95
+			learning = 14
+		}
+		modifier = {
+			factor = 0.95
+			learning = 15
+		}
+		modifier = {
+			factor = 0.95
+			learning = 16
+		}
+		modifier = {
+			factor = 0.95
+			learning = 17
+		}
+		modifier = {
+			factor = 0.95
+			learning = 18
+		}
+		modifier = {
+			factor = 0.95
+			learning = 19
+		}
+		modifier = {
+			factor = 0.95
+			learning = 20
+		}
+		modifier = {
+			factor = 0.95
+			learning = 21
+		}
+		modifier = {
+			factor = 0.95
+			learning = 22
+		}
+		modifier = {
+			factor = 0.95
+			learning = 23
+		}
+		modifier = {
+			factor = 0.95
+			learning = 24
+		}
+		modifier = {
+			factor = 0.95
+			learning = 25
+		}
+		modifier = {
+			factor = 0.3
+			OR = {
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots
+				}
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots_and_slower_normal
+				}
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				capital_scope = {
+					num_of_settlements = 1
+					region = custom_sand_dornish
+					any_province_holding = { NOT = { holding_type = nomad } }
+					AND = {
+						ROOT = { culture = salt_dornish }
+						OR = {
+							culture = andal_dornish
+							culture = spearmen
+							culture = scourgemen
+						}
+					}
+				}
+			}
+			capital_scope = { save_event_target_as = melting_pot_province }
+			break = yes
+		}
+		random_demesne_province = {
+			limit = {
+				num_of_settlements = 1
+				region = custom_sand_dornish
+				any_province_holding = { NOT = { holding_type = nomad } }
+				AND = {
+					ROOT = { culture = salt_dornish }
+					OR = {
+						culture = andal_dornish
+						culture = spearmen
+						culture = scourgemen
+					}
+				}
+			}
+			save_event_target_as = melting_pot_province
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_tsk_melting_pot_2500
+		culture = salt_dornish
+		any_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				dynasty = ROOT
+				OR = {
+					culture = andal_dornish
+					culture = spearmen
+					culture = scourgemen
+				}
+			}
+			culture = salt_dornish
+		}
+		event_target:melting_pot_province = {
+			culture = salt_dornish
+			set_province_flag = melting_pot
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_tsk_melting_pot_2500
+		trigger = { ai = no }
+		set_character_flag = no_melting_pot
+	}
+}
+
+# It's spreading
+province_event = {
+	id = emf_tsk_melting_pot.5
+	desc = EVTDESC_emf_tsk_melting_pot_2501
+	picture = GFX_evt_throne_room
+
+	trigger = {
+		region = custom_sand_dornish
+		owner = { top_liege = { culture = salt_dornish } }
+		OR = {
+			culture = andal_dornish
+			culture = spearmen
+			culture = scourgemen
+		}
+		OR = {
+			owner = { culture = salt_dornish }
+			AND = {
+				any_neighbor_province = { culture = salt_dornish }
+				owner = { top_liege = { culture = salt_dornish } }
+			}
+		}
+		num_of_settlements = 1
+		any_province_holding = { NOT = { holding_type = nomad } }
+		NOT = { has_province_flag = melting_pot }
+	}
+
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.75
+			owner = { culture = salt_dornish }
+			any_neighbor_province = { culture = salt_dornish }
+		}
+	}
+
+	immediate = {
+		owner = {
+			top_liege = { save_event_target_as = new_culture }
+		}
+	}
+
+	option = {
+		name = I_SEE
+		culture = salt_dornish
+		set_province_flag = melting_pot
+		hidden_tooltip = {
+			save_event_target_as = emf_province
+			owner = {
+				character_event = { id = emf_ambitions.1 }
+				any_liege = { character_event = { id = emf_ambitions.1 } }
+			}
+		}
+	}
+}
+
+# Make my court Salt Dornish
+character_event = {
+	id = emf_tsk_melting_pot.6
+	desc = EVTDESC_emf_tsk_melting_pot_2502
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+	culture = salt_dornish
+
+	trigger = {
+		capital_scope = { region = custom_sand_dornish }
+		any_courtier = {
+			is_ruler = no
+			prisoner = no
+			OR = {
+				culture = andal_dornish
+				culture = spearmen
+				culture = scourgemen
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = OK
+		random_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				OR = {
+					culture = andal_dornish
+					culture = spearmen
+					culture = scourgemen
+				}
+			}
+			culture = salt_dornish
+		}
+	}
+}
+
+# The Sand Dornish Melting Pot
+character_event = {
+	id = emf_tsk_melting_pot.7
+	desc = EVTDESC_emf_tsk_melting_pot_2500
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+
+	trigger = {
+		capital_scope = { region = custom_sand_dornish }
+		OR = {
+			culture = sand_dornish
+			culture = andal_dornish
+			culture = tormen
+		}
+		any_demesne_province = {
+			num_of_settlements = 1
+			region = custom_sand_dornish
+			any_province_holding = { NOT = { holding_type = nomad } }
+			AND = {
+				ROOT = { culture = sand_dornish }
+				OR = {
+					culture = andal_dornish
+					culture = tormen
+				}
+			}
+		}
+		NOR = {
+			has_character_flag = no_melting_pot
+			any_liege = { has_character_flag = no_melting_pot }
+			has_game_rule = { name = adventurers value = none }
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 500
+		modifier = {
+			factor = 1.5
+			independent = no
+			NOT = { any_liege = { culture = sand_dornish } }
+		}
+		modifier = {
+			factor = 0.25
+			any_liege = { culture = sand_dornish }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 1 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 2 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 3 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 4 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 5 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 6 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 7 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 8 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 9 }
+		}
+		modifier = {
+			factor = 0.95
+			learning = 11
+		}
+		modifier = {
+			factor = 0.95
+			learning = 12
+		}
+		modifier = {
+			factor = 0.95
+			learning = 13
+		}
+		modifier = {
+			factor = 0.95
+			learning = 14
+		}
+		modifier = {
+			factor = 0.95
+			learning = 15
+		}
+		modifier = {
+			factor = 0.95
+			learning = 16
+		}
+		modifier = {
+			factor = 0.95
+			learning = 17
+		}
+		modifier = {
+			factor = 0.95
+			learning = 18
+		}
+		modifier = {
+			factor = 0.95
+			learning = 19
+		}
+		modifier = {
+			factor = 0.95
+			learning = 20
+		}
+		modifier = {
+			factor = 0.95
+			learning = 21
+		}
+		modifier = {
+			factor = 0.95
+			learning = 22
+		}
+		modifier = {
+			factor = 0.95
+			learning = 23
+		}
+		modifier = {
+			factor = 0.95
+			learning = 24
+		}
+		modifier = {
+			factor = 0.95
+			learning = 25
+		}
+		modifier = {
+			factor = 0.3
+			OR = {
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots
+				}
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots_and_slower_normal
+				}
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				capital_scope = {
+					num_of_settlements = 1
+					region = custom_sand_dornish
+					any_province_holding = { NOT = { holding_type = nomad } }
+					AND = {
+						ROOT = { culture = sand_dornish }
+						OR = {
+							culture = andal_dornish
+							culture = tormen
+						}
+					}
+				}
+			}
+			capital_scope = { save_event_target_as = melting_pot_province }
+			break = yes
+		}
+		random_demesne_province = {
+			limit = {
+				num_of_settlements = 1
+				region = custom_sand_dornish
+				any_province_holding = { NOT = { holding_type = nomad } }
+				AND = {
+					ROOT = { culture = sand_dornish }
+					OR = {
+						culture = andal_dornish
+						culture = tormen
+					}
+				}
+			}
+			save_event_target_as = melting_pot_province
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_tsk_melting_pot_2500
+		culture = sand_dornish
+		any_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				dynasty = ROOT
+				OR = {
+					culture = andal_dornish
+					culture = tormen
+				}
+			}
+			culture = sand_dornish
+		}
+		event_target:melting_pot_province = {
+			culture = sand_dornish
+			set_province_flag = melting_pot
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_tsk_melting_pot_2500
+		trigger = { ai = no }
+		set_character_flag = no_melting_pot
+	}
+}
+
+# It's spreading
+province_event = {
+	id = emf_tsk_melting_pot.8
+	desc = EVTDESC_emf_tsk_melting_pot_2501
+	picture = GFX_evt_throne_room
+
+	trigger = {
+		region = custom_sand_dornish
+		owner = { top_liege = { culture = sand_dornish } }
+		OR = {
+			culture = andal_dornish
+			culture = tormen
+		}
+		OR = {
+			owner = { culture = sand_dornish }
+			AND = {
+				any_neighbor_province = { culture = sand_dornish }
+				owner = { top_liege = { culture = sand_dornish } }
+			}
+		}
+		num_of_settlements = 1
+		any_province_holding = { NOT = { holding_type = nomad } }
+		NOT = { has_province_flag = melting_pot }
+	}
+
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.75
+			owner = { culture = sand_dornish }
+			any_neighbor_province = { culture = sand_dornish }
+		}
+	}
+
+	immediate = {
+		owner = {
+			top_liege = { save_event_target_as = new_culture }
+		}
+	}
+
+	option = {
+		name = I_SEE
+		culture = sand_dornish
+		set_province_flag = melting_pot
+		hidden_tooltip = {
+			save_event_target_as = emf_province
+			owner = {
+				character_event = { id = emf_ambitions.1 }
+				any_liege = { character_event = { id = emf_ambitions.1 } }
+			}
+		}
+	}
+}
+
+# Make my court Salt Dornish
+character_event = {
+	id = emf_tsk_melting_pot.9
+	desc = EVTDESC_emf_tsk_melting_pot_2502
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+	culture = sand_dornish
+
+	trigger = {
+		capital_scope = { region = custom_sand_dornish }
+		any_courtier = {
+			is_ruler = no
+			prisoner = no
+			OR = {
+				culture = andal_dornish
+				culture = tormen
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = OK
+		random_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				OR = {
+					culture = andal_dornish
+					culture = tormen
+				}
+			}
+			culture = sand_dornish
+		}
+	}
+}
+
+# The Stone Dornish Melting Pot
+character_event = {
+	id = emf_tsk_melting_pot.10
+	desc = EVTDESC_emf_tsk_melting_pot_2500
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+
+	trigger = {
+		capital_scope = { region = custom_stone_dornish }
+		OR = {
+			culture = stone_dornish
+			culture = andal_dornish
+			culture = stonemen
+			culture = torrentine
+			culture = bonemen
+		}
+		any_demesne_province = {
+			num_of_settlements = 1
+			region = custom_stone_dornish
+			any_province_holding = { NOT = { holding_type = nomad } }
+			AND = {
+				ROOT = { culture = stone_dornish }
+				OR = {
+					culture = andal_dornish
+					culture = stonemen
+					culture = torrentine
+					culture = bonemen
+				}
+			}
+		}
+		NOR = {
+			has_character_flag = no_melting_pot
+			any_liege = { has_character_flag = no_melting_pot }
+			has_game_rule = { name = adventurers value = none }
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 500
+		modifier = {
+			factor = 1.5
+			independent = no
+			NOT = { any_liege = { culture = stone_dornish } }
+		}
+		modifier = {
+			factor = 0.25
+			any_liege = { culture = stone_dornish }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 1 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 2 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 3 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 4 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 5 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 6 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 7 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 8 }
+		}
+		modifier = {
+			factor = 1.05
+			NOT = { learning = 9 }
+		}
+		modifier = {
+			factor = 0.95
+			learning = 11
+		}
+		modifier = {
+			factor = 0.95
+			learning = 12
+		}
+		modifier = {
+			factor = 0.95
+			learning = 13
+		}
+		modifier = {
+			factor = 0.95
+			learning = 14
+		}
+		modifier = {
+			factor = 0.95
+			learning = 15
+		}
+		modifier = {
+			factor = 0.95
+			learning = 16
+		}
+		modifier = {
+			factor = 0.95
+			learning = 17
+		}
+		modifier = {
+			factor = 0.95
+			learning = 18
+		}
+		modifier = {
+			factor = 0.95
+			learning = 19
+		}
+		modifier = {
+			factor = 0.95
+			learning = 20
+		}
+		modifier = {
+			factor = 0.95
+			learning = 21
+		}
+		modifier = {
+			factor = 0.95
+			learning = 22
+		}
+		modifier = {
+			factor = 0.95
+			learning = 23
+		}
+		modifier = {
+			factor = 0.95
+			learning = 24
+		}
+		modifier = {
+			factor = 0.95
+			learning = 25
+		}
+		modifier = {
+			factor = 0.3
+			OR = {
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots
+				}
+				has_game_rule = {
+					name = culture_conversion
+					value = faster_melting_pots_and_slower_normal
+				}
+			}
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				capital_scope = {
+					num_of_settlements = 1
+					region = custom_stone_dornish
+					any_province_holding = { NOT = { holding_type = nomad } }
+					AND = {
+						ROOT = { culture = stone_dornish }
+						OR = {
+							culture = andal_dornish
+							culture = stonemen
+							culture = torrentine
+							culture = bonemen
+						}
+					}
+				}
+			}
+			capital_scope = { save_event_target_as = melting_pot_province }
+			break = yes
+		}
+		random_demesne_province = {
+			limit = {
+				num_of_settlements = 1
+				region = custom_stone_dornish
+				any_province_holding = { NOT = { holding_type = nomad } }
+				AND = {
+					ROOT = { culture = stone_dornish }
+					OR = {
+						culture = andal_dornish
+						culture = stonemen
+						culture = torrentine
+						culture = bonemen
+					}
+				}
+			}
+			save_event_target_as = melting_pot_province
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_tsk_melting_pot_2500
+		culture = stone_dornish
+		any_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				dynasty = ROOT
+				OR = {
+					culture = andal_dornish
+					culture = stonemen
+					culture = torrentine
+					culture = bonemen
+				}
+			}
+			culture = stone_dornish
+		}
+		event_target:melting_pot_province = {
+			culture = stone_dornish
+			set_province_flag = melting_pot
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_tsk_melting_pot_2500
+		trigger = { ai = no }
+		set_character_flag = no_melting_pot
+	}
+}
+
+# It's spreading
+province_event = {
+	id = emf_tsk_melting_pot.11
+	desc = EVTDESC_emf_tsk_melting_pot_2501
+	picture = GFX_evt_throne_room
+
+	trigger = {
+		region = custom_stone_dornish
+		owner = { top_liege = { culture = stone_dornish } }
+		OR = {
+			culture = andal_dornish
+			culture = stonemen
+			culture = torrentine
+			culture = bonemen
+		}
+		OR = {
+			owner = { culture = stone_dornish }
+			AND = {
+				any_neighbor_province = { culture = stone_dornish }
+				owner = { top_liege = { culture = stone_dornish } }
+			}
+		}
+		num_of_settlements = 1
+		any_province_holding = { NOT = { holding_type = nomad } }
+		NOT = { has_province_flag = melting_pot }
+	}
+
+	mean_time_to_happen = {
+		months = 120
+		modifier = {
+			factor = 0.75
+			owner = { culture = stone_dornish }
+			any_neighbor_province = { culture = stone_dornish }
+		}
+	}
+
+	immediate = {
+		owner = {
+			top_liege = { save_event_target_as = new_culture }
+		}
+	}
+
+	option = {
+		name = I_SEE
+		culture = stone_dornish
+		set_province_flag = melting_pot
+		hidden_tooltip = {
+			save_event_target_as = emf_province
+			owner = {
+				character_event = { id = emf_ambitions.1 }
+				any_liege = { character_event = { id = emf_ambitions.1 } }
+			}
+		}
+	}
+}
+
+# Make my court Stone Dornish
+character_event = {
+	id = emf_tsk_melting_pot.12
+	desc = EVTDESC_emf_tsk_melting_pot_2502
+	picture = GFX_evt_throne_room
+
+	only_rulers = yes
+	min_age = 16
+	capable_only = yes
+	prisoner = no
+	culture = stone_dornish
+
+	trigger = {
+		capital_scope = { region = custom_stone_dornish }
+		any_courtier = {
+			is_ruler = no
+			prisoner = no
+			OR = {
+				culture = andal_dornish
+				culture = stonemen
+				culture = torrentine
+				culture = bonemen
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		months = 60
+	}
+
+	option = {
+		name = OK
+		random_courtier = {
+			limit = {
+				is_ruler = no
+				prisoner = no
+				OR = {
+					culture = andal_dornish
+					culture = stonemen
+					culture = torrentine
+					culture = bonemen
+				}
+			}
+			culture = stone_dornish
+		}
+	}
+}
