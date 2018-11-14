@@ -1,263 +1,263 @@
 republic_governments = {
 
-  merchant_republic_government = {
-    preferred_holdings = { CITY }
-    allowed_holdings = { 
-      TRADE_POST
-      CITY
-      CASTLE
-      FAMILY_PALACE
-      FORT
-      HOSPITAL
-    }
-    allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
-      TRIBAL
-    }
-    accepts_liege_governments = { # Accepts other republics
-      republic_government
-      freehold_government
-    }
-    free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-      tribal_government
-      wildling_government
-    }
-    frame_suffix = "_merchantrepublic"
-    title_prefix = "city_"
-    potential = {
-      NOR = {
-        is_government_potential = freehold_government     # Freehold Government
-        is_government_potential = township_government	  # Township Government
-	   controls_religion = yes
-      }
-      is_female = no
-      OR = {
-        AND = {
-          is_patrician = yes
-          OR = {
-            liege_before_war = {
-              NOT = { character = PREV }
-              is_merchant_republic = yes
-              NOT = {
-                liege_before_war = {
-                  NOT = { character = PREV }
-                  is_merchant_republic = yes
-                }
-              }
-            }
-            has_game_started = no
-          }
-        }
-        AND = {
-          OR = {
-            AND = {
-              has_game_started = yes
-              is_merchant_republic = yes
-            }
-            capital_scope = { port = yes }
-          }
-          higher_real_tier_than = count
-          any_demesne_province = {
-            always = yes
-          }
-          NOT = {
-            liege_before_war = {
-              NOT = { character = PREV }
-              is_merchant_republic = yes
-            }
-          }
-        }
-      }
-    }
-    
-    color = { 250 0 0 }
-    
-    merchant_republic = yes
-    
-    can_imprison_without_reason = no
-    can_revoke_without_reason = no
-    can_usurp_kingdoms_and_empires = no
-    have_gender_laws = no
-    can_grant_kingdoms_and_empires_to_other_government = yes
-    allows_matrilineal_marriage = no
-    uses_bride_price = yes
+	merchant_republic_government = {
+		preferred_holdings = { CITY }
+		allowed_holdings = { 
+			TRADE_POST
+			CITY
+			CASTLE
+			FAMILY_PALACE
+			FORT
+			HOSPITAL
+		}
+		allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
+			TRIBAL
+		}
+		accepts_liege_governments = { # Accepts other republics
+			republic_government
+			freehold_government
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+		}
+		frame_suffix = "_merchantrepublic"
+		title_prefix = "city_"
+		potential = {
+			NOR = {
+				is_government_potential = freehold_government     # Freehold Government
+				is_government_potential = township_government	  # Township Government
+				controls_religion = no
+			}
+			is_female = no
+			OR = {
+				AND = {
+					is_patrician = yes
+					OR = {
+						liege_before_war = {
+							NOT = { character = PREV }
+							is_merchant_republic = yes
+							NOT = {
+								liege_before_war = {
+									NOT = { character = PREV }
+									is_merchant_republic = yes
+								}
+							}
+						}
+						has_game_started = no
+					}
+				}
+				AND = {
+					OR = {
+						AND = {
+							has_game_started = yes
+							is_merchant_republic = yes
+						}
+						capital_scope = { port = yes }
+					}
+					higher_real_tier_than = count
+					any_demesne_province = {
+						always = yes
+					}
+					NOT = {
+						liege_before_war = {
+							NOT = { character = PREV }
+							is_merchant_republic = yes
+						}
+					}
+				}
+			}
+		}
+		
+		color = { 250 0 0 }
+		
+		merchant_republic = yes
+		
+		can_imprison_without_reason = no
+		can_revoke_without_reason = no
+		can_usurp_kingdoms_and_empires = no
+		have_gender_laws = no
+		can_grant_kingdoms_and_empires_to_other_government = yes
+		allows_matrilineal_marriage = no
+		uses_bride_price = yes
 
-    can_build_tribal = no
-    
-    landed_inheritance = no
-    
-    character_modifier = {
-      city_vassal_max_levy = 0.10
-      castle_vassal_max_levy = 0.10
-      temple_vassal_max_levy = 0.10
+		can_build_tribal = no
+		
+		landed_inheritance = no
+		
+		character_modifier = {
+			city_vassal_max_levy = 0.10
+			castle_vassal_max_levy = 0.10
+			temple_vassal_max_levy = 0.10
       
-      city_vassal_min_levy = -0.20
-      castle_vassal_min_levy = -0.20
-      temple_vassal_min_levy = -0.20
-    }
+			city_vassal_min_levy = -0.20
+			castle_vassal_min_levy = -0.20
+			temple_vassal_min_levy = -0.20
+		}
+		
+		capital_move_delay = 600
+	}
+	
+	freehold_government = {
+		preferred_holdings = { CITY CASTLE }
+		allowed_holdings = { 
+			TRADE_POST
+			CITY
+			CASTLE
+			FAMILY_PALACE
+			FORT
+			HOSPITAL
+		}
+		allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
+			TRIBAL
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			stepstones_government
+		}
+		potential = {
+			tier = EMPEROR
+			has_landed_title = e_valyrian_freehold
+			NOT = { controls_religion = yes }
+			is_female = no
+			OR = {
+				AND = {
+					is_patrician = yes
+					OR = {
+						liege_before_war = {
+							NOT = { character = PREV }
+							is_merchant_republic = yes
+							NOT = {
+								liege_before_war = {
+									NOT = { character = PREV }
+									is_merchant_republic = yes
+								}
+							}
+						}
+						has_game_started = no
+					}
+				}
+				AND = {
+					OR = {
+						AND = {
+							has_game_started = yes
+							is_merchant_republic = yes
+						}
+						capital_scope = { port = yes }
+					}
+				higher_real_tier_than = count
+				any_demesne_province = {
+					always = yes
+				}
+				NOT = {
+					liege_before_war = {
+					NOT = { character = PREV }
+						is_merchant_republic = yes
+						}
+					}
+				}
+			}
+		}
     
-    capital_move_delay = 600
-  }
-  
-  freehold_government = {
-    preferred_holdings = { CITY CASTLE }
-    allowed_holdings = { 
-      TRADE_POST
-      CITY
-      CASTLE
-      FAMILY_PALACE
-      FORT
-      HOSPITAL
-    }
-    allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
-      TRIBAL
-    }
-    free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-      tribal_government
-      wildling_government
-      stepstones_government
-    }
-    potential = {
-      tier = EMPEROR
-      has_landed_title = e_valyrian_freehold
-      NOT = { controls_religion = yes }
-      is_female = no
-      OR = {
-        AND = {
-          is_patrician = yes
-          OR = {
-            liege_before_war = {
-              NOT = { character = PREV }
-              is_merchant_republic = yes
-              NOT = {
-                liege_before_war = {
-                  NOT = { character = PREV }
-                  is_merchant_republic = yes
-                }
-              }
-            }
-            has_game_started = no
-          }
-        }
-        AND = {
-          OR = {
-            AND = {
-              has_game_started = yes
-              is_merchant_republic = yes
-            }
-            capital_scope = { port = yes }
-          }
-          higher_real_tier_than = count
-          any_demesne_province = {
-            always = yes
-          }
-          NOT = {
-            liege_before_war = {
-              NOT = { character = PREV }
-              is_merchant_republic = yes
-            }
-          }
-        }
-      }
-    }
+		color = { 110 45 130 }
+		
+		frame_suffix = "_freehold"
+		title_prefix = "city_"
+		
+		merchant_republic = yes
     
-    color = { 110 45 130 }
+		can_usurp_kingdoms_and_empires = no
+		can_create_empires = no
+		can_demand_religious_conversion = no
+		gets_religion_opinion_penalties = no
+		gives_religion_opinion_penalties = no
+		vassal_government_opinion_penalties = no
+		can_grant_kingdoms_and_empires_to_other_government = yes
+		free_retract_vassalage = yes
     
-    frame_suffix = "_freehold"
-    title_prefix = "city_"
+		vassal_limit = 10
     
-    merchant_republic = yes
+		can_imprison_without_reason = no
+		can_revoke_without_reason = no
+		have_gender_laws = no
+		allows_matrilineal_marriage = no
     
-    can_usurp_kingdoms_and_empires = no
-    can_create_empires = no
-    can_demand_religious_conversion = no
-    gets_religion_opinion_penalties = no
-    gives_religion_opinion_penalties = no
-    vassal_government_opinion_penalties = no
-    can_grant_kingdoms_and_empires_to_other_government = yes
-    free_retract_vassalage = yes
+		landed_inheritance = no
     
-    vassal_limit = 10
+		ignore_in_vassal_limit_calculation = {
+			tribal_government
+		}
     
-    can_imprison_without_reason = no
-    can_revoke_without_reason = no
-    have_gender_laws = no
-    allows_matrilineal_marriage = no
+		can_build_tribal = no
     
-    landed_inheritance = no
+		capital_move_delay = 600
     
-    ignore_in_vassal_limit_calculation = {
-      tribal_government
-    }
-    
-    can_build_tribal = no
-    
-    capital_move_delay = 600
-    
-    character_modifier = {
-      city_vassal_min_levy = 0.05
-      castle_vassal_min_levy = 0.05
-      temple_vassal_min_levy = 0.05
+		character_modifier = {
+			city_vassal_min_levy = 0.05
+			castle_vassal_min_levy = 0.05
+			temple_vassal_min_levy = 0.05
       
-      city_vassal_tax_modifier = 0.05
-      temple_vassal_tax_modifier = 0.05
-      castle_vassal_tax_modifier = 0.05
-    }
-  }
-  
-  republic_government = {
-    preferred_holdings = { CITY }
-    allowed_holdings = { 
-      CITY
-      CASTLE
-      FORT
-      HOSPITAL
-    }
-    allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
-      TRIBAL
-    }
-    accepts_liege_governments = { # Accepts other republics and the Freehold
-      merchant_republic_government
-      freehold_government
-    }
-    free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-      tribal_government
-    }
-    frame_suffix = "_republic"
-    title_prefix = "city_"
-    potential = {
-      NOT = { controls_religion = yes }
-      NOR = {
-        is_government_potential = merchant_republic_government
-        is_government_potential = freehold_government
-		is_government_potential = township_government
-      }
-    }
-    
-    color = { 209 125 130 }
-    
-    can_imprison_without_reason = no
-    can_revoke_without_reason = no
-    
-    can_build_tribal = no
-    
-    capital_move_delay = 600
-    
-    character_modifier = {
-      city_vassal_max_levy = 0.10
-      castle_vassal_max_levy = 0.10
-      temple_vassal_max_levy = 0.10
+			city_vassal_tax_modifier = 0.05
+			temple_vassal_tax_modifier = 0.05
+			castle_vassal_tax_modifier = 0.05
+		}
+	}
+	
+	republic_government = {
+		preferred_holdings = { CITY }
+		allowed_holdings = { 
+			CITY
+			CASTLE
+			FORT
+			HOSPITAL
+		}
+		allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
+			TRIBAL
+		}
+		accepts_liege_governments = { # Accepts other republics
+			merchant_republic_government
+			freehold_government
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+		}
+		frame_suffix = "_republic"
+		title_prefix = "city_"
+		potential = {
+			controls_religion = no
+			NOR = {
+				is_government_potential = merchant_republic_government
+				is_government_potential = freehold_government
+				is_government_potential = township_government
+			}
+		}
+		
+		color = { 209 125 130 }
+		
+		can_imprison_without_reason = no
+		can_revoke_without_reason = no
+		
+		can_build_tribal = no
+		
+		capital_move_delay = 600
+		
+		character_modifier = {
+			city_vassal_max_levy = 0.10
+			castle_vassal_max_levy = 0.10
+			temple_vassal_max_levy = 0.10
       
-      city_vassal_min_levy = -0.20
-      castle_vassal_min_levy = -0.20
-      temple_vassal_min_levy = -0.20
+			city_vassal_min_levy = -0.20
+			castle_vassal_min_levy = -0.20
+			temple_vassal_min_levy = -0.20
       
-      city_vassal_tax_modifier = 0.05
-      temple_vassal_tax_modifier = 0.05
-      castle_vassal_tax_modifier = 0.05
-    }
-  }
-  
-  confucian_bureaucracy = {
+			city_vassal_tax_modifier = 0.05
+			temple_vassal_tax_modifier = 0.05
+			castle_vassal_tax_modifier = 0.05
+		}
+	}
+	
+	confucian_bureaucracy = {
 		offmap_power = offmap_freehold
 		preferred_holdings = { CASTLE CITY }
 		allowed_holdings = {
@@ -271,25 +271,25 @@ republic_governments = {
 		}
 		forced_contract = {
 			freehold_government
-      merchant_republic_government
-      republic_government
-      feudal_government
-      theocracy_government
-      muslim_government
+			merchant_republic_government
+			republic_government
+			feudal_government
+			theocracy_government
+			muslim_government
       
-      old_gods_government
-      nights_watch_government
-      merchant_kingdom_government
-      theocratic_kingdom_government
-      march_government
-      council_government
-      storm_kingdom_government
-      vale_government
-      west_government
-      reach_government
-      ironborn_government
-      prince_government
-      winter_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			storm_kingdom_government
+			vale_government
+			west_government
+			reach_government
+			ironborn_government
+			prince_government
+			winter_government
 		}
 		gets_religion_opinion_penalties = no
 		vassal_government_opinion_penalties = no
@@ -301,7 +301,7 @@ republic_governments = {
 			is_offmap_tag = offmap_freehold
 		}
 		
-		color = { 189 105 110 }
+		color = { 94 187 185 }
 		
 		can_imprison_without_reason = no
 		can_revoke_without_reason = no
@@ -385,7 +385,6 @@ republic_governments = {
 		max_consorts = 7
 		max_liege_levy = 0.25
 		max_liege_tax = 0.5
-		
 
 		can_build_tribal = no
     
