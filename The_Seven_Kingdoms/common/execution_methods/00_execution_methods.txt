@@ -28,6 +28,44 @@
 ####################
 
 execution_method = {
+	death = death_execution_crushing
+	weight_multiplier = {
+		factor = 200
+	}
+	trigger = {
+		FROM = {
+			OR = {
+				# Only available to the following:
+				trait = cruel
+				trait = wroth
+ 				religion = aztec
+	 			religion = aztec_reformed
+			}
+		}
+	}
+}
+
+execution_method = {
+	death = death_execution_ash
+	weight_multiplier = {
+		factor = 300
+		modifier = {
+			factor = 2
+			trait = homosexual
+		}
+	}
+	trigger = {
+		FROM = {
+			OR = {
+				# Only available to the following:
+ 				religion = aztec
+	 			religion = aztec_reformed
+			}
+		}
+	}
+}
+
+execution_method = {				
 	death = death_execution_burning
 	weight_multiplier = {
 		factor = 150
@@ -52,6 +90,7 @@ execution_method = {
 					has_opinion_modifier = { who = ROOT modifier = opinion_regicide_traitor } 
 					has_opinion_modifier = { who = ROOT modifier = opinion_killed_close_kin } 
 					has_opinion_modifier = { who = ROOT modifier = opinion_witch }
+					has_opinion_modifier = { who = ROOT modifier = opinion_takfir } 
 					has_opinion_modifier = { who = ROOT modifier = opinion_unfaithful_wife } 
 					has_opinion_modifier = { who = ROOT modifier = opinion_cuckolded } 
 					has_opinion_modifier = { who = ROOT modifier = opinion_charge_heresiarch } 
@@ -86,6 +125,7 @@ execution_method = {
 					has_opinion_modifier = { who = ROOT modifier = opinion_refused_abdicate_title } 
 					has_opinion_modifier = { who = ROOT modifier = opinion_refused_order }
 					has_opinion_modifier = { who = ROOT modifier = opinion_witch }
+					has_opinion_modifier = { who = ROOT modifier = opinion_takfir }												 
 					has_opinion_modifier = { who = ROOT modifier = opinion_unfaithful_wife } 
 					has_opinion_modifier = { who = ROOT modifier = opinion_cuckolded } 
 					has_opinion_modifier = { who = ROOT modifier = opinion_charge_heresiarch } 
@@ -143,15 +183,39 @@ execution_method = {
 	trigger = {
 		FROM = {
 			capital_scope = {
-				NOR = {
-					region = world_westeros
-				}
+				NOT = { region = world_westeros }
 			}
 		}
 	}
 }
 
 execution_method = {
+	death = death_execution_lion
+	weight_multiplier = {
+		factor = 100
+		modifier = {
+			factor = 8
+			FROM = {
+				trait = hunter
+			}
+		}
+		modifier = {
+			factor = 3
+			FROM = {
+				trait = cruel
+			}
+		}
+	}
+	trigger = {
+		FROM = {
+			capital_scope = {
+				region = world_africa
+			}
+		}
+	}
+}
+
+execution_method = {				
 	death = death_execution_snake_pit
 	weight_multiplier = {
 		factor = 50
@@ -294,6 +358,13 @@ execution_method = {
 				trait = architect
 			}
 		}
+		modifier = {
+			factor = 3
+			FROM = {
+				any_owned_bloodline = {
+					has_bloodline_flag = bloodline_blood_building 
+				}
+			}
 	}
 	trigger = {
 		FROM = {
@@ -301,6 +372,9 @@ execution_method = {
 				trait = wroth
 				trait = cruel
 				trait = architect
+			any_owned_bloodline = {
+					has_bloodline_flag = bloodline_blood_building 
+				}
 			}
 			NOR = {
 				is_nomadic = yes
@@ -399,6 +473,32 @@ execution_method = {
 }
 
 execution_method = {
+	death = death_execution_tiger
+	weight_multiplier = {
+		factor = 50
+		modifier = {
+			factor = 8
+			FROM = {
+				trait = hunter
+			}
+		}
+		modifier = {
+			factor = 3
+			FROM = {
+				trait = cruel
+			}
+		}
+	}
+	trigger = {
+		FROM = {
+			capital_scope = {
+				region = world_india
+			}
+		}
+	}
+}
+
+execution_method = {				
 	death = death_execution_elephants
 	weight_multiplier = {
 		factor = 200
@@ -428,6 +528,26 @@ execution_method = {
 }
 
 execution_method = {
+	death = death_execution_bamboo
+	weight_multiplier = {
+		factor = 300
+	}
+	trigger = {
+		FROM = {
+			AND = {
+				OR = {
+					trait = cruel
+					trait = wroth
+				}
+				capital_scope = {
+					region = world_india
+				}
+			}
+		}
+	}
+}
+
+execution_method = {				
 	death = death_execution_stoning
 	weight_multiplier = {
 		factor = 100
@@ -450,9 +570,19 @@ execution_method = {
 	}
 	trigger = {
 		FROM = {
-			OR = {
-				religion_group = the_seven_group
-			}
+			religion_group = the_seven_group
+		}
+	}
+}
+
+execution_method = {
+	death = death_execution_crucifixion
+	weight_multiplier = {
+		factor = 200
+	}
+	trigger = {
+		FROM = {
+			NOT = { religion_group = the_seven_group }										
 		}
 	}
 }
@@ -480,11 +610,32 @@ execution_method = {
 	}
 	trigger = {
 		FROM = {
-			OR = {
-				religion_group = drowned_god_group
+			religion_group = drowned_god_group
+		}
+	}
+}
+
+execution_method = {
+	death = death_execution_scaphism
+	weight_multiplier = {
+		factor = 250
+		modifier = {
+			factor = 2
+			FROM = {
+				trait = cruel
+			}
+		}
+		modifier = {
+			factor = 2
+			FROM = {
+				trait = wroth
 			}
 		}
 	}
+	trigger = {
+		FROM = {
+			culture = persian
+		}
 }
 
 execution_method = {
@@ -506,6 +657,34 @@ execution_method = {
 }
 
 execution_method = {
+	death = death_execution_garrotting
+	weight_multiplier = {
+		factor = 300
+	}
+	trigger = {
+		FROM = {
+			is_tribal = no
+		}
+	}
+}
+
+execution_method = {
+	death = death_execution_horses
+	weight_multiplier = {
+		factor = 300
+		modifier = {
+			factor = 4
+			is_rival = FROM
+		}
+	}
+	trigger = {
+		FROM = {
+			is_nomadic = yes
+		}
+	}
+}
+
+execution_method = {				
 	death = death_execution_back_breaking
 	weight_multiplier = {
 		factor = 700
