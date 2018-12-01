@@ -1,0 +1,697 @@
+########################################
+# The Bearded Priests
+########################################
+
+# The birth of the Bearded Priests
+narrative_event = {
+	id = SoA.2109
+	title = EVTTITLE_SOA_2109
+	desc = EVTDESC_SOA_2109
+	major = yes
+	
+	picture = GFX_evt_melee
+	
+	only_playable = yes
+	hide_from = yes
+	religion = the_seven
+	has_dlc = "Sons of Abraham"
+	has_global_flag = bearded_priests_reformation
+	
+	trigger = {
+		NOT = {
+			is_title_active = d_bearded_priests
+		}
+		controls_religion = yes # Let it happen for the High Septon - he's always around
+	}
+	
+	mean_time_to_happen = {
+		months = 36
+	}
+	
+	immediate = {
+		activate_title = { title = d_bearded_priests status = yes }
+		create_character = {
+			random_traits = no
+			dynasty = random
+			religion = bearded_priests_reformed
+			culture = lorathi
+			female = no
+			age = 32
+			trait = brilliant_strategist
+			trait = zealous
+			trait = humble
+			trait = ambitious
+			trait = strategist
+			trait = holy_warrior
+		}
+		new_character = {
+			wealth = 500
+			d_bearded_priests = {
+				grant_title = PREV
+			}
+			set_government_type = feudal_government
+			create_character = {
+				random_traits = yes
+				dynasty = random
+				religion = bearded_priests_reformed
+				culture = lorathi
+				female = no
+				age = 16
+			}
+			create_character = {
+				random_traits = yes
+				dynasty = random
+				religion = bearded_priests_reformed
+				culture = lorathi
+				female = no
+				age = 18
+			}
+			create_character = {
+				random_traits = yes
+				dynasty = random
+				religion = bearded_priests_reformed
+				culture = lorathi
+				female = no
+				age = 18
+			}
+			create_character = {
+				random_traits = yes
+				dynasty = random
+				religion = bearded_priests_reformed
+				culture = lorathi
+				female = no
+				age = 20
+			}
+			create_character = {
+				random_traits = yes
+				dynasty = random
+				religion = bearded_priests_reformed
+				culture = lorathi
+				female = no
+				age = 25
+			}
+			create_character = {
+				random_traits = yes
+				dynasty = random
+				religion = bearded_priests_reformed
+				culture = lorathi
+				female = no
+				age = 26
+			}
+			create_character = {
+				random_traits = yes
+				dynasty = random
+				religion = bearded_priests_reformed
+				culture = lorathi
+				female = no
+				age = 28
+			}
+			create_character = {
+				random_traits = yes
+				dynasty = random
+				religion = bearded_priests_reformed
+				culture = lorathi
+				female = yes
+				age = 16
+			}
+			create_character = {
+				random_traits = yes
+				dynasty = random
+				religion = bearded_priests_reformed
+				culture = lorathi
+				female = yes
+				age = 17
+			}
+		}
+	}
+	
+	option = {
+		name = EVTOPTA_SOA_2109
+		trigger = {
+			religion = bearded_priests_reformed
+		}
+	}
+	option = {
+		name = EVTOPTB_SOA_2009
+		trigger = {
+			NOT = { religion = bearded_priests_reformed }
+		}
+	}
+}
+
+# The son of a ruler volunteers to join the Bearded Priests
+character_event = {
+	id = SoA.2130
+	hide_window = yes
+	
+	only_men = yes
+	min_age = 16
+	max_age = 45
+	only_capable = yes
+	prisoner = no
+	religion = bearded_priests_reformed
+	
+	trigger = {
+		is_ruler = no
+		
+		martial = 5
+		
+		is_title_active = d_bearded_priests
+		
+		OR = {
+			father_even_if_dead = {
+				primary_title = { higher_tier_than = BARON }
+			}
+			mother_even_if_dead = {
+				primary_title = { higher_tier_than = BARON }
+			}
+		}
+		
+		liege = {
+			holy_order = no
+			liege = {
+				holy_order = no
+			}
+		}
+		
+		has_dlc = "Sons of Abraham"
+		
+		NOT = { has_character_modifier = expelled_d_bearded_priests }
+		NOT = {
+			any_liege = {
+				has_character_modifier = expelled_d_bearded_priests
+			}
+		}
+
+		NOT = {
+			any_spouse = {
+				OR = {
+					is_landed = yes
+					AND = {
+						is_pregnant = yes
+					father_of_unborn = { character = ROOT } # Won't happen if spouse is pregnant with non-bastard child
+					}
+				}
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		years = 100
+		modifier = {
+			factor = 0.25
+			trait = zealous
+		}
+		modifier = {
+			factor = 0.5
+			trait = celibate
+		}
+		modifier = {
+			factor = 0.5
+			trait = homosexual
+		}
+		modifier = {
+			factor = 0.7
+			trait = content
+		}
+		modifier = {
+			factor = 0.75
+			trait = chaste
+		}
+		modifier = {
+			factor = 0.75
+			NOT = { age = 25 }
+		}
+		modifier = {
+			factor = 1.5
+			trait = slothful
+		}
+		modifier = {
+			factor = 2.0
+			trait = lustful
+		}
+		modifier = {
+			factor = 2.0
+			trait = cynical
+		}
+		modifier = {
+			factor = 2.0
+			trait = hedonist
+		}
+		modifier = {
+			factor = 2.0
+			trait = ambitious
+		}
+		modifier = {
+			factor = 2.0
+			any_heir_title = {
+				always = yes
+			}
+		}
+		modifier = {
+			factor = 2.0
+			is_primary_heir = yes
+		}
+		modifier = {
+			factor = 2
+			any_spouse = {
+				reverse_opinion = { who = ROOT value = 100 }
+			}
+		}
+	}
+	
+	immediate = {
+		liege = {
+			character_event = {
+				id = SoA.2131
+			}
+		}
+	}
+}
+
+# Son or brother asks to join the Bearded Priests
+character_event = {
+	id = SoA.2131
+	desc = EVTDESC_SOA_2131
+	picture = GFX_evt_melee
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_SOA_1031 # Agree
+		ai_chance = {
+			factor = 100
+		}
+		
+		if = {
+			limit = {
+				religion = FROM
+			}
+			piety = 100
+		}
+		
+		FROM = {
+			character_event = {
+				id = SoA.2132
+				tooltip = EVTTOOLTIP_SOA_2132
+			}
+		}
+	}
+	
+	option = {
+		name = EVTOPTB_SOA_1031 # Refuse
+		
+		if = {
+			limit = {
+				religion = FROM
+			}
+			piety = -100
+		}
+		
+		FROM = {
+			character_event = {
+				id = SoA.2133
+				tooltip = EVTTOOLTIP_SOA_1033
+			}
+		}
+	}
+}
+
+# Son or brother joins the Bearded Priests
+character_event = {
+	id = SoA.2132
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		d_bearded_priests = {
+			holder_scope = {
+				save_event_target_as = order_target
+				ROOT = {
+					character_event = { id = SoA.2864 }
+				}
+			}
+		}
+	}
+}
+
+# Liege refuses request to join the Bearded Priests
+character_event = {
+	id = SoA.2133
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		opinion = {
+			who = FROM
+			modifier = opinion_refused_request_holy_order
+		}
+	}
+}
+
+# Ping event when donating money to the Bearded Priests
+character_event = {
+	id = SoA.2140
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		wealth = 300
+		FROM = {
+			letter_event = {
+				id = SoA.2141
+			}
+		}
+		opinion = {
+			who = FROM
+			modifier = opinion_generous_donation
+		}
+	}
+}
+
+# Notification event when donating money to the Bearded Priests
+letter_event = {
+	id = SoA.2141
+	desc = EVTDESC_SOA_2141
+	border = GFX_event_letter_frame_religion
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EXCELLENT
+	}
+}
+
+# The Grand Master humbly requests the right to build a castle in your demesne
+character_event = {
+	id = SoA.2150
+	hide_window = yes
+	
+	only_playable = yes
+	religion = bearded_priests_reformed
+	
+	trigger = {
+		d_bearded_priests = {
+			holder_scope = {
+				wealth = 300
+				NOT = {
+					realm_size = 10
+				}
+			}
+		}
+		
+		any_demesne_province = {
+			has_empty_holding = yes
+		}
+		
+		has_dlc = "Sons of Abraham"
+		
+		NOT = { has_character_modifier = expelled_d_bearded_priests }
+		NOT = {
+			any_liege = {
+				has_character_modifier = expelled_d_bearded_priests
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 240
+		modifier = {
+			factor = 0.5
+			d_bearded_priests = {
+				holder_scope = {
+					NOT = { demesne_size = 1 }
+				}
+			}
+		}
+		modifier = {
+			factor = 0.5
+			d_bearded_priests = {
+				holder_scope = {
+					NOT = { demesne_size = 2 }
+				}
+			}
+		}
+		modifier = {
+			factor = 2.0
+			d_bearded_priests = {
+				holder_scope = {
+					num_of_count_titles = 1
+				}
+			}
+		}
+		modifier = {
+			factor = 2.0
+			d_bearded_priests = {
+				holder_scope = {
+					realm_size = 5
+				}
+			}
+		}
+	}
+	
+	immediate = {
+		random_demesne_province = {
+			limit = {
+				has_empty_holding = yes
+			}
+			province_event = {
+				id = SoA.2151
+			}
+		}
+	}
+}
+
+province_event = {
+	id = SoA.2151
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		d_bearded_priests = {
+			holder_scope = {
+				character_event = {
+					id = SoA.2152
+				}
+			}
+		}
+	}
+}
+
+character_event = {
+	id = SoA.2152
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		FROMFROM = {
+			letter_event = {
+				id = SoA.2153
+			}
+		}
+	}
+}
+
+letter_event = {
+	id = SoA.2153
+	desc = EVTDESC_SOA_2153
+	border = GFX_event_letter_frame_religion
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_SOA_1023 # Agree
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0
+				has_character_modifier = expelled_d_bearded_priests
+			}
+		}
+		
+		hidden_tooltip = {
+			FROMFROM = {
+				province_event = { id = SoA.2154 }
+			}
+			remove_character_modifier = expelled_d_bearded_priests
+		}
+		
+		piety = 200
+		wealth = 100
+	}
+	
+	option = {
+		name = EVTOPTB_SOA_1153 # Refuse
+		ai_chance = {
+			factor = 20
+		}
+		
+		piety = -100
+	}
+}
+
+# Castle has been erected
+province_event = {
+	id = SoA.2154
+	desc = EVTDESC_SOA_2154
+	picture = GFX_evt_castle_construction
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		FROMFROM = {
+			wealth = -300
+		}
+	}
+	
+	option = {
+		name = EVTOPTA_SOA_1024
+		build_holding = {
+		   type = castle
+		   holder = FROMFROM
+		}
+	}
+}
+
+# Ping event when expelling the Bearded Priests
+character_event = {
+	id = SoA.2160
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		any_title_under = {
+			limit = {
+				tier = BARON
+				location = {
+					owner = {
+						OR = {
+							character = FROM
+							is_liege_or_above = FROM
+						}
+					}
+				}
+			}
+			usurp_title = FROM
+		}
+	
+		FROM = {
+			letter_event = {
+				id = SoA.2161
+			}
+		}
+		
+		opinion = {
+			who = FROM
+			modifier = opinion_expelled_from_realm
+		}
+	}
+}
+
+# Notification event when expelling the Bearded Priests
+letter_event = {
+	id = SoA.2161
+	desc = EVTDESC_SOA_2161
+	border = GFX_event_letter_frame_religion
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTB_SOA_1061
+	}
+}
+
+# Spouse notified of divorce due to husband going off to join holy order
+character_event = {
+	id = SoA.2862
+	desc = EVTDESC_SoA_2862
+	picture = GFX_evt_melee
+	border = GFX_event_normal_frame_religion
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ALAS
+		trigger = {
+			opinion = { who = FROMFROMFROM value = 0 }
+		}
+		tooltip = { remove_spouse = FROMFROMFROM }
+	}
+	option = {
+		name = GOOD_RIDDANCE
+		trigger = {
+			NOT = { opinion = { who = FROMFROMFROM value = 0 } }
+		}
+		tooltip = { remove_spouse = FROMFROMFROM }
+	}
+}
+
+# Spouse notified of character joining holy order
+character_event = {
+	id = SoA.2863
+	desc = EVTDESC_SoA_2863
+	picture = GFX_evt_melee
+	border = GFX_event_normal_frame_religion
+
+	is_triggered_only = yes
+	
+	option = {
+		name = ALAS
+		trigger = {
+			opinion = { who = FROM value = 0 }
+		}
+		tooltip = { remove_spouse = FROM }
+	}
+	option = {
+		name = GOOD_RIDDANCE
+		trigger = {
+			NOT = { opinion = { who = FROM value = 0 } }
+		}
+		tooltip = { remove_spouse = FROM }
+	}
+}
+
+# Character joining holy order effects
+character_event = {
+	id = SoA.2864
+	hide_window = yes
+
+	is_triggered_only = yes
+	
+	immediate = {
+		if = {
+			limit = {
+				has_minor_title = title_commander
+			}
+			remove_title = title_commander
+		}
+		if = {
+			limit = {
+				has_minor_title = title_appointed_regent
+			}
+			remove_title = title_appointed_regent
+		}
+		if = {
+			limit = {
+				has_minor_title = title_patrician_heir
+			}
+			remove_title = title_patrician_heir
+		}
+		clear_wealth = event_target:order_target
+		spouse = {
+			remove_spouse = spouse
+			character_event = { id = SoA.2863 }
+		}
+		move_character = event_target:order_target
+		add_trait = celibate
+		end_inaccessibility_effect = yes #removes in_hiding or in_seclusion
+	}
+}

@@ -4,8 +4,8 @@ namespace = JD
 #Matthew Clohessy
 #Milla Isaksson
 
-### Events for aquiring Freehold Artifacts ###
-#An envoy from Freehold appears, hidden event generates the envoy then pings
+### Events for aquiring Chinese Artifacts ###
+#An envoy from China appears, hidden event generates the envoy then pings
 character_event = {
 	id = JD.60000
 	hide_window = yes
@@ -19,13 +19,13 @@ character_event = {
     min_age = 16
 
     trigger = {
-        NOT = { offmap_freehold = { governor = { character = ROOT } } }
+        NOT = { offmap_china = { governor = { character = ROOT } } }
         is_inaccessible_trigger = no
-        freehold_diplo_interaction_trigger = yes
-        offmap_freehold = {
+        china_diplo_interaction_trigger = yes
+        offmap_china = {
             NOR = {
-                has_status = freehold_civil_war
-                has_status = freehold_plague
+                has_status = china_civil_war
+                has_status = china_plague
             }
         }
     }
@@ -34,48 +34,36 @@ character_event = {
 		days = 1
 		modifier = {
 			factor = 0.1
-			any_artifact = { has_artifact_flag = freehold }
+			any_artifact = { has_artifact_flag = chinese }
 		}
         modifier = {
-            offmap_freehold = { has_status = freehold_unrest }
+            offmap_china = { has_status = china_unrest }
             factor = 0.6
         }
         modifier = {
-            offmap_freehold = { has_status = freehold_dothraki_invasion }
+            offmap_china = { has_status = china_mongol_invasion }
             factor = 0.3
         }
         modifier = {
-            offmap_freehold = { has_status = freehold_rhoynish_invasion }
-            factor = 0.3
-        }
-		modifier = {
-            offmap_freehold = { has_status = freehold_ghiscari_invasion }
+            offmap_china = { has_status = china_jurchen_invasion }
             factor = 0.3
         }
         modifier = {
-            offmap_freehold = { has_status = freehold_famine }
-            factor = 0.3
-        }
-		modifier = {
-            offmap_freehold = { has_status = freehold_economic_ruin }
-            factor = 0.3
-        }
-		modifier = {
-            offmap_freehold = { has_status = freehold_internal_purge }
+            offmap_china = { has_status = china_famine }
             factor = 0.3
         }
         modifier = {
-            offmap_freehold = { has_status = freehold_golden_age }
+            offmap_china = { has_status = china_golden_age }
             factor = 3
         }
         modifier = {
-            offmap_freehold = { has_policy = freehold_expansionist }
+            offmap_china = { has_policy = china_expansionist }
             factor = 2
         }
 	}
 	
 	immediate = {
-		offmap_freehold = {
+		offmap_china = {
 			governor = {
 				random_list = {
 					50 = {
@@ -111,13 +99,13 @@ character_event = {
 					}
 				}
 				new_character = {
-					set_character_flag = freehold_envoy_artifacts
+					set_character_flag = chinese_envoy_artifacts
 					random = {
 						chance = 10
 						remove_education_effect = yes
 						add_trait = brilliant_strategist
 						change_martial = 5
-						set_character_flag = freehold_envoy_warrior
+						set_character_flag = chinese_envoy_warrior
 					}
 					character_event = { id = JD.60001 }
 				}
@@ -136,17 +124,17 @@ character_event = {
 		FROM = { character_event = { id = JD.60002 } }
 	}
 }
-#An envoy from Freehold has arrived at your court offering to trade
+#An envoy from China has arrived at your court offering to trade
 character_event = {
 	id = JD.60002
 	has_dlc = "Jade Dragon"
 	desc = {
 		text = EVT_DESC_JD_60002_A
-		trigger = { FROM = { has_character_flag = freehold_envoy_artifacts } }
+		trigger = { FROM = { has_character_flag = chinese_envoy_artifacts } }
 	}
 	desc = { #Envoy from HL.5000
 		text = EVT_DESC_JD_60002_B
-		trigger = { FROM = { has_character_flag = is_freehold_envoy } }
+		trigger = { FROM = { has_character_flag = is_chinese_envoy } }
 	}
     picture = GFX_evt_chinese_bureaucrat
     border = GFX_event_normal_frame_diplomacy
@@ -160,7 +148,7 @@ character_event = {
 			limit = {
 				any_courtier = {
 					NOR = {
-						has_character_flag = originated_from_freehold_court
+						has_character_flag = originated_from_chinese_court
 						has_character_flag = eunuch_gift
 						is_landed = yes
 						is_female = yes
@@ -180,7 +168,7 @@ character_event = {
 						trait = strong
 						trait = genius
 						trait = quick
-						trait = fair
+						has_fair_trait_trigger = yes
 						trait = robust
 						trait = shrewd
 						trait = architect
@@ -203,7 +191,7 @@ character_event = {
 			random_courtier = {
 				limit = {
 					NOR = {
-						has_character_flag = originated_from_freehold_court
+						has_character_flag = originated_from_chinese_court
 						has_character_flag = eunuch_gift
 						is_landed = yes
 						is_female = yes
@@ -223,7 +211,7 @@ character_event = {
 						trait = strong
 						trait = genius
 						trait = quick
-						trait = fair
+						has_fair_trait_trigger = yes
 						trait = robust
 						trait = shrewd
 						trait = architect
@@ -242,7 +230,7 @@ character_event = {
 					is_ill = no
 					is_inaccessible_trigger = no
 				}
-				save_event_target_as = freehold_envoy_eunuch_target
+				save_event_target_as = chinese_envoy_eunuch_target
 			}
 		}
 		#Concubine, same potential as grace decision
@@ -251,7 +239,7 @@ character_event = {
 				any_courtier = {
 					OR = {
 						AND = {
-							offmap_freehold = {
+							offmap_china = {
 								offmap_ruler = {
 									is_female = yes
 								}
@@ -259,7 +247,7 @@ character_event = {
 							is_female = no
 						}
 						AND = {
-							offmap_freehold = {
+							offmap_china = {
 								offmap_ruler = {
 									is_female = no
 								}
@@ -271,7 +259,7 @@ character_event = {
 					is_adult = yes
 					NOT = { age = 45 }
 					NOR = {
-						has_character_flag = originated_from_freehold_court
+						has_character_flag = originated_from_chinese_court
 						is_landed = yes
 						is_betrothed = yes
 						is_married = yes
@@ -290,7 +278,7 @@ character_event = {
 				limit = {
 					OR = {
 						AND = {
-							offmap_freehold = {
+							offmap_china = {
 								offmap_ruler = {
 									is_female = yes
 								}
@@ -298,7 +286,7 @@ character_event = {
 							is_female = no
 						}
 						AND = {
-							offmap_freehold = {
+							offmap_china = {
 								offmap_ruler = {
 									is_female = no
 								}
@@ -310,7 +298,7 @@ character_event = {
 					is_adult = yes
 					NOT = { age = 45 }
 					NOR = {
-						has_character_flag = originated_from_freehold_court
+						has_character_flag = originated_from_chinese_court
 						is_landed = yes
 						is_betrothed = yes
 						is_married = yes
@@ -324,17 +312,17 @@ character_event = {
 					NOT = { trait = wounded }
 					is_inaccessible_trigger = no
 				}
-				save_event_target_as = freehold_envoy_concubine_target
+				save_event_target_as = chinese_envoy_concubine_target
 			}
 		}
 	}
 	
 	option = { #Send a eunuch
 		name = EVT_OPTA_JD_60002
-		trigger = { event_target:freehold_envoy_eunuch_target = { always = yes } }
+		trigger = { event_target:chinese_envoy_eunuch_target = { always = yes } }
 		tooltip_info = yes
 		custom_tooltip = { text = JD_60002_eunuch_tt }
-		event_target:freehold_envoy_eunuch_target = {
+		event_target:chinese_envoy_eunuch_target = {
 			show_scope_change = no
 			hidden_effect = {
 				if = {
@@ -346,20 +334,20 @@ character_event = {
 					add_trait = eunuch
 				}
 			}
-			leave_court_for_freehold_effect = yes
+			leave_court_for_china_effect = yes
 		}
 		if = {
 			limit = {
 				OR = {
 					ROOT = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
-					event_target:freehold_envoy_eunuch_target = {
+					event_target:chinese_envoy_eunuch_target = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
@@ -367,38 +355,38 @@ character_event = {
 				NOR = {
 					ROOT = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
-					event_target:freehold_envoy_eunuch_target = {
+					event_target:chinese_envoy_eunuch_target = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
 				}
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_likes_tt }
 				}
 			}
-			set_character_flag = freehold_envoy_trade_like
+			set_character_flag = chinese_envoy_trade_like
 		}
 		if = {
 			limit = {
 				OR = {
 					ROOT = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
-					event_target:freehold_envoy_eunuch_target = {
+					event_target:chinese_envoy_eunuch_target = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
@@ -406,38 +394,38 @@ character_event = {
 				NOR = {
 					ROOT = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
-					event_target:freehold_envoy_eunuch_target = {
+					event_target:chinese_envoy_eunuch_target = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
 				}
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_dislikes_tt }
 				}
 			}
-			set_character_flag = freehold_envoy_trade_dislike
+			set_character_flag = chinese_envoy_trade_dislike
 		}
 		if = {
 			limit = {
 				OR = {
 					ROOT = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
-					event_target:freehold_envoy_eunuch_target = {
+					event_target:chinese_envoy_eunuch_target = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
@@ -445,19 +433,19 @@ character_event = {
 				OR = {
 					ROOT = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
-					event_target:freehold_envoy_eunuch_target = {
+					event_target:chinese_envoy_eunuch_target = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = eunuch
 						}
 					}
 				}
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_likes_but_dislikes_tt }
@@ -468,25 +456,25 @@ character_event = {
 	}
 	option = { #Send a concubine
 		name = EVT_OPTB_JD_60002
-		trigger = { event_target:freehold_envoy_concubine_target = { always = yes } }
+		trigger = { event_target:chinese_envoy_concubine_target = { always = yes } }
 		tooltip_info = yes
 		custom_tooltip = { text = JD_60002_concubine_tt }
-		event_target:freehold_envoy_concubine_target = {
+		event_target:chinese_envoy_concubine_target = {
 			show_scope_change = no
-			leave_court_for_freehold_effect = yes
+			leave_court_for_china_effect = yes
 		}
 		if = {
 			limit = {
 				OR = {
 					ROOT = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
-					event_target:freehold_envoy_concubine_target = {
+					event_target:chinese_envoy_concubine_target = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
@@ -494,38 +482,38 @@ character_event = {
 				NOR = {
 					ROOT = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
-					event_target:freehold_envoy_concubine_target = {
+					event_target:chinese_envoy_concubine_target = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
 				}
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_likes_tt }
 				}
 			}
-			set_character_flag = freehold_envoy_trade_like
+			set_character_flag = chinese_envoy_trade_like
 		}
 		if = {
 			limit = {
 				OR = {
 					ROOT = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
-					event_target:freehold_envoy_concubine_target = {
+					event_target:chinese_envoy_concubine_target = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
@@ -533,38 +521,38 @@ character_event = {
 				NOR = {
 					ROOT = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
-					event_target:freehold_envoy_concubine_target = {
+					event_target:chinese_envoy_concubine_target = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
 				}
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_dislikes_tt }
 				}
 			}
-			set_character_flag = freehold_envoy_trade_dislike
+			set_character_flag = chinese_envoy_trade_dislike
 		}
 		if = {
 			limit = {
 				OR = {
 					ROOT = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
-					event_target:freehold_envoy_concubine_target = {
+					event_target:chinese_envoy_concubine_target = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
@@ -572,19 +560,19 @@ character_event = {
 				OR = {
 					ROOT = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
-					event_target:freehold_envoy_concubine_target = {
+					event_target:chinese_envoy_concubine_target = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = concubine
 						}
 					}
 				}
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_likes_but_dislikes_tt }
@@ -597,8 +585,8 @@ character_event = {
 		name = EVT_OPTC_JD_60002
 		trigger = { 
 			NOR = {
-				event_target:freehold_envoy_eunuch_target = { always = yes }
-				event_target:freehold_envoy_concubine_target = { always = yes }
+				event_target:chinese_envoy_eunuch_target = { always = yes }
+				event_target:chinese_envoy_concubine_target = { always = yes }
 			}
 		}
 		scaled_wealth = { value = -2 min = -200 }
@@ -606,68 +594,68 @@ character_event = {
 			limit = {
 				ROOT = {
 					liked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 						context = wealth
 					}
 				}
 				NOT = {
 					ROOT = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = wealth
 						}
 					}
 				}
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_likes_tt }
 				}
 			}
-			set_character_flag = freehold_envoy_trade_like
+			set_character_flag = chinese_envoy_trade_like
 		}
 		if = {
 			limit = {
 				ROOT = {
 					disliked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 						context = wealth
 					}
 				}
 				NOT = {
 					ROOT = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 							context = wealth
 						}
 					}
 				}
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_dislikes_tt }
 				}
 			}
-			set_character_flag = freehold_envoy_trade_dislike
+			set_character_flag = chinese_envoy_trade_dislike
 		}
 		if = {
 			limit = {
 				ROOT = {
 					liked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 						context = wealth
 					}
 				}
 				ROOT = {
 					disliked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 						context = wealth
 					}
 				}
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_likes_but_dislikes_tt }
@@ -681,36 +669,36 @@ character_event = {
 		prestige = -150
 		if = {
 			limit = {
-				ROOT = { liked_by_offmap = { type = offmap_freehold } }
-				NOT = { ROOT = { disliked_by_offmap = { type = offmap_freehold } } }
+				ROOT = { liked_by_offmap = { type = offmap_china } }
+				NOT = { ROOT = { disliked_by_offmap = { type = offmap_china } } }
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_likes_tt }
 				}
 			}
-			set_character_flag = freehold_envoy_trade_like
+			set_character_flag = chinese_envoy_trade_like
 		}
 		if = {
 			limit = {
-				ROOT = { disliked_by_offmap = { type = offmap_freehold } }
-				NOT = { ROOT = { liked_by_offmap = { type = offmap_freehold } } }
+				ROOT = { disliked_by_offmap = { type = offmap_china } }
+				NOT = { ROOT = { liked_by_offmap = { type = offmap_china } } }
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_dislikes_tt }
 				}
 			}
-			set_character_flag = freehold_envoy_trade_dislike
+			set_character_flag = chinese_envoy_trade_dislike
 		}
 		if = {
 			limit = {
-				ROOT = { liked_by_offmap = { type = offmap_freehold } }
-				ROOT = { disliked_by_offmap = { type = offmap_freehold } }
+				ROOT = { liked_by_offmap = { type = offmap_china } }
+				ROOT = { disliked_by_offmap = { type = offmap_china } }
 			}
-			e_valyrian_freehold = {
+			e_china_west_governor = {
 				offmap_power = {
 					show_scope_change = no
 					custom_tooltip = { text = JD_60002_likes_but_dislikes_tt }
@@ -719,8 +707,8 @@ character_event = {
 		}
 		hidden_effect = {
 			random_list = {
-				8 = { set_character_flag = freehold_envoy_feast_good }
-				2 = { set_character_flag = freehold_envoy_feast_bad }
+				8 = { set_character_flag = chinese_envoy_feast_good }
+				2 = { set_character_flag = chinese_envoy_feast_bad }
 			}
 		}
 		character_event = { id = JD.60003 days = 1 }
@@ -731,9 +719,9 @@ character_event = {
 		hidden_effect = { 
 			if = { 
 				limit = { 
-					FROM = { has_character_flag = freehold_envoy_artifacts }
+					FROM = { has_character_flag = chinese_envoy_artifacts }
 				}
-				FROM = { death = { death_reason = death_went_back_to_freehold } }
+				FROM = { death = { death_reason = death_went_back_to_china } }
 			}
 		}
 	}
@@ -746,18 +734,18 @@ character_event = {
 		text = EVT_DESC_JD_60003_A
 		trigger = { 
 			NOR = {
-				has_character_flag = freehold_envoy_feast_good
-				has_character_flag = freehold_envoy_feast_bad
+				has_character_flag = chinese_envoy_feast_good
+				has_character_flag = chinese_envoy_feast_bad
 			}
 		}
 	}
 	desc = {
 		text = EVT_DESC_JD_60003_B
-		trigger = { has_character_flag = freehold_envoy_feast_good }
+		trigger = { has_character_flag = chinese_envoy_feast_good }
 	}
 	desc = {
 		text = EVT_DESC_JD_60003_C
-		trigger = { has_character_flag = freehold_envoy_feast_bad }
+		trigger = { has_character_flag = chinese_envoy_feast_bad }
 	}
     picture = GFX_evt_china_diplomatic_success
     border = GFX_event_normal_frame_diplomacy
@@ -766,7 +754,7 @@ character_event = {
 	
 	immediate = {
 		if = {
-			limit = { has_character_flag = freehold_envoy_feast_bad }
+			limit = { has_character_flag = chinese_envoy_feast_bad }
 			break = yes
 		}
 		#Spawn artifacts in a character with the current Emperor's culture and religion so loc reffering that stays static and then transfer to intended owner.
@@ -778,103 +766,103 @@ character_event = {
 				}
 				modifier = {
 					factor = 3
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 				}
 				modifier = {
 					factor = 0.3
-					has_character_flag = freehold_envoy_trade_dislike
+					has_character_flag = chinese_envoy_trade_dislike
 				}
 				add_artifact = jade_dragon
 				new_artifact = {
-					save_event_target_as = freehold_envoy_artifact
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			15 = { 
 				modifier = {
 					factor = 0
-					has_artifact = freehold_dragon_amulet
+					has_artifact = chinese_dragon_amulet
 				}
 				modifier = {
 					factor = 3
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 				}
 				modifier = {
 					factor = 0.3
-					has_character_flag = freehold_envoy_trade_dislike
+					has_character_flag = chinese_envoy_trade_dislike
 				}
-				add_artifact = freehold_dragon_amulet
+				add_artifact = chinese_dragon_amulet
 				new_artifact = {
-					save_event_target_as = freehold_envoy_artifact
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			40 = {
 				modifier = {
 					factor = 0
-					has_artifact = freehold_artwork
+					has_artifact = chinese_artwork
 				}
 				modifier = {
 					factor = 0.3
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 				}
-				add_artifact = freehold_artwork
+				add_artifact = chinese_artwork
 				new_artifact = {
-					set_name="freehold_artwork_name"
-					save_event_target_as = freehold_envoy_artifact
+					set_name="chinese_artwork_name"
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			40 = { 
 				modifier = {
 					factor = 0
-					has_artifact = freehold_calligraphy
+					has_artifact = chinese_calligraphy
 				}
 				modifier = {
 					factor = 0.3
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 				}
-				add_artifact = freehold_calligraphy
+				add_artifact = chinese_calligraphy
 				new_artifact = {
-					set_name="freehold_calligraphy_name"
-					save_event_target_as = freehold_envoy_artifact
+					set_name="chinese_calligraphy_name"
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			40 = { 
 				modifier = {
 					factor = 0
-					has_artifact = freehold_sculpture
+					has_artifact = chinese_sculpture
 				}
 				modifier = {
 					factor = 0.3
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 				}
-				add_artifact = freehold_sculpture
+				add_artifact = chinese_sculpture
 				new_artifact = {
-					set_name="freehold_sculpture_name"
-					save_event_target_as = freehold_envoy_artifact
+					set_name="chinese_sculpture_name"
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			20 = { 
 				modifier = {
 					factor = 0
-					has_artifact = freehold_ceremonial_robes
+					has_artifact = chinese_ceremonial_robes
 				}
 				modifier = {
 					factor = 3
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 				}
 				modifier = {
 					factor = 0.3
-					has_character_flag = freehold_envoy_trade_dislike
+					has_character_flag = chinese_envoy_trade_dislike
 				}
-				add_artifact = freehold_ceremonial_robes
+				add_artifact = chinese_ceremonial_robes
 				new_artifact = {
-					save_event_target_as = freehold_envoy_artifact
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			20 = { 
 				trigger = { 
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 					NOT = { martial <= 10 }
-					FROMFROM = { has_character_flag = freehold_envoy_warrior }
+					FROMFROM = { has_character_flag = chinese_envoy_warrior }
 				}
 				modifier = {
 					factor = 0.1
@@ -898,7 +886,7 @@ character_event = {
 				}
 				add_artifact = art_of_war
 				new_artifact = {
-					save_event_target_as = freehold_envoy_artifact
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			20 = { 
@@ -908,15 +896,15 @@ character_event = {
 				}
 				modifier = {
 					factor = 3
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 				}
 				modifier = {
 					factor = 0.3
-					has_character_flag = freehold_envoy_trade_dislike
+					has_character_flag = chinese_envoy_trade_dislike
 				}
 				add_artifact = silk_shroud
 				new_artifact = {
-					save_event_target_as = freehold_envoy_artifact
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			15 = { 
@@ -926,15 +914,15 @@ character_event = {
 				}
 				modifier = {
 					factor = 3
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 				}
 				modifier = {
 					factor = 0.3
-					has_character_flag = freehold_envoy_trade_dislike
+					has_character_flag = chinese_envoy_trade_dislike
 				}
 				add_artifact = water_clock
 				new_artifact = {
-					save_event_target_as = freehold_envoy_artifact
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			15 = { 
@@ -944,15 +932,15 @@ character_event = {
 				}
 				modifier = {
 					factor = 3
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 				}
 				modifier = {
 					factor = 0.3
-					has_character_flag = freehold_envoy_trade_dislike
+					has_character_flag = chinese_envoy_trade_dislike
 				}
 				add_artifact = jian_sword
 				new_artifact = {
-					save_event_target_as = freehold_envoy_artifact
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			10 = { 
@@ -962,22 +950,22 @@ character_event = {
 				}
 				modifier = {
 					factor = 3
-					has_character_flag = freehold_envoy_trade_like
+					has_character_flag = chinese_envoy_trade_like
 				}
 				modifier = {
 					factor = 0.3
-					has_character_flag = freehold_envoy_trade_dislike
+					has_character_flag = chinese_envoy_trade_dislike
 				}
 				add_artifact = classic_of_poetry
 				new_artifact = {
-					save_event_target_as = freehold_envoy_artifact
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 			1 = {
-				add_artifact = freehold_prev_emperor_sculpture
+				add_artifact = chinese_prev_emperor_sculpture
 				new_artifact = {
-					set_name="freehold_figurine_name"
-					save_event_target_as = freehold_envoy_artifact
+					set_name="chinese_figurine_name"
+					save_event_target_as = chinese_envoy_artifact
 				}
 			}
 		}
@@ -986,10 +974,10 @@ character_event = {
 	option = {
 		name = EVT_OPTA_JD_60003
 		trigger = { 
-			NOT = { has_character_flag = freehold_envoy_feast_bad }
-			event_target:freehold_envoy_artifact = { has_artifact_flag = decor }
+			NOT = { has_character_flag = chinese_envoy_feast_bad }
+			event_target:chinese_envoy_artifact = { has_artifact_flag = decor }
 		}
-		sound_effect = freehold_grace_gain
+		sound_effect = china_grace_gain
 		custom_tooltip = {
 			text = artifact_added_tt
 		}
@@ -998,10 +986,10 @@ character_event = {
 	option = {
 		name = EVT_OPTB_JD_60003
 		trigger = { 
-			NOT = { has_character_flag = freehold_envoy_feast_bad }
-			NOT = { event_target:freehold_envoy_artifact = { has_artifact_flag = decor } }
+			NOT = { has_character_flag = chinese_envoy_feast_bad }
+			NOT = { event_target:chinese_envoy_artifact = { has_artifact_flag = decor } }
 		}
-		sound_effect = freehold_grace_gain
+		sound_effect = china_grace_gain
 		custom_tooltip = {
 			text = artifact_added_tt
 		}
@@ -1009,21 +997,21 @@ character_event = {
 	}
 	option = {
 		name = EVT_OPTC_JD_60003
-		trigger = { has_character_flag = freehold_envoy_feast_bad }
+		trigger = { has_character_flag = chinese_envoy_feast_bad }
 		detract_grace_minor_effect = yes
 	}
 	
 	after = {
-		clr_character_flag = freehold_envoy_trade_like
-		clr_character_flag = freehold_envoy_trade_dislike
-		clr_character_flag = freehold_envoy_feast_good
-		clr_character_flag = freehold_envoy_feast_bad
+		clr_character_flag = chinese_envoy_trade_like
+		clr_character_flag = chinese_envoy_trade_dislike
+		clr_character_flag = chinese_envoy_feast_good
+		clr_character_flag = chinese_envoy_feast_bad
 		hidden_effect = { 
 			if = {
 				limit = {
-					FROMFROM = { has_character_flag = freehold_envoy_artifacts }
+					FROMFROM = { has_character_flag = chinese_envoy_artifacts }
 				}
-				FROMFROM = { death = { death_reason = death_went_back_to_freehold } }
+				FROMFROM = { death = { death_reason = death_went_back_to_china } }
 			}
 		}
 	}
@@ -1041,7 +1029,7 @@ character_event = {
 	
 	immediate = {
 		#Spawn artifacts in a character with the current Emperor's culture and religion so loc reffering that stays static and then transfer to intended owner.
-		offmap_freehold = {
+		offmap_china = {
 			governor = {
 				random_list = {
 					5 = { 
@@ -1055,82 +1043,82 @@ character_event = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 					15 = { 
 						modifier = {
 							factor = 0.1
-							ROOT = { has_artifact = freehold_dragon_amulet }
+							ROOT = { has_artifact = chinese_dragon_amulet }
 						}
-						add_artifact = freehold_dragon_amulet
+						add_artifact = chinese_dragon_amulet
 						new_artifact = {
 							transfer_artifact = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 					40 = {
 						modifier = {
 							factor = 0.1
-							ROOT = { has_artifact = freehold_artwork }
+							ROOT = { has_artifact = chinese_artwork }
 						}
-						add_artifact = freehold_artwork
+						add_artifact = chinese_artwork
 						new_artifact = {
 							transfer_artifact = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 					40 = { 
 						modifier = {
 							factor = 0.1
-							ROOT = { has_artifact = freehold_calligraphy }
+							ROOT = { has_artifact = chinese_calligraphy }
 						}
-						add_artifact = freehold_calligraphy
+						add_artifact = chinese_calligraphy
 						new_artifact = {
 							transfer_artifact = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 					40 = { 
 						modifier = {
 							factor = 0.1
-							ROOT = { has_artifact = freehold_sculpture }
+							ROOT = { has_artifact = chinese_sculpture }
 						}
-						add_artifact = freehold_sculpture
+						add_artifact = chinese_sculpture
 						new_artifact = {
 							transfer_artifact = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 					20 = { 
 						modifier = {
 							factor = 0.1
-							ROOT = { has_artifact = freehold_ceremonial_robes }
+							ROOT = { has_artifact = chinese_ceremonial_robes }
 						}
-						add_artifact = freehold_ceremonial_robes
+						add_artifact = chinese_ceremonial_robes
 						new_artifact = {
 							transfer_artifact = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 					20 = { 
 						trigger = { 
-							event_target:freehold_guest = { has_job_title = job_marshal }
+							event_target:chinese_guest = { has_job_title = job_marshal }
 						}
 						modifier = {
 							factor = 0.1
@@ -1158,7 +1146,7 @@ character_event = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 					20 = { 
@@ -1172,7 +1160,7 @@ character_event = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 					15 = { 
@@ -1186,7 +1174,7 @@ character_event = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 					15 = { 
@@ -1200,7 +1188,7 @@ character_event = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 					10 = { 
@@ -1214,7 +1202,7 @@ character_event = {
 								from = PREV
 								to = ROOT
 							}
-							save_event_target_as = freehold_envoy_artifact
+							save_event_target_as = chinese_envoy_artifact
 						}
 					}
 				}
@@ -1225,14 +1213,14 @@ character_event = {
 	option = {
 		name = EVT_OPTA_JD_60003
 		trigger = { 
-			event_target:freehold_envoy_artifact = { has_artifact_flag = decor }
+			event_target:chinese_envoy_artifact = { has_artifact_flag = decor }
 		}
-		sound_effect = freehold_grace_gain
+		sound_effect = china_grace_gain
 		tooltip = { 
-			event_target:freehold_envoy_artifact = { 
+			event_target:chinese_envoy_artifact = { 
 				show_scope_change = no
 				transfer_artifact = {
-					from = event_target:freehold_guest
+					from = event_target:chinese_guest
 					to = ROOT
 				}
 			}
@@ -1242,14 +1230,14 @@ character_event = {
 	option = {
 		name = EVT_OPTB_JD_60003
 		trigger = { 
-			NOT = { event_target:freehold_envoy_artifact = { has_artifact_flag = decor } }
+			NOT = { event_target:chinese_envoy_artifact = { has_artifact_flag = decor } }
 		}
-		sound_effect = freehold_grace_gain
+		sound_effect = china_grace_gain
 		tooltip = { 
-			event_target:freehold_envoy_artifact = { 
+			event_target:chinese_envoy_artifact = { 
 				show_scope_change = no
 				transfer_artifact = {
-					from = event_target:freehold_guest
+					from = event_target:chinese_guest
 					to = ROOT
 				}
 			}
@@ -1663,8 +1651,14 @@ character_event = {
         if = {
         	limit = {
         		OR = {
-	        		NOT = { diplomacy = 5 }
-	        		NOT = { intrigue = 5 }
+        			calc_true_if = { 
+						amount = 3
+		        		NOT = { diplomacy = 8 }
+	        			NOT = { martial = 8 }
+	        			NOT = { intrigue = 8 }
+	        			NOT = { stewardship = 8 }
+	        			NOT = { learning = 8 }
+        			}
 	        		is_dumb_trigger = yes
 	        		has_bottom_tier_education_trait_trigger = yes
         		}
@@ -1674,10 +1668,15 @@ character_event = {
         if = {
         	limit = {
 	        	OR = {
-					diplomacy = 8
-	        		intrigue = 8
+	        		calc_true_if = { 
+						amount = 3
+		        		diplomacy = 12
+	        			martial = 12
+	        			intrigue = 12
+	        			stewardship = 12
+	        			learning = 12
+	        		}
 					has_medium_education_trait_trigger = yes
-					trait = proud
 	        	}
         	}
 			set_character_flag = good_book_potential
@@ -1685,11 +1684,16 @@ character_event = {
         if = {
         	limit = {
         		OR = {
-        			diplomacy = 15
-        			intrigue = 15
-					trait = elusive_shadow
-					trait = grey_eminence
+        			calc_true_if = { 
+						amount = 3
+        				diplomacy = 20
+	        			martial = 20
+	        			intrigue = 20
+	        			stewardship = 20
+	        			learning = 20
+	        		}
         			is_smart_trigger = yes
+					has_top_tier_education_trait_trigger = yes
         		}
         	}
 			set_character_flag = great_book_potential
@@ -1772,7 +1776,7 @@ character_event = { #Progress event type 1!  #invest more time/money/hire scribe
     desc = {
     	text = EVTDESC_JD_10061_B
     	trigger = {
-    		job_chancellor = { NOT = { is_alive = yes } }
+    		NOT = { job_chancellor = { is_alive = yes } }
     	}
     }
 
@@ -2094,9 +2098,17 @@ character_event = { #Progress event type 3!  #deal with writer's block (risk doi
         name = EVTOPTA_JD_10063
         custom_tooltip = { text = EVTOPTA_JD_10063_TT }
 
-        random = {
-			chance = 25
-        	add_maimed_trait_effect = yes
+        random_list = {
+        	45 = {
+        		add_trait = wounded
+				hidden_tooltip = { character_event = { id = 38280 } }
+        	}
+        	5 = {
+        		add_maimed_trait_effect = yes
+        	}
+        	55 = {
+        		#Nothing happens!
+        	}
 		}
 		custom_tooltip = { text = higher_quality_of_book_TT }
 		set_higher_quality_of_book_flags_effect = yes
@@ -2104,11 +2116,15 @@ character_event = { #Progress event type 3!  #deal with writer's block (risk doi
     option = { # Drink something poisonous...?
         name = EVTOPTB_JD_10063
         custom_tooltip = { text = EVTOPTB_JD_10063_TT }
-        random = {
-			chance = 90
-	 		add_trait = vomiting
-			set_character_flag = disease_not_serious
-	 		hidden_effect = { character_event = { id = RIP.11005 days = 10 random = 30 } }
+        random_list = {
+        	99 = {
+		 		add_trait = vomiting
+				set_character_flag = disease_not_serious
+		 		hidden_effect = { character_event = { id = HFP.14005 days = 10 random = 30 } } #remove vomiting
+        	}
+			1 = {
+				death = { death_reason = death_drank_poison }
+			}
 		}
 
 		show_portrait = event_target:my_doctor
@@ -2157,20 +2173,6 @@ character_event = { #Progress event type 4!  #stay up all night or not
     desc = {
     	text = EVTDESC_JD_10064_dynasty
     	trigger = { has_character_flag = writing_about_dynasty }
-    }
-
-    immediate = {
-    	hidden_effect = {
-	    	if = {
-	    		limit = {
-	    			any_courtier_or_vassal = { has_minor_title = title_court_physician }
-	    		}
-	    		random_courtier_or_vassal = {
-	    			limit = { has_minor_title = title_court_physician }
-	    			save_event_target_as = my_doctor
-	    		}
-	    	}
-    	}
     }
 
     option = { # Stay up all night
@@ -2337,8 +2339,20 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
     }
 
     immediate = {
-    	#Evaluates how it's gone, from stats, traits, and choices. The flags unlock quality-level of book (or eliminates a level). Relevant event_targets (spouse/lover?) are saved, for loc (custom book names and descs) and opinion bonuses.
     	hidden_effect = {
+    		#Fallback in case flags have cleared somehow...
+			if = {
+				limit = {
+					NOR = {
+						has_character_flag = decent_book_potential
+		        		has_character_flag = good_book_potential
+		        		has_character_flag = great_book_potential
+					}
+				}
+				set_character_flag = decent_book_potential
+			}
+
+	    	#Evaluates how it's gone, from stats, traits, and choices. The flags unlock quality-level of book (or eliminates a level). Relevant event_targets (spouse/lover?) are saved, for loc (custom book names and descs) and opinion bonuses.
 	    	trigger_switch = {
 	    		on_trigger = has_character_flag
 	    		writing_about_battle = {
@@ -2357,7 +2371,10 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 							}
 							additive_modifier = {
 								value = 10
-								NOT = { combat_rating = 1 }
+								OR = {
+									is_the_worst_duelist_trigger = yes
+									is_terrible_duelist_trigger = yes
+								}
 							}
 							additive_modifier = {
 								value = 10
@@ -2415,11 +2432,7 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 	    					}
 	    					additive_modifier = {
 								value = 10
-								NOT = { combat_rating = 3 }
-							}
-							additive_modifier = {
-								value = 10
-								NOT = { combat_rating = 3 }
+								duelist_skill_is_medium_group_trigger = yes
 							}
 							additive_modifier = {
 								value = 10
@@ -2557,15 +2570,15 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 							}
 							additive_modifier = {
 								value = 10
-								combat_rating = 1
+								duelist_skill_is_high_group_trigger = yes
+							}
+							additive_modifier = {
+								value = 10
+								is_the_best_duelist_trigger = yes
 							}
 							additive_modifier = {
 								value = 10
 								NOT = { can_have_more_leadership_traits = yes }
-							}
-							additive_modifier = {
-								value = 10
-								combat_rating = 3
 							}
 							additive_modifier = {
 								value = 10
@@ -3267,30 +3280,30 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 			    						}
 			    					}
 			    				}
-			    				# 10 = {
-			    					# add_artifact = kama_sutra
-			    					# trigger = {
-			    						# OR = {
-			    							# AND = {
-				    							# trait = lustful
-				    							# trait = hedonist		    							
-			    							# }
-			    							# trait = seducer
-			    							# trait = seductress
-			    						# }
-			    						# culture_group = indo_aryan_group
-			    						# NOT = {
-											# any_artifact = {
-												# artifact_type = kama_sutra
-											# }
-										# }
-			    					# }
-			    				# }
+			    				10 = {
+			    					add_artifact = kama_sutra
+			    					trigger = {
+			    						OR = {
+			    							AND = {
+				    							trait = lustful
+				    							trait = hedonist		    							
+			    							}
+			    							trait = seducer
+			    							trait = seductress
+			    						}
+			    						culture_group = indo_aryan_group
+			    						NOT = {
+											any_artifact = {
+												artifact_type = kama_sutra
+											}
+										}
+			    					}
+			    				}
 			    				10 = {
 			    					add_artifact = the_art_of_love
 			    					if = {
 			    						limit = {
-			    							culture_group = valyrian
+			    							culture_group = latin
 			    						}
 			    						new_artifact = { set_name = the_art_of_love_rename_1 }
 			    					}
@@ -3412,6 +3425,7 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 										value = 20
 										OR = {
 											trait = viking
+											trait = pirate
 											trait = ravager
 											trait = seaking
 											trait = sea_queen
@@ -3492,8 +3506,11 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 											}
 										}
 										OR = {
-											religion = the_seven
-											religion = old_gods
+											religion = catholic							
+											religion = orthodox
+											religion = nestorian
+											religion = sunni
+											religion = shiite
 										}
 										rightful_religious_head_scope = { always = yes }
 			    					}
@@ -3602,7 +3619,7 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 									}
 									additive_modifier = {
 										value = 10
-										trait = fair
+										has_fair_trait_trigger = yes
 									}
 									trigger = {
 										NOT = {
@@ -3638,6 +3655,7 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 												original_owner = { character = ROOT }
 											}
 										}
+										NOT = { religion = jain }
 									}
 			    				}
 			    				10 = {
@@ -3852,6 +3870,56 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 			    					add_artifact = good_cookbook
 			    				}
 			    				10 = {
+			    					add_artifact = cookbook_3_roman
+			    					new_artifact = {
+			    						set_description = cookbook_3_roman_desc_rename
+			    					}
+			    					trigger = {
+			    						culture_group = latin
+			    						NOT = {
+				    						any_artifact = {
+												artifact_type = cookbook_3_roman
+											}
+										}
+			    					}
+			    				}
+			    				10 = {
+			    					add_artifact = cookbook_3_arabic
+			    					trigger = {
+			    						culture_group = arabic
+			    						NOT = {
+				    						any_artifact = {
+												artifact_type = cookbook_3_arabic
+											}
+										}
+			    					}
+			    				}
+			    				10 = {
+			    					add_artifact = cookbook_3_chinese_group
+			    					trigger = {
+			    						culture_group = chinese_group
+			    						NOT = {
+				    						any_artifact = {
+												artifact_type = cookbook_3_chinese_group
+											}
+										}
+			    					}
+			    				}
+			    				10 = {
+			    					add_artifact = cookbook_3_central_german
+			    					new_artifact = {
+			    						set_description = cookbook_3_central_german_desc_rename
+			    					}
+			    					trigger = {
+			    						culture_group = central_germanic
+			    						NOT = {
+				    						any_artifact = {
+												artifact_type = cookbook_3_central_german
+											}
+										}
+			    					}
+			    				}
+			    				10 = {
 			    					add_artifact = on_culture_architecture
 			    					additive_modifier = {
 										value = 10
@@ -3993,7 +4061,8 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 			    					trigger = {
 			    						OR = {
 			    							is_monastic_member_trigger = yes
-			    							religion_group = the_seven
+			    							religion_group = christian
+			    							religion_group = indian_group
 			    						}
 			    						NOT = {
 											any_artifact = {
@@ -4088,10 +4157,10 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 										value = 10
 										is_impious_trigger = yes
 									}
-									# additive_modifier = {
-										# value = 10
-										# is_devil_worshiper_trigger = yes
-									# }
+									additive_modifier = {
+										value = 10
+										is_devil_worshiper_trigger = yes
+									}
 									additive_modifier = {
 										value = 10
 										age = 60
@@ -4301,7 +4370,7 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 												original_owner = { character = ROOT }
 											}
 										}
-										religion = old_gods
+										religion_group = pagan_group
 									}
 			    				}
 			    				10 = {
@@ -4401,7 +4470,7 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 										has_education_learning_trigger = yes
 									}
 			    					trigger = {
-			    						# culture_group = arabic
+			    						culture_group = arabic
 			    						NOT = {
 											any_artifact = {
 												artifact_type = the_book_of_healing
@@ -4612,10 +4681,115 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
 									}
 			    				}
 			    				10 = {
+			    					add_artifact = the_legendary_dynasty_warrior #about you!
+			    					new_artifact = {
+			    						set_name = the_legendary_dynasty_warrior_root
+			    					}
+			    					additive_modifier = {
+										value = 10
+										trait = brave
+									}
+									additive_modifier = {
+										value = 10
+										is_member_of_any_warrior_lodge_trigger = yes
+									}
+									additive_modifier = {
+										value = 10
+										prestige = 500
+									}
+									trigger = {
+										any_owned_bloodline = {
+											has_bloodline_flag = legendary_warrior_lodge_bloodline
+											founder = { character = ROOT }
+										}
+			    						NOT = {
+											any_artifact = {
+												artifact_type = the_legendary_dynasty_warrior
+												original_owner = { character = ROOT }
+											}
+										}
+									}
+			    				}
+			    				10 = {
+			    					random_owned_bloodline = {
+			    						limit = { has_bloodline_flag = legendary_warrior_lodge_bloodline }
+				    					founder = { save_event_target_as = warrior_relative }
+				    				}
+			    					add_artifact = the_legendary_dynasty_warrior #about a relative
+			    					new_artifact = {
+			    						set_name = the_legendary_dynasty_warrior_not_root
+			    						set_description = the_legendary_dynasty_warrior_desc_not_root
+			    					}
+			    					additive_modifier = {
+										value = 10
+										trait = brave
+									}
+									additive_modifier = {
+										value = 10
+										is_member_of_any_warrior_lodge_trigger = yes
+									}
+									additive_modifier = {
+										value = 10
+										prestige = 500
+									}
+									trigger = {
+										any_owned_bloodline = {
+											has_bloodline_flag = legendary_warrior_lodge_bloodline
+											founder = { NOT = { character = ROOT } }
+										}
+			    						NOT = {
+											any_artifact = {
+												artifact_type = the_legendary_dynasty_warrior
+												original_owner = { character = ROOT }
+											}
+										}
+									}
+			    				}
+			    				10 = {
+			    					random_owned_bloodline = {
+			    						limit = { has_bloodline_flag = saintly_bloodline }
+				    					founder = { save_event_target_as = saintly_relative }
+				    				}
+			    					add_artifact = the_saintly_relative
+			    					new_artifact = {
+			    						set_name = the_saintly_relative_1 #contains event-target, so need to be "set"
+			    						set_description = the_saintly_relative_desc
+			    					}
+
+			    					additive_modifier = {
+										value = 10
+										trait = zealous
+									}
+									additive_modifier = {
+										value = 10
+										is_christian_monastic_member_trigger = yes
+									}
+									additive_modifier = {
+										value = 10
+										trait = celibate
+									}
+									trigger = {
+										any_owned_bloodline = {
+											has_bloodline_flag = saintly_bloodline
+											founder = { religion = ROOT }
+										}
+			    						NOT = {
+											any_artifact = {
+												artifact_type = the_saintly_relative
+												original_owner = { character = ROOT }
+											}
+										}
+									}
+			    				}
+			    				10 = {
 			    					add_artifact = the_secret_history_of_culture
 			    					additive_modifier = {
 										value = 10
 										trait = proud
+									}
+									additive_modifier = {
+										value = 10
+										culture = mongol
 									}
 									trigger = {
 			    						NOT = {
@@ -4767,7 +4941,7 @@ character_event = { #Outcome: Book is finished! It went Great/Good/Decent!
     			}
     			reverse_opinion = {
 					who = event_target:dedication_target
-					modifier = opinion_flattered
+					modifier = opinion_strangely_flattered
 					years = 20
 				}
     		}
@@ -4906,7 +5080,7 @@ character_event = {
 }
 
 
-### A Freehold Prince/Princess has died - Sends event to spouse or child ### (fired from on_death)
+### A Chinese Prince/Princess has died - Sends event to spouse or child ### (fired from on_death)
 character_event = { #
     id = JD.10080
     is_triggered_only = yes
@@ -4915,11 +5089,20 @@ character_event = { #
 
     trigger = {
         NOT = {
-	        offmap_freehold = {
-	        	has_policy = freehold_isolationist
+	        offmap_china = {
+	        	has_policy = china_isolationist
 	        }
 		}
-    	death_murder_known_trigger = no #broad check to make sure Freehold doesn't know they were actually murdered by you
+    	NAND = {
+	    	killer = { character = liege }
+			OR = { #make sure China doesn't know they were actually murdered by you
+				death_murder_known_trigger = yes
+				death_execution_trigger = yes
+				death_sacrificed_trigger = yes
+				death_reason = death_duel
+				death_reason = death_dungeon
+			}
+    	}
     	OR = {
     		has_character_modifier = jd_prince
     		has_character_modifier = jd_princess
@@ -4942,17 +5125,17 @@ character_event = { #
 				root_has_terrible_opinion_modifier_of_this_trigger = no
 			}
     	}
-    	had_character_flag = { flag = originated_from_freehold_court days = 1825 } #If less, the regular "grace refund" event will fire instead
+    	had_character_flag = { flag = originated_from_chinese_court days = 1825 } #If less, the regular "grace refund" event will fire instead
     }
 
     immediate = {
-		offmap_freehold = {
+		offmap_china = {
 			governor = {
 				save_event_target_as = the_protector_general
 			}    			
 		}
     	random_list = {
-    		40 = { #Freehold sends their condolences...
+    		40 = { #China sends their condolences...
     			random_spouse = {
     				limit = {
     					ai = no
@@ -4997,7 +5180,7 @@ character_event = { #
     				}
     			}
     			trigger = {
-    				offmap_freehold = {
+    				offmap_china = {
     					offmap_ruler = {
     						dynasty = ROOT
     					}
@@ -5021,12 +5204,12 @@ character_event = { #
     				}
     			}
     		}
-    		30 = { #Freehold sends you an artifact
-				add_freehold_artifact_effect = yes
+    		30 = { #China sends you an artifact
+				add_chinese_artifact_effect = yes
 
 				while = { #runs until it finds an appropriate artifact...
 					limit = {
-						event_target:freehold_artifact = {
+						event_target:chinese_artifact = {
 							NOR = {
 								has_artifact_flag = decor
 								has_artifact_flag = statue
@@ -5036,13 +5219,15 @@ character_event = { #
 							}
 						}
 					}
-					destroy_artifact = event_target:freehold_artifact
-					add_freehold_artifact_effect = yes
+					event_target:chinese_artifact = {
+						destroy_artifact = yes
+					}
+					add_chinese_artifact_effect = yes
 				}
 				
-				event_target:freehold_artifact = {
-					set_name = the_freehold_royals_favorite
-					set_description = the_freehold_royals_favorite_desc
+				event_target:chinese_artifact = {
+					set_name = the_chinese_royals_favorite
+					set_description = the_chinese_royals_favorite_desc
 					set_artifact_flag = royal_inheritance_gift@ROOT
 					transfer_artifact = {
 						from = PREV
@@ -5094,7 +5279,7 @@ character_event = { #
     				}
     			}
     			trigger = {
-					offmap_freehold = {
+					offmap_china = {
 						offmap_ruler = {
 							dynasty = ROOT
 						}
@@ -5119,14 +5304,14 @@ character_event = { #
     			}
     		}
     		15 = { #You find a personal diary...
-				add_artifact = freehold_journal
+				add_artifact = chinese_journal
 
 				new_artifact = {
-					save_event_target_as = freehold_artifact
+					save_event_target_as = chinese_artifact
 				}
-				event_target:freehold_artifact = {
-					set_name = the_freehold_royals_personal_note_book
-					set_description = the_freehold_royals_personal_note_book_desc
+				event_target:chinese_artifact = {
+					set_name = the_chinese_royals_personal_note_book
+					set_description = the_chinese_royals_personal_note_book_desc
 					set_artifact_flag = royal_inheritance_gift@ROOT
 					transfer_artifact = {
 						from = PREV
@@ -5186,21 +5371,21 @@ character_event = { #
 		            any_spouse = {
 		            	is_alive = yes
 		            	is_landed = yes
-		            	has_opinion_modifier = { who = ROOT modifier = opinion_love }
+		            	has_opinion_modifier = { who = ROOT modifier = opinion_lover }
 		            }
 		        }
     		}
     		15 = {
-    			#Nothing happens (more likely if Freehold is busy with other stuff)
+    			#Nothing happens (more likely if China is busy with other stuff)
     			set_character_flag = nothing_happened
     			modifier = {
 		            factor = 5
-		            freehold_is_suffering_trigger = yes
+		            china_is_suffering_trigger = yes
 		        }
     		}
     	}
     	if = { limit = { NOT = { has_character_flag = nothing_happened } }
-    		set_character_flag = ignore_refund #(blocks the other letter of condolences-event from Freehold)
+    		set_character_flag = ignore_refund #(blocks the other letter of condolences-event from China)
     	}
     }
 }
@@ -5216,7 +5401,7 @@ character_event = {
     immediate = {
     	if = {  #for loc + artifact purposes
     		limit = { event_target:the_protector_general = { is_alive = no } }
-    		offmap_freehold = { governor = { save_event_target_as = the_protector_general } }
+    		offmap_china = { governor = { save_event_target_as = the_protector_general } }
     	}
 
     	if = { ### (1) If you are to receive a letter...
@@ -5224,7 +5409,7 @@ character_event = {
 			character_event = { id = JD.10081 }
     	}
 
-    	if = { ### (2) If you are to be gifted a Freehold artifact...
+    	if = { ### (2) If you are to be gifted a Chinese artifact...
     		limit = { has_character_flag = scenario_2 }
 			if = { #if the artifact still exists in the treasury of the WP... (even if the Protector General might've died, but HOPEFULLY they inherited the thing?)
 				limit = {
@@ -5260,8 +5445,8 @@ character_event = {
     		limit = { war_with = event_target:the_protector_general }
 			if = {
 				limit = { has_character_flag = scenario_2 }
-				#to make sure the WP doesn't end up with a ton of Freehold artifacts (named things like "Shan Li's Favorite Tapestry") when the follow-up (JD.10082) doesn't trigger...
-			    hidden_effect = { event_target:freehold_artifact = { destroy_artifact = yes } }
+				#to make sure the WP doesn't end up with a ton of Chinese artifacts (named things like "Shan Li's Favorite Tapestry") when the follow-up (JD.10082) doesn't trigger...
+			    hidden_effect = { event_target:chinese_artifact = { destroy_artifact = yes } }
 			}
 			if = {
 				limit = { NOT = { has_character_flag = scenario_3 } } #The only event that doesn't require peace with WP...
@@ -5277,7 +5462,7 @@ character_event = {
 }
 
 ### For a spouse or child ###
-character_event = { #Freehold sends their condolences, in the form of a LETTER...
+character_event = { #China sends their condolences, in the form of a LETTER...
     id = JD.10081
     desc = EVTDESC_JD_10081
     picture = GFX_evt_chinese_bureaucrat
@@ -5293,7 +5478,7 @@ character_event = { #Freehold sends their condolences, in the form of a LETTER..
     }
 
     immediate = {
-    	offmap_freehold = {
+    	offmap_china = {
 			governor = {
 				save_event_target_as = the_protector_general
 			}    			
@@ -5349,7 +5534,7 @@ character_event = { #Freehold sends their condolences, in the form of a LETTER..
 }
 
 ### For a spouse or child ###
-character_event = { #Freehold sends their condolences, in the form of a GIFT...
+character_event = { #China sends their condolences, in the form of a GIFT...
     id = JD.10082
     desc = EVTDESC_JD_10082
     picture = GFX_evt_chinese_bureaucrat
@@ -5371,7 +5556,7 @@ character_event = { #Freehold sends their condolences, in the form of a GIFT...
         custom_tooltip = { text = EVTOPTA_JD_10082_TT }
 
         hidden_effect = {
-	        event_target:freehold_artifact = {
+	        event_target:chinese_artifact = {
 				transfer_artifact = {
 					from = event_target:the_protector_general
 					to = ROOT
@@ -5398,7 +5583,7 @@ character_event = { #Freehold sends their condolences, in the form of a GIFT...
 		    }
         }
         hidden_effect = {
-        	event_target:freehold_artifact = {
+        	event_target:chinese_artifact = {
         		destroy_artifact = yes
         	}
         }
@@ -5432,7 +5617,7 @@ character_event = { #You find their journal...
         custom_tooltip = { text = EVTOPTA_JD_10083_TT }
 
         hidden_effect = {
-	        event_target:freehold_artifact = {
+	        event_target:chinese_artifact = {
 				transfer_artifact = {
 					from = event_target:the_protector_general
 					to = ROOT
@@ -5452,7 +5637,7 @@ character_event = { #You find their journal...
 		}
 
         hidden_effect = {
-        	event_target:freehold_artifact = {
+        	event_target:chinese_artifact = {
         		destroy_artifact = yes
         	}
         }
