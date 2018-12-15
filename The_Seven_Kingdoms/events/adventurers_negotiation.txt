@@ -55,7 +55,7 @@ character_event = {
 			preferred_limit = {
 				event_target:raiding_adventurer = {
 					OR = {
-						religion = norse_pagan
+						religion_group = drowned_god_group
 						has_religion_feature = religion_seafaring
 						is_seafarer = yes
 					}
@@ -120,7 +120,7 @@ character_event = {
 					preferred_limit = {
 						event_target:raiding_adventurer = {
 							OR = {
-								religion = norse_pagan
+								religion_group = drowned_god_group
 								has_religion_feature = religion_seafaring
 								is_seafarer = yes
 							}
@@ -145,7 +145,7 @@ character_event = {
 						preferred_limit = {
 							event_target:raiding_adventurer = {
 								OR = {
-									religion = norse_pagan
+									religion_group = drowned_god_group
 									has_religion_feature = religion_seafaring
 									is_seafarer = yes
 								}
@@ -688,20 +688,27 @@ letter_event = {
 			event_target:raiding_adventurer = {
 				if = {
 					limit = {
-						religion_group = muslim
+						event_target:selling_province = { 
+							owner = muslim_government
+						}
 					}
 					set_government_type = muslim_government
 				}
 				else_if = {
 					limit = {
-						culture_group = tibetan_group
-						OR = {
-							religion = bon
-                            religion = bon_reformed
-							religion = buddhist
+						event_target:selling_province = { 
+							owner = tribal_government
 						}
 					}
-					set_government_type = theocratic_feudal_government
+					set_government_type = tribal_government
+				}
+				else_if = {
+					limit = {
+						event_target:selling_province = { 
+							owner = old_gods_government
+						}
+					}
+					set_government_type = old_gods_government
 				}
 				else = {
 					set_government_type = feudal_government
@@ -872,20 +879,27 @@ letter_event = {
 			event_target:raiding_adventurer = {
 				if = {
 					limit = {
-						religion_group = muslim
+						event_target:selling_province = { 
+							owner = muslim_government
+						}
 					}
 					set_government_type = muslim_government
 				}
 				else_if = {
 					limit = {
-						culture_group = tibetan_group
-						OR = {
-							religion = bon
-                            religion = bon_reformed
-							religion = buddhist
+						event_target:selling_province = { 
+							owner = tribal_government
 						}
 					}
-					set_government_type = theocratic_feudal_government
+					set_government_type = tribal_government
+				}
+				else_if = {
+					limit = {
+						event_target:selling_province = { 
+							owner = old_gods_government
+						}
+					}
+					set_government_type = old_gods_government
 				}
 				else = {
 					set_government_type = feudal_government
