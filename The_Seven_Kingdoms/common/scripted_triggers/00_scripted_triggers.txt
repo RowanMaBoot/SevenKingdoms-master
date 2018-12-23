@@ -982,9 +982,10 @@ can_be_chancellor_trigger = {
 				}
 				AND = {
 					is_female = yes 
-						religion = the_mother
-						liege = { religion = the_mother }
-						liege = { has_religion_feature = religion_feature_bon } 
+					religion = the_mother
+					liege = { religion = the_mother }
+					liege = { has_religion_feature = religion_feature_bon } 
+				}
 				trait = horse # So we can have female glitterhoofs! :D										  
                 AND = {
 					religion = boashi
@@ -1014,12 +1015,14 @@ can_be_chancellor_trigger = {
 						}
 						is_landed = yes
 						trait = silent_sister
-						
+							
 					}
 				}
 				OR = {
 					AND = { 
-						liege = { primary_title = { has_law = status_of_women_4 } }
+						is_female = yes
+						liege = { primary_title = { has_law = status_of_women_4 } } 
+					}
 					has_game_rule = {
 						name = gender
 						value = all
@@ -1043,6 +1046,7 @@ can_be_chancellor_trigger = {
 				modifier = opinion_resigned_from_council 
 			} 
 		} 
+	}
 }
 
 can_be_marshal_trigger = {
@@ -1060,6 +1064,7 @@ can_be_marshal_trigger = {
 						liege = { has_religion_feature = religion_equal } 
 						liege = { has_religion_feature = religion_feature_bon } 
 					} 
+				}
 				trait = horse # So we can have female glitterhoofs! :D
 				OR = {
 					AND = {
@@ -1100,6 +1105,7 @@ can_be_marshal_trigger = {
 					AND = { 
 						is_female = yes
 						liege = { primary_title = { has_law = status_of_women_4 } } 
+					}
 					has_game_rule = {
 						name = gender
 						value = all
@@ -1124,6 +1130,7 @@ can_be_marshal_trigger = {
 				modifier = opinion_resigned_from_council 
 			} 
 		} 
+	}
 }
 
 can_be_treasurer_trigger = {
@@ -1176,7 +1183,9 @@ can_be_treasurer_trigger = {
 				}
 				OR = {
 					AND = { 
-						liege = { primary_title = { has_law = status_of_women_4 } }
+						is_female = yes
+						liege = { primary_title = { has_law = status_of_women_4 } } 
+					}
 					has_game_rule = {
 						name = gender
 						value = all
@@ -1201,6 +1210,7 @@ can_be_treasurer_trigger = {
 				modifier = opinion_resigned_from_council 
 			} 
 		} 
+	}
 }
 
 can_be_spymaster_trigger = {
@@ -1229,11 +1239,14 @@ can_be_spymaster_trigger = {
 						mother = { character = ROOT }
 						any_spouse = { character = ROOT }
 					}
+				}
+				AND = {
 					religion_group = westerosi_pagan_group
 					liege = {
 						religion_group = westerosi_pagan_group
+						NOR = {
 							liege = { has_religion_feature = religion_matriarchal } 
-							liege = { has_religion_feature = religion_patriarchal } 
+							liege = { has_religion_feature = religion_patriarchal }
 						}									   
 					}
 				}
@@ -1247,11 +1260,15 @@ can_be_spymaster_trigger = {
 				}
 				AND = {
 					religion_group = valyrian_group
-						religion_group = valyrian_group
+					liege = {
 						NOR = {
 							liege = { has_religion_feature = religion_matriarchal } 
 							liege = { has_religion_feature = religion_patriarchal } 
 						}
+					}
+				}
+				AND = {
+					liege = {
 						primary_title = {
 							OR = {
 								has_law = status_of_women_1
@@ -1278,6 +1295,7 @@ can_be_spymaster_trigger = {
 					AND = { 
 						is_female = yes
 						liege = { primary_title = { has_law = status_of_women_4 } } 
+					}
 					has_game_rule = {
 						name = gender
 						value = all
@@ -1317,7 +1335,8 @@ can_be_spiritual_trigger = {
 				who = ROOT	
 				modifier = opinion_resigned_from_council 
 			} 
-		} 
+		}
+	}
 	liege = {
 		religion = ROOT
 	}
@@ -1388,6 +1407,7 @@ can_be_councilmember_king_trigger = {
 				who = ROOT
 			}
 		} 
+	}
 	AND = {
 		OR = {
 			AND = { #Patriarchal religions can only hire males. Matriarchal religions can only hire females.
@@ -1500,6 +1520,7 @@ can_be_councilmember_emperor_trigger = {
 					AND = { 
 						is_female = yes
 						liege = { primary_title = { has_law = status_of_women_4 } } 
+					}
 					has_game_rule = {
 						name = gender
 						value = all
