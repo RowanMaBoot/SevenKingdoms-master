@@ -1,0 +1,1309 @@
+# DO NOT ALTER THE NAME OR NUMBER OF THESE!
+
+succession_laws = {
+
+	succ_gavelkind = {
+		oldest_child_opinion = -5
+		child_opinion = 15
+		dynasty_opinion = 5
+		vassal_opinion = 5
+	
+		potential = {
+			OR = { #only players can select this, should also prevent titles defaulting to this
+				has_law = succ_gavelkind
+				holder_scope = { ai = no }
+			}
+			holder_scope = {
+				OR = {
+					independent = yes
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+				}
+				is_merchant_republic = no
+				is_patrician = no
+				NOT = { government = stepstones_government }
+				NOT = { government = muslim_government }
+				NOT = { government = old_gods_government }
+				NOT = { government = nights_watch_governmentt }
+				NOT = { is_military_command_trigger = yes }
+				NOT = { government = merchant_kingdom_government }
+				NOT = { government = theocratic_kingdom_government }
+				NOT = { government = march_government }
+				NOT = { government = council_government }
+				NOT = { government = storm_kingdom_government }
+				NOT = { government = vale_government }
+				NOT = { government = west_government }
+				NOT = { government = reach_government }
+				NOT = { government = ironborn_government }
+				NOT = { government = prince_government }
+				NOT = { government = winter_government }
+			}
+			OR = {
+				is_landless_type_title = no
+				#is_tribal_type_title = yes
+				temporary = yes
+				holder_scope = {
+					demesne_size = 1
+					mercenary = no
+					holy_order = no
+					is_theocracy = no
+				}
+			}
+			rebel = no		
+			OR = {
+				AND = {
+					tier = baron
+					OR = {
+						is_feudal = yes
+						is_tribal = yes
+					}
+				}
+				holder_scope = { 
+					OR = {
+						is_feudal = yes
+						is_tribal = yes
+					}
+				}
+			}
+			is_primary_type_title = no
+		}
+		allow = {
+			NOT = { culture_group = iron_islander }
+			NOT = {
+				AND = {
+					holder_scope = { has_character_flag = has_great_council_heir }
+					current_heir = { has_character_modifier = great_council_heir }
+				}
+			}
+		}
+		default_selection = {
+			factor = 0
+		}
+		ai_will_do = {
+			factor = 0
+		}	
+		effect = {
+			succession = gavelkind
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+	
+	succ_elective_gavelkind = {
+		child_opinion = 15
+		dynasty_opinion = 5
+	
+		potential = {
+			always = no
+			# holder_scope = {
+				# OR = {
+					# independent = yes
+					# NOT = {
+						# any_liege = {
+							# holy_order = yes
+						# }
+					# }
+				# }
+				# is_merchant_republic = no
+				# is_patrician = no
+			# }
+			# OR = {
+				# is_landless_type_title = no
+				# is_tribal_type_title = yes
+				# temporary = yes
+			# }
+			# rebel = no
+			# OR = {
+				# AND = {
+					# tier = baron
+					# OR = {
+						# is_feudal = yes
+						# is_tribal = yes
+					# }
+				# }
+				# holder_scope = { is_feudal = yes }
+				# holder_scope = { is_tribal = yes }
+			# }
+			# is_primary_type_title = no
+			# is_vice_royalty = no
+		}
+		allow = {
+			#holder_scope = { is_tribal = yes }
+		}
+		effect = {
+			succession = elective_gavelkind
+		}
+		default_selection = {
+			factor = 0
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+	
+	succ_seniority = {
+		vassal_opinion = -5
+		oldest_child_opinion = -15
+		child_opinion = -10
+		dynasty_opinion = 5
+	
+		potential = {
+			OR = { #only players can usually select this, should also prevent titles defaulting to this
+				has_law = succ_seniority
+				holder_scope = { 
+					OR = {
+						ai = no
+						is_patrician = yes
+						seniority_culture_trigger = yes
+					}
+				}
+				AND = { #May want to change if heir is not of my dynasty
+					NOT = { has_law = succ_feudal_elective }
+					holder_scope = {
+						current_heir = { NOT = { dynasty = PREV } }
+						NOT = { trait = content }
+						NOT = { trait = just }
+						NOT = { trait = honourable }
+					}	
+				}
+			}
+			holder_scope = {
+				OR = {
+					independent = yes
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+				}
+				OR = {
+					is_merchant_republic = no
+					primary_title = {
+						NOT = { title = PREVPREV }
+					}
+				}
+				NOT = { government = stepstones_government }
+				NOT = { government = wildling_government }
+				OR = {
+					is_republic = no
+					is_patrician = yes
+				}
+				NOT = { government = nights_watch_government }
+				NOT = { is_military_command_trigger = yes }
+				NOT = { government = theocratic_feudal_government }
+			}
+			OR = {
+				is_landless_type_title = no
+				#is_tribal_type_title = yes
+				temporary = yes
+				holder_scope = {
+					demesne_size = 1
+					mercenary = no
+					holy_order = no
+					is_theocracy = no
+				}
+			}
+			OR = {
+				AND = {
+					tier = baron
+					OR = {
+						is_feudal = yes
+						is_tribal = yes
+					}
+				}
+				holder_scope = { 
+					is_theocracy = no 
+					is_nomadic = no
+				}
+			}
+			is_primary_type_title = no
+			OR = {
+				NOT = { tier = baron }
+				holder_scope = { is_patrician = yes }
+			}
+		}
+		
+		allow = {
+			hidden_tooltip = {
+				holder_scope = {
+					OR = {
+						is_republic = no
+						NOT = { dynasty = 0 }	
+						AND = {
+							is_patrician = yes 
+							OR = {
+								is_merchant_republic = no
+								PREV = {
+									is_primary_holder_title = no
+								}
+							}
+						}
+					}
+				}	
+			}
+			NOT = {
+				AND = {
+					holder_scope = { has_character_flag = has_great_council_heir }
+					current_heir = { has_character_modifier = great_council_heir }
+				}
+			}
+			# OR = {
+				# hidden_tooltip = {
+					# has_crown_law_title = no
+				# }
+				# holder_scope = { is_patrician = yes }
+				# holder_scope = { seniority_culture_trigger = yes }
+				# # crownlaw_title = {
+					# # has_law = centralization_4
+				# # }
+			# }
+		}
+		
+		effect = {
+			succession = seniority
+			hidden_tooltip = {
+				holder_scope = {
+					if = {
+						limit = { 
+							ai = yes
+							is_patrician = no
+							NOT = { seniority_culture_trigger = yes }
+						}
+						set_character_flag = enacted_seniority		
+					}
+				}	
+			}
+		}
+		revoke_allowed = {
+			always = no
+		}	
+		default_selection = {
+			factor = 0
+			additive_modifier = { 
+				value = 10
+				holder_scope = { 
+					OR = {
+						AND = {
+							is_patrician = yes
+							family_palace = { always = yes }
+						}	
+						seniority_culture_trigger = yes
+						AND = { #If AI has enacted seniority dont go back unless they will have an heir
+							has_character_flag = enacted_seniority
+							NOT = {
+								any_child = {
+									is_alive = yes
+									dynasty = PREV
+									OR = {
+										NOT = { age = 5 }
+										is_married = yes
+									}	
+									NOT = { trait = bastard }
+								}
+							}
+						}
+					}	
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.05
+			}
+			modifier = {
+				factor = 0
+				holder_scope = {
+					OR = {
+						war = yes
+						NOT = { age = 16 }
+					}
+				}	
+			}
+			modifier = {
+				factor = 0
+				holder_scope = {
+					NOT = { trait = just }
+					NOT = { trait = proud }
+					any_vassal = { relative_power_to_liege = 0.2 NOT = { opinion = { who = PREV value = -25 } } } 
+				}
+			}	
+		}		
+	}
+	
+	succ_primogeniture = {
+		oldest_child_opinion = 10
+		youngest_child_opinion = -5
+		child_opinion = -10
+		#dynasty_opinion = -5
+		potential = {
+			holder_scope = {
+				OR = {
+					independent = yes
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+				}
+				is_merchant_republic = no
+				is_patrician = no
+				NOT = { government = nights_watch_government }
+				NOT = { government = stepstones_government }
+				NOT = { is_military_command_trigger = yes }
+				NOT = { government = wildling_government }
+			}
+			OR = {
+				is_landless_type_title = no
+				#is_tribal_type_title = yes
+				holder_scope = {
+					demesne_size = 1
+					mercenary = no
+					holy_order = no
+					is_theocracy = no
+				}
+			}
+			is_primary_type_title = no
+			OR = {
+				AND = {
+					tier = baron
+					OR = {
+						is_feudal = yes
+						is_tribal = yes
+					}
+				}
+				holder_scope = { 
+					OR = {
+						is_feudal = yes
+						is_tribal = yes
+					}
+				}
+			}
+		}
+		
+		allow = {
+			NOT = {
+				AND = {
+					holder_scope = { has_character_flag = has_great_council_heir }
+					current_heir = { has_character_modifier = great_council_heir }
+				}
+			}
+		}
+		
+		effect = {
+			succession = primogeniture
+		}
+		revoke_allowed = {
+			always = no
+		}	
+		default_selection = {
+			factor = 1
+			modifier = {
+				factor = 0
+				holder_scope = {
+					seniority_culture_trigger = yes
+				}
+			}
+			modifier = { #If AI has enacted seniority dont go back unless they will have an heir
+				factor = 0	
+				holder_scope = {
+					has_character_flag = enacted_seniority
+					NOT = {
+						any_child = {
+							is_alive = yes
+							dynasty = PREV
+							OR = {
+								NOT = { age = 5 }
+								is_married = yes
+							}	
+							NOT = { trait = bastard }
+						}
+					}
+				}	
+			}	
+		}
+		
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.05
+			}
+				
+			modifier = {
+				factor = 0	
+				holder_scope = {
+					seniority_culture_trigger = yes
+				}	
+			}	
+			modifier = { #If AI has enacted seniority dont go back unless they will have an heir
+				factor = 0	
+				holder_scope = {
+					has_character_flag = enacted_seniority
+					NOT = {
+						any_child = {
+							is_alive = yes
+							dynasty = PREV
+							OR = {
+								NOT = { age = 5 }
+								is_married = yes
+							}	
+							NOT = { trait = bastard }
+						}
+					}
+				}	
+			}			
+			modifier = {
+				factor = 0.01	
+				has_law = succ_feudal_elective
+				holder_scope = { culture_group = iron_islander }	
+			}
+			modifier = {
+				factor = 0
+				holder_scope = {
+					OR = {
+						war = yes
+						NOT = { age = 16 }
+					}
+				}	
+			}
+			modifier = {
+				factor = 0
+				holder_scope = {
+					NOT = { trait = just }
+					NOT = { trait = proud }
+					any_vassal = { relative_power_to_liege = 0.2 NOT = { opinion = { who = PREV value = -25 } } } 
+				}
+			}	
+		}		
+	}
+	
+	succ_feudal_elective = {
+		oldest_child_opinion = -15
+		child_opinion = -5
+		dynasty_opinion = -5
+		vassal_opinion = 10
+		potential = {
+			holder_scope = {
+				OR = {
+					independent = yes
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+				}
+				is_merchant_republic = no
+				is_patrician = no
+				is_theocracy = no
+				is_nomadic = no
+				OR = {
+					is_republic = no
+					higher_tier_than = COUNT
+				}
+				NOT = { government = stepstones_government }
+				NOT = { government = nights_watch_government }
+				NOT = { is_military_command_trigger = yes }
+			}
+			OR = {
+				is_landless_type_title = no
+				#is_tribal_type_title = yes
+				temporary = yes
+				holder_scope = {
+					demesne_size = 1
+					mercenary = no
+					holy_order = no
+					is_theocracy = no
+				}
+			}
+			is_primary_type_title = no
+			NOT = { tier = baron }
+		}
+		allow = {
+			hidden_tooltip = {
+				holder_scope = {
+					OR = {
+						is_republic = no
+						NOT = { dynasty = 0 }				
+					}
+				}	
+			}
+			NOT = {
+				AND = {
+					holder_scope = { has_character_flag = has_great_council_heir }
+					current_heir = { has_character_modifier = great_council_heir }
+				}
+			}
+		}
+		default_selection = {
+			factor = 0
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.05
+			}
+			modifier = {
+				factor = 0
+				holder_scope = {
+					OR = {
+						war = yes
+						NOT = { age = 16 }
+						NOT = { any_child = { is_adult = yes } }
+					}
+				}	
+			}
+			modifier = {
+				factor = 0
+				holder_scope = {
+					NOT = { trait = just }
+					NOT = { trait = proud }
+					any_vassal = { relative_power_to_liege = 0.2 NOT = { opinion = { who = PREV value = -25 } } } 
+				}
+			}	
+		}	
+		effect = {
+			succession = feudal_elective
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+	
+	succ_tanistry = {
+		oldest_child_opinion = -20
+		child_opinion = -10
+		dynasty_opinion = 5
+		vassal_opinion = 5
+		potential = {
+			holder_scope = {
+				OR = {
+					independent = yes
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+				}
+				is_merchant_republic = no
+				is_patrician = no
+				is_nomadic = no
+				government = wildlingl_government
+			}
+			OR = {
+				is_landless_type_title = no
+				#is_tribal_type_title = yes
+				temporary = yes
+				holder_scope = {
+					demesne_size = 1
+					mercenary = no
+					holy_order = no
+					is_theocracy = no
+				}
+			}
+			is_primary_type_title = no
+			NOT = { tier = baron }
+			OR = {
+				AND = {
+					tier = baron
+					OR = {
+						is_feudal = yes
+						is_tribal = yes
+					}
+				}
+				holder_scope = { 
+					OR = {
+						is_feudal = yes
+						is_tribal = yes
+					}
+				}
+			}
+		}
+		default_selection = {
+			factor = 0
+		}
+		ai_will_do = {
+			factor = 0
+		}	
+		effect = {
+			succession = tanistry
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+	
+	succ_ultimogeniture = {
+		youngest_child_opinion = 10
+		oldest_child_opinion = -15
+		child_opinion = -10
+		dynasty_opinion = -5
+		potential = {
+			holder_scope = {
+				OR = {
+					independent = yes
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+				}
+				is_merchant_republic = no
+				is_patrician = no
+				is_nomadic = no
+				NOT = { government = stepstones_government }
+				NOT = { government = wildling_government }
+				NOT = { government = nights_watch_government }
+				NOT = { is_military_command_trigger = yes }
+			}
+			OR = {
+				is_landless_type_title = no
+				#is_tribal_type_title = yes
+				temporary = yes
+				holder_scope = {
+					demesne_size = 1
+					mercenary = no
+					holy_order = no
+					is_theocracy = no
+				}
+			}
+			is_primary_type_title = no
+			OR = {
+				AND = {
+					tier = baron
+					OR = {
+						is_feudal = yes
+						is_tribal = yes
+					}
+				}
+				holder_scope = { 
+					OR = {
+						is_feudal = yes
+						is_tribal = yes
+					}
+				}
+			}
+		}
+		allow = {
+			OR = {
+				hidden_tooltip = {
+					has_crown_law_title = no
+				}
+				crownlaw_title = {
+					NOT = { has_law = centralization_0 }
+				}
+			}
+		}
+		
+		effect = {
+			succession = ultimogeniture
+		}
+		revoke_allowed = {
+			always = no
+		}
+		default_selection = {
+			factor = 0
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.05
+			}
+			modifier = {
+				factor = 0
+				holder_scope = {
+					OR = {
+						war = yes
+						NOT = { age = 16 }
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				holder_scope = {
+					NOT = { trait = just }
+					NOT = { trait = proud }
+					any_vassal = { relative_power_to_liege = 0.2 NOT = { opinion = { who = PREV value = -25 } } } 
+				}
+			}			
+		}
+	}
+
+	succ_turkish_succession = {
+		oldest_child_opinion = -5
+		#child_opinion = 30
+		#dynasty_opinion = 10
+		potential = {
+			OR = {
+				is_landless_type_title = no
+				#is_tribal_type_title = yes
+				temporary = yes
+				holder_scope = {
+					demesne_size = 1
+					mercenary = no
+					holy_order = no
+					is_theocracy = no
+				}
+			}
+			holder_scope = { 
+				OR = {
+					independent = yes
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+				}
+				OR = {
+					is_feudal = yes
+					is_tribal = yes
+				}
+				is_nomadic = no
+				OR = {
+					government = stepstones_government
+					government = wildling_government
+				}	
+			}
+			is_primary_type_title = no
+			NOT = { tier = baron }
+		}
+		allow = {
+			always = yes
+		}
+		default_selection = {
+			factor = 0
+			additive_modifier = { 
+				value = 10
+				holder_scope = { 
+					OR = {
+						government = stepstones_government
+						government = wildling_government
+					}	
+				}
+			}
+		}
+		effect = {
+			succession = turkish_succession
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+	succ_papal_succession = {
+		potential = {
+			title = k_papal_state
+		}		
+		effect = {
+			succession = papal_succession
+		}
+		revoke_allowed = {
+			always = no
+		}		
+	}
+	
+	# Titles revert back to the liege on death
+		succ_appointment = {
+		potential = {	
+			holder_scope = {
+				independent = no				
+				OR = {
+					is_military_command_trigger = yes	
+					government = nights_watch_government
+					AND = {
+						any_liege = { holy_order = yes }
+						OR = {
+							is_feudal = yes
+							is_tribal = yes
+						}						
+					}
+				}	
+				is_nomadic = no
+				is_merchant_republic = no			
+			}	
+		}
+		effect = {
+			succession = appointment
+		}
+		default_selection = {
+			factor = 0
+			additive_modifier = { 
+				value = 10
+				holder_scope = { 
+					OR = {
+						government = nights_watch_government
+						is_military_command_trigger = yes	
+						any_liege = { holy_order = yes }
+					}	
+				}
+			}
+		}
+		revoke_allowed = {
+			always = no
+		}		
+	}
+	
+	succ_open_elective = {
+		potential = {
+			temporary = no
+			OR = {
+				is_primary_type_title = yes
+				holy_order = yes
+				AND = {
+					is_landless_type_title = yes
+					is_tribal_type_title = no
+				}
+				AND = {
+					tier = baron
+					OR = {
+						is_republic = yes
+						is_theocracy = yes
+					}
+				}
+				holder_scope = { 
+					OR = {
+						is_republic = yes
+						is_theocracy = yes
+						AND = {
+							government = nights_watch_government
+							independent = yes
+						}	
+					}
+				}
+			}
+			OR = {
+				is_landless_type_title = yes
+				holder_scope = { is_republic = yes }
+				holder_scope = { NOT = { religion = the_seven } }
+			}
+			holder_scope = { 
+				is_patrician = no
+				is_merchant_republic = no
+				is_nomadic = no
+				is_military_command_trigger = no
+				OR = {
+					independent = yes
+					is_feudal = yes
+					is_tribal = yes
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			succession = open_elective
+		}
+		ai_will_do = {
+			factor = 1
+			modifier = {
+				factor = 0.25
+			}
+			modifier = {
+				factor = 0	
+				holder_scope = {
+					is_republic = no					
+				}	
+			}
+			modifier = {
+				factor = 0
+				holder_scope = {
+					OR = {
+						war = yes
+						NOT = { age = 16 }
+						current_heir = { NOT = { is_liege_of = PREV } }
+					}
+				}	
+			}
+		}		
+		revoke_allowed = {
+			always = no
+		}			
+	}
+	succ_catholic_bishopric = {
+		potential = {
+			is_landless_type_title = no
+			
+			OR = {
+				AND = {
+					tier = baron
+					is_theocracy = yes
+				}
+				holder_scope = { is_theocracy = yes }
+			}
+			
+			holder_scope = {
+				religion = the_seven 
+				is_merchant_republic = no
+				OR = {
+					independent = yes
+					is_feudal = no
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+				}
+				NOT = { government = nights_watch_government }
+				NOT = { is_military_command_trigger = yes }
+			}
+			is_primary_type_title = no
+		}
+		effect = {
+			succession = catholic_bishopric
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+	
+	succ_patrician_elective = {
+		potential = {
+			OR = {
+				is_primary_holder_title = yes
+				holder_scope = {
+					in_revolt = yes
+					succ_law_title = {
+						title = PREVPREV
+					}
+				}
+			}
+			holder_scope = {
+				is_merchant_republic = yes
+			}
+		}
+		effect = {
+			succession = patrician_elective
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+
+	succ_nomad_succession = {
+		potential = {
+			holder_scope = {
+				is_nomadic = yes
+			}
+		}
+		effect = {
+			succession = nomad_succession
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+	
+	succ_offmap_succession = {
+		potential = {
+			holder_scope = {
+				top_liege = { is_offmap_governor = yes }
+				government = confucian_bureaucracy # To use this with future offmap powers, use an OR clause here with the new government types
+			}
+		}
+		effect = {
+			succession = offmap_succession
+			# This succession type generates a character of China's culture and religion
+			# They have decent (4-10) stats, and good (7-11) stewardship, and will always have a Stewardship education
+			# The offmap power defined in the top liege's government is used to determine the culture and religion. Will not function if this isn't defined
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+}
+
+gender_laws = {
+	cognatic_succession = {	
+		potential = {
+			holder_scope = {
+				OR = {
+					independent = yes
+					NOT = {
+						any_liege = {
+							holy_order = yes
+						}
+					}
+					is_merchant_republic = yes
+				}
+				has_horde_culture = no
+				#is_merchant_republic = no
+				#is_patrician = no
+				OR = {
+					culture = jogos_nhai
+					is_nomadic = no
+				}	
+				NOT = { government = nights_watch_government }
+				NOT = { enatic_culture_trigger = yes }
+			}
+			OR = {
+				is_landless_type_title = no	
+				holder_scope = {
+					demesne_size = 1
+					mercenary = no
+					holy_order = no
+					is_theocracy = no
+				}
+			}	
+			OR = {
+				AND = {
+					tier = baron
+					OR = {
+						is_feudal = yes
+						is_tribal = yes
+					}
+				}
+				holder_scope = { 
+					NOR = {
+						is_theocracy = yes
+						government = republic_government
+					}
+				}
+			}
+			
+			is_primary_type_title = no		
+		}
+		allow = {
+			NOT = {
+				AND = {
+					holder_scope = { has_character_flag = has_great_council_heir }
+					current_heir = { has_character_modifier = great_council_heir }
+				}
+			}
+		}
+		effect = {
+			gender_succ = cognatic
+			set_allow_feminism = no
+			hidden_tooltip = { #patrician family palace workaround
+				holder_scope = {
+					if = {
+						limit = {
+							is_patrician = yes
+							primary_title = { title = PREVPREV }
+						}
+						family_palace = { gender_succ = cognatic }
+						recalc_succession = yes
+					}
+				}	
+			}
+		}
+		revoke_allowed = {
+			always = no
+		}	
+		ai_will_do = {
+			factor = 0
+		}	
+		default = yes
+		default_selection = {
+			factor = 1
+		}		
+	}
+
+	agnatic_succession = {
+		female_dynasty_opinion = -5
+	
+		potential = {
+			holder_scope = {
+				NOT = { enatic_culture_trigger = yes }	
+			}	
+		}
+		allow = {
+			NOT = {
+				AND = {
+					holder_scope = { has_character_flag = has_great_council_heir }
+					current_heir = { has_character_modifier = great_council_heir }
+				}
+			}
+		}
+		effect = {
+			gender_succ = agnatic	
+			set_allow_feminism = no	
+			hidden_tooltip = { #patrician family palace workaround
+				holder_scope = {
+					if = {
+						limit = {
+							is_patrician = yes
+							primary_title = { title = PREVPREV }
+						}
+						family_palace = { gender_succ = agnatic }
+						recalc_succession = yes
+					}
+				}	
+			}			
+		}
+		revoke_allowed = {
+			always = no
+		}	
+		ai_will_do = {
+			factor = 0
+		}	
+		default = yes
+		default_selection = {
+			factor = 0
+			additive_modifier = { 
+				value = 5			
+				holder_scope = { 
+					agnatic_culture_trigger = yes	
+				}
+			}
+			additive_modifier = { 
+				value = 15		
+				holder_scope = { 
+					OR = {
+						is_merchant_republic = yes
+						AND = {
+							is_patrician = yes
+							family_palace = { always = yes }
+						}
+					}	
+				}
+			}
+		}		
+	}
+	
+	true_cognatic_succession = {
+		male_dynasty_opinion = -5
+		
+		potential = {
+			OR = {
+				AND = {
+					has_dlc = "Zeus"
+					has_game_rule = {
+						name = gender
+						value = all
+					}
+					is_patrician = no
+				}
+				holder_scope = {
+					OR = {
+						AND = {
+							# NOT = { religion_group = muslim }
+							# NOT = { religion = aztec }
+							# NOT = { religion = aztec_reformed }
+							has_horde_culture = no
+							#is_tribal = no
+							is_nomadic = no
+							is_merchant_republic = no
+							is_patrician = no
+						}
+						AND = {
+							has_dlc = "Zeus"
+							OR = {
+								ROOT = { holder_scope = { primary_title = { has_law = status_of_women_4 } } }
+							}
+							OR = {
+								is_patrician = no
+								liege = {
+									primary_title = {
+										OR = {
+											has_law = true_cognatic_succession
+											has_law = cognatic_succession
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			
+			is_landless_type_title = no
+			
+			OR = {
+				AND = {
+					tier = baron
+					is_theocracy = no
+					is_republic = no
+				}
+				holder_scope = {
+					is_theocracy = no
+					is_republic = no
+				}
+			}
+			
+			is_primary_type_title = no
+		}
+		allow = {
+			OR = {
+				holder_scope = {
+					# OR = {
+						# culture = basque
+						# culture = zhangzhung
+						# culture = sumpa
+						# religion = cathar
+						# religion = messalian
+						# religion = mazdaki
+					# }
+                    OR = {
+						government = dorne_government
+                        culture = salt_dornish
+                        culture = sand_dornish
+                        culture = rhoynish
+                        culture_group = free_folk
+                        culture_group = valyrian
+                        religion_group = valyrian_group
+                        religion = old_gods
+                        religion = the_mother
+                        religion = rhllor
+                        religion = boashi
+                    }
+				}
+				OR = {
+					ROOT = { holder_scope = { primary_title = { has_law = status_of_women_4 } } }
+					has_game_rule = {
+						name = gender
+						value = all
+					}
+				}
+			}
+		}
+		effect = {
+			gender_succ = true_cognatic
+			set_allows_matrilineal_marriage = yes
+		}
+		revoke_allowed = {
+			always = no
+		}	
+	}
+	
+	enatic_succession = {
+		male_dynasty_opinion = -10
+		female_dynasty_opinion = 10
+		
+		potential = {
+			always = no # For modders only
+		}
+		allow = {
+			always=yes
+		}
+		effect = {
+			gender_succ = enatic
+		}
+		revoke_allowed = {
+			always = no
+		}
+	}
+	
+	enatic_cognatic_succession = {
+		male_dynasty_opinion = -10
+		female_dynasty_opinion = 5
+		
+		potential = {
+			always = no # For modders only
+		}
+		allow = {
+			always=yes
+		}
+		effect = {
+			gender_succ = enatic_cognatic
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+	
+}
