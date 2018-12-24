@@ -24,15 +24,15 @@ character_event = {
     min_age = 16
 
     trigger = { 
-        NOT = { has_character_flag = freehold_governor_councilor_guest }
-        NOT = { offmap_freehold = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
+        NOT = { has_character_flag = china_governor_councilor_guest }
+        NOT = { offmap_china = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
         is_inaccessible_trigger = no
-        freehold_diplo_interaction_trigger = yes
-        offmap_freehold = {
+        china_diplo_interaction_trigger = yes
+        offmap_china = {
             NOR = {
-                has_status = freehold_civil_war
-                has_status = freehold_plague
-				has_status = freehold_economic_ruin
+                has_status = china_civil_war
+                has_status = china_plague
+				has_status = china_economic_ruin
             }
             governor = {
                 is_landed = yes #(to make sure there is a councilor to send)
@@ -43,39 +43,39 @@ character_event = {
     weight_multiplier = {
     	days = 1
         modifier = {
-            offmap_freehold = { has_status = freehold_unrest }
+            offmap_china = { has_status = china_unrest }
             factor = 0.6
         }
 		modifier = {
-            offmap_freehold = { has_status = freehold_internal_purge }
+            offmap_china = { has_status = china_internal_purge }
             factor = 0.6
         }
         modifier = {
-            offmap_freehold = { has_status = freehold_dothraki_invasion }
+            offmap_china = { has_status = china_dothraki_invasion }
             factor = 0.3
         }
         modifier = {
-            offmap_freehold = { has_status = freehold_rhoynish_invasion }
+            offmap_china = { has_status = china_rhoynish_invasion }
             factor = 0.3
         }
 		modifier = {
-            offmap_freehold = { has_status = freehold_ghiscari_invasion }
+            offmap_china = { has_status = china_ghiscari_invasion }
             factor = 0.3
         }
         modifier = {
-            offmap_freehold = { has_status = freehold_famine }
+            offmap_china = { has_status = china_famine }
             factor = 0.3
         }
 		modifier = {
-            offmap_freehold = { has_status = freehold_economic_ruin }
+            offmap_china = { has_status = china_economic_ruin }
             factor = 0.3
         }
         modifier = {
-            offmap_freehold = { has_status = freehold_golden_age }
+            offmap_china = { has_status = china_golden_age }
             factor = 1.5
         }
         modifier = {
-            offmap_freehold = { has_policy = freehold_expansionist }
+            offmap_china = { has_policy = china_expansionist }
             factor = 1.5
         }
         modifier = {
@@ -91,13 +91,13 @@ character_event = {
             factor = 0.1
         }
         modifier = {
-            is_tributary = { type = offmap suzerain = offmap_freehold }
+            is_tributary = { type = offmap suzerain = offmap_china }
             factor = 1.5
         }
     }
 
     immediate = {
-        offmap_freehold = {
+        offmap_china = {
             governor = {
                 save_event_target_as = target_governor
                 #Selects a diplomat
@@ -207,7 +207,7 @@ character_event = {
     hide_window = yes
     is_triggered_only = yes
     immediate = { 
-    	save_event_target_as = freehold_guest
+    	save_event_target_as = china_guest
     	FROM = { letter_event = { id = JD.20002 } } 
     }
 }
@@ -238,8 +238,8 @@ letter_event = {
         add_grace_trivial_effect = yes
 
         hidden_effect = {
-        	event_target:freehold_guest = { character_event = { id = JD.20003 days = 50 random = 20 } } 
-            set_character_flag = freehold_governor_councilor_guest
+        	event_target:china_guest = { character_event = { id = JD.20003 days = 50 random = 20 } } 
+            set_character_flag = china_governor_councilor_guest
         }
     }
 
@@ -249,7 +249,7 @@ letter_event = {
         custom_tooltip = { text = EVTOPTB_JD_20002_TT }
     	detract_grace_major_effect = yes
 
-    	event_target:freehold_guest = {
+    	event_target:china_guest = {
             show_scope_change = no
     		opinion = {
                 who = ROOT
@@ -257,7 +257,7 @@ letter_event = {
     			years = 15
     		}
     	}
-    	event_target:freehold_guest = { 
+    	event_target:china_guest = { 
             show_scope_change = no
             liege = {
                 show_scope_change = no
@@ -279,7 +279,7 @@ character_event = {
     is_triggered_only = yes
     trigger = { 
         is_alive = yes 
-        offmap_freehold = { governor = { is_liege_of = ROOT } }
+        offmap_china = { governor = { is_liege_of = ROOT } }
     }
     immediate = { 
         FROM = {
@@ -333,7 +333,7 @@ character_event = {
                 }
                 10 = { #Greet in chinese? 
                     modifier = { is_learned_trigger = yes factor = 1.3 }
-                    trigger = { offmap_freehold = { governor = { NOT = { culture = ROOT } } } }
+                    trigger = { offmap_china = { governor = { NOT = { culture = ROOT } } } }
                     character_event = { id = JD.20006 } 
                 }
                 10 = { #Wearing the clothes wrong
@@ -380,7 +380,7 @@ character_event = {
                 chance = 20
                 modifier = {
                     factor = 0.1
-                    any_artifact = { has_artifact_flag = freehold }
+                    any_artifact = { has_artifact_flag = china }
                 }
                 character_event = { id = JD.60004 days = 1 }
             }
@@ -565,7 +565,7 @@ character_event = {
                 chance = 30
                 modifier = {
                     factor = 0.1
-                    any_artifact = { has_artifact_flag = freehold }
+                    any_artifact = { has_artifact_flag = china }
                 }
                 character_event = { id = JD.60004 days = 1 }
             }
@@ -615,7 +615,7 @@ character_event = {
                 chance = 20
                 modifier = {
                     factor = 0.1
-                    any_artifact = { has_artifact_flag = freehold }
+                    any_artifact = { has_artifact_flag = china }
                 }
                 character_event = { id = JD.60004 days = 1 }
             }
@@ -681,7 +681,7 @@ character_event = {
                 chance = 30
                 modifier = {
                     factor = 0.1
-                    any_artifact = { has_artifact_flag = freehold }
+                    any_artifact = { has_artifact_flag = china }
                 }
                 character_event = { id = JD.60004 days = 1 }
             }
@@ -696,8 +696,8 @@ character_event = {
     hide_window = yes
     is_triggered_only = yes
     immediate = {
-        clr_character_flag = freehold_governor_councilor_guest
-        event_target:freehold_guest = {
+        clr_character_flag = china_governor_councilor_guest
+        event_target:china_guest = {
             clr_character_flag = cg_diplomatic_visit
             clr_character_flag = cg_oversee_troops
             clr_character_flag = cg_study_military
@@ -725,16 +725,16 @@ character_event = {
 
     trigger = {
 		NOT = { mercenary = yes }
-        NOT = { offmap_freehold = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
-        NOT = { has_character_flag = freehold_governor_councilor_guest }
-        NOT = { has_character_flag = is_sending_someone_to_freehold }
+        NOT = { offmap_china = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
+        NOT = { has_character_flag = china_governor_councilor_guest }
+        NOT = { has_character_flag = is_sending_someone_to_china }
         is_inaccessible_trigger = no
-        freehold_diplo_interaction_trigger = yes
-        offmap_freehold = {
+        china_diplo_interaction_trigger = yes
+        offmap_china = {
             NOR = {
-                has_status = freehold_civil_war
-                has_status = freehold_plague
-				has_status = freehold_economic_ruin
+                has_status = china_civil_war
+                has_status = china_plague
+				has_status = china_economic_ruin
             }
         }
         any_courtier = {
@@ -756,15 +756,15 @@ character_event = {
         factor = 1
         modifier = { # more likely if Freehold is doing great
             factor = 1.5
-            freehold_is_fine_trigger = yes
+            china_is_fine_trigger = yes
         }
         modifier = { # less likely if Freehold is NOT doing great
             factor = 0.5
-            freehold_is_suffering_trigger = yes
+            china_is_suffering_trigger = yes
         }
         modifier = { # less likely if Freehold is isolationist
             factor = 0.5
-            offmap_freehold = { has_policy = freehold_isolationist }
+            offmap_china = { has_policy = china_isolationist }
         }
     }
 
@@ -784,7 +784,7 @@ character_event = {
                 NOT = { has_character_flag = wants_to_travel_0 }
                 NOT = { has_character_flag = wants_to_travel_1 }
                 NOT = { has_character_flag = wants_to_travel_2 }
-                NOT = { has_character_flag = originated_from_freehold_court }
+                NOT = { has_character_flag = originated_from_china_court }
             }
             save_event_target_as = adventurous_spirit
             set_character_flag = wants_to_travel_0
@@ -804,7 +804,7 @@ character_event = {
                 NOT = { has_character_flag = wants_to_travel_0 }
                 NOT = { has_character_flag = wants_to_travel_1 }
                 NOT = { has_character_flag = wants_to_travel_2 }
-                NOT = { has_character_flag = originated_from_freehold_court }
+                NOT = { has_character_flag = originated_from_china_court }
                 is_liked_by_Freehold_trigger = yes
             }
             save_event_target_as = adventurous_spirit
@@ -834,7 +834,7 @@ character_event = {
     is_triggered_only = yes
 
     immediate = {
-        offmap_freehold = {
+        offmap_china = {
             governor = {
                 save_event_target_as = the_protector_general
             }
@@ -860,7 +860,7 @@ character_event = {
                 NOT = { has_character_flag = wants_to_travel_0 }
                 NOT = { has_character_flag = wants_to_travel_1 }
                 NOT = { has_character_flag = wants_to_travel_2 }
-                NOT = { has_character_flag = originated_from_freehold_court }
+                NOT = { has_character_flag = originated_from_china_court }
             }
             save_event_target_as = back_up_target_1
             set_character_flag = wants_to_travel_1
@@ -880,7 +880,7 @@ character_event = {
                 NOT = { has_character_flag = wants_to_travel_0 }
                 NOT = { has_character_flag = wants_to_travel_1 }
                 NOT = { has_character_flag = wants_to_travel_2 }
-                NOT = { has_character_flag = originated_from_freehold_court }
+                NOT = { has_character_flag = originated_from_china_court }
             }
             save_event_target_as = back_up_target_1
             set_character_flag = wants_to_travel_1
@@ -900,7 +900,7 @@ character_event = {
                 NOT = { has_character_flag = wants_to_travel_0 }
                 NOT = { has_character_flag = wants_to_travel_1 }
                 NOT = { has_character_flag = wants_to_travel_2 }
-                NOT = { has_character_flag = originated_from_freehold_court }
+                NOT = { has_character_flag = originated_from_china_court }
             }
             save_event_target_as = back_up_target_1
             set_character_flag = wants_to_travel_1
@@ -920,7 +920,7 @@ character_event = {
                 NOT = { has_character_flag = wants_to_travel_0 }
                 NOT = { has_character_flag = wants_to_travel_1 }
                 NOT = { has_character_flag = wants_to_travel_2 }
-                NOT = { has_character_flag = originated_from_freehold_court }
+                NOT = { has_character_flag = originated_from_china_court }
             }
             save_event_target_as = back_up_target_1
             set_character_flag = wants_to_travel_1
@@ -941,7 +941,7 @@ character_event = {
                 NOT = { has_character_flag = wants_to_travel_0 }
                 NOT = { has_character_flag = wants_to_travel_1 }
                 NOT = { has_character_flag = wants_to_travel_2 }
-                NOT = { has_character_flag = originated_from_freehold_court }
+                NOT = { has_character_flag = originated_from_china_court }
             }
             save_event_target_as = back_up_target_2
             set_character_flag = wants_to_travel_2
@@ -961,7 +961,7 @@ character_event = {
                 NOT = { has_character_flag = wants_to_travel_0 }
                 NOT = { has_character_flag = wants_to_travel_1 }
                 NOT = { has_character_flag = wants_to_travel_2 }
-                NOT = { has_character_flag = originated_from_freehold_court }
+                NOT = { has_character_flag = originated_from_china_court }
             }
             save_event_target_as = back_up_target_2
             set_character_flag = wants_to_travel_2
@@ -982,12 +982,12 @@ character_event = {
                 NOT = { has_character_flag = wants_to_travel_0 }
                 NOT = { has_character_flag = wants_to_travel_1 }
                 NOT = { has_character_flag = wants_to_travel_2 }
-                NOT = { has_character_flag = originated_from_freehold_court }
+                NOT = { has_character_flag = originated_from_china_court }
             }
             save_event_target_as = back_up_target_2
             set_character_flag = wants_to_travel_2
         }
-        set_character_flag = is_sending_someone_to_freehold
+        set_character_flag = is_sending_someone_to_china
     }
 
     option = {
@@ -1050,7 +1050,7 @@ character_event = {
     option = {      
         name = EVTOPTD_JD_10011
         custom_tooltip = { text = EVTOPTD_JD_10011_TT }
-        clr_character_flag = is_sending_someone_to_freehold
+        clr_character_flag = is_sending_someone_to_china
     }
 
     after = {
@@ -1061,7 +1061,7 @@ character_event = {
                 clr_character_flag = wants_to_travel_2
             }
             if = {
-                limit = { has_character_flag = is_sending_someone_to_freehold }
+                limit = { has_character_flag = is_sending_someone_to_china }
                 event_target:adventurous_spirit = {
                     force_host = event_target:the_protector_general
                 }
@@ -1078,7 +1078,7 @@ character_event = {
     hide_window = yes
     is_triggered_only = yes
     immediate = {
-        offmap_freehold = {
+        offmap_china = {
             governor = {
                 save_event_target_as = the_protector_general #in case the old one has died, resave
             }
@@ -1107,11 +1107,11 @@ character_event = {
             5 = {
                 modifier = {
                     factor = 1.1
-                    freehold_is_fine_trigger = yes
+                    china_is_fine_trigger = yes
                 }
                 modifier = {
                     factor = 0.5
-                    freehold_is_suffering_trigger = yes
+                    china_is_suffering_trigger = yes
                 }
                 modifier = {
                     factor = 1.1
@@ -1173,11 +1173,11 @@ character_event = {
 
                 trigger = {
                     is_alive = yes
-                    offmap_freehold = {
+                    offmap_china = {
                         NOR = {
-                            has_status = freehold_civil_war
-                            has_status = freehold_plague
-							has_status = freehold_economic_ruin
+                            has_status = china_civil_war
+                            has_status = china_plague
+							has_status = china_economic_ruin
                         }
                     }
                 }
@@ -1185,11 +1185,11 @@ character_event = {
             10 = {
                 modifier = {
                     factor = 1.5
-                    freehold_is_fine_trigger = yes
+                    china_is_fine_trigger = yes
                 }
                 modifier = {
                     factor = 0.5
-                    freehold_is_suffering_trigger = yes
+                    china_is_suffering_trigger = yes
                 }
                 modifier = {
                     factor = 1.1
@@ -1217,11 +1217,11 @@ character_event = {
                 }
                 trigger = {
                     is_alive = yes
-                    offmap_freehold = {
+                    offmap_china = {
                         NOR = {
-                            has_status = freehold_civil_war
-                            has_status = freehold_plague
-							has_status = freehold_economic_ruin
+                            has_status = china_civil_war
+                            has_status = china_plague
+							has_status = china_economic_ruin
                         }
                     }
                 }
@@ -1253,11 +1253,11 @@ character_event = {
             10 = {
                 modifier = {
                     factor = 1.5
-                    freehold_is_suffering_trigger = yes
+                    china_is_suffering_trigger = yes
                 }
                 modifier = {
                     factor = 0.5
-                    freehold_is_fine_trigger = yes
+                    china_is_fine_trigger = yes
                 }
                 modifier = {
                     factor = 0.7
@@ -1287,7 +1287,7 @@ character_event = {
             5 = {
                 modifier = {
                     factor = 1.5
-                    freehold_is_suffering_trigger = yes
+                    china_is_suffering_trigger = yes
                 }
                 modifier = {
                     factor = 0.5
@@ -1431,10 +1431,10 @@ character_event = { # Things went great
             chance = 100
             modifier = {
                 factor = 0
-                any_artifact = { has_artifact_flag = freehold }
+                any_artifact = { has_artifact_flag = china }
             }
-            set_character_flag = freehold_traveler_artifact
-            offmap_freehold = {
+            set_character_flag = china_traveler_artifact
+            offmap_china = {
                 governor = {
                     random_list = {
                         5 = { 
@@ -1444,60 +1444,60 @@ character_event = { # Things went great
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                         15 = { 
-                            add_artifact = freehold_dragon_amulet
+                            add_artifact = china_dragon_amulet
                             new_artifact = {
                                 transfer_artifact = {
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                         40 = {
-                            add_artifact = freehold_artwork
+                            add_artifact = china_artwork
                             new_artifact = {
-								set_name="freehold_artwork_name"
+								set_name="china_artwork_name"
                                 transfer_artifact = {
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                         40 = { 
-                            add_artifact = freehold_calligraphy
+                            add_artifact = china_calligraphy
                             new_artifact = {
-								set_name="freehold_calligraphy_name"
+								set_name="china_calligraphy_name"
                                 transfer_artifact = {
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                         40 = { 
-                            add_artifact = freehold_sculpture
+                            add_artifact = china_sculpture
                             new_artifact = {
-								set_name="freehold_sculpture_name"
+								set_name="china_sculpture_name"
                                 transfer_artifact = {
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                         20 = { 
-                            add_artifact = freehold_ceremonial_robes
+                            add_artifact = china_ceremonial_robes
                             new_artifact = {
                                 transfer_artifact = {
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                         20 = { 
@@ -1526,7 +1526,7 @@ character_event = { # Things went great
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                         20 = { 
@@ -1536,7 +1536,7 @@ character_event = { # Things went great
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                         15 = { 
@@ -1546,7 +1546,7 @@ character_event = { # Things went great
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                         15 = { 
@@ -1556,7 +1556,7 @@ character_event = { # Things went great
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                         10 = { 
@@ -1566,7 +1566,7 @@ character_event = { # Things went great
                                     from = PREV
                                     to = ROOT
                                 }
-                                save_event_target_as = freehold_artifact
+                                save_event_target_as = china_artifact
                             }
                         }
                     }
@@ -1586,9 +1586,9 @@ character_event = { # Things went great
         }
         wealth = 25
         if = {
-            limit = { has_character_flag = freehold_traveler_artifact }
+            limit = { has_character_flag = china_traveler_artifact }
             tooltip = {
-                event_target:freehold_artifact = {
+                event_target:china_artifact = {
                     show_scope_change = no
                     transfer_artifact = {
                         to = ROOT
@@ -1596,11 +1596,11 @@ character_event = { # Things went great
                     }
                 }
             }
-            clr_character_flag = freehold_traveler_artifact
+            clr_character_flag = china_traveler_artifact
         }
         add_grace_medium_effect = yes
         hidden_effect = { FROM = { remove_character_modifier = out_traveling } }
-        clr_character_flag = is_sending_someone_to_freehold
+        clr_character_flag = is_sending_someone_to_china
     }
 }
 character_event = { # Things went good
@@ -1619,7 +1619,7 @@ character_event = { # Things went good
             random = { chance = 50 add_trait_patient_effect = yes }
         }
         hidden_effect = { FROM = { remove_character_modifier = out_traveling } }
-        clr_character_flag = is_sending_someone_to_freehold
+        clr_character_flag = is_sending_someone_to_china
     }
 }
 character_event = { # Things went decently
@@ -1635,7 +1635,7 @@ character_event = { # Things went decently
 		sound_effect = china_grace_gain
         add_grace_trivial_effect = yes
         hidden_effect = { FROM = { remove_character_modifier = out_traveling } }
-        clr_character_flag = is_sending_someone_to_freehold
+        clr_character_flag = is_sending_someone_to_china
     }
 }
 character_event = { # Things went bad
@@ -1653,7 +1653,7 @@ character_event = { # Things went bad
             random = { chance = 50 add_trait = stressed }
         }
         hidden_effect = { FROM = { remove_character_modifier = out_traveling } }
-        clr_character_flag = is_sending_someone_to_freehold
+        clr_character_flag = is_sending_someone_to_china
     }
 }
 character_event = { # Things went terribly
@@ -1674,7 +1674,7 @@ character_event = { # Things went terribly
             random = { chance = 25 add_trait = depressed }
         }
         hidden_effect = { FROM = { remove_character_modifier = out_traveling } }
-        clr_character_flag = is_sending_someone_to_freehold
+        clr_character_flag = is_sending_someone_to_china
     }
 }
 
@@ -1766,13 +1766,13 @@ character_event = { # Special case 1 - The courtier you sent away to Freehold ha
 
         event_target:new_found_lover = {
             set_character_flag = has_to_leave
-            hidden_effect = { leave_court_for_freehold_effect = yes }
+            hidden_effect = { leave_court_for_china_effect = yes }
         }
         add_grace_medium_effect = yes
     }
 
     after = {
-        clr_character_flag = is_sending_someone_to_freehold
+        clr_character_flag = is_sending_someone_to_china
     }
 }
 character_event = { # Special case 2 - The courtier you sent away to Freehold has returned but wants to go back
@@ -1844,12 +1844,12 @@ character_event = { # Special case 2 - The courtier you sent away to Freehold ha
             hidden_effect = {
                 remove_character_modifier = out_traveling
 
-                leave_court_for_freehold_effect = yes
+                leave_court_for_china_effect = yes
                 
                 if = { # They take their spouse with them
                     limit = { is_married = yes }
                     any_spouse = {
-                        leave_court_for_freehold_effect = yes
+                        leave_court_for_china_effect = yes
                     }
                 }
 
@@ -1867,7 +1867,7 @@ character_event = { # Special case 2 - The courtier you sent away to Freehold ha
                             NOT = { is_child_of = ROOT }
                             is_adult = no
                         }
-                        leave_court_for_freehold_effect = yes
+                        leave_court_for_china_effect = yes
                     }
                 }
             }
@@ -1875,7 +1875,7 @@ character_event = { # Special case 2 - The courtier you sent away to Freehold ha
         add_grace_major_effect = yes
         if = {
             limit = { FROM = { is_child_of = ROOT } }
-            set_character_flag = let_child_go_to_freehold #Potential hook-in for future events? 
+            set_character_flag = let_child_go_to_china #Potential hook-in for future events? 
         }
     }
 
@@ -1929,7 +1929,7 @@ character_event = { # Special case 2 - The courtier you sent away to Freehold ha
         }
     }
     after = {
-        clr_character_flag = is_sending_someone_to_freehold
+        clr_character_flag = is_sending_someone_to_china
     }
 }
 
@@ -1942,11 +1942,11 @@ character_event = { # Fallback (in case the traveler died)
     is_triggered_only = yes
 
     trigger = {
-        has_character_flag = is_sending_someone_to_freehold
+        has_character_flag = is_sending_someone_to_china
         event_target:adventurous_spirit = {
             NOT = { is_alive = yes }
             NOR = {
-                death_in_freehold_trigger = yes
+                death_in_china_trigger = yes
                 death_no_trace_trigger = yes
             }
         }
@@ -1955,7 +1955,7 @@ character_event = { # Fallback (in case the traveler died)
     option = {      
         name = EVTOPTA_JD_10020
         custom_tooltip = { text = EVTOPTA_JD_10020_TT }
-        clr_character_flag = is_sending_someone_to_freehold
+        clr_character_flag = is_sending_someone_to_china
     }
 }
 
@@ -1974,8 +1974,8 @@ character_event = { # Hidden event
     only_playable = yes
     
     trigger = {
-        NOT = { offmap_freehold = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
-        freehold_diplo_interaction_trigger = yes
+        NOT = { offmap_china = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
+        china_diplo_interaction_trigger = yes
         any_demesne_province = {
             has_trade_post = yes
             trade_route = silk_road
@@ -1991,7 +1991,7 @@ character_event = { # Hidden event
     }
     
     immediate = {
-        offmap_freehold = {
+        offmap_china = {
             governor = {
                 character_event = { id = JD.30001 }
             }
@@ -2080,7 +2080,7 @@ letter_event = {
 		}
 		
 		add_offmap_currency = {
-			offmap = offmap_freehold
+			offmap = offmap_china
 			value = 150
 		}
 		
@@ -2146,7 +2146,7 @@ letter_event = {
 	option = {
 		name = EVTOPTB_JD_30002
 		add_offmap_currency = {
-			offmap = offmap_freehold
+			offmap = offmap_china
 			value = 50
 		}
 		capital_scope = {
@@ -2179,7 +2179,7 @@ letter_event = {
 	option = {
 		name = EVTOPTC_JD_30002
 		add_offmap_currency = {
-			offmap = offmap_freehold
+			offmap = offmap_china
 			value = -150
 		}
 	}
@@ -2302,21 +2302,21 @@ character_event = {
 	
 	trigger = {
 		is_adult = yes
-        NOT = { offmap_freehold = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
+        NOT = { offmap_china = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
 		NOT = {
-			offmap_freehold = {
-				has_policy = freehold_isolationist
+			offmap_china = {
+				has_policy = china_isolationist
 			}
 		}
 		any_courtier = {
 			block_general_event_trigger = no
 			prisoner = no
-			has_character_flag = originated_from_freehold_court
-            NOT = { has_character_flag = is_escaped_freehold_noble }
-            NOT = { has_character_flag = is_freehold_refugee }
+			has_character_flag = originated_from_china_court
+            NOT = { has_character_flag = is_escaped_china_noble }
+            NOT = { has_character_flag = is_china_refugee }
 			NOT = { has_character_flag = had_opinions_about_host_court }
             NOT = { has_character_flag = ignore_refund }
-			has_character_flag = freehold_courtier_original_court_@ROOT
+			has_character_flag = china_courtier_original_court_@ROOT
 		}
 	}
 	
@@ -2329,15 +2329,15 @@ character_event = {
 			limit = {
 				block_general_event_trigger = no
 				prisoner = no
-				has_character_flag = originated_from_freehold_court
-                NOT = { has_character_flag = is_escaped_freehold_noble }
-                NOT = { has_character_flag = is_freehold_refugee }
+				has_character_flag = originated_from_china_court
+                NOT = { has_character_flag = is_escaped_china_noble }
+                NOT = { has_character_flag = is_china_refugee }
                 NOT = { has_character_flag = ignore_refund }
 				NOT = { has_character_flag = had_opinions_about_host_court }
 			}
 			
 			set_character_flag = had_opinions_about_host_court
-			save_event_target_as = freehold_courtier
+			save_event_target_as = china_courtier
 			random_list = {
 				10 = { # Compliment
 					trigger = {
@@ -2507,7 +2507,7 @@ character_event = {
 		sound_effect = china_grace_gain
 		
 		add_offmap_currency = {
-			offmap = offmap_freehold
+			offmap = offmap_china
 			value = 150
 		}
 	}
@@ -2520,7 +2520,7 @@ character_event = {
 			add_trait_proud_effect = yes
 		}
 		add_offmap_currency = {
-			offmap = offmap_freehold
+			offmap = offmap_china
 			value = 100
 		}
 	}
@@ -2538,7 +2538,7 @@ character_event = {
 	
 	immediate = {
 		hidden_effect = {
-			offmap_freehold = {
+			offmap_china = {
 				governor = {
 					save_event_target_as = target_governor
 				}
@@ -2549,14 +2549,14 @@ character_event = {
 	option = {
 		name = EVTOPTA_JD_30012
 		add_offmap_currency = {
-			offmap = offmap_freehold
+			offmap = offmap_china
 			value = -100
 		}
 	}
 	
 	option = {
 		name = EVTOPTB_JD_30012
-		event_target:freehold_courtier = {
+		event_target:china_courtier = {
 			hidden_tooltip = {
 				imprison = ROOT
 				add_character_modifier = { 
@@ -2601,11 +2601,11 @@ character_event = {
     
     trigger = {
         NOT = { has_character_modifier = trade_competition_in_progress } # No new trade competition should fire while one is in progress
-        offmap_freehold = {
-            NOT = { has_policy = freehold_isolationist }
-            NOT = { has_status = freehold_famine }
-            NOT = { has_status = freehold_plague }
-			NOT = { has_status = freehold_economic_ruin }
+        offmap_china = {
+            NOT = { has_policy = china_isolationist }
+            NOT = { has_status = china_famine }
+            NOT = { has_status = china_plague }
+			NOT = { has_status = china_economic_ruin }
         }
     }
     
@@ -2632,7 +2632,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2640,8 +2640,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = COUNT
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 							}
 							set_character_flag = trade_competition_participant
@@ -2649,7 +2649,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2657,8 +2657,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = COUNT
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2667,7 +2667,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2675,8 +2675,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = COUNT
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2685,7 +2685,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2693,8 +2693,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = COUNT
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2703,7 +2703,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2711,8 +2711,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = COUNT
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2732,7 +2732,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2740,8 +2740,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = DUKE
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 							}
 							set_character_flag = trade_competition_participant
@@ -2749,7 +2749,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2757,8 +2757,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = DUKE
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2767,7 +2767,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2775,8 +2775,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = DUKE
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2785,7 +2785,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2793,8 +2793,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = DUKE
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2803,7 +2803,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2811,8 +2811,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = DUKE
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2832,7 +2832,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2840,8 +2840,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = KING
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 							}
 							set_character_flag = trade_competition_participant
@@ -2849,7 +2849,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2857,8 +2857,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = KING
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2867,7 +2867,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2875,8 +2875,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = KING
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2885,7 +2885,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2893,8 +2893,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = KING
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2903,7 +2903,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2911,8 +2911,8 @@ character_event = {
 								NOR = { 
 									higher_tier_than = KING
 									is_nomadic = yes
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2941,7 +2941,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2949,8 +2949,8 @@ character_event = {
 								NOR = {
 									is_nomadic = yes
 									is_offmap_governor = yes #makes sure it doesn't fire for the governor themselves
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 							}
 							set_character_flag = trade_competition_participant
@@ -2958,7 +2958,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2966,8 +2966,8 @@ character_event = {
 								NOR = {
 									is_nomadic = yes
 									is_offmap_governor = yes #makes sure it doesn't fire for the governor themselves
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2976,7 +2976,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -2984,8 +2984,8 @@ character_event = {
 								NOR = {
 									is_nomadic = yes
 									is_offmap_governor = yes #makes sure it doesn't fire for the governor themselves
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -2994,7 +2994,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -3002,8 +3002,8 @@ character_event = {
 								NOR = {
 									is_nomadic = yes
 									is_offmap_governor = yes #makes sure it doesn't fire for the governor themselves
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -3012,7 +3012,7 @@ character_event = {
 						}
 						random_playable_ruler = {
 							limit = {
-								freehold_diplo_interaction_trigger = yes
+								china_diplo_interaction_trigger = yes
 								any_demesne_province = {
 									trade_route = silk_road
 								}
@@ -3020,8 +3020,8 @@ character_event = {
 								NOR = {
 									is_nomadic = yes
 									is_offmap_governor = yes #makes sure it doesn't fire for the governor themselves
-									has_character_modifier = freehold_raid_active
-									has_character_modifier = freehold_raid_grace_cd
+									has_character_modifier = china_raid_active
+									has_character_modifier = china_raid_grace_cd
 								}
 								NOT = { has_character_flag = trade_competition_participant }
 							}
@@ -3066,7 +3066,7 @@ character_event = {
 							letter_event = { id = JD.40001 }
 						}
 						clr_character_flag = trade_competition_count
-						offmap_freehold = {
+						offmap_china = {
 							governor = {
 								character_event = { id = JD.40006 days = 1825 } # Failure event in case nobody built a city
 							}
@@ -3094,7 +3094,7 @@ character_event = {
 							letter_event = { id = JD.40001 }
 						}
 						clr_character_flag = trade_competition_count
-						offmap_freehold = {
+						offmap_china = {
 							governor = {
 								character_event = { id = JD.40008 days = 913 }
 							}
@@ -3188,7 +3188,7 @@ character_event = {
         set_character_flag = trade_competition_city_winner
         save_event_target_as = trade_competition_city_winner
         clr_character_flag = started_building_holding
-        offmap_freehold = {
+        offmap_china = {
             governor = {
                 character_event = { id = JD.40004 } # Result ping event
             }
@@ -3243,17 +3243,17 @@ letter_event = {
         clr_character_flag = trade_competition_participant
         clr_character_flag = trade_competition_city_winner
         add_offmap_currency = {
-            offmap = offmap_freehold
+            offmap = offmap_china
             value = 1000
         }
         if = {
             limit = {
                 NOT = {
-                    has_character_modifier = freehold_imperial_trade_contract
+                    has_character_modifier = china_imperial_trade_contract
                 }
             }
             add_character_modifier = {
-                modifier = freehold_imperial_trade_contract
+                modifier = china_imperial_trade_contract
                 years = 15
             }
         }
@@ -3269,7 +3269,7 @@ letter_event = {
             show_portrait = yes
         }
         add_offmap_currency = {
-            offmap = offmap_freehold
+            offmap = offmap_china
             value = -100
         }
         clr_character_flag = trade_competition_build_city
@@ -3338,7 +3338,7 @@ letter_event = {
     option = {
         name = EVTOPTA_JD_40007
         add_offmap_currency = {
-            offmap = offmap_freehold
+            offmap = offmap_china
             value = -250
         }
         any_playable_ruler = {
@@ -3876,16 +3876,16 @@ letter_event = {
             if = {
                 limit = {
                     NOT = {
-                        has_character_modifier = freehold_imperial_trade_contract
+                        has_character_modifier = china_imperial_trade_contract
                     }
                 }
                 set_character_flag = trade_competition_winner_modifier
             }
             else_if  = {
                 limit = { 
-                    NOT = { any_artifact = { has_artifact_flag = freehold } }
+                    NOT = { any_artifact = { has_artifact_flag = china } }
                 }
-                offmap_freehold = {
+                offmap_china = {
                     governor = {
                         random_list = {
                             5 = { 
@@ -3895,57 +3895,57 @@ letter_event = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                             15 = { 
-                                add_artifact = freehold_dragon_amulet
+                                add_artifact = china_dragon_amulet
                                 new_artifact = {
                                     transfer_artifact = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                             40 = {
-                                add_artifact = freehold_artwork
+                                add_artifact = china_artwork
                                 new_artifact = {
                                     transfer_artifact = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                             40 = { 
-                                add_artifact = freehold_calligraphy
+                                add_artifact = china_calligraphy
                                 new_artifact = {
                                     transfer_artifact = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                             40 = { 
-                                add_artifact = freehold_sculpture
+                                add_artifact = china_sculpture
                                 new_artifact = {
                                     transfer_artifact = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                             20 = { 
-                                add_artifact = freehold_ceremonial_robes
+                                add_artifact = china_ceremonial_robes
                                 new_artifact = {
                                     transfer_artifact = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                             20 = { 
@@ -3978,7 +3978,7 @@ letter_event = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                             20 = { 
@@ -3988,7 +3988,7 @@ letter_event = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                             15 = { 
@@ -3998,7 +3998,7 @@ letter_event = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                             15 = { 
@@ -4008,7 +4008,7 @@ letter_event = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                             10 = { 
@@ -4018,7 +4018,7 @@ letter_event = {
                                         from = PREV
                                         to = ROOT
                                     }
-                                    save_event_target_as = freehold_artifact
+                                    save_event_target_as = china_artifact
                                 }
                             }
                         }
@@ -4047,11 +4047,11 @@ letter_event = {
         if = {
             limit = { has_character_flag = trade_competition_winner_modifier }
             add_character_modifier = {
-                modifier = freehold_imperial_trade_contract
+                modifier = china_imperial_trade_contract
                 years = 15
             }
             add_offmap_currency = {
-                offmap = offmap_freehold
+                offmap = offmap_china
                 value = 750
             }
             clr_character_flag = trade_competition_winner_modifier
@@ -4059,7 +4059,7 @@ letter_event = {
         if = {
             limit = { has_character_flag = trade_competition_winner_artifact }
             tooltip = {
-                event_target:freehold_artifact = { 
+                event_target:china_artifact = { 
                     show_scope_change = no
                     transfer_artifact = {
                         from = FROM
@@ -4068,7 +4068,7 @@ letter_event = {
                 }
             }
             add_offmap_currency = {
-                offmap = offmap_freehold
+                offmap = offmap_china
                 value = 750
             }
             clr_character_flag = trade_competition_winner_artifact
@@ -4076,7 +4076,7 @@ letter_event = {
         if = {
             limit = { has_character_flag = trade_competition_winner_grace }
             add_offmap_currency = {
-                offmap = offmap_freehold
+                offmap = offmap_china
                 value = 1500
             }
             clr_character_flag = trade_competition_winner_grace
@@ -4096,7 +4096,7 @@ letter_event = {
         clr_character_flag = trade_competition_participant
         clr_character_flag = trade_competition_accumulate_prestige
         add_offmap_currency = {
-            offmap = offmap_freehold
+            offmap = offmap_china
             value = -100
         }
     }
@@ -4115,26 +4115,26 @@ character_event = {
 	only_playable = yes
 	
 	trigger = { 
-        NOT = { offmap_freehold = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
-		NOT = { has_character_flag = escaped_freehold_noble }
+        NOT = { offmap_china = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
+		NOT = { has_character_flag = escaped_china_noble }
         is_inaccessible_trigger = no
-        freehold_diplo_interaction_trigger = yes
-        offmap_freehold = {
+        china_diplo_interaction_trigger = yes
+        offmap_china = {
             NOR = {
-                has_status = freehold_civil_war
-                has_status = freehold_plague
+                has_status = china_civil_war
+                has_status = china_plague
             }
         }
     }
 
 	immediate = {
-    	offmap_freehold = {
+    	offmap_china = {
 			offmap_ruler = {
-				save_event_target_as = freehold_emperor
+				save_event_target_as = china_emperor
 			}
     	}
 	
-    	set_character_flag = escaped_freehold_noble
+    	set_character_flag = escaped_china_noble
 	
 		create_character = {
 			random_traits = yes
@@ -4145,11 +4145,11 @@ character_event = {
 		}
 	
 		new_character = {
-			set_character_flag = originated_from_freehold_court
+			set_character_flag = originated_from_china_court
             set_character_flag = no_court_invites
 			set_character_flag = ignore_refund
-            set_character_flag = is_escaped_freehold_noble
-			save_event_target_as = escaped_freehold_noble
+            set_character_flag = is_escaped_china_noble
+			save_event_target_as = escaped_china_noble
 			character_event = { id = JD.70001 days = 1 }
 		}
 	}
@@ -4182,7 +4182,7 @@ character_event = {		#Escaped Freehold Noble appears
 		
 		custom_tooltip = { text = EVTOPTA_JD_70002_TT }
 		
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			opinion = {
 				modifier = opinion_very_grateful
 				who = ROOT
@@ -4193,7 +4193,7 @@ character_event = {		#Escaped Freehold Noble appears
 		hidden_effect = {
 			random_list = {
 				50 = {
-					offmap_freehold = { 
+					offmap_china = { 
 						governor = { character_event = { id = JD.70007 days = 30 } } 
 					}
 				}
@@ -4209,7 +4209,7 @@ character_event = {		#Escaped Freehold Noble appears
 		
 		custom_tooltip = { text = EVTOPTC_JD_70002_TT }
 		
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			opinion = {
 				modifier = opinion_very_grateful
 				who = ROOT
@@ -4228,7 +4228,7 @@ character_event = {		#Escaped Freehold Noble appears
 	option = {
 		name = EVTOPTB_JD_70002
 		
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			hidden_effect = {
 				leave_court_and_die_effect = yes
 			}
@@ -4236,7 +4236,7 @@ character_event = {		#Escaped Freehold Noble appears
 		
 		custom_tooltip = { text = EVTOPTB_JD_70002_TT }
 		
-		#event_target:escaped_freehold_noble = {
+		#event_target:escaped_china_noble = {
 		#	opinion = {
 		#		modifier = opinion_disappointed
 		#		who = ROOT
@@ -4269,7 +4269,7 @@ letter_event = {			#Freehold finds out
 	is_triggered_only = yes
 	
 	trigger = {
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			is_alive = yes
             is_landed = no
 		}
@@ -4311,7 +4311,7 @@ character_event = {			#Freehold does not find out
 	is_triggered_only = yes
 	
 	trigger = {
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			is_alive = yes
 			prisoner = no # This will effectively break the chain if the courtier is imprisoned... leaving no trace of the end of the chain.
 			is_incapable = no
@@ -4325,10 +4325,10 @@ character_event = {			#Freehold does not find out
 		if = {
 			limit = {
 				NOT = {
-					has_artifact = freehold_dragon_amulet
+					has_artifact = china_dragon_amulet
 				}
 			}
-			add_artifact = freehold_dragon_amulet
+			add_artifact = china_dragon_amulet
 		}
 		else_if = {
 			limit = {
@@ -4339,20 +4339,20 @@ character_event = {			#Freehold does not find out
 			add_artifact = silk_shroud
 		}
 		else = {
-			add_artifact = freehold_prev_emperor_sculpture
+			add_artifact = china_prev_emperor_sculpture
 			new_artifact = {
-				set_name="freehold_figurine_name"
+				set_name="china_figurine_name"
 			}
 		}
 		
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
             show_portrait = yes
         }
 		
 		custom_tooltip = {
 			text = EVTOPTA_JD_70004_TT
 			hidden_effect = {
-				event_target:escaped_freehold_noble = {
+				event_target:escaped_china_noble = {
 					leave_court_and_die_effect = yes
 				}
 			}
@@ -4371,7 +4371,7 @@ character_event = {			#You let Freehold know
 	is_triggered_only = yes
 	
 	trigger = {
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			is_alive = yes
             is_landed = no
 		}
@@ -4383,10 +4383,10 @@ character_event = {			#You let Freehold know
 		sound_effect = china_grace_gain
 		add_grace_medium_effect = yes
 	
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			death = {
-				death_reason = death_executed_by_freehold_emperor
-				killer = event_target:freehold_emperor
+				death_reason = death_executed_by_china_emperor
+				killer = event_target:china_emperor
 			}
 		}
 	}
@@ -4402,7 +4402,7 @@ character_event = {			#You let Freehold know but the noble escapes
 	is_triggered_only = yes
 	
 	trigger = {
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			is_alive = yes
             is_landed = no
 		}
@@ -4411,7 +4411,7 @@ character_event = {			#You let Freehold know but the noble escapes
 	immediate = {
 		detract_grace_minor_effect = yes
 	
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			leave_court_and_die_effect = yes
 		}
 	}
@@ -4436,17 +4436,17 @@ character_event = {			#Freehold Assassinates the noble
 	is_triggered_only = yes
 	
 	trigger = {
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			is_alive = yes
             is_landed = no
 		}
 	}
 	
 	immediate = {
-		event_target:escaped_freehold_noble = {
+		event_target:escaped_china_noble = {
 			death = {
 				death_reason = death_murder_unknown_strangle
-				killer = event_target:freehold_emperor
+				killer = event_target:china_emperor
 			}
 		}
 	}
@@ -4454,10 +4454,10 @@ character_event = {			#Freehold Assassinates the noble
 	option = {
 		name = EVTOPTA_JD_70009
 		tooltip = {
-			event_target:escaped_freehold_noble = {
+			event_target:escaped_china_noble = {
 				death = {
 					death_reason = death_murder_unknown_strangle
-					killer = event_target:freehold_emperor
+					killer = event_target:china_emperor
 				}
 			}
 		}
@@ -4498,10 +4498,10 @@ character_event = {
     only_playable = yes
     
     trigger = {
-        NOT = { offmap_freehold = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
-        NOT = { has_character_flag = received_freehold_refugee }
+        NOT = { offmap_china = { governor = { character = ROOT } } } #makes sure it doesn't fire for the governor themselves
+        NOT = { has_character_flag = received_china_refugee }
         is_inaccessible_trigger = no
-        freehold_diplo_interaction_trigger = yes
+        china_diplo_interaction_trigger = yes
         OR = {
             NOT = { any_courtier = { has_minor_title = title_administrator } }
             NOT = { any_courtier = { has_minor_title = title_master_engineer } }
@@ -4511,14 +4511,14 @@ character_event = {
             }
         }
 
-        offmap_freehold = {
+        offmap_china = {
             OR = {
-                has_status = freehold_dothraki_invasion
-                has_status = freehold_rhoynish_invasion
-				has_status = freehold_ghiscari_invasion
-                has_status = freehold_civil_war
-                has_status = freehold_famine
-                has_status = freehold_plague
+                has_status = china_dothraki_invasion
+                has_status = china_rhoynish_invasion
+				has_status = china_ghiscari_invasion
+                has_status = china_civil_war
+                has_status = china_famine
+                has_status = china_plague
             }
         }
     }
@@ -4526,23 +4526,23 @@ character_event = {
         factor = 1
         
         modifier = {
-            offmap_freehold = { has_policy = freehold_isolationist }
+            offmap_china = { has_policy = china_isolationist }
             factor = 0.8
         }        
         modifier = {
-            offmap_freehold = { has_status = freehold_civil_war }
+            offmap_china = { has_status = china_civil_war }
             factor = 0.5
         }
         modifier = {
-            offmap_freehold = { has_status = freehold_famine }
+            offmap_china = { has_status = china_famine }
             factor = 0.25
         }
         modifier = {
-            offmap_freehold = { has_status = freehold_plague }
+            offmap_china = { has_status = china_plague }
             factor = 0.25
         }
 		modifier = {
-            offmap_freehold = { has_status = freehold_economic_ruin }
+            offmap_china = { has_status = china_economic_ruin }
             factor = 0.25
         }
 
@@ -4556,9 +4556,9 @@ character_event = {
     }
 
     immediate = {
-        offmap_freehold = {
+        offmap_china = {
             offmap_ruler = {
-                save_event_target_as = freehold_emperor
+                save_event_target_as = china_emperor
             }
         }
 
@@ -4580,7 +4580,7 @@ character_event = {
             }
         }
     
-        set_character_flag = received_freehold_refugee
+        set_character_flag = received_china_refugee
     
         ####
 
@@ -4636,16 +4636,16 @@ character_event = {
                 }
                 new_character = {
                     #Education & other basic stuff
-                    save_event_target_as = freehold_administrator
-                    save_event_target_as = freehold_refugee
+                    save_event_target_as = china_administrator
+                    save_event_target_as = china_refugee
 
                     add_character_modifier = {
                         name = jd_administrator
                         duration = -1
                     }
-                    set_character_flag = is_freehold_administrator
-                    set_character_flag = originated_from_freehold_court
-                    set_character_flag = freehold_courtier_original_court_@PREV
+                    set_character_flag = is_china_administrator
+                    set_character_flag = originated_from_china_court
+                    set_character_flag = china_courtier_original_court_@PREV
                     set_character_flag = no_court_invites
 					set_character_flag = ignore_refund
                     random_list = {
@@ -4865,16 +4865,16 @@ character_event = {
                 }
                 new_character = {
                     #Education & other basic stuff
-                    save_event_target_as = freehold_master_engineer
-                    save_event_target_as = freehold_refugee
+                    save_event_target_as = china_master_engineer
+                    save_event_target_as = china_refugee
 
                     add_character_modifier = {
                         name = jd_master_engineer
                         duration = -1
                     }
-                    set_character_flag = is_freehold_master_engineer
-                    set_character_flag = originated_from_freehold_court
-                    set_character_flag = freehold_courtier_original_court_@PREV
+                    set_character_flag = is_china_master_engineer
+                    set_character_flag = originated_from_china_court
+                    set_character_flag = china_courtier_original_court_@PREV
                     set_character_flag = no_court_invites
 					set_character_flag = ignore_refund
                     random_list = {
@@ -5092,16 +5092,16 @@ character_event = {
                 }
                 new_character = {
                     #Education & other basic stuff
-                    save_event_target_as = freehold_strategist
-                    save_event_target_as = freehold_refugee
+                    save_event_target_as = china_strategist
+                    save_event_target_as = china_refugee
 
                     add_character_modifier = {
                         name = jd_strategist
                         duration = -1
                     }
-                    set_character_flag = is_freehold_strategist
-                    set_character_flag = originated_from_freehold_court
-                    set_character_flag = freehold_courtier_original_court_@PREV
+                    set_character_flag = is_china_strategist
+                    set_character_flag = originated_from_china_court
+                    set_character_flag = china_courtier_original_court_@PREV
                     set_character_flag = no_court_invites
 					set_character_flag = ignore_refund
                     random_list = {
@@ -5151,8 +5151,8 @@ character_event = {
                             add_trait = logistics_expert
                             if = {
                                 limit = {
-                                    offmap_freehold = {
-                                        has_status = freehold_golden_age
+                                    offmap_china = {
+                                        has_status = china_golden_age
                                     }
                                 }
                                 random_list = {
@@ -5197,8 +5197,8 @@ character_event = {
                             add_trait = sapper 
                             if = {
                                 limit = {
-                                    offmap_freehold = {
-                                        has_status = freehold_golden_age
+                                    offmap_china = {
+                                        has_status = china_golden_age
                                     }
                                 }
                                 random_list = {
@@ -5233,8 +5233,8 @@ character_event = {
                             add_trait = master_of_flame 
                             if = {
                                 limit = {
-                                    offmap_freehold = {
-                                        has_status = freehold_golden_age
+                                    offmap_china = {
+                                        has_status = china_golden_age
                                     }
                                 }
                                 random_list = {
@@ -5274,8 +5274,8 @@ character_event = {
                             add_trait = levy_coordinator 
                             if = {
                                 limit = {
-                                    offmap_freehold = {
-                                        has_status = freehold_golden_age
+                                    offmap_china = {
+                                        has_status = china_golden_age
                                     }
                                 }
                                 random_list = {
@@ -5302,7 +5302,7 @@ character_event = {
 
                     #Add second commander trait
                     if = {
-                        limit = { offmap_freehold = { has_status = freehold_golden_age } }
+                        limit = { offmap_china = { has_status = china_golden_age } }
                         random_list = {
                             25 = {
                                 trigger = { NOT = {trait = master_of_flame } }
@@ -5374,12 +5374,12 @@ character_event = {
                 }
                 new_character = {
                     #Education & other basic stuff
-                    save_event_target_as = freehold_doctor
-                    save_event_target_as = freehold_refugee
+                    save_event_target_as = china_doctor
+                    save_event_target_as = china_refugee
 
-                    set_character_flag = is_freehold_doctor
-                    set_character_flag = originated_from_freehold_court
-                    set_character_flag = freehold_courtier_original_court_@PREV
+                    set_character_flag = is_china_doctor
+                    set_character_flag = originated_from_china_court
+                    set_character_flag = china_courtier_original_court_@PREV
                     set_character_flag = no_court_invites
 					set_character_flag = ignore_refund
                     random_list = {
@@ -5598,8 +5598,8 @@ character_event = {
                     }
                     if = {
                         limit = {
-                            offmap_freehold = {
-                                has_status = freehold_golden_age
+                            offmap_china = {
+                                has_status = china_golden_age
                             }
                         }
                         change_learning = 5
@@ -5609,7 +5609,7 @@ character_event = {
             }
         }
         #### send ping...
-        event_target:freehold_refugee = { character_event = { id = JD.10031 days = 1 } }
+        event_target:china_refugee = { character_event = { id = JD.10031 days = 1 } }
     }
 }
 
@@ -5620,7 +5620,7 @@ character_event = {
     hide_window = yes
     is_triggered_only = yes
     immediate = {
-        set_character_flag = is_freehold_refugee
+        set_character_flag = is_china_refugee
         FROM = { character_event = { id = JD.10032 } }
     }
 }
@@ -5634,19 +5634,19 @@ character_event = {
     is_triggered_only = yes
     
     desc = {
-        text = EVTDESC_JD_10032_A #freehold_administrator
+        text = EVTDESC_JD_10032_A #china_administrator
         trigger = { has_character_flag = received_administrator }
     }
     desc = {
-        text = EVTDESC_JD_10032_B #freehold_master_engineer
+        text = EVTDESC_JD_10032_B #china_master_engineer
         trigger = { has_character_flag = received_engineer }
     }
     desc = {
-        text = EVTDESC_JD_10032_C #freehold_strategist
+        text = EVTDESC_JD_10032_C #china_strategist
         trigger = { has_character_flag = received_strategist }
     }
     desc = {
-        text = EVTDESC_JD_10032_D #freehold_doctor
+        text = EVTDESC_JD_10032_D #china_doctor
         trigger = { has_character_flag = received_physician }
     }
 
@@ -5655,12 +5655,12 @@ character_event = {
         name = EVTOPTA_JD_10032
         custom_tooltip = { text = EVTOPTA_JD_10032_TT }
 
-        event_target:freehold_administrator = {
+        event_target:china_administrator = {
             show_scope_change = no
             if = {
                 limit = {
-                    offmap_freehold = {
-                        has_status = freehold_golden_age
+                    offmap_china = {
+                        has_status = china_golden_age
                     }
                 }
                 set_character_flag = jd_administrator_golden_age #so you can't reappoint during golden age to get better modifier
@@ -5670,8 +5670,8 @@ character_event = {
         tooltip = {
             if = {
                 limit = {
-                    offmap_freehold = {
-                        has_status = freehold_golden_age
+                    offmap_china = {
+                        has_status = china_golden_age
                     }
                 }
                 add_character_modifier = {
@@ -5688,7 +5688,7 @@ character_event = {
         }
 
         reverse_opinion = {
-            who = event_target:freehold_refugee
+            who = event_target:china_refugee
             modifier = opinion_grateful
             months = 1200
         }
@@ -5702,22 +5702,22 @@ character_event = {
         name = EVTOPTB_JD_10032
         custom_tooltip = { text = EVTOPTA_JD_10032_TT }
 
-        event_target:freehold_master_engineer = { 
+        event_target:china_master_engineer = { 
             show_scope_change = no
             if = {
                 limit = {
-                    offmap_freehold = {
-                        has_status = freehold_golden_age
+                    offmap_china = {
+                        has_status = china_golden_age
                     }
                 }
-                set_character_flag = freehold_master_engineer_golden_age #so you can't reappoint in golden age to get better effects
+                set_character_flag = china_master_engineer_golden_age #so you can't reappoint in golden age to get better effects
             }
             set_character_flag = master_engineer_just_spawned
             give_minor_title = title_master_engineer #effects in minor title definition
         }
 
         reverse_opinion = {
-            who = event_target:freehold_refugee
+            who = event_target:china_refugee
             modifier = opinion_grateful
             months = 1200
         }
@@ -5731,7 +5731,7 @@ character_event = {
         name = EVTOPTC_JD_10032
         custom_tooltip = { text = EVTOPTA_JD_10032_TT } #(yes, the same as opt A)
         
-        event_target:freehold_strategist = {
+        event_target:china_strategist = {
             show_scope_change = no
             if = {
                 limit = { 
@@ -5743,7 +5743,7 @@ character_event = {
         }
 
         reverse_opinion = {
-            who = event_target:freehold_refugee
+            who = event_target:china_refugee
             modifier = opinion_grateful
             months = 1200
         }
@@ -5757,13 +5757,13 @@ character_event = {
         name = EVTOPTD_JD_10032
         custom_tooltip = { text = EVTOPTA_JD_10032_TT }
         
-        event_target:freehold_doctor = {
+        event_target:china_doctor = {
             show_scope_change = no
             give_minor_title = title_court_physician
         }
 
         reverse_opinion = {
-            who = event_target:freehold_refugee
+            who = event_target:china_refugee
             modifier = opinion_grateful
             months = 1200
         }
@@ -5775,14 +5775,14 @@ character_event = {
     
     option = { #Opt out (they leave court and die)...
         name = {
-            text = EVTOPTE_JD_10032_1 #"Surely this [freehold_refugee.GetManWoman] can find shelter elsewhere."
+            text = EVTOPTE_JD_10032_1 #"Surely this [china_refugee.GetManWoman] can find shelter elsewhere."
             trigger = {
                 has_character_flag = received_administrator
             }
         }
         if = {
             limit = { has_character_flag = received_administrator }
-            custom_tooltip = { text = EVTOPTE_JD_10032_1_TT } #"You send the [freehold_refugee.GetManWoman] away.\n"
+            custom_tooltip = { text = EVTOPTE_JD_10032_1_TT } #"You send the [china_refugee.GetManWoman] away.\n"
         }
 
         name = {
@@ -5808,7 +5808,7 @@ character_event = {
         }
 
         name = {
-            text = EVTOPTE_JD_10032_4 #"I'm sure [freehold_refugee.GetSheHe] wants to be left alone"
+            text = EVTOPTE_JD_10032_4 #"I'm sure [china_refugee.GetSheHe] wants to be left alone"
             trigger = {
                 has_character_flag = received_physician
             }
@@ -5819,7 +5819,7 @@ character_event = {
         }
         
         hidden_effect = {
-            event_target:freehold_refugee = {
+            event_target:china_refugee = {
                 leave_court_and_die_effect = yes
             }
         }
@@ -5843,7 +5843,7 @@ character_event = {
 	has_dlc = "Jade Dragon"
     hide_window = yes
     is_triggered_only = yes
-    immediate = { clr_character_flag = received_freehold_refugee } #Now you can get the event again!
+    immediate = { clr_character_flag = received_china_refugee } #Now you can get the event again!
 }
 
 ################
@@ -5920,10 +5920,10 @@ character_event = { # Traveling Teacher
 				is_inaccessible_trigger = yes
 			}
 		}
-		offmap_freehold = {
+		offmap_china = {
             NOR = {
-                has_status = freehold_plague
-				has_status = freehold_famine
+                has_status = china_plague
+				has_status = china_famine
             }
         }
 	}
@@ -5969,7 +5969,7 @@ character_event = { # Traveling Teacher
 			add_trait = scholar
 			add_trait = erudite
 			
-			set_character_flag = originated_from_freehold_court
+			set_character_flag = originated_from_china_court
 			set_character_flag = ignore_refund
 			
 			save_event_target_as = traveling_teacher

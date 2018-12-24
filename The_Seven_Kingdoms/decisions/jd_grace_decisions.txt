@@ -1,4 +1,4 @@
-###GRACE INTERACTION DECISIONS FOR FREEHOLD###
+###GRACE INTERACTION DECISIONS FOR CHINA###
 
 #Add the decisions in a nice order which will make sense in the menu! For example, ranked by cost/reward.
 
@@ -6,13 +6,13 @@
 #PAYING TRIBUTE DECISIONS (GAIN GRACE)
 offmap_decisions = {
 
-	freehold_grace_send_gift = {
+	china_grace_send_gift = {
 		only_playable = yes
 		button_name = offmap_gifts
 		ai_check_interval = 12
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 
 		from_potential = {
@@ -28,15 +28,15 @@ offmap_decisions = {
 				show_scope_change = no
 				scaled_wealth = { value = 4 min = 500 }
 				custom_tooltip = {
-					text = freehold_grace_send_gift_allow_tt 
-					NOT = { has_character_modifier = freehold_grace_send_gift_timer }
+					text = china_grace_send_gift_allow_tt 
+					NOT = { has_character_modifier = china_grace_send_gift_timer }
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			china_offmap_tribute_decisions_enabled_trigger = yes
 		}
 		effect = {
 			FROM = {
@@ -45,26 +45,26 @@ offmap_decisions = {
 				hidden_effect = {
 					add_character_modifier = {
 						hidden = yes
-						name = freehold_grace_send_gift_timer
-						years = 15 #Change freehold_grace_send_gift_allow_tt if this number changes
+						name = china_grace_send_gift_timer
+						years = 15 #Change china_grace_send_gift_allow_tt if this number changes
 					} 
 				}
 				tooltip = {
 					if = {
 						limit = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = wealth
 							}
 							NOT = {
 								disliked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 									context = wealth
 								}
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 450
 						}
 						e_valyrian_freehold = {
@@ -78,18 +78,18 @@ offmap_decisions = {
 					if = {
 						limit = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = wealth
 							}
 							NOT = {
 								liked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 									context = wealth
 								}
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 150
 						}
 						e_valyrian_freehold = {
@@ -103,16 +103,16 @@ offmap_decisions = {
 					if = {
 						limit = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = wealth
 							}
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = wealth
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 300
 						}
 						e_valyrian_freehold = {
@@ -127,23 +127,23 @@ offmap_decisions = {
 						limit = {
 							NOR = {
 								liked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 									context = wealth
 								}
 								disliked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 									context = wealth
 								}
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 300
 						}
 					}
 				}
 			}
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.20023 } } } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.20023 } } } }
 		}
 
 		revoke_allowed = {
@@ -163,13 +163,13 @@ offmap_decisions = {
 	}
 
 	#Offering to become tributary
-	freehold_grace_become_tributary = {
+	china_grace_become_tributary = {
 		only_independent = yes
 		button_name = offmap_gifts
 		ai_check_interval = 12
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 	
 		from_potential = {
@@ -187,13 +187,13 @@ offmap_decisions = {
 				war = no
 				OR = {
 					custom_tooltip = { #Borders the Western Governate
-						text = freehold_grace_become_tributary_allow_governor_neighbor_tt
+						text = china_grace_become_tributary_allow_governor_neighbor_tt
 						any_neighbor_independent_ruler = {
 							has_landed_title = e_valyrian_freehold
 						}
 					}
 					custom_tooltip = { #Borders a Freehold tributary
-						text = freehold_grace_become_tributary_allow_tributary_neighbor_tt
+						text = china_grace_become_tributary_allow_tributary_neighbor_tt
 						any_neighbor_independent_ruler = {
 							suzerain = {
 								has_landed_title = e_valyrian_freehold
@@ -201,13 +201,13 @@ offmap_decisions = {
 						}
 					}
 					custom_tooltip = { #Borders the eastern edge of the map
-						text = freehold_grace_become_tributary_allow_freehold_influence_tt
+						text = china_grace_become_tributary_allow_china_influence_tt
 						any_realm_province = {
 							region = custom_chinese_invasion_target_region
 						}
 					}
 					custom_tooltip = { #Within diplo range of Freehold and has a port in India
-						text = freehold_grace_become_tributary_allow_india_tt
+						text = china_grace_become_tributary_allow_india_tt
 						any_realm_province = { 
 							port = yes 
 							region = world_essos
@@ -215,36 +215,36 @@ offmap_decisions = {
 					}
 				}
 				custom_tooltip = {
-					text = freehold_grace_become_tributary_allow_suzerain_tt
+					text = china_grace_become_tributary_allow_suzerain_tt
 					NOT = {
 						is_tributary = yes
 					}
 				}
 				NOT = { tier = emperor }
 				custom_tooltip = {
-					text = freehold_tribute_become_tributary_cooldown_tt
-					NOT = { has_character_modifier = freehold_grace_tributary_timer }
+					text = china_tribute_become_tributary_cooldown_tt
+					NOT = { has_character_modifier = china_grace_tributary_timer }
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				NOT = { has_character_flag = asked_to_become_tributary }
 				is_inaccessible_trigger = no
 			}
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			china_offmap_tribute_decisions_enabled_trigger = yes
 		}
 
 		effect = {
 			log = "---------------------"
 			log = "Freehold Logging:"
-			log = "[From.GetTitledName] has voluntarily become a tributary of the [offmap_freehold.GetFullname]"
+			log = "[From.GetTitledName] has voluntarily become a tributary of the [offmap_china.GetFullname]"
 			log = "---------------------"
 			make_tributary = {
 				who = FROM
 				tributary_type = offmap
 			}
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.20027 } } } }
-			custom_tooltip = { text = freehold_grace_become_tributary_effect_TT }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.20027 } } } }
+			custom_tooltip = { text = china_grace_become_tributary_effect_TT }
 			FROM = {
 				show_scope_change = no
 				sound_effect = china_grace_gain
@@ -252,18 +252,18 @@ offmap_decisions = {
 					if = {
 						limit = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = tributary
 							}
 							NOT = {
 								disliked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 									context = tributary
 								}
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 400
 						}
 						e_valyrian_freehold = {
@@ -277,18 +277,18 @@ offmap_decisions = {
 					if = {
 						limit = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = tributary
 							}
 							NOT = {
 								liked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 									context = tributary
 								}
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 100
 						}
 						e_valyrian_freehold = {
@@ -302,16 +302,16 @@ offmap_decisions = {
 					if = {
 						limit = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = tributary
 							}
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = tributary
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 200
 						}
 						e_valyrian_freehold = {
@@ -326,17 +326,17 @@ offmap_decisions = {
 						limit = {
 							NOR = {
 								liked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 									context = tributary
 								}
 								disliked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 									context = tributary
 								}
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 200
 						}
 					}
@@ -358,13 +358,13 @@ offmap_decisions = {
 		}
 	}
 	
-	freehold_grace_supply_horses = {
+	china_grace_supply_horses = {
 		only_playable = yes
 		button_name = offmap_gifts
 		ai_check_interval = 36
     
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 	
 		from_potential = {
@@ -381,13 +381,13 @@ offmap_decisions = {
 				show_scope_change = no
 				is_nomadic = yes
 				custom_tooltip = {
-					text = freehold_grace_supply_horses_not_already_supplying_tt
+					text = china_grace_supply_horses_not_already_supplying_tt
 					NOT = {
-						has_character_modifier = freehold_supply_horses
+						has_character_modifier = china_supply_horses
 					}
 				}
 				custom_tooltip = {
-					text = freehold_grace_supply_horses_stopped_supplying_tt
+					text = china_grace_supply_horses_stopped_supplying_tt
 					NOT = {
 						has_character_flag = stopped_supplying_horses
 					}
@@ -395,13 +395,13 @@ offmap_decisions = {
 				war = no
 				OR = {
 					custom_tooltip = { #Borders the Western Governate
-						text = freehold_grace_become_tributary_allow_governor_neighbor_tt
+						text = china_grace_become_tributary_allow_governor_neighbor_tt
 						any_neighbor_independent_ruler = {
 							has_landed_title = e_valyrian_freehold
 						}
 					}
 					custom_tooltip = { #Borders a Freehold tributary
-						text = freehold_grace_become_tributary_allow_tributary_neighbor_tt
+						text = china_grace_become_tributary_allow_tributary_neighbor_tt
 						any_neighbor_independent_ruler = {
 							suzerain = {
 								has_landed_title = e_valyrian_freehold
@@ -409,7 +409,7 @@ offmap_decisions = {
 						}
 					}
 					custom_tooltip = { #Borders the eastern edge of the map
-						text = freehold_grace_become_tributary_allow_freehold_influence_tt
+						text = china_grace_become_tributary_allow_china_influence_tt
 						any_realm_province = {
 							region = custom_chinese_invasion_target_region
 						}
@@ -419,33 +419,33 @@ offmap_decisions = {
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			china_offmap_tribute_decisions_enabled_trigger = yes
 		}
     
 		effect = {
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.3040 } } } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.3040 } } } }
 			FROM = {
 				sound_effect = china_grace_gain
 				tooltip = {
 					add_character_modifier = {
-						name = freehold_supply_horses
+						name = china_supply_horses
 						duration = -1
 						inherit = yes
 					}
 					if = {
 						limit = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 							NOT = {
 								disliked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 								}
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 150
 						}
 						e_valyrian_freehold = {
@@ -459,16 +459,16 @@ offmap_decisions = {
 					if = {
 						limit = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 							NOT = {
 								liked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 								}
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 50
 						}
 						e_valyrian_freehold = {
@@ -482,14 +482,14 @@ offmap_decisions = {
 					if = {
 						limit = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 150
 						}
 						e_valyrian_freehold = {
@@ -504,15 +504,15 @@ offmap_decisions = {
 						limit = {
 							NOR = {
 								liked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 								}
 								disliked_by_offmap = {
-									type = offmap_freehold
+									type = offmap_china
 								}
 							}
 						}
 						add_offmap_currency = {
-							offmap = offmap_freehold
+							offmap = offmap_china
 							value = 100
 						}
 					}
@@ -548,13 +548,13 @@ offmap_decisions = {
 		}
 	}
 	
-	freehold_grace_stop_supply_horses = {
+	china_grace_stop_supply_horses = {
 		only_playable = yes
 		button_name = offmap_gifts
 		ai_check_interval = 36
     
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 	
 		from_potential = {
@@ -562,38 +562,38 @@ offmap_decisions = {
 			mercenary = no
 			holy_order = no
 			is_landed = yes
-			has_character_modifier = freehold_supply_horses
+			has_character_modifier = china_supply_horses
 		}
     
 		allow = {
 			show_only_failed_conditions = yes
 			FROM = {
 				show_scope_change = no
-				has_character_modifier = freehold_supply_horses
+				has_character_modifier = china_supply_horses
 			}
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			#freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			#china_offmap_tribute_decisions_enabled_trigger = yes
 		}
     
 		effect = {
-			#hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.3040 } } } }
+			#hidden_effect = { offmap_china = { governor = { character_event = { id = JD.3040 } } } }
 			FROM = {
 				sound_effect = chinese_emperor_angered
 				set_character_flag = stopped_supplying_horses
-				remove_character_modifier = freehold_supply_horses
+				remove_character_modifier = china_supply_horses
 				if = {
 					limit = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 						}
 						NOT = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
 					add_offmap_currency = {
-						offmap = offmap_freehold
+						offmap = offmap_china
 						value = -150
 					}
 					e_valyrian_freehold = {
@@ -607,16 +607,16 @@ offmap_decisions = {
 				if = {
 					limit = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 						}
 						NOT = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
 					add_offmap_currency = {
-						offmap = offmap_freehold
+						offmap = offmap_china
 						value = -50
 					}
 					e_valyrian_freehold = {
@@ -630,14 +630,14 @@ offmap_decisions = {
 				if = {
 					limit = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 						}
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 						}
 					}
 					add_offmap_currency = {
-						offmap = offmap_freehold
+						offmap = offmap_china
 						value = -150
 					}
 					e_valyrian_freehold = {
@@ -652,15 +652,15 @@ offmap_decisions = {
 					limit = {
 						NOR = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
 					add_offmap_currency = {
-						offmap = offmap_freehold
+						offmap = offmap_china
 						value = -100
 					}
 				}
@@ -696,7 +696,7 @@ offmap_decisions = {
 		}
 	}
 
-	# freehold_grace_offer_eunuch = {
+	# china_grace_offer_eunuch = {
 		# only_playable = yes
 		# button_name = offmap_gifts
 		
@@ -707,7 +707,7 @@ offmap_decisions = {
 		# show_third_party_potential = yes
 
 		# potential = {
-			# is_offmap_tag = offmap_freehold
+			# is_offmap_tag = offmap_china
 		# }
 	
 		# from_potential = {
@@ -722,15 +722,15 @@ offmap_decisions = {
 			# FROM = {
 				# show_scope_change = no
 				# custom_tooltip = {
-					# text = freehold_tribute_send_eunuch_cooldown_tt
-					# NOT = { has_character_modifier = freehold_grace_send_eunuch_timer }
+					# text = china_tribute_send_eunuch_cooldown_tt
+					# NOT = { has_character_modifier = china_grace_send_eunuch_timer }
 				# }
 				# prisoner = no
 				# NOT = { trait = incapable }
 				# is_inaccessible_trigger = no
 			# }
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			# freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			# china_offmap_tribute_decisions_enabled_trigger = yes
 		# }
 		
 		# third_party_potential = {
@@ -761,9 +761,9 @@ offmap_decisions = {
 					# NOT = { is_married = yes }
 				# }
 				# custom_tooltip = { #can't be from Freehold
-					# text = is_not_from_freehold_tt
+					# text = is_not_from_china_tt
 					# NOT = {	has_character_flag = eunuch_gift }
-					# courtier_from_freehold_trigger = no
+					# courtier_from_china_trigger = no
 				# }
 				# custom_tooltip = {
 					# text = is_not_incapable_inbred_or_imbecile_tt
@@ -797,7 +797,7 @@ offmap_decisions = {
 						# is_close_relative = ROOT_FROM
 					# }
 					# custom_tooltip = {
-						# text = freehold_tribute_send_eunuch_stats_tt
+						# text = china_tribute_send_eunuch_stats_tt
 						# OR = {
 							# diplomacy = 20
 							# martial = 20
@@ -807,7 +807,7 @@ offmap_decisions = {
 						# }
 					# }
 					# custom_tooltip = {
-						# text = freehold_tribute_send_eunuch_congenital_tt
+						# text = china_tribute_send_eunuch_congenital_tt
 						# OR = {
 							# trait = strong
 							# trait = genius
@@ -816,7 +816,7 @@ offmap_decisions = {
 						# }
 					# }
 					# custom_tooltip = {
-						# text = freehold_tribute_send_eunuch_non_inherit_congenital_tt
+						# text = china_tribute_send_eunuch_non_inherit_congenital_tt
 						# OR = {
 							# trait = robust
 							# trait = shrewd
@@ -1149,7 +1149,7 @@ offmap_decisions = {
 			# modifier = {
 				# factor = 2.0
 				# OR = {
-					# offmap_freehold = {
+					# offmap_china = {
 						# show_scope_change = no 
 						# offmap_has_like = likes_eunuchs
 					# }
@@ -1160,13 +1160,13 @@ offmap_decisions = {
 				# FROMFROM = {
 					# show_scope_change = no 
 					# liked_by_offmap = {
-			            # type = offmap_freehold
+			            # type = offmap_china
 			        # }
 				# }
 			# }
 			# modifier = {
 				# factor = 0.5
-				# offmap_freehold = {
+				# offmap_china = {
 					# show_scope_change = no 
 					# offmap_has_dislike = likes_eunuchs
 				# }
@@ -1176,7 +1176,7 @@ offmap_decisions = {
 				# FROMFROM = {
 					# show_scope_change = no 
 					# disliked_by_offmap = {
-				        # type = offmap_freehold
+				        # type = offmap_china
 				    # }
 				# }
 			# }
@@ -1185,7 +1185,7 @@ offmap_decisions = {
 				# FROM = { 
 					# show_scope_change = no
 					# liked_by_offmap = {
-						# type = offmap_freehold
+						# type = offmap_china
 					# }
 				# }
 			# }
@@ -1194,7 +1194,7 @@ offmap_decisions = {
 				# FROM = {
 					# show_scope_change = no 
 					# disliked_by_offmap = {
-						# type = offmap_freehold
+						# type = offmap_china
 					# }
 				# }
 			# }
@@ -1211,21 +1211,21 @@ offmap_decisions = {
 			# }
 			#if = {
 			#	limit = {
-			#		FROMFROM = { disliked_by_offmap = offmap_freehold }
+			#		FROMFROM = { disliked_by_offmap = offmap_china }
 			#	}
-			#	custom_tooltip = { text = notification_freehold_dislike_tt }
+			#	custom_tooltip = { text = notification_china_dislike_tt }
 			#}
 			#if = {
 			#	limit = {
-			#		NOT = { FROMFROM = { disliked_by_offmap = offmap_freehold } }
-			#		FROMFROM = { liked_by_offmap = offmap_freehold }
+			#		NOT = { FROMFROM = { disliked_by_offmap = offmap_china } }
+			#		FROMFROM = { liked_by_offmap = offmap_china }
 			#	}
-			#	custom_tooltip = { text = notification_freehold_like_tt }
+			#	custom_tooltip = { text = notification_china_like_tt }
 			#}
 			# FROM = {
 				# show_scope_change = no
 				# add_offmap_currency = {
-					# offmap = offmap_freehold
+					# offmap = offmap_china
 					# value = local_third_party_score
 				# }
 				# hidden_effect = {
@@ -1233,7 +1233,7 @@ offmap_decisions = {
 						# limit = {
 							# ai = no
 						# }
-						# set_character_flag = achievement_snipped_off_to_freehold
+						# set_character_flag = achievement_snipped_off_to_china
 					# }
 				# }
 			# }
@@ -1245,13 +1245,13 @@ offmap_decisions = {
 					# OR = {
 						# FROM = {
 							# liked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
 						# FROMFROM = {
 							# liked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
@@ -1259,13 +1259,13 @@ offmap_decisions = {
 					# NOR = {
 						# FROM = {
 							# disliked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
 						# FROMFROM = {
 							# disliked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
@@ -1285,13 +1285,13 @@ offmap_decisions = {
 					# OR = {
 						# FROM = {
 							# disliked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
 						# FROMFROM = {
 							# disliked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
@@ -1299,13 +1299,13 @@ offmap_decisions = {
 					# NOR = {
 						# FROM = {
 							# liked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
 						# FROMFROM = {
 							# liked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
@@ -1324,13 +1324,13 @@ offmap_decisions = {
 					# OR = {
 						# FROM = {
 							# liked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
 						# FROMFROM = {
 							# liked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
@@ -1338,13 +1338,13 @@ offmap_decisions = {
 					# OR = {
 						# FROM = {
 							# disliked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
 						# FROMFROM = {
 							# disliked_by_offmap = {
-								# type = offmap_freehold
+								# type = offmap_china
 								# context = eunuch
 							# }
 						# }
@@ -1372,12 +1372,12 @@ offmap_decisions = {
 						# add_trait = eunuch
 					# }
 				# }
-				# leave_court_for_freehold_effect = yes
+				# leave_court_for_china_effect = yes
 			# }
 			# hidden_effect = {
 				# FROM = {
 					# add_character_modifier = {
-						# modifier = freehold_grace_send_eunuch_timer
+						# modifier = china_grace_send_eunuch_timer
 						# hidden = yes
 						# years = 20
 					
@@ -1412,7 +1412,7 @@ offmap_decisions = {
 		# }
 	# }
 	
-	freehold_grace_offer_concubine = {
+	china_grace_offer_concubine = {
 		only_playable = yes
 		button_name = offmap_gifts
 		
@@ -1423,7 +1423,7 @@ offmap_decisions = {
 		show_third_party_potential = yes
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 	
 		from_potential = {
@@ -1439,24 +1439,24 @@ offmap_decisions = {
 			FROM = {
 				show_scope_change = no
 				custom_tooltip = {
-					text = freehold_tribute_send_concubine_cooldown_tt
-					NOT = { has_character_modifier = freehold_grace_send_concubine_timer }
+					text = china_tribute_send_concubine_cooldown_tt
+					NOT = { has_character_modifier = china_grace_send_concubine_timer }
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			china_offmap_tribute_decisions_enabled_trigger = yes
 		}
 							
 		third_party_potential = {
 			show_only_failed_conditions = yes
 			custom_tooltip = {
-				text = freehold_tribute_send_concubine_preference_tt
+				text = china_tribute_send_concubine_preference_tt
 				OR = {
 					AND = {
-						offmap_freehold = {
+						offmap_china = {
 							offmap_ruler = {
 								is_female = yes
 							}
@@ -1466,7 +1466,7 @@ offmap_decisions = {
 						}
 					}
 					AND = {
-						offmap_freehold = {
+						offmap_china = {
 							offmap_ruler = {
 								is_female = no
 							}
@@ -1500,8 +1500,8 @@ offmap_decisions = {
 					NOT = { is_married = yes }
 				}
 				custom_tooltip = {
-					text = is_not_from_freehold_tt
-					courtier_from_freehold_trigger = no
+					text = is_not_from_china_tt
+					courtier_from_china_trigger = no
 				}
 				custom_tooltip = {
 					text = is_not_incapable_inbred_or_imbecile_tt
@@ -1843,7 +1843,7 @@ offmap_decisions = {
 			modifier = {
 				factor = 2.0
 				OR = {
-					offmap_freehold = {
+					offmap_china = {
 						show_scope_change = no 
 						offmap_has_like = likes_concubines
 					}
@@ -1854,13 +1854,13 @@ offmap_decisions = {
 				FROMFROM = {
 					show_scope_change = no 
 					liked_by_offmap = {
-			            type = offmap_freehold
+			            type = offmap_china
 			        }
 				}
 			}
 			modifier = {
 				factor = 0.5
-				offmap_freehold = {
+				offmap_china = {
 					show_scope_change = no 
 					offmap_has_dislike = likes_concubines
 				}
@@ -1870,7 +1870,7 @@ offmap_decisions = {
 				FROMFROM = {
 					show_scope_change = no 
 					disliked_by_offmap = {
-				        type = offmap_freehold
+				        type = offmap_china
 				    }
 				}
 			}
@@ -1879,7 +1879,7 @@ offmap_decisions = {
 				FROM = { 
 					show_scope_change = no
 					liked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 				}
 			}
@@ -1888,7 +1888,7 @@ offmap_decisions = {
 				FROM = {
 					show_scope_change = no 
 					disliked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 				}
 			}
@@ -1905,22 +1905,22 @@ offmap_decisions = {
 			}
 			#if = {
 			#	limit = {
-			#		FROMFROM = { disliked_by_offmap = offmap_freehold }
+			#		FROMFROM = { disliked_by_offmap = offmap_china }
 			#	}
-			#	custom_tooltip = { text = notification_freehold_dislike_tt }
+			#	custom_tooltip = { text = notification_china_dislike_tt }
 			#}
 			#if = {
 			#	limit = {
-			#		NOT = { FROMFROM = { disliked_by_offmap = offmap_freehold } }
-			#		FROMFROM = { liked_by_offmap = offmap_freehold }
+			#		NOT = { FROMFROM = { disliked_by_offmap = offmap_china } }
+			#		FROMFROM = { liked_by_offmap = offmap_china }
 			#	}
-			#	custom_tooltip = { text = notification_freehold_like_tt }
+			#	custom_tooltip = { text = notification_china_like_tt }
 			#}
 			
 			FROM = {
 				show_scope_change = no
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = local_third_party_score
 				}
 			}
@@ -1932,13 +1932,13 @@ offmap_decisions = {
 					OR = {
 						FROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
 						FROMFROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
@@ -1946,13 +1946,13 @@ offmap_decisions = {
 					NOR = {
 						FROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
 						FROMFROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
@@ -1972,13 +1972,13 @@ offmap_decisions = {
 					OR = {
 						FROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
 						FROMFROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
@@ -1986,13 +1986,13 @@ offmap_decisions = {
 					NOR = {
 						FROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
 						FROMFROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
@@ -2011,13 +2011,13 @@ offmap_decisions = {
 					OR = {
 						FROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
 						FROMFROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
@@ -2025,13 +2025,13 @@ offmap_decisions = {
 					OR = {
 						FROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
 						FROMFROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 								context = concubine
 							}
 						}
@@ -2050,12 +2050,12 @@ offmap_decisions = {
 			
 			FROMFROM = {
 				show_scope_change = no
-				leave_court_for_freehold_effect = yes
+				leave_court_for_china_effect = yes
 			}
 			hidden_effect = {
 				FROM = {
 					add_character_modifier = {
-						modifier = freehold_grace_send_concubine_timer
+						modifier = china_grace_send_concubine_timer
 						hidden = yes
 						years = 20
 					
@@ -2090,7 +2090,7 @@ offmap_decisions = {
 		}
 	}
 	
-	freehold_grace_offer_commander = {
+	china_grace_offer_commander = {
 		only_playable = yes
 		button_name = offmap_gifts
 		
@@ -2101,13 +2101,13 @@ offmap_decisions = {
 		show_third_party_potential = yes
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 			OR = {
-				offmap_freehold = { has_status = freehold_unrest }
-				offmap_freehold = { has_status = freehold_civil_war }
-				offmap_freehold = { has_status = freehold_dothraki_invasion }
-				offmap_freehold = { has_status = freehold_rhoynish_invasion }
-				offmap_freehold = { has_status = freehold_ghiscari_invasion }
+				offmap_china = { has_status = china_unrest }
+				offmap_china = { has_status = china_civil_war }
+				offmap_china = { has_status = china_dothraki_invasion }
+				offmap_china = { has_status = china_rhoynish_invasion }
+				offmap_china = { has_status = china_ghiscari_invasion }
 			}
 		}
 	
@@ -2120,27 +2120,27 @@ offmap_decisions = {
 
 		allow = {
 			show_only_failed_conditions = yes
-			offmap_freehold = {
+			offmap_china = {
 				OR = {
-					has_status = freehold_unrest
-					has_status = freehold_civil_war
-					has_status = freehold_rhoynish_invasion
-					has_status = freehold_dothraki_invasion
-					has_status = freehold_ghiscari_invasion
+					has_status = china_unrest
+					has_status = china_civil_war
+					has_status = china_rhoynish_invasion
+					has_status = china_dothraki_invasion
+					has_status = china_ghiscari_invasion
 				}
 			}
 			FROM = {
 				show_scope_change = no
 				custom_tooltip = {
-					text = freehold_tribute_send_commander_cooldown_tt
-					NOT = { has_character_modifier = freehold_grace_send_commander_timer }
+					text = china_tribute_send_commander_cooldown_tt
+					NOT = { has_character_modifier = china_grace_send_commander_timer }
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			china_offmap_tribute_decisions_enabled_trigger = yes
 		}
 		
 		third_party_potential = {
@@ -2159,8 +2159,8 @@ offmap_decisions = {
 					NOT = { is_married = yes }
 				}
 				custom_tooltip = {
-					text = is_not_from_freehold_tt
-					courtier_from_freehold_trigger = no
+					text = is_not_from_china_tt
+					courtier_from_china_trigger = no
 				}
 				custom_tooltip = {
 					text = is_not_incapable_inbred_or_imbecile_tt
@@ -2500,7 +2500,7 @@ offmap_decisions = {
 				FROMFROM = { 
 					show_scope_change = no
 					liked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 				}
 			}
@@ -2509,7 +2509,7 @@ offmap_decisions = {
 				FROMFROM = {
 					show_scope_change = no 
 					disliked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 				}
 			}
@@ -2518,7 +2518,7 @@ offmap_decisions = {
 				FROM = { 
 					show_scope_change = no
 					liked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 				}
 			}
@@ -2527,7 +2527,7 @@ offmap_decisions = {
 				FROM = {
 					show_scope_change = no 
 					disliked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 				}
 			}
@@ -2544,21 +2544,21 @@ offmap_decisions = {
 			}
 			#if = {
 			#	limit = {
-			#		FROMFROM = { disliked_by_offmap = offmap_freehold }
+			#		FROMFROM = { disliked_by_offmap = offmap_china }
 			#	}
-			#	custom_tooltip = { text = notification_freehold_dislike_tt }
+			#	custom_tooltip = { text = notification_china_dislike_tt }
 			#}
 			#if = {
 			#	limit = {
-			#		NOT = { FROMFROM = { disliked_by_offmap = offmap_freehold } }
-			#		FROMFROM = { liked_by_offmap = offmap_freehold }
+			#		NOT = { FROMFROM = { disliked_by_offmap = offmap_china } }
+			#		FROMFROM = { liked_by_offmap = offmap_china }
 			#	}
-			#	custom_tooltip = { text = notification_freehold_like_tt }
+			#	custom_tooltip = { text = notification_china_like_tt }
 			#}
 			FROM = {
 				show_scope_change = no
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = local_third_party_score
 				}
 			}
@@ -2570,24 +2570,24 @@ offmap_decisions = {
 					OR = {
 						FROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 						FROMFROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
 					NOR = {
 						FROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 						FROMFROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
@@ -2606,24 +2606,24 @@ offmap_decisions = {
 					OR = {
 						FROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 						FROMFROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
 					NOR = {
 						FROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 						FROMFROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
@@ -2641,24 +2641,24 @@ offmap_decisions = {
 					OR = {
 						FROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 						FROMFROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
 					OR = {
 						FROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 						FROMFROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
@@ -2675,12 +2675,12 @@ offmap_decisions = {
 			
 			FROMFROM = {
 				show_scope_change = no
-				leave_court_for_freehold_effect = yes
+				leave_court_for_china_effect = yes
 			}
 			hidden_effect = {
 				FROM = {
 					add_character_modifier = {
-						modifier = freehold_grace_send_commander_timer
+						modifier = china_grace_send_commander_timer
 						hidden = yes
 						years = 20
 					}
@@ -2713,7 +2713,7 @@ offmap_decisions = {
 		}
 	}
 	
-	freehold_grace_offer_physician = {
+	china_grace_offer_physician = {
 		only_playable = yes
 		button_name = offmap_gifts
 		
@@ -2724,9 +2724,9 @@ offmap_decisions = {
 		show_third_party_potential = yes
 
 		potential = {
-			is_offmap_tag = offmap_freehold
-			offmap_freehold = { has_status = freehold_plague }
-			offmap_freehold = { has_status = freehold_internal_purge }
+			is_offmap_tag = offmap_china
+			offmap_china = { has_status = china_plague }
+			offmap_china = { has_status = china_internal_purge }
 		}
 	
 		from_potential = {
@@ -2741,15 +2741,15 @@ offmap_decisions = {
 			FROM = {
 				show_scope_change = no
 				custom_tooltip = {
-					text = freehold_tribute_send_physician_tt
-					NOT = { has_character_flag = freehold_grace_physician_sent }
+					text = china_tribute_send_physician_tt
+					NOT = { has_character_flag = china_grace_physician_sent }
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			china_offmap_tribute_decisions_enabled_trigger = yes
 		}
 		
 		third_party_potential = {
@@ -2770,8 +2770,8 @@ offmap_decisions = {
 					NOT = { is_married = yes }
 				}
 				custom_tooltip = {
-					text = is_not_from_freehold_tt
-					courtier_from_freehold_trigger = no
+					text = is_not_from_china_tt
+					courtier_from_china_trigger = no
 				}
 				custom_tooltip = {
 					text = is_not_incapable_inbred_or_imbecile_tt
@@ -2953,7 +2953,7 @@ offmap_decisions = {
 				FROM = { 
 					show_scope_change = no
 					liked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 				}
 			}
@@ -2962,7 +2962,7 @@ offmap_decisions = {
 				FROM = {
 					show_scope_change = no 
 					disliked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 				}
 			}
@@ -2979,32 +2979,32 @@ offmap_decisions = {
 			}
 			#if = {
 			#	limit = {
-			#		FROMFROM = { disliked_by_offmap = offmap_freehold }
+			#		FROMFROM = { disliked_by_offmap = offmap_china }
 			#	}
-			#	custom_tooltip = { text = notification_freehold_dislike_tt }
+			#	custom_tooltip = { text = notification_china_dislike_tt }
 			#}
 			#if = {
 			#	limit = {
-			#		NOT = { FROMFROM = { disliked_by_offmap = offmap_freehold } }
-			#		FROMFROM = { liked_by_offmap = offmap_freehold }
+			#		NOT = { FROMFROM = { disliked_by_offmap = offmap_china } }
+			#		FROMFROM = { liked_by_offmap = offmap_china }
 			#	}
-			#	custom_tooltip = { text = notification_freehold_like_tt }
+			#	custom_tooltip = { text = notification_china_like_tt }
 			#}
 			FROM = {
 				show_scope_change = no
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = local_third_party_score
 				}
 			}
 			
 			FROMFROM = {
 				show_scope_change = no
-				leave_court_for_freehold_effect = yes
+				leave_court_for_china_effect = yes
 			}
 			hidden_effect = {
 				FROM = {
-					set_character_flag = freehold_grace_physician_sent
+					set_character_flag = china_grace_physician_sent
 					if = {
 						limit = { local_third_party_score_low_trigger = yes }
 						set_character_flag = sent_bad_tribute
@@ -3034,16 +3034,16 @@ offmap_decisions = {
 		}
 	}
 	
-	freehold_grace_send_relief = {
+	china_grace_send_relief = {
 		only_playable = yes
 		button_name = offmap_gifts
 		ai_check_interval = 60
 
 		potential = {
-			is_offmap_tag = offmap_freehold
-			offmap_freehold = { has_status = freehold_famine }
-			offmap_freehold = { has_status = freehold_plague }
-			offmap_freehold = { has_status = freehold_economic_ruin }
+			is_offmap_tag = offmap_china
+			offmap_china = { has_status = china_famine }
+			offmap_china = { has_status = china_plague }
+			offmap_china = { has_status = china_economic_ruin }
 		}
 
 		from_potential = {
@@ -3060,38 +3060,38 @@ offmap_decisions = {
 				is_nomadic = no
 				is_tribal = no
 				NOT = {
-					has_character_modifier = freehold_send_relief
+					has_character_modifier = china_send_relief
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			china_offmap_tribute_decisions_enabled_trigger = yes
 		}
 
 		effect = {
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.3010 } } } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.3010 } } } }
 			FROM = {
 				sound_effect = china_grace_gain
 				add_character_modifier = {
 					inherit = yes
-					name = freehold_send_relief
+					name = china_send_relief
 					years = 10
 				}
 				if = {
 					limit = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 						}
 						NOT = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
 					add_offmap_currency = {
-						offmap = offmap_freehold
+						offmap = offmap_china
 						value = 750
 					}
 					e_valyrian_freehold = {
@@ -3105,16 +3105,16 @@ offmap_decisions = {
 				if = {
 					limit = {
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 						}
 						NOT = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
 					add_offmap_currency = {
-						offmap = offmap_freehold
+						offmap = offmap_china
 						value = 250
 					}
 					e_valyrian_freehold = {
@@ -3128,14 +3128,14 @@ offmap_decisions = {
 				if = {
 					limit = {
 						liked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 						}
 						disliked_by_offmap = {
-							type = offmap_freehold
+							type = offmap_china
 						}
 					}
 					add_offmap_currency = {
-						offmap = offmap_freehold
+						offmap = offmap_china
 						value = 500
 					}
 					e_valyrian_freehold = {
@@ -3150,15 +3150,15 @@ offmap_decisions = {
 					limit = {
 						NOR = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
 					}
 					add_offmap_currency = {
-						offmap = offmap_freehold
+						offmap = offmap_china
 						value = 500
 					}
 				}
@@ -3184,7 +3184,7 @@ offmap_decisions = {
 		}
 	}
 	
-	freehold_grace_offer_artifact = {
+	china_grace_offer_artifact = {
 		only_playable = yes
 		button_name = offmap_gifts
 		
@@ -3202,7 +3202,7 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 
 		allow = {
@@ -3213,8 +3213,8 @@ offmap_decisions = {
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			china_offmap_tribute_decisions_enabled_trigger = yes
 		}
 		
 		third_party_potential = {
@@ -3226,7 +3226,7 @@ offmap_decisions = {
 					quality > 2
 					NOR = {
 						has_artifact_flag = curse
-						has_artifact_flag = freehold
+						has_artifact_flag = china
 					}
 				}
 			}
@@ -3281,14 +3281,14 @@ offmap_decisions = {
 			}
 			modifier = {
 				factor = 1.5
-				offmap_freehold = {
+				offmap_china = {
 					show_scope_change = no 
 					offmap_has_like = likes_wealth
 				}
 			}
 			modifier = {
 				factor = 0.5
-				offmap_freehold = {
+				offmap_china = {
 					show_scope_change = no 
 					offmap_has_dislike = likes_wealth
 				}
@@ -3298,7 +3298,7 @@ offmap_decisions = {
 				FROM = { 
 					show_scope_change = no
 					liked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 				}
 			}
@@ -3307,7 +3307,7 @@ offmap_decisions = {
 				FROM = {
 					show_scope_change = no 
 					disliked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 				}
 			}
@@ -3317,7 +3317,7 @@ offmap_decisions = {
 			FROM = {
 				show_scope_change = no
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = local_third_party_score
 				}
 			}
@@ -3329,20 +3329,20 @@ offmap_decisions = {
 					OR = {
 						FROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
-						offmap_freehold = {
+						offmap_china = {
 							offmap_has_like = likes_wealth
 						}
 					}
 					NOR = {
 						FROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
-						offmap_freehold = {
+						offmap_china = {
 							offmap_has_dislike = likes_wealth
 						}
 					}
@@ -3361,20 +3361,20 @@ offmap_decisions = {
 					OR = {
 						FROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
-						offmap_freehold = {
+						offmap_china = {
 							offmap_has_dislike = likes_wealth
 						}
 					}
 					NOR = {
 						FROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
-						offmap_freehold = {
+						offmap_china = {
 							offmap_has_like = likes_wealth
 						}
 					}
@@ -3392,20 +3392,20 @@ offmap_decisions = {
 					OR = {
 						FROM = {
 							liked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
-						offmap_freehold = {
+						offmap_china = {
 							offmap_has_like = likes_wealth
 						}
 					}
 					OR = {
 						FROM = {
 							disliked_by_offmap = {
-								type = offmap_freehold
+								type = offmap_china
 							}
 						}
-						offmap_freehold = {
+						offmap_china = {
 							offmap_has_dislike = likes_wealth
 						}
 					}
@@ -3441,7 +3441,7 @@ offmap_decisions = {
 			}
 
 			hidden_effect = { #to reduce cluttered tooltip (effect already heavily implied...)
-				offmap_freehold = {
+				offmap_china = {
 					offmap_ruler = {
 						ROOT_FROMFROM = {
 							show_scope_change = no
@@ -3461,7 +3461,7 @@ offmap_decisions = {
 				FROM = {
 					set_character_flag = jd_gifting_artifact
 				}
-				hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.20023 } } } }
+				hidden_effect = { offmap_china = { governor = { character_event = { id = JD.20023 } } } }
 			}
 		}
 	
@@ -3482,7 +3482,7 @@ offmap_decisions = {
 			}
 		}
 	}
-	freehold_kow_tow_pilgrimage = {
+	china_kow_tow_pilgrimage = {
 		only_playable = yes
 		button_name = offmap_gifts
 		ai_check_interval = 10
@@ -3556,8 +3556,8 @@ offmap_decisions = {
 					}
 				}
 			}
-			# freehold_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for freehold_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
-			freehold_offmap_tribute_decisions_enabled_trigger = yes
+			# china_offmap_decisions_enabled_trigger = yes #leave in please, to be used if the tooltip for china_offmap_tribute_decisions_enabled_trigger changes and we need to reference things uniquely again
+			china_offmap_tribute_decisions_enabled_trigger = yes
 		}
 		
 		effect = {
@@ -3585,10 +3585,10 @@ offmap_decisions = {
 #REQUESTING BOON DECISIONS (PENDING GRACE)
 offmap_decisions = {
 	
-	#If your grace decisions will spawn a character then give them an appropriate flag eg: is_freehold_administrator and add them to the JD.60310 trigger switch to refund grace if they die early
+	#If your grace decisions will spawn a character then give them an appropriate flag eg: is_china_administrator and add them to the JD.60310 trigger switch to refund grace if they die early
 
 	#Get a peace deal
-	freehold_grace_peace_deal = {
+	china_grace_peace_deal = {
 		only_playable = yes
 		button_name = offmap_boons
 		ai_check_interval = 12
@@ -3601,11 +3601,11 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 
 #		potential = {
-#			offmap_freehold = { governor = { character = ROOT } }
+#			offmap_china = { governor = { character = ROOT } }
 #		}
 
 		allow = {
@@ -3615,19 +3615,19 @@ offmap_decisions = {
 				in_revolt = no
 				independent = yes
 				NOT = { pays_tribute_to = ROOT }
-				has_offmap_currency = { offmap = offmap_freehold value = 250 }
+				has_offmap_currency = { offmap = offmap_china value = 250 }
 				custom_tooltip = {
-					text = freehold_grace_peace_deal_allow_tt
-					NOT = { has_character_modifier = peace_deal_with_freehold }
+					text = china_grace_peace_deal_allow_tt
+					NOT = { has_character_modifier = peace_deal_with_china }
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			offmap_freehold = {
-				NOT = { has_policy = freehold_expansionist }
+			offmap_china = {
+				NOT = { has_policy = china_expansionist }
 			}
-			freehold_offmap_boon_decisions_enabled_trigger = yes
+			china_offmap_boon_decisions_enabled_trigger = yes
 		}
 
 		effect = {
@@ -3635,13 +3635,13 @@ offmap_decisions = {
 				sound_effect = china_grace_spend
 				show_scope_change = no
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = -250
 				}
 			}
-			custom_tooltip = { text = freehold_grace_peace_deal_effect_tt }
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.20025 } } } }
-			hidden_effect = { FROM = { set_freehold_boon_cd_effect = yes } }
+			custom_tooltip = { text = china_grace_peace_deal_effect_tt }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.20025 } } } }
+			hidden_effect = { FROM = { set_china_boon_cd_effect = yes } }
 		}
 
 		revoke_allowed = {
@@ -3676,8 +3676,8 @@ offmap_decisions = {
 						NOT = {
 							independent = yes
 						}
-						offmap_freehold = {
-							has_policy = freehold_isolationist
+						offmap_china = {
+							has_policy = china_isolationist
 						}
 					}
 				}
@@ -3692,7 +3692,7 @@ offmap_decisions = {
 	}
 	
 	#Get a Freehold doctor
-	freehold_grace_doctor = {
+	china_grace_doctor = {
 		only_playable = yes
 		button_name = offmap_boons
 		ai_check_interval = 12
@@ -3706,27 +3706,27 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 
 #		potential = {
-#			offmap_freehold = { governor = { character = ROOT } }
+#			offmap_china = { governor = { character = ROOT } }
 #		}
 
 		allow = {
 			show_only_failed_conditions = yes
 			FROM = {
 				show_scope_change = no
-				has_offmap_currency = { offmap = offmap_freehold value = 250 }
+				has_offmap_currency = { offmap = offmap_china value = 250 }
 				custom_tooltip = {
-					text = freehold_grace_doctor_allow_tt
+					text = china_grace_doctor_allow_tt
 					NOT = { any_courtier = { has_minor_title = title_court_physician } }
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_boon_decisions_enabled_trigger = yes
+			china_offmap_boon_decisions_enabled_trigger = yes
 		}
 
 		effect = {
@@ -3734,12 +3734,12 @@ offmap_decisions = {
 				show_scope_change = no
 				sound_effect = china_grace_spend
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = -250
 				}
 			}
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.20021 } } } }
-			hidden_effect = { FROM = { set_freehold_boon_cd_effect = yes } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.20021 } } } }
+			hidden_effect = { FROM = { set_china_boon_cd_effect = yes } }
 		}
 
 		revoke_allowed = {
@@ -3777,7 +3777,7 @@ offmap_decisions = {
 	}
 	
 	# Freehold Artifact
-	freehold_artifact = {
+	china_artifact = {
 		only_playable = yes
 		button_name = offmap_boons
 		ai_check_interval = 60
@@ -3790,48 +3790,48 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 	
 		allow = {
 			show_only_failed_conditions = yes
 			FROM = {
 				show_scope_change = no
-				has_offmap_currency = { offmap = offmap_freehold value = 500 }
+				has_offmap_currency = { offmap = offmap_china value = 500 }
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_boon_decisions_enabled_trigger = yes
+			china_offmap_boon_decisions_enabled_trigger = yes
 			custom_tooltip = {
-				text = freehold_artifact_has_all_tt
+				text = china_artifact_has_all_tt
 				hidden_tooltip = {
 					FROM = {
 						NAND = {
-							has_artifact = freehold_artwork
-							has_artifact = freehold_calligraphy
-							has_artifact = freehold_sculpture
-							has_artifact = freehold_ceremonial_robes
+							has_artifact = china_artwork
+							has_artifact = china_calligraphy
+							has_artifact = china_sculpture
+							has_artifact = china_ceremonial_robes
 							OR = {
-								has_artifact = freehold_prev_emperor_sculpture
-								offmap_freehold = {
+								has_artifact = china_prev_emperor_sculpture
+								offmap_china = {
 									offmap_prev_ruler = {
 										always = no
 									}
 								}
 							}
-							has_artifact = freehold_arm_protector
-							has_artifact = freehold_serpent_spear
-							has_artifact = freehold_ji
-							has_artifact = freehold_crossbow
-							has_artifact = freehold_bronze_sculpture
+							has_artifact = china_arm_protector
+							has_artifact = china_serpent_spear
+							has_artifact = china_ji
+							has_artifact = china_crossbow
+							has_artifact = china_bronze_sculpture
 							has_artifact = chinese_book_health
 							has_artifact = chinese_book_law
 							has_artifact = chinese_book_history
 							has_artifact = chinese_book_economy
-							has_artifact = freehold_painting_of_glitterhoof
-							has_artifact = freehold_tapestry
-							has_artifact = freehold_tapestry_grand
+							has_artifact = china_painting_of_glitterhoof
+							has_artifact = china_tapestry
+							has_artifact = china_tapestry_grand
 						}
 					}
 				}
@@ -3845,13 +3845,13 @@ offmap_decisions = {
 				sound_effect = china_grace_spend
 
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = -500
 				}
-				custom_tooltip = { text = freehold_artifact_effect_tt }
+				custom_tooltip = { text = china_artifact_effect_tt }
 			}
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.3030 } } } }
-			hidden_effect = { FROM = { set_freehold_boon_cd_effect = yes } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.3030 } } } }
+			hidden_effect = { FROM = { set_china_boon_cd_effect = yes } }
 		}
 
 		revoke_allowed = {
@@ -3874,7 +3874,7 @@ offmap_decisions = {
 	}
 	
 	# Siege Engineers
-	freehold_siege_engineers = {
+	china_siege_engineers = {
 		only_playable = yes
 		button_name = offmap_boons
 		ai_check_interval = 60
@@ -3888,19 +3888,19 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 	
 		allow = {
 			show_only_failed_conditions = yes
 			FROM = {
 				show_scope_change = no
-				has_offmap_currency = { offmap = offmap_freehold value = 750 }
+				has_offmap_currency = { offmap = offmap_china value = 750 }
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_boon_decisions_enabled_trigger = yes
+			china_offmap_boon_decisions_enabled_trigger = yes
 		}
 
 		effect = {
@@ -3910,13 +3910,13 @@ offmap_decisions = {
 				sound_effect = china_grace_spend
 
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = -750
 				}
-				custom_tooltip = { text = freehold_siege_engineers_effect_tt }
+				custom_tooltip = { text = china_siege_engineers_effect_tt }
 			}
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.3000 } } } }
-			hidden_effect = { FROM = { set_freehold_boon_cd_effect = yes } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.3000 } } } }
+			hidden_effect = { FROM = { set_china_boon_cd_effect = yes } }
 		}
 
 		revoke_allowed = {
@@ -3929,7 +3929,7 @@ offmap_decisions = {
 	}
 
 	#Strategist
-	freehold_strategist = {
+	china_strategist = {
 		only_playable = yes
 		button_name = offmap_boons
 		ai_check_interval = 60
@@ -3942,19 +3942,19 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 	
 		allow = {
 			show_only_failed_conditions = yes
 			FROM = {
 				show_scope_change = no
-				has_offmap_currency = { offmap = offmap_freehold value = 750 }
+				has_offmap_currency = { offmap = offmap_china value = 750 }
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_boon_decisions_enabled_trigger = yes
+			china_offmap_boon_decisions_enabled_trigger = yes
 		}
 
 		effect = {
@@ -3962,17 +3962,17 @@ offmap_decisions = {
 				show_scope_change = no
 				sound_effect = china_grace_spend
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = -750
 				}
-				custom_tooltip = { text = freehold_strategist_effect_tt }
+				custom_tooltip = { text = china_strategist_effect_tt }
 			}
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.20039 } } } }
-			hidden_effect = { FROM = { set_freehold_boon_cd_effect = yes } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.20039 } } } }
+			hidden_effect = { FROM = { set_china_boon_cd_effect = yes } }
 			hidden_effect = {
 				if = {
 					limit = {
-						offmap_freehold = { has_status = freehold_golden_age }
+						offmap_china = { has_status = china_golden_age }
 					}
 					set_character_flag = jd_strategist_golden_age
 				}
@@ -4004,7 +4004,7 @@ offmap_decisions = {
 	}
 	
 	#Request master engineer
-	freehold_administrator = {
+	china_administrator = {
 		only_playable = yes
 		button_name = offmap_boons
 		ai_check_interval = 60
@@ -4017,23 +4017,23 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 
 		allow = {
 			show_only_failed_conditions = yes
 			FROM = {
 				show_scope_change = no
-				has_offmap_currency = { offmap = offmap_freehold value = 1000 }
+				has_offmap_currency = { offmap = offmap_china value = 1000 }
 				custom_tooltip = {
-					text = freehold_administrator_allow_tt
+					text = china_administrator_allow_tt
 					NOT = { any_courtier = { has_minor_title = title_administrator } }
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_boon_decisions_enabled_trigger = yes
+			china_offmap_boon_decisions_enabled_trigger = yes
 		}
 
 		effect = {
@@ -4041,12 +4041,12 @@ offmap_decisions = {
 				show_scope_change = no
 				sound_effect = china_grace_spend
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = -1000
 				}
-				custom_tooltip = { text = freehold_administrator_effect_tt }
+				custom_tooltip = { text = china_administrator_effect_tt }
 				if = {
-					limit = { offmap_freehold = { has_status = freehold_golden_age } }
+					limit = { offmap_china = { has_status = china_golden_age } }
 					tooltip = {
 						add_character_modifier = {
 							name = employing_jd_administrator_golden_age
@@ -4063,8 +4063,8 @@ offmap_decisions = {
 					}
 				}
 			}
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.20029 } } } }
-			hidden_effect = { FROM = { set_freehold_boon_cd_effect = yes } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.20029 } } } }
+			hidden_effect = { FROM = { set_china_boon_cd_effect = yes } }
 		}
 
 		revoke_allowed = {
@@ -4094,7 +4094,7 @@ offmap_decisions = {
 		}
 	}
 
-	freehold_master_engineer = {
+	china_master_engineer = {
 		only_playable = yes
 		button_name = offmap_boons
 		ai_check_interval = 60
@@ -4107,7 +4107,7 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 	
 		allow = {
@@ -4115,16 +4115,16 @@ offmap_decisions = {
 			FROM = {
 				show_scope_change = no
 				higher_tier_than = COUNT
-				has_offmap_currency = { offmap = offmap_freehold value = 1000 }
+				has_offmap_currency = { offmap = offmap_china value = 1000 }
 				custom_tooltip = {
-					text = freehold_master_engineer_allow_tt
+					text = china_master_engineer_allow_tt
 					NOT = { any_courtier = { has_minor_title = title_master_engineer } }
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_boon_decisions_enabled_trigger = yes
+			china_offmap_boon_decisions_enabled_trigger = yes
 		}
 
 		effect = {
@@ -4132,13 +4132,13 @@ offmap_decisions = {
 				show_scope_change = no
 				sound_effect = china_grace_spend
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = -1000
 				}
-				custom_tooltip = { text = freehold_master_engineer_effect_tt }
+				custom_tooltip = { text = china_master_engineer_effect_tt }
 			}
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.20031 } } } }
-			hidden_effect = { FROM = { set_freehold_boon_cd_effect = yes } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.20031 } } } }
+			hidden_effect = { FROM = { set_china_boon_cd_effect = yes } }
 		}
 
 		revoke_allowed = {
@@ -4168,13 +4168,13 @@ offmap_decisions = {
 		}
 	}
 
-	freehold_silk_road_favored_status = {
+	china_silk_road_favored_status = {
 		only_playable = yes
 		button_name = offmap_boons
 		ai_check_interval = 36
 		
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 
 		from_potential = {
@@ -4188,9 +4188,9 @@ offmap_decisions = {
 			show_only_failed_conditions = yes
 			FROM = {
 				show_scope_change = no
-				has_offmap_currency = { offmap = offmap_freehold value = 2000 }
-				NOT = { has_character_modifier = freehold_imperial_trade_contract }
-				NOT = { has_character_modifier = freehold_favored_in_trade }
+				has_offmap_currency = { offmap = offmap_china value = 2000 }
+				NOT = { has_character_modifier = china_imperial_trade_contract }
+				NOT = { has_character_modifier = china_favored_in_trade }
 				custom_tooltip = {
 					text = tooltip_silk_road_required
 					hidden_tooltip = {
@@ -4203,7 +4203,7 @@ offmap_decisions = {
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_boon_decisions_enabled_trigger = yes
+			china_offmap_boon_decisions_enabled_trigger = yes
 		}
 
 		effect = {
@@ -4211,12 +4211,12 @@ offmap_decisions = {
 				show_scope_change = no
 				sound_effect = china_grace_spend
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = -2000
 				}
 				hidden_effect = {
 					add_character_modifier = {
-						modifier = freehold_imperial_trade_contract
+						modifier = china_imperial_trade_contract
 						inherit = yes
 						years = 25
 					}
@@ -4224,9 +4224,9 @@ offmap_decisions = {
 				}
 			}
 			custom_tooltip = {
-				text = freehold_silk_road_favored_status_modifier_tt
+				text = china_silk_road_favored_status_modifier_tt
 			}
-			hidden_effect = { FROM = { set_freehold_boon_cd_effect = yes } }
+			hidden_effect = { FROM = { set_china_boon_cd_effect = yes } }
 		}
 
 		revoke_allowed = {
@@ -4252,7 +4252,7 @@ offmap_decisions = {
 		}
 	}
 
-	freehold_imperial_marriage = {
+	china_imperial_marriage = {
 		only_playable = yes
 		button_name = offmap_boons
 		third_party_filter = realm_including_me
@@ -4269,7 +4269,7 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 
 		allow = {
@@ -4277,16 +4277,16 @@ offmap_decisions = {
 			FROM = {
 				show_scope_change = no
 				conditional_tooltip = {
-					trigger = { NOT = { has_character_modifier = peace_deal_with_freehold } }
-					has_offmap_currency = { offmap = offmap_freehold value = 1000 }
+					trigger = { NOT = { has_character_modifier = peace_deal_with_china } }
+					has_offmap_currency = { offmap = offmap_china value = 1000 }
 				}
 				conditional_tooltip = {
-					trigger = { has_character_modifier = peace_deal_with_freehold }
-					has_offmap_currency = { offmap = offmap_freehold value = 750 }
+					trigger = { has_character_modifier = peace_deal_with_china }
+					has_offmap_currency = { offmap = offmap_china value = 750 }
 				}
 				OR = {
 					custom_tooltip = {
-						text = can_marry_freehold_royal_tt
+						text = can_marry_china_royal_tt
 						AND = {
 							is_adult = yes
 							is_married = no
@@ -4313,7 +4313,7 @@ offmap_decisions = {
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_boon_decisions_enabled_trigger = yes
+			china_offmap_boon_decisions_enabled_trigger = yes
 		}
 
 		third_party_potential = {
@@ -4341,7 +4341,7 @@ offmap_decisions = {
 			show_only_failed_conditions = yes
 			FROMFROM = {
 				custom_tooltip = {
-					text = can_marry_freehold_royal_tt
+					text = can_marry_china_royal_tt
 					can_marry = yes
 					is_married = no
 				}
@@ -4353,31 +4353,31 @@ offmap_decisions = {
 				show_scope_change = no
 				sound_effect = china_grace_spend
 				if = {
-					limit = { has_character_modifier = peace_deal_with_freehold }
+					limit = { has_character_modifier = peace_deal_with_china }
 					add_offmap_currency = {
-						offmap = offmap_freehold
+						offmap = offmap_china
 						value = -750
 					}
 				}
 				else = {
 					add_offmap_currency = {
-						offmap = offmap_freehold
+						offmap = offmap_china
 						value = -1000
 					}
-					custom_tooltip = { text = freehold_imperial_marriage_peace_deal_tt }	
+					custom_tooltip = { text = china_imperial_marriage_peace_deal_tt }	
 				}				
 			}
 			if = { 
 				limit = { FROMFROM = { is_female = yes } } 
-				custom_tooltip = { text = freehold_imperial_marriage_prince_effect_tt }
+				custom_tooltip = { text = china_imperial_marriage_prince_effect_tt }
 			}
 			if = { 
 				limit = { FROMFROM = { is_female = no } } 
-				custom_tooltip = { text = freehold_imperial_marriage_princess_effect_tt }
+				custom_tooltip = { text = china_imperial_marriage_princess_effect_tt }
 			}
 			hidden_effect = { FROMFROM = { add_trait = cannot_marry } }
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.20045 } } } }
-			hidden_effect = { FROM = { set_freehold_boon_cd_effect = yes } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.20045 } } } }
+			hidden_effect = { FROM = { set_china_boon_cd_effect = yes } }
 			FROM = {
 				if = {
 					limit = {
@@ -4417,7 +4417,7 @@ offmap_decisions = {
 		}
 	}
 
-	freehold_request_invasion = {
+	china_request_invasion = {
 		only_playable = yes
 		button_name = offmap_boons
 		third_party_filter = independent_rulers
@@ -4435,30 +4435,30 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 		
 		allow = {
 			show_only_failed_conditions = yes
 			FROM = {
 				show_scope_change = no
-				has_offmap_currency = { offmap = offmap_freehold value = 5000 }
+				has_offmap_currency = { offmap = offmap_china value = 5000 }
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			offmap_freehold = {
+			offmap_china = {
 				governor = {
 					show_scope_change = no
 					war = no
 				}
 				OR = {
-					has_status = freehold_stable
-					has_status = freehold_golden_age
+					has_status = china_stable
+					has_status = china_golden_age
 				}
-				NOT = { has_policy = freehold_expansionist }
+				NOT = { has_policy = china_expansionist }
 			}
-			freehold_offmap_boon_decisions_enabled_trigger = yes
+			china_offmap_boon_decisions_enabled_trigger = yes
 		}
 
 		third_party_potential = {
@@ -4473,7 +4473,7 @@ offmap_decisions = {
 				num_of_count_titles_in_realm = 40
 				is_within_diplo_range = ROOT
 				custom_tooltip = {
-					text = freehold_request_invasion_rel_head_tt
+					text = china_request_invasion_rel_head_tt
 					NOT = {
 						any_demesne_title = {
 							higher_tier_than = DUKE
@@ -4482,9 +4482,9 @@ offmap_decisions = {
 					}
 				}
 				custom_tooltip = {
-					text = freehold_request_invasion_defeated_freehold_tt
+					text = china_request_invasion_defeated_china_tt
 					NOT = {
-						has_character_flag = defeated_freehold
+						has_character_flag = defeated_china
 					}
 				}
 			}
@@ -4498,10 +4498,10 @@ offmap_decisions = {
 					has_non_aggression_pact_with = ROOT
 					is_allied_with = ROOT
 					liked_by_offmap = {
-						type = offmap_freehold
+						type = offmap_china
 					}
 					is_tributary = { suzerain = ROOT }
-					has_character_modifier = peace_deal_with_freehold
+					has_character_modifier = peace_deal_with_china
 				}
 			}
 		}
@@ -4511,18 +4511,18 @@ offmap_decisions = {
 				show_scope_change = no
 				sound_effect = china_grace_spend
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = -5000
 				}
-				save_event_target_as = freehold_invasion_instigator
+				save_event_target_as = china_invasion_instigator
 			}
 			
 			FROMFROM = {
-				save_event_target_as = freehold_invasion_target
+				save_event_target_as = china_invasion_target
 			}
 			
 			hidden_effect = {
-				offmap_freehold = {
+				offmap_china = {
 					governor = {
 						save_event_target_as = invasion_governor
 						character_event = { id = JD.3020 } 
@@ -4531,18 +4531,18 @@ offmap_decisions = {
 			}
 			
 			hidden_effect = {
-				offmap_freehold = {
+				offmap_china = {
 					governor = {
 						war = {
 							target = FROMFROM
-							casus_belli = destabilization_freehold_cb
+							casus_belli = destabilization_china_cb
 						}
 					}
 				}
 				#Send news of invasion to interested player parties...
 				any_player = {
 					limit = {
-						has_offmap_news_enabled = offmap_freehold
+						has_offmap_news_enabled = offmap_china
 						is_within_diplo_range = ROOT
 					}
 					narrative_event = { id = JD.3022 days = 1 }
@@ -4561,10 +4561,10 @@ offmap_decisions = {
 	}
 }
 
-#HOSTILE DECISIONS (ATTACKING FREEHOLD)
+#HOSTILE DECISIONS (ATTACKING CHINA)
 offmap_decisions = {
 	
-	freehold_raid = {
+	china_raid = {
 		only_playable = yes
 		button_name = offmap_hostility
 		ai_check_interval = 36
@@ -4575,12 +4575,12 @@ offmap_decisions = {
 			holy_order = no
 			is_landed = yes
 			NOT = {
-				has_character_modifier = freehold_raid_active
+				has_character_modifier = china_raid_active
 			}
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 
 		allow = {
@@ -4595,30 +4595,30 @@ offmap_decisions = {
 						suzerain = ROOT
 					}
 				}
-				NOT = { has_character_modifier = peace_deal_with_freehold }
+				NOT = { has_character_modifier = peace_deal_with_china }
 				custom_tooltip = {
-					text = freehold_grace_supply_horses_not_already_supplying_tt
+					text = china_grace_supply_horses_not_already_supplying_tt
 					NOT = {
-						has_character_modifier = freehold_supply_horses
+						has_character_modifier = china_supply_horses
 					}
 				}
 				custom_tooltip = { #Borders the eastern edge of the map
-					text = freehold_grace_become_tributary_allow_freehold_influence_tt
+					text = china_grace_become_tributary_allow_china_influence_tt
 					any_realm_province = {
 						region = custom_chinese_invasion_target_region
 					}
 				}
 				custom_tooltip = {
-					text = freehold_offmap_boon_decisions_enabled_trigger_raiding_tt
+					text = china_offmap_boon_decisions_enabled_trigger_raiding_tt
 					NOT = {
-						has_character_modifier = freehold_raid_grace_cd
+						has_character_modifier = china_raid_grace_cd
 					}
 				}
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_hostile_decisions_enabled_trigger = yes
+			china_offmap_hostile_decisions_enabled_trigger = yes
 		}
 
 		effect = {
@@ -4627,18 +4627,18 @@ offmap_decisions = {
 				show_scope_change = no
 				sound_effect = china_angered_emperor
 				add_offmap_currency = {
-					offmap = offmap_freehold
+					offmap = offmap_china
 					value = -500
 				}
 				hidden_effect = {
 					add_character_modifier = {
 						inherit = yes
-						name = freehold_raid_active
+						name = china_raid_active
 						duration = -1
 					}
 				}
 			}
-			hidden_effect = { offmap_freehold = { governor = { character_event = { id = JD.3050 } } } }
+			hidden_effect = { offmap_china = { governor = { character_event = { id = JD.3050 } } } }
 		}
 
 		revoke_allowed = {
@@ -4665,12 +4665,12 @@ offmap_decisions = {
 			}
 			modifier = {
 				factor = 0
-				offmap_freehold = { offmap_ruler = { dynasty = FROM } }
+				offmap_china = { offmap_ruler = { dynasty = FROM } }
 			}
 		}
 	}
 	
-	freehold_stop_raid = {
+	china_stop_raid = {
 		only_playable = yes
 		button_name = offmap_hostility
 		ai_check_interval = 36
@@ -4680,17 +4680,17 @@ offmap_decisions = {
 			mercenary = no
 			holy_order = no
 			is_landed = yes
-			has_character_modifier = freehold_raid_active
+			has_character_modifier = china_raid_active
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 		}
 
 		allow = {
 			show_only_failed_conditions = yes
 			FROM = {
-				has_character_modifier = freehold_raid_active
+				has_character_modifier = china_raid_active
 			}
 		}
 
@@ -4699,10 +4699,10 @@ offmap_decisions = {
 			FROM = {
 				show_scope_change = no
 				sound_effect = china_grace_gain
-				remove_character_modifier = freehold_raid_active
+				remove_character_modifier = china_raid_active
 				hidden_effect = {
 					add_character_modifier = {
-						name = freehold_raid_grace_cd
+						name = china_raid_grace_cd
 						hidden = yes
 						years = 5
 					}
@@ -4718,7 +4718,7 @@ offmap_decisions = {
 			factor = 0.1
 			modifier = {
 				factor = 10
-				offmap_freehold = { offmap_ruler = { dynasty = FROM } }
+				offmap_china = { offmap_ruler = { dynasty = FROM } }
 			}
 			modifier = {
 				factor = 0
@@ -4731,14 +4731,14 @@ offmap_decisions = {
 						}
 					}
 					NOT = {
-						offmap_freehold = { offmap_ruler = { dynasty = FROM } }
+						offmap_china = { offmap_ruler = { dynasty = FROM } }
 					}
 				}
 			}
 		}
 	}
 
-	freehold_force_to_open = {
+	china_force_to_open = {
 		only_playable = yes
 		button_name = offmap_hostility
 	
@@ -4751,8 +4751,8 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
-			#offmap_freehold = { has_policy = freehold_isolationist }
+			is_offmap_tag = offmap_china
+			#offmap_china = { has_policy = china_isolationist }
 		}
 
 		allow = {
@@ -4767,18 +4767,18 @@ offmap_decisions = {
 					}
 				}
 				custom_tooltip = {
-					text = force_freehold_open_cooldown_tt
-					NOT = { has_character_modifier = freehold_force_open_cooldown }
+					text = force_china_open_cooldown_tt
+					NOT = { has_character_modifier = china_force_open_cooldown }
 				}
 				OR = {
 					custom_tooltip = { #Borders the Western Governate
-						text = freehold_grace_become_tributary_allow_governor_neighbor_tt
+						text = china_grace_become_tributary_allow_governor_neighbor_tt
 						any_neighbor_independent_ruler = {
 							has_landed_title = e_valyrian_freehold
 						}
 					}
 					custom_tooltip = { #Borders a Freehold tributary
-						text = freehold_grace_become_tributary_allow_tributary_neighbor_tt
+						text = china_grace_become_tributary_allow_tributary_neighbor_tt
 						any_neighbor_independent_ruler = {
 							suzerain = {
 								has_landed_title = e_valyrian_freehold
@@ -4786,13 +4786,13 @@ offmap_decisions = {
 						}
 					}
 					custom_tooltip = { #Borders the eastern edge of the map
-						text = freehold_grace_become_tributary_allow_freehold_influence_tt
+						text = china_grace_become_tributary_allow_china_influence_tt
 						any_realm_province = {
 							region = custom_chinese_invasion_target_region
 						}
 					}
 					custom_tooltip = { #Within diplo range of Freehold and has a port in Essos
-						text = freehold_grace_become_tributary_allow_india_tt
+						text = china_grace_become_tributary_allow_india_tt
 						any_realm_province = { 
 							port = yes 
 							region = world_essos
@@ -4803,41 +4803,41 @@ offmap_decisions = {
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			offmap_freehold = {
-				has_policy = freehold_isolationist
+			offmap_china = {
+				has_policy = china_isolationist
 			}
-			offmap_freehold = {
+			offmap_china = {
 				custom_tooltip = {
 					text = already_at_war_tt
 					hidden_tooltip = {
 						governor = {
 							NOT = {
 								any_war = {
-									using_cb = force_open_freehold_cb
+									using_cb = force_open_china_cb
 								}
 							}
 						}
 					}
 				}
 			}
-			freehold_offmap_hostile_decisions_enabled_trigger = yes
+			china_offmap_hostile_decisions_enabled_trigger = yes
 		}
 
 		effect = {
 			save_event_target_as = target_governor
-			hidden_effect = { offmap_freehold = { set_offmap_tmp_flag = freehold_force_open_in_progress } }
+			hidden_effect = { offmap_china = { set_offmap_tmp_flag = china_force_open_in_progress } }
 			FROM = { 
 				sound_effect = china_angered_emperor
 				hidden_effect = { 
 					add_character_modifier = { 
-						name = freehold_force_open_cooldown
+						name = china_force_open_cooldown
 						years = 15
 						hidden = yes
 					}
 				}
 				ROOT = {
 					show_scope_change = no
-					character_event = { id = JD.60300 tooltip = force_open_freehold_start_tt }
+					character_event = { id = JD.60300 tooltip = force_open_china_start_tt }
 				}
 			}
 		}
@@ -4851,7 +4851,7 @@ offmap_decisions = {
 		}
 	}
 
-	freehold_tributary_break_free = {
+	china_tributary_break_free = {
 		only_playable = yes
 		button_name = offmap_hostility
 	
@@ -4864,7 +4864,7 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 			FROM = {
 				is_tributary = {
 					type = offmap
@@ -4885,12 +4885,12 @@ offmap_decisions = {
 					target = ROOT
 					casus_belli = free_tributary_cb
 				}
-				NOT = { is_decision_allowed = tributary_independence_freehold }
+				NOT = { is_decision_allowed = tributary_independence_china }
 				prisoner = no
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_hostile_decisions_enabled_trigger = yes
+			china_offmap_hostile_decisions_enabled_trigger = yes
 		}
 
 		effect = {
@@ -4913,7 +4913,7 @@ offmap_decisions = {
 		}
 	}
 
-	freehold_invade_dragon_throne = {
+	china_invade_dragon_throne = {
 		only_playable = yes
 		button_name = offmap_hostility
 		
@@ -4930,7 +4930,7 @@ offmap_decisions = {
 		}
 
 		potential = {
-			is_offmap_tag = offmap_freehold
+			is_offmap_tag = offmap_china
 			NOT = { offmap_ruler = { dynasty = FROM } }
 		}
 
@@ -4948,30 +4948,30 @@ offmap_decisions = {
 				}
 				OR = {
 					custom_tooltip = { #Borders the Western Governate
-						text = freehold_grace_become_tributary_allow_governor_neighbor_tt
+						text = china_grace_become_tributary_allow_governor_neighbor_tt
 						any_neighbor_independent_ruler = {
 							has_landed_title = e_valyrian_freehold
 						}
 					}
 					custom_tooltip = { #Borders the eastern edge of the map
-						text = freehold_invade_dragon_throne_eastern_edge_tt
+						text = china_invade_dragon_throne_eastern_edge_tt
 						any_realm_province = {
 							region = custom_eastern_edge_of_map
 						}
 					}
 				}
 				custom_tooltip = {
-					text = freehold_invade_dragon_throne_failed_tt
-					NOT = { has_character_modifier = failed_invasion_of_freehold }
+					text = china_invade_dragon_throne_failed_tt
+					NOT = { has_character_modifier = failed_invasion_of_china }
 				}
 				can_use_cb = {
 					target = ROOT
-					casus_belli = invasion_of_freehold_cb
+					casus_belli = invasion_of_china_cb
 					only_check_triggers = yes
 				}
 				NOT = { has_raised_levies = THIS }
 				custom_tooltip = {
-					text = freehold_invade_dragon_throne_levies_tt
+					text = china_invade_dragon_throne_levies_tt
 					NOT = { any_vassal = { ROOT_FROM = { has_raised_levies = PREV } } }
 				}
 				NOT = { has_truce = ROOT }
@@ -4988,17 +4988,17 @@ offmap_decisions = {
 				NOT = { trait = incapable }
 				is_inaccessible_trigger = no
 			}
-			freehold_offmap_hostile_decisions_enabled_trigger = yes
-			offmap_freehold = {
+			china_offmap_hostile_decisions_enabled_trigger = yes
+			offmap_china = {
 				OR = {
-					has_status = freehold_stable
-					has_status = freehold_golden_age
+					has_status = china_stable
+					has_status = china_golden_age
 				}
 				ROOT = {
 					show_scope_change = no
 					custom_tooltip = {
-						text = freehold_invade_dragon_throne_war_tt
-						NOT = { any_war = { using_cb = invasion_of_freehold_cb } }
+						text = china_invade_dragon_throne_war_tt
+						NOT = { any_war = { using_cb = invasion_of_china_cb } }
 					}
 				}
 			}
@@ -5011,7 +5011,7 @@ offmap_decisions = {
 				dynasty = ROOT_FROM
 				is_adult = yes
 				NOR = {
-					courtier_from_freehold_trigger = yes
+					courtier_from_china_trigger = yes
 					is_landed = yes
 					is_incapable = yes
 					trait = inbred
@@ -5035,74 +5035,74 @@ offmap_decisions = {
 		effect = {
 			hidden_effect = {
 				FROMFROM = { #Stop them from moving, marrying or being diplomatically dealt with
-					set_character_flag = invasion_freehold_claimant
+					set_character_flag = invasion_china_claimant
 					set_character_flag = no_court_invites
 					add_trait = cannot_marry
 					diplomatic_immunity = yes
-					save_global_event_target_as = invasion_of_freehold_claimant
+					save_global_event_target_as = invasion_of_china_claimant
 				}
 				ROOT = { #Set amount of troops
-					set_offmap_tmp_flag = freehold_war_variables_set
+					set_offmap_tmp_flag = china_war_variables_set
 					set_variable = {
-						which = freehold_war_troop_quantity
+						which = china_war_troop_quantity
 						value = 15
 						# 15 regiments of ~500 units
 					}
 					set_variable = {
-						which = freehold_war_target_match_mult
+						which = china_war_target_match_mult
 						value = 2
 					}
 					set_variable = {
-						which = freehold_war_troop_quality
+						which = china_war_troop_quality
 						value = 6
 						# Value between 1-7
 					}
 					set_variable = {
-						which = freehold_war_minimum_commander_martial
+						which = china_war_minimum_commander_martial
 						value = 16
 					}
 					set_variable = { #Minimum 80k
-						which = freehold_war_troop_quantity_override
+						which = china_war_troop_quantity_override
 						value = 160
 					}
-					save_event_target_as = invasion_of_freehold_govenor
+					save_event_target_as = invasion_of_china_govenor
 				}
 			}
 			FROM = {
 				show_scope_change = no
 				sound_effect = china_angered_emperor
-				save_event_target_as = invasion_of_freehold_attacker
+				save_event_target_as = invasion_of_china_attacker
 				custom_tooltip = {
-					text = freehold_invade_dragon_throne_modifiers_tt
+					text = china_invade_dragon_throne_modifiers_tt
 					hidden_effect = {
-						set_offmap_currency = { offmap = offmap_freehold value = 0 }
-						remove_character_modifier = peace_deal_with_freehold
-						remove_character_modifier = freehold_grace_send_gift_timer
-						# remove_character_modifier = freehold_grace_send_eunuch_timer
-						remove_character_modifier = freehold_grace_send_concubine_timer
-						remove_character_modifier = freehold_grace_tributary_timer
-						remove_character_modifier = jd_freehold_boon_cd
-						remove_character_modifier = freehold_force_open_cooldown
-						remove_character_modifier = angered_freehold_modifier
-						remove_character_modifier = freehold_imperial_trade_contract
+						set_offmap_currency = { offmap = offmap_china value = 0 }
+						remove_character_modifier = peace_deal_with_china
+						remove_character_modifier = china_grace_send_gift_timer
+						# remove_character_modifier = china_grace_send_eunuch_timer
+						remove_character_modifier = china_grace_send_concubine_timer
+						remove_character_modifier = china_grace_tributary_timer
+						remove_character_modifier = jd_china_boon_cd
+						remove_character_modifier = china_force_open_cooldown
+						remove_character_modifier = angered_china_modifier
+						remove_character_modifier = china_imperial_trade_contract
 					}
 				}
 				hidden_effect = {
 					add_character_modifier = {
-						name = war_with_freehold_modifier
+						name = war_with_china_modifier
 						inherit = yes
 						duration = -1
 					}
 					war = {
 						target = ROOT
-						casus_belli = invasion_of_freehold_cb
+						casus_belli = invasion_of_china_cb
 					}
 				}
 			}
 			hidden_effect = {
 				any_player = {
 					limit = {
-						has_offmap_news_enabled = offmap_freehold
+						has_offmap_news_enabled = offmap_china
 						is_within_diplo_range = ROOT
 					}
 					narrative_event = { id = JD.60400 }

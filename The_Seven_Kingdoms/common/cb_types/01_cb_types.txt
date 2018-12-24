@@ -81,7 +81,7 @@ dejure_duchy_claim = { # New1
 			}
 		}
 		if = {
-			limit = { defender = { is_offmap_governor = offmap_freehold } }
+			limit = { defender = { is_offmap_governor = offmap_china } }
 			attacker = {  
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes
@@ -434,7 +434,7 @@ force_vassalization = { # New2
 			}
 		}
 		if = {
-			limit = { defender = { is_offmap_governor = offmap_freehold } }
+			limit = { defender = { is_offmap_governor = offmap_china } }
 			attacker = {  
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes
@@ -574,7 +574,7 @@ great_realm_conflict = { # New3
 			piety = -1500
 		}
 		if = {
-			limit = { defender = { is_offmap_governor = offmap_freehold } }
+			limit = { defender = { is_offmap_governor = offmap_china } }
 			attacker = {  
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes
@@ -841,7 +841,7 @@ ducal_county_conquest = { # New4
 			}
 		}
 		if = {
-			limit = { defender = { is_offmap_governor = offmap_freehold } }
+			limit = { defender = { is_offmap_governor = offmap_china } }
 			attacker = {  
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes 
@@ -1078,7 +1078,7 @@ hostages_cb = { # New5
 	on_add = {
 		FROM = { character_event = { id = JD.2000 days = 5 } } # Chance to execute captives
 		if = {
-			limit = { defender = { is_offmap_governor = offmap_freehold } }
+			limit = { defender = { is_offmap_governor = offmap_china } }
 			attacker = {  
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes
@@ -1377,7 +1377,7 @@ liberate_religion = { # New6
 			}
 		}
 		if = {
-			limit = { defender = { is_offmap_governor = offmap_freehold } }
+			limit = { defender = { is_offmap_governor = offmap_china } }
 			attacker = {  
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes
@@ -2232,7 +2232,7 @@ unjust_conquest = { # New7
 			}
 		}
 		if = {
-			limit = { defender = { is_offmap_governor = offmap_freehold } }
+			limit = { defender = { is_offmap_governor = offmap_china } }
 			attacker = {  
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes
@@ -2646,7 +2646,7 @@ tributary_permanent_cb = { # New8
 			character_event = { id = JD.2500 days = 5 tooltip = surrender_tributary_tt }
 		}
 		if = {
-			limit = { defender = { is_offmap_governor = offmap_freehold } }
+			limit = { defender = { is_offmap_governor = offmap_china } }
 			attacker = {  
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes 
@@ -2935,7 +2935,7 @@ tributary_nomad_cb = { # New9
 			character_event = { id = JD.2500 days = 5 tooltip = surrender_tributary_tt }
 		}
 		if = {
-			limit = { defender = { is_offmap_governor = offmap_freehold } }
+			limit = { defender = { is_offmap_governor = offmap_china } }
 			attacker = { 
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes 
@@ -3221,7 +3221,7 @@ tributary_nomad_cb = { # New9
 	}
 }
 
-### FREEHOLD CBs 2.8
+### CHINA CBs 2.8
 offmap_submission = {
 	name = CB_NAME_OFFMAP_SUBMISSION
 	war_name = WAR_NAME_OFFMAP_SUBMISSION
@@ -3254,12 +3254,12 @@ offmap_submission = {
 			
 			if = { # Remove Raid Freehold if active
 				limit = {
-					has_character_modifier = freehold_raid_active
+					has_character_modifier = china_raid_active
 				}
-				remove_character_modifier = freehold_raid_active
+				remove_character_modifier = china_raid_active
 				hidden_effect = {
 					add_character_modifier = {
-						name = freehold_raid_grace_cd
+						name = china_raid_grace_cd
 						hidden = yes
 						years = 5
 					}
@@ -3357,8 +3357,8 @@ offmap_submission = {
 					if = { #Freehold with no land calculates what to do with nomad provinces
 						limit = { 
 							is_offmap_governor = yes
-							offmap_power = { is_offmap_tag = offmap_freehold }
-							offmap_freehold = { has_offmap_tmp_flag = WP_is_not_on_map }
+							offmap_power = { is_offmap_tag = offmap_china }
+							offmap_china = { has_offmap_tmp_flag = WP_is_not_on_map }
 							NOT = { wealth = 2500 } #unless already rich from tributes
 						}
 						set_variable = { which = "WP_nomad_provinces" value = 0 }
@@ -3369,7 +3369,7 @@ offmap_submission = {
 							}
 							province_event = { id = JD.60100 } #increase counter for each nomad province
 						}
-						character_event = { id = JD.60101 days = 1 } #calculate gold sent from freehold for building holdings
+						character_event = { id = JD.60101 days = 1 } #calculate gold sent from china for building holdings
 					}
 					if = { #New Empire
 						limit = { has_character_flag = is_rebel_general }
@@ -3382,9 +3382,9 @@ offmap_submission = {
 							adjective = e_valyrian_freehold_adj #Use WP adj as it is "Chinese" but also gives the right one in different languages
 							random_list = { #Random Empire name that Freehold doesn't have
 								1 = { 
-									trigger = { NOT = { offmap_freehold = { has_offmap_name = valyrian_freehold } } }
+									trigger = { NOT = { offmap_china = { has_offmap_name = valyrian_freehold } } }
 									set_name = "Valyrian Freehold"
-									set_title_flag = freehold_name_Valyria
+									set_title_flag = china_name_Valyria
 								}
 							}
 							add_law = {
@@ -3393,7 +3393,7 @@ offmap_submission = {
 								opinion_effect = no
 							}
 						}
-						set_government_type = freehold_government
+						set_government_type = china_government
 						random_list = { #Give a temple name
 							1 = { set_name = Aginarys }
 						}
@@ -3403,10 +3403,10 @@ offmap_submission = {
 						wealth = 1000
 						prestige = 500
 						piety = 200
-						offmap_freehold = { set_offmap_flag = no_war_news }
+						offmap_china = { set_offmap_flag = no_war_news }
 						any_player = {
 							limit = {
-								has_offmap_news_enabled = offmap_freehold
+								has_offmap_news_enabled = offmap_china
 								is_within_diplo_range = PREV
 							}
 							narrative_event = { id = JD.60211 days = 1 }
@@ -3483,7 +3483,7 @@ offmap_submission = {
 		FROM = {
 			piety = 100
 			participation_scaled_prestige = 250
-			set_character_flag = defeated_freehold
+			set_character_flag = defeated_china
 		}
 		any_defender = {
 			limit = { NOT = { character = FROM } }
@@ -3538,27 +3538,27 @@ offmap_submission = {
 						NOT = {
 							has_character_flag = is_rebel_general
 						}
-						is_offmap_tag = offmap_freehold
-						offmap_freehold = {
-							has_policy = freehold_expansionist
+						is_offmap_tag = offmap_china
+						offmap_china = {
+							has_policy = china_expansionist
 						}
 					}
 					random = {
 						chance = 50
-						offmap_freehold = {
-							set_policy = freehold_open
+						offmap_china = {
+							set_policy = china_open
 						}
 						log = "Freehold War Logging: Freehold was forced out of Expansionism"
 						if = {
 							limit = {
-								offmap_freehold = {
-									has_status = freehold_stable
+								offmap_china = {
+									has_status = china_stable
 								}
 							}
 							random = {
 								chance = 30
-								offmap_freehold = {
-									set_status = freehold_unrest
+								offmap_china = {
+									set_status = china_unrest
 								}
 								log = "Freehold War Logging: Freehold was forced into Unrest"
 							}
@@ -3569,7 +3569,7 @@ offmap_submission = {
 			}
 		}
 		FROM = {
-			set_character_flag = defeated_freehold
+			set_character_flag = defeated_china
 			piety = 500
 			# if = {
 				# limit = { 
@@ -3595,12 +3595,12 @@ offmap_submission = {
 			limit = { ROOT = { has_character_flag = is_rebel_general } }
 			end_war = invalid
 			ROOT = {
-				any_courtier = { death = { death_reason = death_went_back_to_freehold } }
+				any_courtier = { death = { death_reason = death_went_back_to_china } }
 				primary_title = {
 					activate_title = { title = THIS status = no }
 					destroy_landed_title = THIS
 				}
-				death = { death_reason = death_went_back_to_freehold }
+				death = { death_reason = death_went_back_to_china }
 			}
 		}
 	}
@@ -3665,7 +3665,7 @@ tributary_offmap_cb = {
 	on_success = {
 		log = "---------------------"
 		log = "Freehold Logging:"
-		log = "The [offmap_freehold.GetShortName] invasion of [From.GetTitledName] has ended"
+		log = "The [offmap_china.GetShortName] invasion of [From.GetTitledName] has ended"
 		log = "The war ended in a victory for Freehold"
 		log = "[From.GetTitledName] is now tributary of Freehold"
 		log = "---------------------"
@@ -3684,12 +3684,12 @@ tributary_offmap_cb = {
 			}
 			if = { # Remove Raid Freehold if active
 				limit = {
-					has_character_modifier = freehold_raid_active
+					has_character_modifier = china_raid_active
 				}
-				remove_character_modifier = freehold_raid_active
+				remove_character_modifier = china_raid_active
 				hidden_effect = {
 					add_character_modifier = {
-						name = freehold_raid_grace_cd
+						name = china_raid_grace_cd
 						hidden = yes
 						years = 5
 					}
@@ -3706,7 +3706,7 @@ tributary_offmap_cb = {
 	on_fail = {
 		log = "---------------------"
 		log = "Freehold Logging:"
-		log = "The [offmap_freehold.GetShortName] invasion of [From.GetTitledName] has ended"
+		log = "The [offmap_china.GetShortName] invasion of [From.GetTitledName] has ended"
 		log = "The war ended in a white peace"
 		log = "---------------------"
 		ROOT = {
@@ -3714,14 +3714,14 @@ tributary_offmap_cb = {
 		}
 		FROM = {
 			prestige = 200
-			set_character_flag = defeated_freehold
+			set_character_flag = defeated_china
 		}
 	}
 
 	on_reverse_demand = {
 		log = "---------------------"
 		log = "Freehold Logging:"
-		log = "The [offmap_freehold.GetShortName] invasion of [From.GetTitledName] has ended"
+		log = "The [offmap_china.GetShortName] invasion of [From.GetTitledName] has ended"
 		log = "The war ended in a victory for [From.GetTitledName]"
 		log = "---------------------"
 		ROOT = {
@@ -3734,15 +3734,15 @@ tributary_offmap_cb = {
 			hidden_effect = {
 				if = { #Makes Freehold have a chance of leaving Expansionist policy...
 					limit = {
-						is_offmap_tag = offmap_freehold
-						offmap_freehold = {
-							has_policy = freehold_expansionist
+						is_offmap_tag = offmap_china
+						offmap_china = {
+							has_policy = china_expansionist
 						}
 					}
 					random = {
 						chance = 50
-						offmap_freehold = {
-							set_policy = freehold_open
+						offmap_china = {
+							set_policy = china_open
 						}
 					}
 				}
@@ -3753,7 +3753,7 @@ tributary_offmap_cb = {
 		FROM = {
 			piety = 500
 			participation_scaled_prestige = 2500
-			set_character_flag = defeated_freehold
+			set_character_flag = defeated_china
 		}
 		any_defender = {
 			limit = { NOT = { character = FROM } }
@@ -3786,9 +3786,9 @@ tributary_offmap_cb = {
 	}
 }
 
-dismantle_pretender_freehold_cb = {
-	name = CB_NAME_DISMANTLE_PRETENDER_FREEHOLD
-	war_name = WAR_NAME_DISMANTLE_PRETENDER_FREEHOLD
+dismantle_pretender_china_cb = {
+	name = CB_NAME_DISMANTLE_PRETENDER_CHINA
+	war_name = WAR_NAME_DISMANTLE_PRETENDER_CHINA
 	sprite = 30
 	truce_days = 365
 	hostile_against_others = yes
@@ -3814,21 +3814,21 @@ dismantle_pretender_freehold_cb = {
 	on_success = {
 		log = "---------------------"
 		log = "Freehold Logging:"
-		log = "The [offmap_freehold.GetShortName] dismantle pretender on [From.GetTitledName] has ended"
+		log = "The [offmap_china.GetShortName] dismantle pretender on [From.GetTitledName] has ended"
 		log = "The war ended in a victory for Freehold"
 		log = "[From.GetTitledName] is now dismantled of Freehold"
 		log = "---------------------"
 		FROM = {
 			custom_tooltip = { 
-				text = dismantle_pretender_freehold_success_tt
+				text = dismantle_pretender_china_success_tt
 				hidden_effect = {
-					offmap_freehold = { set_offmap_flag = no_war_news }
+					offmap_china = { set_offmap_flag = no_war_news }
 					any_player = {
 						limit = {
 							NOT = { character = ROOT_FROM }
 							OR = {
 								AND = {
-									has_offmap_news_enabled = offmap_freehold
+									has_offmap_news_enabled = offmap_china
 									is_within_diplo_range = ROOT
 								}
 								liege = { character = ROOT_FROM }
@@ -3836,12 +3836,12 @@ dismantle_pretender_freehold_cb = {
 						}
 						narrative_event = { id = JD.60209 }
 					}
-					any_courtier = { death = { death_reason = death_executed_by_freehold_emperor } }
+					any_courtier = { death = { death_reason = death_executed_by_china_emperor } }
 					primary_title = {
 						activate_title = { title = THIS status = no }
 						destroy_landed_title = THIS
 					}
-					death = { death_reason = death_executed_by_freehold_emperor }
+					death = { death_reason = death_executed_by_china_emperor }
 				}
 			}
 		}
@@ -3853,7 +3853,7 @@ dismantle_pretender_freehold_cb = {
 	on_fail = {
 		log = "---------------------"
 		log = "Freehold Logging:"
-		log = "The [offmap_freehold.GetShortName] dismantle pretender on [From.GetTitledName] has ended"
+		log = "The [offmap_china.GetShortName] dismantle pretender on [From.GetTitledName] has ended"
 		log = "The war ended in a white peace for Freehold"
 		log = "---------------------"
 		FROM = {
@@ -3872,7 +3872,7 @@ dismantle_pretender_freehold_cb = {
 	on_reverse_demand = {
 		log = "---------------------"
 		log = "Freehold Logging:"
-		log = "The [offmap_freehold.GetShortName] dismantle pretender on [From.GetTitledName] has ended"
+		log = "The [offmap_china.GetShortName] dismantle pretender on [From.GetTitledName] has ended"
 		log = "The war ended in a defeat for Freehold"
 		log = "---------------------"
 		ROOT = {
@@ -3882,7 +3882,7 @@ dismantle_pretender_freehold_cb = {
 				value = 5.0
 				min = 500
 			}
-			offmap_power = { set_offmap_tmp_flag = pretender_freehold_empire_war_cooldown }
+			offmap_power = { set_offmap_tmp_flag = pretender_china_empire_war_cooldown }
 		}
 		FROM = {
 			piety = 200
@@ -3897,7 +3897,7 @@ dismantle_pretender_freehold_cb = {
 	on_attacker_leader_death = {
 		log = "---------------------"
 		log = "Freehold Logging:"
-		log = "The [offmap_freehold.GetShortName] dismantle pretender on [From.GetTitledName] has ended"
+		log = "The [offmap_china.GetShortName] dismantle pretender on [From.GetTitledName] has ended"
 		log = "The war was invalidated for Freehold"
 		log = "---------------------"
 		#end_war = invalid
@@ -3924,9 +3924,9 @@ dismantle_pretender_freehold_cb = {
 	}
 }
 
-force_open_freehold_cb = {
-	name = CB_NAME_FORCE_OPEN_FREEHOLD
-	war_name = WAR_NAME_FORCE_OPEN_FREEHOLD
+force_open_china_cb = {
+	name = CB_NAME_FORCE_OPEN_CHINA
+	war_name = WAR_NAME_FORCE_OPEN_CHINA
 	sprite = 30
 	truce_days = 365
 	hostile_against_others = yes
@@ -3946,12 +3946,12 @@ force_open_freehold_cb = {
 		
 		FROM = {
 			is_offmap_governor = yes
-			offmap_power = { is_offmap_tag = offmap_freehold }
+			offmap_power = { is_offmap_tag = offmap_china }
 		}
 	}
 
 	is_valid = {
-		offmap_freehold = { has_policy = freehold_isolationist }
+		offmap_china = { has_policy = china_isolationist }
 	}
 
 	on_success = {
@@ -3959,14 +3959,14 @@ force_open_freehold_cb = {
 			save_event_target_as = target_governor
 			offmap_power = { 
 				set_offmap_flag = no_policy_news
-				set_policy = freehold_open
+				set_policy = china_open
 				log = "--------------------------------"
 				log = "Freehold Policy Logging:"
 				log = "Freeholds new Policy is now OPEN"
 				log = "-------------------------------------"
-				set_offmap_tmp_flag = freehold_forced_open
+				set_offmap_tmp_flag = china_forced_open
 				set_offmap_flag = no_war_news
-				custom_tooltip = { text = freehold_forced_open_tt }
+				custom_tooltip = { text = china_forced_open_tt }
 				hidden_effect = {
 					any_player = {
 						limit = {
@@ -3977,14 +3977,14 @@ force_open_freehold_cb = {
 					}
 					clr_offmap_flag = no_policy_news
 				}
-				clr_offmap_tmp_flag = freehold_force_open_in_progress
+				clr_offmap_tmp_flag = china_force_open_in_progress
 			}
 		}
 		ROOT = {
 			participation_scaled_prestige = 1000
 			add_grace_massive_effect = yes
 			add_character_modifier = {
-				modifier = freehold_favored_in_trade
+				modifier = china_favored_in_trade
 				inherit = yes
 				years = 25
 			}
@@ -4006,7 +4006,7 @@ force_open_freehold_cb = {
 		FROM = {
 			piety = 100
 			participation_scaled_prestige = 50
-			hidden_effect = { offmap_power = { clr_offmap_tmp_flag = freehold_force_open_in_progress } }
+			hidden_effect = { offmap_power = { clr_offmap_tmp_flag = china_force_open_in_progress } }
 		}
 		any_defender = {
 			limit = { NOT = { character = FROM } }
@@ -4026,7 +4026,7 @@ force_open_freehold_cb = {
 				min = 500
 			}
 			add_character_modifier = {
-				modifier = angered_freehold_modifier
+				modifier = angered_china_modifier
 				inherit = yes
 				years = 50
 			}
@@ -4044,7 +4044,7 @@ force_open_freehold_cb = {
 						}
 						narrative_event = { id = JD.60303 }
 					}
-					clr_offmap_tmp_flag = freehold_force_open_in_progress
+					clr_offmap_tmp_flag = china_force_open_in_progress
 				}
 			}
 		}
@@ -4079,9 +4079,9 @@ force_open_freehold_cb = {
 	}
 }
 
-destabilization_freehold_cb = {
-	name = CB_NAME_DESTABILIZATION_FREEHOLD
-	war_name = WAR_NAME_DESTABILIZATION_FREEHOLD
+destabilization_china_cb = {
+	name = CB_NAME_DESTABILIZATION_CHINA
+	war_name = WAR_NAME_DESTABILIZATION_CHINA
 	sprite = 30
 	truce_days = 365
 	hostile_against_others = yes
@@ -4103,15 +4103,15 @@ destabilization_freehold_cb = {
 	on_success = {
 		FROM = {
 			custom_tooltip = {
-				text = destabilization_freehold_success_tt
+				text = destabilization_china_success_tt
 				hidden_effect = {
-					offmap_freehold = { set_offmap_flag = no_war_news }
+					offmap_china = { set_offmap_flag = no_war_news }
 					any_player = {
 						limit = {
 							NOT = { character = ROOT_FROM }
 							OR = {
 								AND = {
-									has_offmap_news_enabled = offmap_freehold
+									has_offmap_news_enabled = offmap_china
 									is_within_diplo_range = ROOT
 								}
 								liege = { character = ROOT_FROM }
@@ -4129,7 +4129,7 @@ destabilization_freehold_cb = {
 						}
 						unsafe_destroy_landed_title = THIS
 					}
-					#death = { death_reason = death_executed_by_freehold_emperor }
+					#death = { death_reason = death_executed_by_china_emperor }
 				}
 			}
 		}
@@ -4164,7 +4164,7 @@ destabilization_freehold_cb = {
 		FROM = {
 			piety = 500
 			participation_scaled_prestige = 2500
-			set_character_flag = defeated_freehold
+			set_character_flag = defeated_china
 		}
 		any_defender = {
 			limit = { NOT = { character = FROM } }
@@ -4197,9 +4197,9 @@ destabilization_freehold_cb = {
 	}
 }
 
-invasion_of_freehold_cb = {
-	name = CB_NAME_INVASION_OF_FREEHOLD
-	war_name = WAR_NAME_INVASION_OF_FREEHOLD
+invasion_of_china_cb = {
+	name = CB_NAME_INVASION_OF_CHINA
+	war_name = WAR_NAME_INVASION_OF_CHINA
 	sprite = 30
 	truce_days = 365
 	hostile_against_others = yes
@@ -4224,19 +4224,19 @@ invasion_of_freehold_cb = {
 		}
 		FROM = {
 			is_offmap_governor = yes
-			offmap_power = { is_offmap_tag = offmap_freehold }
+			offmap_power = { is_offmap_tag = offmap_china }
 		}
 	}
 
-	is_valid = { event_target:invasion_of_freehold_claimant = { is_alive = yes } }
+	is_valid = { event_target:invasion_of_china_claimant = { is_alive = yes } }
 
 	on_success = {
 		ROOT = {
 			show_scope_change = no
 			custom_tooltip = {
-				text = invasion_of_freehold_success_tt
+				text = invasion_of_china_success_tt
 				hidden_effect = {
-					event_target:invasion_of_freehold_claimant = {
+					event_target:invasion_of_china_claimant = {
 						betrothed = { break_betrothal = PREV }
 						spouse = {
 							if = {
@@ -4244,7 +4244,7 @@ invasion_of_freehold_cb = {
 									is_ruler = no
 									is_primary_heir = no
 								}
-								leave_court_for_freehold_effect = yes
+								leave_court_for_china_effect = yes
 							}
 						}
 						any_child = {
@@ -4253,18 +4253,18 @@ invasion_of_freehold_cb = {
 									is_ruler = no
 									is_primary_heir = no
 								}
-								leave_court_for_freehold_effect = yes
+								leave_court_for_china_effect = yes
 							}
 						}
 						abdicate = yes
 						any_claim = {
-							remove_claim = event_target:invasion_of_freehold_claimant
+							remove_claim = event_target:invasion_of_china_claimant
 						}
 						clr_character_flag = no_court_invites
 						remove_trait = cannot_marry
 						diplomatic_immunity = no
 					}
-					offmap_freehold = {
+					offmap_china = {
 						governor = {
 							any_vassal = {
 								set_defacto_liege = ROOT
@@ -4280,22 +4280,22 @@ invasion_of_freehold_cb = {
 						}
 						ROOT = {
 							if = {
-								limit = { government = freehold_government }
-								offmap_freehold = { set_offmap_flag = rename_override }
+								limit = { government = china_government }
+								offmap_china = { set_offmap_flag = rename_override }
 								primary_title = {
 									trigger_switch = {
 										on_trigger = has_title_flag
-										freehold_name_Elryia = { offmap_freehold = { set_offmap_name = "elryia_freehold" } }
-										freehold_name_Mantarys = { offmap_freehold = { set_offmap_name = "mantarys_freehold" } }
-										freehold_name_Oros = { offmap_freehold = { set_offmap_name = "oros_freehold" } }
-										freehold_name_Rhyos = { offmap_freehold = { set_offmap_name = "rhyos_freehold" } }
-										freehold_name_Tyria = { offmap_freehold = { set_offmap_name = "tyria_freehold" } }
-										freehold_name_Tolos = { offmap_freehold = { set_offmap_name = "tolos_freehold" } }
+										china_name_Elryia = { offmap_china = { set_offmap_name = "elryia_china" } }
+										china_name_Mantarys = { offmap_china = { set_offmap_name = "mantarys_china" } }
+										china_name_Oros = { offmap_china = { set_offmap_name = "oros_china" } }
+										china_name_Rhyos = { offmap_china = { set_offmap_name = "rhyos_china" } }
+										china_name_Tyria = { offmap_china = { set_offmap_name = "tyria_china" } }
+										china_name_Tolos = { offmap_china = { set_offmap_name = "tolos_china" } }
 									}
 									clr_title_flag = pretender_valyrian_empire
 									clr_title_flag = uses_temple_names_by_script
 									clear_flags_with_prefix = temple_name_
-									clear_flags_with_prefix = freehold_name_
+									clear_flags_with_prefix = china_name_
 									set_name = "[Root.Capital.GetName] Empire"
 								}
 								clr_character_flag = given_temple_name_by_script
@@ -4324,21 +4324,21 @@ invasion_of_freehold_cb = {
 						}
 						set_offmap_flag = no_succession_news
 						set_offmap_flag = no_war_news
-						clr_offmap_flag = freehold_invaded_player_dynasty
-						set_offmap_flag = freehold_invaded_player_dynasty
-						set_offmap_holder = event_target:invasion_of_freehold_claimant
+						clr_offmap_flag = china_invaded_player_dynasty
+						set_offmap_flag = china_invaded_player_dynasty
+						set_offmap_holder = event_target:invasion_of_china_claimant
 						clr_offmap_flag = no_succession_news
 						clr_offmap_flag = rename_override
 						
 						if = {
 							limit = {
 								NOR = {
-									has_status = freehold_stable
-									has_status = freehold_golden_age
+									has_status = china_stable
+									has_status = china_golden_age
 								}
 							}
 							set_offmap_flag = no_status_news
-							set_status = freehold_stable
+							set_status = china_stable
 							clr_offmap_flag = no_status_news
 						}
 					}
@@ -4346,7 +4346,7 @@ invasion_of_freehold_cb = {
 						limit = {
 							OR = {
 								AND = {
-									has_offmap_news_enabled = offmap_freehold
+									has_offmap_news_enabled = offmap_china
 									is_within_diplo_range = FROM
 								}
 								liege = { character = ROOT }
@@ -4357,16 +4357,16 @@ invasion_of_freehold_cb = {
 				}
 			}
 			participation_scaled_prestige = 5000
-			set_offmap_currency = { offmap = offmap_freehold value = 5000 }
+			set_offmap_currency = { offmap = offmap_china value = 5000 }
 			wealth = 10000
-			add_character_modifier = { name = freehold_favored_in_trade inherit = yes years = 50 }
+			add_character_modifier = { name = china_favored_in_trade inherit = yes years = 50 }
 			if = {
 				limit = { NOT = { has_artifact = jade_dragon } }
 				add_artifact = jade_dragon
 			}
 			if = {
-				limit = { NOT = { has_artifact = freehold_dragon_amulet } }
-				add_artifact = freehold_dragon_amulet
+				limit = { NOT = { has_artifact = china_dragon_amulet } }
+				add_artifact = china_dragon_amulet
 			}
 			if = {
 				limit = { NOT = { has_artifact = water_clock } }
@@ -4376,15 +4376,15 @@ invasion_of_freehold_cb = {
 				limit = { NOT = { has_artifact = jian_sword } }
 				add_artifact = jian_sword
 			}
-			hidden_effect = { add_character_modifier = { name = peace_deal_with_freehold inherit = yes years = 50 } }
-			remove_character_modifier = freehold_raid_active
-			remove_character_modifier = war_with_freehold_modifier
+			hidden_effect = { add_character_modifier = { name = peace_deal_with_china inherit = yes years = 50 } }
+			remove_character_modifier = china_raid_active
+			remove_character_modifier = war_with_china_modifier
 		}
 		any_attacker = {
 			limit = { NOT = { character = ROOT } }
 			hidden_tooltip = { participation_scaled_prestige = 2000 }
 		}
-		clear_global_event_target = invasion_of_freehold_claimant
+		clear_global_event_target = invasion_of_china_claimant
 	}
 
 	on_invalidation = {
@@ -4398,18 +4398,18 @@ invasion_of_freehold_cb = {
 		}
 		ROOT = {
 			prestige = -2500
-			remove_character_modifier = war_with_freehold_modifier
+			remove_character_modifier = war_with_china_modifier
 			custom_tooltip = {
-				text = invasion_of_freehold_cb_fail_tt
-				hidden_effect = { add_character_modifier = { name = failed_invasion_of_freehold duration = -1 hidden = yes } }
+				text = invasion_of_china_cb_fail_tt
+				hidden_effect = { add_character_modifier = { name = failed_invasion_of_china duration = -1 hidden = yes } }
 			}
 			hidden_effect = {
-				offmap_freehold = { set_offmap_flag = no_war_news }
+				offmap_china = { set_offmap_flag = no_war_news }
 				any_player = {
 					limit = {
 						OR = {
 							AND = {
-								has_offmap_news_enabled = offmap_freehold
+								has_offmap_news_enabled = offmap_china
 								is_within_diplo_range = FROM
 							}
 							liege = { character = ROOT }
@@ -4419,12 +4419,12 @@ invasion_of_freehold_cb = {
 				}
 			}
 			add_character_modifier = {
-				modifier = angered_freehold_modifier
+				modifier = angered_china_modifier
 				inherit = yes
 				years = 50
 			}
 		}
-		clear_global_event_target = invasion_of_freehold_claimant
+		clear_global_event_target = invasion_of_china_claimant
 	}
 
 	on_reverse_demand = {
@@ -4435,20 +4435,20 @@ invasion_of_freehold_cb = {
 				value = 5.0
 				min = 5000
 			}
-			remove_character_modifier = war_with_freehold_modifier
+			remove_character_modifier = war_with_china_modifier
 			custom_tooltip = {
-				text = invasion_of_freehold_cb_fail_tt
-				hidden_effect = { add_character_modifier = { name = failed_invasion_of_freehold duration = -1 hidden = yes } }
+				text = invasion_of_china_cb_fail_tt
+				hidden_effect = { add_character_modifier = { name = failed_invasion_of_china duration = -1 hidden = yes } }
 			}
 			custom_tooltip = {
-				text = destabilization_freehold_success_tt
+				text = destabilization_china_success_tt
 				hidden_effect = { 
-					offmap_freehold = { set_offmap_flag = no_war_news }
+					offmap_china = { set_offmap_flag = no_war_news }
 					any_player = {
 						limit = {
 							OR = {
 								AND = {
-									has_offmap_news_enabled = offmap_freehold
+									has_offmap_news_enabled = offmap_china
 									is_within_diplo_range = FROM
 								}
 								liege = { character = ROOT }
@@ -4469,7 +4469,7 @@ invasion_of_freehold_cb = {
 				}
 			}
 			add_character_modifier = {
-				modifier = angered_freehold_modifier
+				modifier = angered_china_modifier
 				inherit = yes
 				years = 50
 			}
@@ -4482,7 +4482,7 @@ invasion_of_freehold_cb = {
 			limit = { NOT = { character = FROM } }
 			hidden_tooltip = { participation_scaled_prestige = 1000 }
 		}
-		clear_global_event_target = invasion_of_freehold_claimant
+		clear_global_event_target = invasion_of_china_claimant
 	}
 	
 	on_attacker_leader_death = {
