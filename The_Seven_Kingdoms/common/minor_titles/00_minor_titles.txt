@@ -187,6 +187,7 @@ title_commander = {
     
     monthly_salary = 0.05
     monthly_prestige = 0.50
+	#combat_rating = 10 # Reactivate if we get this working
     
     revoke_allowed = no # Handled by diplomatic interaction
     
@@ -200,6 +201,7 @@ title_commander = {
                 OR = {
 					male_can_hold_minor_title_trigger = yes
 					female_can_hold_minor_commander_title_trigger = yes
+				}
                 OR = {
 					religion = the_seven
 					religion = the_stranger
@@ -235,6 +237,7 @@ title_commander = {
 									OR = {
 										religion = the_seven
 										religion = the_stranger
+									}
 									is_adult = yes
 								}
 								has_character_flag = special_marshal
@@ -269,6 +272,13 @@ title_commander = {
 			}
 			character_event = { id = HFP.20805 days = 1 } 
 		}
+		hidden_effect = { # Because this cannot be added in the passive effects, for some code reason
+			add_character_modifier = {
+	        	name = hidden_commander_bonus
+	        	duration = -1
+	        	hidden = yes
+	        }
+		}
 	}
 	lose_effect = {
 		if = {
@@ -277,6 +287,9 @@ title_commander = {
 			}
 			character_event = { id = HFP.20803 days = 1 } #Make sure the commander is not being made a sub-vassal.
 			
+		}
+		hidden_effect = {
+			remove_character_modifier = hidden_commander_bonus
 		}
 	}
 	
@@ -315,8 +328,6 @@ title_court_eunuch = {
                 tier = emperor
             }
         }
-		NOT = { has_landed_title = e_china }
-		
     }
     
     gain_effect = {
@@ -582,7 +593,6 @@ title_cupbearer = {
         NOT = { 
             primary_title = { temporary = yes } 
         }
-        is_adult = yes
         OR = { 
             male_can_hold_minor_title_trigger = yes
 			female_can_hold_minor_title_trigger = yes
@@ -918,7 +928,7 @@ title_food_taster = {
     dignity = 0.01
     realm_in_name = yes
     grant_limit = 1
-    opinion_effect = -5
+	opinion_effect = 5
     
     monthly_salary = 0.02
     monthly_prestige = -0.25
@@ -1226,7 +1236,7 @@ title_high_admiral = {
         is_adult = yes
         OR = { 
             male_can_hold_minor_title_trigger = yes
-			female_can_hold_minor_title_trigger = yes
+			female_can_hold_minor_commander_title_trigger = yes
         }
         NOT = { trait = incapable } 
     }
@@ -1289,8 +1299,8 @@ title_patrician_heir = {
     
     patrician_heir = yes
     
-    monthly_salary = 0.05
-    monthly_prestige = 0.30
+	monthly_salary = 0.01
+	monthly_prestige = 0.20
     
     allowed_to_hold = {
 		OR = { 
@@ -1705,7 +1715,6 @@ title_noyan = {
 			is_tribal = yes
 		}
 		AND = {
-			is_nomadic = yes
 			culture = dothraki
 		}
 	}
@@ -2230,7 +2239,7 @@ title_yabgu = {
         is_adult = yes
         OR = { 
             male_can_hold_minor_title_trigger = yes
-			female_can_hold_minor_commander_title_trigger = yes
+			female_can_hold_minor_title_trigger = yes
         }        
         is_close_relative = FROM
         NOT = { trait = incapable } 
@@ -2642,6 +2651,7 @@ title_councilmember_king = {
 				opinion = { who = ROOT modifier = opinion_resigned_from_council }
 			}
 		}
+	}
     message = yes
 }
 
@@ -2695,10 +2705,8 @@ title_councilmember_emperor = {
 			opinion = { who = FROM modifier = opinion_recently_fired }
 		}
 	}
-    retire_effect = {
-    }
 
-retire_effect = {
+	retire_effect = {
 		if = {
 			limit = {
 				NOT = {
@@ -2715,7 +2723,9 @@ retire_effect = {
 				opinion = { who = ROOT modifier = opinion_resigned_from_council }
 			}
 		}
-    message = yes
+	}
+
+	message = yes
 }
 
 #TAOIST TITLES

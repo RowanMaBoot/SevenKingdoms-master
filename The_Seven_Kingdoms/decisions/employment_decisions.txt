@@ -164,8 +164,11 @@ decisions = {
     #
     
 	employ_soldier = {
+		ai = no
+		only_playable = yes
+
 		potential = {
-			ai = no
+			
 		}
 		allow = {
 			prestige = 25
@@ -313,8 +316,11 @@ decisions = {
 	}
 
 	employ_priest = {
+		ai = no
+		only_playable = yes
+
 		potential = {
-			ai = no
+			NOT = { has_religion_feature = religion_matriarchal }
 		}
 		allow = {
 			piety = 25
@@ -395,10 +401,99 @@ decisions = {
 			factor = 0
 		}
 	}
+	employ_priestess = {
+		ai = no
+		only_playable = yes
+
+		potential = {
+			has_religion_feature = religion_matriarchal
+		}
+		allow = {
+			piety = 25
+			NOT = {
+				has_character_modifier = in_seclusion
+			}
+		}
+		effect = {
+			piety = -25
+			create_random_priest = {
+				random_traits = yes
+				dynasty = random
+				female = yes
+				attributes = {
+					diplomacy = 2
+					learning = 8
+					stewardship = 2
+					intrigue = 2
+					martial = 2
+				}
+			}
+			new_character = {
+				remove_trait = slow
+				remove_trait = imbecile
+				remove_trait = dull
+				
+				remove_trait = mystic
+				remove_trait = socializer
+				remove_trait = gamer
+				remove_trait = hedonist
+				remove_trait = duelist
+				remove_trait = hunter
+				remove_trait = strategist
+				remove_trait = administrator
+				remove_trait = architect
+				remove_trait = gardener
+				remove_trait = schemer
+				remove_trait = impaler
+				remove_trait = seducer
+				remove_trait = seductress
+				remove_trait = theologian
+				remove_trait = scholar
+				
+				random_list = { # Flavor Randomization
+					35 = { 
+						# Nothing
+					}
+					15 = {
+						change_learning = 2
+					}
+					20 = {
+						add_trait = theologian
+					}
+					5 = {
+						add_trait = scholar
+					}
+					5 = {
+						add_trait = mystic
+					}
+					10 = {
+						change_learning = 4
+					}
+					5 = {
+						change_learning = 6
+					}
+					5 = {
+						add_trait = shrewd
+					}
+				}
+				save_event_target_as = invited_character
+			}
+			character_event = { id = NE.1 }
+		}
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
 	
 	employ_steward = {
+		ai = no
+		only_playable = yes
+
 		potential = {
-			ai = no
+			NOT = { has_religion_feature = religion_matriarchal }
 		}
 		allow = {
 			scaled_wealth = 0.25
@@ -479,10 +574,101 @@ decisions = {
 			factor = 0
 		}
 	}
+	employ_stewardess = {
+		ai = no
+		only_playable = yes
+
+		potential = {
+			has_religion_feature = religion_matriarchal
+		}
+		allow = {
+			scaled_wealth = 0.25
+			NOT = {
+				has_character_modifier = in_seclusion
+			}
+		}
+		effect = {
+			scaled_wealth = -0.25
+			create_random_steward = {
+				random_traits = yes
+				dynasty = random
+				female = yes
+				attributes = {
+					diplomacy = 2
+					learning = 2
+					stewardship = 8
+					intrigue = 2
+					martial = 2
+				}
+			}
+			new_character = {
+				remove_trait = slow
+				remove_trait = imbecile
+				remove_trait = dull
+				
+				remove_trait = mystic
+				remove_trait = socializer
+				remove_trait = gamer
+				remove_trait = hedonist
+				remove_trait = duelist
+				remove_trait = hunter
+				remove_trait = strategist
+				remove_trait = administrator
+				remove_trait = architect
+				remove_trait = gardener
+				remove_trait = schemer
+				remove_trait = impaler
+				remove_trait = seducer
+				remove_trait = seductress
+				remove_trait = theologian
+				remove_trait = scholar
+				
+				random_list = { # Flavor Randomization
+					35 = { 
+						# Nothing
+					}
+					15 = {
+						change_stewardship = 2
+					}
+					10 = {
+						add_trait = gardener
+					}
+					10 = {
+						add_trait = architect
+					}
+					10 = {
+						add_trait = administrator
+					}
+					10 = {
+						change_stewardship = 4
+					}
+					5 = {
+						change_stewardship = 6
+					}
+					5 = {
+						add_trait = shrewd
+					}
+				}
+				save_event_target_as = invited_character
+			}
+			character_event = { id = NE.1 }
+		}
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+			factor = 0
+		}
+	}
 	
 	present_debutante = {
+		ai = no
+		only_playable = yes
+
 		potential = {
-			ai = no
+			NOT = {
+				has_religion_feature = religion_matriarchal
+			}
 		}
 		allow = {
 			scaled_wealth = 0.20
@@ -494,7 +680,7 @@ decisions = {
 			scaled_wealth = -0.20
 			create_character = {
 				random_traits = yes
-				dynasty = random
+				dynasty = actually_culture
 				female = yes
 				age = 17
 			}
