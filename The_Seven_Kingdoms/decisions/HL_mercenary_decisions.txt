@@ -20,39 +20,20 @@ targetted_decisions = {
 		only_playable = yes
 		filter = home_court
 		ai_target_filter = home_court
-		ai_check_interval = 36
 		
 		from_potential = {
 			is_playable = yes
-			OR = {
-				has_dlc = "Horse Lords"
-				any_owned_bloodline = {
-					has_bloodline_flag = bloodline_mercenary_traditions
-				}
-			}
+			has_dlc = "Horse Lords"
 			is_adult = yes
 			prisoner = no
 			NOT = { trait = incapable }
 			OR = {
 				government = nomadic_government
 				has_character_modifier = mercenary_traditions
-				any_owned_bloodline = {
-					has_bloodline_flag = bloodline_mercenary_traditions
-				}
 			}
 		}
 		potential = {
-			OR = {
-				AND = { 
-					is_female = no 
-					FROM = { NOT = { has_religion_feature = religion_matriarchal } }
-				}
-				AND = { 
-					is_female = yes 
-					FROM = { has_religion_feature = religion_matriarchal }
-				}
-				FROM = { primary_title = { has_law = status_of_women_4 } }
-			}
+			is_female = no
 			mercenary = no
 			dynasty = FROM
 			OR = {
@@ -93,9 +74,6 @@ targetted_decisions = {
 					government = nomadic_government
 				}
 				has_character_modifier = mercenary_traditions
-				any_owned_bloodline = {
-					has_bloodline_flag = bloodline_mercenary_traditions
-				}
 			}
 		}
 		effect = {
@@ -248,17 +226,14 @@ targetted_decisions = {
 		only_playable = yes
 		filter = dynasty
 		ai_target_filter = dynasty
-		ai_check_interval = 36
 		
 		from_potential = {
 			is_playable = yes
 			is_landed = yes
+			has_dlc = "Horse Lords"
 			OR = {
 				government = nomadic_government
 				has_character_modifier = mercenary_traditions
-				any_owned_bloodline = {
-					has_bloodline_flag = bloodline_mercenary_traditions
-				}
 			}
 		}
 		potential = {
@@ -369,17 +344,11 @@ targetted_decisions = {
 decisions = {
 	increase_mercenary_size = {
 		only_playable = yes
-		ai_check_interval = 18
 		potential = {
 			is_playable = yes
 			prisoner = no
 			wealth = 25
-			OR = {
-				has_dlc = "Horse Lords"
-				any_owned_bloodline = {
-					has_bloodline_flag = bloodline_mercenary_traditions
-				}
-			}
+			has_dlc = "Horse Lords"
 			primary_title = {
 				mercenary = yes
 				adventurer = yes
@@ -388,9 +357,6 @@ decisions = {
 					OR = {
 						government = nomadic_government
 						has_character_modifier = mercenary_traditions
-						any_owned_bloodline = {
-							has_bloodline_flag = bloodline_mercenary_traditions
-						}
 					}
 				}
 			}
@@ -451,13 +417,28 @@ decisions = {
 				factor = 2
 				wealth = 400
 			}
+
+			modifier = {
+				factor = 3
+				wealth = 800
+			}
+
+			modifier = {
+				factor = 4
+				wealth = 1200
+			}
+
+			modifier = {
+				factor = 5
+				wealth = 1600
+			}
 		}
 	}
 
 	carousing_with_the_men = {
-		only_playable = yes
-		ai_check_interval = 10
+		only_rulers = yes
 		potential = {
+			has_dlc = "Horse Lords"
 			is_ruler = yes
 			has_character_flag = is_mercenary_leader
 			primary_title = {
@@ -468,9 +449,6 @@ decisions = {
 					OR = {
 						government = nomadic_government
 						has_character_modifier = mercenary_traditions
-						any_owned_bloodline = {
-							has_bloodline_flag = bloodline_mercenary_traditions
-						}
 					}
 				}
 			}

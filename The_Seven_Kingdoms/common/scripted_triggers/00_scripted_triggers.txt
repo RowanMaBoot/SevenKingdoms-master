@@ -240,7 +240,6 @@ has_vice_trigger = {
 has_attractive_trait_trigger = {
 	OR = {
 		trait = fair
-		trait = groomed
 		trait = just
 		trait = brave
 		trait = gregarious
@@ -248,6 +247,7 @@ has_attractive_trait_trigger = {
 		trait = seductress
 		trait = robust
 		trait = strong
+#		trait = fit # TSK - ADDED
 		trait = socializer
 	}
 }
@@ -260,10 +260,8 @@ is_attractive_trigger = {
 has_unattractive_trait_trigger = {
 	OR = {
 		trait = ugly
-		trait = uncouth
 		trait = feeble
 		trait = dwarf
-		trait = giant
 		trait = clubfooted
 		trait = harelip
 		trait = hunchback
@@ -282,6 +280,7 @@ has_unattractive_trait_trigger = {
 		trait = cruel
 		trait = sociopath # TSK Added
 		trait = stubborn
+		trait = eunuch
 		trait = blinded
 		trait = horse
 		trait = one_eyed
@@ -330,6 +329,7 @@ is_dumb_trigger = {
 is_strong_trigger = {
 	OR = {
 		trait = strong
+#		trait = fit # TSK - ADDED
 		trait = robust
 	}
 }
@@ -359,7 +359,6 @@ poorly_treated_for_disease_trigger = {
 		has_character_modifier = mystic_treatment_terrible
 		has_character_modifier = failed_treatment_1
 		has_character_modifier = failed_treatment_2
-	}	
 }
 
 character_disease_trigger = {
@@ -522,6 +521,7 @@ has_fertile_trait_trigger = {
 		trait = fortune_builder
 		trait = midas_touched
 		trait = strong
+#		trait = fit # TSK - ADDED
 		trait = hedonist
 		trait = lustful
 		trait = dancing_plague
@@ -982,14 +982,12 @@ can_be_chancellor_trigger = {
 				}
 				AND = {
 					is_female = yes 
-					OR = { 
-						liege = { has_religion_feature = religion_matriarchal } 
-						liege = { has_religion_feature = religion_equal } 
-						liege = { has_religion_feature = religion_feature_bon } 
-					} 
+					religion = the_mother
+					liege = { religion = the_mother }
+					liege = { has_religion_feature = religion_feature_bon } 
 				}
 				trait = horse # So we can have female glitterhoofs! :D										  
-				AND = {
+                AND = {
 					religion = boashi
 					liege = { religion = boashi }
 				}
@@ -1254,13 +1252,7 @@ can_be_spymaster_trigger = {
 				}
 				AND = {
 					religion = the_mother
-					liege = { 
-						religion = the_mother
-						NOR = {
-							liege = { has_religion_feature = religion_matriarchal } 
-							liege = { has_religion_feature = religion_patriarchal } 
-						}
-					}
+					liege = { religion = the_mother }
 				}
                 AND = {
 					religion = boashi
@@ -1820,7 +1812,7 @@ death_execution_trigger = {
 		death_reason = death_execution_boar
 		death_reason = death_execution_eaten
 		death_reason = death_execution_aztec_sacrifice
-		death_reason = death_executed_by_chinese_emperor
+		death_reason = death_executed_by_china_emperor
 		death_reason = death_execution_brazen_bull
 		death_reason = death_execution_macabre_banquet							   
 	}	
@@ -4666,7 +4658,7 @@ china_diplo_interaction_trigger = {
 		NOT = { has_policy = china_isolationist }
 	}
 	conditional_tooltip = { 
-		trigger = { government = chinese_imperial_government }
+		trigger = { government = china_government }
 		custom_tooltip = { 
 			text = china_offmap_decisions_pretender_emperor_tt
 			always = no
@@ -4813,8 +4805,8 @@ local_third_party_score_great_trigger = {
 	check_variable = { which = local_third_party_score value = 141 }
 }
 
-# For checking the Chinese Emperor's likes & dislikes
-is_liked_by_China_trigger = {
+# For checking the Freehold Emperor's likes & dislikes
+is_liked_by_Freehold_trigger = {
 	liked_by_offmap = {
         type = offmap_china
     }
@@ -4829,7 +4821,7 @@ is_liked_by_China_trigger = {
     }
 }
 
-is_disliked_by_China_trigger = {
+is_disliked_by_Freehold_trigger = {
 	disliked_by_offmap = {
         type = offmap_china
     }
@@ -4844,7 +4836,7 @@ is_disliked_by_China_trigger = {
     }
 }
 
-is_liked_and_disliked_by_China = {
+is_liked_and_disliked_by_Freehold = {
     disliked_by_offmap = {
         type = offmap_china
     }
@@ -5041,10 +5033,7 @@ death_no_trace_trigger = {
 
 proselytize_convert_independent_trigger = {
 	owner = {
-		OR = { 
-			FROM = { NOT = { religion_group = westerosi_pagan_group } }
-			FROM = { has_religion_feature = religion_proselytizing }
-		}
+		FROM = { NOT = { religion_group = westerosi_pagan_group } }
 		independent = yes
 		NOT = { religion = FROM }
 		religion_group = westerosi_pagan_group
