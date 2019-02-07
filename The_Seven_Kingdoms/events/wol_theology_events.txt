@@ -7,7 +7,7 @@
 ###########################################
 
 # Written by Tobias Bodlund
-# Tweaks and additional events by Henrik Fåhraeus
+# Tweaks and additional events by Henrik FÃ¥hraeus
 
 namespace = WoL
 
@@ -36,7 +36,10 @@ character_event = {
 	desc = {
 		trigger = {
 			OR = {
-				NOT = { religion_group = pagan_group } # Scriptures
+				NOR = { # Scriptures
+					religion_group = westerosi_pagan_group
+					religion_group = eastern_pagan_group
+				}
 				is_reformed_religion = yes
 			}
 		}
@@ -44,7 +47,8 @@ character_event = {
 	}
 	desc = {
 		trigger = {
-			religion_group = pagan_group # Stories
+			religion_group = westerosi_pagan_group # Stories
+			religion_group = eastern_pagan_group
 			is_reformed_religion = no
 		}
 		text = EVTDESC_WoL_7000_unref_pagan
@@ -58,7 +62,10 @@ character_event = {
 		name = EVTOPTA_WoL_7000 # Yes, study scriptures
 		trigger = {
 			OR = {
-				NOT = { religion_group = pagan_group }
+				NOR = {
+					religion_group = westerosi_pagan_group
+					religion_group = eastern_pagan_group
+				}
 				is_reformed_religion = yes
 			}
 		}
@@ -68,7 +75,8 @@ character_event = {
 	option = {
 		name = EVTOPTB_WoL_7000 # Yes, listen to stories
 		trigger = {
-			religion_group = pagan_group
+			religion_group = westerosi_pagan_group
+			religion_group = eastern_pagan_group
 			is_reformed_religion = no
 		}
 		piety = 20
@@ -97,7 +105,10 @@ character_event = {
 	desc = {
 		trigger = {
 			OR = {
-				NOT = { religion_group = pagan_group } # Scriptures
+				NOR = { # Scriptures
+					religion_group = westerosi_pagan_group
+					religion_group = eastern_pagan_group
+				}
 				is_reformed_religion = yes
 			}
 		}
@@ -105,7 +116,8 @@ character_event = {
 	}
 	desc = {
 		trigger = {
-			religion_group = pagan_group # Stories
+			religion_group = westerosi_pagan_group # Stories
+			religion_group = eastern_pagan_group
 			is_reformed_religion = no
 		}
 		text = EVTDESC_WoL_7001_unref_pagan
@@ -115,7 +127,10 @@ character_event = {
 		name = EVTOPTA_WoL_7001 # Scriptures
 		trigger = {
 			OR = {
-				NOT = { religion_group = pagan_group }
+				NOR = {
+					religion_group = westerosi_pagan_group
+					religion_group = eastern_pagan_group
+				}
 				is_reformed_religion = yes
 			}
 		}
@@ -154,7 +169,8 @@ character_event = {
 	option = {
 		name = EVTOPTB_WoL_7001 # Stories
 		trigger = {
-			religion_group = pagan_group # Stories
+			religion_group = westerosi_pagan_group # Stories
+			religion_group = eastern_pagan_group
 			is_reformed_religion = no
 		}
 		piety = 20
@@ -284,10 +300,9 @@ character_event = {
 	trigger = {
 		has_focus = focus_theology
 		in_command = no
-		NOT = { religion_group = christian }
-		NOT = { religion_group = muslim }
+		NOT = { religion_group = the_seven_group }
+		NOT = { religion = rhllor }
 		NOT = { religion = moonsingers }
-		NOT = { religion_group = indian_group }
 		NOT = { is_inaccessible_trigger = yes }
 		NOT = { has_character_flag = do_not_disturb }
 		NOT = { has_character_flag = wol_theology_visited_holy_site }
@@ -489,13 +504,7 @@ character_event = {
 	trigger = {
 		has_focus = focus_theology
 		is_priest = no
-		NOT = { trait = zealous }
-		NOT = { trait = sympathy_christendom }
-		NOT = { trait = sympathy_islam }
-		NOT = { trait = sympathy_pagans }
-		NOT = { trait = sympathy_zoroastrianism }
-		NOT = { trait = sympathy_judaism }
-		NOT = { trait = sympathy_indian }
+		NOT = { has_any_sympathy_trait_trigger = yes }
 		NOT = { has_character_flag = wol_theology_view_other_religions }
 		any_realm_character = {
 			NOT = { religion_group = ROOT }
@@ -550,12 +559,14 @@ character_event = {
 			show_scope_change = no
 			trigger_switch = {
 				on_trigger = religion_group
-				christian = { ROOT = { add_trait = sympathy_christendom } }
-				muslim = { ROOT = { add_trait = sympathy_islam } }
-				pagan_group = { ROOT = { add_trait = sympathy_pagans } }
-				zoroastrian_group = { ROOT = { add_trait = sympathy_zoroastrianism } }
-				jewish_group = { ROOT = { add_trait = sympathy_judaism } }
-				indian_group = { ROOT = { add_trait = sympathy_indian } }
+				the_seven_group = { ROOT = { add_trait = sympathy_the_seven_group } }
+				eastern_group = { ROOT = { add_trait = sympathy_eastern_group } }
+				westerosi_pagan_group = { ROOT = { add_trait = sympathy_westerosi_pagan_group } }
+				drowned_god_group = { ROOT = { add_trait = sympathy_drowned_god_group } }
+				valyrian_group = { ROOT = { add_trait = sympathy_valyrian_group } }
+				eastern_pagan_group = { ROOT = { add_trait = sympathy_eastern_pagan_group } }
+				other_group = { ROOT = { add_trait = sympathy_other_group } }
+				far_east_group = { ROOT = { add_trait = sympathy_far_east_group } }
 			}
 		}
 	}
@@ -585,7 +596,7 @@ character_event = {
 		text = EVTDESC_WoL_7050
 		trigger = {
 			OR = {
-				NOT = { religion_group = pagan_group }
+				NOT = { religion_group = valyrian_group }
 				is_reformed_religion = yes
 				has_alternate_start_parameter = {
 					key = religion_names
@@ -695,10 +706,10 @@ character_event = {
 		is_heretic = no
 		trait = zealous
 		OR = {
-			religion_group = christian
-			religion_group = muslim
-			religion_group = zoroastrian_group
-			religion = moonsingers
+			religion_group = the_seven_group
+			religion = old_gods_beyond
+			religion_group = drowned_god_group
+			religion_group = valyrian_group
 		}
 		NOT = { has_character_flag = wol_theology_heretic }
 	}
@@ -807,21 +818,21 @@ character_event = {
 				10 = {
 					modifier = {
 						factor = 0
-						NOT = { religion_group = christian }
+						NOT = { religion_group = the_seven_group }
 					}
 					give_nickname = nick_the_apostle
 				}
 				10 = {
 					modifier = {
 						factor = 0
-						NOT = { religion_group = christian }
+						NOT = { religion_group = the_seven_group }
 					}
 					give_nickname = nick_the_confessor
 				}
 				10 = {
 					modifier = {
 						factor = 0
-						NOT = { religion_group = christian }
+						NOT = { religion_group = the_seven_group }
 					}
 					give_nickname = nick_the_blessed
 				}
@@ -888,24 +899,24 @@ character_event = {
 		text = EVTDESC_WoL_7080
 		trigger = {
 			NOR = {
-				religion_group = pagan_group
-				religion_group = muslim
-				has_dharmic_religion_trigger = yes
+				religion_group = westerosi_pagan_group
+				religion = rhllor
+				# has_dharmic_religion_trigger = yes
 			}
 		}
 	}
 	desc = {
 		text = EVTDESC_WoL_7080_PAGAN
-		trigger = { religion_group = pagan_group }
+		trigger = { religion_group = westerosi_pagan_group }
 	}
 	desc = {
 		text = EVTDESC_WoL_7080_MUSLIM
-		trigger = { religion_group = muslim }
+		trigger = { religion = rhllor }
 	}
-	desc = {
-		text = EVTDESC_WoL_7080_INDIAN
-		trigger = { has_dharmic_religion_trigger = yes }
-	}
+#	desc = {
+#		text = EVTDESC_WoL_7080_INDIAN
+#		trigger = { has_dharmic_religion_trigger = yes }
+#	}
 
 	trigger = {
 		has_focus = focus_theology
@@ -1020,8 +1031,8 @@ character_event = {
 		trigger = {
 			NOR = {
 				trait = lunatic
-				religion_group = pagan_group
-				has_dharmic_religion_trigger = yes
+				religion_group = westerosi_pagan_group
+				# has_dharmic_religion_trigger = yes
 			}
 		}
 	}
@@ -1031,18 +1042,18 @@ character_event = {
 			NOT = {
 				trait = lunatic				
 			}
-			religion_group = pagan_group
+			religion_group = westerosi_pagan_group
 		}
 	}
-	desc = {
-		text = EVTDESC_WoL_7091_INDIAN
-		trigger = {
-			NOT = {
-				trait = lunatic				
-			}
-			has_dharmic_religion_trigger = yes
-		}
-	}
+#	desc = {
+#		text = EVTDESC_WoL_7091_INDIAN
+#		trigger = {
+#			NOT = {
+#				trait = lunatic				
+#			}
+#			has_dharmic_religion_trigger = yes
+#		}
+#	}
 	desc = {
 		text = EVTDESC_WoL_7091_LUNATIC
 		trigger = {
@@ -1073,8 +1084,8 @@ character_event = {
 			random = {
 				chance = 20
 				add_trait = temperate
-			lose_weight_small_effect = yes
-			weight_trait_check_effect = yes
+				lose_weight_small_effect = yes
+				weight_trait_check_effect = yes
 				character_event = { id = 38276 } # Notify Temperate
 			}
 		}
@@ -1104,8 +1115,8 @@ character_event = {
 			random = {
 				chance = 20
 				add_trait = temperate
-			lose_weight_small_effect = yes
-			weight_trait_check_effect = yes
+				lose_weight_small_effect = yes
+				weight_trait_check_effect = yes
 				character_event = { id = 38276 } # Notify Temperate
 			}
 		}
@@ -1138,8 +1149,8 @@ character_event = {
 			random = {
 				chance = 20
 				add_trait = temperate
-			lose_weight_small_effect = yes
-			weight_trait_check_effect = yes
+				lose_weight_small_effect = yes
+				weight_trait_check_effect = yes
 				character_event = { id = 38276 } # Notify Temperate
 			}
 		}
@@ -1163,7 +1174,7 @@ character_event = {
 		}
 		trigger = {
 			trait = lustful
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 		remove_trait = lustful
 		piety = 100
@@ -1180,8 +1191,8 @@ character_event = {
 			random = {
 				chance = 20
 				add_trait = temperate
-			lose_weight_small_effect = yes
-			weight_trait_check_effect = yes
+				lose_weight_small_effect = yes
+				weight_trait_check_effect = yes
 				character_event = { id = 38276 } # Notify Temperate
 			}
 		}
@@ -1273,8 +1284,8 @@ character_event = {
 		trigger = {
 			trait = chaste
 			NOR = {
-				religion_group = christian
-				has_dharmic_religion_trigger = yes
+				religion_group = the_seven_group
+				# has_dharmic_religion_trigger = yes
 			}
 		}
 		ai_chance = {
@@ -1304,8 +1315,8 @@ character_event = {
 			random = {
 				chance = 20
 				add_trait = temperate
-			lose_weight_small_effect = yes
-			weight_trait_check_effect = yes
+				lose_weight_small_effect = yes
+				weight_trait_check_effect = yes
 				character_event = { id = 38276 } # Notify Temperate
 			}
 		}
