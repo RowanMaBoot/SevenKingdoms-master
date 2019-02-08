@@ -381,8 +381,8 @@ character_event = {
 			limit = { 
 				mother = { 
 					OR = { 
-						religion = catholic
-						religion = orthodox
+						religion = the_seven
+						religion = old_gods
 					}
 					is_married = yes
 					NOT = { num_of_children = 2 }
@@ -1068,7 +1068,7 @@ character_event = {
 			}
 			NOR = { 
 				AND = { 
-					religion_group = christian 
+					religion_group = the_seven_group 
 					trait = zealous 
 				} 
 				trait = kind 
@@ -3968,12 +3968,12 @@ character_event = {
 						modifier = { 
 							factor = 0 
 							NOR = { 
-								religion_group = christian
-								religion_group = muslim
-								religion = tengri_pagan
-								religion = tengri_pagan_reformed
-								religion = norse_pagan
-								religion = norse_pagan_reformed
+								religion_group = westerosi_pagan_group
+								religion_group = drowned_god_group
+								religion_group = eastern_pagan_group
+								# religion = tengri_pagan_reformed
+								# religion = norse_pagan
+								# religion = norse_pagan_reformed
 							} 
 						} 
 						set_dynasty_flag = flag_vision_baby		#Positive
@@ -3983,12 +3983,12 @@ character_event = {
 						modifier = { 
 							factor = 0 
 							NOR = { 
-								religion_group = christian
-								religion_group = muslim
-								religion = tengri_pagan
-								religion = tengri_pagan_reformed
-								religion = norse_pagan
-								religion = norse_pagan_reformed
+								religion_group = westerosi_pagan_group
+								religion_group = drowned_god_group
+								religion_group = eastern_pagan_group
+								# religion = tengri_pagan_reformed
+								# religion = norse_pagan
+								# religion = norse_pagan_reformed
 							} 
 						}
 						set_dynasty_flag = flag_vision_baby 	#Negative
@@ -4179,7 +4179,10 @@ character_event = {
 		trigger = { 
 			OR = { 
 				is_reformed_religion = yes 
-				NOT = { religion_group = pagan_group }
+				NOR = {
+					religion_group = westerosi_pagan_group
+					religion_group = eastern_pagan_group
+				}
 			}
 			NOT = { FROM = { has_character_flag = pregnancy_priest_comfort } }
 			NOT = { FROM = { has_character_flag = pregnancy_shaman_comfort } }
@@ -4201,7 +4204,10 @@ character_event = {
 		hidden_tooltip = { FROM = { character_event = { id = HFP.20510 } } } #Notify woman
 		trigger = { 
 			is_reformed_religion = no 
-			religion_group = pagan_group
+			OR = {
+				religion_group = westerosi_pagan_group
+				religion_group = eastern_pagan_group
+			}
 			NOT = { FROM = { has_character_flag = pregnancy_shaman_comfort } }
 			NOT = { FROM = { has_character_flag = pregnancy_priest_comfort } }
 		}
@@ -4605,8 +4611,8 @@ character_event = {
 		picture = GFX_evt_icon
 		trigger = {
 			OR = { 
-				religion_group = christian
-				religion_group = muslim
+				religion_group = the_seven_group
+				religion_group = eastern_group
 			} 
 		}
 	}
@@ -4615,8 +4621,8 @@ character_event = {
 		picture = GFX_evt_comet
 		trigger = {
 			OR = { 
-				religion = norse_pagan
-				religion = norse_pagan_reformed
+				religion_group = drowned_god_group
+				# religion = norse_pagan_reformed
 			} 
 		}
 	}
@@ -4625,8 +4631,8 @@ character_event = {
 		picture = GFX_evt_wolf
 		trigger = {
 			OR = { 
-				religion = tengri_pagan
-				religion = tengri_pagan_reformed
+				religion_group = westerosi_pagan_group
+				# religion = tengri_pagan_reformed
 			} 
 		}
 	}
@@ -4640,8 +4646,8 @@ character_event = {
 		name = EVTOPTAHFP20503
 		trigger = { 
 			OR = { 
-				religion_group = christian
-				religion_group = muslim
+				religion_group = the_seven_group
+				religion_group = eastern_group
 			} 
 		}
 		set_character_flag = gabriel_baby
@@ -4650,8 +4656,8 @@ character_event = {
 		name = EVTOPTBHFP20503
 		trigger = { 
 			OR = { 
-				religion = norse_pagan
-				religion = norse_pagan_reformed
+				religion_group = drowned_god_group
+				# religion = norse_pagan_reformed
 			} 
 		}
 		set_character_flag = thor_baby
@@ -4660,8 +4666,8 @@ character_event = {
 		name = EVTOPTCHFP20503
 		trigger = { 
 			OR = { 
-				religion = tengri_pagan
-				religion = tengri_pagan_reformed
+				religion_group = westerosi_pagan_group
+				# religion = tengri_pagan_reformed
 			} 
 		}
 		set_character_flag = tengri_baby
@@ -4675,14 +4681,14 @@ character_event = {
 		text = EVTDESCHFPA20504
 		picture = GFX_evt_icon
 		trigger = {
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 	}
 	desc = {
 		text = EVTDESCHFPB20504
 		picture = GFX_evt_irminsul_burning
 		trigger = {
-			religion_group = muslim
+			religion_group = eastern_group
 		}
 	}
 	desc = {
@@ -4690,8 +4696,8 @@ character_event = {
 		picture = GFX_evt_torture
 		trigger = {
 			OR = { 
-				religion = norse_pagan
-				religion = norse_pagan_reformed
+				religion_group = drowned_god_group
+				# religion = norse_pagan_reformed
 			} 
 		}
 	}
@@ -4700,8 +4706,8 @@ character_event = {
 		picture = GFX_evt_illness
 		trigger = {
 			OR = { 
-				religion = tengri_pagan
-				religion = tengri_pagan_reformed
+				religion_group = westerosi_pagan_group
+				# religion = tengri_pagan_reformed
 			} 
 		}
 	}
@@ -4714,14 +4720,14 @@ character_event = {
 	option = { 
 		name = EVTOPTAHFP20504
 		trigger = { 
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 		set_character_flag = lucifer_baby
 	}
 	option = { 
 		name = EVTOPTBHFP20504
 		trigger = { 
-			religion_group = muslim
+			religion_group = eastern_group
 		}
 		set_character_flag = iblis_baby
 	}
@@ -4729,8 +4735,8 @@ character_event = {
 		name = EVTOPTCHFP20504
 		trigger = { 
 			OR = { 
-				religion = norse_pagan
-				religion = norse_pagan_reformed
+				religion_group = drowned_god_group
+				# religion = norse_pagan_reformed
 			} 
 		}
 		set_character_flag = loki_baby
@@ -4739,8 +4745,8 @@ character_event = {
 		name = EVTOPTDHFP20504
 		trigger = { 
 			OR = { 
-				religion = tengri_pagan
-				religion = tengri_pagan_reformed
+				religion_group = westerosi_pagan_group
+				# religion = tengri_pagan_reformed
 			} 
 		}
 		set_character_flag = erlik_baby
@@ -5288,7 +5294,10 @@ character_event = {
 			is_ruler = yes
 			OR = { 
 				is_reformed_religion = yes 
-				NOT = { religion_group = pagan_group }
+				NOR = {
+					religion_group = westerosi_pagan_group
+					religion_group = eastern_pagan_group
+				}
 			}
 		}
 		set_character_flag = pregnancy_priest_comfort
@@ -5308,7 +5317,10 @@ character_event = {
 		trigger = { 
 			is_ruler = yes
 			is_reformed_religion = no 
-			religion_group = pagan_group
+			OR = {
+				religion_group = westerosi_pagan_group
+				religion_group = eastern_pagan_group
+			}
 			NOT = { has_character_flag = pregnancy_shaman_comfort } #Already taken from the spouse/regent
 			NOT = { has_character_flag = pregnancy_priest_comfort }
 		}
@@ -7966,7 +7978,7 @@ character_event = {
 			45 = {
 				trigger = { 
 					is_ruler = yes
-					religion_group = christian
+					religion_group = the_seven_group
 					NOT = { society_member_of = the_satanists }
 					NOT = { num_of_children = 3 }
 					NOT = { is_devil_worshiper_trigger = yes }
@@ -8001,12 +8013,12 @@ character_event = {
 					} 
 					spouse = { 
 						OR = { 
-							religion = norse_pagan
-							religion = norse_pagan_reformed
-							religion = baltic_pagan
-							religion = baltic_pagan_reformed
-							religion = finnish_pagan
-							religion = finnish_pagan_reformed 
+							religion_group = westerosi_pagan_group
+							religion_group = drowned_god_group
+							religion_group = eastern_pagan_group
+							# religion = baltic_pagan_reformed
+							# religion = finnish_pagan
+							# religion = finnish_pagan_reformed 
 						}  
 						NOR = { 
 							trait = incapable 
@@ -8015,12 +8027,12 @@ character_event = {
 						}
 					}
 					OR = { 
-						religion = norse_pagan
-						religion = norse_pagan_reformed
-						religion = baltic_pagan
-						religion = baltic_pagan_reformed
-						religion = finnish_pagan
-						religion = finnish_pagan_reformed 
+						religion_group = westerosi_pagan_group
+						religion_group = drowned_god_group
+						religion_group = eastern_pagan_group
+						# religion = baltic_pagan_reformed
+						# religion = finnish_pagan
+						# religion = finnish_pagan_reformed 
 					} 
 				}
 				modifier = { 
@@ -8066,7 +8078,14 @@ character_event = {
 			50 = {
 				trigger = { 
 					is_ruler = yes
-					religion_group = pagan_group
+					OR = {
+						religion_group = drowned_god_group
+						religion = rhllor
+						AND = {
+							religion_group = westerosi_pagan_group
+							NOT = { religion = old_gods }
+						}
+					}
 					OR = { 
 						is_tribal = yes
 						is_nomadic = yes
@@ -8094,28 +8113,28 @@ character_event = {
 						spouse = { higher_real_tier_than = COUNT } 
 					} 
 					spouse = { 
-						OR = { 
-							religion = norse_pagan
-							religion = norse_pagan_reformed
-							religion = baltic_pagan
-							religion = baltic_pagan_reformed
-							religion = finnish_pagan
-							religion = finnish_pagan_reformed 
-						}  
+						OR = {
+						religion_group = drowned_god_group
+						religion = rhllor
+						AND = {
+							religion_group = westerosi_pagan_group
+							NOT = { religion = old_gods }
+						}
+					}  
 						NOR = { 
 							trait = incapable 
 							prisoner = yes
 							is_inaccessible_trigger = yes
 						}
 					}
-					OR = { 
-						religion = norse_pagan
-						religion = norse_pagan_reformed
-						religion = baltic_pagan
-						religion = baltic_pagan_reformed
-						religion = finnish_pagan
-						religion = finnish_pagan_reformed 
-					} 
+					OR = {
+						religion_group = drowned_god_group
+						religion = rhllor
+						AND = {
+							religion_group = westerosi_pagan_group
+							NOT = { religion = old_gods }
+						}
+					}
 				}
 				modifier = { 
 					factor = 0.5
@@ -8940,12 +8959,12 @@ character_event = {
 						modifier = { 
 							factor = 0 
 							NOR = { 
-								religion_group = christian
-								religion_group = muslim
-								religion = tengri_pagan
-								religion = tengri_pagan_reformed
-								religion = norse_pagan
-								religion = norse_pagan_reformed
+								religion_group = westerosi_pagan_group
+								religion_group = drowned_god_group
+								religion_group = eastern_pagan_group
+								# religion = tengri_pagan_reformed
+								# religion = norse_pagan
+								# religion = norse_pagan_reformed
 							} 
 						} 
 						set_dynasty_flag = flag_vision_baby		#Positive
@@ -8970,12 +8989,12 @@ character_event = {
 						modifier = { 
 							factor = 0 
 							NOR = { 
-								religion_group = christian
-								religion_group = muslim
-								religion = tengri_pagan
-								religion = tengri_pagan_reformed
-								religion = norse_pagan
-								religion = norse_pagan_reformed
+								religion_group = westerosi_pagan_group
+								religion_group = drowned_god_group
+								religion_group = eastern_pagan_group
+								# religion = tengri_pagan_reformed
+								# religion = norse_pagan
+								# religion = norse_pagan_reformed
 							} 
 						} 
 						set_dynasty_flag = flag_vision_baby		#Positive
@@ -9045,12 +9064,12 @@ character_event = {
 						modifier = { 
 							factor = 0 
 							NOR = { 
-								religion_group = christian
-								religion_group = muslim
-								religion = tengri_pagan
-								religion = tengri_pagan_reformed
-								religion = norse_pagan
-								religion = norse_pagan_reformed
+								religion_group = westerosi_pagan_group
+								religion_group = drowned_god_group
+								religion_group = eastern_pagan_group
+								# religion = tengri_pagan_reformed
+								# religion = norse_pagan
+								# religion = norse_pagan_reformed
 							} 
 						}
 						set_dynasty_flag = flag_vision_baby 	#Negative
@@ -9093,12 +9112,12 @@ character_event = {
 						modifier = { 
 							factor = 0 
 							NOR = { 
-								religion_group = christian
-								religion_group = muslim
-								religion = tengri_pagan
-								religion = tengri_pagan_reformed
-								religion = norse_pagan
-								religion = norse_pagan_reformed
+								religion_group = westerosi_pagan_group
+								religion_group = drowned_god_group
+								religion_group = eastern_pagan_group
+								# religion = tengri_pagan_reformed
+								# religion = norse_pagan
+								# religion = norse_pagan_reformed
 							} 
 						}
 						set_dynasty_flag = flag_vision_baby 	#Negative
@@ -9190,7 +9209,7 @@ character_event = {
 	trigger = { 
 		trait = pregnant
 		NOT = { trait = troubled_pregnancy } 
-		religion_group = christian
+		religion_group = the_seven_group
 	}
 
 	is_triggered_only = yes
@@ -9366,7 +9385,7 @@ character_event = {
 	trigger = { 
 		trait = pregnant
 		NOT = { trait = troubled_pregnancy } 
-		religion_group = pagan_group
+		religion_group = westerosi_pagan_group
 	}
 
 	is_triggered_only = yes
@@ -11041,13 +11060,13 @@ character_event = {
 	trigger = { 
 		FROM = { 
 			is_alive = yes 
-			religion = catholic
+			religion = the_seven
 			OR = { 
 				trait = bastard
 				trait = legit_bastard
 			} 
 		} 
-		religion = catholic
+		religion = the_seven
 	}
 	is_triggered_only = yes
 	
@@ -13311,8 +13330,8 @@ character_event = {
 
 	trigger = { 
 		OR = { 
-			religion = catholic
-			religion = orthodox
+			religion = the_seven
+			# religion = orthodox
 		}
 		NOT = { trait = incapable }
 		NOT = { trait = troubled_pregnancy }
@@ -14831,12 +14850,9 @@ character_event = {
 			is_alive = yes
 			is_married = ROOT
 			OR = { #Can be of different but similar religion.
-				religion = baltic_pagan
-				religion = baltic_pagan_reformed
-				religion = norse_pagan
-				religion = norse_pagan_reformed
-				religion = finnish_pagan
-				religion = finnish_pagan_reformed
+				religion_group = westerosi_pagan_group
+				religion_group = drowned_god_group
+				religion_group = eastern_pagan_group
 			}
 			NOR = {
 				trait = incapable
@@ -14853,12 +14869,9 @@ character_event = {
 			} 
 		}
 		OR = {
-			religion = baltic_pagan
-			religion = baltic_pagan_reformed
-			religion = norse_pagan
-			religion = norse_pagan_reformed
-			religion = finnish_pagan
-			religion = finnish_pagan_reformed
+			religion_group = westerosi_pagan_group
+			religion_group = drowned_god_group
+			religion_group = eastern_pagan_group
 		}
 	}
 
@@ -16138,7 +16151,7 @@ character_event = {
 			}
 			modifier = { 
 				factor = 1.5
-				religion_group = christian
+				religion_group = the_seven_group
 				trait = zealous
 			}
 			modifier = { 
