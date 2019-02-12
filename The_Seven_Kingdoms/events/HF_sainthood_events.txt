@@ -10,7 +10,7 @@ character_event = {
 	is_triggered_only = yes
 	min_age = 16
     only_playable = yes
-	religion_group = christian
+	religion_group = the_seven_group
 	has_dlc = "Holy Fury"
 
 	trigger = {
@@ -22,7 +22,7 @@ character_event = {
 			trait = hedonist
 			trait = cannibal_trait
 			#controls_religion = yes
-            religion = waldensian
+            # religion = waldensian
             is_any_kinslayer_trigger = yes
             has_character_modifier = voice_of_satan
             has_character_modifier = known_satanist
@@ -93,7 +93,7 @@ character_event = {
         }
         if = {
             limit = {
-                religion_group = christian
+                religion_group = the_seven_group
             }
             random_realm_character = {
                 limit = {
@@ -178,7 +178,7 @@ province_event = {
         		limit = {
         			has_global_flag = only_papal_saints
         			event_target:saint_person = {
-        				religion = catholic
+        				religion = the_seven
         			}
         		}
         		rightful_religious_head_scope = {
@@ -470,7 +470,7 @@ character_event = {
     desc = {
         trigger = {
             event_target:saint_person = {
-                religion_group = christian
+                religion_group = the_seven_group
             }
         }
         text = EVTDESC_HF_40020_A
@@ -478,7 +478,7 @@ character_event = {
     desc = {
         trigger = {
             event_target:saint_person = {
-                religion_group = pagan_group
+                religion_group = westerosi_pagan_group
             }
         }
         text = EVTDESC_HF_40020_B
@@ -496,7 +496,7 @@ character_event = {
 
         if = {
             limit = {
-                religion_group = christian
+                religion_group = the_seven_group
             }
             custom_tooltip = {
                 text = pope_cannonize_choice_TT
@@ -504,7 +504,7 @@ character_event = {
         }
         else_if = {
             limit = {
-                religion_group = pagan_group
+                religion_group = westerosi_pagan_group
             }
             custom_tooltip = {
                 text = pagan_pope_cannonize_choice_TT
@@ -516,7 +516,7 @@ character_event = {
             if = {
                 limit = {
                     event_target:saint_person = {
-                        religion_group = christian
+                        religion_group = the_seven_group
                     }
                 }
                 random_list = {
@@ -678,7 +678,7 @@ character_event = {
             if = {
                 limit = {
                     event_target:saint_person = {
-                        religion_group = pagan_group
+                        religion_group = westerosi_pagan_group
                         OR = {
                             has_nickname = no
                             has_nickname = nick_the_blessed
@@ -785,7 +785,7 @@ character_event = {
             event_target:saint_person = {
                 if = {
                     limit = {
-                        religion_group = christian
+                        religion_group = the_seven_group
                     }
                     remove_trait = beatified
                     add_trait = saint   
@@ -801,7 +801,7 @@ character_event = {
                 }
                 else_if = {
                     limit = {
-                        religion_group = pagan_group
+                        religion_group = westerosi_pagan_group
                     }
                     add_trait = blessed_ancestor
                     set_special_character_title = BLESSED_TITLE
@@ -811,7 +811,7 @@ character_event = {
             if = {
                 limit = {
                     event_target:saint_person = {
-                        religion_group = christian
+                        religion_group = the_seven_group
                     }
                 }
                 #Confirm that a burial site exists, for pilgrimage
@@ -908,283 +908,288 @@ character_event = {
                         }
                     }
                     event_target:saint_person = {
-                        if = {
-                            limit = {
-                                OR = {
-                                    religion = orthodox
-                                    religion = iconoclast
-                                    religion = paulician
-                                    religion = monothelite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_orthodox_01
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = nestorian
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_nestorian_01
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                OR = {
-                                    religion = miaphysite
-                                    religion = monophysite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_coptic_01
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = norse_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_germanic_01
-                                    religion = norse_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_germanic_01
-                                    religion = norse_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = baltic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_romuva_01
-                                    religion = baltic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_romuva_01
-                                    religion = baltic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = slavic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_slavic_01
-                                    religion = slavic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_slavic_01
-                                    religion = slavic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = tengri_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_tengri_01
-                                    religion = tengri_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_tengri_01
-                                    religion = tengri_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = finnish_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_suomenusko_01
-                                    religion = finnish_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_suomenusko_01
-                                    religion = finnish_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = aztec_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_aztec_01
-                                    religion = aztec_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_aztec_01
-                                    religion = aztec_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = west_african_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_african_01
-                                    religion = west_african_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_african_01
-                                    religion = west_african_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = zun_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_zun_01
-                                    religion = zun_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_zun_01
-                                    religion = zun_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = hellenic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_hellenic_01
-                                    religion = hellenic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_hellenic_01
-                                    religion = hellenic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = bon_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_bon_01
-                                    religion = bon_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_bon_01
-                                    religion = bon_reformed
-                                }
-                            }
-                        }
-                        else = {
-                            create_bloodline = {
-                                type = saintly_bloodline_catholic_01
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = christian
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = saintly_bloodline_name
-                                set_description = saintly_bloodline_description
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = pagan_group
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = blessed_bloodline_name
-                                set_description = blessed_bloodline_description
-                            }
-                        }
+                        create_bloodline = {
+							type = saintly_bloodline
+							religion = event_target:saint_person
+							inheritance = patrilineal
+						}
+						# if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = orthodox
+                                    # religion = iconoclast
+                                    # religion = paulician
+                                    # religion = monothelite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_orthodox_01
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = nestorian
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_nestorian_01
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = miaphysite
+                                    # religion = monophysite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_coptic_01
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = norse_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_germanic_01
+                                    # religion = norse_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_germanic_01
+                                    # religion = norse_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = baltic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_romuva_01
+                                    # religion = baltic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_romuva_01
+                                    # religion = baltic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = slavic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_slavic_01
+                                    # religion = slavic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_slavic_01
+                                    # religion = slavic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = tengri_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_tengri_01
+                                    # religion = tengri_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_tengri_01
+                                    # religion = tengri_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = finnish_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_suomenusko_01
+                                    # religion = finnish_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_suomenusko_01
+                                    # religion = finnish_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = aztec_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_aztec_01
+                                    # religion = aztec_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_aztec_01
+                                    # religion = aztec_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = west_african_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_african_01
+                                    # religion = west_african_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_african_01
+                                    # religion = west_african_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = zun_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_zun_01
+                                    # religion = zun_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_zun_01
+                                    # religion = zun_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = hellenic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_hellenic_01
+                                    # religion = hellenic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_hellenic_01
+                                    # religion = hellenic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = bon_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_bon_01
+                                    # religion = bon_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_bon_01
+                                    # religion = bon_reformed
+                                # }
+                            # }
+                        # }
+                        # else = {
+                            # create_bloodline = {
+                                # type = saintly_bloodline_catholic_01
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = christian
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = saintly_bloodline_name
+                                # set_description = saintly_bloodline_description
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = pagan_group
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = blessed_bloodline_name
+                                # set_description = blessed_bloodline_description
+                            # }
+                        # }
                     }
                 }
                 20 = {
@@ -1211,1215 +1216,1220 @@ character_event = {
                         }
                     }
                     event_target:saint_person = {
-                         if = {
-                            limit = {
-                                OR = {
-                                    religion = orthodox
-                                    religion = iconoclast
-                                    religion = paulician
-                                    religion = monothelite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_orthodox_02
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = nestorian
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_nestorian_02
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                OR = {
-                                    religion = miaphysite
-                                    religion = monophysite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_coptic_02
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else = {
-                            create_bloodline = {
-                                type = saintly_bloodline_catholic_02
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = christian
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = saintly_bloodline_name
-                                set_description = saintly_bloodline_description
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = pagan_group
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = blessed_bloodline_name
-                                set_description = blessed_bloodline_description
-                            }
-                        }
+                        create_bloodline = {
+							type = saintly_bloodline
+							religion = event_target:saint_person
+							inheritance = patrilineal
+						}
+						# if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = orthodox
+                                    # religion = iconoclast
+                                    # religion = paulician
+                                    # religion = monothelite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_orthodox_02
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = nestorian
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_nestorian_02
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = miaphysite
+                                    # religion = monophysite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_coptic_02
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else = {
+                            # create_bloodline = {
+                                # type = saintly_bloodline_catholic_02
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = christian
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = saintly_bloodline_name
+                                # set_description = saintly_bloodline_description
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = pagan_group
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = blessed_bloodline_name
+                                # set_description = blessed_bloodline_description
+                            # }
+                        # }
                     }
                 }
-                5 = {
-                    event_target:saint_person = {
-                        if = {
-                            limit = {
-                                OR = {
-                                    religion = orthodox
-                                    religion = iconoclast
-                                    religion = paulician
-                                    religion = monothelite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_orthodox_03
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = nestorian
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_nestorian_03
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                OR = {
-                                    religion = miaphysite
-                                    religion = monophysite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_coptic_03
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = norse_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_germanic_03
-                                    religion = norse_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_germanic_03
-                                    religion = norse_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = baltic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_romuva_03
-                                    religion = baltic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_romuva_03
-                                    religion = baltic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = slavic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_slavic_03
-                                    religion = slavic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_slavic_03
-                                    religion = slavic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = tengri_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_tengri_03
-                                    religion = tengri_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_tengri_03
-                                    religion = tengri_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = finnish_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_suomenusko_03
-                                    religion = finnish_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_suomenusko_03
-                                    religion = finnish_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = aztec_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_aztec_03
-                                    religion = aztec_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_aztec_03
-                                    religion = aztec_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = west_african_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_african_03
-                                    religion = west_african_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_african_03
-                                    religion = west_african_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = zun_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_zun_03
-                                    religion = zun_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_zun_03
-                                    religion = zun_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = hellenic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_hellenic_03
-                                    religion = hellenic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_hellenic_03
-                                    religion = hellenic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = bon_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_bon_03
-                                    religion = bon_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_bon_03
-                                    religion = bon_reformed
-                                }
-                            }
-                        }
-                        else = {
-                            create_bloodline = {
-                                type = saintly_bloodline_catholic_03
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = christian
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = saintly_bloodline_name
-                                set_description = saintly_bloodline_description
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = pagan_group
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = blessed_bloodline_name
-                                set_description = blessed_bloodline_description
-                            }
-                        }
-                    }
-                }
-                5 = {
-                    modifier = {
-                        factor = 4
-                        OR = {
-                            event_target:saint_person = {
-                                trait = zealous
-                            }
-                            event_target:saint_person = {
-                                trait = holy_warrior
-                            }
-                        }
-                    }
-                    event_target:saint_person = {
-                        if = {
-                            limit = {
-                                OR = {
-                                    religion = orthodox
-                                    religion = iconoclast
-                                    religion = paulician
-                                    religion = monothelite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_orthodox_04
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = nestorian
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_nestorian_04
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                OR = {
-                                    religion = miaphysite
-                                    religion = monophysite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_coptic_04
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = norse_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_germanic_04
-                                    religion = norse_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_germanic_04
-                                    religion = norse_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = baltic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_romuva_04
-                                    religion = baltic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_romuva_04
-                                    religion = baltic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = slavic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_slavic_04
-                                    religion = slavic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_slavic_04
-                                    religion = slavic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = tengri_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_tengri_04
-                                    religion = tengri_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_tengri_04
-                                    religion = tengri_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = finnish_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_suomenusko_04
-                                    religion = finnish_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_suomenusko_04
-                                    religion = finnish_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = aztec_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_aztec_04
-                                    religion = aztec_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_aztec_04
-                                    religion = aztec_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = west_african_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_african_04
-                                    religion = west_african_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_african_04
-                                    religion = west_african_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = zun_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_zun_04
-                                    religion = zun_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_zun_04
-                                    religion = zun_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = hellenic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_hellenic_04
-                                    religion = hellenic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_hellenic_04
-                                    religion = hellenic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = bon_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_bon_04
-                                    religion = bon_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_bon_04
-                                    religion = bon_reformed
-                                }
-                            }
-                        }
-                        else = {
-                            create_bloodline = {
-                                type = saintly_bloodline_catholic_04
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = christian
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = saintly_bloodline_name
-                                set_description = saintly_bloodline_description
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = pagan_group
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = blessed_bloodline_name
-                                set_description = blessed_bloodline_description
-                            }
-                        }
-                    }
-                }
-                30 = {
-                    trigger = {
-                        event_target:saint_person = {
-                            trait = sympathy_judaism
-                        }
-                    }
-                    event_target:saint_person = {
-                        if = {
-                            limit = {
-                                OR = {
-                                    religion = orthodox
-                                    religion = iconoclast
-                                    religion = paulician
-                                    religion = monothelite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_orthodox_05
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = nestorian
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_nestorian_05
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                OR = {
-                                    religion = miaphysite
-                                    religion = monophysite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_coptic_05
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = norse_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_germanic_05
-                                    religion = norse_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_germanic_05
-                                    religion = norse_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = baltic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_romuva_05
-                                    religion = baltic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_romuva_05
-                                    religion = baltic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = slavic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_slavic_05
-                                    religion = slavic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_slavic_05
-                                    religion = slavic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = tengri_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_tengri_05
-                                    religion = tengri_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_tengri_05
-                                    religion = tengri_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = finnish_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_suomenusko_05
-                                    religion = finnish_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_suomenusko_05
-                                    religion = finnish_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = aztec_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_aztec_05
-                                    religion = aztec_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_aztec_05
-                                    religion = aztec_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = west_african_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_african_05
-                                    religion = west_african_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_african_05
-                                    religion = west_african_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = zun_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_zun_05
-                                    religion = zun_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_zun_05
-                                    religion = zun_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = hellenic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_hellenic_05
-                                    religion = hellenic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_hellenic_05
-                                    religion = hellenic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = bon_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_bon_05
-                                    religion = bon_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_bon_05
-                                    religion = bon_reformed
-                                }
-                            }
-                        }
-                        else = {
-                            create_bloodline = {
-                                type = saintly_bloodline_catholic_05
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = christian
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = saintly_bloodline_name
-                                set_description = saintly_bloodline_description
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = pagan_group
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = blessed_bloodline_name
-                                set_description = blessed_bloodline_description
-                            }
-                        }
-                    }
-                }
-                5 = {
-                    event_target:saint_person = {
-                        if = {
-                            limit = {
-                                OR = {
-                                    religion = orthodox
-                                    religion = iconoclast
-                                    religion = paulician
-                                    religion = monothelite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_orthodox_06
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = nestorian
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_nestorian_06
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                OR = {
-                                    religion = miaphysite
-                                    religion = monophysite
-                                }
-                            }
-                            create_bloodline = {
-                                type = saintly_bloodline_coptic_06
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = norse_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_germanic_06
-                                    religion = norse_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_germanic_06
-                                    religion = norse_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = baltic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_romuva_06
-                                    religion = baltic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_romuva_06
-                                    religion = baltic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = slavic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_slavic_06
-                                    religion = slavic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_slavic_06
-                                    religion = slavic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = tengri_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_tengri_06
-                                    religion = tengri_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_tengri_06
-                                    religion = tengri_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = finnish_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_suomenusko_06
-                                    religion = finnish_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_suomenusko_06
-                                    religion = finnish_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = aztec_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_aztec_06
-                                    religion = aztec_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_aztec_06
-                                    religion = aztec_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = west_african_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_african_06
-                                    religion = west_african_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_african_06
-                                    religion = west_african_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = zun_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_zun_06
-                                    religion = zun_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_zun_06
-                                    religion = zun_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = hellenic_pagan_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_hellenic_06
-                                    religion = hellenic_pagan_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_hellenic_06
-                                    religion = hellenic_pagan_reformed
-                                }
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                religion = bon_reformed
-                            }
-                            if = {
-                                limit = {
-                                    is_female = yes
-                                }
-                                create_bloodline = {
-                                    type = saintly_bloodline_bon_06
-                                    religion = bon_reformed
-                                    inheritance = matrilineal
-                                }
-                            }
-                            else = {
-                                create_bloodline = {
-                                    type = saintly_bloodline_bon_06
-                                    religion = bon_reformed
-                                }
-                            }
-                        }
-                        else = {
-                            create_bloodline = {
-                                type = saintly_bloodline_catholic_06
-                                religion = event_target:saint_person
-                                inheritance = patrilineal
-                            }
-                        }
-                        if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = christian
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = saintly_bloodline_name
-                                set_description = saintly_bloodline_description
-                            }
-                        }
-                        else_if = {
-                            limit = {
-                                event_target:saint_person = {
-                                    religion_group = pagan_group
-                                }
-                            }
-                            new_bloodline = {
-                                set_name = blessed_bloodline_name
-                                set_description = blessed_bloodline_description
-                            }
-                        }
-                    }
-                }
+                # 5 = {
+                    # event_target:saint_person = {
+                        # if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = orthodox
+                                    # religion = iconoclast
+                                    # religion = paulician
+                                    # religion = monothelite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_orthodox_03
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = nestorian
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_nestorian_03
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = miaphysite
+                                    # religion = monophysite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_coptic_03
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = norse_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_germanic_03
+                                    # religion = norse_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_germanic_03
+                                    # religion = norse_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = baltic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_romuva_03
+                                    # religion = baltic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_romuva_03
+                                    # religion = baltic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = slavic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_slavic_03
+                                    # religion = slavic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_slavic_03
+                                    # religion = slavic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = tengri_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_tengri_03
+                                    # religion = tengri_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_tengri_03
+                                    # religion = tengri_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = finnish_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_suomenusko_03
+                                    # religion = finnish_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_suomenusko_03
+                                    # religion = finnish_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = aztec_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_aztec_03
+                                    # religion = aztec_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_aztec_03
+                                    # religion = aztec_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = west_african_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_african_03
+                                    # religion = west_african_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_african_03
+                                    # religion = west_african_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = zun_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_zun_03
+                                    # religion = zun_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_zun_03
+                                    # religion = zun_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = hellenic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_hellenic_03
+                                    # religion = hellenic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_hellenic_03
+                                    # religion = hellenic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = bon_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_bon_03
+                                    # religion = bon_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_bon_03
+                                    # religion = bon_reformed
+                                # }
+                            # }
+                        # }
+                        # else = {
+                            # create_bloodline = {
+                                # type = saintly_bloodline_catholic_03
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = christian
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = saintly_bloodline_name
+                                # set_description = saintly_bloodline_description
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = pagan_group
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = blessed_bloodline_name
+                                # set_description = blessed_bloodline_description
+                            # }
+                        # }
+                    # }
+                # }
+                # 5 = {
+                    # modifier = {
+                        # factor = 4
+                        # OR = {
+                            # event_target:saint_person = {
+                                # trait = zealous
+                            # }
+                            # event_target:saint_person = {
+                                # trait = holy_warrior
+                            # }
+                        # }
+                    # }
+                    # event_target:saint_person = {
+                        # if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = orthodox
+                                    # religion = iconoclast
+                                    # religion = paulician
+                                    # religion = monothelite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_orthodox_04
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = nestorian
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_nestorian_04
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = miaphysite
+                                    # religion = monophysite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_coptic_04
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = norse_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_germanic_04
+                                    # religion = norse_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_germanic_04
+                                    # religion = norse_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = baltic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_romuva_04
+                                    # religion = baltic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_romuva_04
+                                    # religion = baltic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = slavic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_slavic_04
+                                    # religion = slavic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_slavic_04
+                                    # religion = slavic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = tengri_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_tengri_04
+                                    # religion = tengri_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_tengri_04
+                                    # religion = tengri_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = finnish_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_suomenusko_04
+                                    # religion = finnish_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_suomenusko_04
+                                    # religion = finnish_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = aztec_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_aztec_04
+                                    # religion = aztec_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_aztec_04
+                                    # religion = aztec_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = west_african_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_african_04
+                                    # religion = west_african_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_african_04
+                                    # religion = west_african_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = zun_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_zun_04
+                                    # religion = zun_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_zun_04
+                                    # religion = zun_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = hellenic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_hellenic_04
+                                    # religion = hellenic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_hellenic_04
+                                    # religion = hellenic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = bon_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_bon_04
+                                    # religion = bon_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_bon_04
+                                    # religion = bon_reformed
+                                # }
+                            # }
+                        # }
+                        # else = {
+                            # create_bloodline = {
+                                # type = saintly_bloodline_catholic_04
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = christian
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = saintly_bloodline_name
+                                # set_description = saintly_bloodline_description
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = pagan_group
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = blessed_bloodline_name
+                                # set_description = blessed_bloodline_description
+                            # }
+                        # }
+                    # }
+                # }
+                # 30 = {
+                    # trigger = {
+                        # event_target:saint_person = {
+                            # trait = sympathy_judaism
+                        # }
+                    # }
+                    # event_target:saint_person = {
+                        # if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = orthodox
+                                    # religion = iconoclast
+                                    # religion = paulician
+                                    # religion = monothelite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_orthodox_05
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = nestorian
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_nestorian_05
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = miaphysite
+                                    # religion = monophysite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_coptic_05
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = norse_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_germanic_05
+                                    # religion = norse_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_germanic_05
+                                    # religion = norse_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = baltic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_romuva_05
+                                    # religion = baltic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_romuva_05
+                                    # religion = baltic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = slavic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_slavic_05
+                                    # religion = slavic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_slavic_05
+                                    # religion = slavic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = tengri_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_tengri_05
+                                    # religion = tengri_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_tengri_05
+                                    # religion = tengri_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = finnish_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_suomenusko_05
+                                    # religion = finnish_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_suomenusko_05
+                                    # religion = finnish_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = aztec_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_aztec_05
+                                    # religion = aztec_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_aztec_05
+                                    # religion = aztec_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = west_african_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_african_05
+                                    # religion = west_african_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_african_05
+                                    # religion = west_african_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = zun_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_zun_05
+                                    # religion = zun_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_zun_05
+                                    # religion = zun_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = hellenic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_hellenic_05
+                                    # religion = hellenic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_hellenic_05
+                                    # religion = hellenic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = bon_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_bon_05
+                                    # religion = bon_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_bon_05
+                                    # religion = bon_reformed
+                                # }
+                            # }
+                        # }
+                        # else = {
+                            # create_bloodline = {
+                                # type = saintly_bloodline_catholic_05
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = christian
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = saintly_bloodline_name
+                                # set_description = saintly_bloodline_description
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = pagan_group
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = blessed_bloodline_name
+                                # set_description = blessed_bloodline_description
+                            # }
+                        # }
+                    # }
+                # }
+                # 5 = {
+                    # event_target:saint_person = {
+                        # if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = orthodox
+                                    # religion = iconoclast
+                                    # religion = paulician
+                                    # religion = monothelite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_orthodox_06
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = nestorian
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_nestorian_06
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # OR = {
+                                    # religion = miaphysite
+                                    # religion = monophysite
+                                # }
+                            # }
+                            # create_bloodline = {
+                                # type = saintly_bloodline_coptic_06
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = norse_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_germanic_06
+                                    # religion = norse_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_germanic_06
+                                    # religion = norse_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = baltic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_romuva_06
+                                    # religion = baltic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_romuva_06
+                                    # religion = baltic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = slavic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_slavic_06
+                                    # religion = slavic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_slavic_06
+                                    # religion = slavic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = tengri_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_tengri_06
+                                    # religion = tengri_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_tengri_06
+                                    # religion = tengri_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = finnish_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_suomenusko_06
+                                    # religion = finnish_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_suomenusko_06
+                                    # religion = finnish_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = aztec_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_aztec_06
+                                    # religion = aztec_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_aztec_06
+                                    # religion = aztec_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = west_african_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_african_06
+                                    # religion = west_african_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_african_06
+                                    # religion = west_african_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = zun_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_zun_06
+                                    # religion = zun_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_zun_06
+                                    # religion = zun_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = hellenic_pagan_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_hellenic_06
+                                    # religion = hellenic_pagan_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_hellenic_06
+                                    # religion = hellenic_pagan_reformed
+                                # }
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # religion = bon_reformed
+                            # }
+                            # if = {
+                                # limit = {
+                                    # is_female = yes
+                                # }
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_bon_06
+                                    # religion = bon_reformed
+                                    # inheritance = matrilineal
+                                # }
+                            # }
+                            # else = {
+                                # create_bloodline = {
+                                    # type = saintly_bloodline_bon_06
+                                    # religion = bon_reformed
+                                # }
+                            # }
+                        # }
+                        # else = {
+                            # create_bloodline = {
+                                # type = saintly_bloodline_catholic_06
+                                # religion = event_target:saint_person
+                                # inheritance = patrilineal
+                            # }
+                        # }
+                        # if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = christian
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = saintly_bloodline_name
+                                # set_description = saintly_bloodline_description
+                            # }
+                        # }
+                        # else_if = {
+                            # limit = {
+                                # event_target:saint_person = {
+                                    # religion_group = pagan_group
+                                # }
+                            # }
+                            # new_bloodline = {
+                                # set_name = blessed_bloodline_name
+                                # set_description = blessed_bloodline_description
+                            # }
+                        # }
+                    # }
+                # }
             }
         }
 
@@ -2471,7 +2481,7 @@ narrative_event = {
     desc = {
         trigger = {
             event_target:saint_person = {
-                religion_group = christian
+                religion_group = the_seven_group
             }
         }
         text = EVTDESC_HF_40025
@@ -2480,7 +2490,7 @@ narrative_event = {
     desc = {
         trigger = {
             event_target:saint_person = {
-                religion_group = pagan_group
+                religion_group = westerosi_pagan_group
             }
         }
         text = EVTDESC_HF_40025_B
@@ -2497,7 +2507,7 @@ narrative_event = {
         if = {
             limit = {
                 event_target:saint_person = {
-                    religion_group = christian
+                    religion_group = the_seven_group
                 }
             }
             sound_effect = saint_proclaimed
@@ -2521,13 +2531,13 @@ narrative_event = {
             piety = 100
             if = {
                 limit = {
-                    religion_group = christian
+                    religion_group = the_seven_group
                 }
                 custom_tooltip = { text = TT_CANONIZATION_FAMILY }
             }
             else_if = {
                 limit = {
-                    religion_group = pagan_group
+                    religion_group = westerosi_pagan_group
                 }
                 custom_tooltip = { text = TT_PAGAN_CANONIZATION_FAMILY}
             }
@@ -2542,7 +2552,7 @@ character_event = {
     hide_window = yes
     has_dlc = "Holy Fury"
     min_age = 16
-    religion = catholic
+    religion = the_seven
 
     trigger = {
     	OR = {
@@ -2946,7 +2956,7 @@ character_event = {
         log = "Only Papal Beatifications, declared by [Root.GetTitledName]"
     	any_playable_ruler = {
     		limit = {
-    			religion = catholic
+    			religion = the_seven
     		}
     		narrative_event = { id = HF.40060 }
     	}
@@ -3115,7 +3125,7 @@ character_event = {
     id = HF.40090
     hide_window = yes
     is_triggered_only = yes
-    religion = catholic
+    religion = the_seven
     min_age = 16
     has_dlc = "Holy Fury"
 
@@ -3132,7 +3142,7 @@ character_event = {
                 }
     		}
     	}
-    	religion = catholic
+    	religion = the_seven
     	NOT = {
     		trait = excommunicated
     	}
