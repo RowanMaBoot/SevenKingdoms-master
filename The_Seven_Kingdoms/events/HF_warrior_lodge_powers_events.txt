@@ -55,10 +55,10 @@ character_event = {
 									male_can_hold_minor_title_trigger = yes
 									female_can_hold_minor_commander_title_trigger = yes
 								}
-								OR = {
-									NOT = { religion = hindu }
-									trait = kshatriya
-								}
+								# OR = {
+									# NOT = { religion = hindu }
+									# trait = kshatriya
+								# }
 								is_adult = yes
 							}
 							has_character_flag = special_marshal
@@ -192,10 +192,10 @@ character_event = {
 									male_can_hold_minor_title_trigger = yes
 									female_can_hold_minor_commander_title_trigger = yes
 								}
-								OR = {
-									NOT = { religion = hindu }
-									trait = kshatriya
-								}
+								# OR = {
+									# NOT = { religion = hindu }
+									# trait = kshatriya
+								# }
 								is_adult = yes
 							}
 							has_character_flag = special_marshal
@@ -1119,14 +1119,14 @@ character_event = {
 	id = HF.25021
 	desc = {
 		trigger = {
-			religion_group = pagan_group
+			religion_group = westerosi_pagan_group
 		}
 		text = EVTDESCAHF25021
 	}
 	desc = {
 		trigger = { 
 			NOT = {
-				religion_group = pagan_group
+				religion_group = westerosi_pagan_group
 			}
 		}
 		text = EVTDESCBHF25021
@@ -1231,20 +1231,25 @@ character_event = {
 		trigger = { 
 			event_target:scoped_war_sacrifice = { is_alive = yes } 
 			OR = { 
-				religion = norse_pagan 
-				religion = norse_pagan_reformed
-				religion = slavic_pagan
-				religion = slavic_pagan_reformed
-				religion = baltic_pagan
-				religion = baltic_pagan_reformed
-				religion = tengri_pagan
-				religion = tengri_pagan_reformed
-				religion = finnish_pagan
-				religion = finnish_pagan_reformed
-				religion = zun_pagan
-				religion = zun_pagan_reformed
-				religion = west_african_pagan
-				religion = west_african_pagan_reformed
+				# religion = norse_pagan 
+				# religion = norse_pagan_reformed
+				# religion = slavic_pagan
+				# religion = slavic_pagan_reformed
+				# religion = baltic_pagan
+				# religion = baltic_pagan_reformed
+				# religion = tengri_pagan
+				# religion = tengri_pagan_reformed
+				# religion = finnish_pagan
+				# religion = finnish_pagan_reformed
+				# religion = zun_pagan
+				# religion = zun_pagan_reformed
+				# religion = west_african_pagan
+				# religion = west_african_pagan_reformed
+				AND = {
+					religion_group = westerosi_pagan_group
+					NOT = { religion = old_gods }
+				}
+				religion = rhllor
 				has_religion_feature = religion_ritual_sacrifice
 			} 
 		}
@@ -1309,20 +1314,25 @@ character_event = {
 				is_alive = yes 
 			} 
 			OR = { 
-				religion = norse_pagan 
-				religion = norse_pagan_reformed
-				religion = slavic_pagan
-				religion = slavic_pagan_reformed
-				religion = baltic_pagan
-				religion = baltic_pagan_reformed
-				religion = tengri_pagan
-				religion = tengri_pagan_reformed
-				religion = finnish_pagan
-				religion = finnish_pagan_reformed
-				religion = zun_pagan
-				religion = zun_pagan_reformed
-				religion = west_african_pagan
-				religion = west_african_pagan_reformed
+				# religion = norse_pagan 
+				# religion = norse_pagan_reformed
+				# religion = slavic_pagan
+				# religion = slavic_pagan_reformed
+				# religion = baltic_pagan
+				# religion = baltic_pagan_reformed
+				# religion = tengri_pagan
+				# religion = tengri_pagan_reformed
+				# religion = finnish_pagan
+				# religion = finnish_pagan_reformed
+				# religion = zun_pagan
+				# religion = zun_pagan_reformed
+				# religion = west_african_pagan
+				# religion = west_african_pagan_reformed
+				AND = {
+					religion_group = westerosi_pagan_group
+					NOT = { religion = old_gods }
+				}
+				religion = rhllor
 				has_religion_feature = religion_ritual_sacrifice
 			} 
 		}
@@ -1420,8 +1430,16 @@ character_event = {
 			manpower = -150
 		}
 		if = { 
-			limit = { NOR = { religion_group = pagan_group has_religion_feature = religion_ritual_sacrifice } }
+			limit = {
+				NOR = {
+					AND = {
+						religion_group = westerosi_pagan_group
+						NOT = { religion = old_gods }
+					}
+					religion = rhllor
+				}
 			tiered_high_piety_negative_effect = yes 
+			}
 		}
 		add_blood_splatter_effect = yes
 		hidden_tooltip = { character_event = { id = HF.25024 } } 
@@ -2421,53 +2439,53 @@ character_event = {
 ##################################################################
 #Hellenic Warrior Lodge has been recreated.
 #Players notified.
-narrative_event = {
-	id = HF.25026
-	title = EVTTITLEHF25026
-	desc = EVTDESCHF25026
-	hide_from = yes
-	hide_new = yes
+# narrative_event = {
+	# id = HF.25026
+	# title = EVTTITLEHF25026
+	# desc = EVTDESCHF25026
+	# hide_from = yes
+	# hide_new = yes
 
-	picture = GFX_evt_hippodrome_byzantine
+	# picture = GFX_evt_hippodrome_byzantine
 	
-	only_playable = yes
-	hide_from = yes
+	# only_playable = yes
+	# hide_from = yes
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 	
-	option = {
-		name = EVTOPTAHF25026
-		trigger = {
-			OR = { 
-				society_member_of = warrior_lodge_hellenic 
-				religion = hellenic_pagan
-				religion = hellenic_pagan_reformed
-				secret_religion = hellenic_pagan
-				secret_religion = hellenic_pagan_reformed
-				can_join_society = warrior_lodge_hellenic
-			}
-		}
-		if = {
-			limit = { 
-				NOT = { society_member_of = warrior_lodge_hellenic }
-				can_join_society = warrior_lodge_hellenic
-			}
-			join_society = warrior_lodge_hellenic
-		}
-	}
-	option = {
-		name = EVTOPTBHF25026
-		trigger = {
-			NOR = { 
-				society_member_of = warrior_lodge_hellenic 
-				religion = hellenic_pagan
-				religion = hellenic_pagan_reformed
-				secret_religion = hellenic_pagan
-				secret_religion = hellenic_pagan_reformed
-			}
-		}
-	}
-}
+	# option = {
+		# name = EVTOPTAHF25026
+		# trigger = {
+			# OR = { 
+				# society_member_of = warrior_lodge_hellenic 
+				# religion = hellenic_pagan
+				# religion = hellenic_pagan_reformed
+				# secret_religion = hellenic_pagan
+				# secret_religion = hellenic_pagan_reformed
+				# can_join_society = warrior_lodge_hellenic
+			# }
+		# }
+		# if = {
+			# limit = { 
+				# NOT = { society_member_of = warrior_lodge_hellenic }
+				# can_join_society = warrior_lodge_hellenic
+			# }
+			# join_society = warrior_lodge_hellenic
+		# }
+	# }
+	# option = {
+		# name = EVTOPTBHF25026
+		# trigger = {
+			# NOR = { 
+				# society_member_of = warrior_lodge_hellenic 
+				# religion = hellenic_pagan
+				# religion = hellenic_pagan_reformed
+				# secret_religion = hellenic_pagan
+				# secret_religion = hellenic_pagan_reformed
+			# }
+		# }
+	# }
+# }
 
 ####################################
 #Call to Glory Power - First notification.
@@ -4734,26 +4752,26 @@ character_event = {
 	}
 }
 #on_startup event giving masks to Grand Masters of the Warrior Lodge.
-character_event = {
-	id = HF.25057
-	hide_window = yes
+# character_event = {
+	# id = HF.25057
+	# hide_window = yes
 
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	trigger = { 
-		is_save_game = no
-		society_member_of = warrior_lodge_west_african
-		society_rank = 4
-		OR = { 
-			religion = west_african_pagan 
-			religion = west_african_pagan_reformed
-		}
-	}
+	# trigger = { 
+		# is_save_game = no
+		# society_member_of = warrior_lodge_west_african
+		# society_rank = 4
+		# OR = { 
+			# religion = west_african_pagan 
+			# religion = west_african_pagan_reformed
+		# }
+	# }
 
-	immediate = {
-		generate_mask_effect = yes
-	}
-}
+	# immediate = {
+		# generate_mask_effect = yes
+	# }
+# }
 
 #Notifications for Baltic Holds Power.
 #tb_defensive_fortifications_1
