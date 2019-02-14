@@ -25,7 +25,7 @@
 #has_unattractive_trait_trigger		Has a negative sex appeal trait.
 #is_unattractive_trigger			Has a negative sex appeal trait and not any traits with sex appeal.
 #has_fair_trait_trigger				Is Fair/Groomed.
-#has_ugly_trait_trigger				Is Ugly/Uncouth.										   
+#has_ugly_trait_trigger				Is Ugly/Uncouth.
 
 #Health/congential
 #is_smart_trigger					Has a smart trait.
@@ -33,7 +33,7 @@
 #is_strong_trigger					Has a strong trait.
 #is_weak_trigger					Has a weak trait.
 #well_treated_for_disease_trigger   Has a modifier relating to a positive treatement.
-#poorly_treated_for_disease_trigger Has a modifier relating to a negative treatement.																					 
+#poorly_treated_for_disease_trigger Has a modifier relating to a negative treatement.
 #character_disease_trigger			Has a disease trait.
 #has_symptom_trigger				Has a symptom trait.
 #has_injury_trigger					Has an injury trait.
@@ -80,7 +80,7 @@
 #Religion
 #has_crusade_trait_trigger			Has a crusade type trait.
 #has_secret_religion_trait_trigger	Has a secret religion trait.
-# has_priest_trait_trigger
+#has_priest_trait_trigger
 
 ##AGREEABLE###
 
@@ -240,7 +240,7 @@ has_vice_trigger = {
 has_attractive_trait_trigger = {
 	OR = {
 		trait = fair
-		trait = groomed		 
+		trait = groomed
 		trait = just
 		trait = brave
 		trait = gregarious
@@ -248,8 +248,8 @@ has_attractive_trait_trigger = {
 		trait = seductress
 		trait = robust
 		trait = strong
-#		trait = fit # TSK - ADDED
 		trait = socializer
+#		trait = fit # TSK - ADDED
 	}
 }
 
@@ -261,10 +261,10 @@ is_attractive_trigger = {
 has_unattractive_trait_trigger = {
 	OR = {
 		trait = ugly
-		trait = uncouth		 
+		trait = uncouth
 		trait = feeble
 		trait = dwarf
-		trait = giant	   
+		trait = giant
 		trait = clubfooted
 		trait = harelip
 		trait = hunchback
@@ -741,84 +741,60 @@ has_any_lifestyle_trait = {
 
 ##RELIGION##
 
-has_crusade_trait_trigger = {
+has_crusade_trait_trigger = { # Requires editing!!!
 	OR = {
 		AND = {
 			religion_group = drowned_god_group
-
 			trait = valhalla_bound
 		}
 		AND = {
 			religion = rhllor
-				religion = tengri_pagan_reformed
-			}
 			trait = tengri_warrior
 		}
+		#AND = {
+		#	religion_group =
+		#	trait = romuvas_own
+		#}
+		#AND = {
+		#	religion_group =
+		#	trait = ukkos_shield
+		#}
+		#AND = {
+		#	religion_group =
+		#	trait = eagle_warrior
+		#}
+		#AND = {
+		#	religion_group =
+		#	trait = peruns_chosen
+		#}
+		#AND = {
+		#	religion_group =
+		#	trait = nyames_shield
+		#}
+		#AND = {
+		#	religion_group =
+		#	trait = sun_warrior
+		#}
 		AND = {
-			OR = {
-				religion = baltic_pagan
-				religion = baltic_pagan_reformed
-			}
-			trait = romuvas_own
-		}
-		AND = {
-			OR = {
-				religion = finnish_pagan
-				religion = finnish_pagan_reformed
-			}
-			trait = ukkos_shield
-		}
-		AND = {
-			OR = {
-				religion = aztec
-				religion = aztec_reformed
-			}
-			trait = eagle_warrior
-		}
-		AND = {
-			OR = {
-				religion = slavic_pagan
-				religion = slavic_pagan_reformed
-			}
-			trait = peruns_chosen
-		}
-		AND = {
-			OR = {
-				religion = west_african_pagan
-				religion = west_african_pagan_reformed
-			}
-			trait = nyames_shield
-		}
-		AND = {
-			OR = {
-				religion = zun_pagan
-				religion = zun_pagan_reformed
-			}
-			trait = sun_warrior
-		}
-		AND = {
-			OR = {
-				religion = hellenic_pagan
-				religion = hellenic_pagan_reformed
-			}
+			religion_group = old_gods
 			trait = ares_own
 		}
-		AND = {
-			religion_group = muslim
-			trait = mujahid
-		}
+		#AND = {
+		#	religion_group =
+		#	trait = mujahid
+		#}
 		AND = {
 			religion_group = the_seven_group
 			trait = crusader
 		}
 		AND = {
-			religion_group = zoroastrian_group
+			religion_group = valyrian_group
 			trait = gondi_shahansha
 		}
-		AND = {
-			religion_group = jewish_group
-			trait = shaddai
-		}
+		#AND = {
+		#	religion_group =
+		#	trait = shaddai
+		#}
 	}
 }
 
@@ -985,9 +961,11 @@ can_be_chancellor_trigger = {
 				}
 				AND = {
 					is_female = yes 
-					religion = the_mother
-					liege = { religion = the_mother }
-					liege = { has_religion_feature = religion_feature_bon } 
+						religion = the_mother
+						liege = { religion = the_mother }
+						liege = { has_religion_feature = religion_matriarchal } 
+						liege = { has_religion_feature = religion_equal } 
+						liege = { has_religion_feature = religion_feature_bon } 
 				}
 				trait = horse # So we can have female glitterhoofs! :D										  
                 AND = {
@@ -1152,8 +1130,8 @@ can_be_treasurer_trigger = {
 						liege = { has_religion_feature = religion_feature_bon } 
 					} 
 				}
-				trait = horse # So we can have female glitterhoofs! :D										  
-                AND = {
+				trait = horse # So we can have female glitterhoofs! :D
+				AND = {
 					religion = boashi
 					liege = { religion = boashi }
 				}
@@ -1250,7 +1228,7 @@ can_be_spymaster_trigger = {
 						NOR = {
 							liege = { has_religion_feature = religion_matriarchal } 
 							liege = { has_religion_feature = religion_patriarchal }
-						}									   
+						}
 					}
 				}
 				AND = {
@@ -1264,6 +1242,7 @@ can_be_spymaster_trigger = {
 				AND = {
 					religion_group = valyrian_group
 					liege = {
+						religion_group = valyrian_group
 						NOR = {
 							liege = { has_religion_feature = religion_matriarchal } 
 							liege = { has_religion_feature = religion_patriarchal } 
@@ -1339,7 +1318,7 @@ can_be_spiritual_trigger = {
 				modifier = opinion_resigned_from_council 
 			} 
 		}
-	}
+		
 	liege = {
 		religion = ROOT
 	}
@@ -1420,7 +1399,7 @@ can_be_councilmember_king_trigger = {
 			AND = {
 				is_female = yes 
 				NOT = { liege = { has_religion_feature = religion_patriarchal } } 
-			}																	  
+			}
 			AND = {
 				OR = {
 					AND = {
@@ -1508,6 +1487,7 @@ can_be_councilmember_emperor_trigger = {
 					liege = { religion_group = valyrian_group }
 				}
 				AND = {
+					is_female = yes   
 					liege = {
 						primary_title = {
 							OR = {
@@ -1616,7 +1596,8 @@ root_attraction_trigger = {
 			ROOT = { prefers_men_trigger = yes }
 		}
 	}
-}
+}	
+	
 prev_attraction_trigger = {
 	#Returns yes when PREV is attracted to the scoped character, based on sex
 	OR = {
@@ -1629,7 +1610,8 @@ prev_attraction_trigger = {
 			PREV = { prefers_men_trigger = yes }
 		}
 	}
-}
+}																	  
+
 attacted_to_root_trigger = {
 	#Returns yes when scoped character is attracted to ROOT, based on sex
 	OR = {
@@ -2044,7 +2026,8 @@ female_can_hold_minor_commander_title_trigger = {
 #		has_character_modifier = follower_of_perkunas
 #		has_character_modifier = follower_of_zemyna
 #	}
-#}
+#}							  
+
 #Has same education as prev?
 has_prev_education_trigger = {
 	OR = {
@@ -2276,32 +2259,34 @@ relationship_with_root_trigger = {
 		is_friend = ROOT
 		is_rival = ROOT
 	}
-}
+}			
+
 is_widow_or_widower_trigger = {
 	is_married = no
 	any_spouse_even_if_dead = {
 		always = yes
 	}
 }
+	
 FROMs_religion_is_playable_trigger = {
 	NOR = {
 		AND = { #Means you're not allowed to play Muslims
 			FROM = { religion = rhllor }
 			NOT = { has_dlc = "The Sword of Islam" }
 		}
-		AND = {
+		AND = { #Means you're not allowed to play Jewish
 			FROM = { religion = moonsingers }
 			NOT = { has_dlc = "Sons of Abraham" }
 		}
-		AND = {
+		AND = { #Means you're not allowed to play (most) Pagans
 			FROM = { 
 				OR = {
-					secret_religion = old_gods_beyond
-					secret_religion = old_gods_beyond_white
-					secret_religion = drowned_god
-					secret_religion = storm_god
-					secret_religion = vulture_god
-					secret_religion = lady_of_the_waves	   
+					religion = old_gods_beyond
+					religion = old_gods_beyond_white
+					religion = drowned_god
+					religion = storm_god
+					religion = vulture_god
+					religion = lady_of_the_waves	   
 				}
 			}
 			NOT = { has_dlc = "The Old Gods" }
@@ -4747,6 +4732,8 @@ has_grace_major_trigger = {
 has_grace_massive_trigger = { 
 	has_offmap_currency = { offmap = offmap_china value = 1000 }
 }
+
+
 #Always put this at the end of your triggers!
 china_diplo_interaction_trigger = { 
 	offmap_china = {
@@ -4764,6 +4751,7 @@ china_diplo_interaction_trigger = {
 		}
 	}
 }
+
 china_is_suffering_trigger = {
 	offmap_china = {
 		OR = {
@@ -5314,6 +5302,7 @@ this_has_terrible_opinion_modifier_of_root_trigger = {
 		has_opinion_modifier = { who = ROOT modifier = opinion_imprisoned }
 	}
 }
+
 #for MNM.9000 chain
 the_hunt_for_an_artifact_has_made_enough_progress_trigger = {
 	OR = {
@@ -5676,35 +5665,35 @@ martyrs_death_trigger = {
 can_build_hillfort_trigger = {
 	OR = { 
 		AND = { 
-					NOR = { 
-						is_building = tb_hillfort_1 
-						has_building = tb_hillfort_1 
-					}
-					location = { TECH_CASTLE_CONSTRUCTION = 0 }
+			NOR = { 
+				is_building = tb_hillfort_1 
+				has_building = tb_hillfort_1 
+			}
+			location = { TECH_CASTLE_CONSTRUCTION = 0 }
 		}
 		AND = { 
-					has_building = tb_hillfort_1
-					NOR = { 
-						is_building = tb_hillfort_2 
-						has_building = tb_hillfort_2 
-					}
-					location = { TECH_CASTLE_CONSTRUCTION = 0 }
+			has_building = tb_hillfort_1
+			NOR = { 
+				is_building = tb_hillfort_2 
+				has_building = tb_hillfort_2 
+			}
+			location = { TECH_CASTLE_CONSTRUCTION = 0 }
 		}
 		AND = { 
-					has_building = tb_hillfort_2
-					NOR = { 
-						is_building = tb_hillfort_3 
-						has_building = tb_hillfort_3 
-					}
-					location = { TECH_CASTLE_CONSTRUCTION = 1 }
+			has_building = tb_hillfort_2
+			NOR = { 
+				is_building = tb_hillfort_3 
+				has_building = tb_hillfort_3 
+			}
+			location = { TECH_CASTLE_CONSTRUCTION = 1 }
 		}
 		AND = { 
-					has_building = tb_hillfort_3
-					NOR = { 
-							is_building = tb_hillfort_4 
-							has_building = tb_hillfort_4 
-						}
-					location = { TECH_CASTLE_CONSTRUCTION = 1 }
+			has_building = tb_hillfort_3
+			NOR = { 
+				is_building = tb_hillfort_4 
+				has_building = tb_hillfort_4 
+			}
+			location = { TECH_CASTLE_CONSTRUCTION = 1 }
 		}
 	}
 }
@@ -6098,6 +6087,8 @@ this_is_warrior_culture_trigger = { #Not really about culture - Used in AI votin
 	NOT = { pacifist = yes }
 	OR = { 
 		religion_group = westerosi_pagan_group
+		religion_group = drowned_god_group
+		religion = dothraki
 		has_religion_feature = religion_warlike
 		is_tribal = yes
 		is_nomadic = yes
@@ -7410,5 +7401,206 @@ any_neighbor_province_has_light_rain_trigger = {
     	is_land = yes
 		region_africa_west_central_or_east_trigger = yes
 		has_province_modifier = africa_light_rain
+	}
+}
+
+varangian_guard_events_default_trigger = {
+	ai = yes
+	age = 16
+	is_incapable = no
+	prisoner = no
+	#culture_group = north_germanic
+	has_character_flag = serving_varangian
+	has_dlc = "The Old Gods"
+}
+
+
+ere_elective_politician_titles_trigger = { #Used in Imperial Elective to determine AI behavior.
+	OR = {
+		has_job_title = job_marshal
+		has_job_title = job_spymaster
+		has_job_title = job_treasurer
+		has_job_title = job_chancellor
+		has_minor_title = title_despot
+		has_minor_title = title_sebastokrator
+		has_minor_title = title_caesar
+		has_minor_title = title_kouropalates
+		has_minor_title = title_anthypatos
+	} 
+}
+
+can_still_be_commander_byzantine_trigger = { 
+	NOT = { 
+		primary_title = { temporary = yes } 
+	}
+	liege = { 
+		character = FROMFROM 
+		has_law = succ_byzantine_elective
+	}
+	OR = {
+		AND = {
+			OR = {
+				male_can_hold_minor_title_trigger = yes
+				female_can_hold_minor_commander_title_trigger = yes
+			}
+			#OR = {
+			#	NOT = { religion = hindu }
+			#	trait = kshatriya
+			#}
+			is_adult = yes
+		}
+		has_character_flag = special_marshal
+	}
+	
+	prisoner = no
+	NOT = { trait = incapable }
+ 	NOT = { trait = sick_incapable }
+	NOT = { is_inaccessible_trigger = yes }
+	NOT = { has_character_flag = guru }
+	NOT = { has_character_modifier = refusing_to_lead }
+	NOR = { 
+		war_with = FROMFROM
+		any_liege = {  
+			war_with = FROMFROM
+		}
+	}
+	OR = { 
+		higher_real_tier_than = BARON #Either potential commander is vassal...
+		NOT = { #...Or there are no valid vassal candidates that can be commanders.
+			custom_tooltip = { 
+				text = tooltip_byzantine_empire_can_appoint_commanders
+				liege = { 
+					any_vassal = { 
+						higher_real_tier_than = BARON
+						NOT = { 
+							primary_title = { temporary = yes } 
+						}
+						OR = {
+							AND = {
+								OR = {
+									male_can_hold_minor_title_trigger = yes
+									female_can_hold_minor_commander_title_trigger = yes
+								}
+								#OR = {
+								#	NOT = { religion = hindu }
+								#	trait = kshatriya
+								#}
+								is_adult = yes
+							}
+							has_character_flag = special_marshal
+						}
+						
+						prisoner = no
+						NOT = { trait = incapable }
+						NOT = { is_inaccessible_trigger = yes }
+						NOT = { has_character_flag = guru }
+						NOT = { has_character_modifier = refusing_to_lead }
+						NOR = {
+							has_job_title = job_chancellor
+							has_job_title = job_marshal
+							has_job_title = job_treasurer
+							has_job_title = job_spymaster
+							has_job_title = job_spiritual
+							has_minor_title = title_commander
+						}
+					} 
+				} 
+			} 
+		}
+	}
+}
+
+can_still_be_marshal_byzantine_trigger = {
+	liege = { 
+		character = FROMFROM
+		has_law = succ_byzantine_elective
+	}
+	NOR = { 
+		war_with = FROMFROM
+		any_liege = {  
+			war_with = FROMFROM
+		}
+	}
+	OR = {
+		AND = {
+			OR = {
+				AND = { #Patriarchal religions can only hire males. Matriarchal religions can only hire females.
+					is_female = no 
+					NOT = { liege = { has_religion_feature = religion_matriarchal } } 
+				}
+				AND = {
+					is_female = yes 
+					OR = { 
+						liege = { has_religion_feature = religion_matriarchal } 
+						liege = { has_religion_feature = religion_equal } 
+						liege = { has_religion_feature = religion_feature_bon } 
+					} 
+				}
+				trait = horse # So we can have female glitterhoofs! :D
+				OR = {
+					AND = {
+						religion = the_mother
+						liege = { religion = the_mother }
+					}
+					#AND = {
+					#	religion = messalian
+					#	liege = { religion = messalian }
+					#}
+				}
+				AND = {
+					liege = {
+						primary_title = {
+							OR = {
+								has_law = status_of_women_3
+							}
+						}
+					}
+					OR = {
+						liege = {
+							OR = {
+								dynasty = ROOT
+								is_close_relative = ROOT
+								any_spouse = { character = ROOT }
+								any_consort = { character = ROOT }
+							}
+						}
+						is_landed = yes
+						
+					}
+				}
+				OR = {
+					AND = { 
+						is_female = yes
+						liege = { primary_title = { has_law = status_of_women_4 } } 
+					}
+					has_game_rule = {
+						name = gender
+						value = all
+					}
+				}
+			}
+			#OR = {
+			#	NOT = { religion = hindu }
+			#	trait = kshatriya
+			#}
+			is_adult = yes
+		}
+		has_character_flag = special_marshal
+	}
+	
+	independent = no
+	prisoner = no
+	NOT = { trait = incapable }
+ 	NOT = { trait = sick_incapable }
+	NOT = { trait = in_hiding }
+	NOT = { has_character_flag = guru }
+	NOT = { has_character_modifier = resigned_in_anger }
+	NOT = { 
+		liege = { 
+			has_opinion_modifier = {
+				who = ROOT	
+				modifier = opinion_resigned_from_council 
+			} 
+		} 
 	}
 }
