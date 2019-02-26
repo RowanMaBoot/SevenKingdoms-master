@@ -6,7 +6,7 @@
 NDefines.NDiplomacy.VASSAL_LIMIT_LEVY_MULTIPLIER = 0
 NDefines.NDiplomacy.LAW_CHANGE_PRESTIGE_COST = 150 -- from 100
 NDefines.NDiplomacy.CROWN_LAW_CHANGE_PRESTIGE_COST = 300 -- from 200
-NDefines.NDiplomacy.BASE_REVOLT_CHANCE_MOD = 200 -- from 250
+NDefines.NDiplomacy.BASE_REVOLT_CHANCE_MOD = 150 -- from 250
 NDefines.NDiplomacy.DUKE_POWERFUL_VASSAL_COUNT = 3 -- from 4
 NDefines.NDiplomacy.KING_POWERFUL_VASSAL_COUNT = 4 -- from 5
 NDefines.NDiplomacy.EMPEROR_POWERFUL_VASSAL_COUNT = 5 -- from 6

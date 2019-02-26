@@ -91,21 +91,21 @@ NDefines = {
     MAX_PREP_INV_ATTACKER_HOLDINGS = 50,            -- The attacker must have fewer Holdings than this in the realm (disallow Prepared Invasions for rulers who are already very powerful)
     PREP_INV_REQ_PRESTIGE = 750,                -- Need to have this much Prestige to prepare an invasion
     BASE_REVOLT_CHANCE_MOD = 125,                -- Pre Old Gods rebel spawn chance modifier (fires on_rebel_revolt) : lower means fewer revolts. MUST NOT BE ZERO.
-    TOG_REVOLT_CHANCE_MOD = 50,                -- Old Gods rebel spawn chance modifier (fires on_rebel_revolt) : lower means fewer revolts. MUST NOT BE ZERO. 
+    TOG_REVOLT_CHANCE_MOD = 40,                -- Old Gods rebel spawn chance modifier (fires on_rebel_revolt) : lower means fewer revolts. MUST NOT BE ZERO. 
     JAIN_LIEGE_OPINION_BONUS = 15,                -- Jain Lieges Get Vassal Opinion Bonus
-    MAX_DIPLO_DISTANCE = 600,                  -- Most diplomacy is disallowed if two rulers are too distant
-    MAX_DIPLO_DISTANCE_SAME_RELIGION = 100,            -- Bonus to max diplo distance for being of the same religion
-    MAX_DIPLO_DISTANCE_SAME_RELIGION_GROUP = 0,         -- Bonus to max diplo distance for being of the same religion group
-    MAX_DIPLO_DISTANCE_SAME_CULTURE = 100,             -- Bonus to max diplo distance for being of the same culture
-    MAX_DIPLO_DISTANCE_SAME_CULTURE_GROUP = 100,        -- Bonus to max diplo distance for being of the same culture group
+    MAX_DIPLO_DISTANCE = 1000,                  -- Most diplomacy is disallowed if two rulers are too distant
+    MAX_DIPLO_DISTANCE_SAME_RELIGION = 50,            -- Bonus to max diplo distance for being of the same religion
+    MAX_DIPLO_DISTANCE_SAME_RELIGION_GROUP = 50,         -- Bonus to max diplo distance for being of the same religion group
+    MAX_DIPLO_DISTANCE_SAME_CULTURE = 50,             -- Bonus to max diplo distance for being of the same culture
+    MAX_DIPLO_DISTANCE_SAME_CULTURE_GROUP = 200,        -- Bonus to max diplo distance for being of the same culture group
     GAME_RULE_RESTRICTED_DIPLO_DISTANCE_MULTIPLIER = 0.5,    -- Multiplier to max diplo distance when using the "diplomatic range: restricted" game rule
     GAME_RULE_PROVINCIAL_REVOLT_RARE_DIVIDER = 2.0,        -- Divider to decrease risk of revolt when using the "provincial revolt: rare" game rule
     TRIBUTARY_UPRISING_AI_WEAK_MALUS = -50,            -- Malus to chances of accepting a call to arms from another tributary during an uprising, if the total forces of the tributaries are weaker than the forces of the Suzerain. Used as a bonus instead if the tributaries combined are significantly stronger than the Suzerain (TRIBUTARY_UPRISING_AI_STRONG_LEVEL)
     TRIBUTARY_UPRISING_AI_STRONG_LEVEL = 1.5,          -- Bonus will be applied to chances of accepting a call to arms from another tributary during an uprising, if the total forces of the tributaries are at least this strong compared to the forces of the Suzerain
     
-    DUKE_POWERFUL_VASSAL_COUNT = 3,        -- The x most powerful vassal will expect a seat in the council
-    KING_POWERFUL_VASSAL_COUNT = 4,        -- The x most powerful vassal will expect a seat in the council
-    EMPEROR_POWERFUL_VASSAL_COUNT = 5,      -- The x most powerful vassal will expect a seat in the council
+    DUKE_POWERFUL_VASSAL_COUNT = 2,        -- The x most powerful vassal will expect a seat in the council
+    KING_POWERFUL_VASSAL_COUNT = 3,        -- The x most powerful vassal will expect a seat in the council
+    EMPEROR_POWERFUL_VASSAL_COUNT = 3,      -- The x most powerful vassal will expect a seat in the council
 
     IMPRISON_CHARACTER_INTERACTION_MONEY = 0,
     IMPRISON_CHARACTER_INTERACTION_PIETY = 10,
@@ -951,16 +951,16 @@ NDefines = {
   -- Title Creation Cost  
     BARON_GOLD_CREATION_COST = 1, -- Unused, impossible
     COUNT_GOLD_CREATION_COST = 100, -- Unused, impossible
-    DUKE_GOLD_CREATION_COST = 200,
-    KING_GOLD_CREATION_COST = 400,
-    EMPEROR_GOLD_CREATION_COST = 600,
+    DUKE_GOLD_CREATION_COST = 50,
+    KING_GOLD_CREATION_COST = 100,
+    EMPEROR_GOLD_CREATION_COST = 500,
     
   -- Title Creation Cost  
     BARON_PIETY_CREATION_COST = 0, -- Unused, impossible
     COUNT_PIETY_CREATION_COST = 0, -- Unused, impossible
     DUKE_PIETY_CREATION_COST = 0,
-    KING_PIETY_CREATION_COST = 200,
-    EMPEROR_PIETY_CREATION_COST = 400,
+    KING_PIETY_CREATION_COST = 0,
+    EMPEROR_PIETY_CREATION_COST = 0,
 
   -- Title Creation Prestige Gain
     BARON_CREATION_PRESTIGE = 50, -- Granted when building a new settlement
@@ -984,11 +984,11 @@ NDefines = {
     EMPEROR_CLAIM_PRESTIGE_COST = 2400, -- Unused, impossible
     
   -- Title Revokation Prestige Cost
-    BARON_REVOKE_PRESTIGE_COST = 25,
-    COUNT_REVOKE_PRESTIGE_COST = 50,
-    DUKE_REVOKE_PRESTIGE_COST = 100,
-    KING_REVOKE_PRESTIGE_COST = 200,
-    EMPEROR_REVOKE_PRESTIGE_COST = 400, -- Unused, impossible
+    BARON_REVOKE_PRESTIGE_COST = 50,
+    COUNT_REVOKE_PRESTIGE_COST = 100,
+    DUKE_REVOKE_PRESTIGE_COST = 200,
+    KING_REVOKE_PRESTIGE_COST = 400,
+    EMPEROR_REVOKE_PRESTIGE_COST = 2000, -- Unused, impossible
     
   -- Title Grant Decadence Reduction (Multiplied with current decadence)
     BARON_GRANT_DECADENCE_RED = 0.05,
@@ -1190,24 +1190,24 @@ NDefines = {
     FRIENDLY_TERRITORY_LEVY_RETURN_PERCENT = 1.0,  -- Percent of subunit that returns to levy when unit is disbanded in friendly territory
     OTHER_TERRITORY_LEVY_RETURN_PERCENT = 0.5,    -- Percent of subunit that returns to levy when unit is disbanded in non-friendly territory
     LEVY_MAINTENANCE_FACTOR = 1.25,          -- General maintenance factor for levy troops
-    HOLDING_LEVY_SIZE_OWNER_MARTIAL_BASE = 0.35,  
-    HOLDING_LEVY_SIZE_OWNER_MARTIAL_MULT = 0.035,  -- Levy size modifier: Each point of the holding owner's Martial skill is multiplied with this and added to HOLDING_LEVY_SIZE_OWNER_MARTIAL_BASE
+    HOLDING_LEVY_SIZE_OWNER_MARTIAL_BASE = 0.5,  
+    HOLDING_LEVY_SIZE_OWNER_MARTIAL_MULT = 0.05,  -- Levy size modifier: Each point of the holding owner's Martial skill is multiplied with this and added to HOLDING_LEVY_SIZE_OWNER_MARTIAL_BASE
     MERCENARY_MAINTENANCE_FACTOR = 3.0,        -- Maintenance factor for NORMAL mercenary units
     MERCENARY_VASSAL_MAINTENANCE_FACTOR = 0.5,    -- Maintenance factor for VASSALIZED mercenary units
     MERCENARY_HIRE_COST_FACTOR = 0.1,        -- Hire cost factor for mercenary units
     HOLY_ORDER_HIRE_COST_FACTOR = 0.25,        -- Conversion of nominal gold cost to piety cost when hiring Holy Orders
     HOLY_ORDER_DYNASTY_HIRE_COST_FACTOR = 0.25,    -- Reduction of cost if the Holy Order is controlled by a dynasty member
     VASSAL_MERC_HIRE_COST_FACTOR = 0.125,      -- Fraction of nominal hire cost when hiring vassal mercenaries OR Holy Orders
-    MERCENARY_HIRE_DISTANCE_THRESHOLD = 600,    -- Mercs will not be available if the province of origin is more distant from your capital
+    MERCENARY_HIRE_DISTANCE_THRESHOLD = 900,    -- Mercs will not be available if the province of origin is more distant from your capital
     OPINION_WHEN_MARSHAL_INSTEAD_OF_SELF = 25,    -- Below this opinion value a vassal tends to use his marshal instead of himself when someone asks to raise his troops
     OPINION_WHEN_NO_LEADER = 0,            -- Below this opinion a vassal will not supply a leader for subunits at all
-    BATTLE_WARSCORE_WORTH = 75,            -- Warscore from battles are multiplied with this value
-    BATTLE_WARSCORE_DEFENDER_MULTIPLIER = 1.5,    -- Defenders wins are multiplied with this value, which also means they get more prestige for a win
-    BATTLE_WARSCORE_WORTH_MULTIPLIER = 1.25,    -- Multiplier applied to the warscore value of individual battles (doesn't affect prestige)
+    BATTLE_WARSCORE_WORTH = 100,            -- Warscore from battles are multiplied with this value
+    BATTLE_WARSCORE_DEFENDER_MULTIPLIER = 1.00,    -- Defenders wins are multiplied with this value, which also means they get more prestige for a win
+    BATTLE_WARSCORE_WORTH_MULTIPLIER = 1.00,    -- Multiplier applied to the warscore value of individual battles (doesn't affect prestige)
     BATTLE_WARSCORE_HOSTS_MULTIPLIER = 2,      -- Multiplier applied to the warscore value of major battle if the losing side is a claimant adventurer
     BATTLE_WARSCORE_LANDLESS_MULTIPLIER = 2,    -- Multiplier applied to the warscore value of major battle if the losing side has no holdings
-    BATTLE_MINIMUM_WARSCORE = 0.2,          -- Battles below this value(in actual percentage) are removed from warscore calculations
-    MIN_LEVY_RAISE_OPINION_THRESHOLD = 0,      -- Below this opinion value you'll get the least amount of troops possible
+    BATTLE_MINIMUM_WARSCORE = 1.0,          -- Battles below this value(in actual percentage) are removed from warscore calculations
+    MIN_LEVY_RAISE_OPINION_THRESHOLD = -20,      -- Below this opinion value you'll get the least amount of troops possible
     MAX_LEVY_RAISE_OPINION_THRESHOLD = 100,      -- Above this opinion value you'll get the max amount of troops possible
     MIN_LEVIES_ABOVE_OPINION_THRESHOLD = 0,      -- The minimum percentage of levies that will be provided if opinion is above threshold
     LEVY_PERCENT_BEFORE_CAN_RAISE = 1.1,      -- Needs at least this much % of full levy before we can raise it again, not used in vanilla anymore
@@ -1226,15 +1226,15 @@ NDefines = {
     FLANKLEADER_PRESTIGE_PART = 0.125,        -- The % of the total prestige gained in the battle that each other flank leader will get
     BATTLE_UNIT_OWNER_PRESTIGE_MULT = 0.5,      -- The % of the total prestige gained in the battle that will be divided among the participating unit owners
     BATTLE_UNIT_OWNER_PIETY_MULT = 0.5,        -- The % of the total piety gained in the battle that will be divided among the participating unit owners
-    REINFORCE_RATE = 0.05,              -- Reinforce rate per year
+    REINFORCE_RATE = 0.025,              -- Reinforce rate per year
     MERC_REINFORCE_RATE = 0.015,          -- The rate at which mercenaries and holy orders reinforce in the field
     MERC_REINFORCE_RATE_WHEN_IDLE = 0.03,      -- The rate at which mercenaries and holy orders reinforce when not hired
-    GARRISON_REINFORCE_RATE_MULTIPLIER = 5,      -- The rate at which the garrison reinforce
-    LEVY_RAISED_REINFORCE_RATE_MULTIPLIER = 0.5,  -- The rate at which the garrison/levy reinforce when the levy is raised
+    GARRISON_REINFORCE_RATE_MULTIPLIER = 4,      -- The rate at which the garrison reinforce
+    LEVY_RAISED_REINFORCE_RATE_MULTIPLIER = 0.2,  -- The rate at which the garrison/levy reinforce when the levy is raised
     BATTLE_PIETY_MULTIPLIER = 0.5,          -- Piety gain/loss multiplier. This is based on the prestige value, so a value of 1 gives a leader as much piety as he gains prestige from combat
     SIEGE_PIETY_MULTIPLIER = 0.2,          -- Piety gain/loss multiplier for sieges
     SIEGE_WEALTH_MULTIPLIER = 1,          -- Wealth gain/loss multiplier for sieges
-    CAPITAL_WARSCORE_MULTIPLIER = 1,        -- Warscore multiplier for capital(this is scaled with SETTLEMENT_WARSCORE_MULTIPLIER)
+    CAPITAL_WARSCORE_MULTIPLIER = 4,        -- Warscore multiplier for capital(this is scaled with SETTLEMENT_WARSCORE_MULTIPLIER)
     BASE_SETTLEMENT_WARSCORE = 1,          -- The base war score from occupying a Holding
     SETTLEMENT_WARSCORE_MULTIPLIER = 0.3,      -- Warscore worth for occupied private demesne
     VASSAL_SETTLEMENT_WARSCORE_MULTIPLIER = 0.3,  -- Warscore worth for occupied vassals
@@ -1284,16 +1284,16 @@ NDefines = {
     EVENT_TROOPS_SIZE_MULT = 1.0,              -- Applied to match_mult to determine size of troops spawned from events & history
     
     OCCUPATION_PENALTY_MONTHS = 12,          -- This and below are different modifier lengths applied to settlements upon conquest
-    OCCUPATION_PENALTY_MONTHS_DIFFERENT_RELIGION = 90,
+    OCCUPATION_PENALTY_MONTHS_DIFFERENT_RELIGION = 1,
     OCCUPATION_PENALTY_MONTHS_DIFFERENT_RELIGIONGROUP = 180,
-    OCCUPATION_PENALTY_MONTHS_DIFFERENT_CULTURE = 60,
+    OCCUPATION_PENALTY_MONTHS_DIFFERENT_CULTURE = 1,
     OCCUPATION_PENALTY_MONTHS_DIFFERENT_CULTUREGROUP = 120,
     
     LOOTED_MODIFIER_MONTHS = 36,          -- How long pagan looting lasts
-    LOOT_TAX_MULTIPLIER = 1.5,            -- Base gold looted from raided holdings is (tax * LOOT_TAX_MULTIPLIER) + (total building value * LOOT_BUILDING_MULTIPLIER)
+    LOOT_TAX_MULTIPLIER = 1.0,            -- Base gold looted from raided holdings is (tax * LOOT_TAX_MULTIPLIER) + (total building value * LOOT_BUILDING_MULTIPLIER)
     LOOT_BUILDING_MULTIPLIER = 0.02,        -- Extra gold looted from raided holdings, from buildings (LOOT_BUILDING_MULTIPLIER * building built cost)
-    LOOT_HOLDING_DEST_MIN_SAFE = 4,          -- there is a 1 in LOOT_HOLDING_DESTRUCTION_ODDS chance that
-    LOOT_HOLDING_DESTRUCTION_ODDS = 20,        -- a holding with less than LOOT_HOLDING_DEST_MIN_SAFE buildings will be destroyed by looting
+    LOOT_HOLDING_DEST_MIN_SAFE = 1,          -- there is a 1 in LOOT_HOLDING_DESTRUCTION_ODDS chance that
+    LOOT_HOLDING_DESTRUCTION_ODDS = 999,        -- a holding with less than LOOT_HOLDING_DEST_MIN_SAFE buildings will be destroyed by looting
     LOOT_HOLDING_BUILDING_DEST_ODDS = 10,      -- there is a 1 in this chance a random building is destroyed when looted
     SETTLED_ADVENTURER_MODIFIER_YEARS = 20,      -- How long provinces are spared from raiding after settling a raider adventurer.
     
