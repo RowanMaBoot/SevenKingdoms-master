@@ -7,7 +7,7 @@
 #	allow: conditions for the character to hold the title
 #	gain_effect: fires when the title is granted
 #	lose_effect: fires when a title is lost through most causes
-#	retire_effect: fires when a title is lost due to the character stepping down
+#	retire_effect: fires when a title is lost due to the character stepping down, or getting a different liege
 #	death_effect: fires when a title is lost due to the character dying
 #	The other fields are all character modifiers.
 
@@ -186,19 +186,20 @@ job_chancellor = {
 				can_be_councilmember_king_trigger = yes
 			}
 			
-			FROM = { 
+			FROM = {
 				opinion = { who = ROOT modifier = opinion_resigned_from_council }
 			}
 		}
-	
-		action = action_statecraft
-		action = action_improve_relations
-		action = action_fabricate_claims
-		action = action_clan_sentiment # Replaces Fabricate Claims for Nomads
-		action = action_sow_dissent
-
-		lift_fow = yes
 	}
+	
+	action = action_statecraft
+	action = action_improve_relations
+	action = action_fabricate_claims
+	action = action_clan_sentiment # Replaces Fabricate Claims for Nomads
+	action = action_sow_dissent
+
+	lift_fow = yes
+		
 }
 
 job_marshal = {
@@ -612,6 +613,10 @@ job_spiritual = {
 	}
 	dismiss_trigger = {
 		FROM = {
+			#OR = {
+				#NOT = { religion_group = muslim }
+				NOT = { religion = ROOT }
+			#}
 			NOT = { 
 				AND = {
 					has_law = succession_voting_power_1
