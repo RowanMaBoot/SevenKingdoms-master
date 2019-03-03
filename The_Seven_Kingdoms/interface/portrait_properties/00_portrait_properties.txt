@@ -2208,58 +2208,320 @@
 18 = {
 	0 = { # blank
 		factor = 100
+		#modifier = {
+		#	factor = 0
+		#	OR = {
+		#		has_minor_title = title_cardinal
+		#		has_minor_title = title_fraticelli_cardinal
+		#	}
+		#}
+		modifier = {
+			factor = 0
+			NAND = { 
+				in_command = yes  # Has to wear helmet instead.
+				has_game_rule = {
+					name = martial_headgear
+					value = on
+				}
+			}
+			# Dead characters can not have artifacts wich is why these are traits
+			OR = {
+				trait = dead_crown_of_winter
+				trait = dead_driftwood_crown
+				trait = dead_durrandon_crown
+				trait = dead_falcon_crown
+				trait = dead_gardener_crown
+				trait = dead_lannister_crown
+				trait = dead_river_kings_crown
+			}
+		}
+		modifier = {
+			factor = 0
+			NAND = { 
+				in_command = yes  # Has to wear helmet instead.
+				has_game_rule = {
+					name = martial_headgear
+					value = on
+				}
+			}
+			any_artifact = {
+				OR = {
+					artifact_type = crown_of_winter
+					artifact_type = driftwood_crown
+					artifact_type = durrandon_crown
+					artifact_type = falcon_crown
+					artifact_type = gardener_crown
+					artifact_type = lannister_crown
+					artifact_type = river_kings_crown
+				}
+				is_artifact_equipped = yes 
+			}
+		}
+	}
+
+	1 = {
+		factor = 1
+		modifier = { # Makes it so the two layers are always matched (if conditions for p19/frame1 are true, use p18/frame1).
+			factor = 0
+			NOT = { has_portrait_property = { layer = 19 index = 1 } }
+		}
+	}
+	
+	2 = { 
+		factor = 1
+		modifier = {
+			factor = 0
+			NOT = { has_portrait_property = { layer = 19 index = 2 } }
+		}
+	}
+	
+	3 = { 
+		factor = 1
+		modifier = {
+			factor = 0
+			NOT = { has_portrait_property = { layer = 19 index = 3 } }
+		}
+	}
+	4 = { 
+		factor = 1
+		modifier = {
+			factor = 0
+			NOT = { has_portrait_property = { layer = 19 index = 4 } }
+		}
+	}
+	5 = { 
+		factor = 1
+		modifier = {
+			factor = 0
+			NOT = { has_portrait_property = { layer = 19 index = 5 } }
+		}
+	}
+	6 = { 
+		factor = 1
+		modifier = {
+			factor = 0
+			NOT = { has_portrait_property = { layer = 19 index = 6 } }
+		}
+	}
+	7 = { 
+		factor = 1
+		modifier = {
+			factor = 0
+			NOT = { has_portrait_property = { layer = 19 index = 7 } }
+		}
 	}
 }
 
 # p19 Special crowns
 19 = {
-	0 = { # Blank
+	0 = { # blank
 		factor = 100
+		#modifier = {
+		#	factor = 0
+		#	OR = {
+		#		has_minor_title = title_cardinal
+		#		has_minor_title = title_fraticelli_cardinal
+		#	}
+		#}
+		modifier = {
+			factor = 0
+			NAND = { 
+				in_command = yes  # Has to wear helmet instead.
+				has_game_rule = {
+					name = martial_headgear
+					value = on
+				}
+			}
+			# Dead characters can not have artifacts wich is why these are traits
+			OR = {
+				trait = dead_crown_of_winter
+				trait = dead_driftwood_crown
+				trait = dead_durrandon_crown
+				trait = dead_falcon_crown
+				trait = dead_gardener_crown
+				trait = dead_lannister_crown
+				trait = dead_river_kings_crown
+			}
+		}
+		modifier = {
+			factor = 0
+			NAND = { 
+				in_command = yes  # Has to wear helmet instead.
+				has_game_rule = {
+					name = martial_headgear
+					value = on
+				}
+			}
+			any_artifact = {
+				OR = {
+					artifact_type = crown_of_winter
+					artifact_type = driftwood_crown
+					artifact_type = durrandon_crown
+					artifact_type = falcon_crown
+					artifact_type = gardener_crown
+					artifact_type = lannister_crown
+					artifact_type = river_kings_crown
+				}
+				is_artifact_equipped = yes 
+			}
+		}
 	}
-	1 = { 
-		factor = 0	
+	1 = {
+		factor = 100
+		hide_layers = { 5 = { } } #Hide layer 5 (headgear) when this frame is picked.
+		modifier = {
+			factor = 0
+			in_command = yes
+			has_game_rule = {
+				name = martial_headgear
+				value = on
+			}
+		}
+		modifier = { # Crown of Winter
+			factor = 0
+			NOR = { 
+				any_artifact = {
+					artifact_type = crown_of_winter
+					is_artifact_equipped = yes 
+				}
+				trait = dead_crown_of_winter
+			}
+		}
 	}
+	
 	2 = { 
-		factor = 0
+		factor = 100
+		hide_layers = { 5 = { } } #Hide layer 5 (headgear) when this frame is picked.
+		modifier = {
+			factor = 0
+			in_command = yes
+			has_game_rule = {
+				name = martial_headgear
+				value = on
+			}
+		}
+		modifier = { # Driftwood Crown
+			factor = 0
+			NOR = { 
+				any_artifact = {
+					artifact_type = driftwood_crown
+					is_artifact_equipped = yes 
+				}
+				trait = dead_driftwood_crown
+			}
+		}
 	}
+	
 	3 = { 
-		factor = 0
+		factor = 100
+		hide_layers = { 5 = { } } #Hide layer 5 (headgear) when this frame is picked.
+		modifier = {
+			factor = 0
+			in_command = yes
+			has_game_rule = {
+				name = martial_headgear
+				value = on
+			}
+		}
+		modifier = { # Durrandon Crown
+			factor = 0
+			NOR = { 
+				any_artifact = {
+					artifact_type = durrandon_crown
+					is_artifact_equipped = yes 
+				}
+				trait = dead_durrandon_crown
+			}
+		}
 	}
 	4 = { 
-		factor = 0
+		factor = 100
+		hide_layers = { 5 = { } } #Hide layer 5 (headgear) when this frame is picked.
+		modifier = {
+			factor = 0
+			in_command = yes
+			has_game_rule = {
+				name = martial_headgear
+				value = on
+			}
+		}
+		modifier = { # Falcon Crown
+			factor = 0
+			NOR = { 
+				any_artifact = {
+					artifact_type = falcon_crown
+					is_artifact_equipped = yes 
+				}
+				trait = dead_falcon_crown
+			}
+		}
 	}
 	5 = { 
-		factor = 0
+		factor = 100
+		hide_layers = { 5 = { } } #Hide layer 5 (headgear) when this frame is picked.
+		modifier = {
+			factor = 0
+			in_command = yes
+			has_game_rule = {
+				name = martial_headgear
+				value = on
+			}
+		}
+		modifier = { # Gardener Crown
+			factor = 0
+			NOR = { 
+				any_artifact = {
+					artifact_type = gardener_crown
+					is_artifact_equipped = yes 
+				}
+				trait = dead_gardener_crown
+			}
+		}
 	}
+	# Lannister Crown portrait dds files needed!
 	6 = { 
 		factor = 0
+		hide_layers = { 5 = { } } #Hide layer 5 (headgear) when this frame is picked.
+		modifier = {
+			factor = 0
+			in_command = yes
+			has_game_rule = {
+				name = martial_headgear
+				value = on
+			}
+		}
+		modifier = { # Lannister Crown
+			factor = 0
+			NOR = { 
+				any_artifact = {
+					artifact_type = lannister_crown
+					is_artifact_equipped = yes 
+				}
+				trait = dead_lannister_crown
+			}
+		}
 	}
 	7 = { 
-		factor = 0
-	}
-	8 = { 
-		factor = 0
-	}
-	9 = { 
-		factor = 0
-	}
-	10 = { 
-		factor = 0
-	}
-	11 = { 
-		factor = 0
-	}
-	12 = { 
-		factor = 0
-	}	
-	13 = { 
-		factor = 0
-	}	
-	14 = { 
-		factor = 0
-	}
-	15 = { 
-		factor = 0
+		factor = 100
+		hide_layers = { 5 = { } } #Hide layer 5 (headgear) when this frame is picked.
+		modifier = {
+			factor = 0
+			in_command = yes
+			has_game_rule = {
+				name = martial_headgear
+				value = on
+			}
+		}
+		modifier = { # River Kings Crown
+			factor = 0
+			NOR = { 
+				any_artifact = {
+					artifact_type = river_kings_crown
+					is_artifact_equipped = yes 
+				}
+				trait = dead_river_kings_crown
+			}
+		}
 	}
 }
 
