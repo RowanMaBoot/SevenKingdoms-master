@@ -106,17 +106,18 @@ character_event = {
 
 	trigger = {
 		is_in_society = no
-		OR = {
-			interested_in_society = the_assassins
-			interested_in_society = the_satanists
-			interested_in_society = the_trollcrafters
-			interested_in_society = the_cult_of_kali
-			interested_in_society = the_cold_ones
-			interested_in_society = the_plaguebringers
-			interested_in_society = the_vodouns
-			interested_in_society = the_bacchants
-			interested_in_society = secret_religious_cult
-		}
+		# OR = {
+			# interested_in_society = the_assassins
+			# interested_in_society = the_satanists
+			# interested_in_society = the_trollcrafters
+			# interested_in_society = the_cult_of_kali
+			# interested_in_society = the_cold_ones
+			# interested_in_society = the_plaguebringers
+			# interested_in_society = the_vodouns
+			# interested_in_society = the_bacchants
+			# interested_in_society = secret_religious_cult
+		# }
+    is_interested_in_society_trigger = yes
 	}
 
 	immediate = {
@@ -132,17 +133,18 @@ character_event = {
 
 	trigger = {
 		is_in_society = no
-		OR = {
-			interested_in_society = the_assassins
-			interested_in_society = the_satanists
-			interested_in_society = the_trollcrafters
-			interested_in_society = the_cult_of_kali
-			interested_in_society = the_cold_ones
-			interested_in_society = the_plaguebringers
-			interested_in_society = the_vodouns
-			interested_in_society = the_bacchants
-			interested_in_society = secret_religious_cult		
-		}
+		# OR = {
+			# interested_in_society = the_assassins
+			# interested_in_society = the_satanists
+			# interested_in_society = the_trollcrafters
+			# interested_in_society = the_cult_of_kali
+			# interested_in_society = the_cold_ones
+			# interested_in_society = the_plaguebringers
+			# interested_in_society = the_vodouns
+			# interested_in_society = the_bacchants
+			# interested_in_society = secret_religious_cult		
+		# }
+    is_interested_in_society_trigger = yes
 	}
 
 	immediate = {
@@ -152,22 +154,22 @@ character_event = {
 			break = yes
 		}
 		#Assassins
-		if = {
-			limit = {
-				interested_in_society = the_assassins
-				NOT = { has_character_flag = ongoing_recruitment }
-			}
+		# if = {
+			# limit = {
+				# interested_in_society = the_assassins
+				# NOT = { has_character_flag = ongoing_recruitment }
+			# }
 
-			random_society_member = {
-				limit = {
-					society_member_of = the_assassins
-					#is_within_diplo_range = ROOT
-					is_society_grandmaster = no
-				}
-				save_event_target_as = assassins_recruiter
-				character_event = { id = MNM.10012 }
-			}
-		}
+			# random_society_member = {
+				# limit = {
+					# society_member_of = the_assassins
+					is_within_diplo_range = ROOT
+					# is_society_grandmaster = no
+				# }
+				# save_event_target_as = assassins_recruiter
+				# character_event = { id = MNM.10012 }
+			# }
+		# }
 		#Satanists
 		if = {
 			limit = {
@@ -296,33 +298,48 @@ character_event = {
 			}
 			character_event = { id = MNM.3420 } 
 		}
+    #The Seven Knights
+    if = {
+			limit = {
+				interested_in_society = knighthood_the_seven
+				NOT = { has_character_flag = being_recruited_by_knighthood_the_seven }
+			}
+			random_society_member = {
+				limit = {
+					society_member_of = knighthood_the_seven
+					is_society_grandmaster = no
+				}
+				save_event_target_as = knighthood_the_seven_recruiter
+				character_event = { id = MNM.10028 }
+			}
+		}
 	}	
 }
 
-character_event = { 
-	id = MNM.10012
-	hide_window = yes
+# character_event = { 
+	# id = MNM.10012
+	# hide_window = yes
 
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	immediate = {
-		FROM = {
-			if = {
-				limit = { NOT = { has_character_flag = ongoing_recruitment } }
-				set_character_flag = assassins_attempted_recruitment
-				set_character_flag = ongoing_recruitment
-				if = {
-					limit = { NOT = { religion = shiite } }
-					character_event = { id = MNM.6020 } 
-				}
-				if = {
-					limit = { religion = shiite }
-					character_event = { id = MNM.6022 } 
-				}
-			}
-		}
-	}
-}
+	# immediate = {
+		# FROM = {
+			# if = {
+				# limit = { NOT = { has_character_flag = ongoing_recruitment } }
+				# set_character_flag = assassins_attempted_recruitment
+				# set_character_flag = ongoing_recruitment
+				# if = {
+					# limit = { NOT = { religion = bearded_priests } }
+					# character_event = { id = MNM.6020 } 
+				# }
+				# if = {
+					# limit = { religion = bearded_priests }
+					# character_event = { id = MNM.6022 } 
+				# }
+			# }
+		# }
+	# }
+# }
 
 character_event = {
 	id = MNM.10013
@@ -423,6 +440,21 @@ character_event = {
 		FROM = {
 			set_character_flag = vodouns_attempted_recruitment
 			set_character_flag = being_recruited_by_the_vodouns
+			character_event = { id = MNM.7001 }
+		}
+	}
+}
+
+character_event = {
+	id = MNM.10028
+	hide_window = yes
+
+	is_triggered_only = yes
+
+	immediate = { 
+		FROM = {
+			set_character_flag = knighthood_the_seven_attempted_recruitment
+			set_character_flag = being_recruited_by_knighthood_the_seven
 			character_event = { id = MNM.7001 }
 		}
 	}
@@ -723,11 +755,11 @@ character_event = {
 					factor = 2
 					higher_tier_than = BARON
 				}
-				modifier = {
-					factor = 3
-					true_religion = shiite
-					can_join_society = the_assassins
-				}
+				# modifier = {
+					# factor = 3
+					# true_religion = bearded_priests
+					# can_join_society = the_assassins
+				# }
 				
 				random_list = {
 					700 = { } # Fall back dead weight
@@ -836,7 +868,7 @@ character_event = {
 					}
 					100 = {
 						trigger = {
-							can_join_society = monastic_order_orthodox
+							can_join_society = monastic_order_lady_of_the_waves
 						}
 						modifier = {
 							factor = 3
@@ -853,13 +885,13 @@ character_event = {
 						}
 						modifier = {
 							factor = 2
-							monastic_order_orthodox = { num_of_society_members < 15 }
+							monastic_order_lady_of_the_waves = { num_of_society_members < 15 }
 						}
 						modifier = {
 							factor = 2
-							monastic_order_orthodox = { num_of_society_members < 10 }
+							monastic_order_lady_of_the_waves = { num_of_society_members < 10 }
 						}
-						join_society = monastic_order_orthodox
+						join_society = monastic_order_lady_of_the_waves
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -886,7 +918,7 @@ character_event = {
 					}
 					100 = {
 						trigger = {
-							can_join_society = monastic_order_nestorian
+							can_join_society = monastic_order_rhllor
 						}
 						modifier = {
 							factor = 3
@@ -903,13 +935,13 @@ character_event = {
 						}
 						modifier = {
 							factor = 2
-							monastic_order_nestorian = { num_of_society_members < 15 }
+							monastic_order_rhllor = { num_of_society_members < 15 }
 						}
 						modifier = {
 							factor = 2
-							monastic_order_nestorian = { num_of_society_members < 10 }
+							monastic_order_rhllor = { num_of_society_members < 10 }
 						}
-						join_society = monastic_order_nestorian
+						join_society = monastic_order_rhllor
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -936,7 +968,7 @@ character_event = {
 					}
 					100 = {
 						trigger = {
-							can_join_society = monastic_order_monophysite
+							can_join_society = monastic_order_storm_god
 						}
 						modifier = {
 							factor = 3
@@ -953,13 +985,13 @@ character_event = {
 						}
 						modifier = {
 							factor = 2
-							monastic_order_monophysite = { num_of_society_members < 15 }
+							monastic_order_storm_god = { num_of_society_members < 15 }
 						}
 						modifier = {
 							factor = 2
-							monastic_order_monophysite = { num_of_society_members < 10 }
+							monastic_order_storm_god = { num_of_society_members < 10 }
 						}
-						join_society = monastic_order_monophysite
+						join_society = monastic_order_storm_god
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1082,7 +1114,7 @@ character_event = {
 					}
 					100 = {
 						trigger = {
-							can_join_society = monastic_order_jain
+							can_join_society = monastic_order_yiti_gods
 						}
 						modifier = {
 							factor = 3
@@ -1097,13 +1129,13 @@ character_event = {
 						}
 						modifier = {
 							factor = 2
-							monastic_order_jain = { num_of_society_members < 15 }
+							monastic_order_yiti_gods = { num_of_society_members < 15 }
 						}
 						modifier = {
 							factor = 2
-							monastic_order_jain = { num_of_society_members < 10 }
+							monastic_order_yiti_gods = { num_of_society_members < 10 }
 						}
-						join_society = monastic_order_jain
+						join_society = monastic_order_yiti_gods
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1177,9 +1209,9 @@ character_event = {
 					}
 					200 = {
 						trigger = {
-							can_join_society = secret_religious_society_catholic
+							can_join_society = secret_religious_society_the_seven
 						}
-						join_society = secret_religious_society_catholic
+						join_society = secret_religious_society_the_seven
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1206,9 +1238,9 @@ character_event = {
 					}
 					200 = {
 						trigger = {
-							can_join_society = secret_religious_society_orthodox
+							can_join_society = secret_religious_society_lady_of_the_waves
 						}
-						join_society = secret_religious_society_orthodox
+						join_society = secret_religious_society_lady_of_the_waves
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1235,9 +1267,9 @@ character_event = {
 					}
 					200 = {
 						trigger = {
-							can_join_society = secret_religious_society_sunni
+							can_join_society = secret_religious_society_faceless_men
 						}
-						join_society = secret_religious_society_sunni
+						join_society = secret_religious_society_faceless_men
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1264,9 +1296,9 @@ character_event = {
 					}
 					200 = {
 						trigger = {
-							can_join_society = secret_religious_society_shiite
+							can_join_society = secret_religious_society_bearded_priests
 						}
-						join_society = secret_religious_society_shiite
+						join_society = secret_religious_society_bearded_priests
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1293,9 +1325,9 @@ character_event = {
 					}
 					200 = {
 						trigger = {
-							can_join_society = secret_religious_society_jewish
+							can_join_society = secret_religious_society_the_dragon_gods
 						}
-						join_society = secret_religious_society_jewish
+						join_society = secret_religious_society_the_dragon_gods
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1322,9 +1354,9 @@ character_event = {
 					}
 					200 = {
 						trigger = {
-							can_join_society = secret_religious_society_zoroastrian
+							can_join_society = secret_religious_society_lady_of_the_rocks
 						}
-						join_society = secret_religious_society_zoroastrian
+						join_society = secret_religious_society_lady_of_the_rocks
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1409,9 +1441,9 @@ character_event = {
 					}
 					200 = {
 						trigger = {
-							can_join_society = secret_religious_society_jain
+							can_join_society = secret_religious_society_yiti_gods
 						}
-						join_society = secret_religious_society_jain
+						join_society = secret_religious_society_yiti_gods
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1438,9 +1470,9 @@ character_event = {
 					}
 					200 = {
 						trigger = {
-							can_join_society = secret_religious_society_norse_pagan_reformed
+							can_join_society = secret_religious_society_starry_wisdom
 						}
-						join_society = secret_religious_society_norse_pagan_reformed
+						join_society = secret_religious_society_starry_wisdom
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1525,9 +1557,9 @@ character_event = {
 					}
 					200 = {
 						trigger = {
-							can_join_society = secret_religious_society_baltic_pagan_reformed
+							can_join_society = secret_religious_society_shadowbinders
 						}
-						join_society = secret_religious_society_baltic_pagan_reformed
+						join_society = secret_religious_society_shadowbinders
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1554,9 +1586,9 @@ character_event = {
 					}
 					200 = {
 						trigger = {
-							can_join_society = secret_religious_society_finnish_pagan_reformed
+							can_join_society = secret_religious_society_gods_nghai
 						}
-						join_society = secret_religious_society_finnish_pagan_reformed
+						join_society = secret_religious_society_gods_nghai
 						random_list = { # Artificially increase society influence for balance purposes
 							75 = {
 								modifier = {
@@ -1770,102 +1802,102 @@ character_event = {
 							set_society_grandmaster = yes
 						}
 					}
-					500 = { 
-						trigger = {
-							can_join_society = the_assassins
-						}
-						modifier = {
-							factor = 0.5
-							is_landed = no
-						}
-						modifier = {
-							factor = 0.1
-							NOR = { 
-								true_religion = shiite 
-								AND = {
-									trait = sympathy_islam
-									trait = deceitful
-									NOT = { trait = zealous }
-									OR = {
-										trait = schemer
-										trait = elusive_shadow
-										intrigue = 18
-									}
-								}
-							}
-						}
-						modifier = {
-							factor = 0
-							NOT = { true_religion = shiite }
-							trait = zealous
-						}
-						modifier = {
-							factor = 0
-							NOT = { intrigue = 6 }
-						}
-						modifier = {
-							factor = 2
-							true_religion = shiite
-							is_landed = yes
-						}
-						modifier = {
-							factor = 5
-							true_religion = shiite
-							NOT = { trait = decadent }
-							OR = {
-								trait = zealous
-								trait = schemer
-								trait = elusive_shadow
-								trait = deceitful
-								trait = ambitious
-								intrigue = 18
-							}
-						}
-						modifier = {
-							factor = 2
-							the_assassins = { num_of_society_members < 20 }
-						}
-						modifier = {
-							factor = 2
-							the_assassins = { num_of_society_members < 15 }
-						}
-						modifier = {
-							factor = 2
-							the_assassins = { num_of_society_members < 10 }
-						}
-						if = {
-							limit = {
-								NOT = {
-									religion = shiite
-								}
-							}
-							set_secret_religion = shiite
-						}
-						join_society = the_assassins
-						random_list = { # Artificially increase society influence for balance purposes
-							75 = {
-								modifier = {
-									factor = 0
-									society_influence >= 30
-								}
-								add_mission_succeed_influence_effect = yes
-							}
-							25 = {
-							}
-						}
-						if = {
-							limit = {
-								NOT = {
-									society = {
-										any_society_member = {
-											is_society_grandmaster = yes
-										}
-									}
-								}
-							}
-							set_society_grandmaster = yes
-						}
-					}
+					# 500 = { 
+						# trigger = {
+							# can_join_society = the_assassins
+						# }
+						# modifier = {
+							# factor = 0.5
+							# is_landed = no
+						# }
+						# modifier = {
+							# factor = 0.1
+							# NOR = { 
+								# true_religion = bearded_priests 
+								# AND = {
+									# trait = sympathy_islam
+									# trait = deceitful
+									# NOT = { trait = zealous }
+									# OR = {
+										# trait = schemer
+										# trait = elusive_shadow
+										# intrigue = 18
+									# }
+								# }
+							# }
+						# }
+						# modifier = {
+							# factor = 0
+							# NOT = { true_religion = bearded_priests }
+							# trait = zealous
+						# }
+						# modifier = {
+							# factor = 0
+							# NOT = { intrigue = 6 }
+						# }
+						# modifier = {
+							# factor = 2
+							# true_religion = bearded_priests
+							# is_landed = yes
+						# }
+						# modifier = {
+							# factor = 5
+							# true_religion = bearded_priests
+							# NOT = { trait = decadent }
+							# OR = {
+								# trait = zealous
+								# trait = schemer
+								# trait = elusive_shadow
+								# trait = deceitful
+								# trait = ambitious
+								# intrigue = 18
+							# }
+						# }
+						# modifier = {
+							# factor = 2
+							# the_assassins = { num_of_society_members < 20 }
+						# }
+						# modifier = {
+							# factor = 2
+							# the_assassins = { num_of_society_members < 15 }
+						# }
+						# modifier = {
+							# factor = 2
+							# the_assassins = { num_of_society_members < 10 }
+						# }
+						# if = {
+							# limit = {
+								# NOT = {
+									# religion = bearded_priests
+								# }
+							# }
+							# set_secret_religion = bearded_priests
+						# }
+						# join_society = the_assassins
+						# random_list = { # Artificially increase society influence for balance purposes
+							# 75 = {
+								# modifier = {
+									# factor = 0
+									# society_influence >= 30
+								# }
+								# add_mission_succeed_influence_effect = yes
+							# }
+							# 25 = {
+							# }
+						# }
+						# if = {
+							# limit = {
+								# NOT = {
+									# society = {
+										# any_society_member = {
+											# is_society_grandmaster = yes
+										# }
+									# }
+								# }
+							# }
+							# set_society_grandmaster = yes
+						# }
+					# }
 					50 = { 
 						trigger = {
 							can_join_society = the_satanists
@@ -2651,15 +2683,15 @@ character_event = {
 			limit = {
 				controls_religion = no
 				OR = {
-					religion = catholic
-					religion = fraticelli
-					religion = orthodox
-					religion = miaphysite
-					religion = monophysite
-					religion = monothelite
-					religion = paulician
-					religion = nestorian
-					religion = yazidi
+					religion = the_seven
+					# religion = the_mother
+					# religion = lady_of_the_waves
+					# religion = drowned_god
+					# religion = storm_god
+					# religion = old_gods
+					# religion = old_gods_beyond_white
+					# religion = rhllor
+					# religion = bearded_priests_reformed
 				}
 			}
 			add_trait = excommunicated
@@ -2869,55 +2901,55 @@ character_event = { #Save game conversion of secret_traits to secret religions
 		any_character = {
 			trigger_switch = {
 				on_trigger = trait
-				secretly_catholic = { set_secret_religion = catholic remove_trait = secretly_catholic }
-				secretly_cathar = { set_secret_religion = cathar remove_trait = secretly_cathar }
-				secretly_fraticelli = { set_secret_religion = fraticelli remove_trait = secretly_fraticelli }
-				secretly_waldensian = { set_secret_religion = waldensian remove_trait = secretly_waldensian }
-				secretly_lollard = { set_secret_religion = lollard remove_trait = secretly_lollard }
-				secretly_orthodox = { set_secret_religion = orthodox remove_trait = secretly_orthodox }
-				secretly_bogomilist = { set_secret_religion = bogomilist remove_trait = secretly_bogomilist }
-				secretly_monothelite = { set_secret_religion = monothelite remove_trait = secretly_monothelite }
-				secretly_iconoclast = { set_secret_religion = iconoclast remove_trait = secretly_iconoclast }
-				secretly_paulician = { set_secret_religion = paulician remove_trait = secretly_paulician }
-				secretly_miaphysite = { set_secret_religion = miaphysite remove_trait = secretly_miaphysite }
-				secretly_monophysite = { set_secret_religion = monophysite remove_trait = secretly_monophysite }
-				secretly_nestorian = { set_secret_religion = nestorian remove_trait = secretly_nestorian }
-				secretly_messalian = { set_secret_religion = messalian remove_trait = secretly_messalian }
-				secretly_sunni = { set_secret_religion = sunni remove_trait = secretly_sunni }
-				secretly_zikri = { set_secret_religion = zikri remove_trait = secretly_zikri }
-				secretly_yazidi = { set_secret_religion = yazidi remove_trait = secretly_yazidi }
-				secretly_shiite = { set_secret_religion = shiite remove_trait = secretly_shiite }
-				secretly_druze = { set_secret_religion = druze remove_trait = secretly_druze }
-				secretly_hurufi = { set_secret_religion = hurufi remove_trait = secretly_hurufi }
-				secretly_ibadi = { set_secret_religion = ibadi remove_trait = secretly_ibadi }
-				secretly_kharijite = { set_secret_religion = kharijite remove_trait = secretly_kharijite }
-				secretly_jewish = { set_secret_religion = jewish remove_trait = secretly_jewish }
-				secretly_samaritan = { set_secret_religion = samaritan remove_trait = secretly_samaritan }
-				secretly_karaite = { set_secret_religion = karaite remove_trait = secretly_karaite }
-				secretly_zoroastrian = { set_secret_religion = zoroastrian remove_trait = secretly_zoroastrian }
-				secretly_mazdaki = { set_secret_religion = mazdaki remove_trait = secretly_mazdaki }
-				secretly_manichean = { set_secret_religion = manichean remove_trait = secretly_manichean }
-				secretly_hinduism = { set_secret_religion = hindu remove_trait = secretly_hinduism }
-				secretly_buddhism = { set_secret_religion = buddhist remove_trait = secretly_buddhism }
-				secretly_jain = { set_secret_religion = jain remove_trait = secretly_jain }
-				secretly_norse_pagan = { set_secret_religion = norse_pagan remove_trait = secretly_norse_pagan }
-				secretly_norse_pagan_reformed = { set_secret_religion = norse_pagan_reformed remove_trait = secretly_norse_pagan_reformed }
-				secretly_baltic_pagan = { set_secret_religion = baltic_pagan remove_trait = secretly_baltic_pagan }
-				secretly_baltic_pagan_reformed = { set_secret_religion = baltic_pagan_reformed remove_trait = secretly_baltic_pagan_reformed }
-				secretly_finnish_pagan = { set_secret_religion = finnish_pagan remove_trait = secretly_finnish_pagan }
-				secretly_finnish_pagan_reformed = { set_secret_religion = finnish_pagan_reformed remove_trait = secretly_finnish_pagan_reformed }
-				secretly_slavic_pagan = { set_secret_religion = slavic_pagan remove_trait = secretly_slavic_pagan }
-				secretly_slavic_pagan_reformed = { set_secret_religion = slavic_pagan_reformed remove_trait = secretly_slavic_pagan_reformed }
-				secretly_tengri_pagan = { set_secret_religion = tengri_pagan remove_trait = secretly_tengri_pagan }
-				secretly_tengri_pagan_reformed = { set_secret_religion = tengri_pagan_reformed remove_trait = secretly_tengri_pagan_reformed }
-				secretly_aztec = { set_secret_religion = aztec remove_trait = secretly_aztec }
-				secretly_aztec_reformed = { set_secret_religion = aztec_reformed remove_trait = secretly_aztec_reformed }
-				secretly_west_african_pagan = { set_secret_religion = west_african_pagan remove_trait = secretly_west_african_pagan }
-				secretly_west_african_pagan_reformed = { set_secret_religion = west_african_pagan_reformed remove_trait = secretly_west_african_pagan_reformed }
-				secretly_zun_pagan = { set_secret_religion = zun_pagan remove_trait = secretly_zun_pagan }
-				secretly_zun_pagan_reformed = { set_secret_religion = zun_pagan_reformed remove_trait = secretly_zun_pagan_reformed }
-				secretly_hellenic_pagan = { set_secret_religion = hellenic_pagan remove_trait = secretly_hellenic_pagan }
-				secretly_pagan = { set_secret_religion = pagan remove_trait = secretly_pagan }
+				secretly_the_seven = { set_secret_religion = the_seven remove_trait = secretly_the_seven }
+				secretly_the_seven_gods = { set_secret_religion = the_seven_gods remove_trait = secretly_the_seven_gods }
+				secretly_the_mother = { set_secret_religion = the_mother remove_trait = secretly_the_mother }
+				secretly_the_stranger = { set_secret_religion = the_stranger remove_trait = secretly_the_stranger }
+				secretly_the_smith = { set_secret_religion = the_smith remove_trait = secretly_the_smith }
+				secretly_lady_of_the_waves = { set_secret_religion = lady_of_the_waves remove_trait = secretly_lady_of_the_waves }
+				secretly_vulture_god = { set_secret_religion = vulture_god remove_trait = secretly_vulture_god }
+				secretly_old_gods = { set_secret_religion = old_gods remove_trait = secretly_old_gods }
+				secretly_old_gods_beyond = { set_secret_religion = old_gods_beyond remove_trait = secretly_old_gods_beyond }
+				secretly_old_gods_beyond_white = { set_secret_religion = old_gods_beyond_white remove_trait = secretly_old_gods_beyond_white }
+				secretly_drowned_god = { set_secret_religion = drowned_god remove_trait = secretly_drowned_god }
+				secretly_storm_god = { set_secret_religion = storm_god remove_trait = secretly_storm_god }
+				secretly_rhllor = { set_secret_religion = rhllor remove_trait = secretly_rhllor }
+				secretly_moonsingers = { set_secret_religion = moonsingers remove_trait = secretly_moonsingers }
+				secretly_faceless_men = { set_secret_religion = faceless_men remove_trait = secretly_faceless_men }
+				secretly_maiden_of_the_harvest = { set_secret_religion = maiden_of_the_harvest remove_trait = secretly_maiden_of_the_harvest }
+				secretly_bearded_priests_reformed = { set_secret_religion = bearded_priests_reformed remove_trait = secretly_bearded_priests_reformed }
+				secretly_bearded_priests = { set_secret_religion = bearded_priests remove_trait = secretly_bearded_priests }
+				secretly_boashi_reformed = { set_secret_religion = boashi_reformed remove_trait = secretly_boashi_reformed }
+				secretly_boashi = { set_secret_religion = boashi remove_trait = secretly_boashi }
+				secretly_trios = { set_secret_religion = trios remove_trait = secretly_trios }
+				secretly_valyrian = { set_secret_religion = valyrian remove_trait = secretly_valyrian }
+				secretly_the_dragon_gods = { set_secret_religion = the_dragon_gods remove_trait = secretly_the_dragon_gods }
+				secretly_the_plundering_dragon = { set_secret_religion = the_plundering_dragon remove_trait = secretly_the_plundering_dragon }
+				secretly_the_weeping_lady = { set_secret_religion = the_weeping_lady remove_trait = secretly_the_weeping_lady }
+				secretly_lady_of_the_rocks = { set_secret_religion = lady_of_the_rocks remove_trait = secretly_lady_of_the_rocks }
+				secretly_black_flag = { set_secret_religion = black_flag remove_trait = secretly_black_flag }
+				secretly_dothraki = { set_secret_religion = dothraki remove_trait = secretly_dothraki }
+				secretly_rhoynar = { set_secret_religion = hindu remove_trait = secretly_rhoynar }
+				secretly_harpy = { set_secret_religion = buddhist remove_trait = secretly_harpy }
+				secretly_yiti_gods = { set_secret_religion = yiti_gods remove_trait = secretly_yiti_gods }
+				secretly_lion_night = { set_secret_religion = lion_night remove_trait = secretly_lion_night }
+				secretly_starry_wisdom = { set_secret_religion = starry_wisdom remove_trait = secretly_starry_wisdom }
+				secretly_old_ones = { set_secret_religion = old_ones remove_trait = secretly_old_ones }
+				secretly_shadowbinders = { set_secret_religion = shadowbinders remove_trait = secretly_shadowbinders }
+				secretly_gods_bone_mountains = { set_secret_religion = gods_bone_mountains remove_trait = secretly_gods_bone_mountains }
+				secretly_gods_nghai = { set_secret_religion = gods_nghai remove_trait = secretly_gods_nghai }
+				secretly_stone_cow = { set_secret_religion = slavic_pagan remove_trait = secretly_slavic_pagan }
+				# secretly_slavic_pagan_reformed = { set_secret_religion = slavic_pagan_reformed remove_trait = secretly_slavic_pagan_reformed }
+				# secretly_tengri_pagan = { set_secret_religion = tengri_pagan remove_trait = secretly_tengri_pagan }
+				# secretly_tengri_pagan_reformed = { set_secret_religion = tengri_pagan_reformed remove_trait = secretly_tengri_pagan_reformed }
+				# secretly_aztec = { set_secret_religion = aztec remove_trait = secretly_aztec }
+				# secretly_aztec_reformed = { set_secret_religion = aztec_reformed remove_trait = secretly_aztec_reformed }
+				# secretly_west_african_pagan = { set_secret_religion = west_african_pagan remove_trait = secretly_west_african_pagan }
+				# secretly_west_african_pagan_reformed = { set_secret_religion = west_african_pagan_reformed remove_trait = secretly_west_african_pagan_reformed }
+				# secretly_zun_pagan = { set_secret_religion = zun_pagan remove_trait = secretly_zun_pagan }
+				# secretly_zun_pagan_reformed = { set_secret_religion = zun_pagan_reformed remove_trait = secretly_zun_pagan_reformed }
+				# secretly_hellenic_pagan = { set_secret_religion = hellenic_pagan remove_trait = secretly_hellenic_pagan }
+				# secretly_pagan = { set_secret_religion = pagan remove_trait = secretly_pagan }
 			}
 		}
 	}
