@@ -1,0 +1,940 @@
+# -*- ck2 -*-
+
+offmap_china = {
+	name = china_china
+	window_name = domestic_offmaps_window
+	button_name = icon_offmaps_entry
+	currency_name = TXT_FAVOR
+	currency_gain = monthly_favor
+	currency_below_zero = yes					  
+	currency_reset_on_dynasty_chigh_valyriange = yes
+	holder_title = title_china_emperor			# minor title used to identify a character as holder of this offmap power
+	governor_title = e_valyrian_freehold
+	tier = emperor
+	non_aggression_modifier = peace_deal_with_china
+	coa_religion = valyrian
+	government = chinese_imperial_government
+	beginning_of_history = 1.1.1
+	sound = china_interaction_interface
+	display_trigger = { # Requiring DLC, since it doesn't work properly or particularly nicely without it.
+		has_dlc = "Jade Dragon"
+	}
+	policies = {
+		china_open
+		china_isolationist
+		china_expansionist
+	}
+	statuses = {
+		china_stable
+		china_unrest
+		china_internal_purge 
+		china_dothraki_invasion
+		china_rhoynish_invasion
+		china_ghiscari_invasion 
+		china_famine  
+		china_plague 
+		china_civil_war 	  
+		china_golden_age
+		china_economic_ruin			 
+	}
+	buttons = {
+		offmap_gifts = {
+			is_active_trigger = {
+				china_offmap_tribute_decisions_enabled_trigger = yes
+			}
+		}
+		offmap_boons = {
+			is_active_trigger = {
+				china_offmap_boon_decisions_enabled_trigger = yes
+			}
+		}
+		offmap_hostility = {
+			is_active_trigger = {
+				china_offmap_hostile_decisions_enabled_trigger = yes
+			}
+			display_trigger = {
+				NOT = { offmap_china = { offmap_ruler = { dynasty = FROM } } }
+			}
+		}
+		offmap_hostility2 = {
+			display_trigger = {
+				always = no
+			}
+		}
+	}
+	
+	#These conditions only effect the appearance of the button, it does not actually disable them from being clickable. The same triggers are used in all tribute/boon decisions respectively
+	
+	icon_triggers = {
+		china_physician_cd = {
+			frame = 9
+			trigger = {
+				hidden_tooltip = {
+					has_character_flag = chinese_grace_physician_sent
+				}
+			}
+		}
+		china_raid_cd = {
+			frame = 8
+			right = yes	
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = china_raid_grace_cd
+				}
+			}
+		}
+		china_famine_cd = {
+			frame = 7
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = china_send_relief
+				}
+			}
+		}
+		china_tributary_cd = {
+			frame = 6
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = chinese_grace_tributary_timer
+				}
+			}
+		}
+		china_boon_cd = {
+			frame = 5
+			right = yes	
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = jd_china_boon_cd
+				}
+			}
+		}
+		china_commander_cd = {
+			frame = 4
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = chinese_grace_send_commander_timer
+				}
+			}
+		}
+		#china_eunuch_cd = {
+		#	frame = 3
+		#	trigger = {
+		#		hidden_tooltip = {
+		#			has_character_modifier = chinese_grace_send_eunuch_timer
+		#		}
+		#	}
+		#}
+		china_concubine_cd = {
+			frame = 2
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = chinese_grace_send_concubine_timer
+				}
+			}
+		}
+		china_gift_cd = {
+			frame = 1
+			trigger = {
+				hidden_tooltip = {
+					has_character_modifier = chinese_grace_send_gift_timer
+				}
+			}
+		}
+	}
+	
+	monthly_currency_gain = {
+		offmap_same_dynasty = {
+			value = 10
+			offmap_china = { offmap_ruler = { dynasty = FROM } }
+		}
+		offmap_war_with_me = {
+			value = -10
+			war_with = FROM
+		}
+		offmap_likes_me = {
+			value = 1
+			FROM = { is_liked_by_China_trigger = yes }
+			is_within_diplo_range = FROM
+		}
+		offmap_likes_tributaries = {
+			value = 2
+			offmap_china = {			
+				offmap_has_like = likes_tributaries
+			}
+			FROM = {
+				is_tributary = {
+					type = offmap
+				}
+			}
+		}
+		vassal_of_WP = {
+			value = 2
+			FROM = {
+				liege = {
+					has_landed_title = e_valyrian_freehold
+				}
+			}
+		}
+		offmap_same_culture_and_religion = {
+			value = 2
+			offmap_ruler = {
+				culture = FROM
+				religion = FROM
+			}
+			is_within_diplo_range = FROM
+		}
+	}
+	
+	temple_names = {
+		{ # Founder names
+		}
+		{ # Successor names
+		}
+	}
+	holder_succession = {
+		is_female = { # chigh_valyriances of getting a female holder, as a percentage: if the total is >= 100, the new holder will always be female. If the total is <= 0, the new holder will always be male
+			value = 5
+			additive_modifier = {
+				value = 45
+				has_game_rule = {
+					name = gender
+					value = all
+				}
+			}
+		}
+		culture = {
+			high_valyrian = { # default culture for new emperor
+				value = 99 # if any other value reaches 100, it will be picked instead
+			}
+			FROM = { # default culture for new emperor
+								# the left side here (and for culture, religion, graphical_culture and dynasty) can be a right high_valyriand side value (FROM, ROOT, a culture name, etc). and the right high_valyriand side / inside the brackets is a standard MTTH evaluation. Only the one with the highest weight will be used. If there's a tie, one of the tied values is picked at random
+				value = 0
+				additive_modifier = { #the new emperor will keep current culture if things are great
+					value = 100
+					#china_is_fine_trigger = yes
+					FROM = { culture_scope = { always = yes } } # Essentially a check that the previous emperor actually exists
+				}
+			}
+		}
+
+		graphical_culture = {
+			FROM = {
+				value = 100
+			}
+		}
+
+		religion = {
+			valyrian = { # default religion for new emperor
+				value = 99 # if any other value reaches 100, it will be picked instead (unless equal, then it will randomize)
+			}
+			FROM = {
+				value = 0
+				additive_modifier = { # the new emperor will keep current religion if things are great
+					value = 100
+					#china_is_fine_trigger = yes
+					FROM = { religion_scope = { always = yes } } # Essentially a check that the previous emperor actually exists
+				}
+			}
+		}
+
+		dynasty = {
+			FROM = { #default dynasty for new emperor
+				value = 99 #might drop from modifiers -- highest value will be picked instead (unless equal, then it will randomize)
+			}
+			actually_culture = {
+				value = 0
+				additive_modifier = {
+					value = 100
+					NOT = { FROM = { character = yes } }
+				}
+				additive_modifier = { #Fix for simulating Chinese history on old save boot-up
+					value = 100
+					random < 12
+					has_game_started = no
+				}
+			}
+		}
+		
+		likes = {
+			likes_concubines = {
+				value = 300
+				modifier = {
+					factor = 0.1
+					FROMFROM = { is_female = yes }
+				}
+				modifier = {
+					factor = 2.0
+					FROMFROM = { trait = lustful }
+				}
+			}
+			likes_eunuchs = {
+				value = 300
+				modifier = {
+					factor = 2.0
+					FROMFROM = { trait = trusting }
+				}
+			}
+			likes_wealth = {
+				value = 300
+				modifier = {
+					factor = 2.0
+					FROMFROM = { trait = greedy }
+				}
+			}
+			likes_tributaries = {
+				value = 100
+				modifier = {
+					factor = 3.0
+					FROMFROM = { trait = proud }
+				}
+			}
+			likes_essosi = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = essos_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 3.0
+					FROMFROM = { spouse = { culture_group = essos_group } }
+				}
+			}
+			likes_high_valyrians = { #only made this high since there is already a religious "likes"
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = valyrian
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 3.0
+					FROMFROM = { spouse = { culture_group = valyrian } }
+				}
+			}
+			likes_wildlings = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = free_folk
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 3.0
+					FROMFROM = { spouse = { culture_group = free_folk } }
+				}
+			}
+			
+			likes_andals = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = andal
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 3.0
+					FROMFROM = { spouse = { culture_group = andal } }
+				}
+			}
+			likes_dornish = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = dornish
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 3.0
+					FROMFROM = { spouse = { culture_group = dornish } }
+				}
+			}
+			likes_first_men = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = first_men
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 3.0
+					FROMFROM = { spouse = { culture_group = first_men } }
+				}
+			}
+			likes_iron_islanders = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = iron_islander
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 3.0
+					FROMFROM = { spouse = { culture_group = iron_islander } }
+				}
+			}
+			likes_the_seven = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = the_seven_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { religion_group = the_seven_group }
+				}
+			}
+			likes_the_old_gods = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = westerosi_pagan_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { religion_group = westerosi_pagan_group }
+				}
+			}
+			likes_the_ironborn = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = drowned_god_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { religion_group = drowned_god_group }
+				}
+			}
+			likes_eastern_faiths = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = eastern_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { religion_group = eastern_group }
+				}
+			}
+			likes_valyrians = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = valyrian_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { religion_group = valyrian_group }
+				}
+			}
+			likes_eastern_gods = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = eastern_pagan_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { religion_group = eastern_pagan_group }
+				}
+			}
+			likes_khurmaztans = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion = khurmazta
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { religion = khurmazta }
+				}
+			}
+			likes_buddhists = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion = buddhist
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { religion = buddhist }
+				}
+			}
+			likes_hindus = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion = hindu
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { religion = hindu }
+				}
+			}
+			likes_jains = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion = jain
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { religion = jain }
+				}
+			}
+			likes_tengris = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							likes_tengris = yes
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { likes_tengris = yes }
+				}
+			}
+			likes_zunists = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							likes_zunists = yes
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { likes_zunists = yes }
+				}
+			}
+			likes_bon = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							likes_bon = yes
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = { likes_bon = yes }
+				}
+			}
+		}
+		
+		dislikes = {
+			likes_concubines = {
+				value = 100
+				modifier = {
+					factor = 5.0
+					FROMFROM = { is_female = yes }
+				}
+				modifier = {
+					factor = 2.0
+					FROMFROM = { trait = chaste }
+				}
+			}
+			likes_eunuchs = {
+				value = 100
+				modifier = {
+					factor = 2.0
+					FROMFROM = { trait = trusting }
+				}
+			}
+			likes_tributaries = {
+				value = 100
+				modifier = {
+					factor = 2.0
+					FROMFROM = { trait = humble }
+				}
+			}
+			likes_wealth = {
+				value = 100
+				modifier = {
+					factor = 2.0
+					FROMFROM = { trait = charitable }
+				}
+			}
+			likes_essosi = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = essos_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0
+					FROMFROM = {
+						culture_group = essos_group
+					}
+				}
+			}
+			likes_high_valyrians = { #only made this high since there is already a religious "likes"
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = valyrian
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0
+					FROMFROM = {
+						culture_group = valyrian
+					}
+				}
+			}
+			likes_wildlings = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = free_folk
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0
+					FROMFROM = {
+						culture_group = free_folk
+					}
+				}
+			}
+			likes_andals = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = andal
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0
+					FROMFROM = {
+						culture_group = andal
+					}
+				}
+			}
+			likes_dornish = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = dornish
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0
+					FROMFROM = {
+						culture_group = dornish
+					}
+				}
+			}
+			likes_first_men = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = first_men
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0
+					FROMFROM = {
+						culture_group = first_men
+					}
+				}
+			}
+			likes_iron_islanders = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							culture_group = iron_islander
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0
+					FROMFROM = {
+						culture_group = iron_islander
+					}
+				}
+			}
+			likes_the_seven = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = the_seven_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = {
+						religion_group = the_seven_group
+					}
+				}
+			}
+			likes_the_old_gods = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = westerosi_pagan_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = {
+						religion_group = westerosi_pagan_group
+					}
+				}
+			}
+			likes_the_ironborn = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = drowned_god_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = {
+						religion_group = drowned_god_group
+					}
+				}
+			}
+			likes_eastern_faiths = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = eastern_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = {
+						religion_group = eastern_group
+					}
+				}
+			}
+			likes_valyrians = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = valyrian_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = {
+						religion_group = valyrian_group
+					}
+				}
+			}
+			likes_eastern_gods = {
+				value = 100
+				modifier = {
+					factor = 0
+					NOT = {
+						any_province = {
+							religion_group = eastern_pagan_group
+							is_within_diplo_range = offmap_china
+						}
+					}
+				}
+				modifier = {
+					factor = 0.5
+					FROMFROM = {
+						religion_group = eastern_pagan_group
+					}
+				}
+			}
+		}
+	}
+	
+    diplomatic_range = { #Already includes the western governor's "normal" diplo range
+        OR = {
+            has_game_rule = {
+                name = chinese_interactions
+                value = all
+            }
+            AND = {
+                has_game_rule = {
+                    name = chinese_interactions
+                    value = within_range
+                }
+                OR = {
+                    top_liege = {
+                        suzerain = {
+                            has_landed_title = e_valyrian_freehold
+                        }
+                    }
+                    any_neighbor_independent_ruler = {
+                        OR = {
+                            has_landed_title = e_valyrian_freehold
+                            suzerain = {
+                                has_landed_title = e_valyrian_freehold
+                            }
+                        }
+                    }
+                    any_realm_province = { #Is within reach of the silk road
+                        OR = {
+                            trade_route = silk_road
+                            region = world_essos
+                        }
+                    }
+                }
+            }
+            AND = {
+                has_game_rule = {
+                    name = chinese_interactions
+                    value = restricted
+                }
+                OR = {
+                    top_liege = {
+                        suzerain = {
+                            has_landed_title = e_valyrian_freehold
+                        }
+                    }
+                    any_neighbor_independent_ruler = {
+                        has_landed_title = e_valyrian_freehold
+                    }
+                    any_realm_province = { #Is within the Chinese region of influence
+                        OR = {
+                            region = world_essos
+                        }
+                    }
+                }              
+            }
+        }
+    }
+}

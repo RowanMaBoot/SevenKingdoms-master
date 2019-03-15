@@ -1,0 +1,136 @@
+# -*- ck2.scripted_effects -*-
+
+
+# Called once per empty holding in qualifying realm provinces of a nomad
+# that's about to settle (only provinces actually part of the nomad's
+# demesne and non-nomadic subrealm qualify).
+emf_nomad_settlement_spawn_unit = {
+	ROOT = {
+		spawn_unit = {
+			province = event_target:emf_new_capital
+			owner = ROOT
+			troops = {
+				light_cavalry = { 60 60 }
+				horse_archers = { 30 30 }
+			}
+			attrition = 1
+			cannot_inherit = yes
+			earmark = settled_nomads
+			merge = yes
+		}
+	}
+}
+
+emf_nomad_antinomad_temple = {
+	random_province_holding = {
+		limit = { holding_type = temple }
+		set_flag = emf_built_by_latb
+		if = {
+			limit = { is_capital = yes }
+			revoke_capital_holding = yes
+		}
+		emf_distribute_barony = yes
+		refill_holding_levy = yes
+	}
+}
+
+emf_nomad_antinomad_tribal = {
+	random_province_holding = {
+		limit = { holding_type = tribal }
+		set_flag = emf_built_by_latb
+		if = {
+			limit = { is_capital = yes }
+			revoke_capital_holding = yes
+		}
+		emf_distribute_barony = yes
+		refill_holding_levy = yes
+	}
+}
+
+emf_transfer_nomad_buildings = {
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_felt_crafter_2 } }
+		add_building = tb_market_town_1
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_felt_crafter_3 } }
+		add_building = tb_market_town_1
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_felt_crafter_4 } }
+		add_building = tb_market_town_2
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_felt_crafter_5 } }
+		add_building = tb_market_town_2
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_felt_crafter_6 } }
+		add_building = tb_market_town_3
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_felt_crafter_7 } }
+		add_building = tb_market_town_3
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_felt_crafter_8 } }
+		add_building = tb_market_town_4
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_harbor_2 } }
+		add_building = tb_shipyard_1
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_harbor_3 } }
+		add_building = tb_shipyard_1
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_harbor_4 } }
+		add_building = tb_shipyard_2
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_harbor_5 } }
+		add_building = tb_shipyard_2
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_harbor_6 } }
+		add_building = tb_shipyard_3
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_harbor_7 } }
+		add_building = tb_shipyard_3
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_harbor_8 } }
+		add_building = tb_shipyard_4
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_camp_fortifications_2 } }
+		add_building = tb_hillfort_1
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_camp_fortifications_3 } }
+		add_building = tb_hillfort_1
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_camp_fortifications_4 } }
+		add_building = tb_hillfort_2
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_camp_fortifications_5 } }
+		add_building = tb_hillfort_2
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_camp_fortifications_6 } }
+		add_building = tb_hillfort_3
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_camp_fortifications_7 } }
+		add_building = tb_hillfort_3
+	}
+	if = {
+		limit = { event_target:emf_current_capital = { has_building = no_camp_fortifications_8 } }
+		add_building = tb_hillfort_4
+	}
+}
+

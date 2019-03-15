@@ -1,0 +1,1541 @@
+# -*- ck2.events -*-
+
+namespace = emf_startup
+
+# emf_startup.0
+#
+# Main EMF campaign initialization event, fired from on_startup [Isis]
+character_event = {
+	id = emf_startup.0
+	hide_window = yes
+	is_triggered_only = yes
+
+	religion = hip_religion
+
+	trigger = {
+		has_landed_title = e_hip
+		is_save_game = no
+	}
+
+	immediate = {
+		# The EMF flag should not be set until this event is done.
+		# The EMF_prestartup flag is set via title history if the HIP installer was used to compile EMF, however.
+		if = {
+			limit = { has_global_flag = EMF }
+			log = "CRITICAL ERROR: emf_startup.0: global flag EMF was already set before startup event; aborting game after error event!"
+			any_player = { character_event = { id = emf_startup.2 } }
+			break = yes
+		}
+
+		set_global_flag = emf_v9_01_at_game_start # FIXME / TODO: CHANGE UPON RELEASE
+
+		# Global EMF config pre-startup settings (great for easy tweaking of EMF behavior in your submod):
+		character_event = { id = emf_config.0 }
+
+		# Map-specific changes (see emf_startup_map.txt)
+		character_event = { id = emf_startup.30 }
+
+		# Absorb the Patrimonium Sancti Petri into Lombardia, sans Latium.
+		k_italy = {
+			k_papacy = {
+				any_direct_de_jure_vassal_title = {
+					set_flag = emf_exarchate_of_ravenna
+					de_jure_liege = PREVPREV
+				}
+				d_latium = { de_jure_liege = PREV }
+			}
+		}
+
+		# Ensure the Persian Emperor doesn't hold the kingdom title too
+		if = {
+			limit = { e_persia = { owner = { has_landed_title = k_persia } } }
+			k_persia = { emf_destroy_title = yes }
+		}
+
+		# Add Court Anarchy trait during Anarchy at Samarra
+		if = {
+			limit = {
+				year >= 862
+				year < 870
+				is_alternate_start = no
+			}
+			d_sunni = {
+				owner = {
+					add_trait = court_anarchy
+					c_163025 = {
+						reverse_remove_opinion = { who = PREV modifier = opinion_charge_heresiarch }
+						reverse_opinion = { who = PREV modifier = mad_heretic }
+					}
+					c_163026 = {
+						reverse_remove_opinion = { who = PREV modifier = opinion_charge_heresiarch }
+						reverse_opinion = { who = PREV modifier = mad_heretic }
+					}
+				}
+			}
+		}
+
+		# Mark [some of] the sons of Ragnar as never being willing to "bend the knee"
+		# via EMF's generalized Rollo mechanic. It's quite sad when the Great Heathen Army just all decides, "Fuck it,
+		# Odin never did anything for me anyway."
+		if = {
+			limit = { start_date == 867.1.1 }
+			c_163110 = { set_flag = emf_will_never_bend_the_knee } # Sigurdr
+			c_163111 = { set_flag = emf_will_never_bend_the_knee } # Ivar
+			c_163112 = { set_flag = emf_will_never_bend_the_knee } # Halfdan
+			c_163119 = { set_flag = emf_will_never_bend_the_knee } # Ubbe
+		}
+
+		if = {
+			limit = { is_alternate_start = no }
+			k_magyar = { set_flag = emf_autodestroy_exemption }
+		}
+
+		# Run the [unnecessary] titular title autodestruction code upon every playable ruler now
+		any_playable_ruler = {
+			limit = {
+				ai = yes
+				war = no
+			}
+			character_event = { id = emf_core.100 }
+		}
+
+		# Ensure Varangian Guard is active and vassal to the ERE after 988
+		character_event = { id = emf_startup.50 }
+
+		# Rum's existence always consumes k_anatolia's de jure territory
+		if = {
+			limit = { k_rum = { has_holder = yes } }
+			k_anatolia = { any_direct_de_jure_vassal_title = { de_jure_liege = k_rum } }
+		}
+
+		# Prevent early mending of the Catholic Schism
+		if = {
+			limit = { b_hagiasophia = { owner = { religion = catholic } } }
+			k_orthodox = {
+				owner = {
+					b_hagiasophia = {
+						grant_title_no_opinion = PREV
+					}
+				}
+			}
+		}
+
+		# Remove ahistorical de jure empires
+		character_event = { id = emf_empires.20 }
+
+		# Setup flags and global event targets for the HRE & ERE
+		emf_startup_init_hre = yes
+		emf_startup_init_byz = yes
+
+		if = { # Paradox title/char history flag-setting timestamp bug workaround
+			limit = { e_mongol_empire = { has_holder = yes } }
+			set_global_flag = mongol_empire_arrival
+		}
+
+		# Initialize capital-connected territory tracking (note that this is also done on_startup as its own
+		# on_action, so I'm commenting-out this invocation until/if some code in campaign setup needs to have that
+		# data guaranteed in order to do something with it).
+
+		# Initialize laws
+		character_event = { id = emf_laws.0 }
+
+		# Cleanup baron-tier border gore
+		any_independent_ruler = {
+			any_realm_lord = {
+				character_event = { id = emf_borders.0 }
+				character_event = { id = emf_borders.1 }
+			}
+		}
+
+		# Initialize playable ruler demesne (limit random vassal barons)
+		any_playable_ruler = {
+			character_event = { id = emf_startup.15 }
+		}
+
+		# Track historical dynasties already in the game at start
+		any_character = {
+			limit = {
+				is_lowborn = no
+				historical = yes
+			}
+			set_dynasty_flag = emf_is_historical
+		}
+
+		if = {
+			limit = {
+				NOT = { has_global_flag = emf_config_antinomad_disabled }
+				has_random_religions_or_cultures = no
+				has_random_religion_or_culture_names = no
+			}
+			# Antinomad setup (preserve province history culture & religion)
+			character_event = { id = emf_nomad.1000 }
+		}
+
+		# Adjust the HRE title's preferred capital based upon owner demesne
+		event_target:emf_global_hre = { owner = { character_event = { id = emf_empires.71 } } }
+
+		# Combat & diplo trait distribution
+		any_character = {
+			character_event = { id = emf_startup.10 }
+			character_event = { id = emf_startup.11 }
+		}
+
+		# Apply Islamic handicap to religious authority
+		character_event = { id = emf_startup.41 }
+
+		# Add Crowned traits [native coronation]
+		character_event = { id = emf_coronation.1100 }
+
+		# Byzantine setup events
+		e_byzantium = { owner = { character_event = { id = emf_imperial.1875 days = 1 } } }
+
+		# History's Forgotten Daughters
+		random_playable_ruler = {
+			limit = { emf_startup_ruler_needs_extra_daughter = yes }
+			character_event = { id = emf_startup.25 }
+		}
+
+		# Mongol startup event
+		character_event = { id = emf_mongol.100 }
+
+		# Norman startup event
+		character_event = { id = emf_adventurer.2749 }
+
+		# Seljuk startup event
+		character_event = { id = emf_seljuk.3 }
+
+		# Marriage flags & deal with random sterility traits
+		emf_startup_init_marriage = yes
+
+		# Initialize dynlevy
+		character_event = { id = emf_dynlevy.0 }
+
+		# Primary startup is done, so we raise the EMF flag.
+		set_global_flag = EMF
+
+		# Global EMF config post-startup settings (great for easy tweaking of EMF behavior in your submod when the
+		# configuration options depend upon the fairly large changes to game state made by the startup code which has
+		# just finished).
+		character_event = { id = emf_config.1 }
+
+		# Welcome event
+		any_player = {
+			narrative_event = { id = emf_startup.1 }
+		}
+	}
+}
+
+# emf_startup.1 [Player]
+#
+# Initial welcome event
+narrative_event = {
+	id      = emf_startup.1
+	desc    = emf_startup.1.desc
+	title   = emf_startup.1.title
+	picture = GFX_evt_rainy_lanterns
+	border  = GFX_event_narrative_frame_diplomacy
+
+	is_triggered_only = yes
+
+	option = {
+		name = emf_startup.1.opt.a
+		custom_tooltip = { text = EMF_TEAM_CREDITS_TT }
+	}
+}
+
+# emf_startup.2 [Player]
+#
+# Campaign initialization fatal error event
+narrative_event = {
+	id      = emf_startup.2
+	desc    = emf_startup.2.desc
+	title   = emf_startup.2.title
+	picture = GFX_evt_rainy_lanterns_error
+	border  = GFX_event_normal_frame_war
+
+	is_triggered_only = yes
+
+	option = {
+		name = emf_startup.2.opt.a
+		custom_tooltip = {
+			text = EMF_GAME_OVER_TT
+			set_global_flag = emf_nondynastic_succession_disabled
+			any_dynasty_member = {
+				limit = { NOT = { character = PREV } }
+				emf_vanish_character = yes
+			}
+			any_close_relative = {
+				limit = { NOT = { character = PREV } }
+				emf_vanish_character = yes
+			}
+			any_demesne_title = {
+				save_event_target_as = emf_title
+				if = {
+					limit = {
+						OR = {
+							higher_tier_than = COUNT
+							PREV = { family_palace = { title = event_target:emf_title } }
+						}
+					}
+					emf_unsafe_destroy_title = yes
+				}
+			}
+			any_demesne_title = { gain_title = FROM }
+			emf_vanish_character = yes
+		}
+	}
+}
+
+# emf_startup.2 thru emf_startup.9 -- FREE
+
+# emf_startup.10 [Any Character]
+#
+# Combat trait distribution
+character_event = {
+	id = emf_startup.10
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	min_age = 16
+
+	trigger = {
+		has_warrior_skill_trigger = no
+		OR = {
+			is_playable = yes
+			can_be_marshal_trigger = yes
+		}
+		OR = {
+			has_education_martial_trigger = yes
+			has_lifestyle_martial_trigger = yes
+			has_job_title = job_marshal
+			has_minor_title = title_commander
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = { trait = misguided_warrior }
+			isis = { change_variable = { which = combat_skill value = 2 } }
+		}
+		if = {
+			limit = { trait = tough_soldier }
+			isis = { change_variable = { which = combat_skill value = 4 } }
+		}
+		if = {
+			limit = { trait = skilled_tactician }
+			isis = { change_variable = { which = combat_skill value = 6 } }
+		}
+		if = {
+			limit = { trait = brilliant_strategist }
+			isis = { change_variable = { which = combat_skill value = 8 } }
+		}
+		if = {
+			limit = { trait = diligent }
+			isis = { change_variable = { which = combat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = brave }
+			isis = { change_variable = { which = combat_skill value = 2 } }
+		}
+		if = {
+			limit = { is_smart_trigger = yes }
+			isis = { change_variable = { which = combat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = genius }
+			isis = { change_variable = { which = combat_skill value = 2 } }
+		}
+		if = {
+			limit = { trait = strong }
+			isis = { change_variable = { which = combat_skill value = 2 } }
+		}
+		if = {
+			limit = { trait = robust }
+			isis = { change_variable = { which = combat_skill value = 2 } }
+		}
+		if = {
+			limit = { trait = agile }
+			isis = { change_variable = { which = combat_skill value = 1 } }
+		}
+		if = {
+			limit = { is_weak_trigger = yes }
+			isis = { change_variable = { which = combat_skill value = -2 } }
+		}
+		if = {
+			limit = { trait = slow }
+			isis = { change_variable = { which = combat_skill value = -1 } }
+		}
+		if = {
+			limit = { trait = dull }
+			isis = { change_variable = { which = combat_skill value = -1 } }
+		}
+		if = {
+			limit = { trait = imbecile }
+			isis = { change_variable = { which = combat_skill value = -3 } }
+		}
+		if = {
+			limit = { trait = inbred }
+			isis = { change_variable = { which = combat_skill value = -2 } }
+		}
+		if = {
+			limit = { trait = clubfooted }
+			isis = { change_variable = { which = combat_skill value = -1 } }
+		}
+		if = {
+			limit = { trait = slothful }
+			isis = { change_variable = { which = combat_skill value = -1 } }
+		}
+		if = {
+			limit = { trait = craven }
+			isis = { change_variable = { which = combat_skill value = -2 } }
+		}
+		if = {
+			limit = { trait = impaler }
+			isis = { change_variable = { which = combat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = duelist }
+			isis = { change_variable = { which = combat_skill value = 3 } }
+		}
+		if = {
+			limit = {
+				isis = { check_variable = { which = combat_skill value = 8 } }
+			}
+			add_trait = master_warrior
+			break = yes
+		}
+		if = {
+			limit = {
+				isis = { check_variable = { which = combat_skill value = 6 } }
+			}
+			add_trait = skilled_warrior
+			break = yes
+		}
+		if = {
+			limit = {
+				isis = { check_variable = { which = combat_skill value = 4 } }
+			}
+			add_trait = trained_warrior
+			break = yes
+		}
+		if = {
+			limit = {
+				isis = { check_variable = { which = combat_skill value = 1 } }
+			}
+			add_trait = poor_warrior
+		}
+	}
+
+	option = {
+		name = OK
+		isis = { set_variable = { which = combat_skill value = 0 } }
+	}
+}
+
+# emf_startup.11 [Any Character]
+# Diplomat trait distribution
+character_event = {
+	id = emf_startup.11
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	min_age = 16
+
+	trigger = {
+		has_diplomat_skill_trigger = no
+		OR = {
+			is_playable = yes
+			can_be_chancellor_trigger = yes
+		}
+		OR = {
+			has_education_diplomacy_trigger = yes
+			has_lifestyle_diplomacy_trigger = yes
+			has_job_title = job_chancellor
+		}
+	}
+
+	immediate = {
+		if = {
+			limit = { trait = naive_appeaser }
+			isis = { change_variable = { which = diplomat_skill value = 2 } }
+		}
+		if = {
+			limit = { trait = underhanded_rogue }
+			isis = { change_variable = { which = diplomat_skill value = 4 } }
+		}
+		if = {
+			limit = { trait = charismatic_negotiator }
+			isis = { change_variable = { which = diplomat_skill value = 6 } }
+		}
+		if = {
+			limit = { trait = grey_eminence }
+			isis = { change_variable = { which = diplomat_skill value = 8 } }
+		}
+		if = {
+			limit = { trait = gregarious }
+			isis = { change_variable = { which = diplomat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = charitable }
+			isis = { change_variable = { which = diplomat_skill value = 1 } }
+		}
+		if = {
+			limit = { is_smart_trigger = yes }
+			isis = { change_variable = { which = diplomat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = genius }
+			isis = { change_variable = { which = diplomat_skill value = 2 } }
+		}
+		if = {
+			limit = { trait = diligent }
+			isis = { change_variable = { which = diplomat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = patient }
+			isis = { change_variable = { which = diplomat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = deceitful }
+			isis = { change_variable = { which = diplomat_skill value = -2 } }
+		}
+		if = {
+			limit = { trait = honest }
+			isis = { change_variable = { which = diplomat_skill value = 2 } }
+		}
+		if = {
+			limit = { trait = slow }
+			isis = { change_variable = { which = diplomat_skill value = -1 } }
+		}
+		if = {
+			limit = { trait = dull }
+			isis = { change_variable = { which = diplomat_skill value = -1 } }
+		}
+		if = {
+			limit = { trait = imbecile }
+			isis = { change_variable = { which = diplomat_skill value = -3 } }
+		}
+		if = {
+			limit = { trait = shy }
+			isis = { change_variable = { which = diplomat_skill value = -2 } }
+		}
+		if = {
+			limit = { trait = trusting }
+			isis = { change_variable = { which = diplomat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = tall }
+			isis = { change_variable = { which = diplomat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = melodious_voice }
+			isis = { change_variable = { which = diplomat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = powerful_voice }
+			isis = { change_variable = { which = diplomat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = calm_voice }
+			isis = { change_variable = { which = diplomat_skill value = 1 } }
+		}
+		if = {
+			limit = { trait = paranoid }
+			isis = { change_variable = { which = diplomat_skill value = -1 } }
+		}
+		if = {
+			limit = { trait = cruel }
+			isis = { change_variable = { which = diplomat_skill value = -1 } }
+		}
+		if = {
+			limit = { trait = deaf }
+			isis = { change_variable = { which = diplomat_skill value = -2 } }
+		}
+		if = {
+			limit = {
+				isis = { check_variable = { which = diplomat_skill value = 8 } }
+			}
+			add_trait = master_diplomat
+			break = yes
+		}
+		if = {
+			limit = {
+				isis = { check_variable = { which = diplomat_skill value = 6 } }
+			}
+			add_trait = skilled_diplomat
+			break = yes
+		}
+		if = {
+			limit = {
+				isis = { check_variable = { which = diplomat_skill value = 4 } }
+			}
+			add_trait = trained_diplomat
+			break = yes
+		}
+		if = {
+			limit = {
+				isis = { check_variable = { which = diplomat_skill value = 1 } }
+			}
+			add_trait = novice_diplomat
+		}
+	}
+
+	option = {
+		name = OK
+		isis = { set_variable = { which = diplomat_skill value = 0 } }
+	}
+}
+
+
+# emf_startup.15 [Playable Ruler]
+#
+# If the ruler has vassal feudal baronies in their capital county or in their
+# capital duchy or in their general demesne (in that order of preference), seize
+# them from ahistorical (randomly-generated) feudal barons until the ruler no
+# longer has free demesne capacity (or runs out of such potential baronies to seize).
+character_event = {
+	id = emf_startup.15
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		is_feudal = yes
+		is_landed = yes
+		over_max_demesne_size < 0 # has free capacity
+	}
+
+	immediate = {
+		# Recursively attempt to seize capital county preferred holdings
+		character_event = { id = emf_startup.16 }
+
+		# Recursively attempt to seize capital county allowed holdings
+		character_event = { id = emf_startup.17 }
+
+		# Recursively attempt to seize capital duchy baronies
+		character_event = { id = emf_startup.18 }
+
+		# Recursively attempt to seize demesne baronies
+		character_event = { id = emf_startup.19 }
+	}
+}
+
+# emf_startup.16 [Playable Ruler]
+#
+# Recursively seize preferred holding types in capital county.
+character_event = {
+	id = emf_startup.16
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		over_max_demesne_size < 0
+		capital_scope = {
+			any_province_holding = {
+				is_preferred_holding_type = ROOT
+				owner = {
+					tier = BARON
+					vassal_of = ROOT
+					NOT = { historical = yes }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = OK
+		capital_scope = {
+			random_province_holding = {
+				limit = {
+					is_preferred_holding_type = ROOT
+					owner = {
+						tier = BARON
+						vassal_of = ROOT
+						NOT = { historical = yes }
+					}
+				}
+				owner = {
+					emf_startup_handle_random_vassal_baron = yes
+				}
+			}
+		}
+		# Tail-recurse
+		repeat_event = { id = emf_startup.16 }
+	}
+}
+
+# emf_startup.17 [Playable Ruler]
+#
+# Recursively seize allowed holding types in capital county.
+character_event = {
+	id = emf_startup.17
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		over_max_demesne_size < 0
+		capital_scope = {
+			any_province_holding = {
+				is_allowed_holding_type = ROOT
+				owner = {
+					tier = BARON
+					vassal_of = ROOT
+					NOT = { historical = yes }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = OK
+		capital_scope = {
+			random_province_holding = {
+				limit = {
+					is_allowed_holding_type = ROOT
+					owner = {
+						tier = BARON
+						vassal_of = ROOT
+						NOT = { historical = yes }
+					}
+				}
+				owner = {
+					emf_startup_handle_random_vassal_baron = yes
+				}
+			}
+		}
+		# Tail-recurse
+		repeat_event = { id = emf_startup.17 }
+	}
+}
+
+
+# emf_startup.18 [Playable Ruler]
+#
+# Recursively seize preferred holding types in capital duchy.
+character_event = {
+	id = emf_startup.18
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		over_max_demesne_size < 0 # still has free capacity
+		capital_scope = {
+			duchy = {
+				ROOT = {
+					any_demesne_province = { # only owned, capital duchy provinces
+						duchy = {
+							title = PREVPREVPREV
+						}
+						any_province_holding = {
+							is_preferred_holding_type = ROOT
+							owner = {
+								tier = BARON
+								vassal_of = ROOT
+								NOT = { historical = yes }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = OK
+		capital_scope = {
+			duchy = {
+				ROOT = {
+					random_demesne_province = {
+						limit = {
+							duchy = {
+								title = PREVPREVPREV
+							}
+							any_province_holding = {
+								is_preferred_holding_type = ROOT
+								owner = {
+									tier = BARON
+									vassal_of = ROOT
+									NOT = { historical = yes }
+								}
+							}
+						}
+						random_province_holding = {
+							limit = {
+								is_preferred_holding_type = ROOT
+								owner = {
+									tier = BARON
+									vassal_of = ROOT
+									NOT = { historical = yes }
+								}
+							}
+							holder_scope = {
+								emf_startup_handle_random_vassal_baron = yes
+							}
+						}
+					}
+				}
+			}
+		}
+		# Tail-recurse
+		repeat_event = { id = emf_startup.18 }
+	}
+}
+
+
+# emf_startup.19 [Playable Ruler]
+#
+# Recursively seize preferred holding types in demesne.
+character_event = {
+	id = emf_startup.19
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		over_max_demesne_size < 0 # still has free capacity
+		any_demesne_province = {
+			any_province_holding = {
+				is_preferred_holding_type = ROOT
+				owner = {
+					tier = BARON
+					vassal_of = ROOT
+					NOT = { historical = yes }
+				}
+			}
+		}
+	}
+
+	option = {
+		name = OK
+		random_demesne_province = {
+			limit = {
+				any_province_holding = {
+					is_preferred_holding_type = ROOT
+					owner = {
+						tier = BARON
+						vassal_of = ROOT
+						NOT = { historical = yes }
+					}
+				}
+			}
+			random_province_holding = {
+				limit = {
+					is_preferred_holding_type = ROOT
+					owner = {
+						tier = BARON
+						vassal_of = ROOT
+						NOT = { historical = yes }
+					}
+				}
+				holder_scope = {
+					emf_startup_handle_random_vassal_baron = yes
+				}
+			}
+		}
+		# Tail-recurse
+		repeat_event = { id = emf_startup.19 }
+	}
+}
+
+# emf_startup.20
+#
+# Detect a ruler-designed character acquiring their titles upon game initialization
+# through on_new_holder_inheritance (neat trick from Rylock to workaround silly way
+# of inserting ruler-designed characters into an already-initialized game without
+# waiting for a maintenance event).
+#
+# Technically this thing fires for a lot more than RDed characters, but is our secondary hook into
+# 2nd-stage campaign setup (setup which requires the presence of a possibly-RDed player's character
+# inserted into the game world).
+character_event = {
+	id = emf_startup.20
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	only_playable = yes
+	has_global_flag = EMF # After the main on_startup only ...
+#	ai = no # Cannot use, because apparently the RD character is still AI at this point.
+
+	trigger = {
+		FROM = { is_primary_holder_title = yes }
+		NOT = { had_global_flag = { flag = EMF days = 1 } } # ... but not before unpausing
+	}
+
+	immediate = {
+		log = "DEBUG: emf_startup.20: day-1 primary-inheritance of [From.GetID] by [Root.EMF_GetDebugName] from [FromFrom.EMF_GetDebugName]"
+
+		# Remove any temp. age customization traits from Ruler Designer
+		remove_trait = age_1
+		remove_trait = age_2
+		remove_trait = age_4
+		remove_trait = age_8
+		remove_trait = age_16
+		remove_trait = age_32
+
+		# Remove the customize ruler dynasty trait in 15 days (if unused)
+		if = {
+			limit = { trait = emf_customize_ruler }
+			character_event = { id = emf_startup.1002 days = 15 }
+		}
+	}
+}
+
+# emf_startup.25 [Playable Ruler]
+#
+# Recursively create extra daughters where they're lacking in scripted history and will not affect succession
+character_event = {
+	id = emf_startup.25
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_flag = emf_initial_daughter_check
+		# Chance of a daughter
+		random = {
+			chance = 40
+			modifier = {
+				factor = 1.25
+				OR = {
+					higher_tier_than = DUKE
+					NOT = { religion_group = christian }
+				}
+			}
+			modifier = {
+				factor = 1.5
+				OR = {
+					is_patrician = yes
+					higher_tier_than = COUNT
+				}
+			}
+			modifier = {
+				factor = 1.25
+				start_date >= 1018.1.1
+				start_date < 1066.1.1
+			}
+			modifier = {
+				factor = 1.5
+				start_date < 1018.1.1
+			}
+			emf_startup_create_daughter = yes
+		}
+		# Another, smaller chance at a [potentially second] daughter
+		random = {
+			chance = 20
+			modifier = {
+				factor = 1.25
+				OR = {
+					higher_tier_than = DUKE
+					NOT = { religion_group = christian }
+				}
+			}
+			modifier = {
+				factor = 1.5
+				OR = {
+					is_patrician = yes
+					higher_tier_than = COUNT
+				}
+			}
+			modifier = {
+				factor = 1.25
+				start_date >= 1018.1.1
+				start_date < 1066.1.1
+			}
+			modifier = {
+				factor = 1.5
+				start_date < 1018.1.1
+			}
+			emf_startup_create_daughter = yes
+		}
+		recalc_succession = yes
+		# Move onto the next ruler
+		random_playable_ruler = {
+			limit = { emf_startup_ruler_needs_extra_daughter = yes }
+			character_event = { id = emf_startup.25 }
+		}
+	}
+}
+
+# emf_startup.30-39 reserved for map-specific de jure adjustments and such (see the map-specific emf_startup_map.txt
+# variants)
+
+# emf_startup.40
+#
+# Place all kingdoms with no de jure empire nominally under e_null. This is due
+# to various bugs with lack of de jure empires (memory leaks, issues with titles,
+# crashing, etc.), as identified by the CK2Plus team (notably Rylock, in the
+# "Captain Gars to the Rescue" thread in CK2/Modding forum) in at least patch 2.4.
+#
+# We also bother with active, titular kingdoms that lack an empire, because it's
+# possible that they will either drift into the game or be swapped with other de
+# jure title(s) by event.
+#
+# Called on_startup (titular titles don't persist the change across save/reload,
+# so it must be re-done each time).
+character_event = {
+	id = emf_startup.40
+	hide_window = yes
+	is_triggered_only = yes
+
+	religion = hip_religion
+
+	trigger = {
+		has_landed_title = e_hip
+	}
+
+	immediate = {
+		any_landed_title = {
+			limit = {
+				tier = KING
+				temporary = no
+				rebel = no
+				NOT = { has_flag = emf_revolt }
+				OR = { # Not a clan/nomad title (unless somehow de jure) ...
+					is_de_jure_title = yes
+					NOR = {
+						clan = yes
+						is_nomadic = yes
+					}
+				}
+				NOT = { empire = { always = yes } }
+				OR = {
+					is_title_active = THIS
+					has_holder = yes
+				}
+			}
+			de_jure_liege = e_null
+		}
+	}
+}
+
+
+# emf_startup.41 [Isis]
+#
+# For dealing with the apparent imbalance in Islamic vs. Christian RA
+# Apply RA modifier islamic_handicap to Ibadi|Sunni|Shia|Ismaili, assuming a
+# character or province of each religion exists in the game.
+character_event = {
+	id = emf_startup.41
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = { has_random_religion_names = no }
+	
+	immediate = {
+		character_event = { id = emf_startup.42 } # Sunni
+		character_event = { id = emf_startup.43 } # Shi'ite
+		character_event = { id = emf_startup.44 } # Isma'ili
+		character_event = { id = emf_startup.45 } # Ibadi
+		character_event = { id = emf_startup.46 } # Zaydi
+	}
+}
+
+
+# emf_startup.42 [Isis]
+#
+# Helper for emf_startup.41 [Sunni]
+character_event = {
+	id = emf_startup.42
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		random_province = {
+			limit = { religion = sunni }
+			religion_authority = { modifier = ra_islamic_handicap }
+			break = yes
+		}
+		random_character = {
+			limit = { religion = sunni }
+			religion_authority = { modifier = ra_islamic_handicap }
+		}
+	}
+}
+
+
+# emf_startup.43 [Isis]
+#
+# Helper for emf_startup.41 [Shia]
+character_event = {
+	id = emf_startup.43
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		random_province = {
+			limit = { religion = shiite }
+			religion_authority = { modifier = ra_islamic_handicap }
+			break = yes
+		}
+		random_character = {
+			limit = { religion = shiite }
+			religion_authority = { modifier = ra_islamic_handicap }
+		}
+	}
+}
+
+
+# emf_startup.44 [Isis]
+#
+# Helper for emf_startup.41 [Isma'ili]
+character_event = {
+	id = emf_startup.44
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		random_province = {
+			limit = { religion = ismaili }
+			religion_authority = { modifier = ra_islamic_handicap }
+			break = yes
+		}
+		random_character = {
+			limit = { religion = ismaili }
+			religion_authority = { modifier = ra_islamic_handicap }
+		}
+	}
+}
+
+# emf_startup.45 [Isis]
+#
+# Helper for emf_startup.41 [Ibadi]
+character_event = {
+	id = emf_startup.45
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		random_province = {
+			limit = { religion = ibadi }
+			religion_authority = { modifier = ra_islamic_handicap }
+			break = yes
+		}
+		random_character = {
+			limit = { religion = ibadi }
+			religion_authority = { modifier = ra_islamic_handicap }
+		}
+	}
+}
+
+# emf_startup.46 [Isis]
+#
+# Helper for emf_startup.41 [Zaydi]
+character_event = {
+	id = emf_startup.46
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		random_province = {
+			limit = { religion = zaydi }
+			religion_authority = { modifier = ra_islamic_handicap }
+			break = yes
+		}
+		random_character = {
+			limit = { religion = zaydi }
+			religion_authority = { modifier = ra_islamic_handicap }
+		}
+	}
+}
+
+# emf_startup.50 [Isis]
+#
+# Make sure the Varangian Guard is active and vassal of the ERE after appropriate start date
+character_event = {
+	id = emf_startup.50
+	hide_window = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_global_flag = varangian_guard_founded # set via history
+		OR = {
+			e_byzantium = {
+				owner = {
+					d_varangian_guard = {
+						NAND = {
+							is_title_active = THIS
+							owner = { vassal_of = PREVPREV }
+						}
+					}
+				}
+			}
+			event_target:emf_global_alt_byz = {
+				owner = {
+					d_varangian_guard = {
+						NAND = {
+							is_title_active = THIS
+							owner = { vassal_of = PREVPREV }
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	immediate = {
+		if = {
+			limit = {
+				NOT = {
+					event_target:emf_global_alt_byz = {
+						owner = {
+							d_varangian_guard = {
+								NAND = {
+									is_title_active = THIS
+									owner = { vassal_of = PREVPREV }
+								}
+							}
+						}
+					}
+				}
+			}
+			e_byzantium = { save_event_target_as = emf_liege_title }
+		}
+		else = {
+			event_target:emf_global_alt_byz = { save_event_target_as = emf_liege_title }
+		}
+		event_target:emf_liege_title = { owner = { save_event_target_as = emf_liege } }
+		event_target:emf_liege = {
+			if = {
+				limit = {
+					should_evolve_cultures_trigger = yes
+					has_global_flag = norse_culture_flipping
+					NOT = {
+						any_independent_ruler = { # A culturally unified empire shouldn't shatter norse
+							culture = norse
+							OR = {
+								tier = EMPEROR
+								num_of_king_titles >= 2
+							}
+						}
+					}
+					NOT = {
+						any_independent_ruler = {
+							religion = event_target:emf_liege
+							religion_head = { culture = norse }
+						}
+					}
+				}
+				random_list = {
+					25 = { swedish   = { save_event_target_as = emf_varangian_culture } }
+					25 = { norwegian = { save_event_target_as = emf_varangian_culture } }
+					25 = { danish    = { save_event_target_as = emf_varangian_culture } }
+					25 = { gothic    = { save_event_target_as = emf_varangian_culture } }
+				}
+			}
+			else = {
+				norse = { save_event_target_as = emf_varangian_culture }
+			}
+			d_varangian_guard = { unsafe_religion = event_target:emf_liege }
+			if = {
+				limit = { has_religion_feature = religion_matriarchal }
+				create_character = {
+					random_traits = yes
+					dynasty = actually_culture
+					religion = event_target:emf_liege
+					culture = event_target:emf_varangian_culture
+					female = yes
+					age = 28
+					attributes = { martial = 7 }
+				}
+			}
+			else_if = {
+				limit = {
+					OR = {
+						gender_equality_trigger = yes
+						has_religion_feature = religion_equal
+						has_religion_feature = religion_feature_bon
+					}
+				}
+				create_character = {
+					random_traits = yes
+					dynasty = actually_culture
+					religion = event_target:emf_liege
+					culture = event_target:emf_varangian_culture
+					female = 50  # 50% chance of being female
+					age = 28
+					attributes = { martial = 7 }
+				}
+			}
+			else = {
+				create_character = {
+					random_traits = yes
+					dynasty = actually_culture
+					religion = event_target:emf_liege
+					culture = event_target:emf_varangian_culture
+					female = no
+					age = 28
+					attributes = { martial = 7 }
+				}
+			}
+			new_character = { save_event_target_as = emf_captain }
+			event_target:emf_captain = {
+				random_list = {
+					60 = { }
+					40 = { change_martial = 1 }
+					20 = { change_martial = 2 }
+					10 = { change_martial = 3 }
+				}
+				remove_trait = weak
+				remove_trait = slow
+				remove_trait = imbecile
+				remove_trait = dull
+				remove_trait = feeble
+				emf_remove_lifestyle_traits = yes
+				random_list = {
+					50 = { }
+					12 = { add_trait = duelist }
+					12 = { add_trait = hunter }
+					12 = { add_trait = strategist }
+					8  = { add_trait = robust }
+					3  = { add_trait = tall }
+					3  = { add_trait = imposing }
+					2  = {
+						add_trait = tall
+						add_trait = imposing
+					}
+				}
+				random = {
+					chance = 2
+					modifier = {
+						factor = 0
+						NOT = { has_dlc = "Reapers" }
+					}
+					add_trait = one_eyed
+				}
+				if = {
+					limit = { is_female = yes }
+					add_trait = shieldmaiden
+				}
+				clear_education_trait = yes
+				random_list = {
+					10 = { add_trait = misguided_warrior }
+					20 = { add_trait = tough_soldier }
+					30 = { add_trait = skilled_tactician }
+					40 = { add_trait = brilliant_strategist }
+				}
+				if = {
+					limit = {
+						trait = brilliant_strategist
+						leader_traits < 1
+					}
+					random_list = {
+						10 = { add_trait = inspiring_leader }
+						10 = { add_trait = siege_leader }
+						10 = { add_trait = organizer }
+						10 = { add_trait = cavalry_leader }
+						10 = { add_trait = heavy_infantry_leader }
+					}
+				}
+				random = { chance = 50 add_trait = brave }
+				health = 1.5
+				random_list = {
+					10 = { add_age = 1 }
+					10 = { add_age = 2 }
+					20 = { add_age = 3 }
+					40 = { add_age = 4 }
+					20 = { add_age = 5 }
+					10 = { add_age = 6 }
+					10 = { add_age = 7 }
+				}
+				if = {
+					limit = { has_random_title_names = no }
+					add_trait = varangian
+				}
+				emf_new_character_noble = yes
+				set_flag = is_chosen_varangian_leader
+				d_varangian_guard = {
+					activate_title = { title = THIS status = yes }
+					grant_title = PREV
+				}
+				emf_create_courtiers = yes
+				set_defacto_liege = event_target:emf_liege
+			}
+		}
+	}
+}
+
+# emf_startup.100
+# on_alternate_start [ROOT = first character generated in random world]
+character_event = {
+	id = emf_startup.100
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	immediate = {
+		# Ensure hip_religion features are apt:
+		if = {
+			limit = { has_random_religion_features = yes }
+			log = "INFO: emf_startup.100: religion features randomized, so setting default values for hip_religion."
+			hip_religion = {
+				reset_religion_features_effect = yes
+				set_peace_piety_gain = 1
+				set_pacifist = yes
+				set_convert_other_groups = 0
+				set_convert_same_group = 0
+				set_ai_aggression = 0
+				set_hard_to_convert = yes
+				set_women_can_take_consorts = no
+				set_men_can_take_consorts = no
+				set_feminist = yes
+				set_pc_marriage = yes
+				set_bs_marriage = yes
+				set_divine_blood = yes
+				set_priests_can_inherit = no
+				set_allows_matrilineal_marriage = no
+				clear_intermarry = yes
+				set_religion_head = e_hip
+			}
+		}
+		if = {
+			limit = { e_hip = { has_holder = no } }
+			log = "ERROR: emf_startup.100: e_hip has no holder!"
+			# Create a placeholder e_hip ruler to receive event hip.5 (the on_death/reincarnate event in general):
+			create_character = {
+				random_traits = no
+				religion = hip_religion
+				culture = hip_culture
+				dynasty = none # prevents hip.5 from attaching the [real] new Isis as the daughter of this char
+			}
+			new_character = { grant_title = e_hip }
+		}
+		e_hip = { owner = { save_event_target_as = emf_isis } }
+		# If the real Isis doesn't own e_hip, replace the pretender Isis:
+		if = {
+			limit = { event_target:emf_isis = { NOT = { character = 606060 } } }
+			# Pass e_hip and other associated game state to a new, real Isis:
+			event_target:emf_isis = { character_event = { id = hip.5 } }
+			# Now that we're done with the random-world pretender Isis, execute her:
+			e_hip = {
+				owner = {
+					event_target:emf_isis = {
+						death = { killer = PREV death_reason = death_execution_beheading }
+					}
+				}
+			}
+		}
+		# Invoke the yearly maintenance cleanup event for Isis now:
+		e_hip = { owner = { character_event = { id = hip.0 } } }
+	}
+}
+
+# emf_startup.2000 [Isis]
+# on_startup (incl. save/reload)
+character_event = {
+	id = emf_startup.2000
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	religion = hip_religion
+
+	trigger = {
+		has_landed_title = e_hip
+	}
+
+	immediate = {
+		if = {
+			limit = { NOT = { has_global_flag = emf_v9_01 } }
+			set_global_flag = emf_v9_01 # TODO / FIXME : CHANGE UPON RELEASE OR SAVE-COMPATIBILITY CHANGE
+		}
+		# TMP-SAVE-COMPAT: un-hard-code the King's Peace laws:
+		any_landed_title = {
+			limit = {
+				higher_tier_than = DUKE
+				has_law = king_peace_1
+				NOT = { has_flag = emf_softcoded_king_peace }
+			}
+			owner = { set_flag = emf_no_law_penalties }
+			add_law = { law = king_peace_0 cooldown = no opinion_effect = no }
+			add_law = { law = king_peace_1 cooldown = no opinion_effect = no }
+			owner = { clr_flag = emf_no_law_penalties }
+			set_flag = emf_softcoded_king_peace
+		}
+		any_landed_title = {
+			limit = {
+				higher_tier_than = DUKE
+				has_law = king_peace_2
+				NOT = { has_flag = emf_softcoded_king_peace }
+			}
+			owner = { set_flag = emf_no_law_penalties }
+			add_law = { law = king_peace_0 cooldown = no opinion_effect = no }
+			add_law = { law = king_peace_2 cooldown = no opinion_effect = no }
+			owner = { clr_flag = emf_no_law_penalties }
+			set_flag = emf_softcoded_king_peace
+		}
+		# TMP-SAVE-COMPAT: Council Laws change
+		any_landed_title = {
+			limit = {
+				has_dlc = "Zeus"
+				higher_tier_than = BARON
+				has_law = war_voting_power_1
+			}
+			owner = { set_flag = emf_no_law_penalties }
+			add_law = { law = war_voting_power_0 cooldown = no opinion_effect = no }
+			add_law = { law = war_voting_power_1 cooldown = no opinion_effect = no }
+			owner = { clr_flag = emf_no_law_penalties }
+		}
+		any_landed_title = {
+			limit = {
+				has_dlc = "Zeus"
+				higher_tier_than = BARON
+				has_law = war_voting_power_0
+			}
+			owner = { set_flag = emf_no_law_penalties }
+			add_law = { law = war_voting_power_1 cooldown = no opinion_effect = no }
+			add_law = { law = war_voting_power_0 cooldown = no opinion_effect = no }
+			owner = { clr_flag = emf_no_law_penalties }
+		}
+		any_landed_title = {
+			limit = {
+				has_dlc = "Zeus"
+				higher_tier_than = BARON
+				OR = {
+					has_law = revoke_title_voting_power_1
+					has_law = grant_title_voting_power_1
+				}
+			}
+			owner = { set_flag = emf_no_law_penalties }
+			add_law = { law = titles_voting_power_1 cooldown = no opinion_effect = no }
+			owner = { clr_flag = emf_no_law_penalties }
+		}
+		any_landed_title = {
+			limit = {
+				has_dlc = "Zeus"
+				higher_tier_than = BARON
+				has_law = revoke_title_voting_power_0
+				has_law = grant_title_voting_power_0
+			}
+			owner = { set_flag = emf_no_law_penalties }
+			add_law = { law = titles_voting_power_0 cooldown = no opinion_effect = no }
+			owner = { clr_flag = emf_no_law_penalties }
+		}
+		any_landed_title = {
+			limit = {
+				has_dlc = "Zeus"
+				higher_tier_than = BARON
+				OR = {
+					has_law = imprison_voting_power_1
+					has_law = banish_voting_power_1
+					has_law = execution_voting_power_1
+				}
+			}
+			owner = { set_flag = emf_no_law_penalties }
+			add_law = { law = justice_voting_power_1 cooldown = no opinion_effect = no }
+			owner = { clr_flag = emf_no_law_penalties }
+		}
+		any_landed_title = {
+			limit = {
+				has_dlc = "Zeus"
+				higher_tier_than = BARON
+				has_law = imprison_voting_power_0
+				has_law = banish_voting_power_0
+				has_law = execution_voting_power_0
+			}
+			owner = { set_flag = emf_no_law_penalties }
+			add_law = { law = justice_voting_power_0 cooldown = no opinion_effect = no }
+			owner = { clr_flag = emf_no_law_penalties }
+		}
+	}
+}

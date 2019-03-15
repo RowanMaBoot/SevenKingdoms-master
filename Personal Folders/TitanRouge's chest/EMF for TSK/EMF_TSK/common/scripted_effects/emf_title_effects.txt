@@ -1,0 +1,188 @@
+# -*- ck2.scripted_effects -*-
+
+
+emf_destroy_title = {
+	if = {
+		limit = { has_holder = yes }
+		hidden_effect = { # This stops the `log` commands from executing when just generating a tooltip
+			owner = {
+				log = "DEBUG: emf_destroy_title: [Prev.EMF_GetDebugTitleNameWithDeJureLieges], held by [This.EMF_GetDebugName]"
+			}
+		}
+	}
+	hidden_effect = { emf_clear_standard_title_state = yes }
+	destroy_landed_title = THIS
+	hidden_effect = {
+		if = {
+			limit = { has_holder = yes }
+			log = "---> ERROR: title could not be destroyed for some reason"
+		}
+	}
+}
+
+emf_unsafe_destroy_title = {
+	if = {
+		limit = { has_holder = yes }
+		hidden_effect = { # This stops the `log` commands from executing when just generating a tooltip
+			owner = {
+				log = "DEBUG: emf_unsafe_destroy_title: [Prev.EMF_GetDebugTitleNameWithDeJureLieges], held by [This.EMF_GetDebugName]"
+			}
+		}
+	}
+	hidden_effect = { emf_clear_standard_title_state = yes }
+	unsafe_destroy_landed_title = THIS
+	hidden_effect = {
+		if = {
+			limit = { has_holder = yes }
+			log = "---> ERROR: title could not be destroyed for some reason"
+		}
+	}
+}
+
+emf_clear_standard_title_state = {
+	if = {
+		limit = { has_flag = viceroy_exemption }
+		owner = {
+			primary_title = { set_flag = viceroy_exemption }
+		}
+	}
+	clr_flag = has_imperial_administration
+	clr_flag = viceroy_exemption
+	clr_flag = emf_autodestroy
+	if = {
+		limit = { tier = EMPEROR }
+		owner = {
+			if = {
+				limit = {
+					NOT = {
+						any_demesne_title = {
+							tier = PREVPREV
+							NOT = { title = PREVPREV }
+						}
+					}
+				}
+				emf_remove_decay_modifier = yes
+			}
+		}
+		set_variable = { which = "imperial_decay" value = 0 }
+		set_variable = { which = "imperial_decay_change" value = 0 }
+		set_variable = { which = "imperial_dynasty_count" value = 0 }
+	}
+}
+
+emf_make_primary_title = {
+	hidden_effect = {
+		if = {
+			limit = {
+				owner = {
+					primary_title = {
+						NOR = {
+							title = PREVPREV
+							higher_tier_than = PREVPREV
+							is_primary_type_title = yes
+						}
+					}
+				}
+			}
+			owner = {
+				log = "DEBUG: emf_make_primary_title: [Prev.EMF_GetDebugTitleNameWithDeJureLieges], held by [This.EMF_GetDebugName]"
+			}
+			if = {
+				limit = { owner = { primary_title = { has_flag = viceroy_exemption } } }
+				set_flag = viceroy_exemption
+				owner = { primary_title = { clr_flag = viceroy_exemption } }
+			}
+			make_primary_title = yes
+			if = {
+				limit = { is_primary_holder_title = no }
+				log = "---> ERROR: title could not be made primary for some reason"
+			}
+			owner = {
+				any_vassal = {
+					limit = { NOT = { de_facto_liege_title = PREVPREV } }
+					set_defacto_liege = PREV
+				}
+			}
+		}
+		else = {
+			log = "WARNING: emf_make_primary_title: could not proceed for [Prev.EMF_GetDebugTitleNameWithDeJureLieges], held by [This.EMF_GetDebugName]"
+			if = {
+				limit = { has_holder = no }
+				log = "-> title has no holder"
+			}
+			else = {
+				owner = {
+					primary_title = {
+						if = {
+							limit = { title = PREVPREV }
+							log = "-> title is same as owner's current primary title"
+						}
+						if = {
+							limit = { higher_tier_than = PREVPREV }
+							log = "-> owner's current primary title is higher tier than the intended new primary title"
+						}
+						if = {
+							limit = { is_primary_type_title = yes }
+							log = "-> owner's current primary title is a primary-type title and thus cannot be switched"
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+emf_copy_title_state_from_PREV = {
+	hidden_effect = {
+		if = {
+			limit = {
+				tier = EMPEROR
+				PREV = { tier = EMPEROR }
+			}
+			set_variable = { which = "imperial_decay" which = PREV }
+			set_variable = { which = "imperial_dynasty_count" which = PREV }
+			if = {
+				limit = { PREV = { has_flag = has_imperial_administration } }
+				set_flag = has_imperial_administration
+			}
+		}
+		if = {
+			limit = { has_flag = viceroy_exemption }
+			set_flag = viceroy_exemption
+		}
+		emf_transfer_claims_from_PREV = yes
+	}
+}
+
+emf_transfer_claims_from_PREV = {
+	hidden_effect = {
+		PREV = { save_event_target_as = emf_claim_src_title_tmp }
+		save_event_target_as = emf_claim_dst_title_tmp
+		event_target:emf_claim_src_title_tmp = {
+			any_claimant = {
+				limit = { has_strong_pressed_claim = PREV }
+				event_target:emf_claim_dst_title_tmp = { add_pressed_claim = PREV }
+			}
+			any_claimant = {
+				limit = {
+					has_strong_claim = PREV
+					NOT = { has_strong_pressed_claim = PREV }
+				}
+				event_target:emf_claim_dst_title_tmp = { add_claim = PREV }
+			}
+			any_claimant = {
+				limit = { has_weak_pressed_claim = PREV }
+				event_target:emf_claim_dst_title_tmp = { add_weak_pressed_claim = PREV }
+			}
+			any_claimant = {
+				limit = {
+					has_weak_claim = PREV
+					NOT = { has_weak_pressed_claim = PREV }
+				}
+				event_target:emf_claim_dst_title_tmp = { add_weak_claim = PREV }
+			}
+		}
+		clear_event_target = emf_claim_src_title_tmp
+		clear_event_target = emf_claim_dst_title_tmp
+	}
+}

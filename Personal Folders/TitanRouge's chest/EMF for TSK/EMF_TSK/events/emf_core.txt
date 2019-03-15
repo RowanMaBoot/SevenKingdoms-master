@@ -1,0 +1,1775 @@
+# -*- ck2.events -*-
+
+
+namespace = emf_core
+
+# emf_core.0 [Player]
+#
+# on_death handler for player characters. Inherits intrigue
+# menu character flag state, clears heir focus/amibition, etc.
+character_event = {
+	id = emf_core.0
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	ai = no
+
+	immediate = {
+		current_heir = {
+			if = {
+				limit = { ROOT = { has_flag = emf_toggle_customization_off } }
+				set_flag = emf_toggle_customization_off
+			}
+			if = {
+				limit = { ROOT = { has_flag = emf_toggle_employment } }
+				set_flag = emf_toggle_employment
+			}
+			if = {
+				limit = { ROOT = { has_flag = emf_show_loan_decisions } }
+				set_flag = emf_show_loan_decisions
+			}
+			clear_focus = yes
+			cancel_ambition = yes
+		}
+	}
+
+	option = { name = OK }
+}
+
+
+# emf_core.1 [Ruler Undergoing Succession]
+#
+# Generic succession handler for DUKE+ rulers. If applicable:
+# - Add a temporary succession modifier (or tiered series of them)
+# - Validate protected_appointment_1 opinions
+#
+# ROOT = character that now holds the title FROM, and FROMFROM is the previous holder
+character_event = {
+	id = emf_core.1
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	only_playable = yes
+
+	trigger = {
+		FROM = { # Title is...
+			higher_tier_than = COUNT
+			is_primary_holder_title = yes # Inheriting FROM caused it to become primary, so this matters.
+		}
+	}
+
+	immediate = {
+		# Succession malus
+		if = {
+			limit = {
+				FROMFROM = { # Not interested in abdications which caused inheritance
+					OR = {
+						is_dying = yes
+						is_alive = no
+					}
+				}
+				FROM = { is_primary_type_title = no } # Nor pope, holy orders, etc.
+				NOT = { has_character_modifier = emf_mod_recent_succession } # Nor repeating ourselves
+			}
+			add_character_modifier = { name = emf_mod_recent_succession duration = 1460 }
+			FROM = { save_event_target_as = emf_tier_title }
+			if = {
+				limit = { ai = yes }
+				add_character_modifier = { name = emf_mod_recent_succession_t3 duration = 730 hidden = yes }
+				character_event = { id = emf_core.4 days = 730 }
+			}
+			if = {
+				limit = { ai = no }
+				add_character_modifier = { name = emf_mod_recent_succession_t1 duration = 365 hidden = yes }
+				character_event = { id = emf_core.2 days = 365 }
+			}
+		}
+		if = {
+			limit = { primary_title = { has_law = protected_appointment_0 } }
+			emf_laws_protected_appointment_0_validate_opinion = yes
+		}
+		if = {
+			limit = { primary_title = { has_law = protected_appointment_1 } }
+			emf_laws_protected_appointment_1_validate_opinion = yes
+		}
+	}
+}
+
+
+character_event = {
+	id = emf_core.2
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		NOT = { lower_tier_than = event_target:emf_tier_title }
+	}
+
+	immediate = {
+		remove_character_modifier = emf_mod_recent_succession_t1
+		add_character_modifier = { name = emf_mod_recent_succession_t2 duration = 365 hidden = yes }
+		character_event = { id = emf_core.3 days = 365 }
+	}
+}
+
+character_event = {
+	id = emf_core.3
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		NOT = { lower_tier_than = event_target:emf_tier_title }
+	}
+
+	immediate = {
+		remove_character_modifier = emf_mod_recent_succession_t2
+		add_character_modifier = { name = emf_mod_recent_succession_t3 duration = 365 hidden = yes }
+		character_event = { id = emf_core.4 days = 365 }
+	}
+}
+
+character_event = {
+	id = emf_core.4
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		NOT = { lower_tier_than = event_target:emf_tier_title }
+	}
+
+	immediate = {
+		remove_character_modifier = emf_mod_recent_succession_t3
+		if = {
+			limit = { ai = yes }
+			add_character_modifier = { name = emf_mod_recent_succession_t4 duration = 730 hidden = yes }
+		}
+		else = {
+			add_character_modifier = { name = emf_mod_recent_succession_t4 duration = 365 hidden = yes }
+		}
+	}
+}
+
+# emf_core.10 -- if game rule Non-Dynastic Succession is 'Allowed', prevent game over with non-dynastic heir on_death.
+character_event = {
+	id = emf_core.10
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	ai = no
+
+	trigger = {
+		has_game_rule = { name = non_dynastic_succession value = on }
+		is_nomadic = no
+		is_merchant_republic = no
+		OR = {
+			capital_scope = {
+				county = {
+					holder = ROOT
+					current_heir = {
+						ai = yes
+						NOT = { dynasty = ROOT }
+					}
+				}
+			}
+			AND = {
+				OR = {
+					mercenary = yes
+					holy_order = yes
+				}
+				current_heir = {
+					ai = yes
+					NOT = { dynasty = ROOT }
+				}
+			}
+		}
+		NOT = { has_global_flag = emf_nondynastic_succession_disabled }
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				capital_scope = {
+					county = {
+						holder = ROOT
+						current_heir = {
+							ai = yes
+							NOT = { dynasty = ROOT }
+						}
+					}
+				}
+			}
+			capital_scope = { county = { current_heir = { save_event_target_as = emf_real_heir } } }
+		}
+		else = {
+			current_heir = { save_event_target_as = emf_real_heir }
+		}
+		event_target:emf_real_heir = {
+			if = {
+				limit = { is_lowborn = yes }
+				dynasty = father_bastard
+			}
+			ROOT = {
+				create_character = {
+					religion = PREV
+					culture = PREV
+					dynasty = PREV
+					trait = immortal
+				}
+				new_character = { save_event_target_as = emf_sleeve }
+			}
+			dynasty = ROOT
+			character_event = { id = emf_core.11 days = 1 }
+		}
+	}
+}
+
+# emf_core.11 -- continuation after 1 day of emf_core.10 (or invoked immediately after abdication in emf_willfully_abdicate)
+character_event = {
+	id = emf_core.11
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		event_target:emf_sleeve = { always = yes }
+	}
+
+	immediate = {
+		dynasty = event_target:emf_sleeve
+		event_target:emf_sleeve = {
+			remove_trait = immortal
+			emf_vanish_character = yes
+		}
+		recalc_succession = yes
+	}
+}
+
+# emf_core.15 -- AI liege with only a barony usurps a county from an AI vassal
+#
+# Called from ai_claim_county_if_baron decision & emf_cb_on_success_posttitle
+character_event = {
+	id = emf_core.15
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	ai = yes
+
+	trigger = {
+		higher_tier_than = COUNT
+		# war = no # commented-out so that it can be called immediately on war end
+		is_landed = yes
+		is_patrician = no
+		num_of_count_titles == 0
+		any_realm_title = {
+			tier = COUNT
+			owner = { ai = yes }
+		}
+	}
+
+	immediate = {
+		random_realm_title = {
+			limit = {
+				tier = COUNT
+				owner = { ai = yes }
+			}
+			preferred_limit = {
+				ROOT = {
+					primary_title = {
+						capital_scope = {
+							county = {
+								title = PREVPREVPREVPREV
+							}
+						}
+					}
+				}
+			}
+			preferred_limit = {
+				owner = { NOT = { has_dynasty_flag = emf_is_historical } }
+				location = { is_capital = no }
+			}
+			preferred_limit = {
+				owner = {
+					NOT = { has_dynasty_flag = emf_is_historical }
+					num_of_count_titles > 1
+				}
+			}
+			preferred_limit = {
+				location = { is_capital = no }
+			}
+			preferred_limit = {
+				owner = { num_of_count_titles > 1 }
+			}
+			preferred_limit = {
+				owner = { NOT = { has_dynasty_flag = emf_is_historical } }
+			}
+			grant_title_no_opinion = { target = ROOT type = revoke }
+			any_direct_de_jure_vassal_title = {
+				limit = {
+					owner = {
+						is_liege_or_above = ROOT
+						ai = yes
+					}
+					is_preferred_holding_type = ROOT
+				}
+				grant_title_no_opinion = { target = ROOT type = revoke }
+			}
+			if = {
+				limit = { NOT = { capital_holding = { is_preferred_holding_type = ROOT } } }
+				random_direct_de_jure_vassal_title = {
+					limit = {
+						holder = ROOT
+						is_preferred_holding_type = ROOT
+					}
+					make_capital_holding = yes
+				}
+			}
+			ROOT = { capital = PREV }
+		}
+		character_event = { id = emf_borders.0 }
+	}
+}
+
+character_event = {
+	id = emf_core.20
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	only_rulers = yes
+
+	trigger = {
+		trait = peasant_leader
+		FROM = {
+			temporary = no
+			rebel = no
+			NOT = { has_flag = emf_revolt }
+			OR = {
+				is_landless_type_title = no
+				mercenary = yes
+				holy_order = yes
+				controls_religion = yes
+				ROOT = { is_patrician = yes }
+			}
+		}
+	}
+
+	immediate = {
+		add_trait = peasant_ruler
+		if = {
+			limit = { is_lowborn = yes }
+			dynasty = father_bastard
+		}
+		log = "INFO: emf_core.20: [Root.GetTitledName] (#[Root.GetID]), a Peasant Leader, has gained the [From.GetFullBaseName] ([From.GetID]) and become a Peasant Ruler!"
+	}
+}
+
+# emf_core.21
+#
+# Event triggered by on_new_holder to set the `emf_global_hre` global event target when `e_hre` or `e_hre_french`
+# are gained. Assumes that the titles cannot be created if the alternative title is already held.
+character_event = {
+	id = emf_core.21
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		FROM = {
+			OR = {
+				title = e_hre
+				title = e_hre_french
+			}
+		}
+		NOT = { FROMFROM = { always = yes } }
+	}
+
+	immediate = {
+		if = {
+			limit = { FROM = { title = e_hre } }
+			e_hre = { save_global_event_target_as = emf_global_hre }
+		}
+		else = {
+			e_hre_french = { save_global_event_target_as = emf_global_hre }
+		}
+		if = {
+			limit = {
+				e_hre = { has_holder = yes }
+				e_hre_french = { has_holder = yes }
+			}
+			log = "WARNING: emf_core.21: after creating [From.GetID], both e_hre and e_hre_french are held!"
+		}
+	}
+}
+
+# emf_core.22
+#
+# Event triggered by on_new_holder to set the `emf_global_byz` global event target when `e_byzantium` or
+# `e_roman_empire` are gained. Assumes that the titles cannot be created if the alternative title is already held,
+# with the exception of `e_roman_empire`.
+character_event = {
+	id = emf_core.22
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		FROM = {
+			OR = {
+				title = e_byzantium
+				title = e_roman_empire
+			}
+		}
+		NOT = { FROMFROM = { always = yes } }
+	}
+
+	immediate = {
+		if = {
+			limit = { FROM = { title = e_byzantium } }
+			e_byzantium = { save_global_event_target_as = emf_global_byz }
+		}
+		else = {
+			e_roman_empire = { save_global_event_target_as = emf_global_byz }
+		}
+		if = {
+			limit = {
+				e_byzantium = { has_holder = yes }
+				e_roman_empire = { has_holder = yes }
+				FROM = { NOT = { title = e_roman_empire } } # The RE is created before auto-destroying the ERE
+			}
+			log = "WARNING: emf_core.22: after creating [From.GetID], both e_byzantium and e_roman_empire are held!"
+		}
+	}
+}
+
+# emf_core.23 -- Ensure nobody ever holds e_null by any means!
+character_event = {
+	id = emf_core.23
+
+	is_triggered_only = yes # on_action: on_new_holder, on_new_holder_usurpation
+	hide_window = yes
+
+	trigger = {
+		FROM = { title = e_null }
+	}
+
+	immediate = {
+		log = "ERROR: emf_core.23: [Root.GetTitledName] (#[Root.GetID]/[Root.PrimaryTitle.GetID]) somehow gained [From.GetID]! auto-destroying it!"
+		destroy_landed_title = FROM
+		FROM = { set_flag = emf_defunct } # Not that anything is going to pay attention this part...
+	}
+}
+
+
+# emf_core.26
+#
+# Duke- or higher-tier AI ruler marries a lowborn (on_marriage)
+# Inspired by Rylock's nearly-identical event Plus.361
+character_event = {
+	id = emf_core.26
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		new_character = { dynasty = none }
+		FROM = {
+			higher_real_tier_than = COUNT
+			ai = yes
+		}
+	}
+
+	immediate = {
+		new_character = { dynasty = father_bastard }
+	}
+}
+
+# emf_core.27
+# Remove monk/nun/etc. traits upon assuming a title -- title xfer on_action
+character_event = {
+	id = emf_core.27
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		OR = {
+			trait = monk
+			trait = nun
+			trait = desert_father
+			trait = desert_mother
+		}
+	}
+
+	immediate = {
+		remove_trait = monk
+		remove_trait = nun
+		remove_trait = desert_father
+		remove_trait = desert_mother
+		clr_flag = title_monk
+		clr_flag = title_nun
+		remove_special_character_title = MONK_BROTHER
+		remove_special_character_title = NUN_SISTER
+	}
+}
+
+# For emf_core.30-emf_core.31, see emf_hre_map.txt
+
+
+# emf_core.40 [Ruler]
+#
+# Refill levies of held barony titles marked or targeted for refill.
+# Useful as a hack to properly refill holding levies when
+# we'd normally be inclined to just use `refill_holding_levy = yes`
+# immediately somewhere (such as converting a tribal settlement to
+# a non-tribal). Instead, invoke this at least 3 days after the fact
+# to achieve the desired effect.
+#
+# The caller can either set the title flag emf_refill_levy on those
+# titles that require refilling, or they can use an event target with
+# emf_core.41 instead.
+character_event = {
+	id = emf_core.40
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		any_title_under = {
+			limit = {
+				tier = BARON
+				had_flag = {
+					flag = emf_refill_levy
+					days = 3
+				}
+			}
+			clr_flag = emf_refill_levy
+			refill_holding_levy = yes
+		}
+	}
+}
+
+
+# emf_core.41 [Character]
+#
+# Alternate version of emf_core.40 in which the title which needs its
+# levies refilled is saved in event_target:emf_refill_levy_title. If
+# the given title is higher tier than a single barony, it will refill
+# all the levies under it de jure.
+character_event = {
+	id = emf_core.41
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		event_target:emf_refill_levy_title = {
+			if = {
+				limit = { tier = BARON }
+				refill_holding_levy = yes
+				break = yes
+			}
+			any_de_jure_vassal_title = {
+				limit = { tier = BARON }
+				refill_holding_levy = yes
+			}
+		}
+	}
+}
+
+# For emf_core.50, see emf_core_map.txt (SWMH only)
+
+# emf_core.55 -- Impose costs of war when armies are in unowned territory
+character_event = {
+	id = emf_core.55
+
+	hide_window = yes
+
+	ai = no
+	war = yes
+
+	trigger = {
+		any_war = {
+			OR = {
+				attacker = { character = ROOT }
+				defender = { character = ROOT }
+			}
+			NOR = {
+				using_cb = peasant_revolt
+				using_cb = heretic_revolt
+				using_cb = emf_revolt_religious
+				using_cb = liberation_revolt
+				using_cb = cb_minor_clan_revolt
+				using_cb = emf_decadence_revolt
+			}
+		}
+		any_army = { location = { owner_under_ROOT = no } }
+	}
+
+	mean_time_to_happen = { days = 0 }
+
+	immediate = {
+		remove_character_modifier = war_costs_modifier
+		add_character_modifier = { name = war_costs_modifier duration = 60 hidden = yes }
+	}
+}
+
+# emf_core.60
+# AI automatically abandons NAPs on appropriate characters (adapted from a dummy decision written by Rylock)
+character_event = {
+	id = emf_core.60
+
+	hide_window = yes
+
+	only_playable = yes
+	min_age = 16
+	prisoner = no
+	only_capable = yes
+
+	trigger = {
+		ai = yes
+		NOR = {
+			trait = content
+			trait = craven
+			is_incapable = yes
+			trait = imbecile
+			is_ascetic_trigger = yes
+			is_inaccessible_trigger = yes
+			holy_order = yes
+			mercenary = yes
+			any_liege = {
+				OR = {
+					holy_order = yes
+					mercenary = yes
+				}
+			}
+		}
+		any_non_aggression_pact_character = {
+			any_demesne_title = { emf_cb_can_press_claim = yes }
+			OR = {
+				NOT = { reverse_opinion = { who = ROOT value = 25 } }
+				AND = {
+					NOT = { reverse_opinion = { who = ROOT value = 50 } }
+					ROOT = {
+						OR = {
+							trait = deceitful
+							trait = ambitious
+							trait = envious
+							trait = proud
+							trait = brave
+						}
+					}
+				}
+			}
+			NOR = {
+				is_allied_with = ROOT
+				is_married = ROOT
+				any_close_relative = { is_married = ROOT }
+				ROOT = { any_heir_title = { holder = PREVPREV } }
+				reverse_has_opinion_modifier = { who = ROOT modifier = opinion_hostile_family }
+				reverse_has_opinion_modifier = { who = ROOT modifier = in_non_aggression_pact }
+			}
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	immediate = {
+		random_non_aggression_pact_character = {
+			limit = {
+				any_demesne_title = { emf_cb_can_press_claim = yes }
+				OR = {
+					NOT = { reverse_opinion = { who = ROOT value = 25 } }
+					AND = {
+						NOT = { reverse_opinion = { who = ROOT value = 50 } }
+						ROOT = {
+							OR = {
+								trait = deceitful
+								trait = ambitious
+								trait = envious
+								trait = proud
+								trait = brave
+							}
+						}
+					}
+				}
+				NOR = {
+					is_allied_with = ROOT
+					is_married = ROOT
+					any_close_relative = { is_married = ROOT }
+					ROOT = { any_heir_title = { holder = PREVPREV } }
+					reverse_has_opinion_modifier = { who = ROOT modifier = opinion_hostile_family }
+					reverse_has_opinion_modifier = { who = ROOT modifier = in_non_aggression_pact }
+				}
+			}
+			reverse_opinion = { who = ROOT modifier = opinion_hostile_family years = 3 }
+		}
+	}
+}
+
+# emf_core.65
+# Recalculate capital-contiguous provinces for an independent realm
+#
+# Called on annual maintenance throughout the year as well as explicitly
+# from all CBs' on_success_posttitle -> emf_cb_on_success_posttitle -> here
+# specifically for the realms potentially affected by territory change due to the war.
+# Also called on_startup.
+character_event = {
+	id = emf_core.65
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	only_independent = yes # Note that this filters-out revolt top realms too, which is intentional
+
+	trigger = {
+		capital_scope = { owner = { character = ROOT } }
+	}
+
+	immediate = {
+		# log = "DEBUG: emf_core.65: calculating emf_capital_connected for [This.GetTitledFirstName] of [This.PrimaryTitle.GetBaseName] ([This.GetID]/[This.PrimaryTitle.GetID])"
+		any_realm_province = { # Remove old state
+			limit = { owner = { same_realm = ROOT } } # any_realm_province includes provinces in which we have a realm barony
+			clr_flag = emf_capital_connected
+			clr_flag = emf_capital_connected_by_seazone
+		}
+		capital_scope = { # Seed the capital
+			set_flag = emf_capital_connected
+			any_neighbor_province = { # Handle near-OPMs quickly (loop below makes it technically redundant)
+				limit = { owner = { same_realm = ROOT } }
+				set_flag = emf_capital_connected
+			}
+		}
+		while = {
+			limit = {
+				any_realm_province = {
+					owner = { same_realm = ROOT }
+					NOT = { has_flag = emf_capital_connected }
+					any_neighbor_province = {
+						owner = { same_realm = ROOT }
+						has_flag = emf_capital_connected
+					}
+				}
+			}
+			any_realm_province = {
+				limit = {
+					owner = { same_realm = ROOT }
+					NOT = { has_flag = emf_capital_connected }
+					any_neighbor_province = {
+						owner = { same_realm = ROOT }
+						has_flag = emf_capital_connected
+					}
+				}
+				set_flag = emf_capital_connected
+			}
+		}
+		# Now path through any independent revolt realms of ours
+		any_war = {
+			limit = {
+				defender = { character = ROOT }
+				attacker = {
+					liege = { character = PREV }
+					OR = {
+						in_revolt = yes
+						liege_before_war = { character = ROOT }
+					}
+				}
+			}
+			attacker = {
+				reverse_opinion = { who = ROOT modifier = opinion_my_rebel }
+				any_realm_province = {
+					limit = { owner_under_PREV = yes }
+					clr_flag = emf_capital_connected
+					clr_flag = emf_capital_connected_by_seazone
+				}
+			}
+		}
+		while = {
+			limit = {
+				any_opinion_modifier_target = {
+					reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+					any_realm_province = {
+						owner_under_PREV = yes
+						NOT = { has_flag = emf_capital_connected }
+						any_neighbor_province = {
+							has_flag = emf_capital_connected
+							owner = {
+								top_liege = {
+									OR = {
+										character = ROOT
+										ROOT = {
+											any_opinion_modifier_target = {
+												reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+												character = PREVPREV
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			any_opinion_modifier_target = {
+				limit = {
+					reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+					any_realm_province = {
+						owner_under_PREV = yes
+						NOT = { has_flag = emf_capital_connected }
+						any_neighbor_province = {
+							has_flag = emf_capital_connected
+							owner = {
+								top_liege = {
+									OR = {
+										character = ROOT
+										ROOT = {
+											any_opinion_modifier_target = {
+												reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+												character = PREVPREV
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				any_realm_province = {
+					limit = {
+						owner_under_PREV = yes
+						NOT = { has_flag = emf_capital_connected }
+						any_neighbor_province = {
+							has_flag = emf_capital_connected
+							owner = {
+								top_liege = {
+									OR = {
+										character = ROOT
+										ROOT = {
+											any_opinion_modifier_target = {
+												reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+												character = PREVPREV
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					set_flag = emf_capital_connected
+				}
+			}
+		}
+		# Now, mark the provinces which are capital-connected only via a seazone adjacency
+		any_realm_province = {
+			limit = {
+				port = yes
+				owner = { same_realm = ROOT }
+				NOT = { has_flag = emf_capital_connected }
+				any_neighbor_province = {
+					is_land = no
+					any_neighbor_province = {
+						owner = { same_realm = ROOT }
+						has_flag = emf_capital_connected
+					}
+				}
+			}
+			set_flag = emf_capital_connected_by_seazone # might want to make this into a modifier w/ slight malus
+		}
+		# Now, do the same through any of our revolt realms
+		any_opinion_modifier_target = {
+			limit = { reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel } }
+			any_realm_province = {
+				limit = {
+					port = yes
+					owner_under_PREV = yes
+					NOT = { has_flag = emf_capital_connected }
+					any_neighbor_province = {
+						is_land = no
+						any_neighbor_province = {
+							has_flag = emf_capital_connected
+							owner = {
+								top_liege = {
+									OR = {
+										character = ROOT
+										ROOT = {
+											any_opinion_modifier_target = {
+												reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+												character = PREVPREV
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				set_flag = emf_capital_connected_by_seazone
+			}
+		}
+		# Now, mark those provinces connected to provinces which are capital-connected only via a seazone adjacency
+		while = {
+			limit = {
+				any_realm_province = {
+					owner = { same_realm = ROOT }
+					NOT = { has_flag = emf_capital_connected_by_seazone }
+					any_neighbor_province = {
+						owner = { same_realm = ROOT }
+						has_flag = emf_capital_connected_by_seazone
+					}
+				}
+			}
+			any_realm_province = {
+				limit = {
+					owner = { same_realm = ROOT }
+					NOT = { has_flag = emf_capital_connected_by_seazone }
+					any_neighbor_province = {
+						owner = { same_realm = ROOT }
+						has_flag = emf_capital_connected_by_seazone
+					}
+				}
+				set_flag = emf_capital_connected_by_seazone
+			}
+		}
+		# Finally, propogate the capital-connected-via-seazone adjacencies through our rebel realms
+		while = {
+			limit = {
+				any_opinion_modifier_target = {
+					reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+					any_realm_province = {
+						owner_under_PREV = yes
+						NOT = { has_flag = emf_capital_connected_by_seazone }
+						any_neighbor_province = {
+							has_flag = emf_capital_connected_by_seazone
+							owner = {
+								top_liege = {
+									OR = {
+										character = ROOT
+										ROOT = {
+											any_opinion_modifier_target = {
+												reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+												character = PREVPREV
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+			any_opinion_modifier_target = {
+				limit = {
+					reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+					any_realm_province = {
+						owner_under_PREV = yes
+						NOT = { has_flag = emf_capital_connected_by_seazone }
+						any_neighbor_province = {
+							has_flag = emf_capital_connected_by_seazone
+							owner = {
+								top_liege = {
+									OR = {
+										character = ROOT
+										ROOT = {
+											any_opinion_modifier_target = {
+												reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+												character = PREVPREV
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+				any_realm_province = {
+					limit = {
+						owner_under_PREV = yes
+						NOT = { has_flag = emf_capital_connected_by_seazone }
+						any_neighbor_province = {
+							has_flag = emf_capital_connected_by_seazone
+							owner = {
+								top_liege = {
+									OR = {
+										character = ROOT
+										ROOT = {
+											any_opinion_modifier_target = {
+												reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel }
+												character = PREVPREV
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+					set_flag = emf_capital_connected_by_seazone
+				}
+			}
+		}
+		# Cleanup rebel TOMs
+		any_opinion_modifier_target = {
+			limit = { reverse_has_opinion_modifier = { who = PREV modifier = opinion_my_rebel } }
+			reverse_remove_opinion = { who = PREV modifier = opinion_my_rebel }
+		}
+	}
+}
+
+# emf_core.80
+# Handle mercenary companies gaining non-mercenary titles -- on_new_holder and on_new_holder_usurpation
+character_event = {
+	id = emf_core.80
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	only_rulers = yes
+	ai = yes
+
+	trigger = {
+		NOT = { has_flag = skip_titular_duchy }
+		any_demesne_title = { mercenary = yes }
+		FROM = {
+			mercenary = no
+			NOT = { has_flag = emf_check_mercenary_titles }
+		}
+	}
+
+	immediate = {
+		add_trait = adventurer
+		primary_title = {
+			save_event_target_as = mercenary_title
+			set_flag = emf_check_mercenary_titles
+		}
+		# They have 5 years before they must surrender the mercenary title
+		isis = {
+			character_event = { id = emf_core.81 days = 1825 }
+		}
+	}
+}
+
+character_event = {
+	id = emf_core.81
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		# First check if the mercenary holder is at war
+		if = {
+			limit = {
+				event_target:mercenary_title = {
+					has_holder = yes
+					has_flag = emf_check_mercenary_titles
+					holder_scope = {
+						ai = yes
+						war = yes
+						any_demesne_title = { mercenary = no }
+					}
+				}
+			}
+			repeat_event = { id = emf_core.81 days = 365 } # Check again in a year
+			break = yes
+		}
+		# The mercenary holder is still a mercenary, not at war, and still has non-mercenary titles
+		if = {
+			limit = {
+				event_target:mercenary_title = {
+					has_holder = yes
+					has_flag = emf_check_mercenary_titles
+					holder_scope = {
+						ai = yes
+						any_demesne_title = { mercenary = no }
+					}
+				}
+			}
+			event_target:mercenary_title = {
+				clr_flag = emf_check_mercenary_titles
+				# First check if I need to give him a Duke-tier title to replace the mecenary company
+				holder_scope = {
+					save_event_target_as = current_merc
+					if = {
+						limit = {
+							# Mercenary is landed, has vassals of Count+ tier
+							# and currently has no titles of equal or higher rank than the mercenary company
+							is_landed = yes
+							any_vassal = { higher_tier_than = BARON }
+							NOT = {
+								any_demesne_title = {
+									NOT = { title = event_target:mercenary_title }
+									OR = {
+										tier = event_target:mercenary_title
+										higher_tier_than = event_target:mercenary_title
+									}
+								}
+							}
+						}
+						# In this case, give him the capital county's de jure duchy if it has no current holder
+						# Otherwise, create a titular duchy based on that capital county
+						capital_scope = {
+							duchy = {
+								if = {
+									limit = { has_holder = no }
+									event_target:current_merc = { set_flag = skip_titular_duchy }
+									grant_title = event_target:current_merc
+								}
+							}
+							if = {
+								limit = {
+									event_target:current_merc = { NOT = { has_flag = skip_titular_duchy } }
+								}
+								county = {
+									create_title = {
+										tier = DUKE
+										landless = no
+										temporary = no
+										custom_created = yes
+										culture = event_target:current_merc
+										holder = event_target:current_merc
+										base_title = THIS
+										copy_title_laws = yes
+									}
+								}
+							}
+							event_target:current_merc = { clr_flag = skip_titular_duchy }
+						}
+					}
+				}
+				# Hand off the mercenary company to the current heir
+				current_heir = {
+					usurp_title_only = PREV
+					# Vassalize to the former holder, in case they're high enough tier
+					if = {
+						limit = { lower_tier_than = event_target:current_merc }
+						set_defacto_liege = event_target:current_merc
+					}
+				}
+				# Remove any claims to the company by the former holder
+				event_target:current_merc = {
+					remove_claim = PREV
+					recalc_succession = yes
+				}
+			}
+			break = yes
+		}
+		event_target:mercenary_title = {
+			clr_flag = emf_check_mercenary_titles
+		}
+	}
+}
+
+
+# emf_core.90
+# Prompt tributes to either declare independence or continue as tributes after overlord's death
+
+# Ruler dies who has tributes - on_death
+character_event = {
+	id = emf_core.90
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	only_independent = yes
+
+	trigger = {
+		mercenary = no
+		current_heir = { is_alive = yes }
+		any_tributary = {
+			OR = {
+				is_tributary = { type = default }
+				is_tributary = { type = nomadic }
+			}
+			any_realm_province = { any_neighbor_province = { owner_under_ROOT = yes } }
+			NOR = {
+				rightful_religious_head_scope = { character = ROOT }
+				AND = {
+					holy_order = yes
+					religion = ROOT
+				}
+			}
+		}
+	}
+
+	immediate = {
+		save_event_target_as = emf_old_suzerain
+		current_heir = { save_event_target_as = emf_new_suzerain }
+		primary_title = { save_event_target_as = emf_suzerain_primary }
+		any_tributary = {
+			limit = {
+				NOT = { character = event_target:emf_new_suzerain }
+				OR = {
+					is_tributary = { type = default }
+					is_tributary = { type = nomadic }
+				}
+			}
+			if = {
+				limit = { is_tributary = { type = default } }
+				set_flag = default_tribute_of_@event_target:emf_new_suzerain
+			}
+			else_if = {
+				limit = { is_tributary = { type = nomadic } }
+				set_flag = nomadic_tribute_of_@event_target:emf_new_suzerain
+			}
+			character_event = { id = emf_core.93 days = 1 } # Renew tribute status
+		}
+	}
+}
+
+# emf_core.91 [Renewed Tributary]
+# Tribute renewal accepted
+character_event = {
+	id = emf_core.91
+	desc = EVTDESC_emf_core_91
+	picture = GFX_evt_emissary
+
+	is_triggered_only = yes
+
+	option = {
+		name = EXCELLENT
+		hidden_effect = {
+			clr_flag = default_tribute_of_@FROM
+			clr_flag = nomadic_tribute_of_@FROM
+		}
+	}
+}
+
+# emf_core.92 [Former Tributary]
+# Tribute renewal refused
+character_event = {
+	id = emf_core.92
+	desc = EVTDESC_emf_core_92
+	picture = GFX_evt_emissary
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_core_92
+		hidden_effect = {
+			clr_flag = default_tribute_of_@FROM
+			clr_flag = nomadic_tribute_of_@FROM
+		}
+	}
+}
+
+# emf_core.93 [Tributary]
+# Tributes decides whether or not to break tribute with heir; fires day after death of previous suzerain
+character_event = {
+	id = emf_core.93
+	desc = EVTDESC_emf_core_93
+	picture = GFX_evt_emissary
+
+	is_triggered_only = yes
+
+	trigger = {
+		independent = yes
+		NOT = { war_with = event_target:emf_new_suzerain }
+		event_target:emf_new_suzerain = {
+			independent = yes
+			has_landed_title = event_target:emf_suzerain_primary # Sanity check
+		}
+		OR = {
+			has_flag = default_tribute_of_@event_target:emf_new_suzerain # Sanity check
+			has_flag = nomadic_tribute_of_@event_target:emf_new_suzerain # Sanity check
+		}
+	}
+	
+	option = {
+		name = EVTOPTA_emf_core_93 # Accept tribute status
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 3
+				is_primary_war_defender = yes
+			}
+			modifier = {
+				factor = 1.5
+				event_target:emf_new_suzerain = {
+					any_realm_province = { any_neighbor_province = { owner_under_ROOT = yes } }
+				}
+			}
+			modifier = {
+				factor = 1.5
+				trait = craven
+			}
+			modifier = {
+				factor = 1.5
+				trait = content
+			}
+			modifier = {
+				factor = 1.5
+				trait = humble
+			}
+			modifier = {
+				factor = 2
+				event_target:emf_new_suzerain = {
+					OR = {
+						dynasty = ROOT
+						is_allied_with = ROOT
+						has_non_aggression_pact_with = ROOT
+						is_friend = ROOT
+					}
+				}
+			}
+		}
+		if = {
+			limit = { has_flag = nomadic_tribute_of_@event_target:emf_new_suzerain }
+			tooltip = {
+				event_target:emf_new_suzerain = {
+					make_tributary = { who = ROOT percentage = 0.5 tributary_type = nomadic }
+				}
+			}
+		}
+		else = {
+			tooltip = {
+				event_target:emf_new_suzerain = {
+					make_tributary = { who = ROOT percentage = 0.4 tributary_type = default }
+				}
+			}
+		}
+		hidden_effect = { event_target:emf_new_suzerain = { character_event = { id = emf_core.94 } } }
+	}
+	option = {
+		name = EVTOPTB_emf_core_93 # Break tribute status
+		trigger = {
+			is_adult = yes
+			is_incapable = no
+			prisoner = no
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 0
+				event_target:emf_new_suzerain = {
+					any_realm_province = { any_neighbor_province = { owner_under_ROOT = yes } }
+					realm_levy_diff = { who = ROOT value = 5000 }
+				}
+			}
+			modifier = {
+				factor = 2
+				is_foe = event_target:emf_new_suzerain
+			}
+			modifier = {
+				factor = 1.5
+				event_target:emf_new_suzerain = {
+					NOT = { any_realm_province = { any_neighbor_province = { owner_under_ROOT = yes } } }
+				}
+			}
+			modifier = {
+				factor = 1.5
+				trait = brave
+			}
+			modifier = {
+				factor = 1.5
+				trait = ambitious
+			}
+			modifier = {
+				factor = 1.5
+				trait = proud
+			}
+			modifier = {
+				factor = 1.5
+				event_target:emf_new_suzerain = { reverse_realm_levy_diff = { who = ROOT value = 10000 } }
+			}
+			modifier = {
+				factor = 1.5
+				event_target:emf_new_suzerain = { reverse_realm_levy_diff = { who = ROOT value = 7500 } }
+			}
+			modifier = {
+				factor = 1.5
+				event_target:emf_new_suzerain = { reverse_realm_levy_diff = { who = ROOT value = 5000 } }
+			}
+			modifier = {
+				factor = 1.25
+				event_target:emf_new_suzerain = { reverse_realm_levy_diff = { who = ROOT value = 1000 } }
+			}
+			modifier = {
+				factor = 0.5
+				event_target:emf_new_suzerain = { realm_levy_diff = { who = ROOT value = 5000 } }
+			}
+			modifier = {
+				factor = 0.5
+				event_target:emf_new_suzerain = { realm_levy_diff = { who = ROOT value = 7500 } }
+			}
+			modifier = {
+				factor = 0.5
+				event_target:emf_new_suzerain = { realm_levy_diff = { who = ROOT value = 10000 } }
+			}
+		}
+		event_target:emf_new_suzerain = {
+			character_event = { id = emf_core.95 tooltip = BREAK_TRIBUTE_STATUS }
+		}
+	}
+}
+
+# emf_core.94 [Former Tribute]
+# Former tribute offers to become tribute of heir
+character_event = {
+	id = emf_core.94
+	desc = EVTDESC_emf_core_94
+	picture = GFX_evt_emissary
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_core_94 # Accept tribute
+		if = {
+			limit = { FROM = { has_flag = nomadic_tribute_of_@ROOT } }
+			make_tributary = { who = FROM percentage = 0.5 tributary_type = nomadic }
+		}
+		else = {
+			make_tributary = { who = FROM percentage = 0.4 tributary_type = default }
+		}
+		hidden_effect = { FROM = { character_event = { id = emf_core.91 } } } # Notify acceptance
+	}
+	option = {
+		name = EVTOPTB_emf_core_94 # Refuse tribute
+		trigger = { ai = no }
+		FROM = {
+			character_event = { id = emf_core.92 tooltip = REFUSE_TRIBUTE_STATUS }
+		}
+	}
+}
+
+# Former tribute refuses to become tribute of heir
+character_event = {
+	id = emf_core.95
+	desc = EVTDESC_emf_core_95
+	picture = GFX_evt_emissary
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_core_95 # Let them go
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 3
+				is_primary_war_defender = yes
+			}
+			modifier = {
+				factor = 2
+				is_primary_war_participant = yes
+			}
+			modifier = {
+				factor = 2
+				NOT = { any_realm_province = { any_neighbor_province = { owner_under_FROM = yes } } }
+			}
+			modifier = {
+				factor = 2
+				reverse_realm_levy_diff = { who = FROM value = 100 }
+			}
+			modifier = {
+				factor = 2
+				reverse_realm_levy_diff = { who = FROM value = 2500 }
+			}
+			modifier = {
+				factor = 1.25
+				trait = patient
+			}
+			modifier = {
+				factor = 1.25
+				trait = humble
+			}
+			modifier = {
+				factor = 1.25
+				trait = content
+			}
+			modifier = {
+				factor = 1.25
+				trait = kind
+			}
+			modifier = {
+				factor = 1.25
+				trait = craven
+			}
+		}
+		opinion = { who = FROM modifier = opinion_outraged years = 10 }
+	}
+	option = {
+		name = EVTOPTB_emf_core_95 # Attack them
+		trigger = {
+			FROM = { NOT = { higher_tier_than = ROOT } }
+		}
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 1.5
+				realm_levy_diff = { who = FROM value = 2500 }
+			}
+			modifier = {
+				factor = 1.5
+				realm_levy_diff = { who = FROM value = 5000 }
+			}
+			modifier = {
+				factor = 2
+				realm_levy_diff = { who = FROM value = 10000 }
+			}
+			modifier = {
+				factor = 0
+				reverse_realm_levy_diff = { who = FROM value = 5000 }
+			}
+			modifier = {
+				factor = 1.25
+				trait = wroth
+			}
+			modifier = {
+				factor = 1.25
+				trait = proud
+			}
+			modifier = {
+				factor = 1.25
+				trait = ambitious
+			}
+			modifier = {
+				factor = 0.5
+				NOT = { any_realm_province = { any_neighbor_province = { owner_under_FROM = yes } } }
+			}
+		}
+		FROM = {
+			if = {
+				limit = { has_flag = default_tribute_of_@ROOT }
+				reverse_war = { target = ROOT casus_belli = tributary_cb }
+			}
+			else = {
+				reverse_war = { target = ROOT casus_belli = tributary_nomad_cb }
+			}
+		}
+	}
+
+	after = {
+		FROM = {
+			clr_flag = default_tribute_of_@ROOT 
+			clr_flag = nomadic_tribute_of_@ROOT 
+		}
+	}
+}
+
+
+# emf_core.100 -- autodestroy unnecessary titular titles
+character_event = {
+	id = emf_core.100
+
+	hide_window = yes
+
+	only_playable = yes
+	war = no
+
+	trigger = {
+		higher_tier_than = COUNT
+		any_demesne_title = {
+			emf_can_autodestroy_title = yes
+			is_de_jure_title = no
+			# Don't just suddenly switch primary title on a player; they can take care of it themselves if wanted
+			OR = {
+				ROOT = { ai = yes }
+				is_primary_holder_title = no
+			}
+			OR = {
+				lower_tier_than = ROOT # Lower-tier titular titles are always forfeit
+				ROOT = { # If there's a primary-tier de jure title, then primary-tier titular titles are also forfeit
+					any_demesne_title = {
+						tier = ROOT
+						lower_tier_than = EMPEROR # Different mechanic handles extra empire titles
+						is_de_jure_title = yes
+						OR = { # Either the de jure title is primary, or we'll switch to it, so...
+							is_primary_holder_title = yes
+							# ... we need to be capable of switching
+							ROOT = { primary_title = { is_primary_type_title = no } }
+						}
+					}
+				}
+			}
+		}
+		has_random_dejure = no
+	}
+
+	mean_time_to_happen = { days = 0 }
+
+	immediate = {
+		any_demesne_title = {
+			limit = {
+				emf_can_autodestroy_title = yes
+				is_de_jure_title = no
+				# Don't just suddenly switch primary title on a player; they can take care of it themselves if wanted
+				OR = {
+					ROOT = { ai = yes }
+					is_primary_holder_title = no
+				}
+				ROOT = {
+					NOT = { has_flag = emf_autodestroy_exemption_for_@PREV }
+				}
+				OR = {
+					lower_tier_than = ROOT # Lower-tier titular titles are always forfeit
+					ROOT = { # If there's a primary-tier de jure title, then primary-tier titular titles are also forfeit
+						any_demesne_title = {
+							tier = ROOT
+							lower_tier_than = EMPEROR # Different mechanic handles extra empire titles
+							is_de_jure_title = yes
+							OR = { # Either the de jure title is primary, or we'll switch to it, so...
+								is_primary_holder_title = yes
+								# ... we need to be capable of switching
+								ROOT = { primary_title = { is_primary_type_title = no } }
+							}
+						}
+					}
+				}
+			}
+			log = "INFO: emf_core.100: auto-destroying titular title of the [This.GetFullBaseName] ([This.GetID]), held by [Root.GetTitledFirstName] [Root.GetOnlyDynastyName] (#[Root.GetID]/[Root.PrimaryTitle.GetID])"
+			if = {
+				limit = { is_primary_holder_title = yes }
+				ROOT = {
+					random_demesne_title = {
+						limit = {
+							NOT = { event_target:emf_new_primary = { always = yes } }
+							tier = ROOT
+							is_de_jure_title = yes
+							culture = ROOT
+						}
+						save_event_target_as = emf_new_primary
+					}
+					random_demesne_title = {
+						limit = {
+							NOT = { event_target:emf_new_primary = { always = yes } }
+							tier = ROOT
+							is_de_jure_title = yes
+							culture_group = ROOT
+						}
+						save_event_target_as = emf_new_primary
+					}
+					# Fallback case
+					random_demesne_title = {
+						limit = {
+							NOT = { event_target:emf_new_primary = { always = yes } }
+							tier = ROOT
+							is_de_jure_title = yes
+						}
+						save_event_target_as = emf_new_primary
+					}
+				}
+				event_target:emf_new_primary = {
+					log = "--> switching primary title to the [This.GetFullBaseName] ([This.GetID]) first"
+					emf_make_primary_title = yes
+				}
+				clear_event_target = emf_new_primary
+			}
+			if = {
+				limit = { is_primary_holder_title = no }
+				if = {
+					limit = { emf_can_safely_autodestroy_title = yes }
+					emf_destroy_title = yes
+				}
+				if = {
+					limit = { emf_can_safely_autodestroy_title = no }
+					emf_unsafe_destroy_title = yes
+				}
+				set_flag = emf_autodestroy_defunct
+				set_flag = emf_defunct
+			}
+		}
+	}
+}
+
+# emf_core.101 -- flag player-created titular titles [on_new_holder]
+character_event = {
+	id = emf_core.101
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	ai = no
+
+	trigger = {
+		FROM = {
+			emf_can_safely_autodestroy_title = yes
+			is_titular_title = yes
+		}
+		NOT = { FROMFROM = { always = yes } }
+	}
+
+	immediate = {
+		set_flag = emf_autodestroy_exemption_for_@FROM
+	}
+}
+
+
+# emf_core.110 -- general pre-abdication handler, invoked manually everywhere that an abdication can occur in our code by the
+#				 scripted effect emf_willfully_abdicate = yes
+#
+# I can also detect abdication via on_new_holder_inheritance, but for the proper amount of power, we want to be able to
+# assess the properties of the abdicator while they still hold all of their titles and no such on_actions have yet executed
+# (much like on_death, but this is effectively on_abdicate when using `emf_willfully_abdicate` instead of the vanilla `abdicate`).
+character_event = {
+	id = emf_core.110
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	immediate = {
+		log = "INFO: emf_core.110: ruler abdicating: [Root.GetTitledFirstName] [Root.GetOnlyDynastyName] of the [Root.PrimaryTitle.GetFullName] (#[Root.GetID]/[Root.PrimaryTitle.GetID])"
+		remove_trait = emf_crowned
+		remove_trait = emf_crowned_by_pope
+		remove_trait = strong_basileus
+		remove_trait = weak_basileus
+		remove_trait = crowned_by_priest
+		remove_trait = crowned_by_bishop
+		remove_trait = crowned_by_pope
+		remove_trait = crowned_by_myself
+		remove_character_modifiers = { modifier = uncrowned_modifier amount = 30 } 	
+		set_variable = { which = uncrowned_count value = 0 }
+		remove_trait = karling_usurper
+		if = {
+			limit = { NOT = { event_target:emf_abdicate_real_heir = { always = yes } } } # Not using abdicate_to
+			current_heir = {
+				log = "--> abdicating to current heir [This.GetTitledFirstName] [This.GetOnlyDynastyName] (#[This.GetID]) [abdicate]"
+				character_event = { id = emf_core.111 } # Adjust government type of heir if necessary
+			}
+			# Renew tributes on standard abdications (where the heir will be `current_heir`)
+			character_event = { id = emf_core.90 }
+		}
+		if = {
+			limit = { event_target:emf_abdicate_real_heir = { always = yes } } # Using abdicate_to
+			log = "--> abdicating directly to [emf_abdicate_real_heir.GetTitledFirstName] [emf_abdicate_real_heir.GetOnlyDynastyName] (#[emf_abdicate_real_heir.GetID]) [abdicate_to]"
+			# Adjust government type of heir if necessary for sanity
+			event_target:emf_abdicate_real_heir = { character_event = { id = emf_core.111 } }
+		}
+	}
+}
+
+# emf_core.111 -- helper that puts abdication heir in ROOT scope so that emf_cb_ROOT_ensure_feudal can do its work
+#
+# NOTE: this only converts the heir to feudal if the title they're about to assume is high enough tier and already feudal,
+# among other things
+character_event = {
+	id = emf_core.111
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = { FROM = { higher_real_tier_than = COUNT } }
+
+	immediate = { FROM = { primary_title = { emf_cb_ROOT_ensure_feudal = yes } } }
+}
+
+
+# emf_core.1000
+# Toggle EMF debug mode
+character_event = {
+	id = emf_core.1000
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	immediate = {
+		if = {
+			limit = { has_global_flag = emf_debug }
+			clr_global_flag = emf_debug
+			break = yes
+		}
+		set_global_flag = emf_debug
+	}
+}

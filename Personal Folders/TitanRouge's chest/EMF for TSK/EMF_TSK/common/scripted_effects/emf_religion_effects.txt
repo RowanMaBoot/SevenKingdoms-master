@@ -1,0 +1,29 @@
+# -*- ck2.scripted_effects -*-
+
+emf_ai_wrong_religion_liege_decision_effect = {
+	# First try to transfer to a higher-tier liege that matches our religion:
+	if = {
+		limit = { top_liege = { religion = PREV } } # Note that liege of liege of a duke is an emperor
+		top_liege = { set_defacto_vassal = PREV }
+		set_flag = ai_flag_never_transfer
+	}
+	# Otherwise, go independent
+	else = {
+		liege = { save_event_target_as = emf_old_wrong_religion_liege_tmp }
+		any_demesne_title = {
+			limit = { emf_is_title_type_special = no }
+			gain_title = { target = event_target:emf_old_wrong_religion_liege_tmp type = revoke }
+			add_pressed_claim = PREV
+		}
+		clear_event_target = emf_old_wrong_religion_liege_tmp
+		set_defacto_liege = THIS
+	}
+	emf_liege_change = yes
+}
+
+emf_fix_wrong_religion_lieges_in_realm = {
+	any_realm_lord = {
+		limit = { is_decision_potential = emf_ai_wrong_religion_liege }
+		emf_ai_wrong_religion_liege_decision_effect = yes
+	}
+}

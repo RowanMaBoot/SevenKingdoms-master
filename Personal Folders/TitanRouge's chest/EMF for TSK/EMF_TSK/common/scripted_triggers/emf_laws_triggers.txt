@@ -1,0 +1,309 @@
+# -*- ck2.scripted_triggers -*-
+
+
+### CONVENIENCE TRIGGERS ###
+emf_laws_no_crown_law_title = {
+	custom_tooltip = {
+		text = emf_laws_ctt_no_crown_law_title
+		hidden_tooltip = { NOT = { crownlaw_title = { always = yes } } }
+	}
+}
+emf_laws_crownlaw_title_limited_ca_plus = {
+	custom_tooltip = {
+		text = emf_laws_ctt_crownlaw_title_limited_ca_plus
+		hidden_tooltip = {
+			crownlaw_title = {
+				OR = {
+					has_law = crown_authority_1
+					has_law = crown_authority_2
+					has_law = crown_authority_3
+					has_law = crown_authority_4
+				}
+			}
+		}
+	}
+}
+emf_laws_crownlaw_title_medium_ca_plus = {
+	custom_tooltip = {
+		text = emf_laws_ctt_crownlaw_title_medium_ca_plus
+		hidden_tooltip = {
+			crownlaw_title = {
+				OR = {
+					has_law = crown_authority_2
+					has_law = crown_authority_3
+					has_law = crown_authority_4
+				}
+			}
+		}
+	}
+}
+emf_laws_crownlaw_title_high_ca_plus = {
+	custom_tooltip = {
+		text = emf_laws_ctt_crownlaw_title_high_ca_plus
+		hidden_tooltip = {
+			crownlaw_title = {
+				OR = {
+					has_law = crown_authority_3
+					has_law = crown_authority_4
+				}
+			}
+		}
+	}
+}
+emf_laws_has_limited_ca_plus = {
+	custom_tooltip = {
+		text = emf_laws_ctt_limited_ca_plus
+		hidden_tooltip = {
+			OR = {
+				has_law = crown_authority_1
+				has_law = crown_authority_2
+				has_law = crown_authority_3
+				has_law = crown_authority_4
+			}
+		}
+	}
+}
+emf_laws_has_medium_ca_plus = {
+	custom_tooltip = {
+		text = emf_laws_ctt_medium_ca_plus
+		hidden_tooltip = {
+			OR = {
+				has_law = crown_authority_2
+				has_law = crown_authority_3
+				has_law = crown_authority_4
+			}
+		}
+	}
+}
+emf_laws_has_high_ca_plus = {
+	custom_tooltip = {
+		text = emf_laws_ctt_high_ca_plus
+		hidden_tooltip = {
+			OR = {
+				has_law = crown_authority_3
+				has_law = crown_authority_4
+			}
+		}
+	}
+}
+emf_laws_has_no_TO = {
+	custom_tooltip = {
+		text = HAS_NO_TRIBAL_ORGANIZATION_LAW_TT
+		NOR = {
+			has_law = tribal_organization_0
+			has_law = tribal_organization_1
+			has_law = tribal_organization_2
+			has_law = tribal_organization_3
+			has_law = tribal_organization_4
+		}
+	}
+}
+emf_laws_has_limited_TO_plus = {
+	custom_tooltip = {
+		text = emf_laws_ctt_limited_TO_plus
+		hidden_tooltip = {
+			OR = {
+				has_law = tribal_organization_1
+				has_law = tribal_organization_2
+				has_law = tribal_organization_3
+				has_law = tribal_organization_4
+			}
+		}
+	}
+}
+emf_laws_has_medium_TO_plus = {
+	custom_tooltip = {
+		text = emf_laws_ctt_medium_TO_plus
+		hidden_tooltip = {
+			OR = {
+				has_law = tribal_organization_2
+				has_law = tribal_organization_3
+				has_law = tribal_organization_4
+			}
+		}
+	}
+}
+emf_laws_has_high_TO_plus = {
+	custom_tooltip = {
+		text = emf_laws_ctt_high_TO_plus
+		hidden_tooltip = {
+			OR = {
+				has_law = tribal_organization_3
+				has_law = tribal_organization_4
+			}
+		}
+	}
+}
+emf_laws_holder_has_late_adminstration_plus = {
+	custom_tooltip = {
+		text = emf_laws_ctt_holder_has_late_adminstration_plus_raw
+		hidden_tooltip = {
+			owner = {
+				primary_title = {
+					OR = {
+						has_law = administration_1
+						has_law = administration_2
+					}
+				}
+			}
+		}
+	}
+}
+emf_laws_penalty = {
+	has_global_flag = EMF # game has made it through startup
+	owner = { NOT = { has_flag = emf_no_law_penalties } }
+}
+emf_laws_infidel_revocation = {
+	custom_tooltip = {
+		text = emf_laws_ctt_infidel_revocation
+		hidden_tooltip = {
+			OR = {
+				has_law = revokation_2
+				has_law = ze_revokation_2
+			}
+		}
+	}
+}
+
+emf_laws_is_exempt_from_TO_penalties = {
+	ai = yes # Only the AI, because players have no problem at all raising TO law with the prestige costs in place
+	OR = {
+		# If our liege has become "civilized," then we're exempt from the prestige cost of raising TO law
+		liege = {
+			OR = {
+				is_feudal = yes
+				is_republic = yes
+				is_theocracy = yes
+			}
+		}
+		# Or if any "civilized" ruler borders our independent realm directly or through 1 seazone
+		top_liege = {
+			any_realm_province = {
+				any_neighbor_province = {
+					OR = {
+						owner = {
+							OR = {
+								is_feudal = yes
+								is_republic = yes
+								is_theocracy = yes
+							}
+						}
+						AND = {
+							is_land = no
+							any_neighbor_province = {
+								owner = {
+									OR = {
+										is_feudal = yes
+										is_republic = yes
+										is_theocracy = yes
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+### SUCCESSION LAWS ###
+
+does_HF_bug_still_execute_law_effects_on_title_creation = {
+	always = yes
+}
+
+# Used for most regular succession laws as PART of the potential. It's NOT common to every major succession type (e.g.,
+# turkish succession doesn't use it); it's just a convenience to clarify the succession laws code.
+emf_laws_succ_basic_potential = {
+	owner = {
+		NOT = { religion_group = muslim }
+		OR = {
+			independent = yes
+			NOT = { any_liege = { holy_order = yes } }
+		}
+	}
+	OR = {
+		is_landless_type_title = no
+		is_tribal_type_title = yes
+		temporary = yes
+	}
+	is_primary_type_title = no
+}
+
+emf_laws_allow_switch_away_from_hre_elective = {
+	trigger_if = {
+		limit = { has_law = succ_hre_elective }
+		trigger_if = {
+			limit = { has_dlc = "Zeus" }
+			has_law = law_voting_power_0
+			emf_laws_has_high_ca_plus = yes
+		}
+		trigger_else = {
+			has_law = crown_authority_4
+		}
+	}
+}
+
+emf_laws_potential_not_for_byzantium = {
+	NAND = { 
+		has_law = succ_byzantine_elective
+		emf_is_roman_empire = yes
+	}
+}
+
+
+### SUCCESSION LAW CHANGES ###
+
+# A lot nicer-looking to the user than the direct-coded version
+emf_laws_change_succ_can_afford_prestige_cost = {
+	#conditional_tooltip = {
+	#	trigger = { tier = BARON }
+	#	custom_tooltip = { text = NEEDS_125_PRESTIGE_COST hidden_tooltip = { owner = { prestige = 125 } } }
+	#}
+	#conditional_tooltip = {
+	#	trigger = { tier = COUNT }
+	#	custom_tooltip = { text = NEEDS_250_PRESTIGE_COST hidden_tooltip = { owner = { prestige = 250 } } }
+	#}
+	#conditional_tooltip = {
+	#	trigger = { tier = DUKE }
+	#	custom_tooltip = { text = NEEDS_500_PRESTIGE_COST hidden_tooltip = { owner = { prestige = 500 } } }
+	#}
+	#conditional_tooltip = {
+	#	trigger = { tier = KING }
+	#	custom_tooltip = { text = NEEDS_750_PRESTIGE_COST hidden_tooltip = { owner = { prestige = 750 } } }
+	#}
+	#conditional_tooltip = {
+	#	trigger = { tier = EMPEROR }
+	#	custom_tooltip = { text = NEEDS_1000_PRESTIGE_COST hidden_tooltip = { owner = { prestige = 1000 } } }
+	#}
+}
+
+# Vassals are [almost] always upset by a succession law change; these are the ones that are affected:
+emf_laws_change_succ_affected_vassal = {
+	OR = {
+		event_target:emf_succ_title = {
+			OR = {
+				is_primary_holder_title = yes
+				is_de_jure_title = no
+			}
+		}
+		primary_title = { de_jure_liege_or_above = event_target:emf_succ_title }
+	}
+}
+
+# Additionally, as the succ_* effects hand-out blanket opinions, they do so in order of priority, and they mark each
+# "already reacted to this succession law change" character as they go with flags.
+#
+# Note that we distinguish the types of succession change reaction so that we may know which opinion modifier we've added
+# from the character to the succession law changer _for this law change only_ so that actual opinions may properly stack from
+# past reactions to law changes (alternative would be to check for the modifiers themselves, but that would not allow
+# coherent stacking across multiple law changes by the same ruler).
+emf_laws_change_succ_reaction = {
+	OR = {
+		has_flag = emf_good_reaction
+		has_flag = emf_mild_reaction
+		has_flag = emf_bad_reaction
+		has_flag = emf_bad2_reaction
+	}
+}
