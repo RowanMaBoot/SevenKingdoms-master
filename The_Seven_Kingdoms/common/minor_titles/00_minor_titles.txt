@@ -177,50 +177,45 @@ title_male_consort = {
 }
 
 # Commander, granted via its own interaction, so very special
+# Commander, granted via its own interaction, so very special
 title_commander = {
-    is_high_prio = yes
-    
-    attribute = martial
-    dignity = 0.05
-    opinion_effect = 5
-    realm_in_name = yes
-    
-    monthly_salary = 0.05
-    monthly_prestige = 0.50
-    
-    revoke_allowed = no # Handled by diplomatic interaction
-    
-    allowed_to_hold = {
-        NOT = { 
-            primary_title = { temporary = yes } 
-        }
-        liege = { character = FROM }
-        OR = {
-            AND = {
-                OR = {
+	is_high_prio = yes
+	
+	attribute = martial
+	dignity = 0.05
+	opinion_effect = 5
+	realm_in_name = yes
+	
+	monthly_salary = 0.05
+	monthly_prestige = 0.50
+	#combat_rating = 10 # Reactivate if we get this working
+	
+	revoke_allowed = no # Handled by diplomatic interaction
+	
+	allowed_to_hold = {
+		NOT = { 
+			primary_title = { temporary = yes } 
+		}
+		liege = { character = FROM }
+		OR = {
+			AND = {
+				OR = {
 					male_can_hold_minor_title_trigger = yes
 					female_can_hold_minor_commander_title_trigger = yes
 				}
-                OR = {
-					religion = the_seven
-					religion = the_stranger
-				}
 				is_adult = yes
 			}
-			has_character_flag = special_marshal			   
+			has_character_flag = special_marshal
 		}
 		
 		prisoner = no
 		NOT = { trait = incapable }
 		NOT = { is_inaccessible_trigger = yes }
-		NOT = { has_character_flag = guru }
 		NOT = { has_character_modifier = refusing_to_lead }
-		OR = {
-			NOT = { liege = { has_law = succ_byzantine_elective } }  #Either not Imperial...
+		OR = { 
 			higher_real_tier_than = BARON #...Or potential commander is vassal...
 			NOT = { #...Or there are no valid vassal candidates that can be commanders.
 				custom_tooltip = { 
-					text = tooltip_byzantine_empire_can_appoint_commanders
 					liege = { 
 						any_vassal = { 
 							higher_real_tier_than = BARON
@@ -233,10 +228,6 @@ title_commander = {
 										male_can_hold_minor_title_trigger = yes
 										female_can_hold_minor_commander_title_trigger = yes
 									}
-								}
-								OR = {
-									religion = the_seven
-									religion = the_stranger
 									is_adult = yes
 								}
 								has_character_flag = special_marshal
@@ -245,7 +236,6 @@ title_commander = {
 							prisoner = no
 							NOT = { trait = incapable }
 							NOT = { is_inaccessible_trigger = yes }
-							NOT = { has_character_flag = guru }
 							NOT = { has_character_modifier = refusing_to_lead }
 							NOR = {
 								has_job_title = job_chancellor
@@ -263,22 +253,17 @@ title_commander = {
 	}
 	
 	gain_effect = {
-		if = {
-			limit = {
-				liege = { 
-					has_law = succ_byzantine_elective 
-				}
-			}
-			character_event = { id = HFP.20805 days = 1 } 
+		hidden_effect = { # Because this cannot be added in the passive effects, for some code reason
+			add_character_modifier = {
+	        	name = hidden_commander_bonus
+	        	duration = -1
+	        	hidden = yes
+	        }
 		}
 	}
 	lose_effect = {
-		if = {
-			limit = {
-				liege = { has_law = succ_byzantine_elective }
-			}
-			character_event = { id = HFP.20803 days = 1 } #Make sure the commander is not being made a sub-vassal.
-			
+		hidden_effect = {
+			remove_character_modifier = hidden_commander_bonus
 		}
 	}
 	
