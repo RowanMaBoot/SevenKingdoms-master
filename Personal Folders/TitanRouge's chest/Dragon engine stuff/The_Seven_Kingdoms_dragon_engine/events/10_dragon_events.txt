@@ -540,7 +540,7 @@ character_event = {
 	}
 }
 
-#	Enemy troops decide to join you FROM is the won barony and ROOT the siege leader
+#	Enemy troops decide to join you | FROM is the won barony and ROOT the siege leader
 character_event = {
 	id = dragon.107
 
@@ -589,7 +589,7 @@ character_event = {
 				factor = 2
 				OR = {
 					trait = kind
-					trait = honorable
+					#trait = honorable
 				}
 			}
 			modifier = {
@@ -708,7 +708,7 @@ character_event = {
 		}
 		if = {
 			limit = { NOT = { has_trait = cruel } }
-			add_trait = add_trait = cruel
+			add_trait = cruel
 		}
 	}
 	
@@ -1070,3 +1070,258 @@ character_event = {
 }
 
 #tooltip = { show_portrait = yes }
+
+##############
+#DRAGON DUELS#
+##############
+
+#Enemy dragon rider is aksed whether or not to attack the attaking dragon rider
+character_event = {
+	id = dragon.300
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		
+	}
+	
+	option = {
+		name = "I will fight"
+		
+		FROM = { character_event = { id = dragon.301 } }
+	}
+	
+	#option = {
+	#	name = "Flee"
+	#	
+	#	clr_global_flag = possible_dragon_duel
+	#	FROM = { character_event = { id = dragon.100 }
+	#}
+}
+
+#Find dragon riders | max. 6 | Team A is a, b, c  Team B is d, e, f 
+#FROM is the enemy commander but it doesn't scope correctly so it is unused,
+character_event = {
+	id = dragon.301
+	
+	desc = "DEBUG"
+	
+	is_triggered_only = yes
+	
+	#hide_window = yes
+	
+	major = yes
+	
+	trigger = {
+		in_battle = yes
+		in_command = yes
+		is_dragon_rider = yes
+		NOR = {
+			has_character_flag = dragon_duel_team_a
+			has_character_flag = dragon_duel_team_b
+		}
+		NOT = { has_character_modifier = in_dragon_duel }
+	}
+	
+	immediate = {
+		#### TEAM A ####
+		any_character = {
+			limit = {
+				at_location = ROOT
+				in_command = yes
+				is_dragon_rider = yes
+				NOR = {
+					has_character_flag = dragon_duel_team_a
+					has_character_flag = dragon_duel_team_b
+				}
+			}
+			set_character_flag = dragon_duel_team_a
+			set_character_flag = set_as_duel_leader
+			add_character_modifier = { name = in_dragon_duel_hidden duration = 12 }
+		}
+		
+		#### TEAM B ####
+		any_current_enemy = {
+			any_realm_character = {
+				limit = {
+					at_location = ROOT
+					in_command = yes
+					is_dragon_rider = yes
+					NOR = {
+						has_character_flag = dragon_duel_team_a
+						has_character_flag = dragon_duel_team_b
+					}
+				}
+				set_character_flag = dragon_duel_team_b
+				add_character_modifier = { name = in_dragon_duel_hidden duration = 12 }
+			}
+		}
+		
+		############################
+		############################
+		############################
+		
+		#### TEAM A ####
+		if = {
+			limit = {
+				NOR = {
+					has_character_flag = debug_rider_a
+					has_character_flag = debug_rider_b
+					has_character_flag = debug_rider_c
+					has_character_flag = debug_rider_d
+					has_character_flag = debug_rider_e
+					has_character_flag = debug_rider_f
+				}
+				#has_character_flag = dragon_duel_team_a
+			}
+			set_character_flag = debug_rider_a
+			save_event_target_as = rider_a
+			#character_event = { id = dragon.301 }
+		}
+		
+		# Set rider b
+		any_character = {
+			limit = {
+				at_location = ROOT
+				in_command = yes
+				is_dragon_rider = yes
+				NOT = { war_with = ROOT }
+				#has_character_flag = dragon_duel_team_a
+				NOR = {
+					has_character_flag = debug_rider_a
+					has_character_flag = debug_rider_b
+					has_character_flag = debug_rider_c
+					has_character_flag = debug_rider_d
+					has_character_flag = debug_rider_e
+					has_character_flag = debug_rider_f
+				}
+			}
+			set_character_flag = debug_rider_b
+			save_event_target_as = rider_b
+		}
+		# Set rider c
+		random_character = {
+			limit = {
+				at_location = ROOT
+				in_command = yes
+				is_dragon_rider = yes
+				NOT = { war_with = ROOT }
+				#has_character_flag = dragon_duel_team_a
+				NOR = {
+					has_character_flag = debug_rider_a
+					has_character_flag = debug_rider_b
+					has_character_flag = debug_rider_c
+					has_character_flag = debug_rider_d
+					has_character_flag = debug_rider_e
+					has_character_flag = debug_rider_f
+				}
+			}
+			set_character_flag = debug_rider_c
+			save_event_target_as = rider_c
+		}
+		
+		#### TEAM B ####
+		
+		# Set rider d
+		random_character = {
+			limit = {
+				at_location = ROOT
+				in_command = yes
+				is_dragon_rider = yes
+				war_with = ROOT
+				#has_character_flag = dragon_duel_team_b
+				NOR = {
+					has_character_flag = debug_rider_a
+					has_character_flag = debug_rider_b
+					has_character_flag = debug_rider_c
+					has_character_flag = debug_rider_d
+					has_character_flag = debug_rider_e
+					has_character_flag = debug_rider_f
+				}
+			}
+			set_character_flag = debug_rider_d
+			save_event_target_as = rider_d
+		}
+		# Set rider e
+		random_character = {
+			limit = {
+				at_location = ROOT
+				in_command = yes
+				is_dragon_rider = yes
+				war_with = ROOT
+				#has_character_flag = dragon_duel_team_b
+				NOR = {
+					has_character_flag = debug_rider_a
+					has_character_flag = debug_rider_b
+					has_character_flag = debug_rider_c
+					has_character_flag = debug_rider_d
+					has_character_flag = debug_rider_e
+					has_character_flag = debug_rider_f
+				}
+			}
+			set_character_flag = debug_rider_e
+			save_event_target_as = rider_e
+		}
+		# Set rider f
+		random_character = {
+			limit = {
+				at_location = ROOT
+				in_command = yes
+				is_dragon_rider = yes
+				war_with = ROOT
+				#has_character_flag = dragon_duel_team_b
+				NOR = {
+					has_character_flag = debug_rider_a
+					has_character_flag = debug_rider_b
+					has_character_flag = debug_rider_c
+					has_character_flag = debug_rider_d
+					has_character_flag = debug_rider_e
+					has_character_flag = debug_rider_f
+				}
+			}
+			set_character_flag = debug_rider_f
+			save_event_target_as = rider_f
+		}
+		any_character = {
+			limit = {
+				OR = {
+					has_character_flag = debug_rider_a
+					has_character_flag = debug_rider_b
+					has_character_flag = debug_rider_c
+					has_character_flag = debug_rider_d
+					has_character_flag = debug_rider_e
+					has_character_flag = debug_rider_f
+				}
+			}
+			clr_character_flag = debug_rider_a
+			clr_character_flag = debug_rider_b
+			clr_character_flag = debug_rider_c
+			clr_character_flag = debug_rider_d
+			clr_character_flag = debug_rider_e
+			clr_character_flag = debug_rider_f
+			clr_character_flag = dragon_duel_team_a
+			clr_character_flag = dragon_duel_team_b
+		}
+	}
+	
+	option = {
+		name = "Riders: A:[rider_a.GetID], B:[rider_b.GetID], C:[rider_c.GetID], D:[rider_d.GetID], E:[rider_e.GetID], F:[rider_f.GetID]"
+		
+		event_target:rider_a = { tooltip = { show_portrait = yes } }
+		event_target:rider_b = { tooltip = { show_portrait = yes } }
+		event_target:rider_c = { tooltip = { show_portrait = yes } }
+		event_target:rider_d = { tooltip = { show_portrait = yes } }
+		event_target:rider_e = { tooltip = { show_portrait = yes } }
+		event_target:rider_f = { tooltip = { show_portrait = yes } }
+	}
+}
+
+character_event = {
+	id = dragon.302
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		
+	}
+}
