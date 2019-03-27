@@ -312,7 +312,9 @@ character_event = {
 				troop_damage_by_dragon = yes
 			}
 		}
-		add_character_modifier = { modifier = used_dragon_in_battle_siege_hidden duration = 970 }
+		hidden_tooltip = {
+			add_character_modifier = { modifier = used_dragon_in_battle_siege_hidden duration = 970 }
+		}
 		change_infamy = {
 			value = 3
 			localisation = dragon_infamy
@@ -369,7 +371,9 @@ character_event = {
 				}
 			}
 		}
-		add_character_modifier = { modifier = used_dragon_in_battle_siege_hidden duration = 970 }
+		hidden_tooltip = {
+			add_character_modifier = { modifier = used_dragon_in_battle_siege_hidden duration = 970 }
+		}
 		change_infamy = {
 			value = 3
 			localisation = dragon_infamy
@@ -1075,34 +1079,10 @@ character_event = {
 #DRAGON DUELS#
 ##############
 
-#Enemy dragon rider is aksed whether or not to attack the attaking dragon rider
-character_event = {
-	id = dragon.300
-	
-	is_triggered_only = yes
-	
-	immediate = {
-		
-	}
-	
-	option = {
-		name = "I will fight"
-		
-		FROM = { character_event = { id = dragon.301 } }
-	}
-	
-	#option = {
-	#	name = "Flee"
-	#	
-	#	clr_global_flag = possible_dragon_duel
-	#	FROM = { character_event = { id = dragon.100 }
-	#}
-}
-
 #Find dragon riders | max. 6 | Team A is a, b, c  Team B is d, e, f 
 #FROM is the enemy commander but it doesn't scope correctly so it is unused,
 character_event = {
-	id = dragon.301
+	id = dragon.300
 	
 	desc = "DEBUG"
 	
@@ -1116,10 +1096,10 @@ character_event = {
 		in_battle = yes
 		in_command = yes
 		is_dragon_rider = yes
-		NOR = {
-			has_character_flag = dragon_duel_team_a
-			has_character_flag = dragon_duel_team_b
-		}
+		#NOR = {
+		#	has_character_flag = dragon_duel_team_a
+		#	has_character_flag = dragon_duel_team_b
+		#}
 		NOT = { has_character_modifier = in_dragon_duel }
 	}
 	
@@ -1162,22 +1142,6 @@ character_event = {
 		############################
 		
 		#### TEAM A ####
-		if = {
-			limit = {
-				NOR = {
-					has_character_flag = debug_rider_a
-					has_character_flag = debug_rider_b
-					has_character_flag = debug_rider_c
-					has_character_flag = debug_rider_d
-					has_character_flag = debug_rider_e
-					has_character_flag = debug_rider_f
-				}
-				#has_character_flag = dragon_duel_team_a
-			}
-			set_character_flag = debug_rider_a
-			save_event_target_as = rider_a
-			#character_event = { id = dragon.301 }
-		}
 		
 		# Set rider b
 		any_character = {
@@ -1198,6 +1162,7 @@ character_event = {
 			}
 			set_character_flag = debug_rider_b
 			save_event_target_as = rider_b
+			character_event = { id = dragon.301 }
 		}
 		# Set rider c
 		random_character = {
@@ -1218,6 +1183,7 @@ character_event = {
 			}
 			set_character_flag = debug_rider_c
 			save_event_target_as = rider_c
+			character_event = { id = dragon.301 }
 		}
 		
 		#### TEAM B ####
@@ -1241,7 +1207,9 @@ character_event = {
 			}
 			set_character_flag = debug_rider_d
 			save_event_target_as = rider_d
+			character_event = { id = dragon.301 }
 		}
+		
 		# Set rider e
 		random_character = {
 			limit = {
@@ -1261,6 +1229,7 @@ character_event = {
 			}
 			set_character_flag = debug_rider_e
 			save_event_target_as = rider_e
+			character_event = { id = dragon.301 }
 		}
 		# Set rider f
 		random_character = {
@@ -1281,27 +1250,13 @@ character_event = {
 			}
 			set_character_flag = debug_rider_f
 			save_event_target_as = rider_f
+			character_event = { id = dragon.301 }
 		}
 		any_character = {
-			limit = {
-				OR = {
-					has_character_flag = debug_rider_a
-					has_character_flag = debug_rider_b
-					has_character_flag = debug_rider_c
-					has_character_flag = debug_rider_d
-					has_character_flag = debug_rider_e
-					has_character_flag = debug_rider_f
-				}
-			}
-			clr_character_flag = debug_rider_a
-			clr_character_flag = debug_rider_b
-			clr_character_flag = debug_rider_c
-			clr_character_flag = debug_rider_d
-			clr_character_flag = debug_rider_e
-			clr_character_flag = debug_rider_f
 			clr_character_flag = dragon_duel_team_a
 			clr_character_flag = dragon_duel_team_b
 		}
+		clr_global_flag = possible_dragon_duel
 	}
 	
 	option = {
@@ -1316,6 +1271,49 @@ character_event = {
 	}
 }
 
+#Enemy dragon rider is aksed whether or not to attack the attaking dragon rider
+character_event = {
+	id = dragon.301
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		
+	}
+	
+	option = {
+		name = "I will fight"
+		
+		if = { #if team leader b is ROOT's ally send the fighting notification to rider_d
+			limit = {
+				has_character_flag = dragon_duel_team_b
+				NOT = { has_character_flag = rider_d }
+			}
+			event_target:rider_d = { character_event = { id = dragon.302 } }
+		}
+		
+		else = { #if not allied with rider_d send it to rider_a/FROM
+			FROM = { character_event = { id = dragon.302 } }
+		}
+	}
+	
+	option = {
+		name = "Flee"
+	
+		trigger = {
+			always = no
+		}
+		
+		if = {
+			limit = {
+				has_minor_title = title_commander
+			}
+			remove_title = title_commander
+		}
+	}
+}
+
+#ROOT/Rider A is aksed whether or not to attack the attaking dragon rider
 character_event = {
 	id = dragon.302
 	
@@ -1323,5 +1321,45 @@ character_event = {
 	
 	immediate = {
 		
+	}
+	
+	option = {
+		name = "I will fight"
+		
+		character_event = { id = dragon.303 }
+	}
+	
+	option = {
+		name = "Flee"
+	
+		trigger = {
+			always = no
+		}
+		
+		if = {
+			limit = {
+				has_character_flag = rider_a
+			}
+			character_event = { id = dragon.100 }
+		}
+	}
+}
+
+#Now calculate the duel teams's dragon strenghts
+character_event = {
+	id = dragon.303
+	
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		random_friend = {
+			limit = {
+				is_tamed_dragon = yes
+			}
+			dragon_stat_calculation = yes
+			set_character_flag = scoped_debug
+		}
 	}
 }

@@ -52,31 +52,21 @@ targetted_decisions = {
 					always = no
 					any_current_enemy = {
 						any_realm_character = {
-							use_dragon_in_battle_potential = yes
-							NOT = { has_character_modifier = in_dragon_duel_hidden_hidden }
+							is_dragon_rider = yes
+							in_command = yes
+							at_location = ROOT
+							NOT = { has_character_modifier = in_dragon_duel_hidden }
 						}
 					}
 				}
 				set_global_flag = possible_dragon_duel
-				any_current_enemy = {
-					random_realm_character = {
-						use_dragon_in_battle_potential = yes
-						NOT = { has_character_modifier = in_dragon_duel_hidden_hidden }
-						character_event = { id = dragon.300 }
-					}
-				}
+				save_event_target_as = rider_a
+				set_character_flag = dragon_duel_team_a
+				set_character_flag = set_as_duel_leader
+				set_character_flag = debug_rider_a
+				character_event = { id = dragon.300 }
 			}
-			if = {
-				limit = {
-					NOT = {
-						any_current_enemy = {
-							any_realm_character = {
-								use_dragon_in_battle_potential = yes
-								NOT = { has_character_modifier = in_dragon_duel_hidden_hidden }
-							}
-						}
-					}
-				}
+			#else = {
 				hidden_tooltip = {
 					ROOT = { add_character_modifier = { modifier = used_dragon_in_battle_hidden duration = 12 } }
 					any_friend = {
@@ -86,7 +76,7 @@ targetted_decisions = {
 					}
 					character_event = { id = dragon.100 }
 				}
-			}
+			#}
 		}
 		
 		ai_will_do = {
