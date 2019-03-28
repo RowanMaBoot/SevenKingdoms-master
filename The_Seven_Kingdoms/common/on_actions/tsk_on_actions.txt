@@ -1,0 +1,121 @@
+#character
+on_startup = {
+	events = {		
+		# The Seven Kingdoms
+		core_resource_dist.1 # Resource distribution
+		modifiers_maintenance.1 # TSK Triggered modifiers, added by blackninja9939
+		nights_watch.1 # TSK assign correct traits to the Lord Commander and vassals
+		nights_watch.2 # TSK clean up Lord Commander's Court
+		thenn.1 # TSK assign "Thenn" trait to all Thenns
+		AOPK.1 # Introduction to the Age of Petty Kings Scenario
+	}
+}
+
+#character
+on_yearly_pulse = {
+	events = {
+		# The Seven Kingdoms
+		modifiers_maintenance.1 # TSK Triggered modifiers, added by blackninja9939
+		modifiers_maintenance.3 # Checks for knight traits and switches them out based on religion.
+		tsk_leadership.2 # Cleanup, remove leadership modifiers from characters not in war
+		# nights_watch.2 # TSK remove unwanted characters from the night's watch
+		#Maintenance				
+		maintenance.31 #Human auto-assigns minor titles
+	    tsk.0116 # Gives Knight Minor Title 
+}
+
+
+#character
+on_bi_yearly_pulse = {
+	events = {
+		nights_watch.1 # Give Lord Commander and vassals black_brother and remove spouses
+		tsk_leadership.1 # Twice a year we check our lords and assign war leadership traits to them.
+		#tsk_leadership.1 # Twice a year we check our lords and remove war leadership traits from them if not at war.
+	}
+	
+	random_events = {	
+		#Estates stuff
+		1000 = liestates.4 # Consider buying estates
+		1000 = liestates.5 # If made ruler, sell estates
+		
+		#VIET EVENTS
+		#Old age events
+		10 = VIETnam.106
+		10 = VIETnam.107
+		10 = VIETnam.108
+		10 = VIETnam.109
+		10 = VIETnam.110
+		10 = VIETnam.300
+	}
+}
+
+on_combat_pulse = {
+	random_events = {
+		# 3000 = TSK_C_DE.1 # Dueling Event Chain (Commander to Commander), test event
+	}
+}
+
+# character
+on_birth = {
+	events = {
+		tsk.0115 # Bastard Nickname Effect
+	}		 
+}
+
+on_death = {
+	events = {
+		DAWN.1
+		blackwater.1 # Pass on figurehead trait  
+		liestates.7 #Estates inheritance
+		nds.0 # Non-dynastical succession	
+	}	  
+}
+
+# ROOT is the character, FROM is the title, FROMFROM is the old holder
+on_new_holder = {
+	events = {
+		modifiers_maintenance.1 # TSK Triggered modifiers, added by blackninja9939
+		administration_main.2 # TSK Administration Modifier, added by Rowan
+		nights_watch.1 # TSK Lord Commander Assignment / Cleanup
+		tsk.0141 # Remove "Ser" title from landed rulers
+		tsk.0143 # Remove "Septon" title from New High Septons
+	}
+}
+
+# ROOT is the character, FROM is the title, FROMFROM is the old holder
+on_new_holder_inheritance = {
+	events = {
+		modifiers_maintenance.1 # TSK Triggered modifiers, added by blackninja9939
+		administration_main.2 # TSK Administration Modifier, added by Rowan
+		nights_watch.1 # TSK assign correct traits to the Lord Commander and vassals
+		tsk.0141 # Remove "Ser" title from landed rulers
+		tsk.0143 # Remove "Septon" title from New High Septons
+	}
+}
+
+# ROOT is the character, FROM is the title, FROMFROM is the old holder
+on_new_holder_usurpation = {
+	events = {
+		modifiers_maintenance.1 # TSK Triggered modifiers, added by blackninja9939
+		administration_main.2 # TSK Administration Modifier, added by Rowan
+		nights_watch.1 # TSK assign correct traits to the Lord Commander and vassals
+		tsk.0141 # Remove "Ser" title from landed rulers
+		tsk.0143 # Remove "Septon" title from New High Septons
+	}
+}
+
+# Character converts culture, for whatever reason. ROOT is the character after conversion and the FROM scope has the old culture.
+on_character_convert_culture = {
+	events = {
+		thenn.2 # TSK removes "Thenn" trait from character if converting to another culture
+	}
+}
+
+# A character asks to join a society. Only works on player
+# Root = Character
+# From = Society
+on_character_ask_to_join_society = {
+	events = {
+		TSK_S.1 # Join Seven Knightly Order
+	}
+}						 
