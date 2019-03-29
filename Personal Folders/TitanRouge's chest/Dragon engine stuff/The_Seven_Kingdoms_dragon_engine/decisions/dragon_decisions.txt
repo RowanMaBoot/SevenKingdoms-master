@@ -1,0 +1,334 @@
+targetted_decisions = {
+	#	Dislpays dragon's stats
+	show_dragon_stats = {
+		only_playable = yes
+		#filter = home_court
+		#ai_target_filter = home_court
+		
+		potential = {
+			is_basic_dragon = yes
+		}
+		
+		allow = {
+		}
+		effect = {
+			# Dragon stat Calculation
+			hidden_tooltip = {
+				dragon_stat_calculation = yes
+			}
+		}
+	}
+	
+	#	Field of fire
+	use_dragon_in_battle = {
+		only_playable = yes
+		is_high_prio = yes
+		filter = self
+		#ai_target_filter = home_court
+		
+		potential = {
+			ROOT = { is_dragon_rider = yes }
+			FROM = { dragon_not_ready_for_battle = no }
+		}
+		
+		allow = {
+			custom_tooltip = {
+				text = TOOLTIP_USE_DRAGON_IN_BATTLE
+				NOT = { has_global_flag = possible_dragon_duel }
+				hidden_tooltip = {
+					ROOT = {
+						use_dragon_in_battle_potential = yes
+						NOR = {
+							has_character_modifier = used_dragon_in_battle_hidden
+							has_character_modifier = in_dragon_duel_hidden
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			if = {
+				limit = {
+					always = no
+					any_current_enemy = {
+						any_realm_character = {
+							is_dragon_rider = yes
+							in_command = yes
+							at_location = ROOT
+							NOT = { has_character_modifier = in_dragon_duel_hidden }
+						}
+					}
+				}
+				set_global_flag = possible_dragon_duel
+				save_event_target_as = rider_a
+				set_character_flag = dragon_duel_team_a
+				set_character_flag = set_as_duel_leader
+				set_character_flag = debug_rider_a
+				character_event = { id = dragon.300 }
+			}
+			#else = {
+				hidden_tooltip = {
+					ROOT = { add_character_modifier = { modifier = used_dragon_in_battle_hidden duration = 12 } }
+					any_friend = {
+						limit = { is_basic_dragon = yes } 
+						# Dragon stat calculation
+						dragon_stat_calculation = yes
+					}
+					character_event = { id = dragon.100 }
+				}
+			#}
+		}
+		
+		ai_will_do = {
+			factor = 0.8
+			modifier = {
+				factor = 2.5
+				trait = cruel
+			}
+			modifier = {
+				factor = 1.5
+				trait = ambitious
+			}
+			modifier = {
+				factor = 1.3
+				trait = wroth
+			}
+			modifier = {
+				factor = 1.3
+				trait = strategist
+			}
+			modifier = {
+				factor = 0.8
+				trait = misguided_warrior
+			}
+			modifier = {
+				factor = 1.1
+				trait = tough_soldier
+			}
+			modifier = {
+				factor = 1.3
+				trait = skilled_tactician
+			}
+			modifier = {
+				factor = 1.5
+				trait = brilliant_strategist
+			}
+			modifier = {
+				factor = 0.9
+				infamy = 5
+			}
+			modifier = {
+				factor = 0.8
+				infamy = 12.5
+			}
+			modifier = {
+				factor = 0.7
+				infamy = 25
+			}
+			modifier = {
+				factor = 0.5
+				infamy = 50
+			}
+			modifier = {
+				factor = 0.3
+				infamy = 75
+			}
+			modifier = {
+				factor = 0.2
+				infamy = 100
+			}
+		}
+	}
+	
+	#	Siege of fire
+	use_dragon_in_siege = {
+		only_playable = yes
+		is_high_prio = yes
+		filter = self
+		#ai_target_filter = home_court
+		
+		potential = {
+			ROOT = { is_dragon_rider = yes }
+			FROM = { dragon_not_ready_for_battle = no }
+		}
+		
+		allow = {
+			custom_tooltip = {
+				text = TOOLTIP_USE_DRAGON_IN_SIEGE
+				hidden_tooltip = {
+					ROOT = { 
+						use_dragon_in_siege_potential = yes
+						NOR = {
+							has_character_modifier = used_dragon_in_siege_hidden
+							has_character_modifier = in_dragon_duel_hidden
+						}
+					}
+				}
+			}
+		}
+		effect = {
+			hidden_tooltip = {
+				ROOT = { add_character_modifier = { modifier = used_dragon_in_siege_hidden duration = 12 } }
+				any_friend = {
+					limit = { is_basic_dragon = yes }
+					# Dragon stat calculation
+					dragon_stat_calculation = yes
+				}
+				character_event = { id = dragon.101 }
+			}
+		}
+		
+		ai_will_do = {
+			factor = 0.8
+			modifier = {
+				factor = 2.5
+				trait = cruel
+			}
+			modifier = {
+				factor = 1.5
+				trait = ambitious
+			}
+			modifier = {
+				factor = 1.3
+				trait = wroth
+			}
+			modifier = {
+				factor = 1.3
+				trait = strategist
+			}
+			modifier = {
+				factor = 0.8
+				trait = misguided_warrior
+			}
+			modifier = {
+				factor = 1.1
+				trait = tough_soldier
+			}
+			modifier = {
+				factor = 1.3
+				trait = skilled_tactician
+			}
+			modifier = {
+				factor = 1.5
+				trait = brilliant_strategist
+			}
+			modifier = {
+				factor = 0.9
+				infamy = 5
+			}
+			modifier = {
+				factor = 0.8
+				infamy = 12.5
+			}
+			modifier = {
+				factor = 0.7
+				infamy = 25
+			}
+			modifier = {
+				factor = 0.5
+				infamy = 50
+			}
+			modifier = {
+				factor = 0.3
+				infamy = 75
+			}
+			modifier = {
+				factor = 0.2
+				infamy = 100
+			}
+		}
+	}
+	
+	#	Face the dragon
+	tame_untamed_dragon = {
+		only_playable = yes
+		is_high_prio = yes
+		#filter = self
+		#ai_target_filter = home_court
+		
+		potential = {
+			FROM = { is_dragon_rider = no }
+			ROOT = { 
+				is_wild_dragon = yes 
+				#has_character_flag = is_wild_dragon
+				at_location = ROOT
+			}
+		}
+		
+		allow = {
+			custom_tooltip = {
+				text = TOOLTIP_TAME_UNTAMED_DRAGON
+				FROM = { is_dragon_rider = no }
+				ROOT = { 
+					is_wild_dragon = yes 
+					#has_character_flag = is_wild_dragon
+					at_location = ROOT
+				}
+			}
+		}
+		effect = {
+			ROOT = { save_event_target_as = targetted_dragon_for_taming }
+			FROM = { character_event = { id = dragon.200 } }
+		}
+		
+		ai_will_do = {
+			factor = 0.6
+			modifier = {
+				factor = 2
+				trait = brave
+			}
+			modifier = {
+				factor = 0.7
+				trait = craven
+			}
+			modifier = {
+				factor = 1.5
+				trait = ambitious
+			}
+		}
+	}
+}
+
+decisions = {
+	#	Hatch a dragon egg
+	hatch_dragon_egg = {
+		only_playable = yes
+		
+		potential = {
+			OR = {
+				has_artifact = black_dragon_egg
+				has_artifact = blue_dragon_egg
+				has_artifact = green_dragon_egg
+				has_artifact = red_dragon_egg
+				has_artifact = white_dragon_egg
+			}
+		}
+		
+		allow = {
+			prisoner = no
+		}
+		effect = {
+			random_artifact = {
+				limit = { is_artifact_equipped = yes }
+				set_artifact_flag = targetted_dragon_egg #Added for ambition
+				save_event_target_as = targetted_egg # to display the right dragon egg
+			}
+			character_event = { id = dragon.203 }
+		}
+		ai_will_do = {
+			factor = 0.8
+			modifier = {
+				factor = 1.5
+				trait = brave
+			}
+			modifier = {
+				factor = 0.7
+				trait = craven
+			}
+			modifier = {
+				factor = 2
+				trait = ambitious
+			}
+		}
+	}
+}

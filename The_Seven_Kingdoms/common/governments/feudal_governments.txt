@@ -25,8 +25,8 @@
 # military_command_government
 			
 
-# is_all_feudal_government_potential = yes                    # All feudal governments, excluding feudal
-# is_special_feudal_government_potential = yes            # All special title specific governments
+# is_all_feudal_government_potential = yes										# All feudal governments, excluding feudal
+# is_special_feudal_government_potential = yes						# All special title specific governments
 
 # Governments cascade, so it picks possible governments from highest to lowest in file.
 
@@ -84,9 +84,9 @@ feudal_governments = {
 				culture_group = dothraki_group 
 				culture_group = rhoynish_group
 				controls_religion = yes
-                is_base_feudal_government_potential = yes
-                is_special_feudal_government_potential = yes
-                is_special_other_government_potential = yes
+				is_base_feudal_government_potential = yes
+				is_special_feudal_government_potential = yes
+				is_special_other_government_potential = yes
 				is_government_potential = military_command_government
 			}
 			is_patrician = no
@@ -459,503 +459,514 @@ feudal_governments = {
 	
 	# Stepstones Government
 	stepstones_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE 
-            FORT
-            HOSPITAL
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-        }
-        frame_suffix = "_feudal"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                religion = lady_of_the_rocks
-                religion = black_flag
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 165 135 115 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE 
+			FORT
+			HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			muslim_government
+			theocratic_feudal_government
+			chinese_imperial_government
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+		}
+		frame_suffix = "_feudal"
+		potential = {
+			OR = {
+				controls_religion = no
+				has_religion_feature = religion_temporal_head
+			}
+			OR = {
+				religion = lady_of_the_rocks
+				religion = black_flag
+			}
+			NOT = {	religion = rhllor	}
+			NOT = { is_government_potential = roman_imperial_government }
+			NOT = { is_government_potential = order_government }
+			NAND = { 
+				tier = EMPEROR
+				primary_title = { has_title_flag = pretender_chinese_empire }
+				OR = {
+					culture_group = valyrian
+					has_character_flag = chinese_imperial_government_preserve
+				}
+			}
+			is_patrician = no
+		}
+				
+		color = { 165 135 115 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
 
-        can_build_tribal = no
-        
-        free_levies_in_offensive_war = yes     # Raise levies in offensive war without vassal opinion penalty.
-        
-        capital_move_delay = 600
-    }
+		can_build_tribal = no
+		
+		free_levies_in_offensive_war = yes		 # Raise levies in offensive war without vassal opinion penalty.
+		
+		capital_move_delay = 300
+	}
 	
 	# Old Gods Government
-    old_gods_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE 
-            FORT
-            HOSPITAL
-        }
-        allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
-            TRIBAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            storm_kingdom_government
-            vale_government
-            west_government
-            reach_government
-            ironborn_government
-            prince_government
-            winter_government
+	old_gods_government = {
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE 
+			FORT
+			HOSPITAL
+		}
+		allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
+			TRIBAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			storm_kingdom_government
+			vale_government
+			west_government
+			reach_government
+			ironborn_government
+			prince_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            stepstones_government
-        }
-        frame_suffix = "_feudal"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                religion = old_gods
-                religion = old_gods_beyond
-                religion = old_gods_beyond_white
-            }
-            NOT = {
-                culture_group = free_folk
-            }
-            NOR = {
-                is_china_pretender_potential = yes
-                is_special_feudal_government_potential = yes            # All special title specific governments
-            }
-            is_patrician = no
-        }
-        
-        color = { 125 121 138 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			stepstones_government
+		}
+		frame_suffix = "_feudal"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				religion = old_gods
+				religion = old_gods_beyond
+				religion = old_gods_beyond_white
+			}
+			NOT = {
+				culture_group = free_folk
+			}
+			NOR = {
+				is_china_pretender_potential = yes
+				is_special_feudal_government_potential = yes						# All special title specific governments
+			}
+			is_patrician = no
+		}
+			
+		color = { 125 121 138 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
 
-        can_build_tribal = no
-        
-        free_retract_vassalage = yes
-        free_levies_in_offensive_war = yes     # Raise levies in offensive war without vassal opinion penalty.
-        
-        ignore_in_vassal_limit_calculation = {
-            tribal_government
-        }
-	character_modifier = {
-            vassal_opinion = 10
-            learning = 2
-	    
-            city_vassal_min_levy = -0.1
-            castle_vassal_min_levy = -0.1
-            temple_vassal_min_levy = -0.1
-            city_vassal_max_levy = -0.1
-            castle_vassal_max_levy = -0.1
-            temple_vassal_max_levy = -0.1
-            
-            city_vassal_tax_modifier = -0.1
-            temple_vassal_tax_modifier = -0.1
-            castle_vassal_tax_modifier = -0.1
-            
-            land_morale = 0.1
-            land_organisation = -0.1
-        }
-    }
+		can_build_tribal = no
+		
+		free_retract_vassalage = yes
+		free_levies_in_offensive_war = yes		 # Raise levies in offensive war without vassal opinion penalty.
+		
+		ignore_in_vassal_limit_calculation = {
+			tribal_government
+		}
+		character_modifier = {
+			vassal_opinion = 10
+			learning = 2
+
+			city_vassal_min_levy = -0.1
+			castle_vassal_min_levy = -0.1
+			temple_vassal_min_levy = -0.1
+			city_vassal_max_levy = -0.1
+			castle_vassal_max_levy = -0.1
+			temple_vassal_max_levy = -0.1
+			
+			city_vassal_tax_modifier = -0.1
+			temple_vassal_tax_modifier = -0.1
+			castle_vassal_tax_modifier = -0.1
+			
+			land_morale = 0.1
+			land_organisation = -0.1
+		}
+	}
 	
 	# The Night's Watch Government
 	nights_watch_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE 
-            FORT
-            HOSPITAL
-        }
-        allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
-            TRIBAL
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            wildling_government
-        }
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                primary_title = {
-                    OR = {
-                        title = d_the_wall
-                        title = k_the_nights_watch
-                    }
-                }
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-        }
-        
-        color = { 60 70 70 }
-        
-        title_prefix = "brother_"
-        frame_suffix = "_nights_watch" 
-        
-        allow_title_revokation = no
-        allow_looting = no
-        
-        can_create_kingdoms = no
-        can_usurp_kingdoms_and_empires = no
-        
-        dukes_called_kings = no
-        barons_need_dynasty = no
-        have_gender_laws = no
-        
-        can_grant_kingdoms_and_empires_to_other_government = no
-        can_be_granted_kingdoms_and_empires_by_other_government = yes
-        
-        free_levies_in_offensive_war = yes # For players
-        
-        aggression = 0.0 # AI will never wage offensive wars.
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE 
+			FORT
+			HOSPITAL
+		}
+		allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
+			TRIBAL
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			wildling_government
+		}
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				primary_title = {
+					OR = {
+						title = d_the_wall
+						title = k_the_nights_watch
+					}
+				}
+			}
+			NOT = {
+				is_china_pretender_potential = yes
+			}
+		}
+		
+		color = { 60 70 70 }
+		
+		title_prefix = "brother_"
+		frame_suffix = "_nights_watch" 
+		
+		allow_title_revokation = no
+		allow_looting = no
+		
+		can_create_kingdoms = no
+		can_usurp_kingdoms_and_empires = no
+		
+		dukes_called_kings = no
+		barons_need_dynasty = no
+		have_gender_laws = no
+		
+		can_grant_kingdoms_and_empires_to_other_government = no
+		can_be_granted_kingdoms_and_empires_by_other_government = yes
+		
+		free_levies_in_offensive_war = yes # For players
+		
+		aggression = 0.0 # AI will never wage offensive wars.
 
-        can_build_tribal = no
-        
-        vassal_limit = 10
-        
-        capital_move_delay = 600
-    }
+		can_build_tribal = no
+		
+		vassal_limit = 10
+		
+		capital_move_delay = 600
+	}
 	
 	# Merchant Kingdom (The Arbor, etc...)
 	merchant_kingdom_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            TRADE_POST
-            CASTLE
-            FORT
-            HOSPITAL
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			TRADE_POST
+			CASTLE
+			FORT
+			HOSPITAL
 			CITY
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            storm_kingdom_government
-            vale_government
-            west_government
-            reach_government
-            ironborn_government
-            prince_government
-            winter_government
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			storm_kingdom_government
+			vale_government
+			west_government
+			reach_government
+			ironborn_government
+			prince_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            stepstones_government
-        }
-        title_prefix = "ming_"
-        frame_suffix = "_ming"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
-                    title = k_the_arbor
-                }
-                top_liege = {
-                    primary_title = { 
-                        title = k_the_arbor
-                    }
-                }
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 135 70 135 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-    
-        character_modifier = {
-            stewardship = 2
-            vassal_opinion = 5
-            global_tax_modifier = 0.10
-            dynasty_opinion = -10
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			stepstones_government
+		}
+		title_prefix = "ming_"
+		frame_suffix = "_ming"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
+					title = k_the_arbor
+				}
+				top_liege = {
+					primary_title = { 
+						title = k_the_arbor
+					}
+				}
+			}
+			NOT = {
+				is_china_pretender_potential = yes
+			}
+			is_patrician = no
+		}
+				
+		color = { 135 70 135 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
 
-            levy_size = -0.10
-            city_vassal_min_levy = -0.1
-            castle_vassal_min_levy = -0.1
-            temple_vassal_min_levy = -0.1
-            city_vassal_max_levy = -0.25
-            
-            global_tax_modifier = 0.15
-            city_vassal_tax_modifier = 0.25
-            
-        }
-        
-        capital_move_delay = 600
-    }
+		character_modifier = {
+			stewardship = 2
+			vassal_opinion = 5
+			global_tax_modifier = 0.10
+			dynasty_opinion = -10
+
+			levy_size = -0.10
+			city_vassal_min_levy = -0.1
+			castle_vassal_min_levy = -0.1
+			temple_vassal_min_levy = -0.1
+			city_vassal_max_levy = -0.25
+			
+			global_tax_modifier = 0.15
+			city_vassal_tax_modifier = 0.25
+		}
+		capital_move_delay = 600
+	}
 	
 	# Theocratic Feudal e.g. Oldtown
 	theocratic_kingdom_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            march_government
-            council_government
-            storm_kingdom_government
-            vale_government
-            west_government
-            reach_government
-            ironborn_government
-            prince_government
-            winter_government
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE
+			FORT
+			HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			march_government
+			council_government
+			storm_kingdom_government
+			vale_government
+			west_government
+			reach_government
+			ironborn_government
+			prince_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            old_gods_government
-            stepstones_government
-        }
-        frame_suffix = "_oldtown"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
-                    title = k_oldtown
-                }
-                top_liege = {
-                    primary_title = { 
-                        title = k_oldtown
-                    }
-                }
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 187 187 187 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        no_vassal_tax = { theocracy_government }
-    
-        character_modifier = {
-            learning = 2
-            vassal_opinion = 5
-            global_tax_modifier = 0.10
-            dynasty_opinion = -5
-            temple_vassal_max_levy = -0.25
-            city_vassal_tax_modifier = 0.05
-            temple_vassal_tax_modifier = -0.15
-            castle_vassal_tax_modifier = 0.10
-            
-            land_morale = 0.15
-            land_organisation = -0.1 # Zealots
-        }
-        
-        capital_move_delay = 600
-    }
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			old_gods_government
+			stepstones_government
+		}
+		frame_suffix = "_oldtown"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
+					title = k_oldtown
+				}
+				top_liege = {
+					primary_title = { 
+						title = k_oldtown
+					}
+				}
+			}
+			NOT = {
+				is_china_pretender_potential = yes
+			}
+			is_patrician = no
+		}
+		
+		color = { 187 187 187 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+		
+		no_vassal_tax = { theocracy_government }
+
+		character_modifier = {
+			learning = 2
+			vassal_opinion = 5
+			global_tax_modifier = 0.10
+			dynasty_opinion = -5
+			temple_vassal_max_levy = -0.25
+			city_vassal_tax_modifier = 0.05
+			temple_vassal_tax_modifier = -0.15
+			castle_vassal_tax_modifier = 0.10
+			
+			land_morale = 0.15
+			land_organisation = -0.1 # Zealots
+		}
+		
+		capital_move_delay = 600
+	}
 	
 	# March Government
 	march_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            council_government
-            storm_kingdom_government
-            vale_government
-            west_government
-            reach_government
-            ironborn_government
-            prince_government
-            winter_government
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE
+			FORT
+			HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			council_government
+			storm_kingdom_government
+			vale_government
+			west_government
+			reach_government
+			ironborn_government
+			prince_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            stepstones_government
-        }
-        title_prefix = "march_"
-        frame_suffix = "_march"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
-                    OR = { 
-                        title = k_starpike
-                        title = k_the_northmarch
-                        title = k_the_westmarch
-                        title = k_the_mander
-                        title = d_mandervale
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			stepstones_government
+		}
+		title_prefix = "march_"
+		frame_suffix = "_march"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
+					OR = { 
+						title = k_starpike
+						title = k_the_northmarch
+						title = k_the_westmarch
+						title = k_the_mander
+						title = d_mandervale
 						title = k_redroost
 						title = k_the_eastmarch
 						title = k_kingswood
 						title = k_talltrees
 						title = k_tumbleton
-                    }
-                }
-                liege = {
-                    primary_title = { 
-                        OR = { 
-                            title = k_starpike
-                            title = k_the_northmarch
-                            title = k_the_westmarch
-                            title = k_the_mander
-                            title = d_mandervale
+					}
+				}
+				liege = {
+					primary_title = { 
+						OR = { 
+							title = k_starpike
+							title = k_the_northmarch
+							title = k_the_westmarch
+							title = k_the_mander
+							title = d_mandervale
 							title = k_talltrees
 							title = k_redroost
 							title = k_the_eastmarch
 							title = k_kingswood
 							title = k_tumbleton
-                        }
-                    }
-                }
+						}
+					}
+				}
 				AND = {
 					is_vassal = yes
 					real_tier = KING
 				}
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 93 66 47 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        character_modifier = {
-            vassal_opinion = 5
-            martial = 1
-            stewardship = -1
-            learning = -1
-	    
-            city_vassal_tax_modifier = -0.1
-            garrison_size = 0.15
+			}
+			NOT = {
+				is_china_pretender_potential = yes
+			}
+			is_patrician = no
+		}
+		
+		color = { 93 66 47 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+		
+		character_modifier = {
+			vassal_opinion = 5
+			martial = 1
+			stewardship = -1
+			learning = -1
 
-            land_morale = 0.10
-            land_organisation = 0.05
-        }
-        
-        capital_move_delay = 600
-    }
+			city_vassal_tax_modifier = -0.1
+			garrison_size = 0.15
+
+			land_morale = 0.10
+			land_organisation = 0.05
+		}
+		
+		capital_move_delay = 600
+	}
 	
 	# Council Government e.g. Blackwater
 	council_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            storm_kingdom_government
-            vale_government
-            west_government
-            reach_government
-            ironborn_government
-            prince_government
-            winter_government
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE
+			FORT
+			HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			storm_kingdom_government
+			vale_government
+			west_government
+			reach_government
+			ironborn_government
+			prince_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            old_gods_government
-            stepstones_government
-        }
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			old_gods_government
+			stepstones_government
+		}
 		vassal_call_to_arms = {
 			march_government
 			council_government
 		}
-        title_prefix = "council_"
-        frame_suffix = "_council"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            
-            OR = {
-		        AND = {
-		            OR = {
+		title_prefix = "council_"
+		frame_suffix = "_council"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				AND = {
+					OR = {
 						has_landed_title = k_blackwater
 						has_landed_title = e_blackwater
-			        }
-			        culture = blackwatermen
+					}
+					culture = blackwatermen
 				}
 				OR = {
 					liege = {
@@ -976,385 +987,382 @@ feudal_governments = {
 					}
 				}
 			}
-            
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 120 60 95 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        character_modifier = {
-            vassal_opinion = 8
-            
-            diplomacy = 2
-            stewardship = -1
-            martial = -2
-            
-            levy_size = -0.25
-            city_vassal_min_levy = -0.1
-            castle_vassal_min_levy = -0.1
-            temple_vassal_min_levy = -0.1
-            city_vassal_max_levy = -0.25
-            castle_vassal_max_levy = -0.25
-            temple_vassal_max_levy = -0.25
-            
-            global_tax_modifier = 0.15
-            city_vassal_tax_modifier = 0.15
-            temple_vassal_tax_modifier = 0.15
-            castle_vassal_tax_modifier = 0.15
-            
-            land_morale = 0.1
-            land_organisation = 0.1
-        }
-        
-        demesne_size = 4
-        vassal_limit = -10
-        
-        capital_move_delay = 600
-    }
+			NOT = {
+				is_china_pretender_potential = yes
+			}
+			is_patrician = no
+		}
+		
+		color = { 120 60 95 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+		
+		character_modifier = {
+			vassal_opinion = 8
+			
+			diplomacy = 2
+			stewardship = -1
+			martial = -2
+			
+			levy_size = -0.25
+			city_vassal_min_levy = -0.1
+			castle_vassal_min_levy = -0.1
+			temple_vassal_min_levy = -0.1
+			city_vassal_max_levy = -0.25
+			castle_vassal_max_levy = -0.25
+			temple_vassal_max_levy = -0.25
+			
+			global_tax_modifier = 0.15
+			city_vassal_tax_modifier = 0.15
+			temple_vassal_tax_modifier = 0.15
+			castle_vassal_tax_modifier = 0.15
+			
+			land_morale = 0.1
+			land_organisation = 0.1
+		}
+		
+		demesne_size = 4
+		vassal_limit = -10
+		
+		capital_move_delay = 600
+	}
 	
 	# Storm Kingdom Government
 	storm_kingdom_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            vale_government
-            west_government
-            reach_government
-            ironborn_government
-            prince_government
-            winter_government
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE
+			FORT
+			HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			vale_government
+			west_government
+			reach_government
+			ironborn_government
+			prince_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            old_gods_government
-            stepstones_government
-        }
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			old_gods_government
+			stepstones_government
+		}
 		vassal_call_to_arms = {
 			march_government
 		}
-        title_prefix = "storm_"
-        frame_suffix = "_storm"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
-                    title = e_the_stormlands
-                }
-                top_liege = {
-                    primary_title = { 
-                        title = e_the_stormlands
-                    }
-               }
-            }
-        
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 170 170 100 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        character_modifier = {
-            vassal_opinion = 10
-            martial = 1
-            diplomacy = -1
-            intrigue = -1
-        }
-        
-        capital_move_delay = 600
+		title_prefix = "storm_"
+		frame_suffix = "_storm"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
+					title = e_the_stormlands
+				}
+				top_liege = {
+					primary_title = { 
+						title = e_the_stormlands
+					}
+				}
+			}
+			NOT = {
+				is_china_pretender_potential = yes
+			}
+			is_patrician = no
+		}
+				
+		color = { 170 170 100 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+		
+		character_modifier = {
+			vassal_opinion = 10
+			martial = 1
+			diplomacy = -1
+			intrigue = -1
+		}
+		
+		capital_move_delay = 600
 	}
-    
+		
 	vale_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            storm_kingdom_government
-            west_government
-            reach_government
-            ironborn_government
-            prince_government
-            winter_government
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE
+			FORT
+			HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			storm_kingdom_government
+			west_government
+			reach_government
+			ironborn_government
+			prince_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            stepstones_government
-        }
-        title_prefix = "vale_"
-        frame_suffix = "_vale"
-        potential = {
-            NOT = {
-            controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
-                    title = e_the_vale
-                }
-                top_liege = {
-                    primary_title = { 
-                        title = e_the_vale
-                    }
-                }
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-			 NOR = {
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			stepstones_government
+		}
+		title_prefix = "vale_"
+		frame_suffix = "_vale"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
+					title = e_the_vale
+				}
+				top_liege = {
+					primary_title = { 
+						title = e_the_vale
+					}
+				}
+			}
+			NOT = {
+				is_china_pretender_potential = yes
+			}
+			is_patrician = no
+			NOR = {
 				is_government_potential = military_command_government
-            }
-        }
-        
-        color = { 60 135 135 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        character_modifier = {
-            vassal_opinion = 5
-            intrigue = -1
-            martial = 1
-            diplomacy = 1
-            land_morale = 0.1
-            land_organisation = 0.05
-            temple_vassal_tax_modifier = -0.1
-        }
-        
-        capital_move_delay = 600
-    }     
-    
-    west_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            storm_kingdom_government
-            vale_government
-            reach_government
-            ironborn_government
-            prince_government
-            winter_government
+			}
+		}
+			
+		color = { 60 135 135 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+		
+		character_modifier = {
+			vassal_opinion = 5
+			intrigue = -1
+			martial = 1
+			diplomacy = 1
+			land_morale = 0.1
+			land_organisation = 0.05
+			temple_vassal_tax_modifier = -0.1
+		}
+		
+		capital_move_delay = 600
+	}		 
+		
+	west_government = {
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE
+			FORT
+			HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			storm_kingdom_government
+			vale_government
+			reach_government
+			ironborn_government
+			prince_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            stepstones_government
-        }
-        title_prefix = "west_"
-        frame_suffix = "_west"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
-                    title = e_the_westerlands
-                }
-                top_liege = {
-                    primary_title = { 
-                        title = e_the_westerlands
-                    }
-                }
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 60 0 0 }
-        
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        character_modifier = {
-            vassal_opinion = 5
-            stewardship = 1
-	    
-	          levy_size = 0.07
-            
-            global_tax_modifier = 0.05
-            city_vassal_tax_modifier = 0.05
-            temple_vassal_tax_modifier = 0.05
-            castle_vassal_tax_modifier = 0.05
-            
-            land_morale = 0.1
-            land_organisation = 0.1
-	    
-        }
-        
-        capital_move_delay = 600
-    } 
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			stepstones_government
+		}
+		title_prefix = "west_"
+		frame_suffix = "_west"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
+					title = e_the_westerlands
+				}
+				top_liege = {
+					primary_title = { 
+						title = e_the_westerlands
+					}
+				}
+			}
+			NOT = {
+				is_china_pretender_potential = yes
+			}
+			is_patrician = no
+		}
+		
+		color = { 60 0 0 }
+		
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+		
+		character_modifier = {
+			vassal_opinion = 5
+			stewardship = 1
 
-    reach_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            storm_kingdom_government
-            vale_government
-            west_government
-            ironborn_government
-            prince_government
-            winter_government
+			levy_size = 0.07
+			
+			global_tax_modifier = 0.05
+			city_vassal_tax_modifier = 0.05
+			temple_vassal_tax_modifier = 0.05
+			castle_vassal_tax_modifier = 0.05
+			
+			land_morale = 0.1
+			land_organisation = 0.1
+		}
+		
+		capital_move_delay = 600
+	} 
+
+	reach_government = {
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE
+			FORT
+			HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			storm_kingdom_government
+			vale_government
+			west_government
+			ironborn_government
+			prince_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            stepstones_government
-        }
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			stepstones_government
+		}
 		vassal_call_to_arms = {
 			march_government
 		}
-        title_prefix = "reach_"
-        frame_suffix = "_reach"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
-                    title = e_the_reach
-                }
-                top_liege = {
-                    primary_title = { 
-                        title = e_the_reach
-                    }
-                }
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 45 100 50 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        character_modifier = {
-             
-        }
-        
-        capital_move_delay = 600
-    } 
+		title_prefix = "reach_"
+		frame_suffix = "_reach"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
+					title = e_the_reach
+				}
+				top_liege = {
+					primary_title = { 
+						title = e_the_reach
+					}
+				}
+			}
+			NOT = {
+				is_china_pretender_potential = yes
+			}
+			is_patrician = no
+		}
+		
+		color = { 45 100 50 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+		
+		character_modifier = {
+			
+		}
+		
+		capital_move_delay = 600
+	} 
 
-    ironborn_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            storm_kingdom_government
-            vale_government
-            west_government
-            reach_government
-            prince_government
-            winter_government
+	ironborn_government = {
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE
+			FORT
+			HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			storm_kingdom_government
+			vale_government
+			west_government
+			reach_government
+			prince_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            feudal_government
-            old_gods_government
-            stepstones_government
-        }
-        frame_suffix = "_iron"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			feudal_government
+			old_gods_government
+			stepstones_government
+		}
+		frame_suffix = "_iron"
+		potential = {
+			NOT = {
+					controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
 					OR = {
 						title = e_the_iron_islands
 						title = k_pyke
@@ -1363,9 +1371,9 @@ feudal_governments = {
 						title = k_seastone_isles
 						title = k_orkmont
 					}
-                }
-                top_liege = {
-                    primary_title = { 
+				}
+				top_liege = {
+					primary_title = { 
 						OR = {
 							title = e_the_iron_islands
 							title = k_pyke
@@ -1374,187 +1382,187 @@ feudal_governments = {
 							title = k_seastone_isles
 							title = k_orkmont
 						}
-                    }
-                }
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 75 80 90 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        character_modifier = {
-            diplomacy = -1
-            intrigue = 1
-            martial = 1
-        }
-        
-        capital_move_delay = 600
-    }
+					}
+				}
+			}
+			NOT = {
+					is_china_pretender_potential = yes
+			}
+			is_patrician = no
+		}
+		
+		color = { 75 80 90 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+		
+		character_modifier = {
+			diplomacy = -1
+			intrigue = 1
+			martial = 1
+		}
+		
+		capital_move_delay = 600
+	}
 
-    prince_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            CITY
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            storm_kingdom_government
-            vale_government
-            west_government
-            reach_government
-            ironborn_government
-            winter_government
+	prince_government = {
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+				CASTLE
+				CITY
+				FORT
+				HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			storm_kingdom_government
+			vale_government
+			west_government
+			reach_government
+			ironborn_government
+			winter_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            stepstones_government
-        }
-        title_prefix = "prince_"
-        frame_suffix = "_prince"
-        potential = {
-            NOT = {
-            controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
-                    OR = {
-                        title = k_wendwater
-                        title = d_dragonstone
-                        title = k_dragonstone 
-                        title = k_lemonwood
-                    }
-                }
-                top_liege = { 
-                    primary_title = { 
-                        OR = {
-                            title = k_wendwater
-                            title = d_dragonstone
-                            title = k_dragonstone 
-                            title = k_lemonwood
-                        }
-                    }
-                }
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 35 100 100 }
-        
-        can_be_granted_kingdoms_and_empires_by_other_government = no
-        can_grant_kingdoms_and_empires_to_other_government = no
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        character_modifier = {
-            vassal_opinion = 5
-            diplomacy = 1
-        }
-        
-        capital_move_delay = 600
-    }
-    
-    winter_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            storm_kingdom_government
-            vale_government
-            west_government
-            reach_government
-            ironborn_government
-            prince_government
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			stepstones_government
+		}
+		title_prefix = "prince_"
+		frame_suffix = "_prince"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
+					OR = {
+						title = k_wendwater
+						title = d_dragonstone
+						title = k_dragonstone 
+						title = k_lemonwood
+					}
+				}
+				top_liege = { 
+					primary_title = { 
+						OR = {
+							title = k_wendwater
+							title = d_dragonstone
+							title = k_dragonstone 
+							title = k_lemonwood
+						}
+					}
+				}
+			}
+			NOT = {
+					is_china_pretender_potential = yes
+			}
+			is_patrician = no
+		}
+			
+		color = { 35 100 100 }
+		
+		can_be_granted_kingdoms_and_empires_by_other_government = no
+		can_grant_kingdoms_and_empires_to_other_government = no
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+		
+		character_modifier = {
+			vassal_opinion = 5
+			diplomacy = 1
+		}
+		
+		capital_move_delay = 600
+	}
+		
+	winter_government = {
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE
+			FORT
+			HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			storm_kingdom_government
+			vale_government
+			west_government
+			reach_government
+			ironborn_government
+			prince_government
 			military_command_government
 			dorne_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            stepstones_government
-        }
-        frame_suffix = "_stark"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
-                    OR = {
-                        title = k_winterfell
-                        title = e_the_north
-                        title = k_the_north
-                    }
-                }
-                top_liege = {
-                    primary_title = { 
-                        OR = {
-                            title = k_winterfell
-                            title = e_the_north
-                            title = k_the_north
-                        }
-                    }
-                }
-            }
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 195 195 170 }
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+				tribal_government
+				wildling_government
+				stepstones_government
+		}
+		frame_suffix = "_stark"
+		potential = {
+				NOT = {
+						controls_religion = yes
+				}
+				OR = {
+					primary_title = { 
+						OR = {
+							title = k_winterfell
+							title = e_the_north
+							title = k_the_north
+						}
+					}
+					top_liege = {
+						primary_title = { 
+							OR = {
+								title = k_winterfell
+								title = e_the_north
+								title = k_the_north
+							}
+						}
+					}
+				}
+				NOT = {
+						is_china_pretender_potential = yes
+				}
+				is_patrician = no
+		}
+		
+		color = { 195 195 170 }
 
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        character_modifier = {
-            vassal_opinion = 5
-            intrigue = -1
-            diplomacy = 1
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+		
+		character_modifier = {
+			vassal_opinion = 5
+			intrigue = -1
+			diplomacy = 1
 			land_morale = 0.1
-        }
-        
-        capital_move_delay = 600
-    }
+		}
+		
+		capital_move_delay = 600
+	}
 	
 	military_command_government = {
 		preferred_holdings = { CASTLE }
@@ -1568,21 +1576,21 @@ feudal_governments = {
 		}
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            storm_kingdom_government
-            vale_government
-            west_government
-            reach_government
-            ironborn_government
-            prince_government
-			winter_government
-			dorne_government
+				muslim_government
+				old_gods_government
+				nights_watch_government
+				merchant_kingdom_government
+				theocratic_kingdom_government
+				march_government
+				council_government
+				storm_kingdom_government
+				vale_government
+				west_government
+				reach_government
+				ironborn_government
+				prince_government
+				winter_government
+				dorne_government
 		}
 		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
 			#tribal_government
@@ -1610,7 +1618,7 @@ feudal_governments = {
 		have_gender_laws = no
 		barons_need_dynasty = no
 		title_prefix = "command_"
-       		frame_suffix = "_nights_watch" 
+		frame_suffix = "_nights_watch" 
 
 		can_build_temple = no
 		can_build_tribal = no
@@ -1622,77 +1630,76 @@ feudal_governments = {
 	}
 	
 	dorne_government = {
-        preferred_holdings = { CASTLE }
-        allowed_holdings = { 
-            CASTLE
-            FORT
-            HOSPITAL
-        }
-        accepts_liege_governments = { # Gets the wrong religion modifier instead
-            feudal_government
-            muslim_government
-            old_gods_government
-            nights_watch_government
-            merchant_kingdom_government
-            theocratic_kingdom_government
-            march_government
-            council_government
-            vale_government
-            west_government
-            reach_government
-            ironborn_government
-            prince_government
-            winter_government
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+				CASTLE
+				FORT
+				HOSPITAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			old_gods_government
+			nights_watch_government
+			merchant_kingdom_government
+			theocratic_kingdom_government
+			march_government
+			council_government
+			vale_government
+			west_government
+			reach_government
+			ironborn_government
+			prince_government
+			winter_government
 			military_command_government
 			storm_government
-        }
-        free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
-            tribal_government
-            wildling_government
-            old_gods_government
-            stepstones_government
-        }
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+			wildling_government
+			old_gods_government
+			stepstones_government
+		}
 		vassal_call_to_arms = {
 			march_government
 		}
-        title_prefix = "prince_"
-        frame_suffix = "_dorne"
-        potential = {
-            NOT = {
-                controls_religion = yes
-            }
-            OR = {
-                primary_title = { 
-                    title = e_dorne
-                }
-                top_liege = {
-                    primary_title = { 
-                        title = e_dorne
-                    }
-               }
-            }
-        
-            NOT = {
-                is_china_pretender_potential = yes
-            }
-            is_patrician = no
-        }
-        
-        color = { 198 193 132 }
-        
-        dukes_called_kings = yes
-        barons_need_dynasty = yes
-        
-        can_build_tribal = no
-        
-        character_modifier = {
-            vassal_opinion = 8
-            martial = 2
+		title_prefix = "prince_"
+		frame_suffix = "_dorne"
+		potential = {
+			NOT = {
+				controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
+					title = e_dorne
+				}
+				top_liege = {
+					primary_title = { 
+						title = e_dorne
+					}
+				}
+			}
+	
+			NOT = {
+				is_china_pretender_potential = yes
+			}
+			is_patrician = no
+		}
+			
+		color = { 198 193 132 }
+		
+		dukes_called_kings = yes
+		barons_need_dynasty = yes
+		
+		can_build_tribal = no
+			
+		character_modifier = {
+			vassal_opinion = 8
+			martial = 2
 			siege_defence = 0.2
 			retinuesize_perc = -0.1
 			attrition = -0.1
-        }
-        
-        capital_move_delay = 600
-    }     
+		}
+		capital_move_delay = 600
+	}		 
 }

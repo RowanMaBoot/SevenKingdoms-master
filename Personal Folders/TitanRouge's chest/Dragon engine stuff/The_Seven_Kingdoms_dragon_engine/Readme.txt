@@ -7,6 +7,11 @@ All scripts are written from scratch. They aren't ported or copied. All script s
 
 If you have any suggestions or bug reports let me know.
 
+
+#############################
+Ideas:
+-add dragon rider rank traits like in EMF poor, ..., formidable warrior
+
 #############################
 Credits:
 #############################
