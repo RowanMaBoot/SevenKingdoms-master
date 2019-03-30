@@ -49,7 +49,7 @@ targetted_decisions = {
 		effect = {
 			if = {
 				limit = {
-					always = no
+					has_game_rule = { name = dragon_duels value = enabled }
 					any_current_enemy = {
 						any_realm_character = {
 							is_dragon_rider = yes
@@ -59,14 +59,25 @@ targetted_decisions = {
 						}
 					}
 				}
-				set_global_flag = possible_dragon_duel
-				save_event_target_as = rider_a
-				set_character_flag = dragon_duel_team_a
-				set_character_flag = set_as_duel_leader
-				set_character_flag = debug_rider_a
-				character_event = { id = dragon.300 }
+				hidden_tooltip = {
+					set_global_flag = possible_dragon_duel
+					save_event_target_as = rider_a
+					save_persistent_event_target = { name = rider_a scope = event_target:rider_a }
+					set_character_flag = dragon_duel_team_a
+					set_character_flag = debug_rider_a
+					any_friend = {
+						limit = {
+							is_tamed_dragon = yes
+						}
+						dragon_stat_calculation = yes
+						set_variable = { which = global_dragon_strenght_var_a which = dragon_strenght_var }
+						set_character_flag = debug_dragon_a
+						save_event_target_as = dragon_a
+					}
+					character_event = { id = dragon.300 }
+				}
 			}
-			#else = {
+			else = {
 				hidden_tooltip = {
 					ROOT = { add_character_modifier = { modifier = used_dragon_in_battle_hidden duration = 12 } }
 					any_friend = {
@@ -76,7 +87,7 @@ targetted_decisions = {
 					}
 					character_event = { id = dragon.100 }
 				}
-			#}
+			}
 		}
 		
 		ai_will_do = {
