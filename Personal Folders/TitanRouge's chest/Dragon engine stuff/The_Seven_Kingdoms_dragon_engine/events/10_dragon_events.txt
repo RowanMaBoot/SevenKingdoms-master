@@ -295,7 +295,7 @@ character_event = {
 					#has_siege = no
 				}
 				character_event = { id = dragon.102 }
-				opinion = { modifier = used_dragon_a_pergainst_me who = ROOT years = 6 }
+				opinion = { modifier = used_dragon_against_me who = ROOT years = 6 }
 				troop_damage_by_dragon = yes
 			}
 		}
@@ -339,7 +339,7 @@ character_event = {
 			top_liege = { character_event = { id = dragon.108 days = 4 } }
 			any_courtier = {
 				limit = { at_location = ROOT }
-				opinion = { modifier = used_dragon_a_pergainst_me who = ROOT years = 6 }
+				opinion = { modifier = used_dragon_against_me who = ROOT years = 6 }
 				random = {
 					chance = 50
 					character_event = { id = dragon.103 }
@@ -694,11 +694,11 @@ character_event = {
 		}
 		prestige = -1000
 		if = {
-			limit = { NOT = { has_trait = commited_mass_killing } }
+			limit = { NOT = { trait = commited_mass_killing } }
 			add_trait = commited_mass_killing
 		}
 		if = {
-			limit = { NOT = { has_trait = cruel } }
+			limit = { NOT = { trait = cruel } }
 			add_trait = cruel
 		}
 	}
@@ -834,7 +834,7 @@ character_event = {
 			50 = {
 				custom_tooltip = {
 					text = TOOLTIP_DRAGON200_B
-					death = { death_reason = death_dragon_f_perire2 killer = event_target:targetted_dragon_f_peror_taming }
+					death = { death_reason = death_dragon_fire2 killer = event_target:targetted_dragon_f_peror_taming }
 				}
 			}
 		}
@@ -1093,10 +1093,11 @@ character_event = {
 		# Rider a is set in the decision
 		
 		# Set rider b
-		random_character = {
+		dragon_rider = {
 			limit = {
 				at_location = ROOT
 				in_command = yes
+				in_battle = yes
 				is_dragon_rider = yes
 				NOT = { war_with = ROOT }
 				NOR = {
@@ -1107,29 +1108,32 @@ character_event = {
 					has_character_flag = debug_rider_e
 					has_character_flag = debug_rider_f
 				}
-			}
+			}	
 			set_character_flag = debug_rider_b
 			event_target:rider_a = {
 				set_character_flag = rider_b_chosen
 			}
 			save_event_target_as = rider_b
 			save_persistent_event_target = { name = rider_b_per scope = event_target:rider_b }
+			dragon_riding_skill_calculation = yes
+			set_variable = { which = global_riding_skill_var_b which = riding_skill_var }
 			any_friend = {
 				limit = {
 					is_tamed_dragon = yes
 				}
 				dragon_stat_calculation = yes
-				set_variable = { which = global_dragon_strenght_var_b which = dragon_strenght_var }
+				set_variable = { which = global_dragon_strength_var_b which = dragon_strenght_var }
 				set_character_flag = debug_dragon_b
 				save_event_target_as = dragon_b
 				save_persistent_event_target = { name = dragon_b_per scope = event_target:dragon_b }
 			}
 		}
 		# Set rider c
-		random_character = {
+		dragon_rider = {
 			limit = {
 				at_location = ROOT
 				in_command = yes
+				in_battle = yes
 				is_dragon_rider = yes
 				NOT = { war_with = ROOT }
 				NOR = {
@@ -1147,12 +1151,14 @@ character_event = {
 			}
 			save_event_target_as = rider_c
 			save_persistent_event_target = { name = rider_c_per scope = event_target:rider_c }
+			dragon_riding_skill_calculation = yes
+			set_variable = { which = global_riding_skill_var_c which = riding_skill_var }
 			any_friend = {
 				limit = {
 					is_tamed_dragon = yes
 				}
 				dragon_stat_calculation = yes
-				set_variable = { which = global_dragon_strenght_var_c which = dragon_strenght_var }
+				set_variable = { which = global_dragon_strength_var_c which = dragon_strenght_var }
 				set_character_flag = debug_dragon_c
 				save_event_target_as = dragon_c
 				save_persistent_event_target = { name = dragon_c_per scope = event_target:dragon_c }
@@ -1162,10 +1168,11 @@ character_event = {
 		#### TEAM B ####
 		
 		# Set rider d
-		random_character = {
+		dragon_rider = {
 			limit = {
 				at_location = ROOT
 				in_command = yes
+				in_battle = yes
 				is_dragon_rider = yes
 				war_with = ROOT
 				NOR = {
@@ -1176,16 +1183,18 @@ character_event = {
 					has_character_flag = debug_rider_e
 					has_character_flag = debug_rider_f
 				}
-			}
+			} 
 			set_character_flag = debug_rider_d
 			save_event_target_as = rider_d
 			save_persistent_event_target = { name = rider_d_per scope = event_target:rider_d }
+			dragon_riding_skill_calculation = yes
+			set_variable = { which = global_riding_skill_var_d which = riding_skill_var }
 			any_friend = {
 				limit = {
 					is_tamed_dragon = yes
 				}
 				dragon_stat_calculation = yes
-				set_variable = { which = global_dragon_strenght_var_d which = dragon_strenght_var }
+				set_variable = { which = global_dragon_strength_var_d which = dragon_strenght_var }
 				set_character_flag = debug_dragon_d
 				save_event_target_as = dragon_d
 				save_persistent_event_target = { name = dragon_d_per scope = event_target:dragon_d }
@@ -1193,10 +1202,11 @@ character_event = {
 		}
 		
 		# Set rider e
-		random_character = {
+		dragon_rider = {
 			limit = {
 				at_location = ROOT
 				in_command = yes
+				in_battle = yes
 				is_dragon_rider = yes
 				war_with = ROOT
 				NOR = {
@@ -1207,19 +1217,21 @@ character_event = {
 					has_character_flag = debug_rider_e
 					has_character_flag = debug_rider_f
 				}
-			}
+			}	
 			set_character_flag = debug_rider_e
 			event_target:rider_d = {
 				set_character_flag = rider_e_chosen
 			}
 			save_event_target_as = rider_e
 			save_persistent_event_target = { name = rider_e_per scope = event_target:rider_e }
+			dragon_riding_skill_calculation = yes
+			set_variable = { which = global_riding_skill_var_e which = riding_skill_var }
 			any_friend = {
 				limit = {
 					is_tamed_dragon = yes
 				}
 				dragon_stat_calculation = yes
-				set_variable = { which = global_dragon_strenght_var_e which = dragon_strenght_var }
+				set_variable = { which = global_dragon_strength_var_e which = dragon_strenght_var }
 				set_character_flag = debug_dragon_e
 				save_event_target_as = dragon_e
 				save_persistent_event_target = { name = dragon_e_per scope = event_target:dragon_e }
@@ -1227,10 +1239,11 @@ character_event = {
 		}
 		
 		# Set rider f
-		random_character = {
+		dragon_rider = {
 			limit = {
 				at_location = ROOT
 				in_command = yes
+				in_battle = yes
 				is_dragon_rider = yes
 				war_with = ROOT
 				NOR = {
@@ -1248,17 +1261,281 @@ character_event = {
 			}
 			save_event_target_as = rider_f
 			save_persistent_event_target = { name = rider_f_per scope = event_target:rider_f }
+			dragon_riding_skill_calculation = yes
+			set_variable = { which = global_riding_skill_var_f which = riding_skill_var }
 			any_friend = {
 				limit = {
 					is_tamed_dragon = yes
 				}
 				dragon_stat_calculation = yes
-				set_variable = { which = global_dragon_strenght_var_f which = dragon_strenght_var }
+				set_variable = { which = global_dragon_strength_var_f which = dragon_strenght_var }
 				set_character_flag = debug_dragon_f
 				save_event_target_as = dragon_f
 				save_persistent_event_target = { name = dragon_f_per scope = event_target:dragon_f }
 			}
 		}
+		
+		################################################
+		
+		#This sets the highest tier commander as rider D | Not necessary for team A, I guess. The rider who starts the attack should stay rider A.
+		event_target:rider_d = {
+			if = {
+				limit = {
+					NOT = { tier = EMPEROR }
+				}
+				if = {
+					limit = {
+						tier = KING
+						OR = {
+							event_target:rider_e = { higher_tier_than = KING }
+							event_target:rider_f = { higher_tier_than = KING }
+						}
+					}
+					if = {
+						limit = {
+							event_target:rider_e = { higher_tier_than = KING }
+						}
+						event_target:rider_e = {
+							clr_character_flag = debug_rider_e
+							set_character_flag = debug_rider_d
+							save_event_target_as = rider_d
+							save_persistent_event_target = { name = rider_d_per scope = event_target:rider_d }
+							any_friend = {
+								limit = {
+									is_tamed_dragon = yes
+								}
+								clr_character_flag = debug_dragon_e
+								set_character_flag = debug_dragon_d
+								save_event_target_as = dragon_d
+								save_persistent_event_target = { name = dragon_d_per scope = event_target:dragon_d }
+								dragon_stat_calculation = yes
+								set_variable = { which = global_dragon_strength_var_d which = dragon_strenght_var }
+							}
+						}
+						clr_character_flag = debug_rider_d
+						set_character_flag = debug_rider_e
+						save_event_target_as = rider_e
+						save_persistent_event_target = { name = rider_e_per scope = event_target:rider_e }
+						any_friend = {
+							limit = {
+								is_tamed_dragon = yes
+							}
+							clr_character_flag = debug_dragon_d
+							set_character_flag = debug_dragon_e
+							save_event_target_as = dragon_e
+							save_persistent_event_target = { name = dragon_e_per scope = event_target:dragon_e }
+							dragon_stat_calculation = yes
+							set_variable = { which = global_dragon_strength_var_e which = dragon_strenght_var }
+						}
+					}
+					if = {
+						limit = {
+							event_target:rider_f = { higher_tier_than = KING }
+						}
+						event_target:rider_f = {
+							clr_character_flag = debug_rider_f
+							set_character_flag = debug_rider_d
+							save_event_target_as = rider_d
+							save_persistent_event_target = { name = rider_d_per scope = event_target:rider_d }
+							any_friend = {
+								limit = {
+									is_tamed_dragon = yes
+								}
+								clr_character_flag = debug_dragon_f
+								set_character_flag = debug_dragon_d
+								save_event_target_as = dragon_d
+								save_persistent_event_target = { name = dragon_d_per scope = event_target:dragon_d }
+								dragon_stat_calculation = yes
+								set_variable = { which = global_dragon_strength_var_d which = dragon_strenght_var }
+							}
+						}
+						clr_character_flag = debug_rider_d
+						set_character_flag = debug_rider_f
+						save_event_target_as = rider_f
+						save_persistent_event_target = { name = rider_f_per scope = event_target:rider_f }
+						any_friend = {
+							limit = {
+								is_tamed_dragon = yes
+							}
+							clr_character_flag = debug_dragon_d
+							set_character_flag = debug_dragon_f
+							save_event_target_as = dragon_f
+							save_persistent_event_target = { name = dragon_f_per scope = event_target:dragon_f }
+							dragon_stat_calculation = yes
+							set_variable = { which = global_dragon_strength_var_f which = dragon_strenght_var }
+						}
+					}
+				}
+				if = {
+					limit = {
+						tier = DUKE
+						OR = {
+							event_target:rider_e = { higher_tier_than = DUKE }
+							event_target:rider_f = { higher_tier_than = DUKE }
+						}
+					}
+					if = {
+						limit = {
+							event_target:rider_e = { higher_tier_than = DUKE }
+						}
+						event_target:rider_e = {
+							clr_character_flag = debug_rider_e
+							set_character_flag = debug_rider_d
+							save_event_target_as = rider_d
+							save_persistent_event_target = { name = rider_d_per scope = event_target:rider_d }
+							any_friend = {
+								limit = {
+									is_tamed_dragon = yes
+								}
+								clr_character_flag = debug_dragon_e
+								set_character_flag = debug_dragon_d
+								save_event_target_as = dragon_d
+								save_persistent_event_target = { name = dragon_d_per scope = event_target:dragon_d }
+								dragon_stat_calculation = yes
+								set_variable = { which = global_dragon_strength_var_d which = dragon_strenght_var }
+							}
+						}
+						clr_character_flag = debug_rider_d
+						set_character_flag = debug_rider_e
+						save_event_target_as = rider_e
+						save_persistent_event_target = { name = rider_e_per scope = event_target:rider_e }
+						any_friend = {
+							limit = {
+								is_tamed_dragon = yes
+							}
+							clr_character_flag = debug_dragon_d
+							set_character_flag = debug_dragon_e
+							save_event_target_as = dragon_e
+							save_persistent_event_target = { name = dragon_e_per scope = event_target:dragon_e }
+							dragon_stat_calculation = yes
+							set_variable = { which = global_dragon_strength_var_e which = dragon_strenght_var }
+						}
+					}
+					if = {
+						limit = {
+							event_target:rider_f = { higher_tier_than = DUKE }
+						}
+						event_target:rider_f = {
+							clr_character_flag = debug_rider_f
+							set_character_flag = debug_rider_d
+							save_event_target_as = rider_d
+							save_persistent_event_target = { name = rider_d_per scope = event_target:rider_d }
+							any_friend = {
+								limit = {
+									is_tamed_dragon = yes
+								}
+								clr_character_flag = debug_dragon_f
+								set_character_flag = debug_dragon_d
+								save_event_target_as = dragon_d
+								save_persistent_event_target = { name = dragon_d_per scope = event_target:dragon_d }
+								dragon_stat_calculation = yes
+								set_variable = { which = global_dragon_strength_var_d which = dragon_strenght_var }
+							}
+						}
+						clr_character_flag = debug_rider_d
+						set_character_flag = debug_rider_f
+						save_event_target_as = rider_f
+						save_persistent_event_target = { name = rider_f_per scope = event_target:rider_f }
+						any_friend = {
+							limit = {
+								is_tamed_dragon = yes
+							}
+							clr_character_flag = debug_dragon_d
+							set_character_flag = debug_dragon_f
+							save_event_target_as = dragon_f
+							save_persistent_event_target = { name = dragon_f_per scope = event_target:dragon_f }
+							dragon_stat_calculation = yes
+							set_variable = { which = global_dragon_strength_var_f which = dragon_strenght_var }
+						}
+					}
+				}
+				if = {
+					limit = {
+						tier = COUNT
+						OR = {
+							event_target:rider_e = { higher_tier_than = COUNT }
+							event_target:rider_f = { higher_tier_than = COUNT }
+						}
+					}
+					if = {
+						limit = {
+							event_target:rider_e = { higher_tier_than = COUNT }
+						}
+						event_target:rider_e = {
+							clr_character_flag = debug_rider_e
+							set_character_flag = debug_rider_d
+							save_event_target_as = rider_d
+							save_persistent_event_target = { name = rider_d_per scope = event_target:rider_d }
+							any_friend = {
+								limit = {
+									is_tamed_dragon = yes
+								}
+								clr_character_flag = debug_dragon_e
+								set_character_flag = debug_dragon_d
+								save_event_target_as = dragon_d
+								save_persistent_event_target = { name = dragon_d_per scope = event_target:dragon_d }
+								dragon_stat_calculation = yes
+								set_variable = { which = global_dragon_strength_var_d which = dragon_strenght_var }
+							}
+						}
+						clr_character_flag = debug_rider_d
+						set_character_flag = debug_rider_e
+						save_event_target_as = rider_e
+						save_persistent_event_target = { name = rider_e_per scope = event_target:rider_e }
+						any_friend = {
+							limit = {
+								is_tamed_dragon = yes
+							}
+							clr_character_flag = debug_dragon_d
+							set_character_flag = debug_dragon_e
+							save_event_target_as = dragon_e
+							save_persistent_event_target = { name = dragon_e_per scope = event_target:dragon_e }
+							dragon_stat_calculation = yes
+							set_variable = { which = global_dragon_strength_var_e which = dragon_strenght_var }
+						}
+					}
+					if = {
+						limit = {
+							event_target:rider_f = { higher_tier_than = COUNT }
+						}
+						event_target:rider_f = {
+							clr_character_flag = debug_rider_f
+							set_character_flag = debug_rider_d
+							save_event_target_as = rider_d
+							save_persistent_event_target = { name = rider_d_per scope = event_target:rider_d }
+							any_friend = {
+								limit = {
+									is_tamed_dragon = yes
+								}
+								clr_character_flag = debug_dragon_f
+								set_character_flag = debug_dragon_d
+								save_event_target_as = dragon_d
+								save_persistent_event_target = { name = dragon_d_per scope = event_target:dragon_d }
+								dragon_stat_calculation = yes
+								set_variable = { which = global_dragon_strength_var_d which = dragon_strenght_var }
+							}
+						}
+						clr_character_flag = debug_rider_d
+						set_character_flag = debug_rider_f
+						save_event_target_as = rider_f
+						save_persistent_event_target = { name = rider_f_per scope = event_target:rider_f }
+						any_friend = {
+							limit = {
+								is_tamed_dragon = yes
+							}
+							clr_character_flag = debug_dragon_d
+							set_character_flag = debug_dragon_f
+							save_event_target_as = dragon_f
+							save_persistent_event_target = { name = dragon_f_per scope = event_target:dragon_f }
+							dragon_stat_calculation = yes
+							set_variable = { which = global_dragon_strength_var_f which = dragon_strenght_var }
+						}
+					}
+				}
+			}
+		}
+		
+		#####################################
 		
 		#If there is no other rider in team A
 		if = {
@@ -1310,6 +1587,25 @@ character_event = {
 			set_character_flag = 2_riders_duel
 		}
 		
+		#Clearing some flags
+		dragon_rider = {
+			limit = {
+				at_location = ROOT
+				in_command = yes
+				in_battle = yes
+				OR = {
+					has_character_flag = rider_b_chosen
+					has_character_flag = rider_c_chosen
+					has_character_flag = rider_e_chosen
+					has_character_flag = rider_f_chosen
+				}
+			}
+			clr_character_flag = rider_b_chosen
+			clr_character_flag = rider_c_chosen
+			clr_character_flag = rider_e_chosen
+			clr_character_flag = rider_f_chosen
+		}
+		
 		event_target:rider_d = { character_event = { id = dragon.301 } }
 		
 		#clr_global_flag = possible_dragon_d_peruel
@@ -1348,8 +1644,8 @@ character_event = {
 			limit = {
 				has_character_flag = debug_rider_d
 			}
-			set_variable = { which = dragon_strength_team_b which = global_dragon_strenght_var_d }
-			set_variable = { which = global_dragon_strength_team_b which = dragon_strength_team_b }
+			set_variable = { which = dragon_strength_team_b which = global_dragon_strength_var_d }
+			change_variable = { which = dragon_strength_team_b which = global_riding_skill_var_d }
 		}
 		
 		#Rider A is notified about Rider D engaging the duel
@@ -1383,18 +1679,19 @@ character_event = {
 	option = {
 		name = "What a fool. He is as good as dead!"
 		
-		#Calculate duel team A's dragon strenght
+		#Sets rider A's dragon strenght
 		if = {
 			limit = {
 				has_character_flag = debug_rider_a
 			}
-			set_variable = { which = dragon_strength_team_a which = global_dragon_strenght_var_a }
-			change_variable = { which = dragon_strength_team_a which = global_dragon_strenght_var_b }
-			change_variable = { which = dragon_strength_team_a which = global_dragon_strenght_var_c }
-			set_variable = { which = global_dragon_strength_team_a which = dragon_strength_team_a }
+			hidden_tooltip = {
+				set_variable = { which = dragon_strength_team_a which = global_dragon_strength_var_a }
+				change_variable = { which = dragon_strength_team_a which = global_riding_skill_var_a }
+				set_variable = { which = global_dragon_strength_team_a which = dragon_strength_team_a }
+			}
 		}
 		
-		#Ask allied riders to join you
+		#Sets rider D's dragon strenght
 		if = { #If there are non...
 			limit = {
 				OR = {
@@ -1502,50 +1799,54 @@ letter_event = {
 	option = {
 		name = "Together we will defeat the enemy!"
 		
-		#Calculate duel team A's dragon strenght
-		if = {
-			limit = {
-				has_character_flag = debug_rider_a
-			}
-			set_variable = { which = dragon_strength_team_a which = global_dragon_strenght_var_a }
-			#If FROM is rider B
+		hidden_tooltip = {
+			#Calculate duel team A's dragon strenght
 			if = {
 				limit = {
-					FROM = { has_character_flag = debug_rider_b }
+					has_character_flag = debug_rider_a
 				}
-				change_variable = { which = dragon_strength_team_a which = global_dragon_strenght_var_b }
+				#If FROM is rider B
+				if = {
+					limit = {
+						FROM = { has_character_flag = debug_rider_b }
+					}
+					change_variable = { which = dragon_strength_team_a which = global_dragon_strength_var_b }
+					change_variable = { which = dragon_strength_team_a which = global_riding_skill_var_b }
+				}
+				#If FROM is rider C
+				if = {
+					limit = {
+						FROM = { has_character_flag = debug_rider_c }
+					}
+					change_variable = { which = dragon_strength_team_a which = global_dragon_strength_var_c }
+					change_variable = { which = dragon_strength_team_a which = global_riding_skill_var_c }
+				}
+				set_variable = { which = global_dragon_strength_team_a which = dragon_strength_team_a }
 			}
-			#If FROM is rider C
+			
+			#Calculate duel team B's dragon strenght
 			if = {
 				limit = {
-					FROM = { has_character_flag = debug_rider_c }
+					has_character_flag = debug_rider_d
 				}
-				change_variable = { which = dragon_strength_team_a which = global_dragon_strenght_var_c }
-			}
-			set_variable = { which = global_dragon_strength_team_a which = dragon_strength_team_a }
-		}
-		
-		#Calculate duel team B's dragon strenght
-		if = {
-			limit = {
-				has_character_flag = debug_rider_d
-			}
-			set_variable = { which = dragon_strength_team_d which = global_dragon_strenght_var_d }
-			#If FROM is rider E
-			if = {
-				limit = {
-					FROM = { has_character_flag = debug_rider_e }
+				#If FROM is rider E
+				if = {
+					limit = {
+						FROM = { has_character_flag = debug_rider_e }
+					}
+					change_variable = { which = dragon_strength_team_b which = global_dragon_strength_var_e }
+					change_variable = { which = dragon_strength_team_b which = global_riding_skill_var_e }
 				}
-				change_variable = { which = dragon_strength_team_b which = global_dragon_strenght_var_e }
-			}
-			#If FROM is rider F
-			if = {
-				limit = {
-					FROM = { has_character_flag = debug_rider_f }
+				#If FROM is rider F
+				if = {
+					limit = {
+						FROM = { has_character_flag = debug_rider_f }
+					}
+					change_variable = { which = dragon_strength_team_b which = global_dragon_strength_var_f }
+					change_variable = { which = dragon_strength_team_b which = global_riding_skill_var_f }
 				}
-				change_variable = { which = dragon_strength_team_b which = global_dragon_strenght_var_f }
+				set_variable = { which = global_dragon_strength_team_b which = dragon_strength_team_b }
 			}
-			set_variable = { which = global_dragon_strength_team_b which = dragon_strength_team_b }
 		}
 		
 		# To avoid duplicate outcome event
@@ -1587,7 +1888,7 @@ character_event = {
 #Calculates Outcome
 character_event = {
 	id = dragon.306
-	desc = "Tema A: [global_dragon_strength_team_a.GetValue]| Team B: [global_dragon_strength_team_b.GetValue]"
+	desc = "Tema A: [global_dragon_strength_team_a.GetValue] | Team B: [global_dragon_strength_team_b.GetValue]"
 	
 	is_triggered_only = yes
 	
@@ -1610,8 +1911,6 @@ character_event = {
 	
 	option = {
 		name = "NONE"
-		
-		
 		
 		event_target:rider_a = { tooltip = { show_portrait = yes } }
 		event_target:dragon_a = { tooltip = { show_portrait = yes } }

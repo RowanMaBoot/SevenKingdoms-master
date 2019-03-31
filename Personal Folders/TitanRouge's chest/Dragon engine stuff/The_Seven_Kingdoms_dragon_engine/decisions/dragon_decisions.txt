@@ -50,13 +50,16 @@ targetted_decisions = {
 			if = {
 				limit = {
 					has_game_rule = { name = dragon_duels value = enabled }
-					any_current_enemy = {
-						any_realm_character = {
-							is_dragon_rider = yes
-							in_command = yes
-							at_location = ROOT
-							NOT = { has_character_modifier = in_dragon_duel_hidden }
-						}
+					dragon_rider = {
+						NOT = { character = ROOT }
+						#OR = {
+							war_with = ROOT
+						#	any_liege = { war_with = ROOT }
+						#}
+						in_command = yes
+						in_battle = yes
+						at_location = ROOT
+						NOT = { has_character_modifier = in_dragon_duel_hidden }
 					}
 				}
 				hidden_tooltip = {
@@ -65,12 +68,14 @@ targetted_decisions = {
 					save_persistent_event_target = { name = rider_a_per scope = event_target:rider_a }
 					set_character_flag = dragon_duel_team_a
 					set_character_flag = debug_rider_a
+					dragon_riding_skill_calculation = yes
+					set_variable = { which = global_riding_skill_var_a which = riding_skill_var }
 					any_friend = {
 						limit = {
 							is_tamed_dragon = yes
 						}
 						dragon_stat_calculation = yes
-						set_variable = { which = global_dragon_strenght_var_a which = dragon_strenght_var }
+						set_variable = { which = global_dragon_strength_var_a which = dragon_strenght_var }
 						set_character_flag = debug_dragon_a
 						save_event_target_as = dragon_a
 						save_persistent_event_target = { name = dragon_a_per scope = event_target:dragon_a }
