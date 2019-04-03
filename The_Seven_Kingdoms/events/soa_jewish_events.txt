@@ -8,118 +8,118 @@
 namespace = SoA
 
 # Third Temple Construction Begun
-character_event = {
-	id = SoA.100
-	desc = EVTDESC_SoA_100
-	picture = GFX_evt_castle_construction
-	border = GFX_event_normal_frame_religion
+# character_event = {
+	# id = SoA.100
+	# desc = EVTDESC_SoA_100
+	# picture = GFX_evt_castle_construction
+	# border = GFX_event_normal_frame_religion
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 	
-	hide_from = yes
+	# hide_from = yes
 	
-	option = {
-		name = EVTOPTA_SoA_100
-		custom_tooltip = { text = third_temple_construction }
-	}
-}
+	# option = {
+		# name = EVTOPTA_SoA_100
+		# custom_tooltip = { text = third_temple_construction }
+	# }
+# }
 
 # Third Temple Built
-province_event = {
-	id = SoA.10199
+# province_event = {
+	# id = SoA.10199
 	
-	hide_window = yes
+	# hide_window = yes
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 	
-	immediate = {
-		owner = { narrative_event = { id = SoA.101 } }
-	}
-}
+	# immediate = {
+		# owner = { narrative_event = { id = SoA.101 } }
+	# }
+# }
 
-narrative_event = {
-	id = SoA.101
-	title = EVTNAME_SoA_101
-	desc = EVTDESC_SoA_101
-	picture = GFX_evt_jerusalem_captured_jews
-	border = GFX_event_narrative_frame_religion
-	major = yes
+# narrative_event = {
+	# id = SoA.101
+	# title = EVTNAME_SoA_101
+	# desc = EVTDESC_SoA_101
+	# picture = GFX_evt_jerusalem_captured_jews
+	# border = GFX_event_narrative_frame_religion
+	# major = yes
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 	
-	hide_from = yes
+	# hide_from = yes
 	
-	major_trigger = {
-		ai = no
-		religion = jewish
-	}
+	# major_trigger = {
+		# ai = no
+		# religion = moonsingers
+	# }
 	
-	immediate = {
-		set_global_flag = third_temple_built
-		clr_global_flag = building_third_temple
-	}
+	# immediate = {
+		# set_global_flag = third_temple_built
+		# clr_global_flag = building_third_temple
+	# }
 	
-	option = {
-		name = EVTOPTA_SoA_101
-	}
-}
+	# option = {
+		# name = EVTOPTA_SoA_101
+	# }
+# }
 
 # Creation of Israel
-narrative_event = {
-	id = SoA.102
-	title = EVTNAME_SoA_102
-	desc = EVTDESC_SoA_102
-	picture = GFX_evt_jerusalem_captured_jews
-	border = GFX_event_narrative_frame_religion
+# narrative_event = {
+	# id = SoA.102
+	# title = EVTNAME_SoA_102
+	# desc = EVTDESC_SoA_102
+	# picture = GFX_evt_jerusalem_captured_jews
+	# border = GFX_event_narrative_frame_religion
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 	
-	hide_from = yes
+	# hide_from = yes
 	
-	immediate = {
-		if = {
-			limit = {
-				ai = no
-			}
-			set_character_flag = achievement_kingdom_of_david
-		}
-	}
+	# immediate = {
+		# if = {
+			# limit = {
+				# ai = no
+			# }
+			# set_character_flag = achievement_kingdom_of_david
+		# }
+	# }
 	
-	option = {
-		name = EVTOPTA_SoA_102
-		primary_title = {
-			show_scope_change = no
-			k_israel = {
-				show_scope_change = no
-				grant_title = ROOT
-				copy_title_laws = PREV
-			}
-		}
-		hidden_tooltip = {
-			if = {
-				limit = {
-					tier = KING
-				}
-				k_israel = {
-					show_scope_change = no
-					make_primary_title = yes
-				}
-			}
-			d_jerusalem = {
-				de_jure_liege = k_israel
-			}
-			d_ascalon = {
-				de_jure_liege = k_israel
-			}
-			d_galilee = {
-				de_jure_liege = k_israel
-			}
-			d_oultrejourdain = {
-				de_jure_liege = k_israel
-			}
-		}
-	}
-}
+	# option = {
+		# name = EVTOPTA_SoA_102
+		# primary_title = {
+			# show_scope_change = no
+			# k_israel = {
+				# show_scope_change = no
+				# grant_title = ROOT
+				# copy_title_laws = PREV
+			# }
+		# }
+		# hidden_tooltip = {
+			# if = {
+				# limit = {
+					# tier = KING
+				# }
+				# k_israel = {
+					# show_scope_change = no
+					# make_primary_title = yes
+				# }
+			# }
+			# d_jerusalem = {
+				# de_jure_liege = k_israel
+			# }
+			# d_ascalon = {
+				# de_jure_liege = k_israel
+			# }
+			# d_galilee = {
+				# de_jure_liege = k_israel
+			# }
+			# d_oultrejourdain = {
+				# de_jure_liege = k_israel
+			# }
+		# }
+	# }
+# }
 
 # Jews Expelled
 character_event = {
@@ -274,18 +274,21 @@ character_event = {
 	trigger = {
 		has_dlc = "Sons of Abraham"
 		OR = {
-			religion_group = christian
-			religion_group = muslim
-			religion_group = zoroastrian_group
+			religion_group = the_seven_group
+			# religion_group = muslim
+			# religion_group = zoroastrian_group
 			religion = moonsingers
-			culture = khazar
-			culture = han
-		}
-		NOT = { 
+			# culture = khazar
+			# culture = han
 			capital_scope = {
-				region = world_europe_west_iberia
+				region = world_the_south
 			}
 		}
+		# NOT = { 
+			# capital_scope = {
+				# region = world_europe_west_iberia
+			# }
+		# }
 		NOT = { has_character_modifier = expelled_jewish }
 		NOT = { trait = incapable }
 		NOT = { is_inaccessible_trigger = yes }
@@ -298,9 +301,9 @@ character_event = {
 	immediate = {
 		create_character = {
 			random_traits = yes
-			culture = ashkenazi
+			culture = braavosi
 			dynasty = culture
-			religion = jewish
+			religion = moonsingers
 			female = no
 			age = 30
 			trait = charismatic_negotiator
@@ -362,18 +365,21 @@ character_event = {
 	trigger = {
 		has_dlc = "Sons of Abraham"
 		OR = {
-			religion_group = christian
-			religion_group = muslim
-			religion_group = zoroastrian_group
+			religion_group = the_seven_group
+			# religion_group = muslim
+			# religion_group = zoroastrian_group
 			religion = moonsingers
-			culture = khazar
-			culture = han
-		}	
-		NOT = { 
+			# culture = khazar
+			# culture = han
 			capital_scope = {
-				region = world_europe_west_iberia
+				region = world_the_south
 			}
-		}
+		}	
+		# NOT = { 
+			# capital_scope = {
+				# region = world_europe_west_iberia
+			# }
+		# }
 		NOT = { has_character_modifier = expelled_jewish }
 		NOT = { trait = incapable }
 		NOT = { is_inaccessible_trigger = yes }
@@ -386,9 +392,9 @@ character_event = {
 	immediate = {
 		create_character = {
 			random_traits = yes
-			culture = ashkenazi
+			culture = braavosi
 			dynasty = culture
-			religion = jewish
+			religion = moonsingers
 			female = no
 			age = 30
 			trait = fortune_builder
@@ -450,18 +456,21 @@ character_event = {
 	trigger = {
 		has_dlc = "Sons of Abraham"
 		OR = {
-			religion_group = christian
-			religion_group = muslim
-			religion_group = zoroastrian_group
+			religion_group = the_seven_group
+			# religion_group = muslim
+			# religion_group = zoroastrian_group
 			religion = moonsingers
-			culture = khazar
-			culture = han
-		}
-		NOT = { 
+			# culture = khazar
+			# culture = han
 			capital_scope = {
-				region = world_europe_west_iberia
+				region = world_the_south
 			}
 		}
+		# NOT = { 
+			# capital_scope = {
+				# region = world_europe_west_iberia
+			# }
+		# }
 		NOT = { has_character_modifier = expelled_jewish }
 		NOT = { trait = incapable }
 		NOT = { is_inaccessible_trigger = yes }
@@ -474,9 +483,9 @@ character_event = {
 	immediate = {
 		create_character = {
 			random_traits = yes
-			culture = ashkenazi
+			culture = braavosi
 			dynasty = culture
-			religion = jewish
+			religion = moonsingers
 			female = no
 			age = 30
 			trait = intricate_webweaver
@@ -522,7 +531,7 @@ character_event = {
 	}
 }
 
-# Jewish Diplomat Appears at Court (Sephardi)
+# Jewish Diplomat Appears at Court (pentoshi)
 character_event = {
 	id = SoA.203
 	desc = EVTDESC_SoA_200
@@ -541,12 +550,12 @@ character_event = {
 			region = world_europe_west_iberia
 		}
 		OR = {
-			religion_group = christian
-			religion_group = muslim
-			religion_group = zoroastrian_group
+			religion_group = the_seven_group
+			# religion_group = muslim
+			# religion_group = zoroastrian_group
 			religion = moonsingers
-			culture = khazar
-			culture = han
+			# culture = khazar
+			# culture = han
 		}	
 		NOT = { 
 			has_character_modifier = expelled_jewish
@@ -562,9 +571,9 @@ character_event = {
 	immediate = {
 		create_character = {
 			random_traits = yes
-			culture = sephardi
+			culture = pentoshi
 			dynasty = culture
-			religion = jewish
+			religion = moonsingers
 			female = no
 			age = 30
 			trait = charismatic_negotiator
@@ -610,7 +619,7 @@ character_event = {
 	}
 }
 
-# Jewish Administrator Appears at Court (Sephardi)
+# Jewish Administrator Appears at Court (pentoshi)
 character_event = {
 	id = SoA.204
 	desc = EVTDESC_SoA_201
@@ -629,12 +638,12 @@ character_event = {
 			region = world_europe_west_iberia
 		}
 		OR = {
-			religion_group = christian
-			religion_group = muslim
-			religion_group = zoroastrian_group
+			religion_group = the_seven_group
+			# religion_group = muslim
+			# religion_group = zoroastrian_group
 			religion = moonsingers
-			culture = khazar
-			culture = han
+			# culture = khazar
+			# culture = han
 		}	
 		NOT = { 
 			has_character_modifier = expelled_jewish
@@ -650,9 +659,9 @@ character_event = {
 	immediate = {
 		create_character = {
 			random_traits = yes
-			culture = sephardi
+			culture = pentoshi
 			dynasty = culture
-			religion = jewish
+			religion = moonsingers
 			female = no
 			age = 30
 			trait = fortune_builder
@@ -698,7 +707,7 @@ character_event = {
 	}
 }
 
-# Jewish Spy Appears at Court (Sephardi)
+# Jewish Spy Appears at Court (pentoshi)
 character_event = {
 	id = SoA.205
 	desc = EVTDESC_SoA_202
@@ -717,12 +726,12 @@ character_event = {
 			region = world_europe_west_iberia
 		}
 		OR = {
-			religion_group = christian
-			religion_group = muslim
+			religion_group = the_seven_group
+			# religion_group = muslim
 			religion_group = zoroastrian_group
 			religion = moonsingers
-			culture = khazar
-			culture = han
+			# culture = khazar
+			# culture = han
 		}	
 		NOT = { 
 			has_character_modifier = expelled_jewish
@@ -738,9 +747,9 @@ character_event = {
 	immediate = {
 		create_character = {
 			random_traits = yes
-			culture = sephardi
+			culture = pentoshi
 			dynasty = culture
-			religion = jewish
+			religion = moonsingers
 			female = no
 			age = 30
 			trait = intricate_webweaver
@@ -877,7 +886,7 @@ character_event = {
 		name = EVTOPTA_SoA_500
 		any_vassal = {
 			limit = {
-				religion = jewish
+				religion = moonsingers
 				age = 16
 				prisoner = no
 				war = no
@@ -1046,14 +1055,14 @@ narrative_event = {
 		trigger = {
 			NOT = {
 				religion = moonsingers
-				religion_group = muslim
+				religion = rhllor
 			}
 		}
 	}
 	option = {
 		name = EVTOPTC_TOG_6004
 		trigger = {
-			religion_group = muslim
+			religion = rhllor
 		}
 	}
 }
