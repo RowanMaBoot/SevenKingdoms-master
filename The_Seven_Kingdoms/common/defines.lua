@@ -1,199 +1,202 @@
 NDefines = {
-  NDiplomacy = {
-    BREAK_TRUCE_PRESTIGE_PERC_COST = 0.5,    -- Percent of current prestige lost before the base prestige cost (below)
-    BREAK_TRUCE_PRESTIGE_COST = 200,      -- Base Prestige cost for breaking a truce
+
+NDiplomacy = {
+    BREAK_TRUCE_PRESTIGE_PERC_COST = 0.5,    	-- Percent of current prestige lost before the base prestige cost (below)
+    BREAK_TRUCE_PRESTIGE_COST = 200,      		-- Base Prestige cost for breaking a truce
     ATTACKING_SOMEONE_CRUSADING_PIETY_COST = 40, -- Piety hit for attacking someone crusading
-    ATTACKING_SOMEONE_DEFENDING_AGAINST_OTHER_RELIGIOUS_GROUP_PIETY_COST = 100,    -- Piety hit for attacking someone who is defending against other religious group
-    ATTACKER_CALL_DECLINE_COST = 25,       -- Prestige cost for refusing to join an offensive war
-    DEFENDER_CALL_DECLINE_COST = 100,       -- Prestige cost for refusing to join a defensive war
+    ATTACKING_SOMEONE_DEFENDING_AGAINST_OTHER_RELIGIOUS_GROUP_PIETY_COST = 100,   	-- Piety hit for attacking someone who is defending against other religious group
+    ATTACKER_CALL_DECLINE_COST = 25,       		-- Prestige cost for refusing to join an offensive war
+    DEFENDER_CALL_DECLINE_COST = 100,      		-- Prestige cost for refusing to join a defensive war
     SUZERAIN_DEFENDER_CALL_DECLINE_COST = 150,  -- Prestige cost for a suzerain refusing to join a defensive war, when they are supposed to alway accept
     ALLIED_CALL_DECLINE_COST = 200,
     
     TRIBAL_VASSAL_CALL_DECLINE_COST_FACTOR = 3.0, -- Prestige cost multiplier for tribal vassals
-    PAPAL_INVEST_PIETY_COST_MULT = 0.5,     -- The effect of Papal investiture on the piety cost of the special Papal actions
+    PAPAL_INVEST_PIETY_COST_MULT = 0.5,     	-- The effect of Papal investiture on the piety cost of the special Papal actions
     SHORT_REIGN_YEARS_END = 9,
     LONG_REIGN_YEARS_START = 10,
     MAX_LONG_REIGN_BONUS = 100,                 -- Max bonus in opinion you can get from long reign 
-    LONG_REIGN_PENALTY = -2,               -- Penalty ticking down every year from long reign bonus
-    LONG_REIGN_PENALTY_START = 3,         -- What year penalty tick should start
-    SHORT_REIGN_OPINION_MULT = 1.0,        -- Opinion penalty multiplier to short reign years
-    LONG_REIGN_OPINION_MULT = 0.5,        -- Opinion penalty boost to long reign years
+    LONG_REIGN_PENALTY = -2,               		-- Penalty ticking down every year from long reign bonus
+    LONG_REIGN_PENALTY_START = 3,         		-- What year penalty tick should start
+    SHORT_REIGN_OPINION_MULT = 1.0,        		-- Opinion penalty multiplier to short reign years
+    LONG_REIGN_OPINION_MULT = 0.5,        		-- Opinion penalty boost to long reign years
     DOW_ON_ALLY_PRESTIGE_COST = 50,
     MINIMUM_SEND_GIFT_COST = 15,
     SEND_GIFT_INCOME_SCALEFACTOR = 15, 
     MINIMUM_BUY_FAVOR_COST = 40,
     BUY_FAVOR_INCOME_SCALEFACTOR = 40, 
-    BUY_FAVOR_TIER_REDUCTION_FOR_NOMADS = 0.25,  -- Reduction for nomads since they're always considered emperors
+    BUY_FAVOR_TIER_REDUCTION_FOR_NOMADS = 0.25, -- Reduction for nomads since they're always considered emperors
     RELEASE_PRISONER_PIETY = 5,
-    USURP_TITLE_PRESTIGE_MULT = 0.25,       -- Multiplier on Creation Prestige
+    USURP_TITLE_PRESTIGE_MULT = 0.25,       	-- Multiplier on Creation Prestige
     
-    DEMESNE_BASE_MAX_SIZE = 0.75,        -- Base Max Demesne Size
-    DEMESNE_MAX_SIZE_BARON_MULT = 0.75,       -- Extra Max Demesne Size from the ruler's rank
-    DEMESNE_MAX_SIZE_COUNT_MULT = 0.75,       -- Extra Max Demesne Size from the ruler's rank
-    DEMESNE_MAX_SIZE_DUKE_MULT = 0.75,      -- Extra Max Demesne Size from the ruler's rank
-    DEMESNE_MAX_SIZE_KING_MULT = 2.25,      -- Extra Max Demesne Size from the ruler's rank
-    DEMESNE_MAX_SIZE_EMPEROR_MULT = 3.0,    -- Extra Max Demesne Size from the ruler's rank
-    DEMESNE_MAX_SIZE_GREAT_DUKE_BONUS = 0.75,  -- Extra Max Demesne Size for Dukes with more than one Duchy
-    DEMESNE_MAX_SIZE_STEWARDSHIP_MULT = 0.1125,  -- Extra Max Demesne Size from ruler and spouse stewardship
-    DEMESNE_MAX_SIZE_PATRICIAN = 0.75,      -- Extra Max Demesne Size for Patricians (Tier effects do no not apply to Patricians!)
-    DEMESNE_MAX_SIZE_PATRICIAN_DOGE = 0.75,    -- Extra Max Demesne Size for a Patrician Doge (Tier effects do no not apply to Patricians!)
-    GAVELKIND_MAX_SIZE_BONUS = 0.225,      -- Max demesne size bonus from Gavelkind
-    DEMESNE_MAX_SIZE_JAIN_BONUS = 3,      -- Followers of the Jain religion have extra demesne
+    DEMESNE_BASE_MAX_SIZE = 0.75,        		-- Base Max Demesne Size
+    DEMESNE_MAX_SIZE_BARON_MULT = 0.75,       	-- Extra Max Demesne Size from the ruler's rank
+    DEMESNE_MAX_SIZE_COUNT_MULT = 0.75,       	-- Extra Max Demesne Size from the ruler's rank
+    DEMESNE_MAX_SIZE_DUKE_MULT = 0.75,      	-- Extra Max Demesne Size from the ruler's rank
+    DEMESNE_MAX_SIZE_KING_MULT = 2.25,      	-- Extra Max Demesne Size from the ruler's rank
+    DEMESNE_MAX_SIZE_EMPEROR_MULT = 3.0,    	-- Extra Max Demesne Size from the ruler's rank
+    DEMESNE_MAX_SIZE_GREAT_DUKE_BONUS = 0.75,  	-- Extra Max Demesne Size for Dukes with more than one Duchy
+    DEMESNE_MAX_SIZE_STEWARDSHIP_MULT = 0.1125, -- Extra Max Demesne Size from ruler and spouse stewardship
+    DEMESNE_MAX_SIZE_PATRICIAN = 0.75,      	-- Extra Max Demesne Size for Patricians (Tier effects do no not apply to Patricians!)
+    DEMESNE_MAX_SIZE_PATRICIAN_DOGE = 0.75,    	-- Extra Max Demesne Size for a Patrician Doge (Tier effects do no not apply to Patricians!)
+    GAVELKIND_MAX_SIZE_BONUS = 0.225,      		-- Max demesne size bonus from Gavelkind
+    DEMESNE_MAX_SIZE_JAIN_BONUS = 3,      		-- Followers of the Jain religion have extra demesne
     
-    GAME_RULE_DEMESNE_SIZE_HALF = 0.50,      -- Divider to decrease max demesne size when using "demesne size: half" game rule
-    GAME_RULE_DEMESNE_SIZE_QUARTERED = 0.25,  -- Divider to decrease max demesne size when using "demesne size: quartered" game rule
-    GAME_RULE_DEMESNE_SIZE_UNLIMITED = 10500,  -- Demesne size when using "demesne size: unlimited" game rule
+    GAME_RULE_DEMESNE_SIZE_HALF = 0.50,      	-- Divider to decrease max demesne size when using "demesne size: half" game rule
+    GAME_RULE_DEMESNE_SIZE_QUARTERED = 0.25,  	-- Divider to decrease max demesne size when using "demesne size: quartered" game rule
+    GAME_RULE_DEMESNE_SIZE_UNLIMITED = 10500,  	-- Demesne size when using "demesne size: unlimited" game rule
     
-    VASSAL_BASE_LIMIT = 1.0,          -- Base Vassal Limit
-    VASSAL_LIMIT_DUKE_MULT = 10.0,         -- Extra Vassal Limit from the ruler's rank
-    VASSAL_LIMIT_KING_MULT = 20.0,         -- Extra Vassal Limit from the ruler's rank
-    VASSAL_LIMIT_EMPEROR_MULT = 30.0,       -- Extra Vassal Limit from the ruler's rank
-    VASSAL_LIMIT_GREAT_DUKE_BONUS = 5.0,     -- Extra Vassal Limit for Dukes with more than one Duchy
-    VASSAL_LIMIT_DIPLOMACY_MULT = 0.3,      -- Extra Vassal Limit from ruler and spouse diplomacy
-    VASSAL_LIMIT_DECADENCE_MULTIPLIER = 0.25,  -- Negative modifier, multiplied with the current decadence.
-    VASSAL_LIMIT_LEVY_MULTIPLIER = 1,      -- Used for levy penalty calculation for being over vassal limit.
-    VASSAL_LIMIT_LEVY_BASE = 4,          -- Used for levy penalty calculation for being over vassal limit.
-    VASSAL_LIMIT_TAX_MULTIPLIER = 1,      -- Used for tax penalty calculation for being over vassal limit.
-    VASSAL_LIMIT_TAX_BASE = 4,          -- Used for tax penalty calculation for being over vassal limit.
-    VASSAL_LIMIT_COUNT_BARONS = 0,        -- If set to 1, baron-tier vassals will also count towards vassal limit.
+    VASSAL_BASE_LIMIT = 1.0,          			-- Base Vassal Limit
+    VASSAL_LIMIT_DUKE_MULT = 10.0,         		-- Extra Vassal Limit from the ruler's rank
+    VASSAL_LIMIT_KING_MULT = 20.0,         		-- Extra Vassal Limit from the ruler's rank
+    VASSAL_LIMIT_EMPEROR_MULT = 30.0,       	-- Extra Vassal Limit from the ruler's rank
+    VASSAL_LIMIT_GREAT_DUKE_BONUS = 5.0,    	-- Extra Vassal Limit for Dukes with more than one Duchy
+    VASSAL_LIMIT_DIPLOMACY_MULT = 0.3,      	-- Extra Vassal Limit from ruler and spouse diplomacy
+    VASSAL_LIMIT_DECADENCE_MULTIPLIER = 0.25,  	-- Negative modifier, multiplied with the current decadence.
+    VASSAL_LIMIT_LEVY_MULTIPLIER = 1,      		-- Used for levy penalty calculation for being over vassal limit.
+    VASSAL_LIMIT_LEVY_BASE = 4,          		-- Used for levy penalty calculation for being over vassal limit.
+    VASSAL_LIMIT_TAX_MULTIPLIER = 1,      		-- Used for tax penalty calculation for being over vassal limit.
+    VASSAL_LIMIT_TAX_BASE = 4,          		-- Used for tax penalty calculation for being over vassal limit.
+    VASSAL_LIMIT_COUNT_BARONS = 0,        		-- If set to 1, baron-tier vassals will also count towards vassal limit.
     
-    GAME_RULE_VASSAL_LIMIT_HALF = 0.5,      -- Divider to decrease vassal limit when using "vassal limit: half" game rule
-    GAME_RULE_VASSAL_LIMIT_QUARTERED = 0.25,  -- Divider to decrease max vassal limit when using "vassal limit: quartered" game rule
-    GAME_RULE_VASSAL_LIMIT_UNLIMITED = 5000,  -- Vassal limit when using "vassal limit: unlimited" game rule
+    GAME_RULE_VASSAL_LIMIT_HALF = 0.5,      	-- Divider to decrease vassal limit when using "vassal limit: half" game rule
+    GAME_RULE_VASSAL_LIMIT_QUARTERED = 0.25,  	-- Divider to decrease max vassal limit when using "vassal limit: quartered" game rule
+    GAME_RULE_VASSAL_LIMIT_UNLIMITED = 5000,  	-- Vassal limit when using "vassal limit: unlimited" game rule
     
-    CONCLAVE_VASSAL_LIMIT_DUKE_MULT = 8.0,         -- Extra Vassal Limit from the ruler's rank
-    CONCLAVE_VASSAL_LIMIT_KING_MULT = 15.0,         -- Extra Vassal Limit from the ruler's rank
-    CONCLAVE_VASSAL_LIMIT_EMPEROR_MULT = 20.0,       -- Extra Vassal Limit from the ruler's rank
-    CONCLAVE_VASSAL_LIMIT_GREAT_DUKE_BONUS = 3.0,     -- Extra Vassal Limit for Dukes with more than one Duchy
+    CONCLAVE_VASSAL_LIMIT_DUKE_MULT = 8.0,         		-- Extra Vassal Limit from the ruler's rank
+    CONCLAVE_VASSAL_LIMIT_KING_MULT = 15.0,         		-- Extra Vassal Limit from the ruler's rank
+    CONCLAVE_VASSAL_LIMIT_EMPEROR_MULT = 20.0,      	-- Extra Vassal Limit from the ruler's rank
+    CONCLAVE_VASSAL_LIMIT_GREAT_DUKE_BONUS = 3.0,     	-- Extra Vassal Limit for Dukes with more than one Duchy
 
-    OBJECTIVE_DISCARD_WEIGHT_THRESHOLD = 0.05,          -- AI will not pick ambitions or plots below this evaluated weight
-    MAX_DUCHIES_LEGALLY_HELD = 2,                -- Max duchies that a king or above can hold before vassals start getting angry
-    MAX_ELECTOR_TITLES_LEGALLY_HELD = 1,            -- Max elector titles that a king or above can hold before vassals start getting angry
-    TITULAR_TITLES_COUNT_TOWARDS_DUCHY_LIMIT = 1,        -- If set to 1 then titular duchy titles (duchy titles with no de-jure land) will count towards the maximum duchy titles held before vassals will get upset.
-    ASSASSINATION_COST_RANK_MULT = 100,              -- Additional cost for assassinations multiplied by rank (count = 1, emperor = 4). Also applies to children of rulers.
-    WOMEN_INHERIT_PRESSED_CLAIMS = 1,              -- If set to 1, they will get pressed claims on their parents' titles
-    BASTARDS_INHERIT_PRESSED_CLAIMS = 1,            -- If set to 1, they will get pressed claims on their parents' titles
-    LAW_CHANGE_PIETY_COST = 50,                  -- Piety cost for Iqta government when changing normal demesne laws
-    CROWN_LAW_CHANGE_PIETY_COST = 100,              -- Piety cost for Iqta government when changing Crown laws
-    LAW_CHANGE_PRESTIGE_COST = 100,                -- Prestige cost for Nomadic government when changing normal demesne laws
-    CROWN_LAW_CHANGE_PRESTIGE_COST = 200,            -- Prestige cost for Nomadic government when changing Crown laws
-    INTER_MUSLIM_WAR_MONTHLY_PIETY_COST = 2,            -- Monthly Piety cost for Muslims who are primary attackers against a ruler of the same religion (not civil wars)
-    MUSLIM_TEMPLE_HOLDING_MONTHLY_PIETY = 0.2,           -- Monthly Piety for Muslims for each Temple holding in the demesne
-    DOWRY_MULTIPLIER = 1.0,                    -- The Dowry cost for a Patrician is prestige gain from marriage * this
-    PAGAN_PEACE_MONTHS = 24,                  -- Months before the Peace Prestige loss kicks in for certain Pagan religions
-    PAGAN_PEACE_MONTHLY_PRESTIGE_LOSS = 2.0,          -- Prestige loss for being at peace, for certain Pagan religions
-    PRESTIGE_OPINION_DIV = 200,                  -- Divider for prestige to vassal opinion (5x higher effect for negative prestige)
-    PRESTIGE_OPINION_MAX = 10,                  -- Max opinion impact of prestige (positive OR negative)
-    PIETY_OPINION_DIV = 50,                    -- Divider for piety to church opinion
-    PIETY_OPINION_MAX = 10,                    -- Max opinion impact of piety (positive OR negative)  
-    MIN_PREP_INV_TARGET_HOLDINGS = 9,              -- The target must control at least this many holdings within the target kingdom to be a valid prepared invasion target
-    MAX_PREP_INV_TARGET_HOLDINGS = 50,              -- The target must control at the most this many holdings within the target kingdom to be a valid prepared invasion target
-    MAX_PREP_INV_ATTACKER_HOLDINGS = 50,            -- The attacker must have fewer Holdings than this in the realm (disallow Prepared Invasions for rulers who are already very powerful)
-    PREP_INV_REQ_PRESTIGE = 750,                -- Need to have this much Prestige to prepare an invasion
-    BASE_REVOLT_CHANCE_MOD = 50,                -- Pre Old Gods rebel spawn chance modifier (fires on_rebel_revolt) : lower means fewer revolts. MUST NOT BE ZERO.
-    TOG_REVOLT_CHANCE_MOD = 10,                -- Old Gods rebel spawn chance modifier (fires on_rebel_revolt) : lower means fewer revolts. MUST NOT BE ZERO. 
-    JAIN_LIEGE_OPINION_BONUS = 15,                -- Jain Lieges Get Vassal Opinion Bonus
-    MAX_DIPLO_DISTANCE = 1000,                  -- Most diplomacy is disallowed if two rulers are too distant
-    MAX_DIPLO_DISTANCE_SAME_RELIGION = 50,            -- Bonus to max diplo distance for being of the same religion
-    MAX_DIPLO_DISTANCE_SAME_RELIGION_GROUP = 50,         -- Bonus to max diplo distance for being of the same religion group
-    MAX_DIPLO_DISTANCE_SAME_CULTURE = 50,             -- Bonus to max diplo distance for being of the same culture
-    MAX_DIPLO_DISTANCE_SAME_CULTURE_GROUP = 200,        -- Bonus to max diplo distance for being of the same culture group
-    GAME_RULE_RESTRICTED_DIPLO_DISTANCE_MULTIPLIER = 0.5,    -- Multiplier to max diplo distance when using the "diplomatic range: restricted" game rule
-    GAME_RULE_PROVINCIAL_REVOLT_RARE_DIVIDER = 3.0,        -- Divider to decrease risk of revolt when using the "provincial revolt: rare" game rule
-    TRIBUTARY_UPRISING_AI_WEAK_MALUS = -50,            -- Malus to chances of accepting a call to arms from another tributary during an uprising, if the total forces of the tributaries are weaker than the forces of the Suzerain. Used as a bonus instead if the tributaries combined are significantly stronger than the Suzerain (TRIBUTARY_UPRISING_AI_STRONG_LEVEL)
-    TRIBUTARY_UPRISING_AI_STRONG_LEVEL = 1.5,          -- Bonus will be applied to chances of accepting a call to arms from another tributary during an uprising, if the total forces of the tributaries are at least this strong compared to the forces of the Suzerain
+    OBJECTIVE_DISCARD_WEIGHT_THRESHOLD = 0.05,          		-- AI will not pick ambitions or plots below this evaluated weight
+    MAX_DUCHIES_LEGALLY_HELD = 2,                				-- Max duchies that a king or above can hold before vassals start getting angry
+    MAX_ELECTOR_TITLES_LEGALLY_HELD = 1,            			-- Max elector titles that a king or above can hold before vassals start getting angry
+    TITULAR_TITLES_COUNT_TOWARDS_DUCHY_LIMIT = 1,        		-- If set to 1 then titular duchy titles (duchy titles with no de-jure land) will count towards the maximum duchy titles held before vassals will get upset.
+    ASSASSINATION_COST_RANK_MULT = 100,              			-- Additional cost for assassinations multiplied by rank (count = 1, emperor = 4). Also applies to children of rulers.
+    WOMEN_INHERIT_PRESSED_CLAIMS = 1,              				-- If set to 1, they will get pressed claims on their parents' titles
+    BASTARDS_INHERIT_PRESSED_CLAIMS = 1,            			-- If set to 1, they will get pressed claims on their parents' titles
+    LAW_CHANGE_PIETY_COST = 50,                  				-- Piety cost for Iqta government when changing normal demesne laws
+    CROWN_LAW_CHANGE_PIETY_COST = 100,             		 		-- Piety cost for Iqta government when changing Crown laws
+    LAW_CHANGE_PRESTIGE_COST = 100,                				-- Prestige cost for Nomadic government when changing normal demesne laws
+    CROWN_LAW_CHANGE_PRESTIGE_COST = 200,            			-- Prestige cost for Nomadic government when changing Crown laws
+    INTER_MUSLIM_WAR_MONTHLY_PIETY_COST = 2,           			-- Monthly Piety cost for Muslims who are primary attackers against a ruler of the same religion (not civil wars)
+    MUSLIM_TEMPLE_HOLDING_MONTHLY_PIETY = 0.2,           		-- Monthly Piety for Muslims for each Temple holding in the demesne
+    DOWRY_MULTIPLIER = 1.0,                    					-- The Dowry cost for a Patrician is prestige gain from marriage * this
+    PAGAN_PEACE_MONTHS = 24,                  					-- Months before the Peace Prestige loss kicks in for certain Pagan religions
+    PAGAN_PEACE_MONTHLY_PRESTIGE_LOSS = 2.0,          			-- Prestige loss for being at peace, for certain Pagan religions
+    PRESTIGE_OPINION_DIV = 200,                  				-- Divider for prestige to vassal opinion (5x higher effect for negative prestige)
+    PRESTIGE_OPINION_MAX = 10,                  				-- Max opinion impact of prestige (positive OR negative)
+    PIETY_OPINION_DIV = 50,                    					-- Divider for piety to church opinion
+    PIETY_OPINION_MAX = 10,                    					-- Max opinion impact of piety (positive OR negative)  
+    MIN_PREP_INV_TARGET_HOLDINGS = 9,             				-- The target must control at least this many holdings within the target kingdom to be a valid prepared invasion target
+    MAX_PREP_INV_TARGET_HOLDINGS = 50,              			-- The target must control at the most this many holdings within the target kingdom to be a valid prepared invasion target
+    MAX_PREP_INV_ATTACKER_HOLDINGS = 50,            			-- The attacker must have fewer Holdings than this in the realm (disallow Prepared Invasions for rulers who are already very powerful)
+    PREP_INV_REQ_PRESTIGE = 750,                				-- Need to have this much Prestige to prepare an invasion
+    BASE_REVOLT_CHANCE_MOD = 50,                				-- Pre Old Gods rebel spawn chance modifier (fires on_rebel_revolt) : lower means fewer revolts. MUST NOT BE ZERO.
+    TOG_REVOLT_CHANCE_MOD = 10,                					-- Old Gods rebel spawn chance modifier (fires on_rebel_revolt) : lower means fewer revolts. MUST NOT BE ZERO. 
+    JAIN_LIEGE_OPINION_BONUS = 15,                				-- Jain Lieges Get Vassal Opinion Bonus
+    MAX_DIPLO_DISTANCE = 1000,                  				-- Most diplomacy is disallowed if two rulers are too distant
+    MAX_DIPLO_DISTANCE_SAME_RELIGION = 50,            			-- Bonus to max diplo distance for being of the same religion
+    MAX_DIPLO_DISTANCE_SAME_RELIGION_GROUP = 50,         		-- Bonus to max diplo distance for being of the same religion group
+    MAX_DIPLO_DISTANCE_SAME_CULTURE = 50,             			-- Bonus to max diplo distance for being of the same culture
+    MAX_DIPLO_DISTANCE_SAME_CULTURE_GROUP = 200,				-- Bonus to max diplo distance for being of the same culture group
+	MAX_DISTANCE_HOLY_WAR_JOIN = 200,							-- How far away people are willing to join in defense against a holy war (capital to capital. Direct neighbors considered distance 0)
+	MAX_DISTANCE_REL_HEAD_DEFENSE_JOIN = 600,        			-- Bonus to max diplo distance for being of the same culture group
+    GAME_RULE_RESTRICTED_DIPLO_DISTANCE_MULTIPLIER = 0.5,    	-- Multiplier to max diplo distance when using the "diplomatic range: restricted" game rule
+    GAME_RULE_PROVINCIAL_REVOLT_RARE_DIVIDER = 3.0,        		-- Divider to decrease risk of revolt when using the "provincial revolt: rare" game rule
+    TRIBUTARY_UPRISING_AI_WEAK_MALUS = -50,            			-- Malus to chances of accepting a call to arms from another tributary during an uprising, if the total forces of the tributaries are weaker than the forces of the Suzerain. Used as a bonus instead if the tributaries combined are significantly stronger than the Suzerain (TRIBUTARY_UPRISING_AI_STRONG_LEVEL)
+    TRIBUTARY_UPRISING_AI_STRONG_LEVEL = 1.5,          			-- Bonus will be applied to chances of accepting a call to arms from another tributary during an uprising, if the total forces of the tributaries are at least this strong compared to the forces of the Suzerain
     
-    DUKE_POWERFUL_VASSAL_COUNT = 2,        -- The x most powerful vassal will expect a seat in the council
-    KING_POWERFUL_VASSAL_COUNT = 3,        -- The x most powerful vassal will expect a seat in the council
-    EMPEROR_POWERFUL_VASSAL_COUNT = 3,      -- The x most powerful vassal will expect a seat in the council
+    DUKE_POWERFUL_VASSAL_COUNT = 2,        		-- The x most powerful vassal will expect a seat in the council
+    KING_POWERFUL_VASSAL_COUNT = 3,        		-- The x most powerful vassal will expect a seat in the council
+    EMPEROR_POWERFUL_VASSAL_COUNT = 3,      	-- The x most powerful vassal will expect a seat in the council
 
     IMPRISON_CHARACTER_INTERACTION_MONEY = 0,
     IMPRISON_CHARACTER_INTERACTION_PIETY = 10,
     IMPRISON_CHARACTER_INTERACTION_PRESTIGE = 0,
     IMPRISON_CHARACTER_INTERACTION_THRESHOLD_FOR_NO = 25,
     IMPRISON_CHARACTER_INTERACTION_THRESHOLD_FOR_YES = 25,
-    IMPRISON_CHARACTER_INTERACTION_MUST_HAVE_COST = 0,        -- Is having prestige/piety >= cost required for this action?
-    IMPRISON_CHARACTER_INTERACTION_ENABLED = 1,            -- Should this action be used at all?
+    IMPRISON_CHARACTER_INTERACTION_MUST_HAVE_COST = 0,        		-- Is having prestige/piety >= cost required for this action?
+    IMPRISON_CHARACTER_INTERACTION_ENABLED = 1,            			-- Should this action be used at all?
     
     RELEASE_FROM_PRISON_INTERACTION_MONEY = 0,
     RELEASE_FROM_PRISON_INTERACTION_PIETY = 0,
     RELEASE_FROM_PRISON_INTERACTION_PRESTIGE = 0,
     RELEASE_FROM_PRISON_INTERACTION_THRESHOLD_FOR_NO = 0,
     RELEASE_FROM_PRISON_INTERACTION_THRESHOLD_FOR_YES = 0,
-    RELEASE_FROM_PRISON_INTERACTION_MUST_HAVE_COST = 1,        -- Is having prestige/piety >= cost required for this action?
-    RELEASE_FROM_PRISON_INTERACTION_ENABLED = 1,            -- Should this action be used at all?
+    RELEASE_FROM_PRISON_INTERACTION_MUST_HAVE_COST = 1,        		-- Is having prestige/piety >= cost required for this action?
+    RELEASE_FROM_PRISON_INTERACTION_ENABLED = 1,            			-- Should this action be used at all?
     
     EXECUTE_IMPRISONED_INTERACTION_MONEY = 0,
     EXECUTE_IMPRISONED_INTERACTION_PIETY = 20,
     EXECUTE_IMPRISONED_INTERACTION_PRESTIGE = 0,
     EXECUTE_IMPRISONED_INTERACTION_THRESHOLD_FOR_NO = 0,
     EXECUTE_IMPRISONED_INTERACTION_THRESHOLD_FOR_YES = 0,
-    EXECUTE_IMPRISONED_INTERACTION_MUST_HAVE_COST = 0,        -- Is having prestige/piety >= cost required for this action?
-    EXECUTE_IMPRISONED_INTERACTION_ENABLED = 1,            -- Should this action be used at all?
+    EXECUTE_IMPRISONED_INTERACTION_MUST_HAVE_COST = 0,        		-- Is having prestige/piety >= cost required for this action?
+    EXECUTE_IMPRISONED_INTERACTION_ENABLED = 1,            			-- Should this action be used at all?
     
     EXILE_IMPRISONED_INTERACTION_MONEY = 0,
     EXILE_IMPRISONED_INTERACTION_PIETY = 10,
     EXILE_IMPRISONED_INTERACTION_PRESTIGE = 0,
     EXILE_IMPRISONED_INTERACTION_THRESHOLD_FOR_NO = 0,
     EXILE_IMPRISONED_INTERACTION_THRESHOLD_FOR_YES = 0,
-    EXILE_IMPRISONED_INTERACTION_MUST_HAVE_COST = 0,        -- Is having prestige/piety >= cost required for this action?
-    EXILE_IMPRISONED_INTERACTION_ENABLED = 1,            -- Should this action be used at all?
+    EXILE_IMPRISONED_INTERACTION_MUST_HAVE_COST = 0,        		-- Is having prestige/piety >= cost required for this action?
+    EXILE_IMPRISONED_INTERACTION_ENABLED = 1,            			-- Should this action be used at all?
     
     RETIRE_TO_MONASTERY_INTERACTION_MONEY = 0,
     RETIRE_TO_MONASTERY_INTERACTION_PIETY = 0,
     RETIRE_TO_MONASTERY_INTERACTION_PRESTIGE = 0,
     RETIRE_TO_MONASTERY_INTERACTION_THRESHOLD_FOR_NO = 25,
     RETIRE_TO_MONASTERY_INTERACTION_THRESHOLD_FOR_YES = 25,
-    RETIRE_TO_MONASTERY_INTERACTION_MUST_HAVE_COST = 1,        -- Is having prestige/piety >= cost required for this action?
-    RETIRE_TO_MONASTERY_INTERACTION_ENABLED = 1,            -- Should this action be used at all?
+    RETIRE_TO_MONASTERY_INTERACTION_MUST_HAVE_COST = 1,        		-- Is having prestige/piety >= cost required for this action?
+    RETIRE_TO_MONASTERY_INTERACTION_ENABLED = 1,           	 			-- Should this action be used at all?
     
     DEMAND_RELIGIOUS_CONVERSION_INTERACTION_MONEY = 0,
     DEMAND_RELIGIOUS_CONVERSION_INTERACTION_PIETY = 0,
     DEMAND_RELIGIOUS_CONVERSION_INTERACTION_PRESTIGE = 0,
     DEMAND_RELIGIOUS_CONVERSION_INTERACTION_THRESHOLD_FOR_NO = 25,
     DEMAND_RELIGIOUS_CONVERSION_INTERACTION_THRESHOLD_FOR_YES = 25,
-    DEMAND_RELIGIOUS_CONVERSION_INTERACTION_MUST_HAVE_COST = 1,        -- Is having prestige/piety >= cost required for this action?
-    DEMAND_RELIGIOUS_CONVERSION_INTERACTION_ENABLED = 1,            -- Should this action be used at all?
+    DEMAND_RELIGIOUS_CONVERSION_INTERACTION_MUST_HAVE_COST = 1,        		-- Is having prestige/piety >= cost required for this action?
+    DEMAND_RELIGIOUS_CONVERSION_INTERACTION_ENABLED = 1,            			-- Should this action be used at all?
     
     INVITE_TO_COURT_INTERACTION_MONEY = 0,
     INVITE_TO_COURT_INTERACTION_PIETY = 0,
     INVITE_TO_COURT_INTERACTION_PRESTIGE = 0,
     INVITE_TO_COURT_INTERACTION_THRESHOLD_FOR_NO = 10,
     INVITE_TO_COURT_INTERACTION_THRESHOLD_FOR_YES = 10,
-    INVITE_TO_COURT_INTERACTION_MUST_HAVE_COST = 1,        -- Is having prestige/piety >= cost required for this action?
-    INVITE_TO_COURT_INTERACTION_ENABLED = 1,            -- Should this action be used at all?
+    INVITE_TO_COURT_INTERACTION_MUST_HAVE_COST = 1,        		-- Is having prestige/piety >= cost required for this action?
+    INVITE_TO_COURT_INTERACTION_ENABLED = 1,           	 			-- Should this action be used at all?
     
     TRANSFER_VASSAL_INTERACTION_MONEY = 0,
     TRANSFER_VASSAL_INTERACTION_PIETY = 0,
     TRANSFER_VASSAL_INTERACTION_PRESTIGE = 0,
     TRANSFER_VASSAL_INTERACTION_THRESHOLD_FOR_NO = 0,
     TRANSFER_VASSAL_INTERACTION_THRESHOLD_FOR_YES = 0,
-    TRANSFER_VASSAL_INTERACTION_MUST_HAVE_COST = 1,        -- Is having prestige/piety >= cost required for this action?
-    TRANSFER_VASSAL_INTERACTION_ENABLED = 1,            -- Should this action be used at all?
+    TRANSFER_VASSAL_INTERACTION_MUST_HAVE_COST = 1,        		-- Is having prestige/piety >= cost required for this action?
+    TRANSFER_VASSAL_INTERACTION_ENABLED = 1,            			-- Should this action be used at all?
       
     CLAIM_TITLE_INTERACTION_MONEY = 0,
     CLAIM_TITLE_INTERACTION_PIETY = 0,
     CLAIM_TITLE_INTERACTION_PRESTIGE = 0,
     CLAIM_TITLE_INTERACTION_THRESHOLD_FOR_NO = 0,
     CLAIM_TITLE_INTERACTION_THRESHOLD_FOR_YES = 0,
-    CLAIM_TITLE_INTERACTION_MUST_HAVE_COST = 1,        -- Is having prestige/piety >= cost required for this action?
-    CLAIM_TITLE_INTERACTION_ENABLED = 1,            -- Should this action be used at all?
+    CLAIM_TITLE_INTERACTION_MUST_HAVE_COST = 1,        		-- Is having prestige/piety >= cost required for this action?
+    CLAIM_TITLE_INTERACTION_ENABLED = 1,            			-- Should this action be used at all?
 
     REVOKE_TITLE_INTERACTION_MONEY = 0,
     REVOKE_TITLE_INTERACTION_PIETY = 0,
     REVOKE_TITLE_INTERACTION_PRESTIGE = 0,
     REVOKE_TITLE_INTERACTION_THRESHOLD_FOR_NO = 25,
     REVOKE_TITLE_INTERACTION_THRESHOLD_FOR_YES = 75,
-    REVOKE_TITLE_INTERACTION_MUST_HAVE_COST = 1,        -- Is having prestige/piety >= cost required for this action?
-    REVOKE_TITLE_INTERACTION_ENABLED = 1,            -- Should this action be used at all?  
+    REVOKE_TITLE_INTERACTION_MUST_HAVE_COST = 1,        		-- Is having prestige/piety >= cost required for this action?
+    REVOKE_TITLE_INTERACTION_ENABLED = 1,            			-- Should this action be used at all?  
     
     AWARD_HONORARY_TITLE_INTERACTION_MONEY = 0,
     AWARD_HONORARY_TITLE_INTERACTION_PIETY = 0,
     AWARD_HONORARY_TITLE_INTERACTION_PRESTIGE = 0,
     AWARD_HONORARY_TITLE_INTERACTION_THRESHOLD_FOR_NO = 0,
     AWARD_HONORARY_TITLE_INTERACTION_THRESHOLD_FOR_YES = 0,
-    AWARD_HONORARY_TITLE_INTERACTION_MUST_HAVE_COST = 1,        -- Is having prestige/piety >= cost required for this action?
-    AWARD_HONORARY_TITLE_INTERACTION_ENABLED = 1,            -- Should this action be used at all?
+    AWARD_HONORARY_TITLE_INTERACTION_MUST_HAVE_COST = 1,        		-- Is having prestige/piety >= cost required for this action?
+    AWARD_HONORARY_TITLE_INTERACTION_ENABLED = 1,            			-- Should this action be used at all?
     
     REVOKE_HONORARY_TITLE_INTERACTION_MONEY = 0,
     REVOKE_HONORARY_TITLE_INTERACTION_PIETY = 0,
@@ -550,7 +553,15 @@ NDefines = {
     ASK_FOR_CRUSADE_INTERACTION_THRESHOLD_FOR_NO = 50,
     ASK_FOR_CRUSADE_INTERACTION_THRESHOLD_FOR_YES = 150,
     ASK_FOR_CRUSADE_INTERACTION_MUST_HAVE_COST = 1,        -- Is having prestige/piety >= cost required for this action?
-    ASK_FOR_CRUSADE_INTERACTION_ENABLED = 1,            -- Should this action be used at all?    
+    ASK_FOR_CRUSADE_INTERACTION_ENABLED = 1,						-- Should this action be used at all?
+
+	CHANGE_CRUSADE_TARGET_INTERACTION_MONEY = 0,
+	CHANGE_CRUSADE_TARGET_INTERACTION_PIETY = 250,
+	CHANGE_CRUSADE_TARGET_INTERACTION_PRESTIGE = 0,
+	CHANGE_CRUSADE_TARGET_INTERACTION_THRESHOLD_FOR_NO = 0,
+	CHANGE_CRUSADE_TARGET_INTERACTION_THRESHOLD_FOR_YES = 150,
+	CHANGE_CRUSADE_TARGET_INTERACTION_MUST_HAVE_COST = 1,				-- Is having prestige/piety >= cost required for this action?
+	CHANGE_CRUSADE_TARGET_INTERACTION_ENABLED = 1,            -- Should this action be used at all?    
     
     NOMINATE_BISHOP_TO_POPE_INTERACTION_MONEY = 50,
     NOMINATE_BISHOP_TO_POPE_INTERACTION_PIETY = 30,
@@ -775,9 +786,9 @@ NDefines = {
     TRUCE_BREAKER_MODIFIER_MONTHS = 3650,          -- How long the truce breaker temporary modifier lasts
 
     DIPLO_ICON_DURATION_DAYS = 96              -- How long incoming diplomatic message stay before being auto declined
-  },
+},
 
-  NCouncil = {
+NCouncil = {
     MONTHS_OF_DISCONTENT_COUNCIL = 24,
     CHANGE_POSITION_COOLDOWN = 1,                -- How often councilors can change their attitude (ie discontent/loyalist/etc in months)
     FAVOR_USE_DURATION = 36,                  -- How long a favor last when used in council in amount of months
@@ -794,15 +805,15 @@ NDefines = {
     REGENCY_VOTING = "laws declare_war_interaction revoke_title_interaction imprison_character_interaction grant_landed_title_interaction exile_imprisoned_interaction execute_imprisoned_interaction",          -- In regencies the council votes on these issues
     COUNCIL_REJECTION_ALL_LAWS_TIMEOUT = 1,            -- How many years the timeout for doing a law change (for any law) is when the council has rejected a law change.
     COUNCIL_REJECTION_ALL_CROWN_LAWS_TIMEOUT = 1,        -- How many years the timeout for doing a crown law change (for any crown law) is when the council has rejected a crown law change.
-  },
+},
 
   NSociety = {
     SOCIETY_INFLUENCE_MEMBER_LIMIT_FACTOR = 100,        -- If less than 100 then society influence percentage is TotalSumOfStat/50, if greater or equal to 100 then TotalSumOfStat/(TotalMembers/2)
     SOCIETY_SHOW_INTEREST_COOLDOWN = 90,            -- Cooldown for showing interest in a society again in days
     JOIN_SOCIETY_COOLDOWN = 90,                  -- Cooldown for joining a society again in days
-  },
+},
 
-  NInfamy = {
+NInfamy = {
     REALM_SIZE_BASE_MODIFIER = 1,
     REALM_SIZE_GROWTH_MODIFIER = 0.125,              -- The bigger you are, the more dangerous you are, modifier for when nation is growing
     REALM_SIZE_SHRINK_MODIFIER = 0.0,              -- The bigger you are, the more dangerous you are, modifier for when nation is shrinking
@@ -816,9 +827,9 @@ NDefines = {
     MILITARY_STRENGTH_DECAY_BASE = 600,              -- Divider on military strength value that is used for the logarithmic part of the decay value.
     MAX_INFAMY_PER_WAR_PROVINCE = 15,              -- A single province taken in war can give at most this much threat
     MIN_INFAMY_PER_WAR_PROVINCE = 2,              -- A single province taken in war can give at most this much threat
-  },
+},
 
-  NCharacter = {
+NCharacter = {
     WRONG_GOV_FORM_TAX_MOD = -0.75,
     WRONG_GOV_FORM_LEVY_MOD = -0.75,
     CHANGE_SUCC_LAW_YEARS = 10,            -- Rulers must have reigned this long before they can change succession laws
@@ -910,9 +921,9 @@ NDefines = {
     
     TREASURY_CHANCE_TO_DISAPPEAR_STANDARD = 0.05,  -- Chances that artifacts disappear on inheritance
     TREASURY_CHANCE_TO_DISAPPEAR_NO_HEIR = 0.5,    -- Chances that artifacts disappear on inheritance when the dying character doesn't have an heir
-  },
+},
 
-  NTitle = {
+NTitle = {
   -- Monthly prestige from vassals
     BARON_AS_VASSAL_PRESTIGE = 0.025,
     COUNT_AS_VASSAL_PRESTIGE = 0.1,
@@ -1040,9 +1051,9 @@ NDefines = {
     EMPIRE_DEJURE_COUNTY_LIMIT_TO_USURP = 0.8,    -- Fraction of de jure counties that you must control to usurp an imperial title  
     
     CUSTOM_TITLE_COLOR_OFFSET = 0.35          -- The offset from the base title color when creating a new title
-  },
+},
 
-  NReligion = {
+NReligion = {
     CREATE_ANTIPOPE_PRESTIGE_COST = 500,
     EXCOM_MIN_AUTHORITY = 0.4,
     INVASION_MIN_AUTHORITY = 0.5,
@@ -1073,9 +1084,9 @@ NDefines = {
     PAPAL_SUCCESSION_PASS_ON_HOLDINGS = 1,      -- Set to zero if holdings shouldn't be passed on
     PAPAL_SUCCESSION_LOSE_MINOR_TITLES = 1,      -- Set to zero if minor religious titles should be lost
     AUTHORITY_FROM_PIETY_CAP = 0.25,        -- Maxmimum boost to religious authority due to head's piety
-  },
+},
 
-  NEconomy = {
+NEconomy = {
     HOLDING_SLOT_BUILD_COST_MOD = 0.2,
     BISHOP_TAX_TO_POPE_FACTOR = 0.1,        -- Bishops only pay half the tax to the Pope if they are loyal to him
     BISHOP_TAX_TO_ANTI_POPE_FACTOR = 0.05,      -- Bishops only pay a quarter taxes to an Anti-Pope if they are loyal to him  
@@ -1121,10 +1132,13 @@ NDefines = {
     SILK_ROAD_TP_BUILD_COST_MOT = 0.333,      -- Build cost modifier for non-Merchant republic Trade Posts
     TRADE_ROUTE_SIEGE_MULTIPLIER = 0.9,        -- Sieges multiply the value of trade routes by this amount downstream
     TRADE_ROUTE_OCCUPATION_MULTIPLIER = 0.75,    -- Occupied provinces multiply the value of trade routes by this amount downstream. If sieged as well, the lowest of this and TRADE_ROUTE_SIEGE_MULTIPLIER is used
-    FORT_CONSUMED_IN_SETTLEMENT_CONTRUCTION = 1    -- If set to 1 then fort holdings are consumed by the construction of another holding in the province while giving a discount to the construction cost in return.
-  },
+    FORT_CONSUMED_IN_SETTLEMENT_CONTRUCTION = 1,	-- If set to 1 then fort holdings are consumed by the construction of another holding in the province while giving a discount to the construction cost in return.
+	WONDER_ABORT_FIRST_STAGE_RETURN_FACTOR = 0.0,	-- Factor for the amount the owner of a wonder gets when they abort the first stage of a wonder construction
+	WONDER_STACKING_PENALTY = 0.4,					-- Additional cost for each consecutive wonder construction
+	WONDER_STACKING_PENALTY_SAME_TYPE = 0.8			-- Extra penalty for construction wonders of the same type
+},
 
-  NDecadence = {
+NDecadence = {
     BASE_EMPEROR_GAIN = 0.1,
     BASE_KING_GAIN = 0.1,
     BASE_DUKE_GAIN = 0.1,
@@ -1135,9 +1149,9 @@ NDefines = {
     DEMESNE_FRACTION_MULT_POS = 0.5,
     DEMESNE_FRACTION_MULT_NEG = -0.8,
     SAFETY_VALUE = 75                -- The limit at where your decadence will give you a risk of decadence revolts
-  }, 
+}, 
 
-  NNomad = {
+NNomad = {
     POPULATION_INCREASE_MULTIPLIER = 0.01,      -- The rate current population grows or declines to max population
     MANPOWER_INCREASE_MULTIPLIER = 0.1,        -- The rate current manpower grows or declines to max manpower
     MANPOWER_LOW_SENTIMENT_INCREASE_MULTIPLIER = 2.0, -- The manpower effect of a negative Clan Sentiment vs the ruling Clan. At a value of 2, -100 Sentiment is 200% faster manpower regrowth.
@@ -1178,9 +1192,9 @@ NDefines = {
     ALWAYS_GENERATE_NOMADS = 0,            -- If turned on will generate nomads even if they are not playable
     
     MIN_TRIBAL_BUILDINGS_VS_AGITATION = 2      -- Tribal Holdings with at least this many buildings is enough to stop subjugated Nomad provinces from regaining independence (for Tribal overlords).
-  }, 
+}, 
 
-  NMilitary = {
+NMilitary = {
     MORALE_COLLAPSE_THRESHOLD = 0.20,        -- Threshold before unit runs away
     MORALELOSS_FACTOR = 3.0,            -- Affects the morale loss rate in combats (higher gives bigger losses)
     ATTACK_TO_DAMAGE_MULT = 0.01,          -- Attack value of troops is multiplied by this when doing damage
@@ -1477,11 +1491,18 @@ NDefines = {
     NOMAD_SUFFER_PAGAN_ATTRITION = 0,            -- Whether pagan nomads suffer attrition in pagan homelands
     VASSALS_UNITE_AGAINST_TYRANNY = 1,            -- Will vassal automatically join wars against tyrants (revocation revolts, for example)
     
-    FAR_CRUSADES_WITHOUT_WEIGHT_MODIFIER = 0.75,      -- War choice modifier for crusade on titles that don't contain a crusade modifier and are not adjacent to territory of our religion
-    FORT_LEVEL_ASSAULT_THRESHOLD = 6            -- The besieging army cannot assault a Holding with a Fort level above this number (unless the Siege Assault Game Rule is 'unlimited')
-  },
+    FAR_CRUSADES_WITHOUT_WEIGHT_MODIFIER = 0.75,			-- War choice modifier for crusade on titles that don't contain a crusade modifier and are not adjacent to territory of our religion
+	NEW_CRUSADE_START_DELAY = 365,							-- The minimum time between a new-style Crusade ("use_new_crusade = yes" in religion) is called and when the war is launched
+	NEW_CRUSADE_START_DELAY_RANDOM = 365,					-- Between 0 and this many days will be added to the Crusade launch delay. So with these numbers, the Crusade will launch between 12 and 24 months after it is called. The exact day is visible in the UI
+	CRUSADE_MINIMUM_CONTRIBUTION = 1000,					-- Participants who have contributed less than this to the war (via sieges, battles, etc., see the in-game war UI) do not receive anything from the Crusade pot
+	CRUSADE_MAX_POT_SHARE = 0.2,							-- It is not possible to receive more than this from the Crusade pot. If there's too few qualifying participants to distribute the full pot, any remainder goes to the Crusader King
+	CRUSADER_KING_POT_SHARE = 0.1,							-- The Crusader King gets this portion of the pot, plus any remainder
+	CRUSADER_KING_ARTIFACTS = 2,							-- The Crusader King gets this many artifacts
+	CRUSADERS_GET_EXTRA_ARTIFACTS = 2,						-- The top <NUM> participants get one extra artifact each
+	FORT_LEVEL_ASSAULT_THRESHOLD = 6						-- The besieging army cannot assault a Holding with a Fort level above this number (unless the Siege Assault Game Rule is 'unlimited')
+},
 
-  NTechnology = {
+NTechnology = {
     DONT_EXECUTE_TECH_BEFORE = 1,        -- Set this to your earliest starting year
     POINTS_PER_ATTRIBUTE = 0.04,
 
@@ -1502,9 +1523,9 @@ NDefines = {
     
     BASE_FROM_NOMAD_CAPITAL_SPREAD_BONUS = 0.09,-- bonus for nomad capital with the tech
     BASE_TO_NOMAD_CAPITAL_SPREAD_BONUS = 0.2  -- bonus for the province the nomad capital resides in
-  },  
+},  
 
-  NDisease = {
+NDisease = {
     SMALL_TOWN_INCOME = 11.0, -- A coastal town with this income has no chance of starting an outbreak
     BIG_TOWN_INCOME = 30.0, -- A coastal town with this income is always a candidate for starting an outbreak
     MIN_OUTBREAK_CHANCE = 0.1, -- Min chance that an outbreak will happen in a particular town
@@ -1529,9 +1550,9 @@ NDefines = {
     INFECTION_ONLY_AFFECTS_ADJACENT_PROVINCES = 0,    -- if true, will make provinces adjacent to a province that just got infected target for the infection in the same tick
     
     INFECTION_DURATION_VARIATION = 0.25,        -- Part of the duration that can vary
-  },
+},
 
-  NGraphics = {
+NGraphics = {
     PORT_SHIP_OFFSET = 3.0,
     CITY_SPRAWL_SHRINK_DISTANCE = 150.0, -- Start shrinking at this distance
     CITY_SPRAWL_DRAW_DISTANCE = 200.0, -- Remove at this distance
@@ -1545,9 +1566,9 @@ NDefines = {
     NUMBER_OF_DNA_PROPERTIES = 21,
     CITY_MAIN_BUILDING_LEVEL_2 = 25,          -- If a main settlement has more building than that, it will use model level 2
     CITY_MAIN_BUILDING_LEVEL_3 = 35,          -- If a main settlement has more building than that, it will use model level 3
-  },
+},
 
-  NEngine = {
+NEngine = {
     EVENT_PROCESS_OFFSET = 20,    -- Events are checked every X day per character or province (1 is ideal, but CPU heavy). Max value of 255
     COURTIER_EVENT_PROCESS_OFFSET = 50,    -- Events are checked every X day for courtiers. Max value of 255
     COURTIERS_MTTTH_EVENTS = 1,  -- Toggles if courtiers are allowed to run MTTH events or not
@@ -1557,10 +1578,10 @@ NDefines = {
     COURT_PRUNE_SIZE = 10,         -- Courts larger than this will be checked for pruning each month
     PRUNE_MINIMAL_AGE = 40,        -- Minimum age for a courtier to be prunable if considered irrelevant
     HEALTH_IMMUNITY_TO_PRUNING = 7,    -- If a character has that much health, they won't be pruned
-  },
+},
 
-  NAI =
-  {
+NAI =
+{
     INTERACTION_THRESHOLD_FOR_NO = 25,            -- Interactions with chance below this will always be declined
     INTERACTION_THRESHOLD_FOR_YES = 25,            -- Interactions with chance above this will always be accepted
     INTERACTION_MIN_DAYS_REJECTED = 365,          -- AI will remember a rejection at least this time
@@ -1682,13 +1703,16 @@ NDefines = {
     AI_SUPPORT_PARDON_BONUS = 60,              -- bonus to ai request support chance if seeking to get pardoned
     DIVINE_BLOOD_INCEST_FACTOR = 1,              -- Multiplier factor used for close relatives when finding best spouse in religion with divine blood enabled. Smaller factor leads to close relatives less likely to be a choice.
     
-    STATECRAFT_THREAT_THRESHOLD = 50.0,            -- If threat from realm is greater or equal to threshold then Chancellor will be assigned to Statecraft job
-    ADMINISTER_REALM_REALM_SIZE_THRESHOLD = 200,      -- If Empire and realm size is greater or equal to threshold then Steward will be assigned to Administer Realm job
-    NOMAD_ORGANIZE_ARMY_THRESHOLD = 0.75,          -- If Nomad manpower growth from Train Warriors job is greater or equal to threshold then Marshal will be assigned to Organize Army job
-  },
+    STATECRAFT_THREAT_THRESHOLD = 50.0,						-- If threat from realm is greater or equal to threshold then Chancellor will be assigned to Statecraft job
+	ADMINISTER_REALM_REALM_SIZE_THRESHOLD = 200,			-- If Empire and realm size is greater or equal to threshold then Steward will be assigned to Administer Realm job
+	NOMAD_ORGANIZE_ARMY_THRESHOLD = 0.75,					-- If Nomad manpower growth from Train Warriors job is greater or equal to threshold then Marshal will be assigned to Organize Army job
+	
+	AI_WONDER_INCOME_THRESHOLD = 40.0,						-- The AI will not consider building a wonder unless it has more monthly income than this
+	AI_WONDER_RESUME_THRESHOLD = 200.0						-- The AI will not resume halted wonder constructions unless over this current wealth
+},
 
-  NFrontend = 
-  {
+NFrontend = 
+{
     CAMERA_LOOKAT_X = 790.0,       -- Rotation point in main menu
     CAMERA_LOOKAT_Y = 0.0,
     CAMERA_LOOKAT_Z = 1000.0,
@@ -1738,10 +1762,10 @@ NDefines = {
     CREDITS_LOOK_X = 900.0,
     CREDITS_LOOK_Y = 0.0,  
     CREDITS_LOOK_Z = 1450.0,
-  },
+},
 
-  NEndGame = 
-  {
+NEndGame = 
+{
     DYN1_SCORE = 100000,  
     DYN1_ID = 604, 
     DYN2_SCORE = 90000,
@@ -1772,10 +1796,10 @@ NDefines = {
     DYN14_ID = 607, 
     DYN15_SCORE = 1000,
     DYN15_ID = 222, 
-  },
+},
 
-  NRulerDesigner =
-  {
+NRulerDesigner =
+{
     BASE_ATTRIB = 5,
     BASE_AGE = 16,
     BASE_FERTILITY = 0.5,
@@ -1813,10 +1837,10 @@ NDefines = {
     COST_MORALE_DEFENCE = 0.0,
     COST_DEFENCE = 0.0,
     MAX_AGE = 90
-  },
+},
 
-  NLearningScenario = 
-  {
+NLearningScenario = 
+{
     START_YEAR = 1066,
     START_MONTH = 8,
     START_DAY = 14,
@@ -1854,5 +1878,13 @@ NDefines = {
     DEATH_EVENT = 107350,
     INCAPABLE_EVENT = 107360,
     CAN_EDUCATE_HEIR_EVENT = 107334
-  }
+},
+  
+NWonders =
+{
+	MIN_LOOTABLE_STAGE = 2, -- The stage set here will be lootable but looting will automagically stop at after it has been looted and no looting will be possible below this stage
+	CONVERTER_IGNORE_HISTORICAL_WONDERS = 1, -- If set to one then the historical wonders will not be transfered through the EU4 converter even if they have finished the final stage of construction.
+	NON_CONCLAVE_COST_MULTIPLIER = 0.6 -- Without the Conclave tax laws the independent rulers will have significantly less income.
+}
+
 }
