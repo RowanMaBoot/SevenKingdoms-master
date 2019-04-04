@@ -262,3 +262,202 @@ troop_damage_by_dragon = {
 		morale = -1
 	}
 }
+
+calculate_injury_outcome_dragon_duel = {
+	random_list = {
+			
+		###Wounded###
+		20 = {
+			set_character_flag = get_wounded
+			random = {
+				chance = 20
+				any_friend = {
+					limit = { is_dragon_in_dragon_duel = yes }
+					set_character_flag = get_wounded
+				}
+			}
+		}
+		
+		###Maimed###
+		20 = {
+			set_character_flag = get_maimed
+			random = {
+				chance = 20
+				any_friend = {
+					limit = { is_dragon_in_dragon_duel = yes }
+					set_character_flag = get_maimed
+				}
+			}
+		}
+		
+		###Death###
+		20 = {
+			#You die | This chooses the killer
+			random_list = {
+				16 = {
+					#For team A
+					if = {
+						limit = { is_in_dragon_duel_team_a = yes }
+						set_character_flag = killed_by_d
+					}
+					#For team B
+					else_if = {
+						limit = { is_in_dragon_duel_team_b = yes }
+						set_character_flag = killed_by_a
+					}
+				}
+				16 = {
+					modifier = {
+						factor = 0
+						OR = {
+							#For team A
+							AND = {
+								NOT = { event_target:rider_d = { has_character_flag = rider_e_chosen } }
+								is_in_dragon_duel_team_a = yes
+							}
+							#For team B
+							AND = {
+								NOT = { event_target:rider_a = { has_character_flag = rider_b_chosen } }
+								is_in_dragon_duel_team_b = yes
+							}
+						}
+					}
+					#For team A
+					if = {
+						limit = { is_in_dragon_duel_team_a = yes }
+						set_character_flag = killed_by_e
+					}
+					#For team B
+					else_if = {
+						limit = { is_in_dragon_duel_team_b = yes }
+						set_character_flag = killed_by_b
+					}
+				}
+				16 = {
+					modifier = {
+						factor = 0
+						OR = {
+							#For team A
+							AND = {
+								NOT = { event_target:rider_d = { has_character_flag = rider_f_chosen } }
+								is_in_dragon_duel_team_a = yes
+							}
+							#For team B
+							AND = {
+								NOT = { event_target:rider_a = { has_character_flag = rider_c_chosen } }
+								is_in_dragon_duel_team_b = yes
+							}
+						}
+					}
+					#For team A
+					if = {
+						limit = { is_in_dragon_duel_team_a = yes }
+						set_character_flag = killed_by_f
+					}
+					#For team B
+					else_if = {
+						limit = { is_in_dragon_duel_team_b = yes }
+						set_character_flag = killed_by_c
+					}
+				}
+			}
+		}
+	}
+}
+
+wound_maim_kill_actions_dragon_duel = {
+	
+	###Wounded###
+	if = {
+		limit = { has_character_flag = get_wounded }
+		if = {
+			limit = {
+				is_rider_in_dragon_duel = yes
+				has_character_flag = get_wounded
+			}
+			add_trait = wounded
+		}
+		else_if = {
+			limit = {
+				is_dragon_in_dragon_duel = yes
+				has_character_flag = get_wounded
+			}
+			add_trait = dragon_wounded
+		}
+	}
+	
+	###Maimed###
+	if = {
+		limit = { has_character_flag = get_maimed }
+		if = {
+			limit = {
+				is_rider_in_dragon_duel = yes
+				has_character_flag = get_maimed
+			}
+			add_trait = maimed
+		}
+		else_if = {
+			limit = {
+				is_dragon_in_dragon_duel = yes
+				has_character_flag = get_maimed
+			}
+			add_trait = dragon_maimed
+		}
+	}
+	
+	###Death###
+	#Killed by rider d
+	if = {
+		limit = { has_character_flag = killed_by_d }
+		if = {
+			limit = {
+				is_rider_in_dragon_duel = yes
+				has_character_flag = killed_by_d
+			}
+			death = { death_reason = death_dragon_duell killer = event_target:rider_d }
+		}
+		else_if = {
+			limit = {
+				is_dragon_in_dragon_duel = yes
+				has_character_flag = killed_by_d
+			}
+			death = { death_reason = death_dragon_duell killer = event_target:rider_d }
+		}
+	}
+	#Killed by rider e
+	else_if = {
+		limit = { has_character_flag = killed_by_e }
+		if = {
+			limit = {
+				is_rider_in_dragon_duel = yes
+				has_character_flag = killed_by_e
+			}
+			death = { death_reason = death_dragon_duell killer = event_target:rider_e }
+		}
+		else_if = {
+			limit = {
+				is_dragon_in_dragon_duel = yes
+				has_character_flag = killed_by_e
+			}
+			death = { death_reason = death_dragon_duell killer = event_target:rider_e }
+		}
+	}
+	#Killed by rider f
+	else_if = {
+		limit = { has_character_flag = killed_by_f }
+		if = {
+			limit = {
+				is_rider_in_dragon_duel = yes
+				has_character_flag = killed_by_f
+			}
+			death = { death_reason = death_dragon_duell killer = event_target:rider_f }
+		}
+		else_if = {
+			limit = {
+				is_dragon_in_dragon_duel = yes
+				has_character_flag = killed_by_f
+			}
+			death = { death_reason = death_dragon_duell killer = event_target:rider_f }
+		}
+	}
+}

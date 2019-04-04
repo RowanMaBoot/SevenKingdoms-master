@@ -524,7 +524,7 @@ character_event = {
 			}
 			if = { 
 				limit = { has_character_flag = killed_by_dragon }
-				death = { death_reason = death_dragon_f_perire1 killer = event_target:your_dragon }
+				death = { death_reason = death_dragon_fire1 killer = event_target:your_dragon }
 				clr_character_flag = burnt_by_dragon
 			}
 		}
@@ -1646,6 +1646,7 @@ character_event = {
 			}
 			set_variable = { which = dragon_strength_team_b which = global_dragon_strength_var_d }
 			change_variable = { which = dragon_strength_team_b which = global_riding_skill_var_d }
+			set_variable = { which = global_dragon_strength_team_b which = dragon_strength_team_b }
 		}
 		
 		#Rider A is notified about Rider D engaging the duel
@@ -1662,6 +1663,8 @@ character_event = {
 		trigger = {
 			always = no
 		}
+		
+		clr_character_flag = debug_rider_d
 	}
 }
 
@@ -1691,7 +1694,7 @@ character_event = {
 			}
 		}
 		
-		#Sets rider D's dragon strenght
+		#Ask allied riders to join you
 		if = { #If there are non...
 			limit = {
 				OR = {
@@ -1699,7 +1702,7 @@ character_event = {
 					has_character_flag = rider_a_stands_alone
 				}
 			}
-			event_target:rider_d = { character_event = { id = dragon.305 } }
+			event_target:rider_a = { character_event = { id = dragon.305 } }
 		}
 		else = {
 			event_target:rider_b = { character_event = { id = dragon.303 } }
@@ -1720,6 +1723,7 @@ character_event = {
 			}
 			remove_title = title_commander
 		}
+		clr_character_flag = debug_rider_a
 	}
 }
 
@@ -1855,7 +1859,7 @@ letter_event = {
 				has_character_flag = debug_rider_a
 				FROM = { has_character_flag = debug_rider_b }
 			}
-			event_target:rider_d = { character_event = { id = dragon.305 } }
+			event_target:rider_a = { character_event = { id = dragon.305 } }
 		}
 	}
 	
@@ -1885,10 +1889,118 @@ character_event = {
 	}
 }
 
-#Calculates Outcome
+#Calculates outcome | Displays all riders and dragons
 character_event = {
 	id = dragon.306
 	desc = "Tema A: [global_dragon_strength_team_a.GetValue] | Team B: [global_dragon_strength_team_b.GetValue]"
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_character_flag = debug_rider_a
+	}
+	
+	major = yes
+	
+	major_trigger = {
+		OR = {
+			has_character_flag = debug_rider_a
+			has_character_flag = debug_rider_b
+			has_character_flag = debug_rider_c
+			has_character_flag = debug_rider_d
+			has_character_flag = debug_rider_e
+			has_character_flag = debug_rider_f
+		}
+	}
+	
+	immediate = {
+		hidden_tooltip = {
+			event_target:rider_a = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:dragon_a = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:rider_b = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:dragon_b = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:rider_c = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:dragon_c = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:rider_d = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:dragon_d = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:rider_e = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:dragon_e = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:rider_f = { calculate_injury_outcome_dragon_duel = yes }
+			event_target:dragon_f = { calculate_injury_outcome_dragon_duel = yes }
+		}
+	}
+	
+	option = {
+		trigger = {
+			NOT = { has_character_flag = debug_rider_a }
+		}
+		name = "NONE"
+		
+		event_target:rider_a = { tooltip = { show_portrait = yes } }
+		event_target:dragon_a = { tooltip = { show_portrait = yes } }
+		
+		event_target:rider_b = { tooltip = { show_portrait = yes } }
+		event_target:dragon_b = { tooltip = { show_portrait = yes } }
+		
+		event_target:rider_c = { tooltip = { show_portrait = yes } }
+		event_target:dragon_c = { tooltip = { show_portrait = yes } }
+		
+		event_target:rider_d = { tooltip = { show_portrait = yes } }
+		event_target:dragon_d = { tooltip = { show_portrait = yes } }
+		
+		event_target:rider_e = { tooltip = { show_portrait = yes } }
+		event_target:dragon_e = { tooltip = { show_portrait = yes } }
+		
+		event_target:rider_f = { tooltip = { show_portrait = yes } }
+		event_target:dragon_f = { tooltip = { show_portrait = yes } }
+	}
+	
+	option = {
+		trigger = {
+			has_character_flag = debug_rider_a
+		}
+		name = "NONE"
+		
+		event_target:rider_a = { tooltip = { show_portrait = yes } }
+		event_target:dragon_a = { tooltip = { show_portrait = yes } }
+		event_target:rider_b = { tooltip = { show_portrait = yes } }
+		event_target:dragon_b = { tooltip = { show_portrait = yes } }
+		event_target:rider_c = { tooltip = { show_portrait = yes } }
+		event_target:dragon_c = { tooltip = { show_portrait = yes } }
+		event_target:rider_d = { tooltip = { show_portrait = yes } }
+		event_target:dragon_d = { tooltip = { show_portrait = yes } }
+		event_target:rider_e = { tooltip = { show_portrait = yes } }
+		event_target:dragon_e = { tooltip = { show_portrait = yes } }
+		event_target:rider_f = { tooltip = { show_portrait = yes } }
+		event_target:dragon_f = { tooltip = { show_portrait = yes } }
+		
+		#Calculates Outcome
+		if = {
+			limit = {
+				check_variable = { which = global_dragon_strength_team_a which = global_dragon_strength_team_b }
+			}
+			set_character_flag = team_a_wins
+		}
+		else = {
+			set_character_flag = team_b_wins
+		}
+
+		event_target:rider_a = { character_event = { id = dragon.307 } }
+	}
+	
+	option = {
+		name = "Flee"
+	
+		trigger = {
+			always = no
+		}
+	}
+}
+
+#
+character_event = {
+	id = dragon.307
+	desc = EVTDESCdragon307
 	
 	is_triggered_only = yes
 	
@@ -1910,46 +2022,55 @@ character_event = {
 	}
 	
 	option = {
-		name = "NONE"
-		
-		event_target:rider_a = { tooltip = { show_portrait = yes } }
-		event_target:dragon_a = { tooltip = { show_portrait = yes } }
-		event_target:rider_b = { tooltip = { show_portrait = yes } }
-		event_target:dragon_b = { tooltip = { show_portrait = yes } }
-		event_target:rider_c = { tooltip = { show_portrait = yes } }
-		event_target:dragon_c = { tooltip = { show_portrait = yes } }
-		event_target:rider_d = { tooltip = { show_portrait = yes } }
-		event_target:dragon_d = { tooltip = { show_portrait = yes } }
-		event_target:rider_e = { tooltip = { show_portrait = yes } }
-		event_target:dragon_e = { tooltip = { show_portrait = yes } }
-		event_target:rider_f = { tooltip = { show_portrait = yes } }
-		event_target:dragon_f = { tooltip = { show_portrait = yes } }
-		
-		if = {
-			limit = {
-				check_variable = { which = global_dragon_strength_team_a which = global_dragon_strength_team_b }
-			}
-			wealth = 10
+		trigger = {
+			NOT = { has_character_flag = debug_rider_a }
 		}
-		else = {
-			prestige = 10
-		}
+		name = EVTOPTAdragon307
 	}
 	
 	option = {
-		name = "Flee"
-	
 		trigger = {
-			always = no
+			has_character_flag = debug_rider_a
+		}
+		name = EVTOPTBdragon307
+		
+		event_target:rider_a = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_a = { wound_maim_kill_actions_dragon_duel = yes }
+		
+		event_target:rider_b = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_b = { wound_maim_kill_actions_dragon_duel = yes }
+		
+		event_target:rider_c = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_c = { wound_maim_kill_actions_dragon_duel = yes }
+		
+		event_target:rider_d = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_d = { wound_maim_kill_actions_dragon_duel = yes }
+		
+		event_target:rider_e = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_e = { wound_maim_kill_actions_dragon_duel = yes }
+		
+		event_target:rider_f = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_f = { wound_maim_kill_actions_dragon_duel = yes }
+		
+		if = {
+			limit = {
+				has_character_flag = team_a_wins
+			}
+			character_event = { id = dragon.100 }
+		}
+		else = {
+			event_target:rider_d = { character_event = { id = dragon.100 } }
 		}
 	}
 }
 
-#
+#Dragon Duel aftermath | gives option to attack the army after victory
 character_event = {
-	id = dragon.999
+	id = dragon.308
 	
 	is_triggered_only = yes
+	
+	hide_window = yes
 	
 	immediate = {
 		
