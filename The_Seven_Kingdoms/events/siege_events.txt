@@ -1156,9 +1156,21 @@ narrative_event = {
 		siege = {
 			is_attacker = no
 		}
-		religion_group = christian
+		OR = {
+			religion_group = the_seven_group
+			religion = old_gods
+			religion_group = eastern_group
+			religion_group = valyrian_group
+			religion_group = drowned_god_group
+		}
 		enemy = {
-			religion_group = pagan_group
+			OR = {
+				AND = {
+					religion_group = westerosi_pagan_group
+					NOT = { religion = old_gods }
+				}
+				religion_group = eastern_pagan_group
+			}
 		}
 		has_game_rule = {
 			name = siege_events
@@ -1265,9 +1277,9 @@ narrative_event = {
 		siege = {
 			is_attacker = no
 		}
-		religion_group = christian
+		religion_group = the_seven_group
 		enemy = {
-			religion_group = muslim
+			religion = rhllor
 		}
 		has_game_rule = {
 			name = siege_events
@@ -1375,9 +1387,9 @@ narrative_event = {
 		siege = {
 			is_attacker = no
 		}
-		religion_group = muslim
+		religion = rhllor
 		enemy = {
-			NOT = { religion_group = muslim }
+			NOT = { religion = rhllor }
 		}
 		has_game_rule = {
 			name = siege_events
@@ -1477,7 +1489,7 @@ character_event = {
 	picture = GFX_evt_crusaders
 	border = GFX_event_normal_frame_religion
 
-	religion_group = christian 
+	religion_group = the_seven_group 
 	
 	is_triggered_only = yes
 	
@@ -1490,7 +1502,7 @@ character_event = {
 		can_be_maimed_trigger = yes
 		NOT = {	trait = wounded	}
 		enemy = {
-			NOT = { religion_group = christian }
+			NOT = { religion_group = the_seven_group }
 		}		
 	}
 
@@ -1789,8 +1801,10 @@ character_event = {
 			is_female = yes
 			new_character = {
 				OR = {
-					religion_group = pagan_group
-					religion_group = zoroastrian_group
+					religion_group = eastern_pagan_group
+					religion_group = drowned_god_group
+					religion_group = other_group
+					religion_group = far_east_group
 				}
 			}
 		}
