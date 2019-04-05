@@ -2575,13 +2575,13 @@ character_event = {
 			primary_title = {
 				is_landless_type_title = no
 			}
-			OR = {
-				NOT = { religion_group = pagan_group }
-				AND = {
-					religion_group = pagan_group
-					is_reformed_religion = yes
-				}
-			}
+			# OR = {
+				# NOT = { religion_group = pagan_group }
+				# AND = {
+					# religion_group = pagan_group
+					# is_reformed_religion = yes
+				# }
+			# }
 		}
 	}
 	
@@ -2618,13 +2618,13 @@ character_event = {
 				primary_title = {
 					is_landless_type_title = no
 				}
-				OR = {
-					NOT = { religion_group = pagan_group }
-					AND = {
-						religion_group = pagan_group
-						is_reformed_religion = yes
-					}
-				}
+				# OR = {
+					# NOT = { religion_group = pagan_group }
+					# AND = {
+						# religion_group = pagan_group
+						# is_reformed_religion = yes
+					# }
+				# }
 			}
 			create_character = {
 				religion = THIS
@@ -2785,12 +2785,12 @@ character_event = {
 				factor = 1.5
 				trait = trusting
 			}
-			modifier = {
-				factor = 0.75
-				NOT = {
-					year = 900
-				}
-			}
+			# modifier = {
+				# factor = 0.75
+				# NOT = {
+					# year = 900
+				# }
+			# }
 			modifier = {
 				factor = 0.25
 				OR = {
@@ -2798,20 +2798,20 @@ character_event = {
 					culture_group = finno_ugric  # The most stubborn pagans
 				}
 			}
-			modifier = {
-				factor = 0.25
-				culture_group = east_slavic # Like alcohol
-				event_target:missionary_physician_target = {
-					religion_group = muslim
-				}
-			}
-			modifier = {
-				factor = 0.25
-				culture_group = north_germanic # Vikings do like their alcohol
-				event_target:missionary_physician_target = {
-					religion_group = muslim
-				}
-			}
+			# modifier = {
+				# factor = 0.25
+				# culture_group = east_slavic # Like alcohol
+				# event_target:missionary_physician_target = {
+					# religion_group = muslim
+				# }
+			# }
+			# modifier = {
+				# factor = 0.25
+				# culture_group = north_germanic # Vikings do like their alcohol
+				# event_target:missionary_physician_target = {
+					# religion_group = muslim
+				# }
+			# }
 			modifier = {
 				factor = 0.25
 				trait = paranoid
@@ -2819,7 +2819,7 @@ character_event = {
 			modifier = {
 				factor = 0
 				NOT = {
-					religion_group = pagan_group
+					religion_group = westerosi_pagan_group
 				}
 			}
 		}
@@ -2833,9 +2833,9 @@ character_event = {
 		}
 		if = {
 			limit = {
-				religion_group = pagan_group
+				religion_group = westerosi_pagan_group
 			}
-			add_trait = sympathy_pagans
+			add_trait = sympathy_westerosi_pagan_group
 		}
 		religion = event_target:missionary_physician_target
 		prestige = -500
@@ -7527,7 +7527,7 @@ character_event = {
 				OR = {
 					primary_title = { has_law = agnatic_succession }
 					primary_title = { has_law = succ_patrician_elective }
-					religion_group = muslim
+					# religion_group = muslim
 				}	
 			}
 			set_character_flag = text_girl_cant_inherit
@@ -7943,17 +7943,18 @@ character_event = {
 	is_triggered_only = yes
 
 	trigger = {
+		always = no # TSK PENDING
 		NOT = {
 			has_game_rule = {
 				name = supernatural_events
 				value = off
 			}
 		}
-		OR = {
-			religion = manichean
-			religion = west_african_pagan_reformed
-			religion = west_african_pagan
-		}
+		# OR = {
+			# religion = manichean
+			# religion = west_african_pagan_reformed
+			# religion = west_african_pagan
+		# }
 		OR = {
 			father = {
 				ai = no
@@ -8132,7 +8133,7 @@ character_event = {
 
 #######################################
 # LIEGE INTERFERES IN VASSAL WARS
-# by Henrik Fåhraeus
+# by Henrik FÃ¥hraeus
 #######################################
 
 # Vassal is asked by Liege to stop war of aggression against another vassal
@@ -10634,8 +10635,8 @@ character_event = {
 			}
 		}
 		OR = {
-			religion_group = christian
-			any_realm_province = { any_neighbor_province = { owner = { religion_group = christian } } } 
+			religion_group = the_seven_group
+			any_realm_province = { any_neighbor_province = { owner = { religion_group = the_seven_group } } } 
 		}
 		is_nomadic = no
 		NOT = { has_character_flag = chess_with_death }
@@ -10677,7 +10678,7 @@ character_event = {
 		
 
 		if = {
-			limit = { religion_group = christian }
+			limit = { religion_group = the_seven_group }
 			random_list = {
 				50 = {
 					create_character = {
@@ -10685,6 +10686,7 @@ character_event = {
 						age = 32
 						dynasty = none
 						female = yes
+						religion = faceless_men
 						trait = mastermind_theologian
 						trait = nun
 						trait = chaste
@@ -10705,6 +10707,7 @@ character_event = {
 						age = 32
 						dynasty = none
 						female = no
+						religion = faceless_men
 						trait = mastermind_theologian
 						trait = monk
 						trait = chaste
@@ -10722,7 +10725,7 @@ character_event = {
 			}			
 		}
 		if = {
-			limit = { NOT = { religion_group = christian } }
+			limit = { NOT = { religion_group = the_seven_group } }
 			random_list = {
 				50 = {
 					create_character = {
@@ -10731,9 +10734,9 @@ character_event = {
 						dynasty = none
 						female = yes
 						name = Eugenia
-						culture = italian
-						race = italian
-						religion = catholic
+						culture = braavosi
+						race = braavosi
+						religion = faceless_men
 						trait = mastermind_theologian
 						trait = nun
 						trait = chaste
@@ -10755,9 +10758,9 @@ character_event = {
 						dynasty = none
 						female = no
 						name = Augusto
-						culture = italian
-						race = italian
-						religion = catholic
+						culture = braavosi
+						race = braavosi
+						religion = faceless_men
 						trait = mastermind_theologian
 						trait = monk
 						trait = chaste
@@ -10916,9 +10919,9 @@ character_event = {
 		custom_tooltip = { text = EVTOPTA_RIP_30223_TOOLTIP }
 
 		if = {
-			limit = { NOT = { religion_group = christian } }
+			limit = { NOT = { religion_group = the_seven_group } }
 			remove_trait_zealous_effect = yes
-			add_trait = sympathy_christendom
+			add_trait = sympathy_the_seven_group
 		}
 
 		set_character_flag = invited_death
@@ -10941,18 +10944,18 @@ character_event = {
 	#Go away! 
 	option = {
 		name = {
-			trigger = { religion_group = christian }
+			trigger = { religion_group = the_seven_group }
 			text = EVTOPTC_RIP_30223_A
 		}
 		name = {
-			trigger = { NOT = { religion_group = christian } }
+			trigger = { NOT = { religion_group = the_seven_group } }
 			text = EVTOPTC_RIP_30223_B
 		}
 
 		custom_tooltip = { text = EVTOPTC_RIP_30223_TOOLTIP }
 
 		if = {
-			limit = { religion_group = christian }
+			limit = { religion_group = the_seven_group }
 
 			piety = -50
 
@@ -12093,8 +12096,8 @@ character_event = {
 				random_traits = no
 				name = "Ramirez"
 				dynasty = none
-				religion = catholic
-				culture = scottish
+				religion = old_gods
+				culture = hill_clansmen
 				female = no
 				age = 1500
 				immortal_age = 40
@@ -12124,7 +12127,7 @@ character_event = {
 				random_traits = no
 				name = "Uran"
 				dynasty = culture
-				religion = pagan
+				religion = old_gods
 				culture = random
 				female = no
 				age = 1800
@@ -12159,8 +12162,8 @@ character_event = {
 				random_traits = no
 				name = "Arthur"
 				dynasty = none
-				religion = catholic
-				culture = breton
+				religion = the_seven
+				culture = andal
 				female = no
 				age = 950
 				immortal_age = 30
@@ -12192,8 +12195,8 @@ character_event = {
 				random_traits = no
 				name = "Torhild"
 				dynasty = none
-				religion = norse_pagan
-				culture = norse
+				religion = drowned_god
+				culture = pykem
 				female = yes
 				age = 1300
 				immortal_age = 18
@@ -12226,7 +12229,7 @@ character_event = {
 				random_traits = no
 				name = "Incitatus"
 				dynasty = none
-				religion = hellenic_pagan
+				religion = faceless_men
 				culture = horse
 				female = no
 				age = 2200
