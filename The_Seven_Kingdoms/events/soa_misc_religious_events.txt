@@ -393,7 +393,7 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	prisoner = no
-	religion = catholic
+	religion = the_seven
 	
 	trigger = {
 		has_dlc = "Sons of Abraham"
@@ -999,7 +999,7 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	prisoner = no
-	religion = catholic
+	religion = the_seven
 	
 	trigger = {
 		has_dlc = "Sons of Abraham"
@@ -1061,7 +1061,7 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	prisoner = no
-	religion = catholic
+	religion = the_seven
 	
 	trigger = {
 		has_dlc = "Sons of Abraham"
@@ -1407,13 +1407,13 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	prisoner = no	
-	religion_group = muslim
+	religion_group = eastern_group
 	
 	trigger = {
 		NOR = {
 			intrigue = 3
 			diplomacy = 3
-			trait = bad_priest_muslim
+			trait = bad_priest_eastern
 		}
 		controls_religion = yes
 		has_dlc = "Sons of Abraham"
@@ -1434,7 +1434,7 @@ character_event = {
 
 	option = {
 		name = EVTOPTA_SoA_5301
-		add_trait = bad_priest_muslim
+		add_trait = bad_priest_eastern
 		if = {
 			limit = {
 				is_ruler = yes
@@ -1475,21 +1475,21 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	prisoner = no	
-	religion_group = pagan_group
+	religion_group = westerosi_pagan_group
 	
 	trigger = {
 		NOR = {
 			intrigue = 3
 			diplomacy = 3
-			trait = bad_priest_norse
+			trait = bad_priest_drowned_god
 		}
 		OR = {
-			religion = norse_pagan
-			religion = norse_pagan_reformed
+			religion = drowned_god
+			religion = drowned_god_reformed
 		}
 		OR = {
 			is_priest = yes
-			has_landed_title = d_norse_pagan_reformed
+			has_landed_title = d_drowned_god_reformed
 		}
 		has_dlc = "Sons of Abraham"
 		OR = {
@@ -1509,7 +1509,7 @@ character_event = {
 
 	option = {
 		name = EVTOPTA_SoA_5302
-		add_trait = bad_priest_norse
+		add_trait = bad_priest_drowned_god
 		if = {
 			limit = {
 				is_ruler = yes
@@ -1549,13 +1549,13 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	prisoner = no	
-	religion_group = pagan_group
+	religion_group = westerosi_pagan_group
 
 	trigger = {
 		NOR = {
 			intrigue = 3
 			diplomacy = 3
-			trait = bad_priest_tengri
+			trait = bad_priest_eastern_pagan
 		}
 		OR = {
 			religion = tengri_pagan
@@ -1580,7 +1580,7 @@ character_event = {
 	}
 
 	immediate = {
-		add_trait = bad_priest_tengri
+		add_trait = bad_priest_eastern_pagan
 		if = {
 			limit = {
 				is_ruler = yes
@@ -1620,13 +1620,13 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	prisoner = no
-	religion_group = zoroastrian_group
+	religion_group = valyrian
 
 	trigger = {
 		NOR = {
 			intrigue = 3
 			diplomacy = 3
-			trait = bad_priest_zoroastrian
+			trait = bad_priest_valyrian
 		}
 		OR = {
 			is_priest = yes
@@ -1648,7 +1648,7 @@ character_event = {
 	}
 
 	immediate = {
-		add_trait = bad_priest_zoroastrian
+		add_trait = bad_priest_valyrian
 		if = {
 			limit = {
 				is_ruler = yes
@@ -1678,86 +1678,86 @@ character_event = {
 }
 
 # Aztec becoming an unworthy priest
-character_event = {
-	id = SoA.5305
+# character_event = {
+	# id = SoA.5305
 
-	hide_window = yes
+	# hide_window = yes
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 	
-	min_age = 16
-	only_capable = yes
-	prisoner = no
-	religion_group = pagan_group
+	# min_age = 16
+	# only_capable = yes
+	# prisoner = no
+	# religion_group = westerosi_pagan_group
 
-	trigger = {
-		is_priest = yes
-		OR = {
-			religion = aztec
-			religion = aztec_reformed
-		}
-		NOR = {
-			intrigue = 3
-			diplomacy = 3
-			trait = bad_priest_aztec
-		}
-		OR = {
-			trait = cynical
-			trait = craven
-			trait = kind
-			trait = slothful
-			trait = gluttonous
-			trait = lustful
-			trait = hedonist
-			trait = lunatic
-			trait = possessed
-			trait = arbitrary
-		}
-		has_dlc = "Sons of Abraham"
-	}
+	# trigger = {
+		# is_priest = yes
+		# OR = {
+			# religion = aztec
+			# religion = aztec_reformed
+		# }
+		# NOR = {
+			# intrigue = 3
+			# diplomacy = 3
+			# trait = bad_priest_aztec
+		# }
+		# OR = {
+			# trait = cynical
+			# trait = craven
+			# trait = kind
+			# trait = slothful
+			# trait = gluttonous
+			# trait = lustful
+			# trait = hedonist
+			# trait = lunatic
+			# trait = possessed
+			# trait = arbitrary
+		# }
+		# has_dlc = "Sons of Abraham"
+	# }
 
-	immediate = {
-		add_trait = bad_priest_aztec
-		if = {
-			limit = {
-				is_ruler = yes
-				has_nickname = no
-				NOT = { trait = possessed }
-				NOT = { trait = lunatic }
-				NOT = { trait = craven }
-				NOT = { trait = kind }
-			}
-			give_nickname = nick_the_unready
-		}
-		if = {
-			limit = {
-				is_ruler = yes
-				has_nickname = no
-				trait = possessed
-			}
-			give_nickname = nick_the_bewitched
-		}
-		if = {
-			limit = {
-				is_ruler = yes
-				has_nickname = no
-				trait = lunatic
-			}
-			give_nickname = nick_the_mad
-		}
-		if = {
-			limit = {
-				is_ruler = yes
-				has_nickname = no
-				OR = {
-					trait = craven
-					trait = kind
-				}
-			}
-			give_nickname = nick_the_kind
-		}
-	}
-}
+	# immediate = {
+		# add_trait = bad_priest_aztec
+		# if = {
+			# limit = {
+				# is_ruler = yes
+				# has_nickname = no
+				# NOT = { trait = possessed }
+				# NOT = { trait = lunatic }
+				# NOT = { trait = craven }
+				# NOT = { trait = kind }
+			# }
+			# give_nickname = nick_the_unready
+		# }
+		# if = {
+			# limit = {
+				# is_ruler = yes
+				# has_nickname = no
+				# trait = possessed
+			# }
+			# give_nickname = nick_the_bewitched
+		# }
+		# if = {
+			# limit = {
+				# is_ruler = yes
+				# has_nickname = no
+				# trait = lunatic
+			# }
+			# give_nickname = nick_the_mad
+		# }
+		# if = {
+			# limit = {
+				# is_ruler = yes
+				# has_nickname = no
+				# OR = {
+					# trait = craven
+					# trait = kind
+				# }
+			# }
+			# give_nickname = nick_the_kind
+		# }
+	# }
+# }
 
 # Check for Cadaver Synod
 character_event = {
@@ -1779,7 +1779,7 @@ character_event = {
 		any_playable_ruler = {
 			limit = {
 				ai = no
-				religion = catholic
+				religion = the_seven
 				}
 			narrative_event = { id = SoA.5307 days = 300 }
 		}
@@ -1865,12 +1865,12 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	prisoner = no
-	religion_group = muslim
+	religion_group = eastern_group
 
 	trigger = {
 		controls_religion = yes
 		has_dlc = "Sons of Abraham"
-		trait = bad_priest_muslim
+		trait = bad_priest_eastern
 		NOT = { has_character_modifier = bad_rel_head }
 	}
 
@@ -1920,12 +1920,12 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	prisoner = no
-	religion = norse_pagan_reformed
+	religion = drowned_god_reformed
 
 	trigger = {
 		has_dlc = "Sons of Abraham"
-		has_landed_title = d_norse_pagan_reformed
-		trait = bad_priest_norse
+		has_landed_title = d_drowned_god_reformed
+		trait = bad_priest_drowned_god
 		NOT = { has_character_modifier = bad_rel_head }
 	}
 
@@ -1980,7 +1980,7 @@ character_event = {
 	trigger = {
 		has_dlc = "Sons of Abraham"
 		has_landed_title = d_tengri_pagan_reformed
-		trait = bad_priest_tengri
+		trait = bad_priest_eastern_pagan
 		NOT = { has_character_modifier = bad_rel_head }
 	}
 
@@ -2030,12 +2030,12 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	prisoner = no
-	religion_group = zoroastrian_group
+	religion_group = valyrian
 
 	trigger = {
 		has_dlc = "Sons of Abraham"
 		controls_religion = yes
-		trait = bad_priest_zoroastrian
+		trait = bad_priest_valyrian
 		NOT = { has_character_modifier = bad_rel_head }
 	}
 
@@ -2076,59 +2076,59 @@ character_event = {
 }
 
 # Unworthy Head Priest! (Aztec)
-character_event = {
-	id = SoA.5321
+# character_event = {
+	# id = SoA.5321
 	
-	hide_window = yes
+	# hide_window = yes
 	
-	only_playable = yes
-	min_age = 16
-	only_capable = yes
-	prisoner = no
-	religion = aztec_reformed
+	# only_playable = yes
+	# min_age = 16
+	# only_capable = yes
+	# prisoner = no
+	# religion = aztec_reformed
 
-	trigger = {
-		has_dlc = "Sons of Abraham"
-		has_landed_title = d_aztec_reformed
-		trait = bad_priest_aztec
-		NOT = { has_character_modifier = bad_rel_head }
-	}
+	# trigger = {
+		# has_dlc = "Sons of Abraham"
+		# has_landed_title = d_aztec_reformed
+		# trait = bad_priest_aztec
+		# NOT = { has_character_modifier = bad_rel_head }
+	# }
 
-	mean_time_to_happen = {
-		days = 1
-	}
+	# mean_time_to_happen = {
+		# days = 1
+	# }
 
-	immediate = {
-		add_character_modifier = {
-			name = bad_rel_head
-			duration = -1
-			hidden = yes
-		}
-		any_playable_ruler = {
-			limit = {
-				ai = no
-				religion_head = {
-					character = ROOT
-				}
-			}
-			character_event = { id = SoA.5322 days = 8 random = 7 }         # Notify player
-		}
-	}
-}
+	# immediate = {
+		# add_character_modifier = {
+			# name = bad_rel_head
+			# duration = -1
+			# hidden = yes
+		# }
+		# any_playable_ruler = {
+			# limit = {
+				# ai = no
+				# religion_head = {
+					# character = ROOT
+				# }
+			# }
+			# character_event = { id = SoA.5322 days = 8 random = 7 }         # Notify player
+		# }
+	# }
+# }
 
 # Unworthy Head Priest player notification (Aztec)
-character_event = {
-	id = SoA.5322
-	desc = EVTDESC_SoA_5322
-	picture = GFX_evt_throne_room
-	border = GFX_event_normal_frame_religion
+# character_event = {
+	# id = SoA.5322
+	# desc = EVTDESC_SoA_5322
+	# picture = GFX_evt_throne_room
+	# border = GFX_event_normal_frame_religion
 	
-	is_triggered_only = yes
+	# is_triggered_only = yes
 
-	option = {
-		name = EVTOPTA_SoA_5322
-	}
-}
+	# option = {
+		# name = EVTOPTA_SoA_5322
+	# }
+# }
 
 
 ###########################################
@@ -2155,11 +2155,11 @@ character_event = {
 		is_priest = yes
 		year = 950
 		OR = {
-			religion = catholic
-			religion = cathar
-			religion = fraticelli
-			religion = waldensian
-			religion = lollard
+			religion = the_seven
+			religion = the_seven_gods
+			religion = the_mother
+			religion = the_stranger
+			religion = the_smith
 		}
 		has_landed_title = b_cluny
 		NOR = {
@@ -2201,11 +2201,11 @@ narrative_event = {
 		has_dlc = "Sons of Abraham"
 		year = 950
 		OR = {
-			religion = catholic
-			religion = cathar
-			religion = fraticelli
-			religion = waldensian
-			religion = lollard
+			religion = the_seven
+			religion = the_seven_gods
+			religion = the_mother
+			religion = the_stranger
+			religion = the_smith
 		}
 		b_cluny = {
 			holder_scope = {
@@ -2299,11 +2299,11 @@ narrative_event = {
 			}
 		}
 		OR = {
-			religion = catholic
-			religion = fraticelli
-			religion = waldensian
-			religion = lollard
-			religion = cathar
+			religion = the_seven
+			religion = the_seven_gods
+			religion = the_mother
+			religion = the_stranger
+			religion = the_smith
 		}
 		distance = {
 			where = 225	# Cluny
@@ -4065,7 +4065,7 @@ character_event = {
 	}
 }
 
-# Tolerant character making Muslim friend
+# Tolerant character making Eastern friend
 character_event = {
 	id = SoA.5411
 	desc = EVTDESC_SoA_5411
@@ -4078,10 +4078,10 @@ character_event = {
 	min_age = 16
 	
 	trigger = {
-		trait = sympathy_islam
+		trait = sympathy_eastern_group
 		has_dlc = "Sons of Abraham"
 		any_courtier = {
-			religion_group = muslim
+			religion_group = eastern_group
 			prisoner = no
 			is_adult = yes
 			NOT = { trait = incapable }
@@ -4097,7 +4097,7 @@ character_event = {
 		name = EVTOPTA_SoA_5411
 		random_courtier = {
 			limit = {
-				religion_group = muslim
+				religion_group = eastern_group
 				prisoner = no
 				is_adult = yes
 				NOT = { trait = incapable }
@@ -4121,10 +4121,10 @@ character_event = {
 	min_age = 16
 	
 	trigger = {
-		trait = sympathy_pagans
+		trait = sympathy_westerosi_westerosi_pagan_group
 		has_dlc = "Sons of Abraham"
 		any_courtier = {
-			religion_group = pagan_group
+			religion_group = westerosi_pagan_group
 			prisoner = no
 			is_adult = yes
 			NOT = { trait = incapable }
@@ -4140,7 +4140,7 @@ character_event = {
 		name = EVTOPTA_SoA_5412
 		random_courtier = {
 			limit = {
-				religion_group = pagan_group
+				religion_group = westerosi_pagan_group
 				prisoner = no
 				is_adult = yes
 				NOT = { trait = incapable }
@@ -4164,10 +4164,10 @@ character_event = {
 	min_age = 16
 	
 	trigger = {
-		trait = sympathy_zoroastrianism
+		trait = sympathy_valyrian_group
 		has_dlc = "Sons of Abraham"
 		any_courtier = {
-			religion_group = zoroastrian_group
+			religion_group = valyrian
 			prisoner = no
 			is_adult = yes
 			NOT = { trait = incapable }
@@ -4183,7 +4183,7 @@ character_event = {
 		name = EVTOPTA_SoA_5413
 		random_courtier = {
 			limit = {
-				religion_group = zoroastrian_group
+				religion_group = valyrian
 				prisoner = no
 				is_adult = yes
 				NOT = { trait = incapable }
@@ -4207,7 +4207,7 @@ character_event = {
 	min_age = 16
 	
 	trigger = {
-		trait = sympathy_judaism
+		trait = sympathy_eastern_pagan_group
 		has_dlc = "Sons of Abraham"
 		any_courtier = {
 			religion = moonsingers
@@ -4294,10 +4294,10 @@ character_event = {
 	min_age = 16
 	prisoner = no
 	only_capable = yes
-	religion_group = muslim
+	religion_group = eastern_group
 
 	trigger = {
-		religion_group = muslim
+		religion_group = eastern_group
 		NOR = {
 			trait = zealous
 			trait = holy_warrior
@@ -4305,7 +4305,7 @@ character_event = {
 			trait = mujahid
 		}
 		OR = {
-			NOT = { trait = sympathy_judaism }
+			NOT = { trait = sympathy_eastern_pagan_group }
 			NOT = { trait = sympathy_christendom }
 		}		
 		NOT = {
@@ -4332,10 +4332,10 @@ character_event = {
 		name = EVTOPTA_SoA_5425
 		if = {
 			limit = { 
-				NOT = { trait = sympathy_judaism } 
+				NOT = { trait = sympathy_eastern_pagan_group } 
 				NOT = { religion = moonsingers } 
 				}
-			add_trait = sympathy_judaism
+			add_trait = sympathy_eastern_pagan_group
 		}
 		if = {
 			limit = { 
