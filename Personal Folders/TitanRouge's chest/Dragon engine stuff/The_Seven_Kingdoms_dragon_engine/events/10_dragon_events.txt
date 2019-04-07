@@ -97,7 +97,7 @@ character_event = {
 			chance = 25
 			modifier = {
 				factor = 2
-				trait = dragon_strong
+				trait = dr_strong
 			}
 			change_martial = 1
 		}
@@ -266,7 +266,7 @@ character_event = {
 character_event = {
 	id = dragon.100
 	desc = EVTDESCdragon100
-	picture = GFX_evt_imad_awan_dragon_f_peright_final2
+	picture = GFX_evt_imad_awan_dragon_fight_final2
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
@@ -788,32 +788,32 @@ character_event = {
 				# increased taming chance
 				modifier = {
 					factor = 1.5
-					event_target:targetted_dragon_f_peror_taming = { trait = dragon_wounded }
+					event_target:targetted_dragon_for_taming = { trait = dr_wounded }
 				}
 				modifier = {
 					factor = 2.1
-					event_target:targetted_dragon_f_peror_taming = { trait = dragon_maimed }
+					event_target:targetted_dragon_for_taming = { trait = dr_maimed }
 				}
 				modifier = {
 					factor = 1.2
-					event_target:targetted_dragon_f_peror_taming = { trait = dragon_slothful }
+					event_target:targetted_dragon_for_taming = { trait = dr_slothful }
 				}
 				modifier = {
 					factor = 2.5
-					event_target:targetted_dragon_f_peror_taming = { trait = dragon_humble }
+					event_target:targetted_dragon_for_taming = { trait = dr_humble }
 				}
 				modifier = {
 					factor = 3
-					event_target:targetted_dragon_f_peror_taming = { trait = dragon_f_perriendly }
+					event_target:targetted_dragon_for_taming = { trait = dr_friendly }
 				}
 				#decreased
 				modifier = {
 					factor = 0.6
-					event_target:targetted_dragon_f_peror_taming = { trait = dragon_wroth }
+					event_target:targetted_dragon_for_taming = { trait = dr_wroth }
 				}
 				modifier = {
 					factor = 0.8
-					event_target:targetted_dragon_f_peror_taming = { trait = dragon_proud }
+					event_target:targetted_dragon_for_taming = { trait = dr_proud }
 				}
 				modifier = {
 					factor = 0.4
@@ -825,7 +825,7 @@ character_event = {
 				}
 				custom_tooltip = {
 					text = TOOLTIP_DRAGON8_A
-					event_target:targetted_dragon_f_peror_taming = {
+					event_target:targetted_dragon_for_taming = {
 						add_friend = ROOT
 					}
 					character_event = { id = dragon.201 }
@@ -834,7 +834,7 @@ character_event = {
 			50 = {
 				custom_tooltip = {
 					text = TOOLTIP_DRAGON200_B
-					death = { death_reason = death_dragon_fire2 killer = event_target:targetted_dragon_f_peror_taming }
+					death = { death_reason = death_dragon_taming killer = event_target:targetted_dragon_for_taming }
 				}
 			}
 		}
@@ -853,7 +853,7 @@ character_event = {
 	option = {
 		name = EVTOPTAdragon201
 		
-		add_trait = dragon_rider
+		add_trait = dr_rider
 		random_courtier = { give_minor_title = title_dragon_lord }
 		change_infamy = {
 			value = 10
@@ -861,7 +861,7 @@ character_event = {
 		}
 		chronicle = { 
 			entry = CHRONICLE_TAMED_DRAGON
-			portrait = [targetted_dragon_f_peror_taming.GetID]
+			portrait = [targetted_dragon_for_taming.GetID]
 		}
 	}
 }
@@ -952,8 +952,8 @@ character_event = {
 			historical = yes
 		}
 		new_character = {
-			add_trait = dragon_trait
-			add_trait = dragon_base_trait
+			add_trait = dr_trait
+			add_trait = dr_base_trait
 			set_father = event_target:dragon_parent
 			save_event_target_as = hatchling
 			random_list = {
@@ -2023,34 +2023,12 @@ character_event = {
 	
 	option = {
 		trigger = {
-			NOT = { has_character_flag = debug_rider_a }
-		}
-		name = EVTOPTAdragon307
-	}
-	
-	option = {
-		trigger = {
 			has_character_flag = debug_rider_a
 		}
-		name = EVTOPTBdragon307
+		name = EVTOPTAdragon307
 		
 		event_target:rider_a = { wound_maim_kill_actions_dragon_duel = yes }
 		event_target:dragon_a = { wound_maim_kill_actions_dragon_duel = yes }
-		
-		event_target:rider_b = { wound_maim_kill_actions_dragon_duel = yes }
-		event_target:dragon_b = { wound_maim_kill_actions_dragon_duel = yes }
-		
-		event_target:rider_c = { wound_maim_kill_actions_dragon_duel = yes }
-		event_target:dragon_c = { wound_maim_kill_actions_dragon_duel = yes }
-		
-		event_target:rider_d = { wound_maim_kill_actions_dragon_duel = yes }
-		event_target:dragon_d = { wound_maim_kill_actions_dragon_duel = yes }
-		
-		event_target:rider_e = { wound_maim_kill_actions_dragon_duel = yes }
-		event_target:dragon_e = { wound_maim_kill_actions_dragon_duel = yes }
-		
-		event_target:rider_f = { wound_maim_kill_actions_dragon_duel = yes }
-		event_target:dragon_f = { wound_maim_kill_actions_dragon_duel = yes }
 		
 		if = {
 			limit = {
@@ -2059,24 +2037,80 @@ character_event = {
 			character_event = { id = dragon.100 }
 		}
 		else = {
-			event_target:rider_d = { character_event = { id = dragon.100 } }
+			event_target:rider_d = { character_event = { id = dragon.308 } }
 		}
 	}
+
+	option = {
+		trigger = {
+			has_character_flag = debug_rider_b
+		}
+		name = EVTOPTAdragon307
+		
+		event_target:rider_b = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_b = { wound_maim_kill_actions_dragon_duel = yes }
+	}
+
+	option = {
+		trigger = {
+			has_character_flag = debug_rider_c
+		}
+		name = EVTOPTAdragon307
+		
+		event_target:rider_c = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_c = { wound_maim_kill_actions_dragon_duel = yes }
+	}
+
+	option = {
+		trigger = {
+			has_character_flag = debug_rider_d
+		}
+		name = EVTOPTAdragon307
+		
+		event_target:rider_d = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_d = { wound_maim_kill_actions_dragon_duel = yes }
+	}
+
+	option = {
+		trigger = {
+			has_character_flag = debug_rider_e
+		}
+		name = EVTOPTAdragon307
+		
+		event_target:rider_e = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_e = { wound_maim_kill_actions_dragon_duel = yes }
+	}
+
+	option = {
+		trigger = {
+			has_character_flag = debug_rider_f
+		}
+		name = EVTOPTAdragon307
+		
+		event_target:rider_f = { wound_maim_kill_actions_dragon_duel = yes }
+		event_target:dragon_f = { wound_maim_kill_actions_dragon_duel = yes }
+	}
+
+
 }
 
 #Dragon Duel aftermath | gives option to attack the army after victory
 character_event = {
 	id = dragon.308
+	desc = EVTDESCdragon308
 	
 	is_triggered_only = yes
-	
-	hide_window = yes
 	
 	immediate = {
 		
 	}
 	
 	option = {
+		name = EVTOPTAdragon308
+		character_event = { id = dragon.100 }
+	}
 	
+	option = {
+		name = EVTOPTBdragon308
 	}
 }
