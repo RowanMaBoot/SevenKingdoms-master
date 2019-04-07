@@ -35,11 +35,11 @@ character_event = {
 					culture = stormmen
 				}
 			}
-			AND = { # westermen
-				capital_scope = { culture = westermen }
-				NOT = { culture = westerlander }
+			AND = { # Westerlander
+				capital_scope = { culture = westerlander }
+				NOT = { culture = westermen }
 				any_demesne_province = {
-					culture = westermen
+					culture = westerlander
 				}
 			}
 			AND = { # Watermen
@@ -49,9 +49,9 @@ character_event = {
 						culture = hookmen
 					}
 				}
-				NOT = { culture = watermen }
+				NOT = { culture = waterman }
 				any_demesne_province = {
-					#culture = watermen
+					culture = waterman
 					OR = {
 						culture = wendmen
 						culture = hookmen
@@ -59,18 +59,10 @@ character_event = {
 				}
 			}
 			AND = { # Riverlander
-				capital_scope = {
-					OR = {
-						culture = rivermen 
-						culture = crabmen
-					}
-				}
+				capital_scope = { culture = rivermen }
 				NOT = { culture = riverlander }
 				any_demesne_province = {
-					OR = {
-						culture = rivermen 
-						culture = crabmen
-					}
+					culture = rivermen
 				}
 			}
 			AND = { # Marcher
@@ -94,11 +86,11 @@ character_event = {
 					culture = shieldislander
 				}
 			}
-			AND = { # Cornlander
-				capital_scope = { culture = cornmen }
-				NOT = { culture = cornlander }
+			AND = { # Cornmen
+				capital_scope = { culture = cornlander }
+				NOT = { culture = cornmen }
 				any_demesne_province = {
-					culture = cornmen
+					culture = cornlander
 				}
 			}
 			AND = { # Grovelander
@@ -112,27 +104,6 @@ character_event = {
 					culture = north_marcher
 				}
 			}
-			AND = { # Northlander
-				capital_scope = {
-					OR = {
-						culture = northmen
-						culture = barrowmen
-						culture = crannogmen
-						culture = hill_clansmen
-						culture = clansmen
-					}
-				}
-				NOT = { culture = northlander }
-				any_demesne_province = {
-					OR = {
-						culture = northmen
-						culture = barrowmen
-						culture = crannogmen
-						culture = hill_clansmen
-						culture = clansmen
-					}
-				}
-			}
 		}
 		#################################
 		NOR = {
@@ -143,7 +114,8 @@ character_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 400
+		#days = 1
+		months = 500
 		modifier = {
 			factor = 1.5
 			independent = no
@@ -152,15 +124,14 @@ character_event = {
 			#################################
 			OR = {
 				NOT = { any_liege = { culture = stormlander } }
-				NOT = { any_liege = { culture = westerlander } }
-				NOT = { any_liege = { culture = watermen } }
+				NOT = { any_liege = { culture = westermen } }
+				NOT = { any_liege = { culture = waterman } }
 				NOT = { any_liege = { culture = riverlander } }
 				NOT = { any_liege = { culture = marcher } }
 				NOT = { any_liege = { culture = wynelander } }
 				NOT = { any_liege = { culture = shieldmen } }
-				NOT = { any_liege = { culture = cornlander } }
+				NOT = { any_liege = { culture = cornmen } }
 				NOT = { any_liege = { culture = grovelander } }
-				NOT = { any_liege = { culture = northlander } }
 			}
 			#################################
 		}
@@ -171,15 +142,14 @@ character_event = {
 			#################################
 			OR = {
 				any_liege = { culture = stormlander }
-				any_liege = { culture = westerlander }
-				any_liege = { culture = watermen }
+				any_liege = { culture = westermen }
+				any_liege = { culture = waterman }
 				any_liege = { culture = riverlander }
 				any_liege = { culture = marcher }
 				any_liege = { culture = wynelander }
 				any_liege = { culture = shieldmen }
-				any_liege = { culture = cornlander }
+				any_liege = { culture = cornmen }
 				any_liege = { culture = grovelander }
-				any_liege = { culture = northlander }
 			}
 			#################################
 		}
@@ -317,25 +287,38 @@ character_event = {
 					### Add new melting pots here ###
 					#################################
 					OR = {
-						culture = stormmen
-						culture = westermen
-						culture = wendmen
-						culture = hookmen
-						culture = rivermen 
-						culture = crabmen
-						culture = marchmen
-						culture = wynemen
-						culture = shieldislander
-						culture = cornmen
-						AND = {
+						AND = { # Stormlander
+							culture = stormmen
+						}
+						AND = { # Westerlander
+							culture = westerlander
+						}
+						AND = { # Watermen
+							culture = waterman
+							OR = {
+								culture = wendmen
+								culture = hookmen
+							}
+						}
+						AND = { # Riverlander
+							culture = rivermen
+						}
+						AND = { # Marcher
+							culture = marchmen
+						}
+						AND = { # Wynelander
+							culture = wynemen
+						}
+						AND = { # Shieldmen
+							culture = shieldislander
+						}
+						AND = { # Cornmen
+							culture = cornlander
+						}
+						AND = { # Grovelander
 							region = world_goldengrove
 							culture = grovelander
 						}
-						culture = northmen
-						culture = barrowmen
-						culture = crannogmen
-						culture = hill_clansmen
-						culture = clansmen
 					}
 					#################################
 				}
@@ -353,29 +336,48 @@ character_event = {
 				### Add new melting pots here ###
 				#################################
 				OR = {
-					culture = stormmen
-					culture = westermen
-					culture = wendmen
-					culture = hookmen
-					culture = rivermen 
-					culture = crabmen
-					culture = marchmen
-					culture = wynemen
-					culture = shieldislander
-					culture = cornmen
-					AND = {
+					AND = { # Stormlander
+						culture = stormmen
+					}
+					AND = { # Westerlander
+						culture = westerlander
+					}
+					AND = { # Watermen
+						OR = {
+							culture = wendmen
+							culture = hookmen
+						}
+					}
+					AND = { # Riverlander
+						culture = rivermen
+					}
+					AND = { # Marcher
+						culture = marchmen
+					}
+					AND = { # Wynelander
+						culture = wynemen
+					}
+					AND = { # Shieldmen
+						culture = shieldislander
+					}
+					AND = { # Cornmen
+						culture = cornlander
+					}
+					AND = { # Grovelander
 						region = world_goldengrove
 						culture = grovelander
 					}
-					culture = northmen
-						culture = barrowmen
-						culture = crannogmen
-						culture = hill_clansmen
-						culture = clansmen
 				}
 				#################################
 			}
 			save_event_target_as = melting_pot_province
+			stormlander = { save_event_target_as = melting_pot_culture }
+		}
+		stormlander = {
+			#if = {
+			#	limit = { event_target:melting_pot_province = { culture = stormmen } }
+				save_event_target_as = melting_pot_culture
+			#}
 		}
 	}
 
@@ -388,12 +390,12 @@ character_event = {
 			limit = { location = { culture = stormmen } }
 			culture = stormlander
 		}
-		if = { # westermen
-			limit = { location = { culture = westermen } }
-			culture = westerlander
+		if = { # Westerlander
+			limit = { location = { culture = westerlander } }
+			culture = westermen
 		}
 		if = { # Watermen
-			limit = {
+			limit = { 
 				location = { 
 					OR = {
 						culture = wendmen
@@ -401,17 +403,10 @@ character_event = {
 					} 
 				}
 			}
-			culture = watermen
+			culture = waterman
 		}
 		if = { # Riverlander
-			limit = {
-				location = {
-					OR = {
-						culture = rivermen 
-						culture = crabmen
-					}
-				}
-			}
+			limit = { location = { culture = rivermen } }
 			culture = riverlander
 		}
 		if = { # Marcher
@@ -426,12 +421,12 @@ character_event = {
 			limit = { location = { culture = shieldislander } }
 			culture = shieldmen
 		}
-		if = { # Cornlander
-			limit = { location = { culture = cornmen } }
-			culture = cornlander
+		if = { # Cornmen
+			limit = { location = { culture = cornlander } }
+			culture = cornmen
 		}
 		if = { # Grovelander
-			limit = {
+			limit = { 
 				location = { 
 					region = world_goldengrove
 					culture = north_marcher 
@@ -439,330 +434,59 @@ character_event = {
 			}
 			culture = grovelander
 		}
-		if = { # Northlander
-			limit = {
-				location = {
-					OR = {
-						culture = northmen
-						culture = barrowmen
-						culture = crannogmen
-						culture = hill_clansmen
-						culture = clansmen
-					}
-				}
-			}
-			culture = northlander
-		}
 		#################################
 		any_courtier = {
 			limit = {
 				is_ruler = no
 				prisoner = no
 				dynasty = ROOT
-				OR = {
-					AND = {
-						father = {
-							culture_group = andal
-						}
-						mother = {
-							culture_group = first_men
-						}
-					}
-					AND = {
-						father = {
-							culture_group = first_men
-						}
-						mother = {
-							culture_group = andal
-						}
-					}
-				}
 			}
 			#################################
 			### Add new melting pots here ###
 			#################################
 			if = { # Stormlander
-				limit = {
-					event_target:melting_pot_province = { culture = stormmen }
-					OR = {
-						AND = {
-							father = {
-								culture_group = andal
-							}
-							mother = {
-								culture = stormmen
-							}
-						}
-						AND = {
-							father = {
-								culture = stormmen
-							}
-							mother = {
-								culture_group = andal
-							}
-						}
-					}
-				}
+				limit = { culture = stormmen }
 				culture = stormlander
 			}
-			if = { # westermen
-				limit = {
-					event_target:melting_pot_province = { culture = westermen }
-					OR = {
-						AND = {
-							father = {
-								culture_group = andal
-							}
-							mother = {
-								culture = westermen
-							}
-						}
-						AND = {
-							father = {
-								culture = westermen
-							}
-							mother = {
-								culture_group = andal
-							}
-						}
-					}
-				}
-				culture = westerlander
+			if = { # Westerlander
+				limit = { culture = westerlander }
+				culture = westermen
 			}
 			if = { # Watermen
-				limit = {
-					event_target:melting_pot_province = {
-						OR = {
-							culture = wendmen
-							culture = hookmen
-						}
-					}
+				limit = { 
 					OR = {
-						AND = {
-							father = {
-								culture_group = andal
-							}
-							mother = {
-								OR = {
-									culture = wendmen
-									culture = hookmen
-								}
-							}
-						}
-						AND = {
-							father = {
-								OR = {
-									culture = wendmen
-									culture = hookmen
-								}
-							}
-							mother = {
-								culture_group = andal
-							}
-						}
+						culture = wendmen
+						culture = hookmen
 					}
 				}
-				culture = watermen
+				culture = waterman
 			}
 			if = { # Riverlander
-				limit = {
-					event_target:melting_pot_province = {
-						OR = {
-							culture = rivermen
-							culture = crabmen
-						}
-					}
-					OR = {
-						AND = {
-							father = {
-								culture_group = andal
-							}
-							mother = {
-								OR = {
-									culture = rivermen
-									culture = crabmen
-								}
-							}
-						}
-						AND = {
-							father = {
-								OR = {
-									culture = rivermen
-									culture = crabmen
-								}
-							}
-							mother = {
-								culture_group = andal
-							}
-						}
-					}
-				}
+				limit = { culture = rivermen }
 				culture = riverlander
 			}
 			if = { # Marcher
-				limit = {
-					event_target:melting_pot_province = { culture = marchmen }
-					OR = {
-						AND = {
-							father = {
-								culture_group = andal
-							}
-							mother = {
-								culture = marchmen
-							}
-						}
-						AND = {
-							father = {
-								culture = marchmen
-							}
-							mother = {
-								culture_group = andal
-							}
-						}
-					}
-				}
+				limit = { culture = marchmen }
 				culture = marcher
 			}
 			if = { # Wynelander
-				limit = {
-					event_target:melting_pot_province = { culture = wynemen }
-					OR = {
-						AND = {
-							father = {
-								culture_group = andal
-							}
-							mother = {
-								culture = wynemen
-							}
-						}
-						AND = {
-							father = {
-								culture = wynemen
-							}
-							mother = {
-								culture_group = andal
-							}
-						}
-					}
-				}
+				limit = { culture = wynemen }
 				culture = wynelander
 			}
 			if = { # Shieldmen
-				limit = {
-					event_target:melting_pot_province = { culture = shieldislander }
-					OR = {
-						AND = {
-							father = {
-								culture_group = andal
-							}
-							mother = {
-								culture = shieldislander
-							}
-						}
-						AND = {
-							father = {
-								culture = shieldislander
-							}
-							mother = {
-								culture_group = andal
-							}
-						}
-					}
-				}
+				limit = { culture = shieldislander }
 				culture = shieldmen
 			}
-			if = { # Cornlander
-				limit = {
-					event_target:melting_pot_province = { culture = cornmen }
-					OR = {
-						AND = {
-							father = {
-								culture_group = andal
-							}
-							mother = {
-								culture = cornmen
-							}
-						}
-						AND = {
-							father = {
-								culture = cornmen
-							}
-							mother = {
-								culture_group = andal
-							}
-						}
-					}
-				}
-				culture = cornlander
+			if = { # Cornmen
+				limit = { culture = cornlander }
+				culture = cornmen
 			}
 			if = { # Grovelander
 				limit = { 
 					location = { region = world_goldengrove }
-					event_target:melting_pot_province = { culture = north_marcher }
-					OR = {
-						AND = {
-							father = {
-								culture_group = andal
-							}
-							mother = {
-								culture = north_marcher
-							}
-						}
-						AND = {
-							father = {
-								culture = north_marcher
-							}
-							mother = {
-								culture_group = andal
-							}
-						}
-					}
+					culture = north_marcher 
 				}
 				culture = grovelander
-			}
-			if = { # Northlander
-				limit = {
-					event_target:melting_pot_province = {
-						OR = {
-							culture = northmen
-							culture = barrowmen
-							culture = crannogmen
-							culture = hill_clansmen
-							culture = clansmen
-						}
-					}
-					OR = {
-						AND = {
-							father = {
-								culture_group = andal
-							}
-							mother = {
-								OR = {
-									culture = northmen
-									culture = barrowmen
-									culture = crannogmen
-									culture = hill_clansmen
-									culture = clansmen
-								}
-							}
-						}
-						AND = {
-							father = {
-								OR = {
-									culture = northmen
-									culture = barrowmen
-									culture = crannogmen
-									culture = hill_clansmen
-									culture = clansmen
-								}
-							}
-							mother = {
-								culture_group = andal
-							}
-						}
-					}
-				}
-				culture = northlander
 			}
 			#################################
 		}
@@ -775,28 +499,23 @@ character_event = {
 				culture = stormlander
 				set_province_flag = melting_pot
 			}
-			if = { # westermen
-				limit = { culture = westermen }
-				culture = westerlander
+			if = { # Westerlander
+				limit = { culture = westerlander }
+				culture = westermen
 				set_province_flag = melting_pot
 			}
-			if = { # watermen
+			if = { # Westerlander
 				limit = {
 					OR = {
 						culture = wendmen
 						culture = hookmen
 					}
 				}
-				culture = watermen
+				culture = waterman
 				set_province_flag = melting_pot
 			}
 			if = { # Riverlander
-				limit = {
-					OR = {
-						culture = rivermen
-						culture = crabmen
-					}
-				}
+				limit = { culture = rivermen }
 				culture = riverlander
 				set_province_flag = melting_pot
 			}
@@ -815,9 +534,9 @@ character_event = {
 				culture = shieldmen
 				set_province_flag = melting_pot
 			}
-			if = { # Cornlander
-				limit = { culture = cornmen }
-				culture = cornlander
+			if = { # Cornmen
+				limit = { culture = cornlander }
+				culture = cornmen
 				set_province_flag = melting_pot
 			}
 			if = { # Grovelander
@@ -826,19 +545,6 @@ character_event = {
 					culture = north_marcher 
 				}
 				culture = grovelander
-				set_province_flag = melting_pot
-			}
-			if = { # Northlander
-				limit = {
-					OR = {
-						culture = northmen
-						culture = barrowmen
-						culture = crannogmen
-						culture = hill_clansmen
-						culture = clansmen
-					}
-				}
-				culture = northlander
 				set_province_flag = melting_pot
 			}
 			#################################
@@ -871,18 +577,18 @@ province_event = {
 				owner = { top_liege = { culture = stormlander } }
 			}
 		}
-		OR = { # westermen trigger
-			owner = { culture = westerlander }
+		OR = { # Westerlander trigger
+			owner = { culture = westermen }
 			AND = {
-				any_neighbor_province = { culture = westerlander }
-				owner = { top_liege = { culture = westerlander } }
+				any_neighbor_province = { culture = westermen }
+				owner = { top_liege = { culture = westermen } }
 			}
 		}
 		OR = { # Watermen trigger
-			owner = { culture = watermen }
+			owner = { culture = waterman }
 			AND = {
-				any_neighbor_province = { culture = watermen }
-				owner = { top_liege = { culture = watermen } }
+				any_neighbor_province = { culture = waterman }
+				owner = { top_liege = { culture = waterman } }
 			}
 		}
 		OR = { # Riverlander trigger
@@ -913,11 +619,11 @@ province_event = {
 				owner = { top_liege = { culture = shieldmen } }
 			}
 		}
-		OR = { # Cornlander trigger
-			owner = { culture = cornlander }
+		OR = { # Cornmen trigger
+			owner = { culture = cornmen }
 			AND = {
-				any_neighbor_province = { culture = cornlander }
-				owner = { top_liege = { culture = cornlander } }
+				any_neighbor_province = { culture = cornmen }
+				owner = { top_liege = { culture = cornmen } }
 			}
 		}
 		OR = { # Grovelander trigger
@@ -926,13 +632,6 @@ province_event = {
 				any_neighbor_province = { culture = grovelander }
 				owner = { top_liege = { culture = grovelander } }
 				region = world_goldengrove
-			}
-		}
-		OR = { # Northlander trigger
-			owner = { culture = northlander }
-			AND = {
-				any_neighbor_province = { culture = northlander }
-				owner = { top_liege = { culture = northlander } }
 			}
 		}
 		#################################
@@ -950,13 +649,13 @@ province_event = {
 					owner = { culture = stormlander }
 					any_neighbor_province = { culture = stormlander }
 				}
-				AND = { # westermen modifier
-					owner = { culture = westerlander }
-					any_neighbor_province = { culture = westerlander }
+				AND = { # Westerlander modifier
+					owner = { culture = westermen }
+					any_neighbor_province = { culture = westermen }
 				}
 				AND = { # Watermen modifier
-					owner = { culture = watermen }
-					any_neighbor_province = { culture = watermen }
+					owner = { culture = waterman }
+					any_neighbor_province = { culture = waterman }
 				}
 				AND = { # Riverlander modifier
 					owner = { culture = riverlander }
@@ -974,17 +673,13 @@ province_event = {
 					owner = { culture = shieldmen }
 					any_neighbor_province = { culture = shieldmen }
 				}
-				AND = { # Cornlander modifier
-					owner = { culture = cornlander }
-					any_neighbor_province = { culture = cornlander }
+				AND = { # Cornmen modifier
+					owner = { culture = cornmen }
+					any_neighbor_province = { culture = cornmen }
 				}
 				AND = { # Grovelander modifier
 					owner = { culture = grovelander }
 					any_neighbor_province = { culture = grovelander }
-				}
-				AND = { # Northlander modifier
-					owner = { culture = northlander }
-					any_neighbor_province = { culture = northlander }
 				}
 			}
 			#################################
@@ -1010,9 +705,9 @@ province_event = {
 			limit = { culture = stormmen }
 			culture = stormlander
 		}
-		if = { # westermen
-			limit = { culture = westermen }
-			culture = westerlander
+		if = { # Westerlander
+			limit = { culture = westerlander }
+			culture = westermen
 		}
 		if = { # Watermen
 			limit = {
@@ -1021,15 +716,10 @@ province_event = {
 					culture = hookmen
 				}
 			}
-			culture = watermen
+			culture = waterman
 		}
 		if = { # Riverlander
-			limit = {
-				OR = {
-					culture = rivermen
-					culture = crabmen
-				}
-			}
+			limit = { culture = rivermen }
 			culture = riverlander
 		}
 		if = { # Marcher
@@ -1044,9 +734,9 @@ province_event = {
 			limit = { culture = shieldislander }
 			culture = shieldmen
 		}
-		if = { # Cornlander
-			limit = { culture = cornmen }
-			culture = cornlander
+		if = { # Cornmen
+			limit = { culture = cornlander }
+			culture = cornmen
 		}
 		if = { # Grovelander
 			limit = { 
@@ -1054,18 +744,6 @@ province_event = {
 				culture = north_marcher 
 			}
 			culture = grovelander
-		}
-		if = { # Northlander
-			limit = {
-				OR = {
-					culture = northmen
-					culture = barrowmen
-					culture = crannogmen
-					culture = hill_clansmen
-					culture = clansmen
-				}
-			}
-			culture = northlander
 		}
 		#################################
 		set_province_flag = melting_pot
@@ -1102,120 +780,56 @@ character_event = {
 			### Add new melting pots here ###
 			#################################
 			OR = {
-				AND = {
-					father = {
-						culture_group = andal
-					}
-					mother = {
-						OR = {
-							culture = stormmen
-							culture = westermen
-							culture = wendmen
-							culture = hookmen
-							culture = rivermen 
-							culture = crabmen
-							culture = marchmen
-							culture = wynemen
-							culture = shieldislander
-							culture = cornmen
-							AND = {
-								location = { region = world_goldengrove }
-								culture = grovelander
-							}
-							culture = northmen
-							culture = barrowmen
-							culture = crannogmen
-							culture = hill_clansmen
-							culture = clansmen
-						}
-					}
-				}
-				AND = {
-					father = {
-						OR = {
-							culture = stormmen
-							culture = westermen
-							culture = wendmen
-							culture = hookmen
-							culture = rivermen 
-							culture = crabmen
-							culture = marchmen
-							culture = wynemen
-							culture = shieldislander
-							culture = cornmen
-							AND = {
-								location = { region = world_goldengrove }
-								culture = grovelander
-							}
-							culture = northmen
-							culture = barrowmen
-							culture = crannogmen
-							culture = hill_clansmen
-							culture = clansmen
-						}
-					}
-					mother = {
-						culture_group = andal
-					}
-				}
-			}
-			OR = {
 				AND = { # Stormlander trigger
-					ROOT = { culture = stormlander }
+					liege = { capital_scope = { culture = stormmen } }
 					culture = stormmen
 				}
-				AND = { # westermen trigger
-					ROOT = { culture = westerlander }
-					culture = westermen
+				AND = { # Westerlander trigger
+					liege = { capital_scope = { culture = westerlander } }
+					culture = westerlander
 				}
 				AND = { # Watermen trigger
-					ROOT = { culture = watermen }
+					liege = { 
+						capital_scope = {
+							OR = {
+								culture = wendmen
+								culture = hookmen
+							}
+						}
+					}
 					OR = {
 						culture = wendmen
 						culture = hookmen
 					}
 				}
 				AND = { # Riverlander trigger
-					ROOT = { culture = riverlander }
-					OR = {
-						culture = rivermen
-						culture = crabmen
-					}
+					liege = { capital_scope = { culture = rivermen } }
+					culture = rivermen
 				}
 				AND = { # Marcher trigger
-					ROOT = { culture = marcher }
+					liege = { capital_scope = { culture = marchmen } }
 					culture = marchmen
 				}
 				AND = { # Wynelander trigger
-					ROOT = { culture = wynelander }
+					liege = { capital_scope = { culture = wynemen } }
 					culture = wynemen
 				}
 				AND = { # Shieldmen trigger
-					ROOT = { culture = shieldmen }
+					liege = { capital_scope = { culture = shieldislander } }
 					culture = shieldislander
 				}
-				AND = { # Cornlander trigger
-					ROOT = { culture = cornlander }
-					culture = cornmen
+				AND = { # Cornmen trigger
+					liege = { capital_scope = { culture = cornlander } }
+					culture = cornlander
 				}
 				AND = { # Grovelander trigger
-					ROOT = {
-						AND = {
-							culture = grovelander
-							location = { region = world_goldengrove } 
+					liege = { 
+						capital_scope = { 
+							region = world_goldengrove
+							culture = north_marcher 
 						}
 					}
 					culture = north_marcher
-				}
-				AND = { # Northlander trigger
-					ROOT = { culture = northlander }
-					OR = {
-						culture = northmen
-						culture = barrowmen
-						culture = crannogmen
-						culture = hill_clansmen
-						culture = clansmen
-					}
 				}
 			}
 			#################################
@@ -1223,134 +837,121 @@ character_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 80
+		months = 60
 		modifier = {
 			factor = 0.5
 			year = 6566
 		}
+		#modifier = {
+		#	factor = 0.5
+		#	year = 1100
+		#}
+		#modifier = {
+		#	factor = 0.5
+		#	year = 1200
+		#}
 	}
 
 	option = {
 		name = OK
 		random_courtier = {
 			limit = {
-				#is_ruler = no
-				#prisoner = no
+				is_ruler = no
+				prisoner = no
 				is_councillor = yes
-				#################################
 				### Add new melting pots here ###
-				#################################
 				OR = {
 					AND = { # Stormlander trigger
-						ROOT = { culture = stormlander }
+						liege = { capital_scope = { culture = stormmen } }
 						culture = stormmen
 					}
-					AND = { # westermen trigger
-						ROOT = { culture = westerlander }
-						culture = westermen
+					AND = { # Westerlander trigger
+						liege = { capital_scope = { culture = westerlander } }
+						culture = westerlander
 					}
 					AND = { # Watermen trigger
-						ROOT = { culture = watermen }
+						liege = { capital_scope = { culture = waterman } }
 						OR = {
 							culture = wendmen
 							culture = hookmen
 						}
 					}
 					AND = { # Riverlander trigger
-						ROOT = { culture = riverlander }
-						OR = {
-							culture = rivermen
-							culture = crabmen
-						}
+						liege = { capital_scope = { culture = rivermen } }
+						culture = rivermen
 					}
 					AND = { # Marcher trigger
-						ROOT = { culture = marcher }
+						liege = { capital_scope = { culture = marchmen } }
 						culture = marchmen
 					}
 					AND = { # Wynelander trigger
-						ROOT = { culture = wynelander }
+						liege = { capital_scope = { culture = wynemen } }
 						culture = wynemen
 					}
 					AND = { # Shieldmen trigger
-						ROOT = { culture = shieldmen }
+						liege = { capital_scope = { culture = shieldislander } }
 						culture = shieldislander
 					}
-					AND = { # Cornlander trigger
-						ROOT = { culture = cornlander }
-						culture = cornmen
+					AND = { # Cornmen trigger
+						liege = { capital_scope = { culture = cornlander } }
+						culture = cornlander
 					}
 					AND = { # Grovelander trigger
-						ROOT = {
-							AND = {
-								culture = grovelander
-								location = { region = world_goldengrove } 
+						liege = { 
+							capital_scope = { 
+								region = world_goldengrove
+								culture = north_marcher 
 							}
 						}
 						culture = north_marcher
 					}
-					AND = { # Northlander trigger
-						ROOT = { culture = northlander }
-						OR = {
-							culture = northmen
-							culture = barrowmen
-							culture = crannogmen
-							culture = hill_clansmen
-							culture = clansmen
-						}
-					}
 				}
 			}
-			#################################
-			
 			#################################
 			### Add new melting pots here ###
 			#################################
-			if = {
-				limit = { ROOT = { culture = stormlander } }
+			if = { # Stormlander
+				limit = { liege = { capital_scope = { culture = stormmen } } }
 				culture = stormlander
 			}
-			if = {
-				limit = { ROOT = { culture = westerlander } }
-				culture = westerlander
+			if = { # Westerlander
+				limit = { liege = { capital_scope = { culture = westerlander } } }
+				culture = westermen
 			}
-			if = {
-				limit = { ROOT = { culture = watermen } }
-				culture = watermen
+			if = { # Watermen
+				limit = { liege = { capital_scope = { culture = waterman } } }
+				culture = waterman
 			}
-			if = {
-				limit = { ROOT = { culture = riverlander } }
+			if = { # Riverlander
+				limit = { liege = { capital_scope = { culture = rivermen } } }
 				culture = riverlander
 			}
-			if = {
-				limit = { ROOT = { culture = marcher } }
+			if = { # Marcher
+				limit = { liege = { capital_scope = { culture = marchmen } } }
 				culture = marcher
 			}
-			if = {
-				limit = { ROOT = { culture = wynelander } }
+			if = { # Wynelander
+				limit = { liege = { capital_scope = { culture = wynemen } } }
 				culture = wynelander
 			}
-			if = {
-				limit = { ROOT = { culture = shieldmen } }
+			if = { # Shieldmen
+				limit = { liege = { capital_scope = { culture = shieldislander } } }
 				culture = shieldmen
 			}
-			if = {
-				limit = { ROOT = { culture = cornlander } }
-				culture = cornlander
+			if = { # Cornmen
+				limit = { liege = { capital_scope = { culture = cornlander } } }
+				culture = cornmen
 			}
-			if = {
-				limit = {
-					ROOT = {
-						AND = {
-							culture = grovelander
-							location = { region = world_goldengrove } 
-						}
+			if = { # Grovelander
+				limit = { 
+					liege = { 
+						capital_scope = { 
+							region = world_goldengrove
+							culture = north_marcher 
+						} 
 					}
 				}
 				culture = grovelander
-			}
-			if = {
-				limit = { ROOT = { culture = northlander } }
-				culture = northlander
 			}
 			#################################
 		}
@@ -1400,7 +1001,7 @@ character_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 450
+		months = 500
 		modifier = {
 			factor = 1.5
 			independent = no
@@ -1668,7 +1269,7 @@ character_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 80
+		months = 60
 	}
 
 	option = {
@@ -1726,7 +1327,7 @@ character_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 450
+		months = 500
 		modifier = {
 			factor = 1.5
 			independent = no
@@ -1989,7 +1590,7 @@ character_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 80
+		months = 60
 	}
 
 	option = {
@@ -2050,7 +1651,7 @@ character_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 450
+		months = 500
 		modifier = {
 			factor = 1.5
 			independent = no
@@ -2323,7 +1924,7 @@ character_event = {
 	}
 
 	mean_time_to_happen = {
-		months = 80
+		months = 60
 	}
 
 	option = {
