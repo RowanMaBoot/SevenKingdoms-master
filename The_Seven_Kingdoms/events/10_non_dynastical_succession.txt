@@ -39,43 +39,7 @@ character_event = {
 	
 	immediate = {
 		current_heir = { 
-			save_event_target_as = my_heir
-			create_character = {
-				name = "testdude"
-				father = THIS
-				dynasty = THIS
-				religion = THIS
-				culture = THIS
-			}
-			dynasty = ROOT
-			new_character = {
-				save_event_target_as = parked_dynasty
-				event_target:my_heir = { character_event = { id = nds.1 days = 1 } }
-			}
-		}
-	}
-	
-	option = { }
-}
-
-#
-character_event = {
-	id = nds.1
-
-	is_triggered_only = yes
-	hide_window = yes
-	
-	immediate = {
-		dynasty = event_target:parked_dynasty 
-		character_event = { id = dynamic_coa.0 }
-		event_target:parked_dynasty = {  #usually saved in emf_core_effects in common/scripted_effects as emf_vanish_character
-			dynasty = none
-			set_father = 0
-			set_mother = 0
-			if = {
-				limit = { is_alive = yes }
-				death = { death_reason = death_missing }
-			}
+			ROOT = { set_player_character = PREV }
 		}
 	}
 	
