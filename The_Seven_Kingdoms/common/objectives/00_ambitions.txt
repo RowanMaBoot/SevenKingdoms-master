@@ -113,7 +113,7 @@ obj_become_chancellor = {
 		opinion = {
 			who = liege
 			modifier = opinion_ambition_fulfilled
-			months = 24
+			years = 5
 		}
 		set_character_flag = successful_council_ambition
 	}
@@ -224,7 +224,7 @@ obj_become_marshal = {
 		opinion = {
 			who = liege
 			modifier = opinion_ambition_fulfilled
-			months = 24
+			years = 5
 		}
 		set_character_flag = successful_council_ambition
 	}
@@ -343,7 +343,7 @@ obj_become_treasurer = {
 		opinion = {
 			who = liege
 			modifier = opinion_ambition_fulfilled
-			months = 24
+			years = 5
 		}
 		set_character_flag = successful_council_ambition
 	}
@@ -463,7 +463,7 @@ obj_become_spymaster = {
 		opinion = {
 			who = liege
 			modifier = opinion_ambition_fulfilled
-			months = 24
+			years = 5
 		}
 		set_character_flag = successful_council_ambition
 	}
@@ -566,7 +566,7 @@ obj_become_spiritual = {
 		opinion = {
 			who = liege
 			modifier = opinion_ambition_fulfilled
-			months = 24
+			years = 5
 		}
 		set_character_flag = successful_council_ambition
 	}
@@ -588,7 +588,7 @@ obj_amass_wealth = {
 		is_adult = yes
 		NOT = { wealth = 200 }
 		is_playable = yes
-		is_landed = yes	 
+		is_landed = yes
 		NOT = { trait = charitable }
 		NOT = { trait = incapable }
 	}
@@ -633,6 +633,7 @@ obj_amass_wealth = {
 	}
 }
 
+
 obj_become_paragon_of_virtue = {
 	type = character
 	
@@ -642,13 +643,14 @@ obj_become_paragon_of_virtue = {
 	
 	allow = {
 		is_adult = yes
-		NOT = { piety = 100 }
-		is_ruler = yes
-		has_education_learning_trigger = yes
-		has_pious_trait_trigger = yes
+		NOT = { piety = 1000 }
+		OR = {
+			has_education_learning_trigger = yes
+			has_pious_trait_trigger = yes
+		}
 		has_impious_trait_trigger = no
 		is_playable = yes
-		is_landed = yes		 
+		is_landed = yes
 		NOT = { trait = incapable }
 	}
 	
@@ -661,8 +663,11 @@ obj_become_paragon_of_virtue = {
 		}
 		modifier = {
 			factor = 0.01
-			NOT = { tier = king }
-			NOT = { tier = emperor }
+			NOR = {
+				tier = king 
+				tier = emperor
+				is_theocracy = yes
+			}
 		}
 		modifier = {
 			factor = 10.0
@@ -672,13 +677,9 @@ obj_become_paragon_of_virtue = {
 			factor = 10.0
 			trait = zealous
 		}
-		modifier = {
-			factor = 0.01
-			trait = cynical
-		}
 	}
 	success = {
-		piety = 500
+		piety = 2000
 	}
 	abort = {
 		OR = {
@@ -705,7 +706,7 @@ obj_become_paragon_of_virtue = {
 			opinion = {
 				who = ROOT
 				modifier = opinion_paragon
-				months = 1200
+				years = 100
 			}
 		}
 		any_vassal = {
@@ -716,7 +717,7 @@ obj_become_paragon_of_virtue = {
 			opinion = {
 				who = ROOT
 				modifier = opinion_paragon
-				months = 1200
+				years = 100
 			}
 		}
 		# Achievement
@@ -739,7 +740,7 @@ obj_become_exalted = {
 	
 	allow = {
 		is_adult = yes
-		NOT = { prestige = 200 }
+		NOT = { prestige = 1000 }
 		is_playable = yes
 		is_landed = yes
 		OR = { 
@@ -753,6 +754,7 @@ obj_become_exalted = {
 			trait = content
 			trait = humble
 			trait = shy
+		}
 		NOT = { trait = incapable }
 	}
 	chance = {
@@ -764,6 +766,7 @@ obj_become_exalted = {
 		}
 		modifier = {
 			factor = 0.01
+			NOR = { 
 				tier = king
 				tier = emperor
 			}
@@ -778,12 +781,13 @@ obj_become_exalted = {
 		}
 	}
 	success = {
-		prestige = 1000
+		prestige = 5000
 	}
 	abort = {
 		OR = {
 			trait = content
 			trait = humble
+			trait = shy
 			trait = incapable
 		}
 	}
@@ -796,7 +800,7 @@ obj_become_exalted = {
 			opinion = {
 				who = ROOT
 				modifier = opinion_exalted
-				months = 1200
+				years = 100
 			}
 		}
 		# Achievement
@@ -821,8 +825,10 @@ obj_get_married = {
 	}
 	
 	allow = {
-		NOT = { has_dlc = "Zeus" }
-		ai = yes
+		OR = {
+			NOT = { has_dlc = "Zeus" }
+			ai = yes
+		}
 		prisoner = no
 		is_marriage_adult = yes
 		NOT = { trait = celibate }
@@ -859,7 +865,7 @@ obj_get_married = {
 			is_female = no
 			has_religion_feature = religion_patriarchal
 		}
-		modifier = {  
+		modifier = {
 			factor = 0.5
 			trait = shy
 		}
@@ -917,7 +923,7 @@ obj_get_married = {
 			opinion = {
 				who = liege
 				modifier = opinion_fulfilled_marriage_wish
-				months = 24
+				years = 5
 			}
 		}
 		hidden_tooltip = {
@@ -950,14 +956,16 @@ obj_marry_ruler = {
 	}
 	
 	allow = {
-		NOT = { has_dlc = "Zeus" }
-		ai = yes
+		OR = {
+			NOT = { has_dlc = "Zeus" }
+			ai = yes
+		}
 		prisoner = no
 		is_marriage_adult = yes
 		NOT = { trait = celibate }
 		NOT = { trait = incapable }
 		OR = {
-			AND = {
+			AND = { 
 				is_female = no 
 				NOT = { age = 45 }
 				has_religion_feature = religion_matriarchal
@@ -1012,7 +1020,6 @@ obj_marry_ruler = {
 				can_marry = no
 			}
 			AND = {
-				is_female = yes
 				is_ruler = no
 				age = 45
 			}
@@ -1074,7 +1081,7 @@ obj_have_a_daughter = {
 			factor = 10.0
 			has_religion_feature = religion_matriarchal
 		}
-		modifier = {	  
+		modifier = {
 			factor = 1.5
 			num_of_children = 3
 		}
@@ -1132,7 +1139,7 @@ obj_have_a_son = {
 		OR = {
 			ai = no
 			is_female = no
-			has_religion_feature = religion_patriarchal								  
+			has_religion_feature = religion_patriarchal
 			# Have at least two daughters
 			any_child = {
 				is_female = yes
@@ -1165,7 +1172,7 @@ obj_have_a_son = {
 			factor = 10.0
 			has_religion_feature = religion_patriarchal
 		}
-		modifier = {	  
+		modifier = {
 			factor = 1.5
 			num_of_children = 3
 		}
@@ -1322,7 +1329,7 @@ obj_wants_landed_title = {
 		opinion = {
 			who = liege
 			modifier = opinion_generous_relative
-			months = 60
+			years = 10
 		}
 		hidden_tooltip = {
 			clr_character_flag = flag_denied_title
@@ -1365,8 +1372,10 @@ obj_become_heir = {
 	}
 	
 	allow = {
-		NOT = { has_dlc = "Zeus" }
-		ai = yes
+		OR = {
+			NOT = { has_dlc = "Zeus" }
+			ai = yes
+		}
 		prisoner = no
 		is_adult = yes
 		is_primary_heir = no
@@ -1938,14 +1947,17 @@ obj_become_paragon_of_enlightenment = {
 	
 	allow = {
 		is_adult = yes
-		NOT = { piety = 100 }
-		has_education_learning_trigger = yes
-		has_pious_trait_trigger = yes
+		NOT = { piety = 1000 }
+		OR = {
+			has_education_learning_trigger = yes
+			has_pious_trait_trigger = yes
+		}
 		has_impious_trait_trigger = no
 		is_playable = yes
 		is_landed = yes
 		NOT = { trait = incapable }
 	}
+	
 	chance = {
 		factor = 50
 		
@@ -1955,9 +1967,11 @@ obj_become_paragon_of_enlightenment = {
 		}
 		modifier = {
 			factor = 0.01
-			tier = king 
-			tier = emperor
-			is_theocracy = yes
+			NOR = {
+				tier = king 
+				tier = emperor
+				is_theocracy = yes
+			}
 		}
 		modifier = {
 			factor = 10.0
@@ -1967,19 +1981,14 @@ obj_become_paragon_of_enlightenment = {
 			factor = 10.0
 			trait = zealous
 		}
-		modifier = {
-			factor = 0.01
-			trait = cynical
-		}
 	}
 	success = {
-		piety = 500
+		piety = 2000
 	}
 	abort = {
 		OR = {
-			has_impious_trait_trigger = yes					  
+			has_impious_trait_trigger = yes
 			trait = incapable
-			trait = lunatic
 		}
 	}
 	abort_effect = {
@@ -2020,11 +2029,11 @@ obj_gain_any_title = {
 		is_adult = yes
 		is_playable = yes
 		independent = no
-		liege = { independent = yes }
+		#liege = { independent = yes }
 		is_nomadic = no
 		liege = { is_nomadic = no }
 		NOT = { has_character_flag = gain_any_title_ambition_success }
-		is_landed = yes		 
+		is_landed = yes
 	}
 	
 	allow = {
