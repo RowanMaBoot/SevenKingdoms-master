@@ -100,7 +100,12 @@ is_in_dragon_duel_team_b = {
 	}
 }
 
-gets_killed_in_dragon_duels = {
+is_in_dragon_duel = {
+	is_in_dragon_duel_team_a = yes
+	is_in_dragon_duel_team_b = yes
+}
+
+gets_killed_in_dragon_duel = {
 	OR = {
 		has_character_flag = killed_by_a
 		has_character_flag = killed_by_b
@@ -110,3 +115,17 @@ gets_killed_in_dragon_duels = {
 		has_character_flag = killed_by_f
 	}
 }
+
+dragon_and_rider_get_killed_or_maimed = {
+	OR = {
+		gets_killed_in_dragon_duel = yes
+		any_friend = {
+			is_dragon_in_dragon_duel = yes
+			OR = {
+				has_character_flag = get_maimed
+				gets_killed_in_dragon_duel = yes
+			}
+		}
+	}
+}
+		
