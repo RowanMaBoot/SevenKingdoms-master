@@ -1970,11 +1970,25 @@ character_event = {
 	option = {
 		name = {
 			text = EVTOPTB_7017
-			trigger = { is_married = no }
+			trigger = {
+				OR = {
+					is_married = no
+					any_spouse = {
+						character = event_target:satanists_inductor
+					}
+				}
+			}
 		}
 		name = {
-			text = EVTOPTC_7017
-			trigger = { is_married = yes }
+			text = EVTOPTC_7017 #I am married! (and not to the inductor)
+			trigger = {
+				is_married = yes
+				NOT = {
+					any_spouse = {
+						character = event_target:satanists_inductor
+					}
+				}
+			}
 		}
 		custom_tooltip = { text = EVTOPTB_7017_TT }
 		
@@ -11514,14 +11528,14 @@ character_event = {
 			}
 			if = {
 				limit = {
-					NOT = { has_character_flag = honest }
-					NOT = { has_character_flag = deceitful }
+					NOT = { trait = honest }
+					NOT = { trait = deceitful }
 				}
 				add_trait = deceitful
 			}
 			if = {
 				limit = {
-					has_character_flag = honest
+					trait = honest
 				}
 				remove_trait = honest
 			}
@@ -11533,14 +11547,14 @@ character_event = {
 			}
 			if = {
 				limit = {
-					NOT = { has_character_flag = shy }
-					NOT = { has_character_flag = gregarious }
+					NOT = { trait = shy }
+					NOT = { trait = gregarious }
 				}
 				add_trait = gregarious
 			}
 			if = {
 				limit = {
-					has_character_flag = shy
+					trait = shy
 				}
 				remove_trait = shy
 			}
