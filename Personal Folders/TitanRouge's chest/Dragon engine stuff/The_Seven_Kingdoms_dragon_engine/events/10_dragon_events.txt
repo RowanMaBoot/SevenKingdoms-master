@@ -271,10 +271,6 @@ character_event = {
 
 	is_triggered_only = yes
 	
-	trigger = {
-		use_dragon_in_battle_potential = yes
-	}
-	
 	immediate = {
 		set_your_dragon = yes #Be aware! ROOT must be the dragon's rider!
 	}
@@ -524,8 +520,8 @@ character_event = {
 			}
 			if = { 
 				limit = { has_character_flag = killed_by_dragon }
-				death = { death_reason = death_dragon_fire1 killer = event_target:your_dragon }
-				clr_character_flag = burnt_by_dragon
+				death = { death_reason = death_dragon_fire1 killer = ROOT }
+				clr_character_flag = killed_by_dragon
 			}
 		}
 	}
@@ -1562,7 +1558,7 @@ character_event = {
 		
 		if = {
 			limit = { has_game_rule = { name = dragon_duels value = enabled_debugging } }
-			character_event = { id = dragon.313 }
+			character_event = { id = dragon.311 }
 		}
 	}
 	
@@ -1571,7 +1567,7 @@ character_event = {
 
 #	DEBUG: Display riders
 character_event = {
-	id = dragon.313
+	id = dragon.311
 	desc = "DEBUG"
 	
 	is_triggered_only = yes
@@ -1817,23 +1813,17 @@ character_event = {
 		
 		#Order is important. Elsewise the rider does not die if his dragon does!
 		event_target:dragon_a = { calculate_injury_outcome_dragon_duel = yes }
-		event_target:rider_a = { calculate_injury_outcome_dragon_duel = yes }
 		event_target:dragon_b = { calculate_injury_outcome_dragon_duel = yes }
-		event_target:rider_b = { calculate_injury_outcome_dragon_duel = yes }
 		event_target:dragon_c = { calculate_injury_outcome_dragon_duel = yes }
-		event_target:rider_c = { calculate_injury_outcome_dragon_duel = yes }
 		event_target:dragon_d = { calculate_injury_outcome_dragon_duel = yes }
-		event_target:rider_d = { calculate_injury_outcome_dragon_duel = yes }
 		event_target:dragon_e = { calculate_injury_outcome_dragon_duel = yes }
-		event_target:rider_e = { calculate_injury_outcome_dragon_duel = yes }
 		event_target:dragon_f = { calculate_injury_outcome_dragon_duel = yes }
+		event_target:rider_a = { calculate_injury_outcome_dragon_duel = yes }
+		event_target:rider_b = { calculate_injury_outcome_dragon_duel = yes }
+		event_target:rider_c = { calculate_injury_outcome_dragon_duel = yes }
+		event_target:rider_d = { calculate_injury_outcome_dragon_duel = yes }
+		event_target:rider_e = { calculate_injury_outcome_dragon_duel = yes }
 		event_target:rider_f = { calculate_injury_outcome_dragon_duel = yes }
-		
-		##########################################
-		
-		check_for_maimed_and_killed_by_flags = yes
-		
-		##########################################
 		
 		if = {
 			limit = {
@@ -1880,6 +1870,12 @@ character_event = {
 				set_character_flag = team_b_wins_round_1
 			}	
 		}
+		
+		##########################################
+		
+		check_for_maimed_and_killed_by_flags = yes
+		
+		##########################################
 	}
 	
 	option = { }
@@ -1965,6 +1961,7 @@ character_event = {
 				is_dragon_in_dragon_duel = yes
 				has_character_flag = get_maimed
 			}
+		}
 		text = EVTDESCBdragon308
 	}
 	desc = { #	Get killed
@@ -1973,12 +1970,151 @@ character_event = {
 				is_dragon_in_dragon_duel = yes
 				gets_killed_in_dragon_duel = yes
 			}
+		}
 		text = EVTDESCCdragon308
 	}
 	
 	is_triggered_only = yes
 	
 	immediate = {
+	
+		#If your dragon is killed you die, too.
+		if = {
+			limit = {
+				any_friend = {
+					is_dragon_in_dragon_duel = yes
+					has_character_flag = killed_by_a
+				}
+			}
+			clear_wounded_maimed_flags_dragon_duel = yes
+			set_character_flag = killed_by_a
+		}
+		else_if = {
+			limit = {
+				any_friend = {
+					is_dragon_in_dragon_duel = yes
+					has_character_flag = killed_by_b
+				}
+			}
+			clear_wounded_maimed_flags_dragon_duel = yes
+			set_character_flag = killed_by_b
+		}
+		else_if = {
+			limit = {
+				any_friend = {
+					is_dragon_in_dragon_duel = yes
+					has_character_flag = killed_by_c
+				}
+			}
+			clear_wounded_maimed_flags_dragon_duel = yes
+			set_character_flag = killed_by_c
+		}
+		else_if = {
+			limit = {
+				any_friend = {
+					is_dragon_in_dragon_duel = yes
+					has_character_flag = killed_by_d
+				}
+			}
+			clear_wounded_maimed_flags_dragon_duel = yes
+			set_character_flag = killed_by_d
+		}
+		else_if = {
+			limit = {
+				any_friend = {
+					is_dragon_in_dragon_duel = yes
+					has_character_flag = killed_by_e
+				}
+			}
+			clear_wounded_maimed_flags_dragon_duel = yes
+			set_character_flag = killed_by_e
+		}
+		else_if = {
+			limit = {
+				any_friend = {
+					is_dragon_in_dragon_duel = yes
+					has_character_flag = killed_by_f
+				}
+			}
+			clear_wounded_maimed_flags_dragon_duel = yes
+			set_character_flag = killed_by_f
+		}
+	
+		any_friend = {
+			is_dragon_in_dragon_duel = yes
+			save_event_target_as = your_dragon
+		}
+		if = {
+			limit = { has_character_flag = killed_by_a }
+			event_target:rider_a = { save_event_target_as = encounter }
+		}
+		else_if = {
+			limit = { has_character_flag = killed_by_b }
+			event_target:rider_b = { save_event_target_as = encounter }
+		}
+		else_if = {
+			limit = { has_character_flag = killed_by_c }
+			event_target:rider_c = { save_event_target_as = encounter }
+		}
+		else_if = {
+			limit = { has_character_flag = killed_by_d }
+			event_target:rider_d = { save_event_target_as = encounter }
+		}
+		else_if = {
+			limit = { has_character_flag = killed_by_e }
+			event_target:rider_e = { save_event_target_as = encounter }
+		}
+		else_if = {
+			limit = { has_character_flag = killed_by_f }
+			event_target:rider_f = { save_event_target_as = encounter }
+		}
+		else_if = {
+			limit = {
+				OR = {
+					has_character_flag = get_wounded
+					has_character_flag = get_maimed
+				}
+			}
+			random = {
+				1 = {
+					event_target:rider_a = { save_event_target_as = encounter }
+				}
+				1 = {
+					event_target:rider_b = { save_event_target_as = encounter }
+					modifier = {
+						factor = 0
+						event_target:rider_a = { NOT = { has_character_flag = rider_b_chosen } }
+					}
+				}
+				1 = {
+					event_target:rider_c = { save_event_target_as = encounter }
+					modifier = {
+						factor = 0
+						event_target:rider_a = { NOT = { has_character_flag = rider_b_chosen } }
+					}
+				}
+				1 = {
+					event_target:rider_d = { save_event_target_as = encounter }
+				}
+				1 = {
+					event_target:rider_e = { save_event_target_as = encounter }
+					modifier = {
+						factor = 0
+						event_target:rider_d = { NOT = { has_character_flag = rider_e_chosen } }
+					}
+				}
+				1 = {
+					event_target:rider_f = { save_event_target_as = encounter }
+					modifier = {
+						factor = 0
+						event_target:rider_d = { NOT = { has_character_flag = rider_f_chosen } }
+					}
+				}
+			}
+		}
+		
+		set_variable = { which = global_dragon_strength_team_a value = 0 }
+		set_variable = { which = global_dragon_strength_team_b value = 0 }
 	}
 	
 	option = {
@@ -1997,6 +2133,7 @@ character_event = {
 					is_dragon_in_dragon_duel = yes
 					has_character_flag = get_maimed
 				}
+			}
 			text = EVTOPTBdragon308
 		}
 		name = { #	Get killed
@@ -2005,6 +2142,7 @@ character_event = {
 					is_dragon_in_dragon_duel = yes
 					gets_killed_in_dragon_duel = yes
 				}
+			}
 			text = EVTOPTCdragon308
 		}
 		
@@ -2034,17 +2172,26 @@ character_event = {
 				}
 			}
 			event_target:rider_a = { character_event = { id = dragon.306 } }
+			#Only for debugging
+			if = {
+				limit = {
+					has_game_rule = { name = dragon_duels value = enabled_debugging }
+				}
+				event_target:rider_a = { character_event = { id = dragon.305 } }
+			}
 		}
 		if = {
 			limit = {
 				has_character_flag = debug_rider_a
-				OR = {
-					has_character_flag = team_a_wins_round_1
-					has_character_flag = team_b_wins_round_1
-				}
-				OR = {
-					has_character_flag = team_a_wins_round_2
-					has_character_flag = team_b_wins_round_2
+				AND = {
+					OR = {
+						has_character_flag = team_a_wins_round_1
+						has_character_flag = team_b_wins_round_1
+					}
+					OR = {
+						has_character_flag = team_a_wins_round_2
+						has_character_flag = team_b_wins_round_2
+					}
 				}
 			}
 			event_target:rider_a = { character_event = { id = dragon.309 } }
@@ -2065,7 +2212,15 @@ character_event = {
 		is_in_dragon_duel = yes
 	}
 	
-	immediate = { }
+	immediate = {
+		clr_global_flag = ongoing_dragon_duel
+		event_target:rider_a = { dragon_duel_char_flag_clean_up = yes }
+		event_target:rider_b = { dragon_duel_char_flag_clean_up = yes }
+		event_target:rider_c = { dragon_duel_char_flag_clean_up = yes }
+		event_target:rider_d = { dragon_duel_char_flag_clean_up = yes }
+		event_target:rider_e = { dragon_duel_char_flag_clean_up = yes }
+		event_target:rider_f = { dragon_duel_char_flag_clean_up = yes }
+	}
 	
 	option = {
 		name = EVTOPTAdragon309
@@ -2081,49 +2236,65 @@ character_event = {
 
 #	The Wound/Maim/Kill event for rider A and D if one of them stands alone and dies
 character_event = {
-	id = dragon.311
-	desc = EVTDESCdragon311
+	id = dragon.310
+	desc = EVTDESCdragon310
 	
 	is_triggered_only = yes
 	
 	immediate = {
+	
 		clr_global_flag = ongoing_dragon_duel
+
+		event_target:rider_a = { dragon_duel_char_flag_clean_up = yes }
+		event_target:rider_b = { dragon_duel_char_flag_clean_up = yes }
+		event_target:rider_c = { dragon_duel_char_flag_clean_up = yes }
+		event_target:rider_d = { dragon_duel_char_flag_clean_up = yes }
+		event_target:rider_e = { dragon_duel_char_flag_clean_up = yes }
+		event_target:rider_f = { dragon_duel_char_flag_clean_up = yes }
 	}
 	
 	option = {
-		name = EVTOPTAdragon311
+		name = EVTOPTAdragon310
+		
+		wound_maim_kill_actions_dragon_duel_rider_and_dragon = yes
+		
+		clear_wounded_maimed_flags_dragon_duel = yes
 		
 		#If team A wins
 		if = {
 			limit = {
 				has_character_flag = debug_rider_a
-				has_character_flag = end_of_dragon_duel_team_a_wins
+				OR = {
+					has_character_flag = end_of_dragon_duel_team_a_wins
+					has_character_flag = end_of_dragon_duel_team_b_wins
+				}
 			}
 			event_target:rider_a = {
-				wound_maim_kill_actions_dragon_duel_rider_and_dragon = yes
-				dragon_duel_char_flag_clean_up = yes
 				any_friend = {
 					limit = { is_dragon_in_dragon_duel = yes }
 					dragon_duel_char_flag_clean_up = yes
+					character_event = { id = dragon.100 }
 				}
 			}
-			event_target:rider_a = { character_event = { id = dragon.100 } }
 		}
 		#If team B wins
 		if = {
 			limit = {
 				has_character_flag = debug_rider_d
-				event_target:rider_a = { has_character_flag = end_of_dragon_duel_team_b_wins }
+				event_target:rider_a = {
+					OR = {
+						has_character_flag = end_of_dragon_duel_team_a_wins
+						has_character_flag = end_of_dragon_duel_team_b_wins
+					}
+				}
 			}
 			event_target:rider_d = {
-				wound_maim_kill_actions_dragon_duel_rider_and_dragon = yes
-				dragon_duel_char_flag_clean_up = yes
 				any_friend = {
 					limit = { is_dragon_in_dragon_duel = yes }
 					dragon_duel_char_flag_clean_up = yes
 				}
+				character_event = { id = dragon.100 }
 			}
-			event_target:rider_d = { character_event = { id = dragon.100 } }
 		}
 	}
 	
@@ -2131,6 +2302,6 @@ character_event = {
 		trigger = {
 			always = no
 		}
-		name = EVTOPTBdragon311
+		name = EVTOPTBdragon310
 	}
 }
