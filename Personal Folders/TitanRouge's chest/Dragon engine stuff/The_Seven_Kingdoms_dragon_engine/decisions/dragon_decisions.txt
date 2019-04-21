@@ -72,7 +72,7 @@ targetted_decisions = {
 				}
 				hidden_tooltip = {
 					add_character_modifier = { modifier = in_dragon_duel_hidden duration = 15 }
-					set_global_flag = ongoing_dragon_duel
+					#set_global_flag = ongoing_dragon_duel
 					character_event = { id = dragon.300 }
 				}
 				set_character_flag = dragon_duel
@@ -174,8 +174,13 @@ targetted_decisions = {
 			custom_tooltip = {
 				text = TOOLTIP_USE_DRAGON_IN_SIEGE
 				hidden_tooltip = {
-					ROOT = { 
-						use_dragon_in_siege_potential = yes
+					ROOT = {
+						is_dragon_rider = yes
+						siege = { is_attacker = yes }
+						any_friend = {
+							is_tamed_dragon = yes
+							NOT = { trait = dr_maimed }
+						}
 						NOT = { has_character_modifier = used_dragon_in_siege_hidden }
 					}
 				}

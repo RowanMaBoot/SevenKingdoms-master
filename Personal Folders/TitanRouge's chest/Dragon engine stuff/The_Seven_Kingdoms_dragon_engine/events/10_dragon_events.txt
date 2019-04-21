@@ -10,6 +10,7 @@
 #003	Kills the dragon
 #004	Decreases the infamy gained in sieges/battles when behaving peacufully
 #005	Adds dragon egg to dragon to set dragon as FROM for renaming
+#006	Assigns special character titles
 
 ####Dragon in combat events 100-199####
 #100	Use your dragon battle
@@ -31,6 +32,17 @@
 #205	Dragon egg transfered
 
 ####Dragon duel events 300####
+#300	Find and set up dragon riders
+#301	Rider D is notified about rider A's attack
+#302	Rider A spots Rider D in the air
+#303	Riders are asked whether or not to join the duel
+#304	Rider A and D are notified about the riders who join on their side
+#305	DEBUG: Shows Dragon Strenghts
+#306	Calculates outcome | Displays all riders and dragons
+#307	Displays round outcome | Displays all riders and dragons
+#308	The Wound/Maim/Kill event
+#309	End of dragon duel
+#310	The Wound/Maim/Kill event for rider A and D if one of them stands alone and dies
 
 namespace = dragon
 
@@ -258,6 +270,39 @@ character_event = {
 					}
 				}
 			}
+		}
+	}
+}
+
+#	Assigns special character titles
+character_event = {
+	id = dragon.6
+
+	is_triggered_only = yes
+	hide_window = yes
+
+	trigger = {
+		trait = dragon_rider
+	}
+	
+	immediate = {
+		if = {
+			limit = { is_ruler = no }
+			set_special_character_title = title_dragon_rider
+		}
+		else_if = {
+			limit = {
+				is_ruler = no
+				OR = {
+					trait = skilled_tactician
+					trait = brilliant_strategist
+				}
+			}
+			set_special_character_title = title_dragon_knight
+		}
+		else_if = {
+			limit = { is_ruler = yes }
+			set_special_character_title = title_dragon_lord
 		}
 	}
 }
@@ -849,7 +894,24 @@ character_event = {
 		name = EVTOPTAdragon201
 		
 		add_trait = dragon_rider
-		random_courtier = { give_minor_title = title_dragon_lord }
+		if = {
+			limit = { is_ruler = no }
+			set_special_character_title = title_dragon_rider
+		}
+		else_if = {
+			limit = {
+				is_ruler = no
+				OR = {
+					trait = skilled_tactician
+					trait = brilliant_strategist
+				}
+			}
+			set_special_character_title = title_dragon_knight
+		}
+		else_if = {
+			limit = { is_ruler = yes }
+			set_special_character_title = title_dragon_lord
+		}
 		change_infamy = {
 			value = 10
 			localisation = dragon_infamy

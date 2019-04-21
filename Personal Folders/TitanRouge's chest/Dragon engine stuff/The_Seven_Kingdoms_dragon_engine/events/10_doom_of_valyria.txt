@@ -1,47 +1,28 @@
 namespace = the_doom
 
-# Fires the event
-character_event = {
+#Targaryen setup
+narrative_event = {
     id = the_doom.0
+	desc = EVTDESCthe_doom0
+	picture = GFX_evt_targaryen
     
-	hide_window = yes
     is_triggered_only = yes
-    
-    trigger = {
-		has_landed_title = c_dragonstone
-    }
-    
+	
+	hide_window = yes
+	
 	immediate = {
 		if = {
 			limit = { independent = no }
 			top_liege = {
-				character_event = { id = the_doom.1 }
+				save_event_target_as = owner_dragonstone
 			}
 		}
 		else = {
-			character_event = { id = the_doom.1 }
+			save_event_target_as = owner_dragonstone
 		}
-		character_event = { id = the_doom.2 days = 4380 }
-	}
-	
-	option = {
-	}
-}
-
-# Aenar arrives
-character_event = {
-    id = the_doom.1
-	desc = EVTDESCthe_doom1
-	picture = GFX_evt_targaryen
-    
-    is_triggered_only = yes
-	#major = yes
-    
-	immediate = {
 		create_character = {
 			random_traits = no
 			name = "Aenar"
-			has_nickname = nick_the_exile
 			dynasty = 1634
 			culture = high_valyrian
 			religion = valyrian
@@ -65,7 +46,25 @@ character_event = {
 			trait = dragon_rider
 		}
 		new_character = {
+			give_nickname = nick_the_exile
 			save_event_target_as = aenar
+			add_pressed_claim = d_dragonstone
+			#Some start troops for Aenar
+			spawn_unit = {
+				owner = event_target:aenar
+				province = 797
+				home = 797
+				troops = {
+					archers = { 250 500 }
+					light_infantry = { 1000 2000 }
+					heavy_infantry = { 1500 3000 }
+					light_cavalry = { 250 500 }
+				}
+				attrition = 1.0
+				#disband_on_peace = yes
+				maintenance_multiplier = 0
+			}
+			ROOT = { character_event = { id = the_doom.1 } }
 		}
 		create_character = {
 			random_traits = no
@@ -123,6 +122,7 @@ character_event = {
 		new_character = {
 			set_father = event_target:aenar
 			set_mother = event_target:jaehaera
+			save_event_target_as = gaemon
 		}
 		create_character = {
 			random_traits = no
@@ -150,8 +150,10 @@ character_event = {
 			trait = temperate
 		}
 		new_character = {
+			give_nickname = nick_the_dreamer
 			set_father = event_target:aenar
 			set_mother = event_target:jaehaera
+			add_spouse = event_target:gaemon
 		}
 		create_character = {
 			random_traits = no
@@ -180,22 +182,105 @@ character_event = {
 				transfer_artifact = { from = PREVPREV to = event_target:aenar }
 			}
 		}
+		create_character = {
+			random_traits = no
+			name = "Callax"
+			dynasty = none
+			culture = dragon_culture
+			religion = dragon_religion
+			age = 30
+			attributes = {
+				martial = 30
+			}
+			health = 6
+			trait = dragon_base_trait
+			trait = dragon_trait
+			trait = dr_proud
+			trait = dr_wroth
+			trait = dragon8
+		}
+		new_character = {
+			save_event_target_as = callax
+			add_friend = event_target:gaemon
+			add_artifact = red_dragon_egg
+			new_artifact = {
+				set_name = "Callax' egg"
+				set_artifact_original_owner = PREV
+				transfer_artifact = { from = PREVPREV to = event_target:gaemon }
+			}
+		}
 	}
 	
+	option = { }
+}
+
+# Aenar arrives
+character_event = {
+    id = the_doom.1
+	desc = EVTDESCthe_doom1
+	picture = GFX_evt_targaryen
+    
+    is_triggered_only = yes
+	
+	major = yes
+    
+	major_trigger = {
+		capital_scope = {
+			OR = {
+				location = { region = world_westeros_north_south }
+				location = { region = world_essos }
+			}
+		}
+	}
+	
+	immediate = {
+		set_global_flag = aenar_arrived
+	}
+	
+	#Owner yields to Aenar
 	option = {
 		name = EVTOPTAthe_doom1
-	
-		event_target:aenar = {
-			c_dragonstone = { gain_title = PREV }
-			d_dragonstone = { gain_title = PREV }
-		}
-		hidden_tooltip = {
-			if = {
-				limit = { k_dragonstone = { is_title_active = yes } }
-				k_dragonstone = { destroy_landed_title = THIS }
+		
+		if = {
+			limit = { has_landed_title = c_dragonstone }
+			custom_tooltip = {
+				text = EVTthe_doom1CUSTOM
+				event_target:aenar = {
+					c_dragonstone = { gain_title = PREV }
+					d_dragonstone = { gain_title = PREV }
+				}
 			}
-			event_target:visenyx = {
-				move_character = event_target:aenar
+			hidden_tooltip = {
+				if = {
+					limit = { k_dragonstone = { is_title_active = yes } }
+					k_dragonstone = { destroy_landed_title = THIS }
+				}
+				event_target:visenyx = {
+					move_character = event_target:aenar
+				}
+				event_target:callax = {
+					move_character = event_target:aenar
+				}
+			}
+		}
+	}
+	
+	#Owner rejects
+	option = {
+		name = EVTOPTBthe_doom1
+		
+		if = {
+			limit = { has_landed_title = c_dragonstone }
+			event_target:aenar = {
+				c_dragonstone = { gain_title = PREV }
+				any_demesne_title = {
+					limit = { is_landless_type_title = yes }
+					destroy_landed_title = THIS
+				}
+			}
+			reverse_unsafe_war = {
+				target = event_target:aenar
+				casus_belli = duchy_adventure
 			}
 		}
 	}
@@ -207,9 +292,23 @@ narrative_event = {
 	desc = EVTDESCthe_doom2
 	picture = GFX_evt_targaryen
     
-    is_triggered_only = yes
+    #is_triggered_only = yes
+	
+	trigger = {
+		has_landed_title = c_dragonstone
+		had_global_flag = { flag = aenar_arrived days = 4 }
+	}
+	
 	major = yes
     
+	major_trigger = {
+		capital_scope = {
+			OR = {
+				location = { region = world_westeros_north_south }
+				location = { region = world_essos }
+			}
+		}
+	}
 	immediate = {
 		set_global_flag = the_doom_of_valyria
 	}
