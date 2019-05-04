@@ -274,16 +274,96 @@ calculate_injury_outcome_dragon_duel = {
 	
 		###Wounded###
 		10 = {
+			modifier = {
+				factor = 0
+				trait = wounded
+			}
+			modifier = {
+				factor = 0
+				trait = dr_wounded
+			}
+			modifier = {
+				factor = 5
+				trait = dr_weak
+			}
+			modifier = {
+				factor = 4
+				trait = weak
+			}
+			modifier = {
+				factor = 0.3
+				trait = dr_strong
+			}
+			modifier = {
+				factor = 0.5
+				trait = strong
+			}
 			set_character_flag = get_wounded
 		}
 		
 		###Maimed###
 		5 = {
+			modifier = {
+				factor = 0
+				trait = maimed
+			}
+			modifier = {
+				factor = 0
+				trait = dr_maimed
+			}
+			modifier = {
+				factor = 4
+				trait = dr_weak
+			}
+			modifier = {
+				factor = 3
+				trait = weak
+			}
+			modifier = {
+				factor = 0.6
+				trait = dr_strong
+			}
+			modifier = {
+				factor = 0.8
+				trait = strong
+			}
 			set_character_flag = get_maimed
 		}
 		
 		###Death###
 		5 = {
+			modifier = {
+				factor = 8
+				trait = dr_maimed
+			}
+			modifier = {
+				factor = 12
+				trait = maimed
+			}
+			modifier = {
+				factor = 5
+				trait = dr_wounded
+			}
+			modifier = {
+				factor = 9
+				trait = wounded
+			}
+			modifier = {
+				factor = 9
+				trait = dr_weak
+			}
+			modifier = {
+				factor = 7
+				trait = weak
+			}
+			modifier = {
+				factor = 0.5
+				trait = dr_strong
+			}
+			modifier = {
+				factor = 0.9
+				trait = strong
+			}
 			#You die | This chooses the killer
 			random_list = {
 				16 = {
@@ -1030,6 +1110,7 @@ check_for_maimed_and_killed_by_flags = {
 	#If there is no other rider in team A team B wins
 	else_if = { #2
 		limit = {
+			has_character_flag = debug_rider_a
 			OR = {
 				event_target:rider_a = {
 					has_character_flag = rider_a_stands_alone
@@ -1046,13 +1127,13 @@ check_for_maimed_and_killed_by_flags = {
 		event_target:rider_a = {
 			set_character_flag = end_of_dragon_duel_team_b_wins
 			set_character_flag = _nummer_2
-			character_event = { id = dragon.310 }
+			character_event = { id = dragon.309 }
 		}
-		event_target:rider_b = { character_event = { id = dragon.310 } }
-		event_target:rider_c = { character_event = { id = dragon.310 } }
-		event_target:rider_d = { character_event = { id = dragon.310 } }
-		event_target:rider_e = { character_event = { id = dragon.310 } }
-		event_target:rider_f = { character_event = { id = dragon.310 } }
+		event_target:rider_b = { character_event = { id = dragon.309 } }
+		event_target:rider_c = { character_event = { id = dragon.309 } }
+		event_target:rider_d = { character_event = { id = dragon.309 } }
+		event_target:rider_e = { character_event = { id = dragon.309 } }
+		event_target:rider_f = { character_event = { id = dragon.309 } }
 	}
 	#Reassigns rider A and dragon A if they get maimed or killed. If rider B or dragon B are not valid check C.
 	else_if = { #3
@@ -1118,13 +1199,13 @@ check_for_maimed_and_killed_by_flags = {
 		event_target:rider_a = {
 			set_character_flag = end_of_dragon_duel_team_b_wins
 			set_character_flag = _nummer_5
-			character_event = { id = dragon.310 }
+			character_event = { id = dragon.309 }
 		}
-		event_target:rider_b = { character_event = { id = dragon.310 } }
-		event_target:rider_c = { character_event = { id = dragon.310 } }
-		event_target:rider_d = { character_event = { id = dragon.310 } }
-		event_target:rider_e = { character_event = { id = dragon.310 } }
-		event_target:rider_f = { character_event = { id = dragon.310 } }
+		event_target:rider_b = { character_event = { id = dragon.309 } }
+		event_target:rider_c = { character_event = { id = dragon.309 } }
+		event_target:rider_d = { character_event = { id = dragon.309 } }
+		event_target:rider_e = { character_event = { id = dragon.309 } }
+		event_target:rider_f = { character_event = { id = dragon.309 } }
 	}
 
 	#############################################################
@@ -1132,9 +1213,12 @@ check_for_maimed_and_killed_by_flags = {
 	#If there is no other rider in team B team A wins
 	if = { #6
 		limit = {
+			has_character_flag = debug_rider_d
+			event_target:rider_a = {
+				has_character_flag = rider_d_stands_alone
+			}
 			OR = {
 				event_target:rider_d = {
-					has_character_flag = rider_d_stands_alone
 					gets_killed_in_dragon_duel = yes
 				}
 				event_target:dragon_d = {
@@ -1148,13 +1232,13 @@ check_for_maimed_and_killed_by_flags = {
 		event_target:rider_a = {
 			set_character_flag = end_of_dragon_duel_team_a_wins
 			set_character_flag = _nummer_6
-			character_event = { id = dragon.310 }
+			character_event = { id = dragon.309 }
 		}
-		event_target:rider_b = { character_event = { id = dragon.310 } }
-		event_target:rider_c = { character_event = { id = dragon.310 } }
-		event_target:rider_d = { character_event = { id = dragon.310 } }
-		event_target:rider_e = { character_event = { id = dragon.310 } }
-		event_target:rider_f = { character_event = { id = dragon.310 } }
+		event_target:rider_b = { character_event = { id = dragon.309 } }
+		event_target:rider_c = { character_event = { id = dragon.309 } }
+		event_target:rider_d = { character_event = { id = dragon.309 } }
+		event_target:rider_e = { character_event = { id = dragon.309 } }
+		event_target:rider_f = { character_event = { id = dragon.309 } }
 	}
 	#Reassigns rider A and dragon A if they get maimed or killed. If rider B or dragon B are not valid check C.
 	else_if = { #7
@@ -1213,13 +1297,13 @@ check_for_maimed_and_killed_by_flags = {
 		event_target:rider_a = {
 			set_character_flag = end_of_dragon_duel_team_a_wins
 			set_character_flag = _nummer_9
-			character_event = { id = dragon.310 }
+			character_event = { id = dragon.309 }
 		}
-		event_target:rider_b = { character_event = { id = dragon.310 } }
-		event_target:rider_c = { character_event = { id = dragon.310 } }
-		event_target:rider_d = { character_event = { id = dragon.310 } }
-		event_target:rider_e = { character_event = { id = dragon.310 } }
-		event_target:rider_f = { character_event = { id = dragon.310 } }
+		event_target:rider_b = { character_event = { id = dragon.309 } }
+		event_target:rider_c = { character_event = { id = dragon.309 } }
+		event_target:rider_d = { character_event = { id = dragon.309 } }
+		event_target:rider_e = { character_event = { id = dragon.309 } }
+		event_target:rider_f = { character_event = { id = dragon.309 } }
 	}
 }
 
@@ -1408,4 +1492,30 @@ kill_rider_if_dragon_dies = {
 			set_character_flag = killed_by_f
 		}
 	}
+}
+
+#Leveling for dragon riders
+dragon_rider_leveling = {
+	if = {
+		limit = {
+			check_variable = { which = dragon_duel_count value = 4 }
+			trait = dragon_rider_1
+		}
+		add_trait = trained_dragon_rider
+	}
+	if = {
+		limit = {
+			check_variable = { which = dragon_duel_count value = 8 }
+			trait = dragon_rider_2
+		}
+		add_trait = skilled_dragon_rider
+	}
+	if = {
+		limit = {
+			check_variable = { which = dragon_duel_count value = 13 }
+			trait = dragon_rider_3
+		}
+		add_trait = master_dragon_rider
+	}
+	change_variable = { which = dragon_duel_count value = 1 }
 }

@@ -1,12 +1,17 @@
 is_dragon_rider = {
 	is_alive = yes
-	trait = dragon_rider
+	OR = {
+		trait = dragon_rider_1
+		trait = dragon_rider_2
+		trait = dragon_rider_3
+		trait = dragon_rider_4
+	}
 	any_friend = {
 		is_tamed_dragon = yes
 	}
 }
 
-is_basic_dragon = {
+is_dragon = {
 	is_alive = yes
 	culture = dragon_culture
 	religion = dragon_religion
@@ -15,12 +20,14 @@ is_basic_dragon = {
 }
 
 is_wild_dragon = {
-	is_basic_dragon = yes
-	is_tamed_dragon = no
+	is_dragon = yes
+	any_friend = {
+		NOT = { trait = dragon_rider }
+	}
 }
 
 is_tamed_dragon = {
-	is_basic_dragon = yes
+	is_dragon = yes
 	any_friend = {
 		trait = dragon_rider
 	}
