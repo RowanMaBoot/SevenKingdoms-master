@@ -2890,9 +2890,11 @@ character_event = {
 		FROM = {
 			holding_type = temple
 		}
+		NOT = { has_character_flag = monastic_orders_temple_construction_ongoing } #flag to avoid doubling of letter events when finishing two buildings at the same time
 	}
 	
 	immediate = {
+		set_character_flag = monastic_orders_temple_construction_ongoing
 		random_society_member = {
 			limit = {
 				same_society_as = ROOT
@@ -2944,6 +2946,9 @@ letter_event = {
 		else = {
 			add_society_currency_major_effect = yes		
 		}
+	}
+	after = {
+		clr_character_flag = monastic_orders_temple_construction_ongoing
 	}
 }
 
