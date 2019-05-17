@@ -2921,14 +2921,50 @@ character_event = {
     	character_event = { id = HF.41480 }
     }
 
+    immediate = {
+        if = {
+            limit = { 
+                ai = no
+                NOT = { has_character_flag = achievement_pilgrim }
+            }
+            set_character_flag = achievement_pilgrim
+        }
+    }
+
     option = {      
         name = EVTOPTA_HF_41450
         remove_trait = on_pilgrimage
         add_trait = pilgrim
+
+        if = {
+            limit = {
+                has_quest = quest_monastic_order_pilgrimage_christian
+            }
+            character_event = { id = MNM.4020 days = 1}
+        }
+        
+        hidden_effect = {
+            clr_character_flag = do_not_disturb
+            clr_character_flag = pilgrimage_to_canterbury
+            clr_character_flag = pilgrimage_to_jerusalem
+            clr_character_flag = pilgrimage_to_koln
+            clr_character_flag = pilgrimage_to_rome
+            clr_character_flag = pilgrimage_to_santiago
+            clr_character_flag = pilgrimage_to_constantinople
+            clr_character_flag = pilgrimage_to_axum
+            clr_character_flag = pilgrimage_to_antioch
+            clr_character_flag = abominable_pilgrimage
+            clr_character_flag = preparing_pilgrimage
+            clr_character_flag = activated_pilgrimage
+            clr_character_flag = cold_saintly_pilgrimage
+            clr_character_flag = mild_saintly_pilgrimage
+            clr_character_flag = exotic_saintly_pilgrimage
+            clr_character_flag = generic_saintly_pilgrimage
+        }
     }
 }
 
-#Stop pilgrimage
+#Stop pilgrimage / Clears all flags if need be
 character_event = {
     id = HF.41480
     is_triggered_only = yes
@@ -2936,5 +2972,21 @@ character_event = {
 
     immediate = {
     	remove_trait = on_pilgrimage
+        clr_character_flag = do_not_disturb
+        clr_character_flag = pilgrimage_to_canterbury
+        clr_character_flag = pilgrimage_to_jerusalem
+        clr_character_flag = pilgrimage_to_koln
+        clr_character_flag = pilgrimage_to_rome
+        clr_character_flag = pilgrimage_to_santiago
+        clr_character_flag = pilgrimage_to_constantinople
+        clr_character_flag = pilgrimage_to_axum
+        clr_character_flag = pilgrimage_to_antioch
+        clr_character_flag = abominable_pilgrimage
+        clr_character_flag = preparing_pilgrimage
+        clr_character_flag = activated_pilgrimage
+        clr_character_flag = cold_saintly_pilgrimage
+        clr_character_flag = mild_saintly_pilgrimage
+        clr_character_flag = exotic_saintly_pilgrimage
+        clr_character_flag = generic_saintly_pilgrimage
     }
 }
