@@ -289,7 +289,7 @@ character_event = {
         evaluate_legendary_progress_effect = yes
 
         hidden_effect = {
-            #If any of the others heroes are players, they get the choice to back out...
+            #Other heroes, they get the choice to back out...
             any_society_member = {
                 limit = {
                     same_society_as = ROOT
@@ -311,19 +311,46 @@ character_event = {
         custom_tooltip = { text = EVTOPTA_HF_12001_TT }        
         hidden_effect = { character_event = { id = HF.12003 days = 5 } } #Hidden tombola...
     }
-    option = {
+    option = { # (AI's don't get this option)
         name = EVTOPTB_HF_12001 #I'd rather not start anything...
-        #add_society_progress = 10
         set_character_flag = rank_up_blocked
         clr_character_flag = call_to_legend_active
         society_rank_down = 1
         custom_tooltip = { text = EVTOPTB_HF_12002_TT }
 
-        set_society_progress = 0
+        if = {
+            limit = {
+                # If there are no adventures left (because you're in a weird MP where everyone is in this lodge and at rank 4 and you all decided to turn this epic chain down for some reason)
+                NOT = {
+                    any_society_member = {
+                        society_rank == 4
+                        same_society_as = ROOT
+                        has_character_flag = call_to_legend_active
+                        NOT = { character = ROOT }
+                    }
+                }
+            }
+            stop_society_progress = yes # To prevent things from breaking
+        }
 
-        event_target:fellow_hero_1 = { clr_character_flag = do_not_disturb }
-        event_target:fellow_hero_2 = { clr_character_flag = do_not_disturb }
-        event_target:fellow_hero_3 = { clr_character_flag = do_not_disturb }
+        hidden_effect = {
+            if = {
+                limit = { is_society_grandmaster = yes }
+                set_society_grandmaster = no
+            }
+        }
+
+        hidden_effect = {
+            #Other heroes get the choice to continue without you...
+            any_society_member = {
+                limit = {
+                    same_society_as = ROOT
+                    has_character_flag = call_to_legend_active
+                    NOT = { character = ROOT }
+                }
+                character_event = { id = HF.12002 } # Give them the choice to back out...
+            }
+        }
 
         trigger = {
             ai = no #Because the ai will never refuse...
@@ -358,6 +385,18 @@ character_event = {
         evaluate_legendary_progress_effect = yes
         show_portrait = event_target:target_ruler
         character_event = { id = HF.12003 days = 5 } #Send hidden tombola on self...
+
+        hidden_effect = { # Lower-ranking player members are notified...
+            any_society_member = {
+                limit = {
+                    ai = no
+                    same_society_as = ROOT
+                    NOT = { has_character_flag = call_to_legend_active }
+                    NOT = { character = ROOT }
+                }
+                character_event = { id = HF.12011 } # Let other society members know what is going on
+            }
+        }
     }
     option = {
         name = EVTOPTB_HF_12001 #I'd rather stay here.
@@ -366,6 +405,28 @@ character_event = {
         clr_character_flag = call_to_legend_active
         set_character_flag = rank_up_blocked
         society_rank_down = 1
+
+        hidden_effect = {
+            if = {
+                limit = { is_society_grandmaster = yes }
+                set_society_grandmaster = no
+            }
+        }
+
+        if = {
+            limit = {
+                # If there are no adventures left (because you're in a weird MP where everyone is in this lodge and at rank 4 and you all decided to turn this epic chain down for some reason)
+                NOT = {
+                    any_society_member = {
+                        society_rank == 4
+                        same_society_as = ROOT
+                        has_character_flag = call_to_legend_active
+                        NOT = { character = ROOT }
+                    }
+                }
+            }
+            stop_society_progress = yes # To prevent things from breaking
+        }
         
         trigger = {
             ai = no
@@ -381,6 +442,20 @@ character_event = {
     picture = GFX_evt_camaraderie
     border = GFX_event_normal_frame_war
     is_triggered_only = yes
+
+    trigger = {
+        NOT = { has_character_modifier = warrior_lodge_HF_12011_cooldown } # to prevent MP spam
+    }
+
+    immediate = {
+         hidden_effect = {
+            add_character_modifier = {
+                name = warrior_lodge_HF_12011_cooldown
+                duration = 60
+                hidden = yes
+            }
+        }   
+    }
 
     option = {      
         name = EVTOPTA_HF_12011
@@ -1844,7 +1919,8 @@ character_event = {
         prestige = -50
         add_1_point_to_legendary_progress_effect = yes # Good progress on journey...
         evaluate_legendary_progress_effect = yes
-        #send_legendary_tombola_effect = yes #superfluous (also fired from resolve_legendary_duel_effect)
+        send_legendary_tombola_effect = yes #EDIT: actually *not* superfluous (otehrwise fired from resolve_legendary_duel_effect, which only happens after actual duels)
+        clr_ABCDEF_desc_flag_effect = yes #to not leave any weird desc-flags behind for next time around...
         trigger = {
             ai = no
             NOR = { #This is not a boss fight...
@@ -1861,6 +1937,7 @@ character_event = {
         add_trait = craven
         prestige = -500
         clean_up_after_legendary_showdown_effect = yes
+        clr_XYZ_desc_flag_effect = yes
         set_character_flag = failed_call_to_legend
 
         if = {
