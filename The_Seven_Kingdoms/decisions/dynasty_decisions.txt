@@ -17,8 +17,9 @@ targetted_decisions = {
 	commit_suicide = {
 		filter = self
 		ai_target_filter = self
+		ai = no
+
 		potential = {
-			ai = no
 			is_adult = yes
 
 			OR = {
@@ -43,7 +44,17 @@ targetted_decisions = {
 			prisoner = no
 			custom_tooltip = {
 				text = is_not_busy_trigger_tooltip
-				hidden_tooltip = { NOT = { has_character_flag = do_not_disturb } }
+				hidden_tooltip = {
+					# NOR  = { has_character_flag = do_not_disturb is_inaccessible_trigger = yes }
+					# Line above outcommented to account for Seclusion (below)
+					OR = {
+						in_seclusion = yes
+						NOR = {
+							has_character_flag = do_not_disturb
+							is_inaccessible_trigger = yes
+						}
+					}
+				}
 			}
 			custom_tooltip = {
 				NOT = { has_character_flag = attempting_suicide }
@@ -89,6 +100,7 @@ targetted_decisions = {
 		only_playable = yes
 		filter = close_relatives
 		ai_target_filter = close_relatives
+		ai_check_interval = 30
 	
 		from_potential = {
 			ai = no
@@ -103,8 +115,17 @@ targetted_decisions = {
 			is_liege_or_above = FROM
 		}
 		allow = {
-			FROM = {
-				piety = 20
+			conditional_tooltip = {
+				trigger = {
+					NOT = {
+						any_owned_bloodline = {
+							has_bloodline_flag = bloodline_legitimize
+						}
+					}
+				}
+				FROM = {
+					piety = 20
+				}
 			}
 		}
 		effect = {
@@ -112,7 +133,21 @@ targetted_decisions = {
 			remove_trait = bastard
 			add_trait = legit_bastard
 			recalc_succession = yes
-			FROM = { piety = -20 }
+			FROM = { 
+				show_scope_change = no
+				if = {
+					limit = {
+						NOT = {
+							any_owned_bloodline = {
+								has_bloodline_flag = bloodline_legitimize
+							}
+						}
+					}
+					FROM = {
+						piety = -20
+					}
+				}
+			}
 			if = {
 				limit = {
 					prisoner = yes
@@ -124,6 +159,7 @@ targetted_decisions = {
 			if = {
 				limit = { FROM = { is_female = no } }
 				mother = {
+					show_scope_change = no
 					opinion = {
 						who = FROM
 						modifier = legitimized_child
@@ -132,7 +168,9 @@ targetted_decisions = {
 				}
 			}
 			FROM = {
+				show_scope_change = no
 				spouse = {
+					show_scope_change = no
 					if = {
 						limit = {
 							NOT = {
@@ -148,16 +186,29 @@ targetted_decisions = {
 						}
 					}
 				}
-				any_child = {
+				if = {
 					limit = {
-						NOT = { character = ROOT }
-						dynasty = ROOT_FROM
-						NOT = { trait = bastard }
+						any_child = {
+							dynasty = ROOT_FROM
+							NOT = { character = ROOT }
+							NOT = { trait = bastard }
+						}
 					}
-					opinion = {
-						who = ROOT_FROM
-						modifier = legitimized_bastard
-						months = 12
+					custom_tooltip = {
+						text = any_child_gets_angry_tt
+						any_child = {
+							show_scope_change = no
+							limit = {
+								NOT = { character = ROOT }
+								dynasty = ROOT_FROM
+								NOT = { trait = bastard }
+							}
+							opinion = {
+								who = ROOT_FROM
+								modifier = legitimized_bastard
+								months = 12
+							}
+						}
 					}
 				}
 			}
@@ -170,14 +221,14 @@ targetted_decisions = {
 			factor = 0
 		}
 	}
-
+	
 	send_child_into_hiding = {
 		only_rulers = yes
 		is_high_prio = yes
 		
 		filter = dynasty
 		ai_target_filter = dynasty
-		ai_check_interval = 3
+		ai_check_interval = 12
 	
 		from_potential = {
 			is_ruler = yes
@@ -370,7 +421,7 @@ targetted_decisions = {
 		ai_will_do = {
 			factor = 1
 			modifier = {
-				factor = 0.3
+				factor = 0.5
 			}
 			modifier = {
 				factor = 0.5
@@ -413,7 +464,7 @@ targetted_decisions = {
 		
 		filter = dynasty
 		ai_target_filter = dynasty
-		ai_check_interval = 3
+		ai_check_interval = 12
 	
 		from_potential = {
 			is_ruler = yes
@@ -489,7 +540,7 @@ targetted_decisions = {
 		ai_will_do = {
 			factor = 1
 			modifier = {
-				factor = 0.1
+				factor = 0.3
 				FROM = { trait = paranoid }
 			}
 			modifier = {
@@ -511,16 +562,16 @@ targetted_decisions = {
 	}
 	
 	go_into_hiding = {
-		only_rulers = yes
+		only_playable = yes
 		is_high_prio = yes
 		
 		filter = self
 		ai_target_filter = self
-		ai_check_interval = 3
+		ai_check_interval = 12
 		
 		potential = {
 			prisoner = no
-			NOT = { is_inaccessible_trigger = yes }
+			is_inaccessible_trigger = no
 			OR = {
 				ai = no
 				trait = amateurish_plotter
@@ -620,7 +671,7 @@ targetted_decisions = {
 				}
 			}
 			modifier = {
-				factor = 0.3
+				factor = 0.5
 			}
 			modifier = {
 				factor = 0.1
@@ -651,7 +702,7 @@ targetted_decisions = {
 		
 		filter = self
 		ai_target_filter = self
-		ai_check_interval = 3
+		ai_check_interval = 12
 		
 		potential = {
 			is_ruler = yes
@@ -709,7 +760,7 @@ targetted_decisions = {
 		ai_will_do = {
 			factor = 1
 			modifier = {
-				factor = 0.1
+				factor = 0.3
 				trait = paranoid
 			}
 			modifier = {
@@ -743,7 +794,7 @@ targetted_decisions = {
 		
 		filter = spouse
 		ai_target_filter = spouse
-		ai_check_interval = 3
+		ai_check_interval = 12
 		
 		from_potential = {
 			is_ruler = yes
@@ -854,7 +905,7 @@ targetted_decisions = {
 			factor = 1 
 			
 			modifier = {
-				factor = 0.3
+				factor = 0.5
 			}
 			modifier = {
 				factor = 0.1
@@ -923,7 +974,7 @@ targetted_decisions = {
 		
 		filter = spouse
 		ai_target_filter = spouse
-		ai_check_interval = 3
+		ai_check_interval = 12
 		
 		from_potential = {
 			is_ruler = yes
@@ -973,7 +1024,7 @@ targetted_decisions = {
 		ai_will_do = {
 			factor = 1
 			modifier = {
-				factor = 0.1
+				factor = 0.3
 				trait = paranoid
 			}
 			modifier = {
