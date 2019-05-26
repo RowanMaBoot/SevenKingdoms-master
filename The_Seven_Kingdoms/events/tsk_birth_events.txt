@@ -1,0 +1,220 @@
+namespace = tsk_birth
+
+#	Sets the dynastical gfx for special houses
+character_event = {
+	id = tsk_birth.0
+
+	is_triggered_only = yes
+
+	hide_window = yes
+
+	trigger = {
+		any_owned_bloodline = { has_bloodline_flag = special_gfx }
+	}
+
+	immediate = {
+		if = {
+			limit = {
+				any_owned_bloodline = { has_bloodline_flag = dayne_genetics }
+			}
+			if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = andal }
+						mother_even_if_dead = { culture_group = andal }
+					}
+				}
+				daynean = { save_event_target_as = new_gfx }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = first_men }
+						mother_even_if_dead = { culture_group = first_men }
+					}
+				}
+				daynefm = { save_event_target_as = new_gfx }
+			}
+		}
+		
+		if = {
+			limit = {
+				any_owned_bloodline = { has_bloodline_flag = durrandon_genetics }
+			}
+			if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = andal }
+						mother_even_if_dead = { culture_group = andal }
+					}
+				}
+				durrandonan = { save_event_target_as = new_gfx }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = first_men }
+						mother_even_if_dead = { culture_group = first_men }
+					}
+				}
+				durrandonfm = { save_event_target_as = new_gfx }
+			}
+		}
+		
+		if = {
+			limit = {
+				any_owned_bloodline = { has_bloodline_flag = greyjoy_genetics }
+			}
+			if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = andal }
+						mother_even_if_dead = { culture_group = andal }
+					}
+				}
+				greyjoyan = { save_event_target_as = new_gfx }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = first_men }
+						mother_even_if_dead = { culture_group = first_men }
+					}
+				}
+				greyjoyfm = { save_event_target_as = new_gfx }
+			}
+		}
+		
+		if = {
+			limit = {
+				any_owned_bloodline = { has_bloodline_flag = lannister_genetics }
+			}
+			if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = andal }
+						mother_even_if_dead = { culture_group = andal }
+					}
+				}
+				lannisteran = { save_event_target_as = new_gfx }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = first_men }
+						mother_even_if_dead = { culture_group = first_men }
+					}
+				}
+				lannisterfm = { save_event_target_as = new_gfx }
+			}
+		}
+		
+		if = {
+			limit = {
+				any_owned_bloodline = { has_bloodline_flag = stark_genetics }
+			}
+			if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = andal }
+						mother_even_if_dead = { culture_group = andal }
+					}
+				}
+				starkan = { save_event_target_as = new_gfx }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = first_men }
+						mother_even_if_dead = { culture_group = first_men }
+					}
+				}
+				starkfm = { save_event_target_as = new_gfx }
+			}
+		}
+		
+		if = {
+			limit = {
+				any_owned_bloodline = { has_bloodline_flag = tully_genetics }
+			}
+			if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = andal }
+						mother_even_if_dead = { culture_group = andal }
+					}
+				}
+				tullyan = { save_event_target_as = new_gfx }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = first_men }
+						mother_even_if_dead = { culture_group = first_men }
+					}
+				}
+				tullyfm = { save_event_target_as = new_gfx }
+			}
+		}
+		
+		if = {
+			limit = {
+				any_owned_bloodline = { has_bloodline_flag = yronwood_genetics }
+			}
+			if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = andal }
+						mother_even_if_dead = { culture_group = andal }
+					}
+				}
+				yronwoodan = { save_event_target_as = new_gfx }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						true_father_even_if_dead = { culture_group = first_men }
+						mother_even_if_dead = { culture_group = first_men }
+					}
+				}
+				yronwoodfm = { save_event_target_as = new_gfx }
+			}
+		}
+	}
+
+	option = { }
+	
+	after = {
+		random = {
+			chance = 60
+			set_graphical_culture = event_target:new_gfx
+			
+			additive_modifier = {
+				value = 20
+				is_heir = yes
+			}
+		}
+	}
+}
+
+#	Fixes courtiers having wrong graphical culture
+character_event = {
+	id = tsk_birth.1
+
+	is_triggered_only = yes
+
+	hide_window = yes
+
+	culture_group = house_genetics
+
+	immediate = {
+		location = {
+			holder_scope = {
+				ROOT = {
+					culture = PREV
+				}
+			}
+		}
+		set_character_flag = culture_switch_worked
+	}
+}
