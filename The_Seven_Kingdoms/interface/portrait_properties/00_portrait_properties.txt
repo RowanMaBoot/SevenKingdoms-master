@@ -1412,22 +1412,200 @@
 		factor = 100
 		modifier = {
 			factor = 0
+			is_alive = yes
 			OR = {
-				trait = has_measles
-				trait = has_small_pox
+				trait = fair
+				trait = ugly
+				trait = drunkard
+				trait = stressed
+				trait = depressed
+				trait = possessed
+				trait = infirm
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			OR = {
+				trait = fair
+				trait = ugly
+				AND = {
+					trait = drunkard
+					has_nickname = nick_the_drunkard
+				}
+				AND = {
+					trait = possessed
+					OR = {
+						has_nickname = nick_the_accursed
+						has_nickname = nick_the_wicked
+						has_nickname = nick_the_bewitched
+					}
+				}
 			}
 		}
  	}
 
-	1 = { # red dots
+	1 = { # fair
 		factor = 100
 		modifier = {
 			factor = 0
+			NOT = { trait = fair }
+		}
+		modifier = {
+			factor = 0
 			OR = {
-				NOT = {
-					trait = has_measles
-					trait = has_small_pox
-				}
+				trait = drunkard
+				trait = stressed
+				trait = depressed
+				trait = possessed
+				trait = infirm
+			}
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				graphical_culture = africangfx
+				graphical_culture = westafricangfx
+				graphical_culture = centralafricangfx
+				graphical_culture = southernberbergfx
+				graphical_culture = bejagfx
+				graphical_culture = somaligfx
+				graphical_culture = indiangfx
+			}
+		}
+  	}
+	2 = { # ugly
+		factor = 100
+		modifier = {
+			factor = 0
+			NOT = { trait = ugly }
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				trait = drunkard
+				trait = stressed
+				trait = depressed
+				trait = possessed
+				trait = infirm
+			}
+		}
+  	}
+	3 = { # drunkard
+		factor = 100
+		modifier = {
+			factor = 0
+			NOT = { trait = drunkard }
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				trait = stressed
+				trait = depressed
+				trait = possessed
+				trait = infirm
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			NOT = { has_nickname = nick_the_drunkard }
+		}
+  	}
+	4 = { # stressed
+		factor = 100
+		modifier = {
+			factor = 0
+			NOT = { trait = stressed }
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				trait = depressed
+				trait = possessed
+				trait = infirm
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+		}
+  	}
+	5 = { # depressed
+		factor = 100
+		modifier = {
+			factor = 0
+			NOT = { trait = depressed }
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				trait = possessed
+				trait = infirm
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+		}
+  	}
+	6 = { # possessed
+		factor = 100
+		modifier = {
+			factor = 0
+			NOT = { trait = possessed }
+		}
+		modifier = {
+			factor = 0
+			trait = infirm
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			NOR = {
+				has_nickname = nick_the_accursed
+				has_nickname = nick_the_wicked
+				has_nickname = nick_the_bewitched
+			}
+		}
+  	}
+	7 = { # infirm
+		factor = 100
+		modifier = {
+			factor = 0
+			NOT = { trait = infirm }
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+		}
+  	}
+	8 = { # fair - dark skinned
+		factor = 100
+		modifier = {
+			factor = 0
+			NOT = { trait = fair }
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				trait = drunkard
+				trait = stressed
+				trait = depressed
+				trait = possessed
+				trait = infirm
+			}
+		}
+		modifier = {
+			factor = 0
+			NOR = {
+				graphical_culture = africangfx
+				graphical_culture = westafricangfx
+				graphical_culture = centralafricangfx
+				graphical_culture = southernberbergfx
+				graphical_culture = bejagfx
+				graphical_culture = somaligfx
+				graphical_culture = indiangfx
 			}
 		}
   	}
@@ -1435,29 +1613,109 @@
 
 # p9 boils
 9 = {
-
 	0 = { # blank
 		factor = 100
 		modifier = {
 			factor = 0
+			is_alive = yes
+			OR = {
+				trait = ill
+				trait = flu
+				trait = pneumonic
+				trait = has_bubonic_plague
+				trait = has_measles
+				trait = has_small_pox
+				trait = has_typhus
+				trait = syphilitic
+				trait = has_aztec_disease
+				trait = leper
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
 			OR = {
 				trait = has_bubonic_plague
+				trait = has_measles
+				trait = has_small_pox
+				trait = has_typhus
+				trait = syphilitic
+				trait = has_aztec_disease
+				trait = leper
 			}
 		}
  	}
-
-	1 = { # boils
+	1 = { # boil
 		factor = 100
 		modifier = {
 			factor = 0
+			NOR = {
+				trait = has_bubonic_plague
+				trait = syphilitic
+				trait = has_aztec_disease
+			}
+		}
+		modifier = {
+			factor = 0
+			trait = leper
+		}
+ 	}
+	2 = { # red dots
+		factor = 100
+		modifier = {
+			factor = 0
+			NOR = {
+				trait = has_measles
+				trait = has_small_pox
+				trait = has_typhus
+			}
+		}
+		modifier = {
+			factor = 0
 			OR = {
-				NOT = {
-					trait = has_bubonic_plague
-				}
+				trait = has_bubonic_plague
+				trait = syphilitic
+				trait = has_aztec_disease
+				trait = leper
 			}
 		}
  	}
- 	
+	3 = { # ill/pneumonic
+		factor = 100
+		modifier = {
+			factor = 0
+			NOR = {
+				trait = ill
+				trait = flu
+				trait = pneumonic
+			}
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				trait = has_bubonic_plague
+				trait = has_measles
+				trait = has_small_pox
+				trait = has_typhus
+				trait = syphilitic
+				trait = has_aztec_disease
+				trait = leper
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+		}
+ 	}
+ 	4 = { # leper
+		factor = 100
+		modifier = {
+			factor = 0
+			NOT = {
+				trait = leper
+			}
+		}
+ 	}
 }
 
 # p10 blinded
@@ -1466,17 +1724,80 @@
 		factor = 100
 		modifier = {
 			factor = 0
-			trait = blinded
+			is_alive = yes
+			OR = {
+				trait = blinded
+				trait = lunatic
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			OR = {
+				trait = blinded
+				AND = {
+					trait = lunatic
+					has_nickname = nick_the_mad
+				}
+			}
 		}
 	}
 	
-	1 =  {
+	1 =  { #blinded
 		factor = 100
 		modifier = {
 			factor = 0
 			NOT = {
 				trait = blinded
 			}
+		}
+		modifier = {
+			factor = 0
+			trait = lunatic
+			is_alive = yes
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			trait = lunatic
+			has_nickname = nick_the_mad
+		}
+	}
+	2 =  { #lunatic
+		factor = 100
+		modifier = {
+			factor = 0
+			NOT = {
+				trait = lunatic
+			}
+		}
+		modifier = {
+			factor = 0
+			trait = blinded
+			is_alive = yes
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			OR = {
+				NOT = { has_nickname = nick_the_mad }
+				trait = blinded
+			}
+		}
+	}
+	3 =  { #blinded and lunatic
+		factor = 100
+		modifier = {
+			factor = 0
+			NAND = {
+				trait = blinded
+				trait = lunatic
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			NOT = { has_nickname = nick_the_mad }
 		}
 	}
 }
@@ -2713,11 +3034,26 @@
 		factor = 100
 		modifier = {
 			factor = 0
+			is_alive = yes
 			OR = {
 				has_character_modifier = black_eye
-				has_character_modifier = concussion 
+				has_character_modifier = concussion
 				trait = wounded
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+				trait = incapable
 			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			OR = {
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+			}
+			death_reason = death_accident
 		}
  	}
 
@@ -2731,6 +3067,14 @@
 			factor = 0
 			has_character_modifier = black_eye
 			has_character_modifier = concussion 
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+			}
 		}
   	}
 	2 = { #Concussion.
@@ -2750,6 +3094,23 @@
 				trait = wounded
 			}
 		}
+		modifier = {
+			factor = 0
+			trait = wounded
+			OR = {
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+			}
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+			}
+		}
   	}
 	3 = { #Concussion AND Black eye.
 		factor = 100
@@ -2763,7 +3124,144 @@
 				has_character_modifier = black_eye
 			}
 		}
+		modifier = {
+			factor = 0
+			OR = {
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+			}
+		}
   	}
+	4 = { # maimed
+		factor = 100
+		modifier = {
+			factor = 0
+			NOR = {
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+			}
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				has_character_modifier = black_eye
+				has_character_modifier = concussion
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			NOT = { death_reason = death_accident }
+		}
+   	}
+	5 = { # maimed AND black eye
+		factor = 100
+		modifier = {
+			factor = 0
+			NOR = {
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+			}
+		}
+		modifier = {
+			factor = 0
+			NOT = { has_character_modifier = black_eye }
+		}
+		modifier = {
+			factor = 0
+			has_character_modifier = black_eye
+			has_character_modifier = concussion 
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			NOT = { death_reason = death_accident }
+		}
+   	}
+	6 = { # maimed AND concussion
+		factor = 100
+		modifier = {
+			factor = 0
+			NOR = {
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+			}
+		}
+		modifier = {
+			factor = 0
+			NOR = { 
+				has_character_modifier = concussion 
+				trait = wounded
+			}
+		}
+		modifier = {
+			factor = 0
+			has_character_modifier = black_eye
+			OR = { 
+				has_character_modifier = concussion 
+				trait = wounded
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			NOT = { death_reason = death_accident }
+		}
+   	}
+	7 = { # maimed AND concussion AND black eye
+		factor = 100
+		modifier = {
+			factor = 0
+			NOR = {
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+			}
+		}
+		modifier = {
+			factor = 0
+			NOT = { 
+				OR = { 
+					has_character_modifier = concussion 
+					trait = wounded
+				}
+				has_character_modifier = black_eye
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+			NOT = { death_reason = death_accident }
+		}
+   	}
+	8 = { # incapable
+		factor = 100
+		modifier = {
+			factor = 0
+			NOT = {
+				trait = incapable
+			}
+		}
+		modifier = {
+			factor = 0
+			OR = {
+				trait = maimed
+				trait = mangled
+				trait = severely_injured
+				has_character_modifier = black_eye
+				has_character_modifier = concussion 
+				trait = wounded
+			}
+		}
+		modifier = {
+			factor = 0
+			is_alive = no
+		}
+   	}
 }
 
 #p24 harelip
