@@ -1,3 +1,3 @@
-name = "A The Seven Kingdoms IHGO"
+name = "TSK In heaven's graphical overhaul"
 path = "mod/The_Seven_Kingdoms_IHGO"
-picture="thumb.jpg"
+dependencies={ "The Seven Kingdoms | Beta3 | 3.1.1" }
