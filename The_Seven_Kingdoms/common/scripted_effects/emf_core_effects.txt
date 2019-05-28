@@ -1,7 +1,7 @@
 # -*- ck2.scripted_effects -*-
 
 
-emf_stop_hiding_effect = {
+emf_stop_hiding = {
 	if = {
 		limit = { trait = in_hiding }
 		remove_trait = in_hiding
@@ -14,20 +14,26 @@ emf_stop_hiding_effect = {
 # with this status, should we ever switch to an alterate design based-upon automatically-expiring, timed, and hidden
 # character modifiers.
 
-emf_do_not_disturb_effect = {
-	set_character_flag = do_not_disturb
+emf_do_not_disturb = {
+	set_flag = do_not_disturb
 }
 
-emf_can_disturb_effect = {
-	clr_character_flag = do_not_disturb
-}
-
-emf_see_god_effect = {
+emf_see_god = {
 	isis = { reverse_banish = PREV }
 	death = { death_reason = death_missing }
 }
 
-emf_make_location_ROOT_capital_effect = {
+emf_vanish_character = {
+	dynasty = none
+	set_father = 0
+	set_mother = 0
+	if = {
+		limit = { is_alive = yes }
+		death = { death_reason = death_missing }
+	}
+}
+
+emf_make_location_ROOT_capital = {
 	if = {
 		limit = {
 			ROOT = { is_nomadic = no } # Can't seem to set nomad capitals by event (tested last in 2.4)
@@ -41,7 +47,7 @@ emf_make_location_ROOT_capital_effect = {
 			}
 		}
 		custom_tooltip = {
-			text = emf_ctt_make_location_ROOT_capital_effect
+			text = emf_ctt_make_location_ROOT_capital
 			hidden_tooltip = {
 				location = { ROOT = { capital = PREV } }
 			}
@@ -51,24 +57,52 @@ emf_make_location_ROOT_capital_effect = {
 }
 
 # THIS = ruler to subjugate, ROOT = new liege
-emf_ROOT_subjugate_ruler_effect = {
+emf_ROOT_subjugate_ruler = {
 	if = {
 		limit = { NOT = { vassal_of = ROOT } }
 		ROOT = { save_event_target_as = emf_cb_new_imperial_liege }
-		emf_set_viceroy_exemption_effect = yes
+		emf_set_viceroy_exemption = yes
 		set_defacto_liege = ROOT
-		hidden_tooltip = {
+		hidden_effect = {
 			if = {
 				limit = { vassal_of = ROOT }
-				emf_liege_change_effect = yes
+				emf_liege_change = yes
 				if = {
 					limit = { religion = ROOT }
 					opinion = { who = ROOT modifier = opinion_subjugated }
 				}
-				if = {
-					limit = { NOT = { religion = ROOT } }
+				else = {
 					opinion = { who = ROOT modifier = opinion_subjugated_other_rel }
 				}
+			}
+			else = {
+				log = "WARNING: emf_ROOT_subjugate_ruler: failed to vassalize [This.EMF_GetDebugName] to [Root.EMF_GetDebugName]"
+			}
+		}
+	}
+}
+
+# THIS = ruler to subjugate, FROM = new liege
+emf_FROM_subjugate_ruler = {
+	if = {
+		limit = { NOT = { vassal_of = FROM } }
+		FROM = { save_event_target_as = emf_cb_new_imperial_liege }
+		emf_set_viceroy_exemption = yes
+		set_defacto_liege = FROM
+		hidden_effect = {
+			if = {
+				limit = { vassal_of = FROM }
+				emf_liege_change = yes
+				if = {
+					limit = { religion = FROM }
+					opinion = { who = FROM modifier = opinion_subjugated }
+				}
+				else = {
+					opinion = { who = FROM modifier = opinion_subjugated_other_rel }
+				}
+			}
+			else = {
+				log = "WARNING: emf_FROM_subjugate_ruler: failed to vassalize [This.EMF_GetDebugName] to [From.EMF_GetDebugName]"
 			}
 		}
 	}
@@ -96,10 +130,9 @@ emf_remove_suzerain_under_FROM = {
 	}
 }
 
-emf_liege_change_effect = {
+emf_liege_change = {
 	hidden_tooltip = {
 		pf_liege_change_effect = yes
-		
 		if = {
 			limit = {
 				independent = no
@@ -107,7 +140,6 @@ emf_liege_change_effect = {
 			}
 			any_suzerain = { remove_tributary = PREV }
 		}
-		
 		# Remove any invalidated protected_appointment opinions due to liege change
 		any_opinion_modifier_target = {
 			limit = {
@@ -119,7 +151,7 @@ emf_liege_change_effect = {
 	}
 }
 
-emf_remove_plot_assisted_spying_effect = {
+emf_remove_plot_assisted_spying = {
 	if = {
 		limit = {
 			OR = {

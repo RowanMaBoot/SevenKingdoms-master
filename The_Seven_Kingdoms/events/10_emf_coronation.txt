@@ -14,91 +14,49 @@ character_event = {
 	id = emf_coronation.1100
 
 	is_triggered_only = yes
+	
+	trigger = {
+	}
+	
 	hide_window = yes
 
 	immediate = {
-		# Add Crowned/Crowned by Pope/Weak Basileus traits
 		any_playable_ruler = {
 			limit = {
-				higher_real_tier_than = DUKE
-				is_adult = yes
-				is_feudal = yes
-				emf_allowed_coronation = yes
-				has_horde_culture = no
-				is_nomadic = no
-				primary_title = { is_vice_royalty = no }
-				#OR = {
-				#	emf_imperial_government = no
-				#	real_tier = EMPEROR
-				#}
-				NOR = {
-					trait = crowned
-					trait = uncrowned
-					trait = crowned_valyrian_emperor
-					trait = crowned_the_seven_high_king
-					trait = crowned_old_gods_high_king
-				}
+				emf_needs_coronation = yes
+				#emf_uses_furry_coronation = no
+				NOT = { has_global_flag = The_Seven_Kingdoms_initialized }
 			}
+			# Add Crowned traits
 			if = {
-				limit = { emf_uses_old_gods_hk_coronation = yes }
-				add_trait = crowned_old_gods_high_king
+				limit = { emf_uses_the_seven_high_king_coronation = yes }
+				add_trait = the_seven_high_king
 			}
-			if = {
-				limit = { emf_uses_the_seven_hk_coronation = yes }
-				add_trait = crowned_the_seven_high_king
+			else_if = {
+				limit = { emf_uses_the_old_gods_high_king_coronation = yes }
+				add_trait = the_old_gods_high_king
 			}
-			if = {
-				limit = { emf_uses_valyrian_emperor_coronation = yes }
-				add_trait = crowned_valyrian_emperor
+			else_if = {
+				limit = { emf_uses_valyrian_coronation = yes }
+				add_trait = valyrian_king
 			}
-			if = {
-				limit = {
-					emf_uses_old_gods_hk_coronation = no
-					emf_uses_the_seven_hk_coronation = no
-					emf_uses_valyrian_emperor_coronation = no
-				}
-				add_trait = crowned
+			else = {
+				add_trait = emf_crowned
 			}
-		}
 
-		# Add Uncrowned to everyone else
-		any_playable_ruler = {
-			limit = {
-				higher_real_tier_than = DUKE
-				is_feudal = yes
-				emf_allowed_coronation = yes
-				has_horde_culture = no
-				is_nomadic = no
-				#is_tributary = no
-				primary_title = {
-					is_primary_type_title = no
-					is_vice_royalty = no
-				}
-				#OR = {
-				#	emf_imperial_government = no
-				#	real_tier = EMPEROR
-				#}
-				NOR = {
-					trait = crowned
-					trait = uncrowned
-					trait = crowned_valyrian_emperor
-					trait = crowned_old_gods_high_king
-					trait = crowned_the_seven_high_king
-				}
+			# Initialize Imperial Decay
+			if = {
+				limit = { emf_uses_imperial_decay = yes }
+				primary_title = { set_variable = { which = "imperial_decay_change" value = 0 } }
+				character_event = { id = emf_imperial.1852 }
 			}
-			add_trait = uncrowned
+			set_flag = got_traits
 		}
-
-		# Initialize Imperial Decay
-		#any_playable_ruler = {
-		#	limit = { emf_uses_imperial_decay = yes }
-		#	primary_title = { set_variable = { which = "imperial_decay_change" value = 0 } }
-		#	character_event = { id = emf_imperial.1852 }
-		#}
+		set_global_flag = The_Seven_Kingdoms_initialized
 	}
 }
 
-# Add Uncrowned trait to new kings and emperors
+# Handle crown-tier title flip re: coronation traits
 character_event = {
 	id = emf_coronation.1101
 
@@ -106,140 +64,56 @@ character_event = {
 	hide_window = yes
 
 	trigger = {
-		emf_allowed_coronation = yes
 		FROM = {
 			higher_tier_than = DUKE
 			temporary = no
 		}
-		#NOT = { has_landed_title = e_hip }
+		NOT = { has_landed_title = e_hip }
 	}
 
 	immediate = {
-		if = {
-			limit = { 
-				emf_allowed_coronation = yes
-			}
-			character_event = { id = emf_coronation.1103 days = 1 } # check for Uncrowned
-		}
-
 		# Remove old ruler's coronation traits, if necessary
 		FROMFROM = {
 			if = {
 				limit = {
 					is_alive = yes
-					OR = {
-						trait = crowned
-						trait = uncrowned
-						trait = crowned_valyrian_emperor
-						trait = crowned_old_gods_high_king
-						trait = crowned_the_seven_high_king
-					}
+					emf_is_crowned = yes
 				}
 				if = {
+					limit = {
+						emf_uses_native_coronation = no
+					}
+					# If wouldn't be allowed to be crowned under either system, they lose their crowns.
+					remove_trait = emf_crowned
+					remove_trait = emf_crowned_by_pope
+					remove_trait = the_old_gods_high_king
+					remove_trait = the_seven_high_king
+					remove_trait = crowned_by_priest
+					remove_trait = crowned_by_bishop
+					remove_trait = crowned_by_pope
+					remove_trait = crowned_by_myself
+				}
+				else_if = {
 					limit = {
 						OR = {
-							is_ruler = no
-							lower_real_tier_than = KING
-							#AND = {
-							#	real_tier = KING
-							#	emf_imperial_government = yes
-							#}
+							AND = {
+								trait = emf_crowned_by_pope
+								emf_uses_native_coronation = yes
+							}
+							AND = {
+								OR = {
+									trait = the_old_gods_high_king
+									trait = the_seven_high_king
+								}
+								emf_uses_valyrian_coronation = no
+								emf_uses_native_coronation = yes
+							}
 						}
 					}
-					remove_trait = crowned
-					remove_trait = uncrowned
-					remove_trait = crowned_valyrian_emperor
-					remove_trait = crowned_old_gods_high_king
-					remove_trait = crowned_the_seven_high_king
-					break = yes
+					add_trait = emf_crowned
 				}
-				if = {
-					limit = {
-						trait = crowned_old_gods_high_king
-						emf_uses_old_gods_hk_coronation = no
-					}
-					add_trait = crowned
-				}
-				if = {
-					limit = {
-						trait = crowned_the_seven_high_king
-						emf_uses_the_seven_hk_coronation = no
-					}
-					add_trait = crowned
-				}
-				#if = {
-				#	limit = {
-				#		trait = crowned_valyrian_emperor
-				#		emf_uses_valyrian_emperor_coronation = no
-				#	}
-				#	add_trait = crowned
-				#}
-				#if = {
-				#	limit = {
-				#		OR = {
-				#			trait = strong_basileus
-				#			trait = weak_basileus
-				#		}
-				#		emf_uses_byzantine_coronation = no
-				#	}
-				#	add_trait = crowned
-				#}
 			}
 		}
-	}
-}
-
-character_event = {
-	id = emf_coronation.1102
-
-	is_triggered_only = yes
-	hide_window = yes
-
-	trigger = {
-		emf_allowed_coronation = yes
-		FROM = {
-			higher_tier_than = DUKE
-			temporary = no
-		}
-		#NOT = { has_landed_title = e_hip }
-	}
-
-	immediate = {
-		character_event = { id = emf_coronation.1103 days = 1 } # check for Uncrowned
-	}
-}
-
-# Add Uncrowned trait for non-viceroy kings & emperors
-character_event = {
-	id = emf_coronation.1103
-
-	is_triggered_only = yes
-	hide_window = yes
-
-	trigger = {
-		higher_real_tier_than = DUKE
-		is_feudal = yes
-		has_horde_culture = no
-		is_nomadic = no
-		primary_title = {
-			is_primary_type_title = no
-			is_vice_royalty = no
-		}
-		#OR = {
-		#	emf_imperial_government = no
-		#	real_tier = EMPEROR
-		#}
-		NOR = {
-			trait = crowned
-			trait = uncrowned
-			trait = crowned_valyrian_emperor
-			trait = crowned_the_seven_high_king
-			trait = crowned_old_gods_high_king
-		}
-	}
-
-	immediate = {
-		add_trait = uncrowned
 	}
 }
 
@@ -251,6 +125,13 @@ character_event = {
 	id = emf_coronation.1200
 	desc = EVTDESC_emf_coronation_1200
 	picture = GFX_evt_coronation
+
+	desc = {
+		text = EVTDESC_emf_coronation_1200_old_gods
+		trigger = {
+			FROM = { religion_group = westerosi_pagan_group }
+		}
+	}
 
 	is_triggered_only = yes
 	hide_from = yes
@@ -293,7 +174,7 @@ character_event = {
 							any_realm_province = {
 								ROOT = {
 									any_realm_province = {
-										NOT = { distance = { where = PREVPREV value = 125 } }
+										NOT = { distance = { where = PREVPREV value = 150 } }
 									}
 								}
 							}
@@ -490,9 +371,10 @@ character_event = {
 	hide_window = yes
 
 	trigger = {
-		# NOT = { religion_group = muslim }
-		has_character_flag = planning_coronation
-		NOT = { has_character_flag = has_priest_to_perform_coronation }
+		#NOT = { religion_group = eastern_group }
+		NOT = { religion_group = westeosi_pagan_group }
+		has_flag = planning_coronation
+		NOT = { has_flag = has_priest_to_perform_coronation }
 	}
 
 	immediate = {
@@ -675,9 +557,9 @@ character_event = {
 			religion = ROOT
 			has_opinion_modifier = { who = ROOT modifier = attending_coronation }
 			reverse_has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-			has_character_flag = planning_coronation
+			has_flag = planning_coronation
 			NOR = {
-				has_character_flag = has_priest_to_perform_coronation
+				has_flag = has_priest_to_perform_coronation
 				reverse_has_opinion_modifier = { who = ROOT modifier = opinion_insulted }
 			}
 		}
@@ -702,11 +584,11 @@ letter_event = {
 
 	is_triggered_only = yes
 
-	trigger = { has_character_flag = planning_coronation }
+	trigger = { has_flag = planning_coronation }
 
 	option = {
 		name = EVTOPTA_emf_coronation_1208 # Let him do it
-		set_character_flag = has_priest_to_perform_coronation
+		set_flag = has_priest_to_perform_coronation
 		reverse_opinion = { who = FROM modifier = opinion_performed_coronation months = 120 }
 		hidden_tooltip = {
 			FROM = { letter_event = { id = emf_coronation.1209 days = 1 } }
@@ -778,8 +660,8 @@ character_event = {
 
 	trigger = {
 		OR = {
-			has_character_flag = planning_coronation
-			has_character_flag = holding_coronation
+			has_flag = planning_coronation
+			has_flag = holding_coronation
 		}
 	}
 
@@ -790,25 +672,25 @@ character_event = {
 	option = {
 		name = CURSES
 		if = {
-			limit = { has_character_flag = planning_coronation }
+			limit = { has_flag = planning_coronation }
 			scaled_wealth = 0.8
 		}
 		hidden_tooltip = {
-			clr_character_flag = do_not_disturb
-			clr_character_flag = planning_coronation
-			clr_character_flag = holding_coronation
-			clr_character_flag = has_priest_to_perform_coronation
-			clr_character_flag = asked_about_coronation
-			clr_character_flag = coronation_event
-			clr_character_flag = coronation_lover
-			clr_character_flag = coronation_duel
-			clr_character_flag = coronation_poetry
-			clr_character_flag = coronation_friend
-			clr_character_flag = coronation_rival
-			clr_character_flag = coronation_toast
-			clr_character_flag = coronation_badmouth
-			clr_character_flag = coronation_drunkard
-			clr_character_flag = coronation_lunatic
+			clr_flag = do_not_disturb
+			clr_flag = planning_coronation
+			clr_flag = holding_coronation
+			clr_flag = has_priest_to_perform_coronation
+			clr_flag = asked_about_coronation
+			clr_flag = coronation_event
+			clr_flag = coronation_lover
+			clr_flag = coronation_duel
+			clr_flag = coronation_poetry
+			clr_flag = coronation_friend
+			clr_flag = coronation_rival
+			clr_flag = coronation_toast
+			clr_flag = coronation_badmouth
+			clr_flag = coronation_drunkard
+			clr_flag = coronation_lunatic
 			any_opinion_modifier_target = {
 				limit = {
 					is_alive = yes
@@ -832,16 +714,16 @@ letter_event = {
 	option = {
 		name = EVTOPTA_emf_coronation_1212
 		hidden_tooltip = {
-			clr_character_flag = do_not_disturb
-			clr_character_flag = coronation_event
+			clr_flag = do_not_disturb
+			clr_flag = coronation_event
 			if = {
 				limit = {
 					FROM = {
 						NOR = {
-							trait = crowned
-							trait = crowned_the_seven_high_king
-							# trait = strong_basileus
-							# trait = weak_basileus
+							trait = emf_crowned
+							trait = emf_crowned_by_pope
+							trait = the_old_gods_high_king
+							trait = the_seven_high_king
 						}
 					}
 					has_opinion_modifier = { who = FROM modifier = opinion_performed_coronation }
@@ -863,32 +745,32 @@ character_event = {
 
 	trigger = {
 		OR = {
-			has_character_flag = planning_coronation
-			has_character_flag = holding_coronation
+			has_flag = planning_coronation
+			has_flag = holding_coronation
 		}
 	}
 
 	option = {
 		name = CURSES
 		if = {
-			limit = { has_character_flag = planning_coronation }
+			limit = { has_flag = planning_coronation }
 			scaled_wealth = 0.8
 		}
 		hidden_tooltip = {
-			clr_character_flag = planning_coronation
-			clr_character_flag = holding_coronation
-			clr_character_flag = has_priest_to_perform_coronation
-			clr_character_flag = asked_about_coronation
-			clr_character_flag = coronation_event
-			clr_character_flag = coronation_lover
-			clr_character_flag = coronation_duel
-			clr_character_flag = coronation_poetry
-			clr_character_flag = coronation_friend
-			clr_character_flag = coronation_rival
-			clr_character_flag = coronation_toast
-			clr_character_flag = coronation_badmouth
-			clr_character_flag = coronation_drunkard
-			clr_character_flag = coronation_lunatic
+			clr_flag = planning_coronation
+			clr_flag = holding_coronation
+			clr_flag = has_priest_to_perform_coronation
+			clr_flag = asked_about_coronation
+			clr_flag = coronation_event
+			clr_flag = coronation_lover
+			clr_flag = coronation_duel
+			clr_flag = coronation_poetry
+			clr_flag = coronation_friend
+			clr_flag = coronation_rival
+			clr_flag = coronation_toast
+			clr_flag = coronation_badmouth
+			clr_flag = coronation_drunkard
+			clr_flag = coronation_lunatic
 			any_opinion_modifier_target = {
 				limit = {
 					is_alive = yes
@@ -912,8 +794,8 @@ letter_event = {
 	option = {
 		name = EVTOPTA_emf_coronation_1212
 		hidden_tooltip = {
-			clr_character_flag = do_not_disturb
-			clr_character_flag = coronation_event
+			clr_flag = do_not_disturb
+			clr_flag = coronation_event
 		}
 	}
 }
@@ -931,13 +813,19 @@ narrative_event = {
 	desc = {
 		text = EVTDESC_emf_coronation_1215_bishop
 		trigger = {
-			FROM = { has_character_flag = has_priest_to_perform_coronation }
+			FROM = { has_flag = has_priest_to_perform_coronation }
 		}
 	}
 	desc = {
 		text = EVTDESC_emf_coronation_1215
 		trigger = {
-			FROM = { NOT = { has_character_flag = has_priest_to_perform_coronation } }
+			FROM = { NOT = { has_flag = has_priest_to_perform_coronation } }
+		}
+	}
+	desc = {
+		text = EVTDESC_emf_coronation_1215_old_gods
+		trigger = {
+			FROM = { religion_group = westerosi_pagan_group }
 		}
 	}
 
@@ -947,7 +835,7 @@ narrative_event = {
 	show_ROOT = yes
 
 	trigger = {
-		has_character_flag = planning_coronation
+		has_flag = planning_coronation
 	}
 
 	major_trigger = {
@@ -971,7 +859,15 @@ narrative_event = {
 		name = EVTOPTA_emf_coronation_1215
 		trigger = { character = FROM }
 		piety = 100
-		add_trait = crowned
+		if = {
+			limit = {
+				emf_uses_the_old_gods_high_king_coronation = yes
+			}
+			add_trait = the_old_gods_high_king
+		}
+		else= {
+			add_trait = emf_crowned
+		}
 
 		if = {
 			limit = { trait = humble }
@@ -1035,7 +931,7 @@ character_event = {
 	is_triggered_only = yes
 
 	trigger = {
-		has_character_flag = planning_coronation
+		has_flag = planning_coronation
 	}
 
 	major_trigger = {
@@ -1046,8 +942,8 @@ character_event = {
 	}
 
 	immediate = {
-		set_character_flag = holding_coronation
-		clr_character_flag = planning_coronation
+		set_flag = holding_coronation
+		clr_flag = planning_coronation
 		character_event = { id = emf_coronation.1275 days = 30 } # coronation feast ends
 		character_event = { id = emf_coronation.1250 days = 3 } # coronation events
 	}
@@ -1141,9 +1037,9 @@ character_event = {
 
 	option = {
 		name = EVTOPTA_emf_coronation_1217
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		FROM = {
-			set_character_flag = coronation_friend
+			set_flag = coronation_friend
 			character_event = { id = emf_coronation.1218 tooltip = become_coronation_friends }
 		}
 	}
@@ -1199,9 +1095,9 @@ character_event = {
 
 	option = {
 		name = EVTOPTA_emf_coronation_1219
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		FROM = {
-			set_character_flag = coronation_rival
+			set_flag = coronation_rival
 			character_event = { id = emf_coronation.1220 tooltip = become_coronation_rivals }
 		}
 	}
@@ -1247,14 +1143,17 @@ character_event = {
 					has_opinion_modifier = { who = PREV modifier = attending_coronation }
 					war = no
 					is_adult = yes
-					is_female = no
+					OR = {
+						is_female = no
+						emf_accepts_shieldmaiden_trigger = yes
+					}
 					prisoner = no
 					is_foe = ROOT
 					NOR = {
 						is_incapable = yes
 						has_injury_trigger = yes
 						is_maimed_trigger = yes
-						has_character_flag = coronation_event
+						has_flag = coronation_event
 					}
 				}
 				save_event_target_as = challenge_target
@@ -1287,7 +1186,7 @@ character_event = {
 				trait = slothful
 			}
 		}
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		event_target:challenge_target = {
 			character_event = { id = emf_coronation.1223 tooltip = EVTTOOLTIP72031 }
 		}
@@ -1357,9 +1256,9 @@ character_event = {
 				trait = slothful
 			}
 		}
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		FROMFROM = {
-			set_character_flag = coronation_duel
+			set_flag = coronation_duel
 			character_event = { id = emf_coronation.1225 tooltip = ask_permission_to_duel }
 		}
 	}
@@ -1418,8 +1317,8 @@ character_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		clr_character_flag = coronation_event
-		set_character_flag = coronation_event
+		clr_flag = coronation_event
+		set_flag = coronation_event
 	}
 
 	option = {
@@ -1540,7 +1439,8 @@ character_event = {
 	hide_from = yes
 
 	immediate = {
-		set_character_flag = coronation_duelist
+		set_flag = coronation_duelist
+		save_event_target_as = combatant_1
 		FROMFROM = {
 			character_event = { id = emf_coronation.1229 }
 		}
@@ -1556,8 +1456,30 @@ character_event = {
 	hide_from = yes
 
 	immediate = {
-		set_character_flag = coronation_duelist
-		e_rebels = { holder_scope = { character_event = { id = DuelEngine.0 } } }
+		set_flag = coronation_duelist
+        clr_flag = flag_duel_no_backsies
+		save_event_target_as = combatant_2
+        if = {
+            limit = { trait = craven }
+            random = {
+                chance = 20
+                emf_notify_remove_craven = yes
+            }
+        }
+        pacifists_lose_piety_effect = yes
+        if = { #If they previously offended you, this rectifies that.
+            limit = { event_target:combatant_1 = { has_opinion_modifier = { who = ROOT modifier = grievously_offended } } }
+            event_target:combatant_1 = { remove_opinion = { who = ROOT modifier = grievously_offended } }
+        }
+        if = {
+            limit = { #Warriors like a warrior who acts like one...
+                is_member_of_any_warrior_lodge_trigger = yes
+            }
+            add_legend_progress_trivial_effect = yes
+        }
+        event_target:combatant_1 = { character_event = { id = HFP.10096 days = 1 } }
+        set_flag = add_duel_xp
+        clr_flag = punish_declining
 	}
 }
 
@@ -1720,7 +1642,7 @@ character_event = {
 			if = {
 				limit = {
 					NOT = { trait = kinslayer }
-					# NOT = { religion_group = muslim }
+					NOT = { religion_group = eastern_group }
 					dynasty = FROMFROM
 				}
 				add_trait = kinslayer
@@ -1821,7 +1743,7 @@ character_event = {
 				NOR = {
 					is_married = PREV
 					is_consort = PREV
-					has_character_flag = coronation_event
+					has_flag = coronation_event
 				}
 			}
 		}
@@ -1835,7 +1757,7 @@ character_event = {
 					NOR = {
 						is_married = PREV
 						is_consort = PREV
-						has_character_flag = coronation_event
+						has_flag = coronation_event
 					}
 				}
 				save_event_target_as = lover_coronation
@@ -1845,9 +1767,9 @@ character_event = {
 
 	option = {
 		name = EVTOPTA_emf_coronation_1232
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		event_target:lover_coronation = {
-			set_character_flag = coronation_event
+			set_flag = coronation_event
 			reverse_opinion = {
 				who = ROOT
 				modifier = opinion_outraged
@@ -1888,9 +1810,9 @@ character_event = {
 
 	option = {
 		name = EVTOPTA_emf_coronation_1234 # I'll do it!
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		FROM = {
-			set_character_flag = coronation_poetry
+			set_flag = coronation_poetry
 			random_list = {
 				40 = {
 					modifier = {
@@ -2023,9 +1945,9 @@ character_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		FROM = {
-			set_character_flag = coronation_toast
+			set_flag = coronation_toast
 			character_event = { id = emf_coronation.1238 }
 		}
 	}
@@ -2070,9 +1992,9 @@ character_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		FROM = {
-			set_character_flag = coronation_lover
+			set_flag = coronation_lover
 			character_event = { id = emf_coronation.1240 }
 		}
 	}
@@ -2088,57 +2010,7 @@ character_event = {
 	option = {
 		name = EVTOPTA_emf_coronation_1240 # Pursue him/her
 		add_lover = FROM
-		hidden_tooltip = {
-			if = {
-				limit = {
-					is_female = no
-					fertility = 0.33
-					FROM = {
-						is_female = yes
-						fertility = 0.33
-					}
-				}
-				if = {
-					limit = { FROM = { is_married = no } }
-					random = {
-						chance = 50
-						ROOT = { impregnate = FROM }
-					}
-				}
-				if = {
-					limit = { FROM = { is_married = yes } }
-					random = {
-						chance = 50
-						ROOT = { impregnate_cuckoo = FROM }
-					}
-				}
-			}
-			if = {
-				limit = {
-					NOT = { age = 45 }
-					is_female = yes
-					fertility = 0.33
-					FROM = {
-						is_female = no
-						fertility = 0.33
-					}
-				}
-				if = {
-					limit = { is_married = no }
-					random = {
-						chance = 50
-						FROM = { impregnate = ROOT }
-					}
-				}
-				if = {
-					limit = { is_married = yes }
-					random = {
-						chance = 50
-						FROM = { impregnate_cuckoo = ROOT }
-					}
-				}
-			}
-		}
+		unprotected_sex_effect = yes
 	}
 	option = {
 		name = EVTOPTB_emf_coronation_1240 # A dance is more than enough
@@ -2159,9 +2031,9 @@ character_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		FROM = {
-			set_character_flag = coronation_lover
+			set_flag = coronation_lover
 			character_event = { id = emf_coronation.1242 }
 		}
 	}
@@ -2197,9 +2069,9 @@ character_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		FROM = {
-			set_character_flag = coronation_badmouth
+			set_flag = coronation_badmouth
 			character_event = { id = emf_coronation.1244 }
 		}
 	}
@@ -2290,10 +2162,10 @@ character_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		prestige = -20
 		FROM = {
-			set_character_flag = coronation_drunkard
+			set_flag = coronation_drunkard
 			character_event = { id = emf_coronation.1246 }
 		}
 	}
@@ -2330,10 +2202,10 @@ character_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		set_character_flag = coronation_event
+		set_flag = coronation_event
 		prestige = -20
 		FROM = {
-			set_character_flag = coronation_lunatic
+			set_flag = coronation_lunatic
 			character_event = { id = emf_coronation.1248 }
 		}
 	}
@@ -2400,7 +2272,7 @@ character_event = {
 			10 = { # Possible duel
 				modifier = {
 					factor = 0
-					has_character_flag = coronation_duel
+					has_flag = coronation_duel
 				}
 				modifier = {
 					factor = 0
@@ -2408,7 +2280,6 @@ character_event = {
 						any_opinion_modifier_target = {
 							reverse_has_opinion_modifier = { who = ROOT modifier = attending_coronation }
 							has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-							is_female = no
 							higher_tier_than = BARON
 							OR = {
 								martial = 8
@@ -2420,37 +2291,36 @@ character_event = {
 								trait = craven
 								has_injury_trigger = yes
 								is_maimed_trigger = yes
-								has_character_flag = coronation_event
+								has_flag = coronation_event
 							}
 							ROOT = {
 								any_opinion_modifier_target = {
 									has_opinion_modifier = { who = PREV modifier = attending_coronation }
 									war = no
 									is_adult = yes
-									is_female = no
+									this_can_duel_with_prevprev_trigger = yes
 									prisoner = no
 									is_foe = PREVPREV
 									NOR = {
 										is_incapable = yes
 										has_injury_trigger = yes
 										is_maimed_trigger = yes
-										has_character_flag = coronation_event
+										has_flag = coronation_event
 									}
 								}
 							}
 						}
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_opinion_modifier_target = {
 					limit = {
 						reverse_has_opinion_modifier = { who = ROOT modifier = attending_coronation }
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-						is_female = no
 						higher_tier_than = BARON
 						OR = {
-							martial = 8
+							martial > 5
 							trait = duelist
 							trait = lunatic
 							trait = possessed
@@ -2459,21 +2329,21 @@ character_event = {
 							trait = craven
 							has_injury_trigger = yes
 							is_maimed_trigger = yes
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 						ROOT = {
 							any_opinion_modifier_target = {
 								has_opinion_modifier = { who = PREV modifier = attending_coronation }
 								war = no
 								is_adult = yes
-								is_female = no
+								this_can_duel_with_prevprev_trigger = yes
 								prisoner = no
 								is_foe = PREVPREV
 								NOR = {
 									is_incapable = yes
 									has_injury_trigger = yes
 									is_maimed_trigger = yes
-									has_character_flag = coronation_event
+									has_flag = coronation_event
 								}
 							}
 						}
@@ -2484,8 +2354,8 @@ character_event = {
 			10 = { # Ruler gets along with host at coronation
 				modifier = {
 					factor = 0
-					has_character_flag = coronation_friend
-					NOT = { had_character_flag = { flag = coronation_friend days = 10 } }
+					has_flag = coronation_friend
+					NOT = { had_flag = { flag = coronation_friend days = 10 } }
 				}
 				modifier = {
 					factor = 0
@@ -2523,13 +2393,13 @@ character_event = {
 								is_incapable = yes
 								is_friend = ROOT
 								num_of_friends = 5
-								has_character_flag = coronation_event
+								has_flag = coronation_event
 							}
 						}
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_opinion_modifier_target = {
 					limit = {
 						higher_tier_than = COUNT
@@ -2547,7 +2417,7 @@ character_event = {
 							is_incapable = yes
 							is_friend = ROOT
 							num_of_friends = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1217 }
@@ -2568,7 +2438,7 @@ character_event = {
 							is_incapable = yes
 							is_friend = ROOT
 							num_of_friends = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1217 }
@@ -2590,7 +2460,7 @@ character_event = {
 							is_incapable = yes
 							is_friend = ROOT
 							num_of_friends = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1217 }
@@ -2610,7 +2480,7 @@ character_event = {
 							is_incapable = yes
 							is_friend = ROOT
 							num_of_friends = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1217 }
@@ -2620,8 +2490,8 @@ character_event = {
 			10 = { # Ruler argues with host over claim
 				modifier = {
 					factor = 0
-					has_character_flag = coronation_rival
-					NOT = { had_character_flag = { flag = coronation_rival days = 10 } }
+					has_flag = coronation_rival
+					NOT = { had_flag = { flag = coronation_rival days = 10 } }
 				}
 				modifier = {
 					factor = 0
@@ -2648,13 +2518,13 @@ character_event = {
 								is_incapable = yes
 								is_rival = ROOT
 								num_of_rivals = 5
-								has_character_flag = coronation_event
+								has_flag = coronation_event
 							}
 						}
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_opinion_modifier_target = {
 					limit = {
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
@@ -2679,7 +2549,7 @@ character_event = {
 							is_incapable = yes
 							is_rival = ROOT
 							num_of_rivals = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1219 }
@@ -2704,7 +2574,7 @@ character_event = {
 							is_incapable = yes
 							is_rival = ROOT
 							num_of_rivals = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1219 }
@@ -2720,7 +2590,7 @@ character_event = {
 							NOR = {
 								is_married = ROOT
 								is_consort = ROOT
-								has_character_flag = coronation_event
+								has_flag = coronation_event
 							}
 						}
 					}
@@ -2730,7 +2600,7 @@ character_event = {
 					NOT = {
 						any_spouse = {
 							has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-							NOT = { has_character_flag = coronation_event }
+							NOT = { has_flag = coronation_event }
 						}
 					}
 				}
@@ -2738,7 +2608,7 @@ character_event = {
 					factor = 2.0
 					any_spouse = {
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 						trait = wroth
 					}
 				}
@@ -2746,7 +2616,7 @@ character_event = {
 					factor = 2.0
 					any_spouse = {
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 						trait = proud
 					}
 				}
@@ -2754,7 +2624,7 @@ character_event = {
 					factor = 0.5
 					any_spouse = {
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 						trait = patient
 					}
 				}
@@ -2762,16 +2632,16 @@ character_event = {
 					factor = 0.5
 					any_spouse = {
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 						trait = humble
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_spouse = {
 					limit = {
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 						OR = {
 							trait = wroth
 							trait = proud
@@ -2783,7 +2653,7 @@ character_event = {
 				random_spouse = {
 					limit = {
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 					}
 					character_event = { id = emf_coronation.1232 }
 					break = yes
@@ -2792,7 +2662,7 @@ character_event = {
 			10 = { # Poet puts on a show at the coronation
 				modifier = {
 					factor = 0
-					has_character_flag = coronation_poetry
+					has_flag = coronation_poetry
 				}
 				modifier = {
 					factor = 0
@@ -2810,13 +2680,13 @@ character_event = {
 								trait = stressed
 								trait = humble
 								trait = shy
-								has_character_flag = coronation_event
+								has_flag = coronation_event
 							}
 						}
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_opinion_modifier_target = {
 					limit = {
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
@@ -2831,7 +2701,7 @@ character_event = {
 							trait = stressed
 							trait = humble
 							trait = shy
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1234 }
@@ -2840,8 +2710,8 @@ character_event = {
 			10 = { # Ruler gives a toast at the coronation
 				modifier = {
 					factor = 0
-					has_character_flag = coronation_toast
-					NOT = { had_character_flag = { flag = coronation_toast days = 10 } }
+					has_flag = coronation_toast
+					NOT = { had_flag = { flag = coronation_toast days = 10 } }
 				}
 				modifier = {
 					factor = 0
@@ -2858,13 +2728,13 @@ character_event = {
 								trait = shy
 								trait = envious
 								trait = cruel
-								has_character_flag = coronation_event
+								has_flag = coronation_event
 							}
 						}
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_opinion_modifier_target = {
 					limit = {
 						higher_tier_than = COUNT
@@ -2884,7 +2754,7 @@ character_event = {
 							trait = shy
 							trait = envious
 							trait = cruel
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1237 }
@@ -2908,7 +2778,7 @@ character_event = {
 							trait = shy
 							trait = envious
 							trait = cruel
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1237 }
@@ -2928,7 +2798,7 @@ character_event = {
 							trait = shy
 							trait = envious
 							trait = cruel
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1237 }
@@ -2947,7 +2817,7 @@ character_event = {
 							trait = shy
 							trait = envious
 							trait = cruel
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1237 }
@@ -2957,7 +2827,7 @@ character_event = {
 			10 = { # A dance with the host?
 				modifier = {
 					factor = 0
-					has_character_flag = coronation_lover
+					has_flag = coronation_lover
 				}
 				modifier = {
 					factor = 2.0
@@ -3038,13 +2908,13 @@ character_event = {
 								trait = imbecile
 								age = 40
 								num_of_lovers = 5
-								has_character_flag = coronation_event
+								has_flag = coronation_event
 							}
 						}
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_opinion_modifier_target = {
 					limit = {
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
@@ -3091,7 +2961,7 @@ character_event = {
 							trait = imbecile
 							age = 20
 							num_of_lovers = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1239 }
@@ -3143,7 +3013,7 @@ character_event = {
 							trait = imbecile
 							age = 40
 							num_of_lovers = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1239 }
@@ -3190,7 +3060,7 @@ character_event = {
 							trait = imbecile
 							age = 40
 							num_of_lovers = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1239 }
@@ -3200,7 +3070,7 @@ character_event = {
 			10 = { # A homosexual guest is interested in the host
 				modifier = {
 					factor = 0
-					has_character_flag = coronation_lover
+					has_flag = coronation_lover
 				}
 				modifier = {
 					factor = 2.0
@@ -3272,13 +3142,13 @@ character_event = {
 								trait = imbecile
 								age = 40
 								num_of_lovers = 5
-								has_character_flag = coronation_event
+								has_flag = coronation_event
 							}
 						}
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_opinion_modifier_target = {
 					limit = {
 						has_opinion_modifier = { who = ROOT modifier = attending_coronation }
@@ -3325,7 +3195,7 @@ character_event = {
 							trait = imbecile
 							age = 20
 							num_of_lovers = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1241 }
@@ -3377,7 +3247,7 @@ character_event = {
 							trait = imbecile
 							age = 40
 							num_of_lovers = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1241 }
@@ -3424,7 +3294,7 @@ character_event = {
 							trait = imbecile
 							age = 40
 							num_of_lovers = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1241 }
@@ -3434,8 +3304,8 @@ character_event = {
 			10 = { # Guest is badmouthing the host
 				modifier = {
 					factor = 0
-					has_character_flag = coronation_badmouth
-					NOT = { had_character_flag = { flag = coronation_badmouth days = 10 } }
+					has_flag = coronation_badmouth
+					NOT = { had_flag = { flag = coronation_badmouth days = 10 } }
 				}
 				modifier = {
 					factor = 0
@@ -3459,13 +3329,13 @@ character_event = {
 							NOR = {
 								opinion = { who = ROOT value = 0 }
 								num_of_rivals = 5
-								has_character_flag = coronation_event
+								has_flag = coronation_event
 							}
 						}
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_opinion_modifier_target = {
 					limit = {
 						higher_tier_than = COUNT
@@ -3488,7 +3358,7 @@ character_event = {
 						NOR = {
 							opinion = { who = ROOT value = 0 }
 							num_of_rivals = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1243 }
@@ -3515,7 +3385,7 @@ character_event = {
 						NOR = {
 							opinion = { who = ROOT value = 0 }
 							num_of_rivals = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1243 }
@@ -3537,7 +3407,7 @@ character_event = {
 						NOR = {
 							opinion = { who = ROOT value = 0 }
 							num_of_rivals = 5
-							has_character_flag = coronation_event
+							has_flag = coronation_event
 						}
 					}
 					character_event = { id = emf_coronation.1243 }
@@ -3547,7 +3417,7 @@ character_event = {
 			10 = { # Guest overindulges and makes a spectacle of themselves
 				modifier = {
 					factor = 0
-					has_character_flag = coronation_drunkard
+					has_flag = coronation_drunkard
 				}
 				modifier = {
 					factor = 0
@@ -3567,12 +3437,12 @@ character_event = {
 								trait = imbecile
 								trait = inbred
 							}
-							NOT = { has_character_flag = coronation_event }
+							NOT = { has_flag = coronation_event }
 						}
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_opinion_modifier_target = {
 					limit = {
 						higher_tier_than = COUNT
@@ -3586,7 +3456,7 @@ character_event = {
 							trait = imbecile
 							trait = inbred
 						}
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 					}
 					character_event = { id = emf_coronation.1245 }
 					break = yes
@@ -3604,7 +3474,7 @@ character_event = {
 							trait = imbecile
 							trait = inbred
 						}
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 					}
 					character_event = { id = emf_coronation.1245 }
 					break = yes
@@ -3621,7 +3491,7 @@ character_event = {
 							trait = imbecile
 							trait = inbred
 						}
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 					}
 					character_event = { id = emf_coronation.1245 }
 					break = yes
@@ -3630,7 +3500,7 @@ character_event = {
 			10 = { # Lunatic guest makes a spectacle of themselves
 				modifier = {
 					factor = 0
-					has_character_flag = coronation_lunatic
+					has_flag = coronation_lunatic
 				}
 				modifier = {
 					factor = 0
@@ -3644,12 +3514,12 @@ character_event = {
 								trait = lunatic
 								trait = possessed
 							}
-							NOT = { has_character_flag = coronation_event }
+							NOT = { has_flag = coronation_event }
 						}
 					}
 				}
-				clr_character_flag = coronation_event
-				set_character_flag = coronation_event
+				clr_flag = coronation_event
+				set_flag = coronation_event
 				random_opinion_modifier_target = {
 					limit = {
 						higher_tier_than = COUNT
@@ -3661,7 +3531,7 @@ character_event = {
 							trait = lunatic
 							trait = possessed
 						}
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 					}
 					character_event = { id = emf_coronation.1247 }
 					break = yes
@@ -3677,7 +3547,7 @@ character_event = {
 							trait = lunatic
 							trait = possessed
 						}
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 					}
 					character_event = { id = emf_coronation.1247 }
 					break = yes
@@ -3692,7 +3562,7 @@ character_event = {
 							trait = lunatic
 							trait = possessed
 						}
-						NOT = { has_character_flag = coronation_event }
+						NOT = { has_flag = coronation_event }
 					}
 					character_event = { id = emf_coronation.1247 }
 					break = yes
@@ -3701,19 +3571,19 @@ character_event = {
 			100 = { # No event
 				modifier = {
 					factor = 0.5
-					NOT = { has_character_flag = coronation_event }
+					NOT = { has_flag = coronation_event }
 				}
 				modifier = {
 					factor = 0.5
-					had_character_flag = { flag = coronation_event days = 6 }
+					had_flag = { flag = coronation_event days = 6 }
 				}
 				modifier = {
 					factor = 0.5
-					had_character_flag = { flag = coronation_event days = 12 }
+					had_flag = { flag = coronation_event days = 12 }
 				}
 				modifier = {
 					factor = 0.5
-					had_character_flag = { flag = coronation_event days = 18 }
+					had_flag = { flag = coronation_event days = 18 }
 				}
 			}
 		}
@@ -3729,7 +3599,7 @@ character_event = {
 	is_triggered_only = yes
 
 	immediate = {
-		clr_character_flag = holding_coronation
+		clr_flag = holding_coronation
 	}
 
 	option = {
@@ -3737,19 +3607,19 @@ character_event = {
 		prestige = 100
 		pf_court_plus2_effect = yes
 		hidden_tooltip = {
-			clr_character_flag = do_not_disturb
-			clr_character_flag = has_priest_to_perform_coronation
-			clr_character_flag = asked_about_coronation
-			clr_character_flag = coronation_event
-			clr_character_flag = coronation_lover
-			clr_character_flag = coronation_duel
-			clr_character_flag = coronation_poetry
-			clr_character_flag = coronation_friend
-			clr_character_flag = coronation_rival
-			clr_character_flag = coronation_toast
-			clr_character_flag = coronation_badmouth
-			clr_character_flag = coronation_drunkard
-			clr_character_flag = coronation_lunatic
+			clr_flag = do_not_disturb
+			clr_flag = has_priest_to_perform_coronation
+			clr_flag = asked_about_coronation
+			clr_flag = coronation_event
+			clr_flag = coronation_lover
+			clr_flag = coronation_duel
+			clr_flag = coronation_poetry
+			clr_flag = coronation_friend
+			clr_flag = coronation_rival
+			clr_flag = coronation_toast
+			clr_flag = coronation_badmouth
+			clr_flag = coronation_drunkard
+			clr_flag = coronation_lunatic
 			any_opinion_modifier_target = {
 				limit = {
 					is_alive = yes
@@ -3773,1075 +3643,12 @@ character_event = {
 
 	option = {
 		name = EVTOPTB_emf_coronation_1275
-		clr_character_flag = do_not_disturb
-		clr_character_flag = coronation_event
+		clr_flag = do_not_disturb
+		clr_flag = coronation_event
 		opinion = { who = FROM modifier = opinion_attended_ceremony years = 5 }
 		reverse_opinion = { who = FROM modifier = opinion_attended_ceremony years = 5 }
 	}
 }
-
-
-### BYZANTINE CORONATION EVENTS
-
-# New Byzantine emperor ascends to the throne
-# character_event = {
-	# id = emf_coronation.1320
-
-	# hide_window = yes
-	# is_triggered_only = yes
-
-	# trigger = {
-		# FROM = {
-			# OR = {
-				# title = e_byzantium
-				# title = e_roman_empire
-			# }
-			# is_primary_holder_title = yes
-		# }
-		# FROMFROM = {
-			# is_alive = yes
-			# OR = {
-				# trait = strong_basileus
-				# trait = weak_basileus
-			# }
-		# }
-	# }
-
-	# immediate = {
-		# FROMFROM = {
-			# if = {
-				# limit = { trait = strong_basileus }
-				# set_character_flag = was_strong_basileus_byz
-				# remove_trait = strong_basileus
-			# }
-			# if = {
-				# limit = { trait = weak_basileus }
-				# set_character_flag = was_weak_basileus_byz
-				# remove_trait = weak_basileus
-			# }
-		# }
-	# }
-# }
-
-# Patriarch asked to do formal coronation (fired from decision)
-# character_event = {
-	# id = emf_coronation.1321
-	# desc = EVTDESC_emf_coronation_1321
-	# picture = GFX_evt_throne_room_byzantine
-
-	# is_triggered_only = yes
-
-	# option = {
-		# name = EVTOPTA_emf_coronation_1321 #Patriarch approves
-		# ai_chance = {
-			# factor = 100
-			# modifier = {
-				# factor = 2
-				# opinion = { who = FROM value = 75 }
-			# }
-			# modifier = {
-				# factor = 2
-				# opinion = { who = FROM value = 50 }
-			# }
-			# modifier = {
-				# factor = 2
-				# opinion = { who = FROM value = 25 }
-			# }
-			# modifier = {
-				# factor = 3
-				# FROM = { trait = born_in_the_purple }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = {
-					# OR = {
-						# father_even_if_dead = { trait = strong_basileus }
-						# mother_even_if_dead = { trait = strong_basileus }
-					# }
-				# }
-			# }
-			# modifier = {
-				# factor = 0.5
-				# FROM = {
-					# NOR = {
-						# father_even_if_dead = { trait = strong_basileus }
-						# mother_even_if_dead = { trait = strong_basileus }
-						# father_even_if_dead = { trait = weak_basileus }
-						# mother_even_if_dead = { trait = weak_basileus }
-					# }
-				# }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { trait = celibate }
-			# }
-			# modifier = {
-				# factor = 1.7
-				# FROM = { trait = chaste }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { trait = humble }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { trait = zealous }
-			# }
-		# }
-		# FROM = { character_event = { id = emf_coronation.1322 } }
-	# }
-	# option = {
-		# name = EVTOPTB_emf_coronation_1321 #Patriarch refuses
-		# ai_chance = {
-			# factor = 20
-			# modifier = {
-				# factor = 2
-				# NOT = { opinion = { who = FROM value = -40 } }
-			# }
-			# modifier = {
-				# factor = 2
-				# NOT = { opinion = { who = FROM value = -60 } }
-			# }
-			# modifier = {
-				# factor = 2
-				# NOT = { opinion = { who = FROM value = -80 } }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { is_female = yes }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { culture = greek } }
-			# }
-			# modifier = {
-				# factor = 3
-				# FROM = { trait = lunatic }
-			# }
-			# modifier = {
-				# factor = 4
-				# FROM = { trait = possessed }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { trait = infirm }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { trait = bastard }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { trait = legit_bastard }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { trait = imbecile }
-			# }
-			# modifier = {
-				# factor = 4
-				# FROM = { trait = inbred }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { trait = hedonist }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { trait = cynical }
-			# }
-		# }
-		# FROM = { character_event = { id = emf_coronation.1328 } }
-   # }
-# }
-
-# The Patriarch agrees to the coronation
-# character_event = {
-	# id = emf_coronation.1322
-	# desc = EVTDESC_emf_coronation_1322
-	# picture = GFX_evt_bishop_byzantine
-
-	# is_triggered_only = yes
-
-	# option = {
-		# name = EVTOPTA_emf_coronation_1177 #Excellent, now invite all the lords
-		# scaled_wealth = -1.0
-		# custom_tooltip = { text = send_invitations }
-		# hidden_tooltip = {
-			# clr_character_flag = wants_coronation
-			# set_character_flag = planning_coronation
-			# set_character_flag = has_priest_to_perform_coronation
-			# reverse_opinion = { who = FROM modifier = attending_coronation months = 12 }
-			# opinion = { who = FROM modifier = attending_coronation months = 12 }
-			# reverse_opinion = { who = FROM modifier = opinion_performed_coronation months = 120 }
-			# opinion = { who = FROM modifier = opinion_performed_coronation months = 120 }
-			# any_character = {
-				# limit = {
-					# is_adult = yes
-					# prisoner = no
-					# is_within_diplo_range = ROOT
-					# OR = {
-						# is_vassal_or_below = ROOT
-						# is_liege_or_above = ROOT
-						# is_close_relative = ROOT
-						# dynasty = ROOT
-						# is_allied_with = ROOT
-						# has_non_aggression_pact_with = ROOT
-						# AND = {
-							# same_realm = ROOT
-							# higher_tier_than = BARON
-						# }
-						# AND = {
-							# religion = ROOT
-							# any_realm_province = {
-								# ROOT = {
-									# any_realm_province = {
-										# NOT = { distance = { where = PREVPREV value = 125 } }
-									# }
-								# }
-							# }
-						# }
-					# }
-					# NOR = {
-						# has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-						# character = ROOT
-						# is_incapable = yes
-						# trait = excommunicated
-						# has_truce = ROOT
-					# }
-				# }
-				# letter_event = { id = emf_coronation.1201 }
-			# }
-			# FROM = { character_event = { id = emf_coronation.1324 } }
-		# }
-	# }
-# }
-
-# The Patriarch decides whether the Basileus will be considered strong or weak
-# character_event = {
-	# id = emf_coronation.1324
-	# desc = EVTDESC_emf_coronation_1324
-	# picture = GFX_evt_throne_room_byzantine
-
-	# is_triggered_only = yes
-
-	# option = {
-		# name = EVTOPTA_emf_coronation_1324 #Strong
-		# ai_chance = {
-			# factor = 75
-			# modifier = {
-				# factor = 2
-				# FROM = { martial = 18 }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { martial = 15 }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { martial = 12 }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { diplomacy = 18 }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { diplomacy = 15 }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { diplomacy = 12 }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { stewardship = 15 }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { learning = 18 }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { intrigue = 15 }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { religion_authority = 0.8 }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { father_even_if_dead = { trait = strong_basileus } }
-			# }
-			# modifier = {
-				# factor = 1.6
-				# FROM = { trait = zealous }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = just }
-			# }
-			# modifier = {
-				# factor = 1.4
-				# FROM = { trait = ambitious }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = gregarious }
-			# }
-			# modifier = {
-				# factor = 1.4
-				# FROM = { trait = brave }
-			# }
-			# modifier = {
-				# factor = 1.2
-				# FROM = { trait = patient }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = fair }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { trait = genius }
-			# }
-			# modifier = {
-				# factor = 1.8
-				# FROM = { trait = quick }
-			# }
-			# modifier = {
-				# factor = 1.8
-				# FROM = { trait = shrewd }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { is_strong_trigger = yes }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = duelist }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = hunter }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = temperate }
-			# }
-			# modifier = {
-				# factor = 1.4
-				# FROM = { trait = diligent }
-			# }
-			# modifier = {
-				# factor = 1.8
-				# FROM = { trait = born_in_the_purple }
-			# }
-		# }
-		# FROM = { narrative_event = { id = emf_coronation.1325 days = 30 } }
-	# }
-	# option = {
-		# name = EVTOPTB_emf_coronation_1324 #Weak
-		# ai_chance = {
-			# factor = 100
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { martial = 9 } }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { martial = 6 } }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { martial = 3 } }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { diplomacy = 9 } }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { diplomacy = 6 } }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { diplomacy = 3 } }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { stewardship = 5 } }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { intrigue = 5 } }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { learning = 5 } }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { NOT = { culture = greek } }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { is_female = yes }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { has_character_flag = forced_patriarch_to_abdicate }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { NOT = { religion_authority = 0.4 } }
-			# }
-			# modifier = {
-				# factor = 1.8
-				# NOT = { FROM = { owns = 496 } }
-			# }
-			# modifier = {
-				# factor = 1.6
-				# FROM = { NOT = { realm_size = 50 } }
-			# }
-			# modifier = {
-				# factor = 1.6
-				# FROM = { NOT = { realm_size = 100 } }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { NOT = { realm_size = 150 } }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { age = 50 }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { age = 60 }
-			# }
-			# modifier = {
-				# factor = 1.7
-				# FROM = { age = 70 }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { age = 80 }
-			# }
-			# modifier = {
-				# factor = 2.5
-				# FROM = { age = 90 }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = depressed }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { trait = lunatic }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { trait = possessed }
-			# }
-			# modifier = {
-				# factor = 1.8
-				# FROM = { trait = infirm }
-			# }
-			# modifier = {
-				# factor = 1.4
-				# FROM = { trait = drunkard }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { trait = bastard }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = legit_bastard }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { trait = kinslayer }
-			# }
-			# modifier = {
-				# factor = 1.2
-				# FROM = { trait = clubfooted }
-			# }
-			# modifier = {
-				# factor = 1.2
-				# FROM = { trait = harelip }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = hunchback }
-			# }
-			# modifier = {
-				# factor = 1.2
-				# FROM = { trait = lisp }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = stutter }
-			# }
-			# modifier = {
-				# factor = 1.2
-				# FROM = { trait = ugly }
-			# }
-			# modifier = {
-				# factor = 1.3
-				# FROM = { trait = dwarf }
-			# }
-			# modifier = {
-				# factor = 1.8
-				# FROM = { trait = slow }
-			# }
-			# modifier = {
-				# factor = 1.8
-				# FROM = { trait = dull }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { trait = imbecile }
-			# }
-			# modifier = {
-				# factor = 2.5
-				# FROM = { trait = inbred }
-			# }
-			# modifier = {
-				# factor = 1.7
-				# FROM = { is_weak_trigger = yes }
-			# }
-			# modifier = {
-				# factor = 1.4
-				# FROM = { trait = blinded }
-			# }
-			# modifier = {
-				# factor = 2
-				# FROM = { trait = eunuch }
-			# }
-			# modifier = {
-				# factor = 1.4
-				# FROM = { trait = trusting }
-			# }
-			# modifier = {
-				# factor = 1.4
-				# FROM = { trait = paranoid }
-			# }
-			# modifier = {
-				# factor = 1.5
-				# FROM = { trait = arbitrary }
-			# }
-			# modifier = {
-				# factor = 1.6
-				# FROM = { trait = content }
-			# }
-			# modifier = {
-				# factor = 1.4
-				# FROM = { trait = shy }
-			# }
-			# modifier = {
-				# factor = 1.7
-				# FROM = { trait = craven }
-			# }
-			# modifier = {
-				# factor = 1.2
-				# FROM = { trait = deceitful }
-			# }
-			# modifier = {
-				# factor = 1.2
-				# FROM = { trait = gluttonous }
-			# }
-			# modifier = {
-				# factor = 1.2
-				# FROM = { trait = greedy }
-			# }
-			# modifier = {
-				# factor = 0
-				# FROM = {
-					# prestige = 2500
-					# piety = 500
-					# NOT = {
-						# any_vassal = {
-							# higher_tier_than = COUNT
-							# NOT = { opinion = { who = PREV value = 0 } }
-						# }
-					# }
-				# }
-			# }
-		# }
-		# FROM = { narrative_event = { id = emf_coronation.1326 days = 30 } }
-   # }
-# }
-
-# Strong Basileus ascends
-# narrative_event = {
-	# id = emf_coronation.1325
-	# title = EVTNAME_emf_coronation_1325
-	# picture = GFX_evt_coronation_orthodox
-	# border = GFX_event_narrative_frame_religion
-
-	# desc = {
-		# text = EVTDESC_emf_coronation_1325
-		# trigger = {
-			# ROOT = {
-				# capital_scope = { province_id = 496 }
-			# }
-		# }
-	# }
-	# desc = {
-		# text = EVTDESC_emf_coronation_1325_other
-		# trigger = {
-			# ROOT = {
-				# NOT = { capital_scope = { province_id = 496 } }
-			# }
-		# }
-	# }
-
-	# major = yes
-	# is_triggered_only = yes
-	# hide_from = yes
-	# show_ROOT = yes
-
-	# trigger = {
-		# has_character_flag = planning_coronation
-	# }
-
-	# option = {
-		# name = EVTOPTA_emf_coronation_1325
-		# trigger = {
-			# character = FROMFROM
-		# }
-		# piety = 100
-		# prestige = 250
-		# add_trait = strong_basileus
-		# religion_authority = { modifier = strong_emperor_byz }
-
-		# if = {
-			# limit = { trait = humble }
-			# random = {
-				# chance = 50
-				# remove_trait = humble
-			# }
-		# }
-		# if = {
-			# limit = {
-				# NOT = { trait = humble }
-				# NOT = { trait = proud }
-			# }
-			# random = {
-				# chance = 50
-				# add_trait = proud
-				# hidden_tooltip = { character_event = { id = 38261 } } # notify proud
-			# }
-		# }
-
-		# pf_court_plus2_effect = yes
-		# pf_tradition_plus2_effect = yes
-
-		# hidden_tooltip = {
-# #			if = {
-# #				limit = { is_ironman = no }
-				# primary_title = { set_variable = { which = "imperial_decay_change" value = -5 } }
-# #			}
-			# character_event = { id = emf_imperial.1852 } # change the decay modifier
-			# character_event = { id = emf_coronation.1216 days = 1 } # the feast begins
-		# }
-		# if = {
-			# limit = { ai = no }
-			# chronicle = {
-				# entry = CHRONICLE_NORMAL_CORONATION
-				# portrait = [Root.GetID]
-				# picture = GFX_evt_coronation
-			# }
-		# }
-	# }
-	# option = {
-		# name = EVTOPTB_emf_coronation_1325
-		# trigger = {
-			# NOT = { character = FROMFROM }
-			# any_liege = { character = FROMFROM }
-		# }
-		# tooltip = {
-			# ROOT = {
-				# add_trait = strong_basileus
-				# religion_authority = { modifier = strong_emperor_byz }
-			# }
-		# }
-		# if = {
-			# limit = { ai = no }
-			# chronicle = {
-				# entry = CHRONICLE_NORMAL_CORONATION
-				# portrait = [Root.GetID]
-				# picture = GFX_evt_coronation
-			# }
-		# }
-	# }
-	# option = {
-		# name = OK
-		# trigger = {
-			# NOT = { character = FROMFROM }
-			# NOT = { any_liege = { character = FROMFROM } }
-		# }
-	# }
-# }
-
-# Weak Basileus ascends
-# narrative_event = {
-	# id = emf_coronation.1326
-	# title = EVTNAME_emf_coronation_1325
-	# desc = EVTDESC_emf_coronation_1327
-	# picture = GFX_evt_coronation_orthodox
-	# border = GFX_event_narrative_frame_religion
-
-	# major = yes
-	# is_triggered_only = yes
-	# hide_from = yes
-	# show_ROOT = yes
-
-	# trigger = {
-		# has_character_flag = planning_coronation
-	# }
-
-	# major_trigger = {
-		# OR = {
-			# character = ROOT
-			# has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-			# same_realm = ROOT
-		# }
-	# }
-
-	# option = {
-		# name = EVTOPTA_emf_coronation_1326
-		# trigger = {
-			# character = FROMFROM
-		# }
-		# piety = 100
-		# add_trait = weak_basileus
-		# religion_authority = { modifier = weak_emperor_byz }
-
-		# pf_court_plus1_effect = yes
-		# pf_tradition_plus1_effect = yes
-		# emf_imperial_decay_minus_1 = yes
-
-		# hidden_tooltip = {
-			# character_event = { id = emf_coronation.1216 days = 1 } # the feast begins
-		# }
-		# if = {
-			# limit = { ai = no }
-			# chronicle = {
-				# entry = CHRONICLE_NORMAL_CORONATION
-				# portrait = [Root.GetID]
-				# picture = GFX_evt_coronation
-			# }
-		# }
-	# }
-	# option = {
-		# name = I_SEE
-		# trigger = {
-			# NOT = { character = FROMFROM }
-		# }
-		# tooltip = {
-			# FROMFROM = {
-				# add_trait = weak_basileus
-				# religion_authority = { modifier = weak_emperor_byz }
-			# }
-		# }
-	# }
-# }
-
-# The Patriarch has refused to coronate -- do you depose him?
-# character_event = {
-	# id = emf_coronation.1328
-	# desc = EVTDESC_emf_coronation_1328
-	# picture = GFX_evt_bishop_byzantine
-
-	# is_triggered_only = yes
-
-	# option = {
-		# name = EVTOPTA_emf_coronation_1328 #Force him to abdicate!
-		# ai_chance = {
-			# factor = 130
-			# modifier = {
-				# factor = 1.8
-				# trait = born_in_the_purple
-			# }
-			# modifier = {
-				# factor = 2
-				# trait = lunatic
-			# }
-			# modifier = {
-				# factor = 2
-				# trait = possessed
-			# }
-			# modifier = {
-				# factor = 1.5
-				# trait = paranoid
-			# }
-			# modifier = {
-				# factor = 1.5
-				# trait = greedy
-			# }
-			# modifier = {
-				# factor = 1.5
-				# is_strong_trigger = yes
-			# }
-			# modifier = {
-				# factor = 1.5
-				# trait = deceitful
-			# }
-			# modifier = {
-				# factor = 2
-				# trait = ambitious
-			# }
-			# modifier = {
-				# factor = 1.7
-				# trait = arbitrary
-			# }
-			# modifier = {
-				# factor = 1.3
-				# trait = hedonist
-			# }
-			# modifier = {
-				# factor = 1.8
-				# trait = impaler
-			# }
-			# modifier = {
-				# factor = 1.6
-				# trait = cynical
-			# }
-		# }
-		# prestige = -200
-		# piety = -350
-		# scaled_wealth = -1.0
-		# religion_authority = { modifier = deposed_patriarch_byz }
-		# FROM = {
-			# opinion = { who = ROOT modifier = opinion_basileus_patr_revoking months = 60 }
-			# emf_willfully_abdicate = yes
-		# }
-		# set_character_flag = forced_patriarch_to_abdicate
-		# custom_tooltip = { text = send_invitations }
-		# if = {
-			# limit = { any_vassal = { leads_faction = faction_tradition } }
-			# custom_tooltip = { text = TRADITIONFACTIONMOODMINUS }
-			# hidden_tooltip = {
-				# random_vassal = {
-					# limit = { leads_faction = faction_tradition }
-					# change_variable = { which = "faction_mood_decrease" value = 6 }
-				# }
-				# character_event = { id = PlusFaction.200 days = 1 }
-			# }
-		# }
-		# hidden_tooltip = {
-			# clr_character_flag = wants_coronation
-			# set_character_flag = planning_coronation
-			# set_character_flag = has_priest_to_perform_coronation
-			# religion_head = {
-				# opinion = { who = ROOT modifier = opinion_appointed_patriarch months = 120 }
-				# reverse_opinion = { who = ROOT modifier = attending_coronation months = 12 }
-				# opinion = { who = ROOT modifier = attending_coronation months = 12 }
-				# reverse_opinion = { who = ROOT modifier = opinion_performed_coronation months = 120 }
-				# opinion = { who = ROOT modifier = opinion_performed_coronation months = 120 }
-			# }
-			# any_character = {
-				# limit = {
-					# is_adult = yes
-					# prisoner = no
-					# is_within_diplo_range = ROOT
-					# OR = {
-						# is_vassal_or_below = ROOT
-						# is_liege_or_above = ROOT
-						# is_close_relative = ROOT
-						# dynasty = ROOT
-						# is_allied_with = ROOT
-						# has_non_aggression_pact_with = ROOT
-						# AND = {
-							# same_realm = ROOT
-							# higher_tier_than = BARON
-						# }
-						# AND = {
-							# religion = ROOT
-							# any_realm_province = {
-								# ROOT = {
-									# any_realm_province = {
-										# NOT = { distance = { where = PREVPREV value = 125 } }
-									# }
-								# }
-							# }
-						# }
-					# }
-					# NOR = {
-						# has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-						# character = ROOT
-						# is_incapable = yes
-						# trait = excommunicated
-						# has_truce = ROOT
-					# }
-				# }
-				# letter_event = { id = emf_coronation.1201 }
-			# }
-			# religion_head = { character_event = { id = emf_coronation.1324 } }
-		# }
-		# custom_tooltip = {
-			# text = tyrant_custom_tooltip
-			# hidden_tooltip = {
-				# any_realm_character = {
-					# limit = { controls_religion = no }
-					# opinion = {
-						# who = PREV
-						# modifier = opinion_tyrant
-						# months = 120
-					# }
-				# }
-			# }
-		# }
-	# }
-	# option = {
-		# name = EVTOPTB_emf_coronation_1328
-		# ai_chance = {
-			# factor = 70
-			# modifier = {
-				# factor = 1.7
-				# trait = depressed
-			# }
-			# modifier = {
-				# factor = 1.7
-				# trait = stressed
-			# }
-			# modifier = {
-				# factor = 1.2
-				# trait = scholar
-			# }
-			# modifier = {
-				# factor = 1.8
-				# trait = infirm
-			# }
-			# modifier = {
-				# factor = 1.4
-				# trait = chaste
-			# }
-			# modifier = {
-				# factor = 1.8
-				# trait = humble
-			# }
-			# modifier = {
-				# factor = 1.3
-				# trait = slothful
-			# }
-			# modifier = {
-				# factor = 2
-				# is_weak_trigger = yes
-			# }
-			# modifier = {
-				# factor = 1.6
-				# trait = trusting
-			# }
-			# modifier = {
-				# factor = 2.4
-				# trait = zealous
-			# }
-			# modifier = {
-				# factor = 1.8
-				# trait = craven
-			# }
-			# modifier = {
-				# factor = 1.6
-				# trait = shy
-			# }
-			# modifier = {
-				# factor = 2
-				# trait = content
-			# }
-			# modifier = {
-				# factor = 1.3
-				# trait = just
-			# }
-		# }
-		# prestige = -100
-		# clr_character_flag = wants_coronation
-		# religion_head = { set_character_flag = refused_to_coronate }
-		# emf_imperial_decay_plus_1 = yes
-	# }
-# }
-
-### MAINTENANCE EVENTS
-
-# Character becomes Byzantine Emperor once again
-# character_event = {
-	# id = emf_coronation.1331
-
-	# hide_window = yes
-	# is_triggered_only = yes
-
-	# trigger = {
-		# FROM = {
-			# OR = {
-				# title = e_byzantium
-				# title = e_roman_empire
-			# }
-			# is_primary_holder_title = yes
-		# }
-		# emf_uses_byzantine_coronation = yes
-		# OR = {
-			# has_character_flag = was_strong_basileus_byz
-			# has_character_flag = was_weak_basileus_byz
-		# }
-	# }
-
-	# immediate = {
-		# if = {
-			# limit = { has_character_flag = was_weak_basileus_byz }
-			# add_trait = weak_basileus
-			# clr_character_flag = was_weak_basileus_byz
-		# }
-		# if = {
-			# limit = { has_character_flag = was_strong_basileus_byz }
-			# add_trait = strong_basileus
-			# clr_character_flag = was_strong_basileus_byz
-		# }
-	# }
-# }
-
-# Emperor becomes strong
-narrative_event = {
-	id = emf_coronation.1338
-	title = EVTNAME_emf_coronation_1338
-	desc = EVTDESC_emf_coronation_1338
-	picture = GFX_evt_byzantine_throne
-
-	is_triggered_only = yes
-
-	major = yes
-	hide_from = yes
-	show_ROOT = yes
-
-	major_trigger = {
-		OR = {
-			character = ROOT
-			same_realm = ROOT
-			ai = no
-		}
-	}
-
-	option = {
-		name = EVTOPTA_emf_coronation_1338
-		trigger = { character = ROOT }
-	}
-	option = {
-		name = EVTOPTA_emf_coronation_1338
-		trigger = {
-			NOT = { character = ROOT }
-			same_realm = ROOT
-		}
-	}
-	option = {
-		name = EVTOPTA_emf_coronation_1338
-		trigger = {
-			NOT = { same_realm = ROOT }
-		}
-	}
-}
-
 
 ### HRE CORONATION EVENTS
 
@@ -4976,9 +3783,9 @@ letter_event = {
 		scaled_wealth = -1.0
 		custom_tooltip = { text = send_invitations }
 		hidden_tooltip = {
-			clr_character_flag = wants_coronation
-			set_character_flag = planning_coronation
-			set_character_flag = has_priest_to_perform_coronation
+			clr_flag = wants_coronation
+			set_flag = planning_coronation
+			set_flag = has_priest_to_perform_coronation
 			reverse_opinion = { who = FROM modifier = attending_coronation months = 12 }
 			opinion = { who = FROM modifier = attending_coronation months = 12 }
 			reverse_opinion = { who = FROM modifier = opinion_performed_coronation months = 120 }
@@ -5034,18 +3841,18 @@ letter_event = {
 
 	option = {
 		name = EVTOPTA_emf_coronation_1478 # Maybe we should try again later
-		clr_character_flag = wants_coronation
+		clr_flag = wants_coronation
 		prestige = -50
 		opinion = { who = FROM modifier = coronation_rejected years = 2 }
 	}
 }
 
-# Emperor crowned by High Septon
+# Emperor crowned by pope
 narrative_event = {
 	id = emf_coronation.1481
 	title = EVTNAME_emf_coronation_1484
 	desc = EVTDESC_emf_coronation_1484
-	picture = GFX_evt_coronation
+	picture = GFX_evt_holy_emperor
 	border = GFX_event_narrative_frame_religion
 
 	major = yes
@@ -5054,7 +3861,7 @@ narrative_event = {
 	show_ROOT = yes
 
 	trigger = {
-		has_character_flag = planning_coronation
+		has_flag = planning_coronation
 	}
 
 	option = {
@@ -5064,13 +3871,13 @@ narrative_event = {
 		}
 		piety = 100
 		prestige = 250
-		add_trait = crowned_the_seven_high_king
+		add_trait = the_seven_high_king
 
 		if = {
 			limit = { trait = humble }
 			random = {
 				chance = 50
-				remove_trait = humble
+				emf_notify_remove_humble = yes
 			}
 		}
 		if = {
@@ -5080,19 +3887,15 @@ narrative_event = {
 			}
 			random = {
 				chance = 50
-				add_trait = proud
-				hidden_tooltip = { character_event = { id = 38261 } } # notify proud
+				emf_notify_add_proud = yes
 			}
 		}
-
 		pf_court_plus2_effect = yes
 		pf_tradition_plus2_effect = yes
 		emf_imperial_decay_minus_2 = yes
-
 		hidden_tooltip = {
 			character_event = { id = emf_coronation.1216 days = 1 } # the feast begins
 		}
-
 		if = {
 			limit = { ai = no }
 			chronicle = {
@@ -5142,107 +3945,3 @@ narrative_event = {
 		}
 	}
 }
-
-# Old gods coronation
-narrative_event = {
-	id = emf_coronation.1483
-	title = EVTNAME_emf_coronation_1486
-	desc = EVTDESC_emf_coronation_1486
-	picture = GFX_evt_coronation
-	border = GFX_event_narrative_frame_religion
-
-	major = yes
-	is_triggered_only = yes
-	hide_from = yes
-	show_ROOT = yes
-
-	trigger = {
-		has_character_flag = planning_coronation
-	}
-
-	option = {
-		name = EVTOPTA_emf_coronation_1481 # This is the happiest day of my life
-		trigger = {
-			character = ROOT
-		}
-		piety = 100
-		prestige = 250
-		add_trait = crowned_valyrian_emperor
-
-		if = {
-			limit = { trait = humble }
-			random = {
-				chance = 50
-				remove_trait = humble
-			}
-		}
-		if = {
-			limit = {
-				NOT = { trait = humble }
-				NOT = { trait = proud }
-			}
-			random = {
-				chance = 50
-				add_trait = proud
-				hidden_tooltip = { character_event = { id = 38261 } } # notify proud
-			}
-		}
-
-		pf_court_plus2_effect = yes
-		pf_tradition_plus2_effect = yes
-		emf_imperial_decay_minus_2 = yes
-
-		hidden_tooltip = {
-			character_event = { id = emf_coronation.1216 days = 1 } # the feast begins
-		}
-
-		if = {
-			limit = { ai = no }
-			chronicle = {
-				entry = CHRONICLE_OLD_GODS_CORONATION
-				portrait = [Root.GetID]
-				picture = GFX_evt_holy_emperor
-			}
-		}
-	}
-	option = {
-		name = EVTOPTA_emf_coronation_1482
-		trigger = {
-			NOT = { character = ROOT }
-			has_opinion_modifier = { who = ROOT modifier = attending_coronation }
-		}
-		if = {
-			limit = { ai = no }
-			chronicle = {
-				entry = CHRONICLE_PAPAL_CORONATION_NEWS
-				portrait = [From.GetID]
-				picture = GFX_evt_holy_emperor
-			}
-		}
-	}
-	option = {
-		name = EVTDESC_emf_coronation_1483
-		trigger = {
-			NOT = { character = ROOT }
-			NOT = { has_opinion_modifier = { who = ROOT modifier = attending_coronation } }
-			same_realm = ROOT
-		}
-		if = {
-			limit = { ai = no }
-			chronicle = {
-				entry = CHRONICLE_PAPAL_CORONATION_NEWS
-				portrait = [From.GetID]
-				picture = GFX_evt_holy_emperor
-			}
-		}
-	}
-	option = {
-		name = OK
-		trigger = {
-			NOT = { character = ROOT }
-			NOT = { has_opinion_modifier = { who = ROOT modifier = attending_coronation } }
-			NOT = { same_realm = ROOT }
-		}
-	}
-}
-

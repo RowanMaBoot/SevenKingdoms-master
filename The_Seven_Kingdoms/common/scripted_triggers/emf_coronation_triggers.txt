@@ -1,0 +1,116 @@
+# -*- ck2.scripted_triggers -*-
+
+#emf_was_strong_basileus = {
+#	OR = {
+#		character = 1700
+#		character = 1706
+#		character = 1708
+#		character = 1712
+#		character = 1714
+#		character = 1716
+#		character = 1730
+#		character = 1742
+#		character = 70501
+#		character = 125741
+#		character = 215530
+#		character = 215674
+#		character = 223023
+#		character = 465527
+#	}
+#}
+
+emf_uses_the_seven_high_king_coronation = {
+	religion_group = the_seven_group
+	
+	real_tier = EMPEROR
+	is_feudal = yes
+	controls_religion = no
+	#religion_head = { is_alive = yes }
+}
+
+emf_uses_the_old_gods_high_king_coronation = {
+	religion_group = westerosi_pagan_group
+	
+	real_tier = EMPEROR
+	is_feudal = yes
+	controls_religion = no
+	#religion_head = { is_alive = yes }
+}
+
+emf_uses_valyrian_coronation = {
+	primary_title = {
+		title = e_valyrian_freehold
+	}
+	culture_group = valyrian
+	is_heretic = no
+	is_feudal = yes
+	rightful_religious_head_scope = {
+		controls_religion = yes
+		NOT = { character = ROOT }
+	}
+}
+
+emf_common_coronation_requirements = {
+	higher_real_tier_than = DUKE
+	is_feudal = yes
+	is_landed = yes
+	holy_order = no
+	NOT = { government = council_government }
+	#NAND = {
+	#	real_tier = EMPEROR
+	#	OR = {
+	#		religion_group = the_seven_group
+	#		religion = the_old_gods
+	#	}
+	#}
+}
+
+emf_uses_furry_coronation = {
+	#has_dlc = "Holy Fury"
+	#OR = { 
+	#	religion = catholic
+	#	religion = fraticelli
+	#}
+	#emf_common_coronation_requirements = yes
+}
+
+emf_uses_native_coronation = {
+	#NOT = {
+	#	religion_group = the_seven_group
+	#}
+	emf_common_coronation_requirements = yes
+}
+
+# does THIS need to get coronated somehow? use when checking, e.g., for uncrowned state as a weakness
+emf_needs_coronation = {
+	emf_common_coronation_requirements = yes
+	emf_is_uncrowned = yes
+}
+
+emf_is_crowned = {
+	custom_tooltip = {
+		text = EMF_IS_CROWNED_CTT
+		hidden_trigger = {
+			OR = {
+				trait = emf_crowned
+				trait = emf_crowned_by_pope
+				trait = the_old_gods_high_king
+				trait = the_seven_high_king
+				trait = crowned_by_priest
+				trait = crowned_by_bishop
+				trait = crowned_by_pope
+				trait = crowned_by_myself
+			}
+		}
+	}
+}
+
+emf_is_uncrowned = {
+	custom_tooltip = {
+		text = EMF_IS_UNCROWNED_CTT
+		hidden_trigger = {
+			emf_is_crowned = no
+		}
+	}
+}
+
