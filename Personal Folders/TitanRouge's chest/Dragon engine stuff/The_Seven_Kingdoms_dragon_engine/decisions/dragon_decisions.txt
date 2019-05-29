@@ -32,15 +32,17 @@ targetted_decisions = {
 	use_dragon_in_battle = {
 		only_playable = yes
 		is_high_prio = yes
-		filter = self
-		#ai_target_filter = home_court
+		filter = home_court
+		ai_target_filter = home_court
 		
 		potential = {
 			ROOT = {
-				is_dragon_rider = yes
+				is_dragon = yes
+				NOT = { trait = dr_maimed }
 				any_friend = {
-					is_tamed_dragon = yes
-					NOT = { trait = dr_maimed }
+					is_dragon_rider = yes
+					in_command = yes
+					in_battle = yes
 				}
 			}
 		}
@@ -49,7 +51,7 @@ targetted_decisions = {
 			custom_tooltip = {
 				text = TOOLTIP_USE_DRAGON_IN_BATTLE
 				hidden_tooltip = {
-					ROOT = {
+					FROM = {
 						in_command = yes
 						in_battle = yes
 						is_dragon_rider = yes
@@ -63,36 +65,37 @@ targetted_decisions = {
 		}
 		
 		effect = {
-			if = {
-				limit = {
-					OR = {
-						has_game_rule = { name = dragon_duels value = enabled }
-						has_game_rule = { name = dragon_duels value = enabled_debugging }
+			FROM = {
+				if = {
+					limit = {
+						OR = {
+							has_game_rule = { name = dragon_duels value = enabled }
+							has_game_rule = { name = dragon_duels value = enabled_debugging }
+						}
+						basic_dragon_rider = {
+							NOT = { character = FROM }
+							war_with = FROM
+							in_command = yes
+							in_battle = yes
+							at_location = FROM
+						}
+						NOT = { has_character_modifier = in_dragon_duel_hidden }
 					}
-					dragon_rider = {
-						NOT = { character = ROOT }
-						war_with = ROOT
-						in_command = yes
-						in_battle = yes
-						at_location = ROOT
+					hidden_effect = {
+						character_event = { id = dragon.300 }
 					}
-					NOT = { has_character_modifier = in_dragon_duel_hidden }
 				}
-				hidden_tooltip = {
-					add_character_modifier = { modifier = in_dragon_duel_hidden duration = 15 }
-					character_event = { id = dragon.300 }
-				}
-			}
-			else = {
-				hidden_tooltip = {
-					add_character_modifier = { modifier = used_dragon_in_battle_hidden duration = 12 }
-					any_friend = {
-						limit = { is_dragon = yes } 
-						# Dragon stat calculation
-						dragon_stat_calculation = yes
+				else = {
+					hidden_tooltip = {
+						add_character_modifier = { modifier = used_dragon_in_battle_hidden duration = 12 }
+						any_friend = {
+							limit = { is_dragon = yes } 
+							# Dragon stat calculation
+							dragon_stat_calculation = yes
+						}
+						character_event = { id = dragon.100 }
+						set_character_flag = dragon_in_battle
 					}
-					character_event = { id = dragon.100 }
-					set_character_flag = dragon_in_battle
 				}
 			}
 		}
@@ -162,16 +165,16 @@ targetted_decisions = {
 	use_dragon_in_siege = {
 		only_playable = yes
 		is_high_prio = yes
-		filter = self
-		#ai_target_filter = home_court
+		filter = home_court
+		ai_target_filter = home_court
 		
 		potential = {
 			ROOT = {
-				is_dragon_rider = yes
-				siege = { is_attacker = yes }
+				is_dragon = yes
+				NOT = { trait = dr_maimed }
 				any_friend = {
-					is_tamed_dragon = yes
-					NOT = { trait = dr_maimed }
+					is_dragon_rider = yes
+					siege = { is_attacker = yes }
 				}
 			}
 		}
@@ -180,7 +183,7 @@ targetted_decisions = {
 			custom_tooltip = {
 				text = TOOLTIP_USE_DRAGON_IN_SIEGE
 				hidden_tooltip = {
-					ROOT = {
+					FROM = {
 						is_dragon_rider = yes
 						siege = { is_attacker = yes }
 						any_friend = {
@@ -195,7 +198,7 @@ targetted_decisions = {
 		
 		effect = {
 			hidden_tooltip = {
-				ROOT = { add_character_modifier = { modifier = used_dragon_in_siege_hidden duration = 12 } }
+				FROM = { add_character_modifier = { modifier = used_dragon_in_siege_hidden duration = 12 } }
 				any_friend = {
 					limit = { is_dragon = yes }
 					# Dragon stat calculation
