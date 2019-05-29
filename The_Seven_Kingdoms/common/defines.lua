@@ -1572,6 +1572,8 @@ NGraphics = {
     NUMBER_OF_DNA_PROPERTIES = 21,
     CITY_MAIN_BUILDING_LEVEL_2 = 25,          -- If a main settlement has more building than that, it will use model level 2
     CITY_MAIN_BUILDING_LEVEL_3 = 35,          -- If a main settlement has more building than that, it will use model level 3
+	NUDGE_WONDER_MODEL_LAND = "wonder_generic",
+	NUDGE_WONDER_MODEL_COAST = "wonder_grand_lighthouse",
 },
 
 NEngine = {
