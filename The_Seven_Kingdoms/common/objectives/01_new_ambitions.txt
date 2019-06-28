@@ -399,7 +399,7 @@ obj_become_high_king_riverlands = {
 	}
 }
 
-# Become High King of the Dorne
+# Become High King of Dorne
 obj_become_high_king_dorne = {
 	type = character
 	
@@ -642,6 +642,89 @@ obj_become_high_king_beyond_the_wall = {
 	
 	success = {
 		has_landed_title = e_beyond_the_wall
+	}
+	
+	abort = {
+		OR = {
+			trait = incapable
+			is_playable = no
+			is_landed = no
+			higher_tier_than = KING
+			any_heir_title = {
+				higher_tier_than = KING
+				temporary = no
+			}
+		}
+	}
+	
+	abort_effect = {
+	}
+	
+	effect = {
+		prestige = 2000
+	}
+}
+
+# Become High King of the Vale
+obj_become_high_king_vale = {
+	type = character
+	
+	can_cancel = no
+
+	potential = {
+		is_adult = yes
+		is_playable = yes
+		is_landed = yes
+		tier = KING
+		independent = yes
+		trait = ambitious
+		NOT = { trait = incapable }
+		martial = 12
+		stewardship = 10
+		diplomacy = 9
+		capital_scope = { region = world_the_vale }
+		e_the_vale = { has_holder = no }
+	}
+	
+	allow = {
+		capital_scope = { region = world_the_vale }
+	}
+	
+	chance = {
+		factor = 100
+
+		modifier = {
+			factor = 3.0
+			trait = ambitious
+		}
+		modifier = {
+			factor = 4.0
+			e_dorne = { has_holder = no }
+		}
+		modifier = {
+			factor = 2.0
+			trait = brave
+		}
+		modifier = {
+			factor = 0.1
+			trait = craven
+		}
+		modifier = {
+			factor = 0.01
+			trait = content
+		}
+		modifier = {
+			factor = 0.01
+			trait = slothful
+		}
+		modifier = {
+			factor = 0.1
+			tier = COUNT
+		}
+	}
+	
+	success = {
+		has_landed_title = e_the_vale
 	}
 	
 	abort = {

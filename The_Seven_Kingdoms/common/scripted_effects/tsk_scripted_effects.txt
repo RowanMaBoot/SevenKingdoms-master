@@ -141,3 +141,147 @@ bastard_nickname_ROOT_effect = {
 		}	
 	}
 }
+
+
+##################################
+#	High Kimgdom event effects	 #
+##################################
+
+tsk_location_high_kingdom_claimed_assign_region_effect = {
+	if = {
+		limit = {
+			capital_scope = {
+				region = world_beyond_the_wall
+			}
+			event_target:high_king = { has_flag = high_king_claims_beyond_the_wall }
+		}
+		set_flag = high_kingdom_beyond_the_wall
+	}
+	else_if = {
+		limit = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+			event_target:high_king = { has_flag = high_king_claims_blackwater }
+		}
+		set_flag = high_kingdom_blackwater
+	}
+	else_if = {
+		limit = {
+			capital_scope = {
+				region = world_dorne
+			}
+			event_target:high_king = { has_flag = high_king_claims_dorne }
+		}
+		set_flag = high_kingdom_dorne
+	}
+	else_if = {
+		limit = {
+			capital_scope = {
+				region = world_the_iron_islands
+			}
+			event_target:high_king = { has_flag = high_king_claims_iron_islands }
+		}
+		set_flag = high_kingdom_iron_islands
+	}
+	else_if = {
+		limit = {
+			capital_scope = {
+				region = world_the_north
+			}
+			event_target:high_king = { has_flag = high_king_claims_north }
+		}
+		set_flag = high_kingdom_north
+	}
+	else_if = {
+		limit = {
+			capital_scope = {
+				region = world_the_reach
+			}
+			event_target:high_king = { has_flag = high_king_claims_reach }
+		}
+		set_flag = high_kingdom_reach
+	}
+	else_if = {
+		limit = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+			event_target:high_king = { has_flag = high_king_claims_riverlands }
+		}
+		set_flag = high_kingdom_riverlands
+	}
+	else_if = {
+		limit = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+			event_target:high_king = { has_flag = high_king_claims_stormlands }
+		}
+		set_flag = high_kingdom_stormlands
+	}
+	else_if = {
+		limit = {
+			capital_scope = {
+				region = world_the_vale
+			}
+			event_target:high_king = { has_flag = high_king_claims_vale }
+		}
+		set_flag = high_kingdom_vale
+	}
+	else_if = {
+		limit = {
+			capital_scope = {
+				region = world_westerlands
+			}
+			event_target:high_king = { has_flag = high_king_claims_westerlands }
+		}
+		set_flag = high_kingdom_westerlands
+	}
+}
+
+tsk_high_kingdom_creation_effect = {
+	set_flag = claims_high_kingdom
+	save_event_target_as = high_king
+	any_tributary = {
+		set_defacto_liege = ROOT
+		remove_tributary = THIS
+	}
+	recalc_succession = yes
+	character_event = { id = tsk_high_kingdom.0 }
+	any_playable_ruler = {
+		limit = {
+			tsk_location_high_kingdom_claimed_trigger = yes
+			independent = yes
+			higher_tier_than = DUKE
+			NOT = { character = ROOT }
+		}
+		character_event = { id = tsk_high_kingdom.2 }
+	}
+	any_vassal = {
+		limit = { tier = KING }
+		character_event = { id = tsk_high_kingdom.14 }
+	}
+	character_event = { id = tsk_high_kingdom.14 }
+	character_event = { id = tsk_high_kingdom.8 days = 3 }
+	assign_realm_dependencies = yes
+}
+
+clear_high_kingdom_creation_flags = {
+	clr_flag = high_kingdom_blackwater
+	clr_flag = high_kingdom_dorne
+	clr_flag = high_kingdom_iron_islands
+	clr_flag = high_kingdom_north
+	clr_flag = high_kingdom_reach
+	clr_flag = high_kingdom_riverlands
+	clr_flag = high_kingdom_stormlands
+	clr_flag = high_kingdom_vale
+	clr_flag = high_kingdom_westerlands
+	clr_flag = is_opposer
+	clr_flag = is_supporter
+	clr_flag = is_claimant_opposer
+	clr_flag = accepts_FROM_as_liege
+	clr_flag = leading_opposer_claimant
+	clr_flag = leading_opposer_dismantle
+	clr_flag = won_war
+}
