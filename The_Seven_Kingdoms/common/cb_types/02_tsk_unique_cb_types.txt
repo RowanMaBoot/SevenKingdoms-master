@@ -378,12 +378,14 @@ tsk_dismantle_high_kingdom_cb = {
 	
 	can_use = {
 		FROM = {
+			has_flag = claims_high_kingdom
 			tsk_holds_high_kingdom = yes
 		}
 	}
 	
 	is_valid = {
 		FROM = {
+			has_flag = claims_high_kingdom
 			tsk_holds_high_kingdom = yes
 		}
 	}
@@ -397,6 +399,11 @@ tsk_dismantle_high_kingdom_cb = {
 			hidden_tooltip = { 
 				participation_scaled_prestige = 300
 			}
+		}
+		
+		any_attacker = {
+			set_flag = won_war
+			set_flag = won_dismantle_war
 		}
 		
 		ROOT = {
@@ -424,7 +431,6 @@ tsk_dismantle_high_kingdom_cb = {
 
 	on_reverse_demand = {
 		FROM = {
-			set_flag = won_dismantle_war
 			participation_scaled_prestige = 750
 			character_event = { id = tsk_high_kingdom.17 }
 		}
@@ -434,6 +440,12 @@ tsk_dismantle_high_kingdom_cb = {
 				participation_scaled_prestige = 350
 			}
 		}
+		
+		any_defender = {
+			set_flag = won_war
+			set_flag = won_dismantle_war
+		}
+		
 		any_attacker = {
 			limit = {
 				tier = KING
