@@ -1,0 +1,68 @@
+namespace = tsk_startup
+
+#	Start-up event to manage game rules and systems
+character_event = {
+	id = tsk_startup.1
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_landed_title = c_oldtown
+		is_save_game = no
+	}
+	
+	hide_window = yes
+
+	immediate = {
+		any_character = {
+			limit = {
+				dynasty = none
+				NOT = { any_owned_bloodline = { has_bloodline_flag = special_gfx } }
+				OR = {
+					graphical_culture = valyriangfx
+					graphical_culture = dayneangfx
+					graphical_culture = daynefmgfx
+					graphical_culture = durrandonangfx
+					graphical_culture = durrandonfmgfx
+					graphical_culture = greyjoyangfx
+					graphical_culture = greyjoyfmgfx
+					graphical_culture = lannisterangfx
+					graphical_culture = lannisterfmgfx
+					graphical_culture = starkangfx
+					graphical_culture = starkfmgfx
+					graphical_culture = tullyangfx
+					graphical_culture = tullyfmgfx
+					graphical_culture = yronwoodangfx
+					graphical_culture = yronwoodfmgfx
+				}
+			}
+			character_event = { id = tsk_birth.1 }
+		}
+		if = {
+			limit = {
+				has_game_rule = { name = more_great_works value = disabled }
+			}
+			character_event = { id = tsk_startup.2 }
+		}
+	}
+}
+
+#	Remove wonders and replace them with buildings
+character_event = {
+	id = tsk_startup.2
+
+	is_triggered_only = yes
+
+	hide_window = yes
+
+	option = {
+		496 = { destroy_wonder = wonder_skyreach }
+		b_skyreach = { add_building = ca_skyreach }
+		
+		898 = { destroy_wonder = wonder_banefort }
+		b_banefort = { add_building = ca_banefort }
+
+		1026 = { destroy_wonder = wonder_oldstones }
+		
+	}
+}
