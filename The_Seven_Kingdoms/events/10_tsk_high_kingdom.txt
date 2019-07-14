@@ -447,7 +447,7 @@ character_event = {
 				FROM = { has_flag = leading_opposer_claimant }
 			}
 			
-			FROM = {
+			ROOT = {
 				set_flag = won_claimant_war
 				save_event_target_as = high_king
 				character_event = { id = tsk_high_kingdom.11 days = 1 }
@@ -459,7 +459,7 @@ character_event = {
 				FROM = { has_flag = leading_opposer_dismantle }
 			}
 			
-			FROM = {
+			ROOT = {
 				set_flag = won_dismantle_war
 				save_event_target_as = high_king
 				character_event = { id = tsk_high_kingdom.17 days = 1 }
@@ -951,7 +951,7 @@ character_event = {
 
 	is_triggered_only = yes
 
-	#hide_window = yes
+	hide_window = yes
 	
 	immediate = {
 		save_event_target_as = high_king
@@ -970,6 +970,93 @@ character_event = {
 			clear_high_kingdom_creation_flags = yes
 		}
 		clear_high_kingdom_creation_flags = yes
+		any_vassal = {
+			limit = { ROOT = { has_flag = vassal_is_@PREV } }
+			ROOT = { clr_flag = vassal_is_@PREV }
+		}
+		any_title = {
+			limit = { ROOT = { has_flag = is_former_holder_@PREV } }
+			ROOT = { clr_flag = is_former_holder_@PREV }
+		}
+	}
+	
+	option = { }
+}
+
+#	Give necessary flags for heirs
+character_event = {
+	id = tsk_high_kingdom.19
+
+	is_triggered_only = yes
+
+	hide_window = yes
+	
+	immediate = {
+		if = {
+			limit = { has_flag = high_kingdom_blackwater }
+			current_heir = { set_flag = high_kingdom_blackwater }
+		}
+		if = {
+			limit = { has_flag = high_kingdom_dorne }
+			current_heir = { set_flag = high_kingdom_dorne }
+		}
+		if = {
+			limit = { has_flag = high_kingdom_iron_islands }
+			current_heir = { set_flag = high_kingdom_iron_islands }
+		}
+		if = {
+			limit = { has_flag = high_kingdom_north }
+			current_heir = { set_flag = high_kingdom_north }
+		}
+		if = {
+			limit = { has_flag = high_kingdom_reach }
+			current_heir = { set_flag = high_kingdom_reach }
+		}
+		if = {
+			limit = { has_flag = high_kingdom_riverlands }
+			current_heir = { set_flag = high_kingdom_riverlands }
+		}
+		if = {
+			limit = { has_flag = high_kingdom_stormlands }
+			current_heir = { set_flag = high_kingdom_stormlands }
+		}
+		if = {
+			limit = { has_flag = high_kingdom_vale }
+			current_heir = { set_flag = high_kingdom_vale }
+		}
+		if = {
+			limit = { has_flag = high_kingdom_westerlands }
+			current_heir = { set_flag = high_kingdom_westerlands }
+		}
+		if = {
+			limit = { has_flag = is_opposer }
+			current_heir = { set_flag = is_opposer }
+		}
+		if = {
+			limit = { has_flag = is_supporter }
+			current_heir = { set_flag = is_supporter }
+		}
+		if = {
+			limit = { has_flag = is_claimant_opposer }
+			current_heir = { set_flag = is_claimant_opposer }
+		}
+		if = {
+			limit = { has_flag = accepts_FROM_as_liege }
+			current_heir = { set_flag = accepts_FROM_as_liege }
+		}
+		if = {
+			limit = { has_flag = leading_opposer_claimant }
+			current_heir = { set_flag = leading_opposer_claimant }
+		}
+		if = {
+			limit = { has_flag = leading_opposer_dismantle }
+			current_heir = { set_flag = leading_opposer_dismantle }
+		}
+		if = {
+			limit = { has_flag = won_war }
+			current_heir = { set_flag = won_war }
+		}
+		
 	}
 	
 	option = { }
