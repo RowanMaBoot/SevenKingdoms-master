@@ -38,6 +38,7 @@ character_event = {
 			}
 			character_event = { id = tsk_birth.1 }
 		}
+			
 		if = {
 			limit = {
 				has_game_rule = { name = more_great_works value = disabled }
@@ -64,5 +65,301 @@ character_event = {
 
 		1026 = { destroy_wonder = wonder_oldstones }
 		
+	}
+}
+
+#	Adds spouses to rulers or dynasty members with children
+character_event = {
+	id = tsk_startup.3
+
+	is_triggered_only = yes
+
+	trigger = {
+		NOT = { dynasty = none }
+		has_game_rule = { name = generate_spouses value = enabled }
+		is_married = no
+		can_marry = yes
+		any_child_even_if_dead = {
+			OR = {
+				AND = {
+					mother = { always = yes }
+					NOT = { father = { always = yes } }
+				}
+				AND = {
+					NOT = { mother = { always = yes } }
+					father = { always = yes }
+				}
+			}
+		}
+	}
+
+	hide_window = yes
+
+	immediate = {
+		if = {
+			limit = {
+				NOT = { is_female = yes }
+			}
+			if = {
+				limit = {
+					age >= 44
+				}
+				create_character = {
+					age = 44
+					female = yes
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 40
+				}
+				create_character = {
+					age = 40
+					female = yes
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 35
+				}
+				create_character = {
+					age = 35
+					female = yes
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 30
+				}
+				create_character = {
+					age = 30
+					female = yes
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 27
+				}
+				create_character = {
+					age = 27
+					female = yes
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 25
+				}
+				create_character = {
+					age = 25
+					female = yes
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 20
+				}
+				create_character = {
+					age = 20
+					female = yes
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 18
+				}
+				create_character = {
+					age = 18
+					female = yes
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 16
+				}
+				create_character = {
+					age = 16
+					female = yes
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			new_character = {
+				trigger_switch = {
+					on_trigger = tier
+					EMPEROR = { prestige = 400 }
+					KING = { prestige = 300 }
+					DUKE = { prestige = 200 }
+					COUNT = { prestige = 100 }
+				}
+				add_spouse = ROOT
+				save_event_target_as = new_mother_target
+			}
+			any_child_even_if_dead = {
+				limit = { NOT = { mother = { always = yes } } }
+				set_mother = event_target:new_mother_target
+			}
+		}
+		else_if = {
+			limit = {
+				is_female = yes
+			}
+			if = {
+				limit = {
+					age >= 44
+				}
+				create_character = {
+					age = 44
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 40
+				}
+				create_character = {
+					age = 40
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 35
+				}
+				create_character = {
+					age = 35
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 30
+				}
+				create_character = {
+					age = 30
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 27
+				}
+				create_character = {
+					age = 27
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 25
+				}
+				create_character = {
+					age = 25
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 20
+				}
+				create_character = {
+					age = 20
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 18
+				}
+				create_character = {
+					age = 18
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			else_if = {
+				limit = {
+					age >= 16
+				}
+				create_character = {
+					age = 16
+					religion = ROOT
+					culture = ROOT
+					dynasty = actually_culture
+					random_traits = yes
+				}
+			}
+			new_character = {
+				trigger_switch = {
+					on_trigger = tier
+					EMPEROR = { prestige = 400 }
+					KING = { prestige = 300 }
+					DUKE = { prestige = 200 }
+					COUNT = { prestige = 100 }
+				}
+				add_spouse_matrilineal = ROOT
+				save_event_target_as = new_father_target
+			}
+			any_child_even_if_dead = {
+				limit = { NOT = { father = { always = yes } } }
+				set_mother = event_target:new_father_target
+			}
+		}
 	}
 }
