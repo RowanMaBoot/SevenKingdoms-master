@@ -18,6 +18,7 @@ targetted_decisions = {
 		}
 		allow = {
 			NOT = { trait = zealous }
+			liege = { ROOTs_religion_is_playable_trigger = yes }
 		}
 		effect = {
 			prestige = -500
@@ -113,7 +114,6 @@ targetted_decisions = {
 		potential = {
 			NOT = { character = FROM }
 			NOT = { culture = FROM }
-			FROM = { NOT = { culture = low_valyrian } }
 		}
 		allow = {
 			FROM = { prestige = 200 }
@@ -141,11 +141,9 @@ targetted_decisions = {
 		
 		potential = {
 			is_playable = yes
-			NOT = { culture = low_valyrian }
 			liege = {
 				NOT = { character = ROOT }
 				NOT = { culture = ROOT }
-				NOT = { culture = low_valyrian }
 			}
 		}
 		allow = {
@@ -187,12 +185,9 @@ targetted_decisions = {
 			holy_order = no
 			mercenary = no
 			has_dlc = "Rajas of India"
+			NOT = { government = chinese_imperial_government }
 		}
 		allow = {
-			NAND = {
-				capital_scope = { culture = low_valyrian }
-				owner = { culture = high_valyrian }
-			}
 			prestige = 500
 		}
 		effect = {
@@ -216,7 +211,7 @@ targetted_decisions = {
 		ai_will_do = {
 			factor = 1
 			modifier = {
-				factor = 0.01
+				factor = 0.25
 			}
 			modifier = {
 				factor = 0
@@ -238,6 +233,102 @@ targetted_decisions = {
 						}
 					}
 				}
+			}
+			modifier = {
+				factor = 0
+				capital_scope = {
+					OR = {
+						AND = {
+							culture = norse
+							NOT = {	has_global_flag = norse_culture_flipping }
+							ROOT = {
+								OR = {
+									culture = swedish 
+									culture = norwegian
+									culture = danish
+									culture = norman
+								}
+							}
+						}
+						AND = {
+							culture = saxon
+							ROOT = {
+								OR = {
+									culture = norman 
+									culture = english
+								}
+							}
+						}
+						AND = {
+							culture = norman
+							ROOT = {
+								OR = {
+									culture = english 
+									culture = saxon
+								}
+							}
+						}
+						AND = {
+							culture_group = east_slavic
+							ROOT = {
+								culture = russian
+							}
+						}
+						AND = {
+							culture = pictish
+							ROOT = {
+								culture = scottish
+							}
+						}
+						AND = {
+							culture = lombard
+							ROOT = {
+								culture = italian
+							}
+						}
+						AND = {
+							culture = old_frankish
+							ROOT = {
+								culture = frankish
+							}
+						}
+						AND = {
+							culture = frisian
+							ROOT = {
+								culture = dutch
+							}
+						}
+						AND = {
+							culture = old_saxon
+							ROOT = {
+								culture = german
+							}
+						}
+						AND = {
+							culture = visigothic
+							ROOT = {
+								OR = {
+									culture_group = iberian
+									culture = andalusian_arabic
+									culture = occitan
+									religion_group = muslim
+								}
+							}
+						}
+					}
+				}
+			}
+			modifier = {
+				factor = 0
+				culture = nahuatl
+			}
+			modifier = {
+				factor = 0
+				has_landed_title = e_china_west_governor
+			}
+			modifier = {
+				factor = 0
+				government = chinese_imperial_government
 			}
 		}
 	}
@@ -264,9 +355,13 @@ targetted_decisions = {
 			
 			controls_religion = no
 			holy_order = no
+			
+			has_dlc = "Rajas of India"
+			
 		}
 		allow = {
 			NOT = { trait = zealous }
+			capital_scope = { ROOTs_religion_is_playable_trigger = yes }
 			OR = {
 				AND = {
 					prestige = 500
@@ -468,6 +563,7 @@ targetted_decisions = {
 		from_potential = {
 			ai = no
 			is_playable = yes
+			#religion_group = pagan_group
 			controls_religion = no
 		}
 		
@@ -480,14 +576,19 @@ targetted_decisions = {
 					character = FROM
 				}
 			}
-			NOT = {
-				religion = FROM
-			}
+			#OR = {
+			#	religion_group = christian
+			#	religion_group = muslim
+			#	religion_group = zoroastrian_group
+			#	religion_group = jewish_group
+			#	religion_group = indian_group
+			#}
 			is_alive = yes
 		}
 		
 		allow = {
 			FROM = { NOT = { trait = zealous } }
+			FROMs_religion_is_playable_trigger = yes
 		}
 		
 		effect = {
@@ -603,13 +704,15 @@ decisions = {
 			is_playable = yes
 			OR = {
 				AND = {
-					religion_group = westerosi_pagan_group
+					tsk_is_westerosi_pagan_trigger = yes
 					is_reformed_religion = no
-					NOT = { religion_authority = 0.5 }
+					NOT = { religion_authority = 0.4 }
 				}
 				NOT = { religion_authority = 0.3 }
+				is_nomadic = yes
 			}
 			controls_religion = no
+			NOT = { has_character_modifier = baptism_request_cooldown }
 			
 			war = yes
 			any_war = {
@@ -618,16 +721,18 @@ decisions = {
 					NOT = { religion = ROOT }
 					religion_authority = 0.5
 					OR = {
-						NOT = { religion_group = westerosi_pagan_group }
+						tsk_is_westerosi_pagan_trigger = yes
 						is_reformed_religion = yes
 					}
 				}
-				# OR = {
-					# using_cb = tsk_county_conquest
-					# using_cb = tsk_duchy_conquest
-					# using_cb = tsk_duchy_subjugation
-					# using_cb = tsk_kingdom_subjugation
-				# }
+				#OR = {
+				#	using_cb = crusade
+				#	using_cb = new_crusade
+				#	using_cb = religious
+				#	using_cb = muslim_invasion
+				#	using_cb = buddhist_holy_war
+				#	using_cb = pagan_holy_war
+				#}
 			}
 		}
 		
@@ -650,71 +755,158 @@ decisions = {
 							NOT = { religion = ROOT }
 							religion_authority = 0.5
 							OR = {
-								NOR = {
-									religion_group = westerosi_pagan_group
-									
-								}
+								tsk_is_westerosi_pagan_trigger = yes
 								is_reformed_religion = yes
 							}
 						}
-						# OR = {
-							# using_cb = tsk_county_conquest
-							# using_cb = tsk_duchy_conquest
-							# using_cb = tsk_duchy_subjugation
-							# using_cb = tsk_kingdom_subjugation
-						# }
+						#OR = {
+						#	using_cb = crusade
+						#	using_cb = new_crusade
+						#	using_cb = religious
+						#	using_cb = muslim_invasion
+						#	using_cb = buddhist_holy_war
+						#	using_cb = pagan_holy_war
+						#}
 					}
 					attacker = {
 						save_event_target_as = enemy_attacker
 					}
 				}
 			}
-			
+
+			#If possible, perform mass baptism.
 			if = {
-				limit = { event_target:enemy_attacker = { NOT = { religion_group = ROOT } } }
-				if = {
-					limit = { religion_group = westerosi_pagan_group }
-					add_trait = sympathy_westerosi_pagan_group
-				}
-				
-				if = {
-					limit = { religion_group = eastern_pagan_group }
-					add_trait = sympathy_eastern_pagan_group
-				}
-			}
-			
-			event_target:enemy_attacker = {
-				hidden_tooltip = {
-					letter_event = { id = 62800 }
-					ROOT = {
-						any_courtier = {
-							limit = {
-								religion = ROOT
-								employer = { character = ROOT }
-							}
-							religion = PREVPREV
-						}
-						any_vassal = {
-							limit = {
-								is_playable = no
-								religion = ROOT
-							}
-							religion = PREVPREV
-						}
-						capital_scope = {
-							if = {
-								limit = { religion = ROOT }
-								religion = PREVPREV
-							}
+				limit = {
+					has_dlc = "Holy Fury"
+					is_tribal = yes
+					tsk_is_westerosi_pagan_trigger = yes
+					higher_real_tier_than = count 		
+					NOT = { trait = incapable }
+					NOT = { is_reformed_religion = yes }
+					NOT = { has_character_flag = flag_converting_baptism }
+					NOT = { has_character_modifier = baptism_request_cooldown } 
+					independent = yes 
+					prisoner = no
+					has_regent = no
+					primary_title = { 
+						OR = { 
+							has_law = tribal_organization_2 
+							has_law = tribal_organization_3 
+							has_law = tribal_organization_4 
+						} 
+					}
+					any_war = {
+						using_cb = new_crusade 
+						defender = { character = ROOT }
+						attacker = { #Special case.
+							religion = the_seven
+							NOT = { has_character_flag = flag_sponsoring_baptism }
 						}
 					}
 				}
-				reverse_religion = ROOT 
+				hidden_effect = {
+					add_character_modifier = {
+						name = baptism_request_cooldown
+						months = 1
+						hidden = yes
+					}
+					event_target:enemy_attacker = {
+						add_character_modifier = {
+							name = baptism_request_cooldown
+							months = 1
+							hidden = yes
+						}
+					}
+					opinion = {
+						modifier = opinion_baptism_sponsor_target
+						years = 20
+						who = event_target:enemy_attacker
+						origin_description = EVTTOOLTIPHFA20005
+					}
+					event_target:enemy_attacker = {
+						opinion = {
+							modifier = opinion_baptism_sponsor_target
+							years = 20
+							who = ROOT
+							origin_description = EVTTOOLTIPHFB20005
+						}
+					}
+				}
+				event_target:enemy_attacker = { show_scope_change = no letter_event = { id = HF.20000 tooltip = tooltip_mass_convert_during_crusade } }
 			}
-			
-			hidden_tooltip = {
+			else = {
+				if = {
+					limit = { event_target:enemy_attacker = { NOT = { religion_group = ROOT } } }
+					if = {
+						limit = { religion_group = pagan_group }
+						add_trait = sympathy_pagans
+					}
+					
+					if = {
+						limit = { religion_group = the_seven_group }
+						add_trait = sympathy_the_seven_group
+					}
+					
+					if = {
+						limit = { religion_group = westerosi_pagan_group }
+						add_trait = sympathy_westerosi_pagan_group
+					}
+					if = {
+						limit = { religion_group = drowned_god_group }
+						add_trait = sympathy_drowned_god_group
+					}
+					if = {
+						limit = { religion_group = eastern_group }
+						add_trait = sympathy_eastern_group
+					}
+					if = {
+						limit = { religion_group = valyrian_group }
+						add_trait = sympathy_valyrian_group
+					}
+					if = {
+						limit = { religion_group = eastern_pagan_group }
+						add_trait = sympathy_eastern_pagan_group
+					}
+					if = {
+						limit = { religion_group = other_group }
+						add_trait = sympathy_other_group
+					}
+				}
+				event_target:enemy_attacker = {
+					hidden_tooltip = {
+						letter_event = { id = 62800 }
+						ROOT = {
+							any_courtier = {
+								limit = {
+									religion = ROOT
+									employer = { character = ROOT }
+								}
+								religion = PREVPREV
+							}
+							any_vassal = {
+								limit = {
+									is_playable = no
+									religion = ROOT
+								}
+								religion = PREVPREV
+							}
+							capital_scope = {
+								if = {
+									limit = { religion = ROOT }
+									religion = PREVPREV
+								}
+							}
+						}
+					}
+					hidden_tooltip = {
+						religion_authority = {
+							modifier = ruler_converted_to
+						}
+					}
+					reverse_religion = ROOT 
+				}
 				religion_authority = {
-					modifier = ruler_converted_to
+					modifier = ruler_converted_from
 				}
 			}
 		}
@@ -741,19 +933,18 @@ decisions = {
 							NOT = { religion = ROOT }
 							religion_authority = 0.45
 							OR = {
-								NOR = {
-									religion_group = westerosi_pagan_group
-									religion_group = eastern_pagan_group
-								}
+								NOT = { religion_group = pagan_group }
 								is_reformed_religion = yes
 							}
 						}
-						# OR = {
-							# using_cb = tsk_county_conquest
-							# using_cb = tsk_duchy_conquest
-							# using_cb = tsk_duchy_subjugation
-							# using_cb = tsk_kingdom_subjugation
-						# }
+						#OR = {
+						#	using_cb = crusade
+						#	using_cb = new_crusade
+						#	using_cb = religious
+						#	using_cb = muslim_invasion
+						#	using_cb = buddhist_holy_war
+						#	using_cb = pagan_holy_war
+						#}
 						war_score = 50
 						thirdparty_title_scope = {
 							ROOT = {
@@ -773,19 +964,18 @@ decisions = {
 						NOT = { religion = ROOT }
 						religion_authority = 0.45
 						OR = {
-							NOR = {
-								religion_group = westerosi_pagan_group
-								religion_group = eastern_pagan_group
-							}
+							NOT = { tsk_is_pagan_trigger = yes }
 							is_reformed_religion = yes
 						}
 					}
-					# OR = {
-						# using_cb = tsk_county_conquest
-						# using_cb = tsk_duchy_conquest
-						# using_cb = tsk_duchy_subjugation
-						# using_cb = tsk_kingdom_subjugation
-					# }
+					#OR = {
+					#	using_cb = crusade
+					#	using_cb = new_crusade
+					#	using_cb = religious
+					#	using_cb = muslim_invasion
+					#	using_cb = buddhist_holy_war
+					#	using_cb = pagan_holy_war
+					#}
 					war_score = 75
 					thirdparty_title_scope = {
 						ROOT = {
@@ -798,4 +988,5 @@ decisions = {
 			}
 		}
 	}
+	# Vanilla Roman renaissance decisions - deleted for obvious reasons
 }
