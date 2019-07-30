@@ -87,7 +87,6 @@ targetted_decisions = {
 
 										OR = {
 											capital_scope = { region = world_dorne }
-											capital_scope = { region = world_valyria }
 										}
 									}
 								}
@@ -107,6 +106,7 @@ targetted_decisions = {
 
 										OR = {
 											capital_scope = { region = world_beyond_the_wall }
+											capital_scope = { region = world_north }
 										}
 									}
 								}
@@ -177,6 +177,36 @@ targetted_decisions = {
 
 						FROM = { character_event = { id = RIP.20007 } }
 						character_event = { id = RIP.20008 } 
+					}
+					70 = {
+						# Phalaris option
+						trigger = {
+							always = no
+							FROM = {
+								NOT = { has_dynasty_flag = flag_phalaris_event }
+								NOT = { has_global_flag = flag_phalaris_bloodline }
+								has_dlc = "Holy Fury"
+								culture = greek
+								is_female = no
+								is_alternate_start = no 
+								independent = yes
+								primary_title = { title = k_sicily }
+								completely_controls = d_sicily
+								capital_scope = { de_jure_liege = d_sicily }
+								OR = {
+									trait = lunatic
+									trait = possessed
+									trait = impaler
+									trait = cruel
+								}
+								OR = {
+									learning = 15
+									has_character_modifier = brazen_bull #Already has it from Impaler event.
+								}
+							}
+						}
+						FROM = { character_event = { id = HF.24002 } }
+						character_event = { id = HF.24003 } 
 					}
 				}	
 			}
@@ -1116,16 +1146,19 @@ targetted_decisions = {
 				}
 				add_kinslayer_trait_effect = yes
 			}
-			hidden_tooltip = {
-				if = {
-					limit = {
-						religion = old_gods
-						FROM = { ai = no }
-					}
-					FROM = {
-						set_character_flag = achievement_bon_appetit
-					}
-				}
+			#hidden_tooltip = {
+			#	if = {
+			#		limit = {
+			#			OR = { 
+			#				religion = bon
+			#				religion = bon_reformed
+			#			}
+			#			FROM = { ai = no }
+			#		}
+			#		FROM = {
+			#			set_character_flag = achievement_bon_appetit
+			#		}
+			#	}
 			}
 		}
 	}
