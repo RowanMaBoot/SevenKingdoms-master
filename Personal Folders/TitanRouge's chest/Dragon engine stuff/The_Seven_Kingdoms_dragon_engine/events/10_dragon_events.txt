@@ -1565,21 +1565,18 @@ character_event = {
 	
 	option = {
 		name = EVTOPTAdragon210
+		trigger = { has_flag = kills_dragon }
 		
-		if = {
-			limit = {
-				has_flag = kills_dragon
-			}
-			event_target:targetted_dragon_for_taming = { death = { death_reason = death_tried_to_kill_dragon killer = ROOT } }
-			add_trait = dragon_slayer
-			prestige = 500
-		}
-		else_if = {
-			limit = {
-				has_flag = killed_by_dragon
-			}
-			death = { death_reason = death_tried_to_kill_dragon killer = event_target:targetted_dragon_for_taming }
-		}
+		event_target:targetted_dragon_for_taming = { death = { death_reason = death_tried_to_kill_dragon killer = ROOT } }
+		add_trait = dragon_slayer
+		prestige = 500
+	}
+	
+	option = {
+		name = EVTOPTBdragon210
+		trigger = { has_flag = killed_by_dragon }
+		
+		death = { death_reason = death_tried_to_kill_dragon killer = event_target:targetted_dragon_for_taming }
 	}
 	
 	after = {
@@ -1592,6 +1589,7 @@ character_event = {
 		clr_flag = chose_short_spear
 		clr_flag = chose_fists
 	}
+}
 
 ####Dragon duel events
 
