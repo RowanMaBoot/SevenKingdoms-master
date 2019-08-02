@@ -5,12 +5,13 @@
 
 ####Basic dragon engine events 000-099 ####
 #000	Initialize dragon stat calculation
-#001	Sets dragon's status
+#001	Initializes dragon duel counting for riders
 #002	Simulates the dragon's growth
 #003	Kills the dragon
 #004	Decreases the infamy gained in sieges/battles when behaving peacufully
 #005	Adds dragon egg to dragon to set dragon as FROM for renaming
 #006	Assigns special character titles
+#007	Assigns traits for dragon when rider dies
 
 ####Dragon in combat events 100-199####
 #100	Use your dragon battle
@@ -30,6 +31,15 @@
 #203	You really want to hatch?
 #204	Dragon egg hatched
 #205	Dragon egg transfered
+#206	A wild dragon is seen in a province
+#207	Kill the dragon - Choose your armor
+#208	Kill the dragon - Choose your weapon
+#209	Kill the dragon - You finally face the beast
+#210	Kill the dragon - Displays outcome
+#211	Evaluates dragon recovery from wound
+#212	Dragon Recovers from Wound
+#213	Dragon gets wounded
+#214	Dragon recovers (maimed)
 
 ####Dragon duel events 300####
 #300	Find and set up dragon riders
@@ -82,7 +92,7 @@ character_event = {
 	}
 }
 
-#
+#	Initializes dragon duel counting for riders
 character_event = {
 	id = dragon.1
 
@@ -122,13 +132,6 @@ character_event = {
 				trait = master_dragon_rider
 			}
 			set_variable = { which = dragon_duel_count value = 10 }
-		}
-		any_friend = {
-			limit = {
-				is_dragon = yes
-			}
-			save_event_target_as = your_dragon_old
-			save_persistent_event_target = { name = your_dragon scope = event_target:your_dragon_old }
 		}
 	}
 }
@@ -1235,8 +1238,29 @@ character_event = {
 	picture = GFX_evt_imad_awan_dragon_fight_final2
 	#border = GFX_event_normal_frame_martial
 
-	is_triggered_only = yes
+	trigger = {
+		location = { region = world_valyria }
+		location = d_dragonstone
+		NOT = { had_global_flag = { flag = doom_fell_on_valyria days = 1825 } }
+		NOT = { has_global_flag = age_of_dragons_ended }
+	}
 	
+	mean_time_to_happen = {
+		years = 4
+		modifier = {
+			factor = 1.8
+			location = d_dragonstone
+		}
+		modifier = {
+			factor = 3
+			is_dragon_rider = yes
+		}
+		modifier = {
+			factor = 3
+			any_artifact = { artifact_type = dragon_egg }
+		}
+	}		
+			
 	immediate = {
 		create_character = {
 			age = 60
@@ -1274,13 +1298,17 @@ character_event = {
 	option = { # Kill the dragon
 		name = EVTOPTAdragon206
 		
-		character_event = { id = dragon.207 }
+		new_character = {
+			ROOT = { character_event = { id = dragon.207 } }
+		}
 	}
 	
 	option = { # Tame the dragon
 		name = EVTOPTBdragon206
 		
-		character_event = { id = dragon.200 }
+		new_character = {
+			ROOT = { character_event = { id = dragon.200 } }
+		}
 	}
 	
 	option = { # There is nothing I can do
@@ -1588,6 +1616,253 @@ character_event = {
 		clr_flag = chose_zweihander
 		clr_flag = chose_short_spear
 		clr_flag = chose_fists
+	}
+}
+
+#	Evaluates dragon recovery from wound
+character_event = {
+	id = dragon.211
+	
+	hide_window = yes
+	
+	trigger = {
+		trait = dr_wounded
+		NOT = { has_flag = dragon_gets_maimed }
+	}
+
+	mean_time_to_happen = {
+		months = 8
+		
+		modifier = {
+			factor = 0.7
+			trait = dr_strong
+		}
+		modifier = {
+			factor = 1.7
+			trait = dr_weak
+		}
+		modifier = {
+			factor = 1.1
+			health = 8
+		}
+		modifier = {
+			factor = 1.2
+			health = 7.5
+		}
+		modifier = {
+			factor = 1.3
+			health = 7
+		}
+		modifier = {
+			factor = 1.4
+			health = 6.5
+		}
+	}
+	
+	immediate = {
+		random_list = {
+			60 = { # Dragon recovers
+				character_event = { id = dragon.212 }
+			}
+			40 = { # Dragon gets Maimed
+				set_flag = dragon_gets_maimed
+				modifier = {
+					factor = 0.7
+					trait = dr_strong
+				}
+				modifier = {
+					factor = 1.7
+					trait = dr_weak
+				}
+				modifier = {
+					factor = 1.1
+					health = 8
+				}
+				modifier = {
+					factor = 1.2
+					health = 7.5
+				}
+				modifier = {
+					factor = 1.3
+					health = 7
+				}
+				modifier = {
+					factor = 1.4
+					health = 6.5
+				}
+			}
+		}
+	}
+}
+
+#	Dragon Recovers from Wound
+character_event = {
+	id = dragon.212
+	desc = EVTDESCdragon212
+	picture = GFX_evt_imad_awan_dragon_fight_final2
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+
+	major = yes
+	major_trigger = {
+		is_dragon_rider = yes
+		is_friend = ROOT
+	}
+
+	mean_time_to_happen = {
+		months = 8
+		
+		modifier = {
+			factor = 0.7
+			trait = dr_strong
+		}
+		modifier = {
+			factor = 1.7
+			trait = dr_weak
+		}
+		modifier = {
+			factor = 1.1
+			health = 8
+		}
+		modifier = {
+			factor = 1.2
+			health = 7.5
+		}
+		modifier = {
+			factor = 1.3
+			health = 7
+		}
+		modifier = {
+			factor = 1.4
+			health = 6.5
+		}
+	}
+	
+	option = {
+		name = EVTOPTAdragon212
+		
+		ROOT = {
+			show_scope_change = no
+			remove_trait = dr_wounded
+		}
+	}
+}
+
+#	Dragon gets wounded
+character_event = {
+	id = dragon.213
+	desc = EVTDESCdragon213
+	picture = GFX_evt_imad_awan_dragon_fight_final2
+	#border = GFX_event_normal_frame_martial
+	
+	major = yes
+	major_trigger = {
+		is_dragon_rider = yes
+		is_friend = ROOT
+	}
+
+	trigger = {
+		trait = dr_wounded
+		has_flag = dragon_gets_maimed
+	}
+
+	mean_time_to_happen = {
+		months = 5
+		
+		modifier = {
+			factor = 0.7
+			trait = dr_strong
+		}
+		modifier = {
+			factor = 1.7
+			trait = dr_weak
+		}
+		modifier = {
+			factor = 1.1
+			health = 8
+		}
+		modifier = {
+			factor = 1.2
+			health = 7.5
+		}
+		modifier = {
+			factor = 1.3
+			health = 7
+		}
+		modifier = {
+			factor = 1.4
+			health = 6.5
+		}
+	}
+	
+	immediate = {
+		clr_flag = dragon_gets_maimed
+	}
+	
+	option = {
+		name = EVTOPTAdragon213
+		
+		ROOT = {
+			show_scope_change = no
+			add_trait = dr_maimed
+		}
+	}
+}
+
+#	Dragon recovers (maimed)
+character_event = {
+	id = dragon.214
+	desc = EVTDESCdragon214
+	picture = GFX_evt_imad_awan_dragon_fight_final2
+	#border = GFX_event_normal_frame_martial
+	
+	major = yes
+	major_trigger = {
+		is_dragon_rider = yes
+		 is_friend = ROOT
+	}
+
+	trigger = {
+		trait = dr_maimed
+	}
+
+	mean_time_to_happen = {
+		months = 18
+		
+		modifier = {
+			factor = 0.7
+			trait = dr_strong
+		}
+		modifier = {
+			factor = 1.7
+			trait = dr_weak
+		}
+		modifier = {
+			factor = 1.1
+			health = 8
+		}
+		modifier = {
+			factor = 1.2
+			health = 7.5
+		}
+		modifier = {
+			factor = 1.3
+			health = 7
+		}
+		modifier = {
+			factor = 1.4
+			health = 6.5
+		}
+	}
+	
+	option = {
+		name = EVTOPTAdragon214
+		
+		ROOT = {
+			show_scope_change = no
+			remove_trait = dr_maimed
+		}
 	}
 }
 
