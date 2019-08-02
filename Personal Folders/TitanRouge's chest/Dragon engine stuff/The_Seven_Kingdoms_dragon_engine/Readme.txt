@@ -10,7 +10,6 @@ If you have any suggestions or bug reports let me know.
 
 #############################
 Ideas:
--add dragon rider rank traits like in EMF poor, ..., formidable warrior
 
 #############################
 Credits:
@@ -20,3 +19,5 @@ imad_awan_dragon_fight_final2:					https://www.artstation.comartworkygBeJ
 Dragon2:										https://www.artstation.com/artwork/Dbyg9
 Dragon3:										https://www.deviantart.com/tithendar/art/Dragon-in-the-Wild-549691941
 Dragon4:										https://www.artstation.com/artwork/aWGEk
+Dragon Portraits:								made by tuned
+Trait icons made by tuned and TitanRogue

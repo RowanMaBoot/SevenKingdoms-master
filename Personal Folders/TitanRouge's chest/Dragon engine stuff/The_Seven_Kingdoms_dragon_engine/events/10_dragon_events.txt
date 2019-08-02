@@ -343,11 +343,38 @@ character_event = {
 		}
 		else_if = {
 			limit = { is_ruler = yes }
-			set_special_character_title = title_dragon_lord
+			if = {
+				limit = { is_female = no }
+				set_special_character_title = title_dragon_lord
+			}
+			else = {
+				set_special_character_title = title_dragon_lady
+			}
 		}
 	}
 }
 
+#	Assigns traits for dragon when rider dies
+character_event = {
+	id = dragon.7
+
+	is_triggered_only = yes
+	hide_window = yes
+	
+	trigger = {
+		trait = dragon_rider
+	}
+	
+	immediate = {
+		any_friend = {
+			limit ={
+				is_tamed_dragon = yes
+			}
+			remove_trait = tamed_dragon
+			add_trait = wild_dragon
+		}
+	}
+}
 
 ####Dragon in combat events
 
@@ -391,6 +418,8 @@ character_event = {
 		#Dragon Rider Leveling
 		dragon_rider_leveling = yes
 		
+		add_province_modifier = { name = burnt_land months = 6 stacking = yes }
+		
 		change_infamy = {
 			value = 3
 			localisation = dragon_infamy
@@ -402,14 +431,10 @@ character_event = {
 character_event = {
 	id = dragon.101
 	desc = EVTDESCdragon101
-	picture = GFX_evt_battle_dragon_two
+	picture = GFX_evt_burning_castle_hf
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
-
-	trigger = {
-		use_dragon_in_siege_potential = yes
-	}
 	
 	immediate = {
 		set_your_dragon = yes #Be aware! ROOT must be the dragon's rider!
@@ -870,12 +895,9 @@ character_event = {
 
 	is_triggered_only = yes
 	
-	option = {
-		name = EVTOPTAdragon200
-		tooltip_info = basic_dragon_rider
-		
+	immediate = {
 		random_list = {
-			50 = {
+			40 = {
 				# increased taming chance
 				modifier = {
 					factor = 1.5
@@ -914,21 +936,36 @@ character_event = {
 					factor = 5
 					culture_group = valyrian
 				}
-				custom_tooltip = {
-					text = TOOLTIP_DRAGON8_A
-					event_target:targetted_dragon_for_taming = {
-						add_friend = ROOT
-					}
-					set_character_flag = tamed_a_dragon
-					character_event = { id = dragon.201 }
-				}
+				set_flag = tames_dragon
 			}
-			50 = {
-				custom_tooltip = {
-					text = TOOLTIP_DRAGON200_B
-					death = { death_reason = death_dragon_taming killer = event_target:targetted_dragon_for_taming }
-				}
+			60 = {
+				set_flag = killed_by_dragon
 			}
+		}
+	}
+	
+	option = {
+		name = EVTOPTAdragon200
+		tooltip_info = basic_dragon_rider
+		
+		if = {
+			limit = {
+				has_flag = tames_dragon
+			}
+			custom_tooltip = {
+				text = TOOLTIP_DRAGON8_A
+				event_target:targetted_dragon_for_taming = {
+					add_friend = ROOT
+				}
+				set_character_flag = tamed_a_dragon
+				character_event = { id = dragon.201 }
+			}
+		}
+		else_if = {
+			limit = {
+				has_flag = killed_by_dragon
+			}
+			character_event = { id = dragon.202 }
 		}
 	}
 }
@@ -962,7 +999,19 @@ character_event = {
 		}
 		else_if = {
 			limit = { is_ruler = yes }
-			set_special_character_title = title_dragon_lord
+			if = {
+				limit = { is_female = no }
+				set_special_character_title = title_dragon_lord
+			}
+			else = {
+				set_special_character_title = title_dragon_lady
+			}
+		}
+		hidden_tooltip = {
+			FROMFROM = {
+				add_trait = tamed_dragon
+				remove_trait = wild_dragon
+			}
 		}
 		change_infamy = {
 			value = 10
@@ -986,6 +1035,14 @@ character_event = {
 	
 	option = {
 		name = EVTOPTAdragon202
+		chronicle = { 
+			entry = CHRONICLE_DRAGON_TAMING_FAILED
+			portrait = [targetted_dragon_for_taming.GetID]
+		}
+		custom_tooltip = {
+			text = TOOLTIP_DRAGON200_B
+			death = { death_reason = death_dragon_taming killer = event_target:targetted_dragon_for_taming }
+		}
 	}
 }
 
@@ -1057,7 +1114,7 @@ character_event = {
 		}
 		new_character = {
 			add_trait = dragon_base_trait
-			add_trait = dragon_base_trait
+			add_trait = dragon_trait
 			set_father = event_target:dragon_parent
 			save_event_target_as = hatchling
 			random_list = {
@@ -1076,6 +1133,18 @@ character_event = {
 				1 = { add_trait = dragon13 }
 				1 = { add_trait = dragon14 }
 				1 = { add_trait = dragon15 }
+				1 = { add_trait = dragon16 }
+				1 = { add_trait = dragon17 }
+				1 = { add_trait = dragon18 }
+				1 = { add_trait = dragon19 }
+				1 = { add_trait = dragon20 }
+				1 = { add_trait = dragon21 }
+				1 = { add_trait = dragon22 }
+				1 = { add_trait = dragon23 }
+				1 = { add_trait = dragon24 }
+				1 = { add_trait = dragon25 }
+				1 = { add_trait = dragon26 }
+				1 = { add_trait = dragon27 }
 			}
 		}
 		clear_event_target = dragon_parent
@@ -1159,6 +1228,370 @@ character_event = {
 	}
 }
 
+#	A wild dragon is seen in a province
+character_event = {
+	id = dragon.206
+	desc = EVTDESCdragon206
+	picture = GFX_evt_imad_awan_dragon_fight_final2
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	immediate = {
+		create_character = {
+			age = 60
+			attributes = {
+				diplomacy = 0
+				martial = 70
+				stewardship = 0
+				intrigue = 0
+				learning = 0
+			}
+			culture = dragon_culture
+			religion = dragon_religion
+			dynasty = NONE
+			trait = dragon_base_trait
+			trait = dragon_trait
+			trait = wild_dragon
+			historical = yes
+		}
+		new_character = {
+			tsk_generate_dragon_traits = yes
+			dragon_stat_calculation = yes
+			save_event_target_as = targetted_dragon_for_taming
+			ROOT = {
+				random_demesne_province = {
+					add_province_modifier = { name = burnt_land duration = -1 }
+					set_flag = is_lair_of_dragon_@PREVPREV
+					PREVPREV = {
+						set_flag = lair_is_in_province_@PREVPREV
+					}
+				}
+			}
+		}
+	}
+	
+	option = { # Kill the dragon
+		name = EVTOPTAdragon206
+		
+		character_event = { id = dragon.207 }
+	}
+	
+	option = { # Tame the dragon
+		name = EVTOPTBdragon206
+		
+		character_event = { id = dragon.200 }
+	}
+	
+	option = { # There is nothing I can do
+		name = EVTOPTCdragon206
+		
+	}
+}
+
+#	Kill the dragon - Choose your armor
+character_event = {
+	id = dragon.207
+	desc = EVTDESCdragon207
+	picture = GFX_evt_imad_awan_dragon_fight_final2
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	immediate = {
+	}
+	
+	option = { # a shield and light armor
+		name = EVTOPTAdragon207
+		
+		set_flag = chose_shield
+	}
+	
+	option = { # heavy armor
+		name = EVTOPTBdragon207
+		
+		set_flag = chose_heavy_armor
+	}
+	
+	option = { # light armor
+		name = EVTOPTCdragon207
+		
+		set_flag = chose_light_armor
+	}
+	
+	option = { # I do not need protection
+		name = EVTOPTDdragon207
+		
+		set_flag = chose_no_protection
+	}
+	
+	after = {
+		character_event = { id = dragon.208 }
+	}
+}
+
+#	Kill the dragon - Choose your weapon
+character_event = {
+	id = dragon.208
+	desc = EVTDESCdragon208
+	picture = GFX_evt_imad_awan_dragon_fight_final2
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	immediate = {
+	}
+	
+	option = { # a short sword
+		name = EVTOPTAdragon208
+		
+		set_flag = chose_sword
+	}
+	
+	option = { # a Zweihänder
+		name = EVTOPTBdragon208
+		
+		set_flag = chose_zweihander
+	}
+	
+	option = { # a short spear
+		name = EVTOPTCdragon208
+		
+		set_flag = chose_short_spear
+	}
+	
+	option = { # your bare fists
+		name = EVTOPTDdragon208
+		
+		set_flag = chose_fists
+	}
+	
+	after = {
+		character_event = { id = dragon.209 days = 2 }
+	}
+}
+
+#	Kill the dragon - You finally face the beast
+character_event = {
+	id = dragon.209
+	desc = { # Has no shield
+		trigger = {
+			NOT = { has_flag = chose_shield }
+		}
+		text = EVTDESCAdragon209
+	}
+	desc = { # Has shield
+		trigger = {
+			has_flag = chose_shield
+		}
+		text = EVTDESCBdragon209
+	}
+	picture = GFX_evt_imad_awan_dragon_fight_final2
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	immediate = {
+		random_list = {
+			5 = {
+				set_flag = kills_dragon
+				modifier = {
+					factor = 3
+					culture_group = valyrian
+				}
+				modifier = {
+					factor = 1.5
+					trait = bright
+				}
+				modifier = {
+					factor = 2
+					trait = quick
+				}
+				modifier = {
+					factor = 2.5
+					trait = genius
+				}
+				modifier = {
+					factor = 0.5
+					trait = misguided_warrior
+				}
+				modifier = {
+					factor = 0.7
+					trait = tough_soldier
+				}
+				modifier = {
+					factor = 1.5
+					trait = skilled_tactician
+				}
+				modifier = {
+					factor = 2
+					trait = brilliant_strategist
+				}
+				modifier = {
+					factor = 0.5
+					trait = dueling_novice
+				}
+				modifier = {
+					factor = 0.7
+					trait = dueling_adept
+				}
+				modifier = {
+					factor = 2
+					trait = dueling_skilled
+				}
+				modifier = {
+					factor = 3
+					trait = dueling_expert
+				}
+				modifier = {
+					factor = 4
+					trait = dueling_master
+				}
+				modifier = {
+					factor = 5
+					trait = dueling_legend
+				}
+				modifier = {
+					factor = 0.4
+					has_flag = chose_no_protection
+				}
+				modifier = {
+					factor = 0.3
+					has_flag = chose_fists
+				}
+				modifier = {
+					factor = 2
+					has_flag = chose_shield
+				}
+				modifier = {
+					factor = 4
+					has_flag = chose_short_spear
+				}
+				
+				modifier = {
+					factor = 2
+					event_target:targetted_dragon_for_taming = { martial <= 10 }
+				}
+				modifier = {
+					factor = 1.5
+					event_target:targetted_dragon_for_taming = {
+						martial <= 20
+						martial >= 10
+					}
+				}
+				modifier = {
+					factor = 0.8
+					event_target:targetted_dragon_for_taming = {
+						martial <= 30
+						martial >= 20
+					}
+				}
+				modifier = {
+					factor = 0.5
+					event_target:targetted_dragon_for_taming = {
+						martial <= 40
+						martial >= 30
+					}
+				}
+				modifier = {
+					factor = 0.2
+					event_target:targetted_dragon_for_taming = { martial >= 40 }
+				}
+			}
+			85 = {
+				set_flag = killed_by_dragon
+			}
+		}
+	}
+	
+	option = {
+		name = EVTOPTAdragon209
+		trigger = { NOT = { has_flag = chose_short_spear } }
+		
+		character_event = { id = dragon.210 }
+	}
+	
+	option = {
+		name = EVTOPTBdragon209
+		trigger = { has_flag = chose_short_spear }
+		
+		character_event = { id = dragon.210 }
+	}
+	
+	option = {
+		name = EVTOPTCdragon209
+		random = {
+			chance = 75
+			death = { death_reason = death_fled_from_dragon killer = event_target:targetted_dragon_for_taming }
+		}
+	}
+}
+
+#	Kill the dragon - Displays outcome
+character_event = {
+	id = dragon.210
+	desc = {
+		trigger = {
+			NOT = { has_flag = chose_short_spear }
+			has_flag = killed_by_dragon
+		}
+		text = EVTDESCA1dragon210
+	}
+	desc = {
+		trigger = {
+			has_flag = chose_short_spear
+			has_flag = killed_by_dragon
+		}
+		text = EVTDESCA2dragon210
+	}
+	desc = {
+		trigger = {
+			NOT = { has_flag = chose_short_spear }
+			has_flag = kills_dragon
+		}
+		text = EVTDESCB1dragon210
+	}
+	desc = {
+		trigger = {
+			has_flag = chose_short_spear
+			has_flag = kills_dragon
+		}
+		text = EVTDESCB2dragon210
+	}
+	picture = GFX_evt_imad_awan_dragon_fight_final2
+	#border = GFX_event_normal_frame_martial
+
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAdragon210
+		
+		if = {
+			limit = {
+				has_flag = kills_dragon
+			}
+			event_target:targetted_dragon_for_taming = { death = { death_reason = death_tried_to_kill_dragon killer = ROOT } }
+			add_trait = dragon_slayer
+			prestige = 500
+		}
+		else_if = {
+			limit = {
+				has_flag = killed_by_dragon
+			}
+			death = { death_reason = death_tried_to_kill_dragon killer = event_target:targetted_dragon_for_taming }
+		}
+	}
+	
+	after = {
+		clr_flag = chose_shield
+		clr_flag = chose_light_armor
+		clr_flag = chose_heavy_armor
+		clr_flag = chose_no_protection
+		clr_flag = chose_sword
+		clr_flag = chose_zweihander
+		clr_flag = chose_short_spear
+		clr_flag = chose_fists
+	}
 
 ####Dragon duel events
 
@@ -2391,28 +2824,28 @@ character_event = {
 		
 		#Names killed riders
 		if = {
-			limit = { even_target:rider_b_per = { death_reason = death_dragon_duel } }
-			even_target:rider_b_per = { show_portrait = yes }
+			limit = { event_target:rider_b_per = { death_reason = death_dragon_duel } }
+			event_target:rider_b_per = { show_portrait = yes }
 			cutom_tooltip = { text = CUSTOM_DRAGON_309B }
 		}
 		if = {
-			limit = { even_target:rider_c_per = { death_reason = death_dragon_duel } }
-			even_target:rider_c_per = { show_portrait = yes }
+			limit = { event_target:rider_c_per = { death_reason = death_dragon_duel } }
+			event_target:rider_c_per = { show_portrait = yes }
 			cutom_tooltip = { text = CUSTOM_DRAGON_309C }
 		}
 		if = {
-			limit = { even_target:rider_d_per = { death_reason = death_dragon_duel } }
-			even_target:rider_d_per = { show_portrait = yes }
+			limit = { event_target:rider_d_per = { death_reason = death_dragon_duel } }
+			event_target:rider_d_per = { show_portrait = yes }
 			cutom_tooltip = { text = CUSTOM_DRAGON_309D }
 		}
 		if = {
-			limit = { even_target:rider_e_per = { death_reason = death_dragon_duel } }
-			even_target:rider_e_per = { show_portrait = yes }
+			limit = { event_target:rider_e_per = { death_reason = death_dragon_duel } }
+			event_target:rider_e_per = { show_portrait = yes }
 			cutom_tooltip = { text = CUSTOM_DRAGON_309E }
 		}
 		if = {
-			limit = { even_target:rider_f_per = { death_reason = death_dragon_duel } }
-			even_target:rider_f_per = { show_portrait = yes }
+			limit = { event_target:rider_f_per = { death_reason = death_dragon_duel } }
+			event_target:rider_f_per = { show_portrait = yes }
 			cutom_tooltip = { text = CUSTOM_DRAGON_309F }
 		}
 		

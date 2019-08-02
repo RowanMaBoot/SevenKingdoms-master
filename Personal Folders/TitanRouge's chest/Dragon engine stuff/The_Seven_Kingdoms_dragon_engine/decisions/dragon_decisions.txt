@@ -72,7 +72,7 @@ targetted_decisions = {
 							has_game_rule = { name = dragon_duels value = enabled }
 							has_game_rule = { name = dragon_duels value = enabled_debugging }
 						}
-						basic_dragon_rider = {
+						dragon_rider = {
 							NOT = { character = FROM }
 							war_with = FROM
 							in_command = yes
@@ -275,25 +275,26 @@ targetted_decisions = {
 	tame_untamed_dragon = {
 		only_playable = yes
 		is_high_prio = yes
-		#filter = self
-		#ai_target_filter = home_court
+		filter = home_court
+		ai_target_filter = home_court
 		
 		potential = {
-			FROM = { is_dragon_rider = no }
-			ROOT = { 
-				is_wild_dragon = yes 
-				#has_character_flag = is_wild_dragon
-				at_location = ROOT
+			custom_tooltip = {
+				text = TOOLTIP_TAME_UNTAMED_DRAGON
+				FROM = { has_dragon_rider_trait = no }
+				ROOT = { 
+					is_wild_dragon = yes 
+					at_location = ROOT
+				}
 			}
 		}
 		
 		allow = {
 			custom_tooltip = {
 				text = TOOLTIP_TAME_UNTAMED_DRAGON
-				FROM = { is_dragon_rider = no }
+				FROM = { has_dragon_rider_trait = no }
 				ROOT = { 
 					is_wild_dragon = yes 
-					#has_character_flag = is_wild_dragon
 					at_location = ROOT
 				}
 			}
@@ -316,6 +317,48 @@ targetted_decisions = {
 			modifier = {
 				factor = 1.5
 				trait = ambitious
+			}
+			modifier = {
+				factor = 3
+				culture_group = valyrian
+			}
+		}
+	}
+	
+	#	Kill dragon
+	kill_dragon = {
+		filter = realm
+		ai_target_filter = realm
+		
+		potential = {
+			is_wild_dragon = yes
+		}
+		
+		allow = {
+		}
+		
+		effect = {
+			FROM = { character_event = { id = dragon.207 } }
+			save_event_target_as = targetted_dragon_for_taming
+		}
+		
+		ai_will_do = {
+			factor = 0.7
+			modifier = {
+				factor = 2
+				FROM = { trait = dragon_slayer }
+			}
+			modifier = {
+				factor = 1.5
+				FROM = { trait = brave }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { NOT = { culture_group = valyrian } }
+			}
+			modifier = {
+				factor = 2.5
+				FROM = { NOT = { culture_group = andal } }
 			}
 		}
 	}
