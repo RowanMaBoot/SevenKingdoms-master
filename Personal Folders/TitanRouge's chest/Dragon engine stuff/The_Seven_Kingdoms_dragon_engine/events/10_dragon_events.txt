@@ -73,19 +73,8 @@ character_event = {
 	immediate = {
 		# Dragon stat Calculation
 		dragon_stat_calculation = yes
-		
-		# Sets dragon's status
-		if = {
-			limit = { 
-				any_friend = { is_dragon_rider = yes }
-			}
-			set_character_flag = is_tamed_dragon
-		}
-		if = {
-			limit = { 
-				any_friend = { is_dragon_rider = no }
-			}
-			set_character_flag = is_wild_dragon
+		dragon_trait = {
+			set_immune_to_pruning = yes
 		}
 		
 		repeat_event = { id = dragon.0 days = 31 }
@@ -287,6 +276,20 @@ character_event = {
 				}
 			}
 			20 = {
+				add_artifact = grey_dragon_egg
+				new_artifact = {
+					save_event_target_as = created_dragon_egg
+					set_name = "[From.GetFirstName]'s egg"
+					set_artifact_original_owner = ROOT
+				}
+				if = {
+					limit = { any_friend = { is_dragon_rider = yes } }
+					random_friend = {
+						character_event = { id = dragon.205 }
+					}
+				}
+			}
+			20 = {
 				add_artifact = red_dragon_egg
 				new_artifact = {
 					save_event_target_as = created_dragon_egg
@@ -301,7 +304,35 @@ character_event = {
 				}
 			}
 			20 = {
+				add_artifact = violet_dragon_egg
+				new_artifact = {
+					save_event_target_as = created_dragon_egg
+					set_name = "[From.GetFirstName]'s egg"
+					set_artifact_original_owner = ROOT
+				}
+				if = {
+					limit = { any_friend = { is_dragon_rider = yes } }
+					random_friend = {
+						character_event = { id = dragon.205 }
+					}
+				}
+			}
+			20 = {
 				add_artifact = white_dragon_egg
+				new_artifact = {
+					save_event_target_as = created_dragon_egg
+					set_name = "[From.GetFirstName]'s egg"
+					set_artifact_original_owner = ROOT
+				}
+				if = {
+					limit = { any_friend = { is_dragon_rider = yes } }
+					random_friend = {
+						character_event = { id = dragon.205 }
+					}
+				}
+			}
+			20 = {
+				add_artifact = yellow_dragon_egg
 				new_artifact = {
 					save_event_target_as = created_dragon_egg
 					set_name = "[From.GetFirstName]'s egg"
@@ -381,7 +412,7 @@ character_event = {
 
 ####Dragon in combat events
 
-#	Use your dragon battle
+#	Use your dragon in battle
 character_event = {
 	id = dragon.100
 	desc = EVTDESCdragon100
@@ -960,7 +991,12 @@ character_event = {
 				event_target:targetted_dragon_for_taming = {
 					add_friend = ROOT
 				}
-				set_character_flag = tamed_a_dragon
+				if = {
+					limit = {
+						has_objective = obj_tame_a_dragon
+					}
+					set_character_flag = tamed_a_dragon
+				}
 				character_event = { id = dragon.201 }
 			}
 		}
@@ -1108,72 +1144,62 @@ character_event = {
 		}
 		create_character = {
 			random_traits = no
+			attributes = {
+				diplomacy = 0
+				martial = 0
+				stewardship = 0
+				intrigue = 0
+				learning = 0
+			}
 			dynasty = NONE
 			religion = dragon_religion
 			culture = dragon_culture
 			female = no
 			age = 0
-			historical = yes
 		}
 		new_character = {
-			add_trait = dragon_base_trait
-			add_trait = dragon_trait
+			tsk_new_dragons_startup = yes
 			set_father = event_target:dragon_parent
 			save_event_target_as = hatchling
-			random_list = {
-				1 = { add_trait = dragon1 }
-				1 = { add_trait = dragon2 }
-				1 = { add_trait = dragon3 }
-				1 = { add_trait = dragon4 }
-				1 = { add_trait = dragon5 }
-				1 = { add_trait = dragon6 }
-				1 = { add_trait = dragon7 }
-				1 = { add_trait = dragon8 }
-				1 = { add_trait = dragon9 }
-				1 = { add_trait = dragon10 }
-				1 = { add_trait = dragon11 }
-				1 = { add_trait = dragon12 }
-				1 = { add_trait = dragon13 }
-				1 = { add_trait = dragon14 }
-				1 = { add_trait = dragon15 }
-				1 = { add_trait = dragon16 }
-				1 = { add_trait = dragon17 }
-				1 = { add_trait = dragon18 }
-				1 = { add_trait = dragon19 }
-				1 = { add_trait = dragon20 }
-				1 = { add_trait = dragon21 }
-				1 = { add_trait = dragon22 }
-				1 = { add_trait = dragon23 }
-				1 = { add_trait = dragon24 }
-				1 = { add_trait = dragon25 }
-				1 = { add_trait = dragon26 }
-				1 = { add_trait = dragon27 }
-			}
 		}
 		clear_event_target = dragon_parent
 		hidden_tooltip = {
 			random_artifact = {
 				limit = { is_artifact_equipped = yes }
 				clr_artifact_flag = targetted_dragon_egg #Added for ambition
-				if = {
-					limit = { artifact_type = black_dragon_egg }
-					artifact_owner = { destroy_artifact = black_dragon_egg }
-				}
-				if = {
-					limit = { artifact_type = blue_dragon_egg }
-					artifact_owner = { destroy_artifact = blue_dragon_egg }
-				}
-				if = {
-					limit = { artifact_type = green_dragon_egg }
-					artifact_owner = { destroy_artifact = green_dragon_egg }
-				}
-				if = {
-					limit = { artifact_type = red_dragon_egg }
-					artifact_owner = { destroy_artifact = red_dragon_egg }
-				}
-				if = {
-					limit = { artifact_type = white_dragon_egg }
-					artifact_owner = { destroy_artifact = white_dragon_egg }
+				#if = {
+				#	limit = { artifact_type = black_dragon_egg }
+				#	artifact_owner = { destroy_artifact = black_dragon_egg }
+				#}
+				#else_if = {
+				#	limit = { artifact_type = blue_dragon_egg }
+				#	artifact_owner = { destroy_artifact = blue_dragon_egg }
+				#}
+				#else_if = {
+				#	limit = { artifact_type = green_dragon_egg }
+				#	artifact_owner = { destroy_artifact = green_dragon_egg }
+				#}
+				#else_if = {
+				#	limit = { artifact_type = red_dragon_egg }
+				#	artifact_owner = { destroy_artifact = red_dragon_egg }
+				#}
+				#else_if = {
+				#	limit = { artifact_type = white_dragon_egg }
+				#	artifact_owner = { destroy_artifact = white_dragon_egg }
+				#}
+				
+				### Replaced the if-clauses with trigger_switch. If it does not work use if-clauses instead.
+				
+				trigger_switch = {
+					on_trigger = artifact_type
+					black_dragon_egg = { artifact_owner = { destroy_artifact = black_dragon_egg } }
+					blue_dragon_egg = { artifact_owner = { destroy_artifact = blue_dragon_egg } }
+					green_dragon_egg = { artifact_owner = { destroy_artifact = green_dragon_egg } }
+					grey_dragon_egg = { artifact_owner = { destroy_artifact = grey_dragon_egg } }
+					red_dragon_egg = { artifact_owner = { destroy_artifact = red_dragon_egg } }
+					violet_dragon_egg = { artifact_owner = { destroy_artifact = violet_dragon_egg } }
+					white_dragon_egg = { artifact_owner = { destroy_artifact = white_dragon_egg } }
+					yellow_dragon_egg = { artifact_owner = { destroy_artifact = yellow_dragon_egg } }
 				}
 			}
 		}
@@ -1211,13 +1237,25 @@ character_event = {
 		trigger = { event_target:created_dragon_egg = { artifact_type = green_dragon_egg } }
 		picture = GFX_evt_green_dragon_egg_bg	
 	}
+	picture = { #	Grey dragon egg
+		trigger = { event_target:created_dragon_egg = { artifact_type = grey_dragon_egg } }
+		picture = GFX_evt_grey_dragon_egg_bg	
+	}
 	picture = { #	Red dragon egg
 		trigger = { event_target:created_dragon_egg = { artifact_type = red_dragon_egg } }
 		picture = GFX_evt_red_dragon_egg_bg	
 	}
+	picture = { #	Violet dragon egg
+		trigger = { event_target:created_dragon_egg = { artifact_type = violet_dragon_egg } }
+		picture = GFX_evt_violet_dragon_egg_bg	
+	}
 	picture = { #	White dragon egg
 		trigger = { event_target:created_dragon_egg = { artifact_type = white_dragon_egg } }
 		picture = GFX_evt_white_dragon_egg_bg	
+	}
+	picture = { #	Yellow dragon egg
+		trigger = { event_target:created_dragon_egg = { artifact_type = yellow_dragon_egg } }
+		picture = GFX_evt_yellow_dragon_egg_bg	
 	}
 	is_triggered_only = yes
 	
@@ -1239,31 +1277,33 @@ character_event = {
 	#border = GFX_event_normal_frame_martial
 
 	trigger = {
-		location = { region = world_valyria }
-		location = d_dragonstone
+		#OR = {
+		#	location = { region = world_valyria }
+		#	location = d_dragonstone
+		#}
 		NOT = { had_global_flag = { flag = doom_fell_on_valyria days = 1825 } }
 		NOT = { has_global_flag = age_of_dragons_ended }
 	}
 	
 	mean_time_to_happen = {
 		years = 4
-		modifier = {
-			factor = 1.8
-			location = d_dragonstone
-		}
+	#	modifier = {
+	#		factor = 1.8
+	#		location = d_dragonstone
+	#	}
 		modifier = {
 			factor = 3
 			is_dragon_rider = yes
 		}
-		modifier = {
-			factor = 3
-			any_artifact = { artifact_type = dragon_egg }
-		}
+	#	modifier = {
+	#		factor = 3
+	#		any_artifact = { artifact_type = dragon_egg }
+	#	}
 	}		
 			
 	immediate = {
 		create_character = {
-			age = 60
+			random_traits = no
 			attributes = {
 				diplomacy = 0
 				martial = 70
@@ -1271,21 +1311,18 @@ character_event = {
 				intrigue = 0
 				learning = 0
 			}
-			culture = dragon_culture
-			religion = dragon_religion
 			dynasty = NONE
-			trait = dragon_base_trait
-			trait = dragon_trait
-			trait = wild_dragon
-			historical = yes
+			religion = dragon_religion
+			culture = dragon_culture
+			female = no
+			age = 60
 		}
 		new_character = {
-			tsk_generate_dragon_traits = yes
-			dragon_stat_calculation = yes
+			tsk_new_dragons_startup = yes
 			save_event_target_as = targetted_dragon_for_taming
 			ROOT = {
 				random_demesne_province = {
-					add_province_modifier = { name = burnt_land duration = -1 }
+					add_province_modifier = { name = burnt_land duration = 400 }
 					set_flag = is_lair_of_dragon_@PREVPREV
 					PREVPREV = {
 						set_flag = lair_is_in_province_@PREVPREV
@@ -1298,17 +1335,14 @@ character_event = {
 	option = { # Kill the dragon
 		name = EVTOPTAdragon206
 		
-		new_character = {
-			ROOT = { character_event = { id = dragon.207 } }
-		}
+		character_event = { id = dragon.207 }
 	}
 	
 	option = { # Tame the dragon
 		name = EVTOPTBdragon206
+		trigger = { is_dragon_rider = no }
 		
-		new_character = {
-			ROOT = { character_event = { id = dragon.200 } }
-		}
+		character_event = { id = dragon.200 }
 	}
 	
 	option = { # There is nothing I can do
@@ -1321,7 +1355,7 @@ character_event = {
 character_event = {
 	id = dragon.207
 	desc = EVTDESCdragon207
-	picture = GFX_evt_imad_awan_dragon_fight_final2
+	picture = GFX_evt_armory
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
@@ -1362,7 +1396,7 @@ character_event = {
 character_event = {
 	id = dragon.208
 	desc = EVTDESCdragon208
-	picture = GFX_evt_imad_awan_dragon_fight_final2
+	picture = GFX_evt_armory
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
@@ -1616,6 +1650,8 @@ character_event = {
 		clr_flag = chose_zweihander
 		clr_flag = chose_short_spear
 		clr_flag = chose_fists
+		clr_flag = kills_dragon
+		clr_flag = killed_by_dragon
 	}
 }
 
@@ -1749,7 +1785,7 @@ character_event = {
 	}
 }
 
-#	Dragon gets wounded
+#	Dragon gets maimed
 character_event = {
 	id = dragon.213
 	desc = EVTDESCdragon213
@@ -1820,7 +1856,7 @@ character_event = {
 	major = yes
 	major_trigger = {
 		is_dragon_rider = yes
-		 is_friend = ROOT
+		is_friend = ROOT
 	}
 
 	trigger = {

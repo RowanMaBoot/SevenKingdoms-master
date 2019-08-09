@@ -18,7 +18,7 @@ dragon_riding_skill_calculation = {
 	divide_variable = { which = riding_skill_var value = 50 }
 }
 
-#	For localistaion and minor things
+#	For localisation and minor things
 set_your_dragon = {
 	ROOT = {
 		any_friend = {
@@ -778,7 +778,7 @@ wound_maim_kill_actions_dragon_duel = {
 			limit = {
 				any_friend = {
 					is_dragon_in_dragon_duel = yes
-					check_variable = { wich = dragon_strenght_var which = global_dragon_strength_var_a }
+					check_variable = { which = dragon_strenght_var which = global_dragon_strength_var_a }
 				}
 			}
 			clr_character_flag = killed_by_a
@@ -799,7 +799,7 @@ wound_maim_kill_actions_dragon_duel = {
 			limit = {
 				any_friend = {
 					is_dragon_in_dragon_duel = yes
-					check_variable = { wich = dragon_strenght_var which = global_dragon_strength_var_b }
+					check_variable = { which = dragon_strenght_var which = global_dragon_strength_var_b }
 				}
 			}
 			clr_character_flag = killed_by_b
@@ -820,7 +820,7 @@ wound_maim_kill_actions_dragon_duel = {
 			limit = {
 				any_friend = {
 					is_dragon_in_dragon_duel = yes
-					check_variable = { wich = dragon_strenght_var which = global_dragon_strength_var_c }
+					check_variable = { which = dragon_strenght_var which = global_dragon_strength_var_c }
 				}
 			}
 			clr_character_flag = killed_by_c
@@ -841,7 +841,7 @@ wound_maim_kill_actions_dragon_duel = {
 			limit = {
 				any_friend = {
 					is_dragon_in_dragon_duel = yes
-					check_variable = { wich = dragon_strenght_var which = global_dragon_strength_var_d }
+					check_variable = { which = dragon_strenght_var which = global_dragon_strength_var_d }
 				}
 			}
 			clr_character_flag = killed_by_d
@@ -862,7 +862,7 @@ wound_maim_kill_actions_dragon_duel = {
 			limit = {
 				any_friend = {
 					is_dragon_in_dragon_duel = yes
-					check_variable = { wich = dragon_strenght_var which = global_dragon_strength_var_e }
+					check_variable = { which = dragon_strenght_var which = global_dragon_strength_var_e }
 				}
 			}
 			clr_character_flag = killed_by_e
@@ -883,7 +883,7 @@ wound_maim_kill_actions_dragon_duel = {
 			limit = {
 				any_friend = {
 					is_dragon_in_dragon_duel = yes
-					check_variable = { wich = dragon_strenght_var which = global_dragon_strength_var_f }
+					check_variable = { which = dragon_strenght_var which = global_dragon_strength_var_f }
 				}
 			}
 			clr_character_flag = killed_by_f
@@ -974,6 +974,31 @@ wound_maim_kill_actions_dragon_duel = {
 
 #	Simple flag and event target clean up
 dragon_duel_char_flag_clean_up = {
+	if = {
+		limit = { has_character_flag = debug_rider_a }
+		clear_event_target = rider_a
+	}
+	if = {
+		limit = { has_character_flag = debug_rider_b }
+		clear_event_target = rider_b
+	}
+	if = {
+		limit = { has_character_flag = debug_rider_c }
+		clear_event_target = rider_c
+	}
+	if = {
+		limit = { has_character_flag = debug_rider_d }
+		clear_event_target = rider_d
+	}
+	if = {
+		limit = { has_character_flag = debug_rider_e }
+		clear_event_target = rider_e
+	}
+	if = {
+		limit = { has_character_flag = debug_rider_f }
+		clear_event_target = rider_f
+	}
+	
 	clr_character_flag = debug_rider_a
 	clr_character_flag = debug_rider_b
 	clr_character_flag = debug_rider_c
@@ -1005,31 +1030,6 @@ dragon_duel_char_flag_clean_up = {
 	clr_character_flag = rider_a_stands_alone
 	clr_character_flag = rider_d_stands_alone
 	clr_character_flag = 2_riders_duel
-	
-	if = {
-		limit = { has_character_flag = debug_rider_a }
-		clear_event_target = rider_a
-	}
-	if = {
-		limit = { has_character_flag = debug_rider_b }
-		clear_event_target = rider_b
-	}
-	if = {
-		limit = { has_character_flag = debug_rider_c }
-		clear_event_target = rider_c
-	}
-	if = {
-		limit = { has_character_flag = debug_rider_d }
-		clear_event_target = rider_d
-	}
-	if = {
-		limit = { has_character_flag = debug_rider_e }
-		clear_event_target = rider_e
-	}
-	if = {
-		limit = { has_character_flag = debug_rider_f }
-		clear_event_target = rider_f
-	}
 }
 
 clear_wounded_maimed_flags_dragon_duel = {
@@ -1509,21 +1509,21 @@ dragon_rider_leveling = {
 	if = {
 		limit = {
 			check_variable = { which = dragon_duel_count value = 4 }
-			trait = dragon_rider_1
+			trait = poor_dragon_rider
 		}
 		add_trait = trained_dragon_rider
 	}
 	if = {
 		limit = {
 			check_variable = { which = dragon_duel_count value = 8 }
-			trait = dragon_rider_2
+			trait = trained_dragon_rider
 		}
 		add_trait = skilled_dragon_rider
 	}
 	if = {
 		limit = {
 			check_variable = { which = dragon_duel_count value = 13 }
-			trait = dragon_rider_3
+			trait = skilled_dragon_rider
 		}
 		add_trait = master_dragon_rider
 	}
@@ -1565,6 +1565,16 @@ tsk_generate_dragon_traits = {
 		10 = { add_trait = dr_weak trigger = { NOT = { trait = dr_weak } } }
 		10 = { add_trait = dr_fast trigger = { NOT = { trait = dr_fast } } }
 		10 = { add_trait = dr_slow trigger = { NOT = { trait = dr_slow } } }
+		10 = { add_trait = dr_large_claws trigger = { NOT = { trait = dr_large_claws } } }
+		10 = { add_trait = dr_small_claws trigger = { NOT = { trait = dr_small_claws } } }
+		10 = { add_trait = dr_thick_scales trigger = { NOT = { trait = dr_thick_scales } } }
+		10 = { add_trait = dr_thin_scales trigger = { NOT = { trait = dr_thin_scales } } }
+	}
+	random_list = {
+		10 = { add_trait = dr_large_claws trigger = { NOT = { trait = dr_large_claws } } }
+		10 = { add_trait = dr_small_claws trigger = { NOT = { trait = dr_small_claws } } }
+		10 = { add_trait = dr_thick_scales trigger = { NOT = { trait = dr_thick_scales } } }
+		10 = { add_trait = dr_thin_scales trigger = { NOT = { trait = dr_thin_scales } } }
 	}
 	random_list = {
 		1 = { add_trait = dr_slothful trigger = { NOT = { trait = dr_slothful } } }
@@ -1573,9 +1583,510 @@ tsk_generate_dragon_traits = {
 		1 = { add_trait = dr_humble trigger = { NOT = { trait = dr_humble } } }
 		1 = { add_trait = dr_proud trigger = { NOT = { trait = dr_proud } } }
 		1 = { add_trait = dr_friendly trigger = { NOT = { trait = dr_friendly } } }
-		1 = { add_trait = dr_large_claws trigger = { NOT = { trait = dr_large_claws } } }
-		1 = { add_trait = dr_small_claws trigger = { NOT = { trait = dr_small_claws } } }
-		1 = { add_trait = dr_thick_scales trigger = { NOT = { trait = dr_thick_scales } } }
-		1 = { add_trait = dr_thin_scales trigger = { NOT = { trait = dr_thin_scales } } }
 	}
 }
+
+tsk_remove_non_dragon_traits = {
+
+	#00_traits
+	remove_trait = amateurish_plotter
+	remove_trait = flamboyant_schemer
+	remove_trait = intricate_webweaver
+	remove_trait = elusive_shadow
+	remove_trait = naive_appeaser
+	remove_trait = underhanded_rogue
+	remove_trait = charismatic_negotiator
+	remove_trait = grey_eminence
+	remove_trait = indulgent_wastrel
+	remove_trait = thrifty_clerk
+	remove_trait = fortune_builder
+	remove_trait = midas_touched
+	remove_trait = misguided_warrior
+	remove_trait = tough_soldier
+	remove_trait = skilled_tactician
+	remove_trait = brilliant_strategist
+	remove_trait = detached_priest
+	remove_trait = martial_cleric
+	remove_trait = scholarly_theologian
+	remove_trait = mastermind_theologian
+
+	remove_trait = stressed
+	remove_trait = depressed
+	remove_trait = lunatic
+	remove_trait = possessed
+	remove_trait = ill
+	remove_trait = pneumonic
+	remove_trait = syphilitic
+	remove_trait = leper
+	remove_trait = wounded
+	remove_trait = maimed
+	remove_trait = infirm
+	remove_trait = incapable
+	remove_trait = drunkard
+	remove_trait = has_tuberculosis
+	remove_trait = has_typhoid_fever
+	remove_trait = has_typhus
+	remove_trait = has_bubonic_plague
+	remove_trait = has_measles
+	remove_trait = has_small_pox
+	remove_trait = crusader
+	remove_trait = bastard
+	remove_trait = twin
+	remove_trait = legit_bastard
+	remove_trait = pregnant
+	remove_trait = excommunicated
+	remove_trait = kinslayer
+	remove_trait = homosexual
+	remove_trait = clubfooted
+	remove_trait = harelip
+	remove_trait = hunchback
+	remove_trait = lisp
+	remove_trait = stutter
+	remove_trait = fair
+	remove_trait = ugly
+	remove_trait = dwarf
+	remove_trait = genius
+	remove_trait = quick
+	remove_trait = slow
+	remove_trait = imbecile
+	remove_trait = inbred
+	remove_trait = strong
+	remove_trait = weak
+	remove_trait = celibate
+	remove_trait = hedonist
+	remove_trait = scholar
+	remove_trait = gardener
+	remove_trait = mystic
+	remove_trait = impaler
+	remove_trait = duelist
+	remove_trait = hunter
+	remove_trait = poet
+	remove_trait = falconer
+	remove_trait = lustful
+	remove_trait = chaste
+	remove_trait = gluttonous
+	remove_trait = temperate
+	remove_trait = greedy
+	remove_trait = charitable
+	remove_trait = slothful
+	remove_trait = diligent
+	remove_trait = envious
+	remove_trait = kind
+	remove_trait = wroth
+	remove_trait = patient
+	remove_trait = proud
+	remove_trait = humble
+	remove_trait = deceitful
+	remove_trait = honest
+	remove_trait = craven
+	remove_trait = brave
+	remove_trait = shy
+	remove_trait = gregarious
+	remove_trait = ambitious
+	remove_trait = content
+	remove_trait = arbitrary
+	remove_trait = just
+	remove_trait = cynical
+	remove_trait = zealous
+	remove_trait = paranoid
+	remove_trait = trusting
+	remove_trait = cruel
+	remove_trait = light_foot_leader
+	remove_trait = heavy_infantry_leader
+	remove_trait = cavalry_leader
+	remove_trait = inspiring_leader
+	remove_trait = trickster
+	remove_trait = organizer
+	remove_trait = defensive_leader
+	remove_trait = experimenter
+	remove_trait = flanker
+	remove_trait = aggressive_leader
+	remove_trait = siege_leader
+
+	#01_traits
+	remove_trait = mujahid
+	remove_trait = hajjaj
+	remove_trait = on_hajj
+	remove_trait = faqih
+	remove_trait = hafiz
+	remove_trait = sayyid
+	remove_trait = pilgrim
+	remove_trait = mirza
+	remove_trait = scarred
+	
+	#02_traits
+	remove_trait = eunuch
+	remove_trait = blinded
+	remove_trait = born_in_the_purple
+	remove_trait = augustus
+	remove_trait = flat_terrain_leader
+	remove_trait = rough_terrain_leader
+	remove_trait = mountain_terrain_leader
+	remove_trait = desert_terrain_leader
+	remove_trait = holy_warrior
+	remove_trait = unyielding_leader
+	remove_trait = has_aztec_disease
+	remove_trait = child_of_consort
+	remove_trait = peasant_leader
+	remove_trait = heresiarch
+	remove_trait = berserker
+	remove_trait = varangian
+	remove_trait = saoshyant
+	remove_trait = saoshyant_descendant
+	remove_trait = viking
+	remove_trait = monk
+	remove_trait = nun
+	remove_trait = on_pilgrimage
+	remove_trait = sickly
+	remove_trait = mutazilite
+	remove_trait = ashari
+	remove_trait = narrow_flank_leader
+	remove_trait = brahmin
+	remove_trait = kshatriya
+	remove_trait = vaishya
+	remove_trait = decadent
+	remove_trait = reincarnation
+	remove_trait = war_elephant_leader
+	remove_trait = jungle_terrain_leader
+	remove_trait = in_hiding
+	remove_trait = winter_soldier
+	remove_trait = seducer
+	remove_trait = seductress
+	remove_trait = administrator
+	remove_trait = architect
+	remove_trait = strategist
+	remove_trait = socializer
+	remove_trait = schemer
+	remove_trait = theologian
+	remove_trait = gamer
+	remove_trait = adventurer
+	remove_trait = erudite
+	remove_trait = stubborn
+	remove_trait = haughty
+	remove_trait = affectionate
+	remove_trait = timid
+	remove_trait = rowdy
+	remove_trait = willful
+	remove_trait = brooding
+	remove_trait = indolent
+	remove_trait = playful
+	remove_trait = conscientious
+	remove_trait = fussy
+	remove_trait = curious
+	remove_trait = idolizer
+	remove_trait = horse
+	remove_trait = robust
+	remove_trait = feeble
+	remove_trait = shrewd
+	remove_trait = dull
+	remove_trait = cough
+	remove_trait = fever
+	remove_trait = diarrhea
+	remove_trait = vomiting
+	remove_trait = chest_pain
+	remove_trait = cramps
+	remove_trait = rash
+	remove_trait = headache
+	remove_trait = abdominal_pain
+	remove_trait = fatigue
+	remove_trait = malaise
+	remove_trait = infection
+	remove_trait = one_eyed
+	remove_trait = one_handed
+	remove_trait = one_legged
+	remove_trait = disfigured
+	remove_trait = mangled
+	remove_trait = severely_injured
+	remove_trait = flu
+	remove_trait = dysentery
+	remove_trait = gout
+	remove_trait = food_poisoning
+	remove_trait = rabies
+	remove_trait = cancer
+	remove_trait = immortal
+	remove_trait = valhalla_bound
+	remove_trait = ravager
+	remove_trait = seaking
+	remove_trait = dancing_plague
+	remove_trait = shieldmaiden
+	remove_trait = physician
+	remove_trait = scurvy
+	remove_trait = sick_incapable
+	remove_trait = cannot_marry
+	remove_trait = sea_queen
+	remove_trait = eagle_warrior
+	remove_trait = sun_warrior
+	remove_trait = ukkos_shield
+	remove_trait = nyames_shield
+	remove_trait = peruns_chosen
+	remove_trait = romuvas_own
+	remove_trait = ares_own
+	remove_trait = tengri_warrior
+	remove_trait = shaddai
+	remove_trait = gondi_shahansha
+	remove_trait = cannibal_trait
+	remove_trait = lovers_pox
+	remove_trait = disinherited
+	remove_trait = muni
+	remove_trait = aryika
+	remove_trait = bhikkhu
+	remove_trait = bhikkhuni
+	remove_trait = sanyasi
+	remove_trait = sanyasini
+	remove_trait = indian_pilgrim
+	remove_trait = on_indian_pilgrimage
+	remove_trait = masterless_dog
+	remove_trait = house_dog
+	remove_trait = hedgehog
+	remove_trait = otter
+	remove_trait = cat
+	remove_trait = master_of_flame
+	remove_trait = logistics_expert
+	remove_trait = levy_coordinator
+	remove_trait = sapper
+	remove_trait = familial_kinslayer
+	remove_trait = dynastic_kinslayer
+	remove_trait = kow_tow_travels
+	remove_trait = kow_tow_completed_tier_1
+	remove_trait = kow_tow_completed_tier_2
+	remove_trait = kow_tow_completed_tier_3
+	remove_trait = giant
+	remove_trait = crowned_by_priest
+	remove_trait = crowned_by_bishop
+	remove_trait = crowned_by_pope
+	remove_trait = crowned_by_myself
+	remove_trait = uncrowned
+	remove_trait = travelling
+	remove_trait = pregnancy_finishing
+	remove_trait = hard_pregnancy
+	remove_trait = troubled_pregnancy
+	remove_trait = lefthanded
+	remove_trait = freckles
+	remove_trait = sturdy
+	remove_trait = is_fat
+	remove_trait = is_malnourished
+	remove_trait = baptized_by_pope
+	remove_trait = baptized_by_bishop
+	remove_trait = baptized_by_satan
+	remove_trait = baptized_by_patriarch
+	remove_trait = norse_leader
+	remove_trait = tengri_leader
+	remove_trait = baltic_leader
+	remove_trait = finnish_leader
+	remove_trait = slavic_leader
+	remove_trait = west_african_leader
+	remove_trait = zun_leader
+	remove_trait = bon_leader
+	remove_trait = hellenic_leader
+	remove_trait = pagan_branch_1
+	remove_trait = pagan_branch_2
+	remove_trait = pagan_branch_3
+	remove_trait = pagan_branch_4
+	remove_trait = dead_crown_of_winter
+	remove_trait = dead_driftwood_crown
+	remove_trait = dead_durrandon_crown
+	remove_trait = dead_falcon_crown
+	remove_trait = dead_gardener_crown
+	remove_trait = dead_lannister_crown
+	remove_trait = dead_river_kings_crown
+	remove_trait = dead_cursed_diamond_crown
+	remove_trait = freckles_2
+	remove_trait = freckles_3
+	remove_trait = freckles_4
+	remove_trait = freckles_5
+	remove_trait = saint
+	remove_trait = beatified
+	remove_trait = blessed_ancestor
+	remove_trait = zodiac_aquarius
+	remove_trait = zodiac_aries
+	remove_trait = zodiac_cancer
+	remove_trait = zodiac_capricorn
+	remove_trait = zodiac_gemini
+	remove_trait = zodiac_leo
+	remove_trait = zodiac_libra
+	remove_trait = zodiac_pisces
+	remove_trait = zodiac_sagittarius
+	remove_trait = zodiac_scorpio
+	remove_trait = zodiac_taurus
+	remove_trait = zodiac_virgo
+	remove_trait = i_used_to_be_a_player
+	remove_trait = child_of_consort_male
+	remove_trait = crowned_by_priest_rd
+	remove_trait = crowned_by_bishop_rd
+	remove_trait = crowned_by_pope_rd
+	remove_trait = crusader_king
+	remove_trait = crusader_queen
+	remove_trait = pirate
+	remove_trait = bloodthirsty_gods_1
+	remove_trait = bloodthirsty_gods_2
+	remove_trait = bloodthirsty_gods_3
+	remove_trait = groomed
+	remove_trait = uncouth
+	remove_trait = tribal_kinslayer
+	
+	#03_traits_religion
+	remove_trait = sympathy_the_seven_group
+	remove_trait = sympathy_eastern_group
+	remove_trait = sympathy_westerosi_pagan_group
+	remove_trait = sympathy_drowned_god_group
+	remove_trait = sympathy_valyrian_group
+	remove_trait = sympathy_eastern_pagan_group
+	remove_trait = sympathy_other_group
+	remove_trait = sympathy_far_east_group
+	remove_trait = bad_priest_the_seven
+	remove_trait = bad_priest_westerosi_pagan
+	remove_trait = bad_priest_drowned_god
+	remove_trait = bad_priest_eastern
+	remove_trait = bad_priest_valyrian
+	remove_trait = bad_priest_eastern_pagan
+	remove_trait = bad_priest_other
+	remove_trait = bad_priest_far_east
+	remove_trait = secretly_the_seven
+	remove_trait = secretly_the_seven_gods
+	remove_trait = secretly_the_mother
+	remove_trait = secretly_the_stranger
+	remove_trait = secretly_the_smith
+	remove_trait = secretly_lady_of_the_waves
+	remove_trait = secretly_vulture_god
+	remove_trait = secretly_old_gods
+	remove_trait = secretly_old_gods_beyond
+	remove_trait = secretly_old_gods_beyond_white
+	remove_trait = secretly_drowned_god
+	remove_trait = secretly_storm_god
+	remove_trait = secretly_rhllor
+	remove_trait = secretly_moonsingers
+	remove_trait = secretly_faceless_men
+	remove_trait = secretly_maiden_of_the_harvest
+	remove_trait = secretly_bearded_priests
+	remove_trait = secretly_bearded_priests_reformed
+	remove_trait = secretly_boashi
+	remove_trait = secretly_boashi_reformed
+	remove_trait = secretly_trios
+	remove_trait = secretly_valyrian
+	remove_trait = secretly_the_dragon_gods
+	remove_trait = secretly_the_weeping_lady
+	remove_trait = secretly_lady_of_the_rocks
+	remove_trait = secretly_dothraki
+	remove_trait = secretly_rhoynar
+	remove_trait = secretly_harpy
+	remove_trait = secretly_yiti_gods
+	remove_trait = secretly_lion_night
+	remove_trait = secretly_starry_wisdom
+	remove_trait = secretly_old_ones
+	remove_trait = secretly_shadowbinders
+	remove_trait = secretly_gods_bone_mountains
+	remove_trait = secretly_gods_nghai
+	remove_trait = secretly_stone_cow
+	
+	#04_battle_scars_and_tattoos_traits
+	remove_trait = scarred_type_1
+	remove_trait = scarred_type_2
+	remove_trait = scarred_type_3
+	remove_trait = scarred_type_4
+	remove_trait = scarred_type_5
+	remove_trait = scarred_type_6
+	remove_trait = scarred_type_7
+	remove_trait = scarred_type_8
+	remove_trait = scarred_type_9
+	remove_trait = scarred_type_10
+	remove_trait = scarred_mid
+	remove_trait = scarred_high
+	remove_trait = african_tattoo_1
+	remove_trait = african_tattoo_2
+	remove_trait = african_tattoo_3
+	remove_trait = african_tattoo_4
+	remove_trait = african_tattoo_5
+	remove_trait = african_tattoo_6
+	remove_trait = african_tattoo_7
+	remove_trait = african_tattoo_8
+	remove_trait = norse_tattoo_1
+	remove_trait = norse_tattoo_2
+	remove_trait = norse_tattoo_3
+	remove_trait = norse_tattoo_4
+	remove_trait = norse_tattoo_5
+	remove_trait = norse_tattoo_6
+	remove_trait = slavic_tattoo_1
+	remove_trait = slavic_tattoo_2
+	remove_trait = slavic_tattoo_3
+	remove_trait = slavic_tattoo_4
+	remove_trait = slavic_tattoo_5
+	remove_trait = slavic_tattoo_6
+	remove_trait = african_tattoo_9
+	remove_trait = african_tattoo_10
+	remove_trait = african_tattoo_11
+	remove_trait = african_tattoo_12
+	
+	#10_emf_age_customizer
+	remove_trait = age_1
+	remove_trait = age_2
+	remove_trait = age_4
+	remove_trait = age_8
+	remove_trait = age_16
+	remove_trait = age_32
+	remove_trait = emf_customize_ruler
+	
+	#10_emf_coronation_traits
+	remove_trait = emf_crowned_by_pope
+	remove_trait = emf_crowned
+	remove_trait = the_old_gods_high_king
+	remove_trait = the_seven_high_king
+	
+	#11_custom_traits
+	remove_trait = traveling
+	remove_trait = figurehead
+	remove_trait = black_brother
+	remove_trait = page
+	remove_trait = squire
+	remove_trait = red_knight
+	remove_trait = dragon_knight
+	remove_trait = knight
+	remove_trait = hedge_knight
+	remove_trait = sociopath
+	remove_trait = bleeding_heart
+	remove_trait = honourable
+	remove_trait = dishonourable
+	remove_trait = heartless
+	remove_trait = irrational
+	remove_trait = slave
+	remove_trait = former_slave
+	remove_trait = slave_owner
+	remove_trait = dueling_novice
+	remove_trait = dueling_adept
+	remove_trait = dueling_skilled
+	remove_trait = dueling_expert
+	remove_trait = dueling_master
+	remove_trait = dueling_legend
+	remove_trait = god_man
+	remove_trait = greensight_unconcious
+	remove_trait = greensight_awakening
+	remove_trait = greensight_awakened
+	remove_trait = greenseer
+	remove_trait = sunguard
+	remove_trait = wolfguard
+	remove_trait = roseguard
+	remove_trait = iron_victores
+	remove_trait = winged_knights
+	remove_trait = stormguard
+	remove_trait = riverguard
+	remove_trait = lionguard
+	remove_trait = duskguard
+	remove_trait = new_birth
+	remove_trait = tsk_war_leader_1
+	remove_trait = tsk_war_leader_2
+	remove_trait = thenn
+	remove_trait = septon
+	remove_trait = septa
+	remove_trait = silent_sister
+	remove_trait = red_priest
+	remove_trait = drowned
+	remove_trait = bearded_priest
+}
+
+tsk_new_dragons_startup = {
+	set_immune_to_pruning = yes
+	add_trait = dragon_base_trait
+	add_trait = dragon_trait
+	tsk_generate_dragon_traits = yes
+	dragon_stat_calculation = yes
+}
+	
