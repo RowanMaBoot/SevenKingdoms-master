@@ -1,0 +1,900 @@
+# All new traits should be added to the bottom of this file to preserve save-game compatability.
+traveling = {
+	monthly_character_prestige = 2 #libert v12a increased by ten-fold due to short durations
+	
+	customizer = no
+	
+	pilgrimage = yes # Will need a regent, but can still be guardian to children
+}
+figurehead = {
+	monthly_character_prestige = -0.5
+	ai_ambition = -50
+}
+
+### Night's Watch
+
+black_brother = { 
+    cannot_marry = yes
+    cannot_inherit = yes
+    
+    random = no
+    customizer = no
+
+    monthly_character_prestige = 0.25
+}
+
+### Knighthood traits
+
+# Page
+page  = {
+  potential = {
+      NOT = { age = 17 } # Remove after the age of 17, leeway
+  }
+
+  opposites = {
+    squire
+    dragon_knight
+    red_knight
+    knight
+    hedge_knight
+  }
+
+  customizer = yes
+  random = no
+  hidden = no
+
+  learning = 1
+  stewardship = 1
+
+  monthly_character_prestige = 0.05
+
+  vassal_opinion = -10
+  same_opinion = 15
+  sex_appeal_opinion = 5
+
+  ai_rationality = -5
+  ai_honor = 15
+}
+
+# Squire
+squire  = {
+  opposites = {
+    page
+    dragon_knight
+    red_knight
+    knight
+    hedge_knight
+  }
+  
+  customizer = yes
+  random = no
+  hidden = no
+  
+  learning = 1
+  
+  monthly_character_prestige = 0.10
+  
+  vassal_opinion = -5
+  same_opinion = 10
+  sex_appeal_opinion = 10
+  
+  ai_rationality = -5
+  ai_honor = 15
+}
+
+# Red Knight, R'hllor
+red_knight  = {
+  opposites = {
+    page
+    squire
+    dragon_knight
+    knight
+    hedge_knight
+  }
+  
+  customizer = yes
+  random = no
+  hidden = no
+  
+  learning = 2
+  
+  monthly_character_prestige = 0.25
+  
+  command_modifier = {
+    religious_enemy = 0.25
+    morale_defence = 0.10
+    
+    cavalry = 0.1
+    light_infantry = -0.2
+  }
+  
+  vassal_opinion = 5
+  same_opinion = 10
+  sex_appeal_opinion = 15
+  
+  ai_zeal = 30
+  ai_rationality = -10
+  ai_honor = 10
+}
+
+# Red Knight
+dragon_knight  = {
+  opposites = {
+    page
+    squire
+    red_knight
+    knight
+    hedge_knight
+  }
+  
+  customizer = yes
+  random = no
+  hidden = no
+  
+  diplomacy = 1
+  learning = 1
+  martial = 2
+  
+  monthly_character_prestige = 0.25
+  
+  command_modifier = {
+    religious_enemy = 0.10
+    morale_defence = 0.15
+    
+    cavalry = 0.1
+    light_infantry = -0.20
+  }
+ 
+  vassal_opinion = 5
+  same_opinion = 10
+  sex_appeal_opinion = 15
+  
+  ai_zeal = 10
+  ai_rationality = -5
+  ai_honor = 5
+}
+
+# Knight
+knight  = {
+  opposites = {
+    page
+    squire
+    dragon_knight
+    red_knight
+    hedge_knight
+  }
+  
+  customizer = yes
+  random = no
+  hidden = no
+  
+  diplomacy = 2
+  learning = 1
+  martial = 1
+  
+  monthly_character_prestige = 0.25
+  
+  command_modifier = {
+    religious_enemy = 0.15
+    morale_defence = 0.05
+    
+    cavalry = 0.1
+    light_infantry = -0.2
+  }
+  
+  vassal_opinion = 5
+  same_opinion = 10
+  sex_appeal_opinion = 15
+  
+  ai_zeal = 20
+  ai_rationality = -5
+  ai_honor = 10
+}
+
+hedge_knight  = {
+  opposites = {
+    page
+    squire
+    dragon_knight
+    red_knight
+    knight
+  }
+  
+  customizer = yes
+  random = no
+  hidden = no
+  
+  command_modifier = {
+    heavy_infantry = 0.1
+  }
+  
+  learning = 1
+  martial = 1
+  
+  monthly_character_prestige = 0.10
+  
+  vassal_opinion = -5
+  same_opinion = 20
+  sex_appeal_opinion = 5
+  
+  ai_rationality = 5
+  ai_honor = -10
+}
+
+### Personality traits
+
+# Could technically be genetic or the result of serious abuse.
+sociopath = {
+    personality = yes
+    
+    opposites =  {
+        bleeding_heart
+        kind
+        honourable
+        just
+        content
+        trusting
+        envious
+    }
+    
+    intrigue = 3
+    diplomacy = 2
+    
+    vassal_opinion = 15
+    liege_opinion = 15
+    
+    same_opinion = -15
+    opposite_opinion = -25
+    ambition_opinion = -25
+    dynasty_opinion = -50 # Negates child bonus, makes dynasty members not like them due to imtimate knowledge of what they are like.
+    sex_appeal_opinion = -25
+    
+    ai_rationality = -10
+    ai_greed = 10
+    ai_ambition = 30
+    ai_honor = -30
+    ai_zeal = -30
+    
+    combat_rating = 1
+    
+    command_modifier = {
+        morale_offence = 0.10
+    }
+    
+    male_insult = INSULT_BRUTE
+    female_insult = INSULT_FIEND
+    child_insult = INSULT_TROLL
+    male_insult_adj = INSULT_CRUEL
+    female_insult_adj = INSULT_CALLOUS
+    child_insult_adj = INSULT_WICKED
+}
+
+# Advanced version of Kind
+bleeding_heart = {
+    personality = yes
+    
+    potential = {
+        NOT = {
+            trait = kind
+        }
+    }
+    
+    opposites =  {
+        envious
+        cruel
+        sociopath
+    }
+    
+    virtue = yes
+    
+    global_tax_modifier = -0.05
+    
+    intrigue = -3
+    diplomacy = 3
+    
+    vassal_opinion = 15
+    opposite_opinion = -5
+    same_opinion = 10
+    
+    female_dynasty_opinion = 15
+    male_dynasty_opinion = 5
+    
+    ai_honor = 10
+    
+    command_modifier = {
+        morale_offence = -0.10
+    }
+    
+    male_insult_adj = INSULT_SOFT
+    male_compliment_adj = COMPL_KINDLY
+    female_compliment_adj = COMPL_KINDHEARTED
+}
+
+# Honourable / Dishonourable
+honourable = {
+    personality = yes
+    
+    opposites =  {
+        dishonourable
+        sociopath
+    }
+    
+    intrigue = -1
+    diplomacy = 2
+    
+    liege_opinion = 10
+    opposite_opinion = -20
+    general_opinion = 10
+    same_opinion = 5
+    
+    ai_honor = 100
+    ai_ambition = -5
+    ai_greed = -5
+    
+    virtue = yes
+    
+    male_compliment_adj = COMPL_JUST
+    female_compliment_adj = COMPL_JUST
+    child_compliment_adj = COMPL_NICE
+}
+
+dishonourable = {
+    personality = yes
+    
+    opposites =  {
+        honourable
+    }
+    
+    intrigue = 2
+    diplomacy = -1
+    
+    liege_opinion = -15
+    opposite_opinion = -15
+    general_opinion = -5
+    same_opinion = 5
+    
+    ai_honor = -100
+    ai_ambition = 10
+    ai_greed = 5
+    
+    combat_rating = 1
+    
+    vice = yes
+    
+    male_insult = INSULT_BRUTE
+    female_insult = INSULT_FIEND
+    child_insult = INSULT_TROLL
+    male_insult_adj = INSULT_CRUEL
+    female_insult_adj = INSULT_CALLOUS
+    child_insult_adj = INSULT_WICKED
+}
+
+# Advanced version of Cruel
+heartless = {
+    personality = yes
+    
+    opposites =  {
+        bleeding_heart
+        kind
+        cruel
+    }
+    
+    intrigue = 2
+    diplomacy = -2
+    
+    global_tax_modifier = 0.05
+    
+    vassal_opinion = -10
+    dynasty_opinion = -10
+    same_opinion = 5
+    
+    ai_honor = -10
+    ai_greed = 10
+    
+    command_modifier = {
+        morale_offence = 0.15
+    }
+    
+    male_insult = INSULT_BRUTE
+    female_insult = INSULT_FIEND
+    child_insult = INSULT_TROLL
+    male_insult_adj = INSULT_CRUEL
+    female_insult_adj = INSULT_CALLOUS
+    child_insult_adj = INSULT_WICKED
+}
+
+# Irrational
+irrational = {
+    personality = yes
+    
+    stewardship = -1
+    martial = -1
+    intrigue = 1
+    
+    vassal_opinion = -10
+    liege_opinion = -5
+    dynasty_opinion = -10
+    
+    global_tax_modifier = -0.05
+    
+    ai_rationality = -50
+}
+
+### Slavery traits
+
+slave = {
+    customizer = no
+    random = no
+    
+    opposites = {
+        former_slave
+        slave_owner
+    }
+    
+    health = -1
+    diplomacy = -5
+    
+    general_opinion = -5
+    same_opinion = 20
+}
+
+former_slave = {
+    random = no
+	customizer = no
+    
+    opposites = {
+        slave
+        slave_owner
+    }
+    
+    diplomacy = -2
+    
+    same_opinion = 30
+}
+
+slave_owner = {
+    customizer = no
+    random = no
+    
+    opposites = {
+        slave
+        former_slave
+    }
+    
+    stewardship = -1 # Resources dedicated to slave management
+    
+    opposite_opinion = -15
+    same_opinion = 5
+}
+
+### Dueling traits
+
+dueling_novice = {
+    random = yes
+    
+    monthly_character_prestige = 0.1
+    combat_rating = 10
+    opposites =  {
+        dueling_adept
+        dueling_skilled
+        dueling_expert
+        dueling_master
+        dueling_legend
+    }
+}
+
+dueling_adept = {
+    random = yes
+    
+    monthly_character_prestige = 0.2
+    combat_rating = 20
+    opposites =  {
+        dueling_novice
+        dueling_skilled
+        dueling_expert
+        dueling_master
+        dueling_legend
+    }
+}
+
+dueling_skilled = {
+    random = yes
+    
+    monthly_character_prestige = 0.3
+    combat_rating = 30
+	health = 0.5
+    opposites = {
+        dueling_novice
+        dueling_adept
+        dueling_expert
+        dueling_master
+        dueling_legend
+    }
+}
+
+dueling_expert = {
+    random = yes
+    
+    martial = 1
+    monthly_character_prestige = 0.4
+    combat_rating = 45
+	health = 1
+    opposites = {
+        dueling_novice
+        dueling_adept
+        dueling_skilled
+        dueling_master
+        dueling_legend
+    }
+}
+
+dueling_master = {
+    random = no
+    
+    martial = 2
+    monthly_character_prestige = 0.5
+    combat_rating = 70
+	health = 1.5
+    opposites = {
+        dueling_novice
+        dueling_adept
+        dueling_skilled
+        dueling_expert
+        dueling_legend
+    }
+}
+
+dueling_legend = {
+    random = no
+    
+    martial = 3
+    monthly_character_prestige = 0.6
+    combat_rating = 100
+	health = 2
+    opposites = {
+        dueling_novice
+        dueling_adept
+        dueling_skilled
+        dueling_expert
+        dueling_master
+    }
+}
+
+god_man = { # God mode used for timeskipping 
+    random = no
+    customizer = no
+    martial = 40
+    stewardship = 40
+    diplomacy = 40
+    intrigue = 40
+    learning = 40
+    health = 10
+    general_opinion = 300
+}
+
+### Greensight
+
+# The Unconcious dreamers are afflicted with Greendreams, but have no control
+greensight_unconcious = {    
+    customizer = yes
+    random = no
+    hidden = no
+    
+    health = 0.25
+    
+    learning = 1
+    
+    command_modifier = {
+        random = 0.30
+    }
+    
+    ai_rationality = 5
+}
+
+# The Awakening are aware of their dreams and their power, but have little to no control, or no desire to control them.
+greensight_awakening = {
+    customizer = yes
+    random = no
+    hidden = no
+    
+    health = 0.25
+    
+    diplomacy = 1
+    intrigue = 1
+    learning = 1
+    martial = 1
+    stewardship = 1
+    
+    command_modifier = {
+        random = 0.25
+    }
+    
+    ai_rationality = 10
+}
+
+# The Awakened have control over the Greensight, but are far from masters of the sight.
+greensight_awakened = {
+    customizer = yes
+    random = no
+    hidden = no
+    
+    health = 0.50
+    
+    diplomacy = 1
+    intrigue = 1
+    learning = 1
+    martial = 1
+    stewardship = 1
+    
+    command_modifier = {
+        random = 0.20 # Control means less seen, but also less likely to see paths created by knowledge of their sight.
+    }
+    
+    ai_rationality = 20
+}
+
+# A Greenseer is an awakened individual with the Greensight. They may peer in the future or past at will.
+greenseer = {
+    customizer = yes
+    random = no
+    hidden = no
+    
+    health = 0.50
+    
+    diplomacy = 2
+    learning = 3
+    
+    command_modifier = {
+        random = 0.10
+    }
+    
+    ai_rationality = 10
+}
+
+### Guard traits
+
+sunguard = { 
+    martial = 1
+    monthly_character_prestige = 0.5
+    customizer = no
+}
+
+wolfguard = { 
+    martial = 1
+    monthly_character_prestige = 0.5
+    customizer = no
+}
+
+roseguard = { 
+    martial = 1
+    monthly_character_prestige = 0.5
+    cannot_marry = yes
+    cannot_inherit = yes
+    liege_opinion = 40
+    cached = yes
+    customizer = no
+}
+
+iron_victores = { 
+    martial = 1
+    monthly_character_prestige = 0.5
+    customizer = no
+}
+
+winged_knights = { 
+    martial = 1
+    monthly_character_prestige = 0.5
+    customizer = no
+}
+
+stormguard = { 
+    martial = 1
+    monthly_character_prestige = 0.5
+    cannot_marry = yes
+    cannot_inherit = yes
+    liege_opinion = 40
+    cached = yes
+    customizer = no
+}
+
+riverguard = { 
+    martial = 1
+    monthly_character_prestige = 0.5
+    customizer = no
+}
+
+lionguard = { 
+    martial = 1
+    monthly_character_prestige = 0.5
+    customizer = no
+}
+
+duskguard = { 
+    martial = 1
+    monthly_character_prestige = 0.5
+    customizer = no
+}
+
+### Birth Control traits
+
+new_birth = {
+    lifestyle = yes
+
+    opposites =  {
+        hedonist
+    }
+    fertility = -2.0
+    
+    christian_church_opinion = 5
+    opposite_opinion = -20
+    
+    monthly_character_piety = 1
+
+}
+
+### War leader traits
+
+tsk_war_leader_1 = {
+	customizer = no
+  
+	vassal_opinion = 5
+	monthly_character_prestige = 0.50
+  
+	global_tax_modifier = -0.05
+  
+	martial = 3
+	diplomacy = -2
+	stewardship = -1
+	intrigue = -1
+	learning = -1
+	
+	#is_abroad = yes Doesn't work here! Needs to be in potential = { } ?
+}
+
+tsk_war_leader_2 = {
+	customizer = no
+  
+	vassal_opinion = -5
+	monthly_character_prestige = -0.25
+
+	intrigue = 2
+}
+
+### Cultural traits
+
+
+thenn = {
+	general_opinion = -30
+	same_opinion = 35
+	ai_honor = -25
+	
+	male_insult = INSULT_THENN
+	female_insult = INSULT_THENN
+	male_insult_adj = INSULT_SAVAGE
+	female_insult_adj = INSULT_SAVAGE
+}
+
+### Religious traits
+
+#################
+### The Seven ###
+#################
+
+septon = {
+	religious = yes # Lost immediately on religion change
+	
+	diplomacy = 3
+	
+	monthly_character_piety = 0.5
+	church_opinion = 5
+	same_religion_opinion = 5
+	
+	customizer = no
+	cannot_marry = yes
+	cannot_inherit = yes 
+	
+	ai_zeal = 25
+	
+	male_compliment_adj = COMPL_HOLY
+}
+septa = {
+	religious = yes # Lost immediately on religion change
+	
+	monthly_character_piety = 0.5
+	church_opinion = 5
+	same_religion_opinion = 5
+	
+	customizer = no
+	cannot_marry = yes
+	cannot_inherit = yes
+	
+	ai_zeal = 25
+	
+	female_compliment_adj = COMPL_DEVOUT
+}
+silent_sister = {
+	potential = { religion = the_seven }
+	diplomacy = -10
+	monthly_character_piety = 1
+	church_opinion = 25
+	customizer = no
+	cannot_marry = yes
+	cannot_inherit = yes
+	
+	female_compliment_adj = COMPL_DEVOUT
+}
+
+###############
+### Rhllor ####
+###############
+
+red_priest = {
+	religious = yes # Lost immediately on religion change
+	
+	learning = 4
+	
+	monthly_character_piety = 0.5
+	
+	infidel_opinion = -5
+	same_religion_opinion = 10
+	church_opinion = 5
+	
+	customizer = no
+	cannot_marry = yes
+	cannot_inherit = yes
+	
+	ai_zeal = 50
+	
+	female_insult = INSULT_RED_BITCH
+	
+	female_compliment_adj = COMPL_HOLY
+	male_compliment_adj = COMPL_HOLY
+}
+
+###################
+### Drowned God ###
+###################
+
+drowned = {
+	religious = yes # Lost immediately on religion change
+	
+	martial = 4
+	learning = -2
+	
+	monthly_character_piety = 0.5 #1
+	monthly_character_prestige = 0.2 #0.4
+	church_opinion = 10 #75
+	same_religion_opinion = 5 #50
+	
+	customizer = no
+	cannot_marry = yes
+	cannot_inherit = yes
+	ai_zeal = 50
+	
+	male_compliment_adj = COMPL_HOLY
+}
+
+########################
+### Bearded Priests ####
+########################
+
+bearded_priest = {
+	religious = yes # Lost immediately on religion change
+
+	martial = 4	
+	learning = 2
+	
+	monthly_character_piety = 0.5
+	
+	infidel_opinion = -5
+	same_religion_opinion = 30
+	church_opinion = 5
+	
+	customizer = no
+	cannot_marry = yes
+	cannot_inherit = yes
+	
+	ai_zeal = 50
+	
+	male_compliment_adj = COMPL_HOLY
+}
