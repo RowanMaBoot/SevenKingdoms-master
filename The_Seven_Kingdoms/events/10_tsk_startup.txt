@@ -363,3 +363,91 @@ character_event = {
 		}
 	}
 }
+
+# BUG FIXING:
+
+# Removes Pregnancy Finishing trait
+character_event = {
+	id = tsk_startup.4
+	
+	hide_window = yes
+	
+	trigger = {
+		is_pregnant = no
+		trait = pregnancy_finishing
+	}
+	
+	option = {
+		remove_trait = pregnancy_finishing
+		remove_trait = in_hiding
+		remove_trait = travelling
+		remove_character_modifier = mother_praying_health
+		remove_character_modifier = mother_resting_health
+		remove_character_modifier = mother_partying_health
+		clr_character_flag = mother_asked_retirement 
+		clr_character_flag = flag_mother_dark_rest
+		clr_character_flag = mother_gossip_listening #Safety check, they should already have been removed
+		clr_character_flag = mother_gossip_talking
+		clr_character_flag = mother_gossip_trusting
+		clr_character_flag = mother_gossip_plotting
+		clr_character_flag = mother_gossip_envious
+		clr_character_flag = mother_gossip_shy
+		clr_character_flag = mother_gossip_learning
+		clr_character_flag = mother_gossip_content
+		clr_character_flag = mother_gossip_gluttonous
+
+		character_event = { id = HFP.20597 days = 35 } #Clears persistent Physician targets. They are still on on_birth since post-partum complications may require their services.
+		log = "PregnancyError: [This.GetID]"
+	}
+}
+
+# Prevents characters from being bastards if they actually aren't
+character_event = {
+	id = tsk_startup.5
+	
+	hide_window = yes
+	is_triggered_only = yes
+	
+	trigger = {
+		age = 0
+		trait = bastard
+		father_even_if_dead = {
+			ROOT = {
+				mother_even_if_dead = {
+					is_married = PREVPREV
+				}
+			}
+		}
+	}
+	
+	option = {
+		remove_trait = bastard
+		if = {
+			limit = {
+				father_even_if_dead = {
+					ROOT = {
+						mother_even_if_dead = {
+							is_married = PREVPREV
+							is_married_matrilineally = yes
+						}
+					}
+				}
+			}
+			dynasty = mother
+		}
+		if = {
+			limit = {
+				father_even_if_dead = {
+					ROOT = {
+						mother_even_if_dead = {
+							is_married = PREVPREV
+							is_married_matrilineally = no
+						}
+					}
+				}
+			}
+			dynasty = father
+		}
+		log = "BastardError: [This.GetID]"
+	}
+}
