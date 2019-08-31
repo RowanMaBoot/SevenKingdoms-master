@@ -1,4 +1,4 @@
-name = "TSK DLC Portraits"
-path = "mod/tsk_dlc_portrait"
-dependencies = { "The Seven Kingdoms | Beta3 | 3.2" }
-picture = "thumb.jpg"
+name="GoT | The Seven Kingdoms CPR+ Patch"
+archive="mod/tsk_dlc_portrait.zip"
+dependencies={"GoT | The Seven Kingdoms" "CPRplus - Cultures and Portraits Revamped"}
+picture="thumb.jpg"
