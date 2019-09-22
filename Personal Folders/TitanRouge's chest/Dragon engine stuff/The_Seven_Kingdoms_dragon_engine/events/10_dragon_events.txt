@@ -11,7 +11,7 @@
 #004	Decreases the infamy gained in sieges/battles when behaving peacufully
 #005	Adds dragon egg to dragon to set dragon as FROM for renaming
 #006	Assigns special character titles
-#007	Assigns traits for dragon when rider dies
+#007	Assigns traits for dragon (rider) when rider dies
 
 ####Dragon in combat events 100-199####
 #100	Use your dragon battle
@@ -77,7 +77,7 @@ character_event = {
 			set_immune_to_pruning = yes
 		}
 		
-		repeat_event = { id = dragon.0 days = 31 }
+		#repeat_event = { id = dragon.0 days = 31 }
 	}
 }
 
@@ -163,7 +163,7 @@ character_event = {
 	
 	mean_time_to_happen = { days = 1 }
 	
-	immediate = {
+	option = {
 		random = {
 			chance = 30
 			modifier = {
@@ -172,27 +172,27 @@ character_event = {
 			}
 			modifier = {
 				factor = 1.2
-				age <= 120
+				age < 120
 				age >= 110
 			}
 			modifier = {
 				factor = 1.4
-				age <= 130
+				age < 130
 				age >= 120
 			}
 			modifier = {
 				factor = 1.6
-				age <= 140
+				age < 140
 				age >= 130
 			}
 			modifier = {
 				factor = 1.8
-				age <= 150
+				age < 150
 				age >= 140
 			}
 			modifier = {
 				factor = 2.2
-				age <= 160
+				age < 160
 				age >= 150
 			}
 			death = { death_reason = death_natural } 
@@ -233,117 +233,24 @@ character_event = {
 	
 	immediate = {
 		random_list = {
-			20 = {
-				add_artifact = black_dragon_egg
-				new_artifact = {
-					save_event_target_as = created_dragon_egg
-					set_name = "[From.GetFirstName]'s egg"
-					set_artifact_original_owner = ROOT
-				}
-				if = {
-					limit = { any_friend = { is_dragon_rider = yes } }
-					random_friend = {
-						character_event = { id = dragon.205 }
-					}
-				}
-			}
-			20 = {
-				add_artifact = blue_dragon_egg
-				new_artifact = {
-					save_event_target_as = created_dragon_egg
-					set_name = "[From.GetFirstName]'s egg"
-					set_artifact_original_owner = ROOT
-				}
-				if = {
-					limit = { any_friend = { is_dragon_rider = yes } }
-					random_friend = {
-						character_event = { id = dragon.205 }
-					}
-				}
-			}
-			20 = {
-				add_artifact = green_dragon_egg
-				new_artifact = {
-					save_event_target_as = created_dragon_egg
-					set_name = "[From.GetFirstName]'s egg"
-					set_artifact_original_owner = ROOT
-				}
-				if = {
-					limit = { any_friend = { is_dragon_rider = yes } }
-					random_friend = {
-						character_event = { id = dragon.205 }
-					}
-				}
-			}
-			20 = {
-				add_artifact = grey_dragon_egg
-				new_artifact = {
-					save_event_target_as = created_dragon_egg
-					set_name = "[From.GetFirstName]'s egg"
-					set_artifact_original_owner = ROOT
-				}
-				if = {
-					limit = { any_friend = { is_dragon_rider = yes } }
-					random_friend = {
-						character_event = { id = dragon.205 }
-					}
-				}
-			}
-			20 = {
-				add_artifact = red_dragon_egg
-				new_artifact = {
-					save_event_target_as = created_dragon_egg
-					set_name = "[From.GetFirstName]'s egg"
-					set_artifact_original_owner = ROOT
-				}
-				if = {
-					limit = { any_friend = { is_dragon_rider = yes } }
-					random_friend = {
-						character_event = { id = dragon.205 }
-					}
-				}
-			}
-			20 = {
-				add_artifact = violet_dragon_egg
-				new_artifact = {
-					save_event_target_as = created_dragon_egg
-					set_name = "[From.GetFirstName]'s egg"
-					set_artifact_original_owner = ROOT
-				}
-				if = {
-					limit = { any_friend = { is_dragon_rider = yes } }
-					random_friend = {
-						character_event = { id = dragon.205 }
-					}
-				}
-			}
-			20 = {
-				add_artifact = white_dragon_egg
-				new_artifact = {
-					save_event_target_as = created_dragon_egg
-					set_name = "[From.GetFirstName]'s egg"
-					set_artifact_original_owner = ROOT
-				}
-				if = {
-					limit = { any_friend = { is_dragon_rider = yes } }
-					random_friend = {
-						character_event = { id = dragon.205 }
-					}
-				}
-			}
-			20 = {
-				add_artifact = yellow_dragon_egg
-				new_artifact = {
-					save_event_target_as = created_dragon_egg
-					set_name = "[From.GetFirstName]'s egg"
-					set_artifact_original_owner = ROOT
-				}
-				if = {
-					limit = { any_friend = { is_dragon_rider = yes } }
-					random_friend = {
-						character_event = { id = dragon.205 }
-					}
-				}
+			20 = { add_artifact = black_dragon_egg }
+			20 = { add_artifact = blue_dragon_egg }
+			20 = { add_artifact = green_dragon_egg }
+			20 = { add_artifact = grey_dragon_egg }
+			20 = { add_artifact = red_dragon_egg }
+			20 = { add_artifact = violet_dragon_egg }
+			20 = { add_artifact = white_dragon_egg }
+			20 = { add_artifact = yellow_dragon_egg }
+		}
+		new_artifact = {
+			save_event_target_as = created_dragon_egg
+			set_name = "[From.GetFirstName]'s egg"
+			set_artifact_original_owner = ROOT
+		}
+		if = {
+			limit = { any_friend = { is_dragon_rider = yes } }
+			random_friend = {
+				character_event = { id = dragon.205 }
 			}
 		}
 	}
@@ -388,7 +295,7 @@ character_event = {
 	}
 }
 
-#	Assigns traits for dragon when rider dies
+#	Assigns traits for dragon (rider) when rider dies
 character_event = {
 	id = dragon.7
 
@@ -396,16 +303,44 @@ character_event = {
 	hide_window = yes
 	
 	trigger = {
-		trait = dragon_rider
+		OR = {
+			trait = dragon_rider
+			trait = dragon_base_trait
+		}
 	}
 	
 	immediate = {
-		any_friend = {
-			limit ={
-				is_tamed_dragon = yes
+		if = {
+			limit = { trait = dragon_rider }
+			any_friend = {
+				limit ={
+					is_tamed_dragon = yes
+				}
+				remove_trait = tamed_dragon
+				add_trait = wild_dragon
 			}
-			remove_trait = tamed_dragon
-			add_trait = wild_dragon
+		}
+		else_if = {
+			limit = { trait = dragon_base_trait }
+			trigger_switch = {
+				on_trigger = trait
+				poor_dragon_rider = {
+					set_flag = is_poor_dragon_rider
+					remove_trait = poor_dragon_rider
+				}
+				trained_dragon_rider = {
+					set_flag = is_trained_dragon_rider
+					remove_trait = trained_dragon_rider
+				}
+				skilled_dragon_rider = {
+					set_flag = is_skilled_dragon_rider
+					remove_trait = skilled_dragon_rider
+				}
+				master_dragon_rider = {
+					set_flag = is_master_dragon_rider
+					remove_trait = master_dragon_rider
+				}
+			}
 		}
 	}
 }
@@ -427,7 +362,7 @@ character_event = {
 	
 	option = {	#Burn them all!
 		name = EVTOPTAdragon100
-		tooltip_info = basic_dragon_rider
+		tooltip_info = dragon_rider
 		
 		any_current_enemy =  {
 			top_liege = { character_event = { id = dragon.108 days = 4 } }
@@ -476,7 +411,7 @@ character_event = {
 	
 	option = { #Let these stones be their graves
 		name = EVTOPTAdragon101
-		tooltip_info = basic_dragon_rider
+		tooltip_info = dragon_rider
 		
 		siege =  {
 			enemy = {
@@ -501,7 +436,7 @@ character_event = {
 					ROOT = { siege = { is_attacker = yes } }
 				}
 				add_holding_modifier = { modifier = damaged_walls duration = 730 }
-				holder = { 
+				holder_scope = { 
 					opinion = { modifier = used_dragon_against_me who = ROOT years = 6 } 
 				}
 			}
@@ -578,8 +513,6 @@ character_event = {
 	#}
 	
 	immediate = {
-		name = EVTOPTAdragon103
-
 		random_list = {
 			10 = {
 			}
@@ -707,7 +640,7 @@ character_event = {
 	# Burn the walls only
 	option = {
 		name = EVTOPTAdragon105
-		tooltip_info = basic_dragon_rider
+		tooltip_info = dragon_rider
 		
 		ai_chance = {
 			factor = 30
@@ -738,7 +671,7 @@ character_event = {
 	# Burn the fort
 	option = {
 		name = EVTOPTBdragon105
-		tooltip_info = basic_dragon_rider
+		tooltip_info = dragon_rider
 		
 		ai_chance = {
 			factor = 20
@@ -775,7 +708,7 @@ character_event = {
 	# Give them fire
 	option = {
 		name = EVTOPTCdragon105
-		tooltip_info = basic_dragon_rider
+		tooltip_info = dragon_rider
 		
 		ai_chance = {
 			factor = 10
@@ -817,7 +750,7 @@ character_event = {
 			random_province_holding = { 
 				limit = { controlled_by = ROOT }
 				add_holding_modifier = { modifier = destroyed_holding duration = 7300 }
-				holder = { 
+				holder_scope = { 
 					opinion = { modifier = used_dragon_against_me who = ROOT years = 6 } 
 				}
 			}
@@ -980,7 +913,7 @@ character_event = {
 	
 	option = {
 		name = EVTOPTAdragon200
-		tooltip_info = basic_dragon_rider
+		tooltip_info = dragon_rider
 		
 		if = {
 			limit = {
@@ -993,7 +926,7 @@ character_event = {
 				}
 				if = {
 					limit = {
-						has_objective = obj_tame_a_dragon
+						has_ambition = obj_tame_a_dragon
 					}
 					set_character_flag = tamed_a_dragon
 				}
@@ -1021,7 +954,26 @@ character_event = {
 	option = {
 		name = EVTOPTAdragon201
 		
-		add_trait = poor_dragon_rider
+		
+		trigger_switch = {
+			on_trigger = has_character_flag
+			is_poor_dragon_rider = {
+				clr_flag = is_poor_dragon_rider
+				add_trait = poor_dragon_rider
+			}
+			is_trained_dragon_rider = {
+				clr_flag = is_trained_dragon_rider
+				add_trait = trained_dragon_rider
+			}
+			is_skilled_dragon_rider = {
+				clr_flag = is_skilled_dragon_rider
+				add_trait = skilled_dragon_rider
+			}
+			is_master_dragon_rider = {
+				clr_flag = is_master_dragon_rider
+				add_trait = master_dragon_rider
+			}
+		}
 		if = {
 			limit = { is_ruler = no }
 			set_special_character_title = title_dragon_rider
@@ -1158,48 +1110,103 @@ character_event = {
 			age = 0
 		}
 		new_character = {
+			set_flag = is_hatchling
+			save_event_target_as = hatchling
 			tsk_new_dragons_startup = yes
 			set_father = event_target:dragon_parent
-			save_event_target_as = hatchling
 		}
+		
 		clear_event_target = dragon_parent
 		hidden_tooltip = {
 			random_artifact = {
 				limit = { is_artifact_equipped = yes }
 				clr_artifact_flag = targetted_dragon_egg #Added for ambition
-				#if = {
-				#	limit = { artifact_type = black_dragon_egg }
-				#	artifact_owner = { destroy_artifact = black_dragon_egg }
-				#}
-				#else_if = {
-				#	limit = { artifact_type = blue_dragon_egg }
-				#	artifact_owner = { destroy_artifact = blue_dragon_egg }
-				#}
-				#else_if = {
-				#	limit = { artifact_type = green_dragon_egg }
-				#	artifact_owner = { destroy_artifact = green_dragon_egg }
-				#}
-				#else_if = {
-				#	limit = { artifact_type = red_dragon_egg }
-				#	artifact_owner = { destroy_artifact = red_dragon_egg }
-				#}
-				#else_if = {
-				#	limit = { artifact_type = white_dragon_egg }
-				#	artifact_owner = { destroy_artifact = white_dragon_egg }
-				#}
-				
-				### Replaced the if-clauses with trigger_switch. If it does not work use if-clauses instead.
 				
 				trigger_switch = {
 					on_trigger = artifact_type
-					black_dragon_egg = { artifact_owner = { destroy_artifact = black_dragon_egg } }
-					blue_dragon_egg = { artifact_owner = { destroy_artifact = blue_dragon_egg } }
-					green_dragon_egg = { artifact_owner = { destroy_artifact = green_dragon_egg } }
-					grey_dragon_egg = { artifact_owner = { destroy_artifact = grey_dragon_egg } }
-					red_dragon_egg = { artifact_owner = { destroy_artifact = red_dragon_egg } }
-					violet_dragon_egg = { artifact_owner = { destroy_artifact = violet_dragon_egg } }
-					white_dragon_egg = { artifact_owner = { destroy_artifact = white_dragon_egg } }
-					yellow_dragon_egg = { artifact_owner = { destroy_artifact = yellow_dragon_egg } }
+					black_dragon_egg = {
+						event_target:hatchling = {
+							random_list = {
+								1 = { add_trait = dragon1 }
+								1 = { add_trait = dragon2 }
+								1 = { add_trait = dragon6 }
+							}
+						}
+						artifact_owner = { destroy_artifact = black_dragon_egg }
+					}
+					blue_dragon_egg = {
+						event_target:hatchling = {
+							random_list = {
+								1 = { add_trait = dragon13 }
+								1 = { add_trait = dragon15 } # Turquoise
+								1 = { add_trait = dragon17 } # Turquoise
+							}
+						}
+						artifact_owner = { destroy_artifact = blue_dragon_egg }
+					}
+					green_dragon_egg = {
+						event_target:hatchling = {
+							random_list = {
+								1 = { add_trait = dragon3 }
+								1 = { add_trait = dragon9 }
+								1 = { add_trait = dragon11 }
+							}
+						}
+						artifact_owner = { destroy_artifact = green_dragon_egg }
+					}
+					grey_dragon_egg = {
+						event_target:hatchling = {
+							random_list = {
+								1 = { add_trait = dragon14 }
+								1 = { add_trait = dragon18 }
+								1 = { add_trait = dragon24 }
+								1 = { add_trait = dragon26 }
+							}
+						}
+						artifact_owner = { destroy_artifact = grey_dragon_egg }
+					}
+					red_dragon_egg = {
+						event_target:hatchling = {
+							random_list = {
+								1 = { add_trait = dragon8 } # Dark red
+								1 = { add_trait = dragon20 } # Orange
+								1 = { add_trait = dragon5 }
+								1 = { add_trait = dragon10 }
+								1 = { add_trait = dragon21 }
+							}
+						}
+						artifact_owner = { destroy_artifact = red_dragon_egg }
+					}
+					violet_dragon_egg = {
+						event_target:hatchling = {
+							random_list = {
+								1 = { add_trait = dragon16 }
+								1 = { add_trait = dragon19 }
+								1 = { add_trait = dragon27 }
+							}
+						}
+						artifact_owner = { destroy_artifact = violet_dragon_egg }
+					}
+					white_dragon_egg = {
+						event_target:hatchling = {
+							random_list = {
+								1 = { add_trait = dragon7 }
+								1 = { add_trait = dragon4 } # White-yellow
+							}
+						}
+						artifact_owner = { destroy_artifact = white_dragon_egg }
+					}
+					yellow_dragon_egg = {
+						event_target:hatchling = {
+							random_list = {
+								1 = { add_trait = dragon12 }
+								1 = { add_trait = dragon22 }
+								1 = { add_trait = dragon23 }
+								1 = { add_trait = dragon25 }
+							}
+						}
+						artifact_owner = { destroy_artifact = yellow_dragon_egg }
+					}
 				}
 			}
 		}
@@ -1277,20 +1284,22 @@ character_event = {
 	#border = GFX_event_normal_frame_martial
 
 	trigger = {
-		#OR = {
-		#	location = { region = world_valyria }
-		#	location = d_dragonstone
-		#}
+		OR = {
+			capital_scope = { region = world_valyria }
+			capital_scope = {
+				de_jure_liege = d_dragonstone
+			}
+		}
 		NOT = { had_global_flag = { flag = doom_fell_on_valyria days = 1825 } }
 		NOT = { has_global_flag = age_of_dragons_ended }
 	}
 	
 	mean_time_to_happen = {
-		years = 4
-	#	modifier = {
-	#		factor = 1.8
-	#		location = d_dragonstone
-	#	}
+		years = 8
+		modifier = {
+			factor = 4
+			capital_scope = { de_jure_liege = d_dragonstone }
+		}
 		modifier = {
 			factor = 3
 			is_dragon_rider = yes
@@ -1322,6 +1331,12 @@ character_event = {
 			save_event_target_as = targetted_dragon_for_taming
 			ROOT = {
 				random_demesne_province = {
+					limit = {
+						OR = {
+							region = world_valyria
+							ROOT = { capital_scope = { de_jure_liege = d_dragonstone } }
+						}
+					}
 					add_province_modifier = { name = burnt_land duration = 400 }
 					set_flag = is_lair_of_dragon_@PREVPREV
 					PREVPREV = {
@@ -1348,6 +1363,14 @@ character_event = {
 	option = { # There is nothing I can do
 		name = EVTOPTCdragon206
 		
+	}
+	
+	option = { # Kill the dragon with your dragon
+		name = EVTOPTDdragon206
+		tooltip_info = dragon_rider
+		trigger = { trait = dragon_rider }
+		
+		character_event = { id = dragon.216 }
 	}
 }
 
@@ -1620,7 +1643,20 @@ character_event = {
 		}
 		text = EVTDESCB2dragon210
 	}
-	picture = GFX_evt_imad_awan_dragon_fight_final2
+	desc = {
+		trigger = {
+			has_flag = chose_dragon
+			has_flag = kills_dragon
+		}
+		text = EVTDESCC1dragon210
+	}
+	desc = {
+		trigger = {
+			has_flag = chose_dragon
+			has_flag = killed_by_dragon
+		}
+		text = EVTDESCC1dragon210
+	}
 	#border = GFX_event_normal_frame_martial
 
 	is_triggered_only = yes
@@ -1637,8 +1673,17 @@ character_event = {
 	option = {
 		name = EVTOPTBdragon210
 		trigger = { has_flag = killed_by_dragon }
-		
-		death = { death_reason = death_tried_to_kill_dragon killer = event_target:targetted_dragon_for_taming }
+		event_target:targetted_dragon_for_taming = {
+			ROOT = {
+				death = { death_reason = death_tried_to_kill_dragon killer = PREV }
+			}
+		}
+		if = {
+			limit = { has_flag = chose_dragon }
+			event_target:targetted_dragon_for_taming = {
+				event_target:my_dragon = { death = { death_reason = death_dragon_duel killer = PREV } }
+			}
+		}	
 	}
 	
 	after = {
@@ -1650,6 +1695,7 @@ character_event = {
 		clr_flag = chose_zweihander
 		clr_flag = chose_short_spear
 		clr_flag = chose_fists
+		clr_flag = chose_dragon
 		clr_flag = kills_dragon
 		clr_flag = killed_by_dragon
 	}
@@ -1924,6 +1970,7 @@ character_event = {
 		set_character_flag = debug_rider_a
 		save_event_target_as = rider_a
 		save_persistent_event_target = { name = rider_a_per scope = event_target:rider_a }
+		change_variable = { which = num_team_a value = 1 }
 		dragon_riding_skill_calculation = yes
 		add_character_modifier = { modifier = in_dragon_duel_hidden duration = 15 }
 		any_friend = {
@@ -1937,7 +1984,7 @@ character_event = {
 		}
 		
 		# Set rider B
-		basic_dragon_rider = {
+		dragon_rider = {
 			limit = {
 				at_location = ROOT
 				in_command = yes
@@ -1952,6 +1999,7 @@ character_event = {
 			}
 			save_event_target_as = rider_b
 			save_persistent_event_target = { name = rider_b_per scope = event_target:rider_b }
+			event_target:rider_a = { change_variable = { which = num_team_a value = 1 } }
 			dragon_riding_skill_calculation = yes
 			any_friend = {
 				limit = {
@@ -1963,8 +2011,9 @@ character_event = {
 				save_persistent_event_target = { name = dragon_b_per scope = event_target:dragon_b }
 			}
 		}
+		
 		# Set rider C
-		basic_dragon_rider = {
+		dragon_rider = {
 			limit = {
 				at_location = ROOT
 				in_command = yes
@@ -1979,6 +2028,7 @@ character_event = {
 			}
 			save_event_target_as = rider_c
 			save_persistent_event_target = { name = rider_c_per scope = event_target:rider_c }
+			event_target:rider_a = { change_variable = { which = num_team_a value = 1 } }
 			dragon_riding_skill_calculation = yes
 			any_friend = {
 				limit = {
@@ -1994,7 +2044,7 @@ character_event = {
 		#### TEAM B ####
 		
 		# Set rider D
-		basic_dragon_rider = {
+		dragon_rider = {
 			limit = {
 				at_location = ROOT
 				in_command = yes
@@ -2006,6 +2056,7 @@ character_event = {
 			set_character_flag = debug_rider_d
 			save_event_target_as = rider_d
 			save_persistent_event_target = { name = rider_d_per scope = event_target:rider_d }
+			change_variable = { which = num_team_b value = 1 }
 			dragon_riding_skill_calculation = yes
 			any_friend = {
 				limit = {
@@ -2019,7 +2070,7 @@ character_event = {
 		}
 		
 		# Set rider E
-		basic_dragon_rider = {
+		dragon_rider = {
 			limit = {
 				at_location = ROOT
 				in_command = yes
@@ -2034,6 +2085,7 @@ character_event = {
 			}
 			save_event_target_as = rider_e
 			save_persistent_event_target = { name = rider_e_per scope = event_target:rider_e }
+			event_target:rider_d = { change_variable = { which = num_team_b value = 1 } }
 			dragon_riding_skill_calculation = yes
 			any_friend = {
 				limit = {
@@ -2047,7 +2099,7 @@ character_event = {
 		}
 		
 		# Set rider F
-		basic_dragon_rider = {
+		dragon_rider = {
 			limit = {
 				at_location = ROOT
 				in_command = yes
@@ -2062,6 +2114,7 @@ character_event = {
 			}
 			save_event_target_as = rider_f
 			save_persistent_event_target = { name = rider_f_per scope = event_target:rider_f }
+			event_target:rider_d = { change_variable = { which = num_team_b value = 1 } }
 			dragon_riding_skill_calculation = yes
 			any_friend = {
 				limit = {
@@ -2115,6 +2168,25 @@ character_event = {
 						set_character_flag = debug_rider_e
 						save_event_target_as = rider_e
 						save_persistent_event_target = { name = rider_e_per scope = event_target:rider_e }
+						if = {
+							limit = { has_flag = rider_e_chosen }
+							event_target:rider_e = { set_flag = rider_e_chosen }
+							clr_flag = rider_e_chosen
+						}
+						if = {
+							limit = {
+								check_variable = { which = num_team_b value = 3 }
+							}
+							event_target:rider_e = { set_variable = { which = num_team_b value = 3 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
+						else_if = {
+							limit = {
+								check_variable = { which = num_team_b value = 2 }
+							}
+							event_target:rider_e = { set_variable = { which = num_team_b value = 2 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
 						any_friend = {
 							limit = {
 								is_tamed_dragon = yes
@@ -2152,6 +2224,25 @@ character_event = {
 						set_character_flag = debug_rider_f
 						save_event_target_as = rider_f
 						save_persistent_event_target = { name = rider_f_per scope = event_target:rider_f }
+						if = {
+							limit = { has_flag = rider_f_chosen }
+							event_target:rider_f = { set_flag = rider_f_chosen }
+							clr_flag = rider_f_chosen
+						}
+						if = {
+							limit = {
+								check_variable = { which = num_team_b value = 3 }
+							}
+							event_target:rider_f = { set_variable = { which = num_team_b value = 3 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
+						else_if = {
+							limit = {
+								check_variable = { which = num_team_b value = 2 }
+							}
+							event_target:rider_f = { set_variable = { which = num_team_b value = 2 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
 						any_friend = {
 							limit = {
 								is_tamed_dragon = yes
@@ -2198,6 +2289,25 @@ character_event = {
 						set_character_flag = debug_rider_e
 						save_event_target_as = rider_e
 						save_persistent_event_target = { name = rider_e_per scope = event_target:rider_e }
+						if = {
+							limit = { has_flag = rider_e_chosen }
+							event_target:rider_e = { set_flag = rider_e_chosen }
+							clr_flag = rider_e_chosen
+						}
+						if = {
+							limit = {
+								check_variable = { which = num_team_b value = 3 }
+							}
+							event_target:rider_e = { set_variable = { which = num_team_b value = 3 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
+						else_if = {
+							limit = {
+								check_variable = { which = num_team_b value = 2 }
+							}
+							event_target:rider_e = { set_variable = { which = num_team_b value = 2 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
 						any_friend = {
 							limit = {
 								is_tamed_dragon = yes
@@ -2235,6 +2345,25 @@ character_event = {
 						set_character_flag = debug_rider_f
 						save_event_target_as = rider_f
 						save_persistent_event_target = { name = rider_f_per scope = event_target:rider_f }
+						if = {
+							limit = { has_flag = rider_f_chosen }
+							event_target:rider_f = { set_flag = rider_f_chosen }
+							clr_flag = rider_f_chosen
+						}
+						if = {
+							limit = {
+								check_variable = { which = num_team_b value = 3 }
+							}
+							event_target:rider_f = { set_variable = { which = num_team_b value = 3 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
+						else_if = {
+							limit = {
+								check_variable = { which = num_team_b value = 2 }
+							}
+							event_target:rider_f = { set_variable = { which = num_team_b value = 2 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
 						any_friend = {
 							limit = {
 								is_tamed_dragon = yes
@@ -2281,6 +2410,25 @@ character_event = {
 						set_character_flag = debug_rider_e
 						save_event_target_as = rider_e
 						save_persistent_event_target = { name = rider_e_per scope = event_target:rider_e }
+						if = {
+							limit = { has_flag = rider_e_chosen }
+							event_target:rider_e = { set_flag = rider_e_chosen }
+							clr_flag = rider_e_chosen
+						}
+						if = {
+							limit = {
+								check_variable = { which = num_team_b value = 3 }
+							}
+							event_target:rider_e = { set_variable = { which = num_team_b value = 3 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
+						else_if = {
+							limit = {
+								check_variable = { which = num_team_b value = 2 }
+							}
+							event_target:rider_e = { set_variable = { which = num_team_b value = 2 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
 						any_friend = {
 							limit = {
 								is_tamed_dragon = yes
@@ -2318,6 +2466,25 @@ character_event = {
 						set_character_flag = debug_rider_f
 						save_event_target_as = rider_f
 						save_persistent_event_target = { name = rider_f_per scope = event_target:rider_f }
+						if = {
+							limit = { has_flag = rider_f_chosen }
+							event_target:rider_f = { set_flag = rider_f_chosen }
+							clr_flag = rider_f_chosen
+						}
+						if = {
+							limit = {
+								check_variable = { which = num_team_b value = 3 }
+							}
+							event_target:rider_f = { set_variable = { which = num_team_b value = 3 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
+						else_if = {
+							limit = {
+								check_variable = { which = num_team_b value = 2 }
+							}
+							event_target:rider_f = { set_variable = { which = num_team_b value = 2 } }
+							set_variable = { which = num_team_b value = 0 }
+						}
 						any_friend = {
 							limit = {
 								is_tamed_dragon = yes
@@ -2340,11 +2507,12 @@ character_event = {
 		if = {
 			limit = {
 				NAND = {
-					has_character_flag = rider_b_chosen
-					has_character_flag = rider_c_chosen
+					has_flag = rider_b_chosen
+					has_flag = rider_c_chosen
 				}
 			}
-			set_character_flag = rider_a_stands_alone
+			#set_flag = rider_a_stands_alone
+			set_flag = shit_happened
 		}
 		
 		#If there is no other rider in team B
@@ -2352,20 +2520,20 @@ character_event = {
 			limit = {
 				event_target:rider_d = {
 					NAND = {
-						has_character_flag = rider_e_chosen
-						has_character_flag = rider_f_chosen
+						has_flag = rider_e_chosen
+						has_flag = rider_f_chosen
 					}
 				}
 			}
-			set_character_flag = rider_d_stands_alone
+			set_flag = rider_d_stands_alone
 		}
 		#If there are only 2 riders
 		if = {
 			limit = {
-				has_character_flag = rider_a_stands_alone
-				has_character_flag = rider_d_stands_alone
+				has_flag = rider_a_stands_alone
+				has_flag = rider_d_stands_alone
 			}
-			set_character_flag = 2_riders_duel
+			set_flag = 2_riders_duel
 		}
 		
 		event_target:rider_d = { character_event = { id = dragon.301 } }
@@ -2374,6 +2542,9 @@ character_event = {
 			limit = { has_game_rule = { name = dragon_duels value = enabled_debugging } }
 			character_event = { id = dragon.305 }
 		}
+		
+		# Calculate outcome
+		#event_target:rider_a = { character_event = { id = dragon.306 days = 1 } }
 	}
 	
 	option = { }
@@ -2536,20 +2707,38 @@ letter_event = {
 	option = {
 		name = "Together we will defeat the enemy!"
 		
-		# To avoid duplicate outcome event
-		if = {
-			limit = {
-				has_character_flag = debug_rider_a
-				FROM = { has_character_flag = debug_rider_b }
-			}
-			event_target:rider_a = { character_event = { id = dragon.306 } }
-		}
 		#Only for debugging
 		if = {
 			limit = {
+				has_flag = debug_rider_a
 				has_game_rule = { name = dragon_duels value = enabled_debugging }
 			}
 			event_target:rider_a = { character_event = { id = dragon.305 } }
+		}
+		
+		
+		if = {
+			limit = { has_flag = debug_rider_a }
+			if = {
+				limit = {
+					check_variable = { which = num_team_a value = 3 }
+					has_flag = event_306_trigger_flag
+				}
+				character_event = { id = dragon.306 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { which = num_team_a value = 2 }
+				}
+				character_event = { id = dragon.306 }
+			}
+			else_if = {
+				limit = {
+					check_variable = { which = num_team_a value = 3 }
+					NOT = { has_flag = event_306_trigger_flag }
+				}
+				set_flag = two_rider_join
+			}
 		}
 	}
 	
@@ -2570,7 +2759,7 @@ character_event = {
 	is_triggered_only = yes
 	
 	option = {
-		name = "Team A: [global_dragon_strength_team_a.GetValue] | Team B: [global_dragon_strength_team_b.GetValue]"
+		name = "Team A: [Root.duel_strength_team_a.GetValue] | Team B: [Root.duel_strength_team_b.GetValue]"
 	}
 	
 	option = {
@@ -2594,13 +2783,9 @@ character_event = {
 	
 	is_triggered_only = yes
 	
-	trigger = {
-		has_character_flag = debug_rider_a
-	}
-	
 	hide_window = yes
 	
-	immediate = {
+	option = {
 		calculate_dragon_duel_team_dragon_strenght = yes
 	
 		clear_wounded_maimed_flags_dragon_duel = yes
@@ -2633,7 +2818,7 @@ character_event = {
 			#Calculates Outcome
 			if = {
 				limit = {
-					check_variable = { which = global_dragon_strength_team_a which = global_dragon_strength_team_b }
+					check_variable = { which = duel_strength_team_a which = duel_strength_team_b }
 				}
 				set_character_flag = team_a_wins_round_2
 			}
@@ -2655,7 +2840,7 @@ character_event = {
 			#Calculates Outcome
 			if = {
 				limit = {
-					check_variable = { which = global_dragon_strength_team_a which = global_dragon_strength_team_b }
+					check_variable = { which = duel_strength_team_a which = duel_strength_team_b }
 				}
 				set_character_flag = team_a_wins_round_1
 			}
@@ -2830,7 +3015,7 @@ character_event = {
 					has_character_flag = get_maimed
 					any_friend = {
 						is_dragon_in_dragon_duel = yes
-						Or = {
+						OR = {
 							has_character_flag = get_wounded
 							has_character_flag = get_maimed
 						}
@@ -3135,27 +3320,27 @@ character_event = {
 		if = {
 			limit = { event_target:rider_b_per = { death_reason = death_dragon_duel } }
 			event_target:rider_b_per = { show_portrait = yes }
-			cutom_tooltip = { text = CUSTOM_DRAGON_309B }
+			custom_tooltip = { text = CUSTOM_DRAGON_309B }
 		}
 		if = {
 			limit = { event_target:rider_c_per = { death_reason = death_dragon_duel } }
 			event_target:rider_c_per = { show_portrait = yes }
-			cutom_tooltip = { text = CUSTOM_DRAGON_309C }
+			custom_tooltip = { text = CUSTOM_DRAGON_309C }
 		}
 		if = {
 			limit = { event_target:rider_d_per = { death_reason = death_dragon_duel } }
 			event_target:rider_d_per = { show_portrait = yes }
-			cutom_tooltip = { text = CUSTOM_DRAGON_309D }
+			custom_tooltip = { text = CUSTOM_DRAGON_309D }
 		}
 		if = {
 			limit = { event_target:rider_e_per = { death_reason = death_dragon_duel } }
 			event_target:rider_e_per = { show_portrait = yes }
-			cutom_tooltip = { text = CUSTOM_DRAGON_309E }
+			custom_tooltip = { text = CUSTOM_DRAGON_309E }
 		}
 		if = {
 			limit = { event_target:rider_f_per = { death_reason = death_dragon_duel } }
 			event_target:rider_f_per = { show_portrait = yes }
-			cutom_tooltip = { text = CUSTOM_DRAGON_309F }
+			custom_tooltip = { text = CUSTOM_DRAGON_309F }
 		}
 		
 		event_target:rider_a_per = { complete_dragon_duel_char_flag_clean_up = yes }

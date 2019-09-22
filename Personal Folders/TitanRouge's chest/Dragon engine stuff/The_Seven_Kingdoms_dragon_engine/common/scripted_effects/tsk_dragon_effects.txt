@@ -419,82 +419,49 @@ calculate_injury_outcome_dragon_duel = {
 					}
 				}
 			}
-			if = { #Killed by rider A
+			if = {
 				limit = { is_rider_in_dragon_duel = yes }
-				if = {
-					limit = {
-						any_friend = {
-							is_dragon_in_dragon_duel = yes
-							has_character_flag = killed_by_a
+				any_friend = {
+					limit = { is_dragon_in_dragon_duel = yes }
+					trigger_switch = {
+						on_trigger = has_character_flag
+						killed_by_a = {
+							ROOT = {
+								clear_wounded_maimed_flags_dragon_duel = yes
+								set_character_flag = killed_by_a
+							}
+						}
+						killed_by_b = {
+							ROOT = {
+								clear_wounded_maimed_flags_dragon_duel = yes
+								set_character_flag = killed_by_b
+							}
+						}
+						killed_by_c = {
+							ROOT = {
+								clear_wounded_maimed_flags_dragon_duel = yes
+								set_character_flag = killed_by_c
+							}
+						}
+						killed_by_d = {
+							ROOT = {
+								clear_wounded_maimed_flags_dragon_duel = yes
+								set_character_flag = killed_by_d
+							}
+						}
+						killed_by_e = {
+							ROOT = {
+								clear_wounded_maimed_flags_dragon_duel = yes
+								set_character_flag = killed_by_e
+							}
+						}
+						killed_by_f = {
+							ROOT = {
+								clear_wounded_maimed_flags_dragon_duel = yes
+								set_character_flag = killed_by_f
+							}
 						}
 					}
-					clear_wounded_maimed_flags_dragon_duel = yes
-					set_character_flag = killed_by_a
-				}
-			}
-			if = { #Killed by rider B
-				limit = { is_rider_in_dragon_duel = yes }
-				if = {
-					limit = {
-						any_friend = {
-							is_dragon_in_dragon_duel = yes
-							has_character_flag = killed_by_b
-						}
-					}
-					clear_wounded_maimed_flags_dragon_duel = yes
-					set_character_flag = killed_by_b
-				}
-			}
-			if = { #Killed by rider C
-				limit = { is_rider_in_dragon_duel = yes }
-				if = {
-					limit = {
-						any_friend = {
-							is_dragon_in_dragon_duel = yes
-							has_character_flag = killed_by_c
-						}
-					}
-					clear_wounded_maimed_flags_dragon_duel = yes
-					set_character_flag = killed_by_c
-				}
-			}
-			if = { #Killed by rider D
-				limit = { is_rider_in_dragon_duel = yes }
-				if = {
-					limit = {
-						any_friend = {
-							is_dragon_in_dragon_duel = yes
-							has_character_flag = killed_by_d
-						}
-					}
-					clear_wounded_maimed_flags_dragon_duel = yes
-					set_character_flag = killed_by_d
-				}
-			}
-			if = { #Killed by rider E
-				limit = { is_rider_in_dragon_duel = yes }
-				if = {
-					limit = {
-						any_friend = {
-							is_dragon_in_dragon_duel = yes
-							has_character_flag = killed_by_e
-						}
-					}
-					clear_wounded_maimed_flags_dragon_duel = yes
-					set_character_flag = killed_by_e
-				}
-			}
-			if = { #Killed by rider F
-				limit = { is_rider_in_dragon_duel = yes }
-				if = {
-					limit = {
-						any_friend = {
-							is_dragon_in_dragon_duel = yes
-							has_character_flag = killed_by_f
-						}
-					}
-					clear_wounded_maimed_flags_dragon_duel = yes
-					set_character_flag = killed_by_f
 				}
 			}
 		}
@@ -509,12 +476,12 @@ calculate_injury_outcome_dragon_duel = {
 				has_character_flag = killed_by_c
 			}
 		}
-		random = {
+		random_list = {
 			1 = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_b }
-					check_variable = { which = global_dragon_strength_rider_a which = global_dragon_strength_rider_b }
+					event_target:rider_a = { check_variable = { which = duel_rider_b which = duel_rider_a } }
 				}
 				clr_character_flag = killed_by_b
 			}
@@ -522,7 +489,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_b }
-					check_variable = { which = global_dragon_strength_rider_b which = global_dragon_strength_rider_a }
+					event_target:rider_a = { check_variable = { which = duel_rider_a which = duel_rider_b } }
 				}
 				clr_character_flag = killed_by_a
 			}
@@ -530,7 +497,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_c }
-					check_variable = { which = global_dragon_strength_rider_a which = global_dragon_strength_rider_c }
+					event_target:rider_a = { check_variable = { which = duel_rider_c which = duel_rider_a } }
 				}
 				clr_character_flag = killed_by_c
 			}
@@ -538,7 +505,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_c }
-					check_variable = { which = global_dragon_strength_rider_c which = global_dragon_strength_rider_a }
+					event_target:rider_a = { check_variable = { which = duel_rider_a which = duel_rider_c } }
 				}
 				clr_character_flag = killed_by_a
 			}
@@ -552,12 +519,12 @@ calculate_injury_outcome_dragon_duel = {
 				has_character_flag = killed_by_c
 			}
 		}
-		random = {
+		random_list = {
 			1 = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_a }
-					check_variable = { which = global_dragon_strength_rider_b which = global_dragon_strength_rider_a }
+					event_target:rider_a = { check_variable = { which = duel_rider_b which = duel_rider_a } }
 				}
 				clr_character_flag = killed_by_a
 			}
@@ -565,7 +532,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_a }
-					check_variable = { which = global_dragon_strength_rider_a which = global_dragon_strength_rider_b }
+					event_target:rider_a = { check_variable = { which = duel_rider_a which = duel_rider_b } }
 				}
 				clr_character_flag = killed_by_b
 			}
@@ -573,7 +540,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_c }
-					check_variable = { which = global_dragon_strength_rider_b which = global_dragon_strength_rider_c }
+					event_target:rider_a = { check_variable = { which = duel_rider_b which = duel_rider_c } }
 				}
 				clr_character_flag = killed_by_c
 			}
@@ -581,7 +548,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_c }
-					check_variable = { which = global_dragon_strength_rider_c which = global_dragon_strength_rider_b }
+					event_target:rider_a = { check_variable = { which = duel_rider_c which = duel_rider_b } }
 				}
 				clr_character_flag = killed_by_b
 			}
@@ -595,28 +562,28 @@ calculate_injury_outcome_dragon_duel = {
 				has_character_flag = killed_by_b
 			}
 		}
-		random = {
+		random_list = {
 			1 = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_a }
-					check_variable = { which = global_dragon_strength_rider_c which = global_dragon_strength_rider_a }
-				}
-				clr_character_flag = killed_by_a
-			}
-			1 = {
-				modifier = {
-					factor = 0
-					NOT = { has_character_flag = killed_by_a }
-					check_variable = { which = global_dragon_strength_rider_a which = global_dragon_strength_rider_c }
+					event_target:rider_a = { check_variable = { which = duel_rider_a which = duel_rider_c } }
 				}
 				clr_character_flag = killed_by_c
 			}
 			1 = {
 				modifier = {
 					factor = 0
+					NOT = { has_character_flag = killed_by_a }
+					event_target:rider_a = { check_variable = { which = duel_rider_c which = duel_rider_a } }
+				}
+				clr_character_flag = killed_by_a
+			}
+			1 = {
+				modifier = {
+					factor = 0
 					NOT = { has_character_flag = killed_by_b }
-					check_variable = { which = global_dragon_strength_rider_c which = global_dragon_strength_rider_b }
+					event_target:rider_a = { check_variable = { which = duel_rider_c which = duel_rider_b } }
 				}
 				clr_character_flag = killed_by_b
 			}
@@ -624,7 +591,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_b }
-					check_variable = { which = global_dragon_strength_rider_b which = global_dragon_strength_rider_c }
+					event_target:rider_a = { check_variable = { which = duel_rider_b which = duel_rider_c } }
 				}
 				clr_character_flag = killed_by_c
 			}
@@ -638,12 +605,12 @@ calculate_injury_outcome_dragon_duel = {
 				has_character_flag = killed_by_f
 			}
 		}
-		random = {
+		random_list = {
 			1 = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_e }
-					check_variable = { which = global_dragon_strength_rider_d which = global_dragon_strength_rider_e }
+					event_target:rider_a = { check_variable = { which = duel_rider_d which = duel_rider_e } }
 				}
 				clr_character_flag = killed_by_e
 			}
@@ -651,7 +618,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_e }
-					check_variable = { which = global_dragon_strength_rider_e which = global_dragon_strength_rider_d }
+					event_target:rider_a = { check_variable = { which = duel_rider_e which = duel_rider_d } }
 				}
 				clr_character_flag = killed_by_d
 			}
@@ -659,7 +626,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_f }
-					check_variable = { which = global_dragon_strength_rider_d which = global_dragon_strength_rider_f }
+					event_target:rider_a = { check_variable = { which = duel_rider_d which = duel_rider_f } }
 				}
 				clr_character_flag = killed_by_f
 			}
@@ -667,7 +634,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_f }
-					check_variable = { which = global_dragon_strength_rider_f which = global_dragon_strength_rider_d }
+					event_target:rider_a = { check_variable = { which = duel_rider_f which = duel_rider_d } }
 				}
 				clr_character_flag = killed_by_d
 			}
@@ -682,12 +649,12 @@ calculate_injury_outcome_dragon_duel = {
 				has_character_flag = killed_by_f
 			}
 		}
-		random = {
+		random_list = {
 			1 = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_d }
-					check_variable = { which = global_dragon_strength_rider_e which = global_dragon_strength_rider_d }
+					event_target:rider_a = { check_variable = { which = duel_rider_e which = duel_rider_d } }
 				}
 				clr_character_flag = killed_by_d
 			}
@@ -695,7 +662,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_d }
-					check_variable = { which = global_dragon_strength_rider_d which = global_dragon_strength_rider_e }
+					event_target:rider_a = { check_variable = { which = duel_rider_d which = duel_rider_e } }
 				}
 				clr_character_flag = killed_by_e
 			}
@@ -703,7 +670,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_f }
-					check_variable = { which = global_dragon_strength_rider_e which = global_dragon_strength_rider_f }
+					event_target:rider_a = { check_variable = { which = duel_rider_e which = duel_rider_f } }
 				}
 				clr_character_flag = killed_by_f
 			}
@@ -711,7 +678,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_f }
-					check_variable = { which = global_dragon_strength_rider_f which = global_dragon_strength_rider_e }
+					event_target:rider_a = { check_variable = { which = duel_rider_f which = duel_rider_e } }
 				}
 				clr_character_flag = killed_by_e
 			}
@@ -725,12 +692,12 @@ calculate_injury_outcome_dragon_duel = {
 				has_character_flag = killed_by_e
 			}
 		}
-		random = {
+		random_list = {
 			1 = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_d }
-					check_variable = { which = global_dragon_strength_rider_f which = global_dragon_strength_rider_d }
+					event_target:rider_a = { check_variable = { which = duel_rider_f which = duel_rider_d } }
 				}
 				clr_character_flag = killed_by_d
 			}
@@ -738,7 +705,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_d }
-					check_variable = { which = global_dragon_strength_rider_d which = global_dragon_strength_rider_f }
+					event_target:rider_a = { check_variable = { which = duel_rider_d which = duel_rider_f } }
 				}
 				clr_character_flag = killed_by_f
 			}
@@ -746,7 +713,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_e }
-					check_variable = { which = global_dragon_strength_rider_f which = global_dragon_strength_rider_e }
+					event_target:rider_a = { check_variable = { which = duel_rider_f which = duel_rider_e } }
 				}
 				clr_character_flag = killed_by_e
 			}
@@ -754,7 +721,7 @@ calculate_injury_outcome_dragon_duel = {
 				modifier = {
 					factor = 0
 					NOT = { has_character_flag = killed_by_e }
-					check_variable = { which = global_dragon_strength_rider_e which = global_dragon_strength_rider_f }
+					event_target:rider_a = { check_variable = { which = duel_rider_e which = duel_rider_f } }
 				}
 				clr_character_flag = killed_by_f
 			}
@@ -1315,63 +1282,172 @@ check_for_maimed_and_killed_by_flags = {
 }
 
 calculate_dragon_duel_team_dragon_strenght = {
-	#Rider and dragon A
-	event_target:dragon_a = {
-		dragon_stat_calculation = yes
-		set_variable = { which = global_dragon_strength_rider_a which = dragon_strenght_var }
-	}
+
+	#### TEAM A ####
+	
 	event_target:rider_a = {
-		change_variable = { which = global_dragon_strength_rider_a which = riding_skill_var }
-		change_variable = { which = global_dragon_strength_team_a which = global_dragon_strength_rider_a }
-	}
-	#Rider and dragon B
-	event_target:dragon_b = {
-		dragon_stat_calculation = yes
-		set_variable = { which = global_dragon_strength_rider_b which = dragon_strenght_var }
-	}
-	event_target:rider_b = {
-		change_variable = { which = global_dragon_strength_rider_b which = riding_skill_var }
-		change_variable = { which = global_dragon_strength_team_a which = global_dragon_strength_rider_b }
-	}
-	#Rider and dragon C
-	event_target:dragon_c = {
-		dragon_stat_calculation = yes
-		set_variable = { which = global_dragon_strength_rider_c which = dragon_strenght_var }
-	}
-	event_target:rider_c = {
-		change_variable = { which = global_dragon_strength_rider_c which = riding_skill_var }
-		change_variable = { which = global_dragon_strength_team_a which = global_dragon_strength_rider_c }
+		# Add rider A's riding skill to team A
+		export_to_variable = { which = riding_skill_var value = martial }
+		export_to_variable = { which = combat_rating_var value = combat_rating }
+		multiply_variable = { which = riding_skill_var which = combat_rating_var }
+		divide_variable = { which = riding_skill_var value = 50 }
+		change_variable = { which = duel_rider_a which = riding_skill_var }
+		
+		# Add dragon A's strength to team A
+		export_to_variable = { which = dragon_martial_var value = martial who = event_target:dragon_a }
+		change_variable = { which = duel_dragon_a which = dragon_martial_var }
+		export_to_variable = { which = health_var value = health who = event_target:dragon_a }
+		export_to_variable = { which = dragon_combat_rating_var value = combat_rating who = event_target:dragon_a }
+		multiply_variable = { which = dragon_combat_rating_var which = health_var }
+		divide_variable = { which = dragon_combat_rating_var value = 10 }
+		change_variable = { which = duel_dragon_a which = dragon_combat_rating_var }
+		
+		set_variable = { which = combat_rating_var value = 0 }
+		set_variable = { which = riding_skill_var value = 0 }
+		set_variable = { which = dragon_martial_var value = 0 }
+		set_variable = { which = health_var value = 0 }
+		set_variable = { which = dragon_combat_rating_var value = 0 }
+		
+		#if = { # Add rider B's riding skill to team A
+			#limit = { has_flag = rider_b_chosen }
+			export_to_variable = { which = riding_skill_var value = martial who = event_target:rider_b }
+			export_to_variable = { which = combat_rating_var value = combat_rating who = event_target:rider_b }
+			multiply_variable = { which = riding_skill_var which = combat_rating_var }
+			divide_variable = { which = riding_skill_var value = 50 }
+			change_variable = { which = duel_rider_b which = riding_skill_var }
+			
+			set_variable = { which = combat_rating_var value = 0 }
+			set_variable = { which = riding_skill_var value = 0 }
+			
+		###### Add dragon B's strength to team A
+			export_to_variable = { which = dragon_martial_var value = martial who = event_target:dragon_b }
+			change_variable = { which = duel_dragon_b which = dragon_martial_var }
+			export_to_variable = { which = health_var value = health who = event_target:dragon_b }
+			export_to_variable = { which = dragon_combat_rating_var value = combat_rating who = event_target:dragon_b }
+			multiply_variable = { which = dragon_combat_rating_var which = health_var }
+			divide_variable = { which = dragon_combat_rating_var value = 10 }
+			change_variable = { which = duel_dragon_b which = dragon_combat_rating_var }
+			
+			set_variable = { which = dragon_martial_var value = 0 }
+			set_variable = { which = health_var value = 0 }
+			set_variable = { which = dragon_combat_rating_var value = 0 }
+		#}
+		
+		#if = { # Add rider C's riding skill to team A
+		#	limit = { has_flag = rider_c_chosen }
+			export_to_variable = { which = riding_skill_var value = martial who = event_target:rider_c }
+			export_to_variable = { which = combat_rating_var value = combat_rating who = event_target:rider_c }
+			multiply_variable = { which = riding_skill_var which = combat_rating_var }
+			divide_variable = { which = riding_skill_var value = 50 }
+			change_variable = { which = duel_rider_c which = riding_skill_var }
+			
+			set_variable = { which = combat_rating_var value = 0 }
+			set_variable = { which = riding_skill_var value = 0 }
+
+		###### Add dragon C's strength to team A
+			export_to_variable = { which = dragon_martial_var value = martial who = event_target:dragon_c }
+			change_variable = { which = duel_dragon_c which = dragon_martial_var }
+			export_to_variable = { which = health_var value = health who = event_target:dragon_c }
+			export_to_variable = { which = dragon_combat_rating_var value = combat_rating who = event_target:dragon_c }
+			multiply_variable = { which = dragon_combat_rating_var which = health_var }
+			divide_variable = { which = dragon_combat_rating_var value = 10 }
+			change_variable = { which = duel_dragon_c which = dragon_combat_rating_var }
+			
+			set_variable = { which = dragon_martial_var value = 0 }
+			set_variable = { which = health_var value = 0 }
+			set_variable = { which = dragon_combat_rating_var value = 0 }
+		#}
+		
+		change_variable = { which = duel_strength_team_a which = duel_rider_a }
+		change_variable = { which = duel_strength_team_a which = duel_rider_b }
+		change_variable = { which = duel_strength_team_a which = duel_rider_c }
+		change_variable = { which = duel_strength_team_a which = duel_dragon_a }
+		change_variable = { which = duel_strength_team_a which = duel_dragon_b }
+		change_variable = { which = duel_strength_team_a which = duel_dragon_c }
 	}
 	
-	####Calculate duel team B's dragon strenght after round 1####
+	#### TEAM B ####
 	
-	#Rider and dragon D
-	event_target:dragon_d = {
-		dragon_stat_calculation = yes
-		set_variable = { which = global_dragon_strength_rider_d which = dragon_strenght_var }
-	}
-	event_target:rider_d = {
-		change_variable = { which = global_dragon_strength_rider_d which = riding_skill_var }
-		change_variable = { which = global_dragon_strength_team_b which = global_dragon_strength_rider_d }
-	}
-	#Rider and dragon E
-	event_target:dragon_e = {
-		dragon_stat_calculation = yes
-		set_variable = { which = global_dragon_strength_rider_e which = dragon_strenght_var }
-	}
-	event_target:rider_e = {
-		change_variable = { which = global_dragon_strength_rider_e which = riding_skill_var }
-		change_variable = { which = global_dragon_strength_team_b which = global_dragon_strength_rider_e }
-	}
-	#Rider and dragon F
-	event_target:dragon_f = {
-		dragon_stat_calculation = yes
-		set_variable = { which = global_dragon_strength_rider_f which = dragon_strenght_var }
-	}
-	event_target:rider_f = {
-		change_variable = { which = global_dragon_strength_rider_f which = riding_skill_var }
-		change_variable = { which = global_dragon_strength_team_b which = global_dragon_strength_rider_f }
-	}
+	#event_target:rider_d = {
+		# Add rider D's riding skill to team B
+		export_to_variable = { which = riding_skill_var value = martial who = event_target:rider_d }
+		export_to_variable = { which = combat_rating_var value = combat_rating who = event_target:rider_d }
+		multiply_variable = { which = riding_skill_var which = combat_rating_var }
+		divide_variable = { which = riding_skill_var value = 50 }
+		change_variable = { which = duel_rider_d which = riding_skill_var }
+		
+		# Add dragon D's strength to team B
+		export_to_variable = { which = dragon_martial_var value = martial who = event_target:dragon_d }
+		change_variable = { which = duel_dragon_d which = dragon_martial_var }
+		export_to_variable = { which = health_var value = health who = event_target:dragon_d }
+		export_to_variable = { which = dragon_combat_rating_var value = combat_rating who = event_target:dragon_d }
+		multiply_variable = { which = dragon_combat_rating_var which = health_var }
+		divide_variable = { which = dragon_combat_rating_var value = 10 }
+		change_variable = { which = duel_dragon_d which = dragon_combat_rating_var }
+		
+		set_variable = { which = combat_rating_var value = 0 }
+		set_variable = { which = riding_skill_var value = 0 }
+		set_variable = { which = dragon_martial_var value = 0 }
+		set_variable = { which = health_var value = 0 }
+		set_variable = { which = dragon_combat_rating_var value = 0 }
+		
+		#if = { # Add rider E's riding skill to team B
+		#	limit = { has_flag = rider_e_chosen } # the if clauses are disabled since they for some reason do not trigger properly
+			export_to_variable = { which = riding_skill_var value = martial who = event_target:rider_e }
+			export_to_variable = { which = combat_rating_var value = combat_rating who = event_target:rider_e }
+			multiply_variable = { which = riding_skill_var which = combat_rating_var }
+			divide_variable = { which = riding_skill_var value = 50 }
+			change_variable = { which = duel_rider_e which = riding_skill_var }
+			
+			set_variable = { which = combat_rating_var value = 0 }
+			set_variable = { which = riding_skill_var value = 0 }
+
+		###### Add dragon E's strength to team B
+			export_to_variable = { which = dragon_martial_var value = martial who = event_target:dragon_e }
+			change_variable = { which = duel_dragon_e which = dragon_martial_var }
+			export_to_variable = { which = health_var value = health who = event_target:dragon_e }
+			export_to_variable = { which = dragon_combat_rating_var value = combat_rating who = event_target:dragon_e }
+			multiply_variable = { which = dragon_combat_rating_var which = health_var }
+			divide_variable = { which = dragon_combat_rating_var value = 10 }
+			change_variable = { which = duel_dragon_e which = dragon_combat_rating_var }
+			
+			set_variable = { which = dragon_martial_var value = 0 }
+			set_variable = { which = health_var value = 0 }
+			set_variable = { which = dragon_combat_rating_var value = 0 }
+		#}
+		
+		#if = { # Add rider F's riding skill to team B
+			#limit = { has_flag = rider_f_chosen }
+			export_to_variable = { which = riding_skill_var value = martial who = event_target:rider_f }
+			export_to_variable = { which = combat_rating_var value = combat_rating who = event_target:rider_f }
+			multiply_variable = { which = riding_skill_var which = combat_rating_var }
+			divide_variable = { which = riding_skill_var value = 50 }
+			change_variable = { which = duel_rider_f which = riding_skill_var }
+			
+			set_variable = { which = combat_rating_var value = 0 }
+			set_variable = { which = riding_skill_var value = 0 }
+
+		###### Add dragon F's strength to team B
+			export_to_variable = { which = dragon_martial_var value = martial who = event_target:dragon_f }
+			change_variable = { which = duel_dragon_f which = dragon_martial_var }
+			export_to_variable = { which = health_var value = health who = event_target:dragon_f }
+			export_to_variable = { which = dragon_combat_rating_var value = combat_rating who = event_target:dragon_f }
+			multiply_variable = { which = dragon_combat_rating_var which = health_var }
+			divide_variable = { which = dragon_combat_rating_var value = 10 }
+			change_variable = { which = duel_dragon_f which = dragon_combat_rating_var }
+			
+			set_variable = { which = dragon_martial_var value = 0 }
+			set_variable = { which = health_var value = 0 }
+			set_variable = { which = dragon_combat_rating_var value = 0 }
+		#}
+		
+		change_variable = { which = duel_strength_team_b which = duel_rider_d }
+		change_variable = { which = duel_strength_team_b which = duel_rider_e }
+		change_variable = { which = duel_strength_team_b which = duel_rider_f }
+		change_variable = { which = duel_strength_team_b which = duel_dragon_d }
+		change_variable = { which = duel_strength_team_b which = duel_dragon_e }
+		change_variable = { which = duel_strength_team_b which = duel_dragon_f }
+	#}
 }
 
 move_flags_from_old_rider_a_to_new_one = {
@@ -1438,65 +1514,47 @@ kill_rider_if_dragon_dies = {
 	#If your dragon is killed you die, too.
 	if = {
 		limit = { is_rider_in_dragon_duel = yes }
-		if = {
-			limit = {
-				any_friend = {
-					is_dragon_in_dragon_duel = yes
-					has_character_flag = killed_by_a
+		any_friend = {
+			limit = { is_dragon_in_dragon_duel = yes }
+			trigger_switch = {
+				on_trigger = has_character_flag
+				killed_by_a = {
+					ROOT = {
+						clear_wounded_maimed_flags_dragon_duel = yes
+						set_character_flag = killed_by_a
+					}
+				}
+				killed_by_b = {
+					ROOT = {
+						clear_wounded_maimed_flags_dragon_duel = yes
+						set_character_flag = killed_by_b
+					}
+				}
+				killed_by_c = {
+					ROOT = {
+						clear_wounded_maimed_flags_dragon_duel = yes
+						set_character_flag = killed_by_c
+					}
+				}
+				killed_by_d = {
+					ROOT = {
+						clear_wounded_maimed_flags_dragon_duel = yes
+						set_character_flag = killed_by_d
+					}
+				}
+				killed_by_e = {
+					ROOT = {
+						clear_wounded_maimed_flags_dragon_duel = yes
+						set_character_flag = killed_by_e
+					}
+				}
+				killed_by_f = {
+					ROOT = {
+						clear_wounded_maimed_flags_dragon_duel = yes
+						set_character_flag = killed_by_f
+					}
 				}
 			}
-			clear_wounded_maimed_flags_dragon_duel = yes
-			set_character_flag = killed_by_a
-		}
-		else_if = {
-			limit = {
-				any_friend = {
-					is_dragon_in_dragon_duel = yes
-					has_character_flag = killed_by_b
-				}
-			}
-			clear_wounded_maimed_flags_dragon_duel = yes
-			set_character_flag = killed_by_b
-		}
-		else_if = {
-			limit = {
-				any_friend = {
-					is_dragon_in_dragon_duel = yes
-					has_character_flag = killed_by_c
-				}
-			}
-			clear_wounded_maimed_flags_dragon_duel = yes
-			set_character_flag = killed_by_c
-		}
-		else_if = {
-			limit = {
-				any_friend = {
-					is_dragon_in_dragon_duel = yes
-					has_character_flag = killed_by_d
-				}
-			}
-			clear_wounded_maimed_flags_dragon_duel = yes
-			set_character_flag = killed_by_d
-		}
-		else_if = {
-			limit = {
-				any_friend = {
-					is_dragon_in_dragon_duel = yes
-					has_character_flag = killed_by_e
-				}
-			}
-			clear_wounded_maimed_flags_dragon_duel = yes
-			set_character_flag = killed_by_e
-		}
-		else_if = {
-			limit = {
-				any_friend = {
-					is_dragon_in_dragon_duel = yes
-					has_character_flag = killed_by_f
-				}
-			}
-			clear_wounded_maimed_flags_dragon_duel = yes
-			set_character_flag = killed_by_f
 		}
 	}
 }
@@ -1531,34 +1589,37 @@ dragon_rider_leveling = {
 
 #The dragon must be generated before, this only assigns random traits
 tsk_generate_dragon_traits = {
-	random_list = {
-		1 = { add_trait = dragon1 }
-		1 = { add_trait = dragon2 }
-		1 = { add_trait = dragon3 }
-		1 = { add_trait = dragon4 }
-		1 = { add_trait = dragon5 }
-		1 = { add_trait = dragon6 }
-		1 = { add_trait = dragon7 }
-		1 = { add_trait = dragon8 }
-		1 = { add_trait = dragon9 }
-		1 = { add_trait = dragon10 }
-		1 = { add_trait = dragon11 }
-		1 = { add_trait = dragon12 }
-		1 = { add_trait = dragon13 }
-		1 = { add_trait = dragon14 }
-		1 = { add_trait = dragon15 }
-		1 = { add_trait = dragon16 }
-		1 = { add_trait = dragon17 }
-		1 = { add_trait = dragon18 }
-		1 = { add_trait = dragon19 }
-		1 = { add_trait = dragon20 }
-		1 = { add_trait = dragon21 }
-		1 = { add_trait = dragon22 }
-		1 = { add_trait = dragon23 }
-		1 = { add_trait = dragon24 }
-		1 = { add_trait = dragon25 }
-		1 = { add_trait = dragon26 }
-		1 = { add_trait = dragon27 }
+	if = {
+		limit = { NOT = { has_flag = is_hatchling } }
+		random_list = {
+			1 = { add_trait = dragon1 }
+			1 = { add_trait = dragon2 }
+			1 = { add_trait = dragon3 }
+			1 = { add_trait = dragon4 }
+			1 = { add_trait = dragon5 }
+			1 = { add_trait = dragon6 }
+			1 = { add_trait = dragon7 }
+			1 = { add_trait = dragon8 }
+			1 = { add_trait = dragon9 }
+			1 = { add_trait = dragon10 }
+			1 = { add_trait = dragon11 }
+			1 = { add_trait = dragon12 }
+			1 = { add_trait = dragon13 }
+			1 = { add_trait = dragon14 }
+			1 = { add_trait = dragon15 }
+			1 = { add_trait = dragon16 }
+			1 = { add_trait = dragon17 }
+			1 = { add_trait = dragon18 }
+			1 = { add_trait = dragon19 }
+			1 = { add_trait = dragon20 }
+			1 = { add_trait = dragon21 }
+			1 = { add_trait = dragon22 }
+			1 = { add_trait = dragon23 }
+			1 = { add_trait = dragon24 }
+			1 = { add_trait = dragon25 }
+			1 = { add_trait = dragon26 }
+			1 = { add_trait = dragon27 }
+		}
 	}
 	random_list = {
 		10 = { add_trait = dr_strong trigger = { NOT = { trait = dr_strong } } }
