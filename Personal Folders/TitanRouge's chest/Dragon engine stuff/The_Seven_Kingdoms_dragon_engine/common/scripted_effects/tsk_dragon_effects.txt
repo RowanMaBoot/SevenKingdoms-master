@@ -326,6 +326,10 @@ calculate_injury_outcome_dragon_duel = {
 		25 = {
 			modifier = {
 				factor = 0
+				NOT = { has_flag = is_picked_as_encounter }
+			}
+			modifier = {
+				factor = 0
 				trait = wounded
 			}
 			modifier = {
@@ -355,6 +359,15 @@ calculate_injury_outcome_dragon_duel = {
 		15 = {
 			modifier = {
 				factor = 0
+				NOT = { has_flag = is_picked_as_encounter }
+			}
+			modifier = {
+				factor = 0
+				is_dragon_in_dragon_duel = yes
+				check_variable = { which = dragon_strenght_var which = FROM }
+			}
+			modifier = {
+				factor = 0
 				trait = maimed
 			}
 			modifier = {
@@ -382,6 +395,15 @@ calculate_injury_outcome_dragon_duel = {
 		
 		###Death###
 		15 = {
+			modifier = {
+				factor = 0
+				NOT = { has_flag = is_picked_as_encounter }
+			}
+			modifier = {
+				factor = 0
+				is_dragon_in_dragon_duel = yes
+				check_variable = { which = dragon_strenght_var which = FROM }
+			}
 			modifier = {
 				factor = 8
 				trait = dr_maimed
@@ -430,7 +452,7 @@ weird_outcome_fixes = {
 				has_flag = gets_killed
 			}
 		}
-		clear_wounded_maimed_flags_dragon_duel = yes
+		clear_outcome_flags_dragon_duel = yes
 		set_flag = gets_killed
 	}
 }
@@ -589,6 +611,14 @@ give_outcome_traits_or_kill = {
 }
 
 clear_outcome_flags_dragon_duel = {
+	random_character = {
+		limit = { has_flag = is_encounter_of_@PREV }
+		clr_flag = is_encounter_of_@PREV
+		ROOT = {
+			clr_flag = is_encounter_of_@PREV
+		}
+	}
+	clr_flag = is_picked_as_encounter
 	clr_flag = gets_wounded
 	clr_flag = get_maimed
 	clr_flag = gets_killed
@@ -602,6 +632,9 @@ complete_flag_variable_target_clear = {
 	clr_flag = is_dragon_in_dragon_duel
 	clr_flag = is_rider_in_team_a
 	clr_flag = is_rider_in_team_b
+	clr_flag = EVT3071
+	clr_flag = EVT3072
+	clr_flag = EVT3073
 	set_variable = { which = vict_team_a value = 0 }
 	set_variable = { which = vict_team_b value = 0 }
 	set_variable = { which = num_team_a value = 0 }
@@ -619,23 +652,23 @@ dragon_rider_leveling = {
 	}
 	if = {
 		limit = {
-			check_variable = { which = dragon_duel_count value = 4 }
+			is_variable_equal = { which = dragon_duel_count value = 4 }
 			trait = poor_dragon_rider
 		}
 		hidden_tooltip = { remove_trait = poor_dragon_rider }
 		add_trait = trained_dragon_rider
 	}
-	if = {
+	else_if = {
 		limit = {
-			check_variable = { which = dragon_duel_count value = 8 }
+			is_variable_equal = { which = dragon_duel_count value = 8 }
 			trait = trained_dragon_rider
 		}
 		hidden_tooltip = { remove_trait = trained_dragon_rider }
 		add_trait = skilled_dragon_rider
 	}
-	if = {
+	else_if = {
 		limit = {
-			check_variable = { which = dragon_duel_count value = 13 }
+			is_variable_equal = { which = dragon_duel_count value = 13 }
 			trait = skilled_dragon_rider
 		}
 		hidden_tooltip = { remove_trait = skilled_dragon_rider }

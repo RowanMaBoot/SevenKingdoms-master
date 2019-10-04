@@ -108,19 +108,19 @@ character_event = {
 			limit = {
 				trait = trained_dragon_rider
 			}
-			set_variable = { which = dragon_duel_count value = 2 }
+			set_variable = { which = dragon_duel_count value = 4 }
 		}
 		else_if = {
 			limit = {
 				trait = skilled_dragon_rider
 			}
-			set_variable = { which = dragon_duel_count value = 6 }
+			set_variable = { which = dragon_duel_count value = 8 }
 		}
 		else_if = {
 			limit = {
 				trait = master_dragon_rider
 			}
-			set_variable = { which = dragon_duel_count value = 10 }
+			set_variable = { which = dragon_duel_count value = 13 }
 		}
 	}
 }
@@ -278,6 +278,8 @@ character_event = {
 				OR = {
 					trait = skilled_tactician
 					trait = brilliant_strategist
+					trait = knight
+					trait = dragon_knight
 				}
 			}
 			set_special_character_title = title_dragon_knight
@@ -295,7 +297,7 @@ character_event = {
 	}
 }
 
-#	Assigns traits for dragon (rider) when rider dies
+#	Assigns traits for dragon (rider) when rider (dragon) dies
 character_event = {
 	id = dragon.7
 
@@ -312,7 +314,7 @@ character_event = {
 	immediate = {
 		if = {
 			limit = { trait = dragon_rider }
-			any_friend = {
+			random_friend = {
 				limit ={
 					is_tamed_dragon = yes
 				}
@@ -322,23 +324,26 @@ character_event = {
 		}
 		else_if = {
 			limit = { trait = dragon_base_trait }
-			trigger_switch = {
-				on_trigger = trait
-				poor_dragon_rider = {
-					set_flag = is_poor_dragon_rider
-					remove_trait = poor_dragon_rider
-				}
-				trained_dragon_rider = {
-					set_flag = is_trained_dragon_rider
-					remove_trait = trained_dragon_rider
-				}
-				skilled_dragon_rider = {
-					set_flag = is_skilled_dragon_rider
-					remove_trait = skilled_dragon_rider
-				}
-				master_dragon_rider = {
-					set_flag = is_master_dragon_rider
-					remove_trait = master_dragon_rider
+			random_friend = {
+				limit = { is_dragon_rider = yes }
+				trigger_switch = {
+					on_trigger = trait
+					poor_dragon_rider = {
+						set_flag = is_poor_dragon_rider
+						remove_trait = poor_dragon_rider
+					}
+					trained_dragon_rider = {
+						set_flag = is_trained_dragon_rider
+						remove_trait = trained_dragon_rider
+					}
+					skilled_dragon_rider = {
+						set_flag = is_skilled_dragon_rider
+						remove_trait = skilled_dragon_rider
+					}
+					master_dragon_rider = {
+						set_flag = is_master_dragon_rider
+						remove_trait = master_dragon_rider
+					}
 				}
 			}
 		}
@@ -928,7 +933,7 @@ character_event = {
 					limit = {
 						has_ambition = obj_tame_a_dragon
 					}
-					set_character_flag = tamed_a_dragon
+					set_flag = tamed_a_dragon
 				}
 				character_event = { id = dragon.201 }
 			}
@@ -954,24 +959,32 @@ character_event = {
 	option = {
 		name = EVTOPTAdragon201
 		
-		
-		trigger_switch = {
-			on_trigger = has_character_flag
-			is_poor_dragon_rider = {
-				clr_flag = is_poor_dragon_rider
+		add_trait = dragon_rider
+		if = {
+			limit = { has_dragon_rider_Flags = yes }
+			trigger_switch = {
+				on_trigger = has_character_flag
+				is_poor_dragon_rider = {
+					clr_flag = is_poor_dragon_rider
+					add_trait = poor_dragon_rider
+				}
+				is_trained_dragon_rider = {
+					clr_flag = is_trained_dragon_rider
+					add_trait = trained_dragon_rider
+				}
+				is_skilled_dragon_rider = {
+					clr_flag = is_skilled_dragon_rider
+					add_trait = skilled_dragon_rider
+				}
+				is_master_dragon_rider = {
+					clr_flag = is_master_dragon_rider
+					add_trait = master_dragon_rider
+				}
+			}
+		}
+		else = {
+			hidden_tooltip = {
 				add_trait = poor_dragon_rider
-			}
-			is_trained_dragon_rider = {
-				clr_flag = is_trained_dragon_rider
-				add_trait = trained_dragon_rider
-			}
-			is_skilled_dragon_rider = {
-				clr_flag = is_skilled_dragon_rider
-				add_trait = skilled_dragon_rider
-			}
-			is_master_dragon_rider = {
-				clr_flag = is_master_dragon_rider
-				add_trait = master_dragon_rider
 			}
 		}
 		if = {
@@ -999,7 +1012,7 @@ character_event = {
 			}
 		}
 		hidden_tooltip = {
-			FROMFROM = {
+			event_target:targetted_dragon_for_taming = {
 				add_trait = tamed_dragon
 				remove_trait = wild_dragon
 			}
@@ -1012,6 +1025,10 @@ character_event = {
 			entry = CHRONICLE_TAMED_DRAGON
 			portrait = [targetted_dragon_for_taming.GetID]
 		}
+	}
+	
+	after = {
+		clr_flag = tames_dragon
 	}
 }
 
@@ -1328,6 +1345,7 @@ character_event = {
 		}
 		new_character = {
 			tsk_new_dragons_startup = yes
+			add_trait = wild_dragon
 			save_event_target_as = targetted_dragon_for_taming
 			ROOT = {
 				random_demesne_province = {
@@ -2447,54 +2465,30 @@ character_event = {
 				calculate_team_strengths = yes
 			}
 			
-			any_character = {
-				limit = {
-					OR = {
+			#if = {
+			#	limit = { event_target:leader_b = { always = no } }
+				random_character = {
+					limit = {
 						is_rider_in_dragon_duel = yes
-						is_dragon_in_dragon_duel = yes
+						has_flag = is_leader_team_b
 					}
+					save_event_target_as = leader_b
 				}
-				
-				# Find suitable encounter
-				if = {
-					limit = { has_flag = is_rider_in_team_a }
-					random_character = {
-						limit = { has_flag = is_rider_in_team_b }
-						preferred_limit = {
-							NOR = {
-								has_flag = gets_killed
-								has_flag = gets_maimed
-								has_flag = is_picked_as_encounter
-							}
-						}
-						set_flag = is_picked_as_encounter
-						set_flag = is_encounter_of_@PREV
-						#ROOT = {
-						#	set_flag = is_encounter_of_@PREV
-						#	set_flag = is_picked_as_encounter
-						#}
-					}
+			#}
+			
+			change_variable = { which = num_rounds value = 1 }
+			
+			if = {
+				limit = {
+					is_first_round_or_team_a_won = yes
 				}
-				else_if = {
-					limit = { has_flag = is_rider_in_team_b always = no }
-					random_character = {
-						limit = { has_flag = is_rider_in_team_a }
-						preferred_limit = {
-							NOR = {
-								has_flag = gets_killed
-								has_flag = gets_maimed
-								has_flag = is_picked_as_encounter
-							}
-						}
-						set_flag = is_picked_as_encounter
-						character_event = { id = dragon.3071 }
-					}
+				character_event = { id = dragon.3061 }
+			}
+			else_if = {
+				limit = {
+					has_flag = team_b_won
 				}
-				
-				clear_outcome_flags_dragon_duel = yes
-				
-				calculate_injury_outcome_dragon_duel = yes
-				weird_outcome_fixes = yes
+				event_target:leader_b = { character_event = { id = dragon.3061 } }
 			}
 			
 			#Only for debugging
@@ -2504,11 +2498,6 @@ character_event = {
 					has_game_rule = { name = dragon_duels value = enabled_debugging }
 				}
 				character_event = { id = dragon.3001 }
-			}
-			
-			any_character = {
-				limit = { is_rider_in_dragon_duel = yes }
-				character_event = { id = dragon.307 }
 			}
 		}
 		else = {
@@ -2525,26 +2514,173 @@ character_event = {
 	option = { }
 }
 
-#	The duel begins
+#	Ping event to get encounter
 character_event = {
-	id = dragon.307
-	desc = EVTDESCdragon307
+	id = dragon.3061
 	
-	desc = {
-		trigger = {
-			event_target:leader_a = {
-				OR = {
-					has_flag = team_a_wins_round_1
-					has_flag = team_b_wins_round_1
+	is_triggered_only = yes
+	
+	hide_window = yes
+	
+	option = {
+		if = {
+			limit = {
+				has_flag = is_rider_in_team_a
+				is_first_round_or_team_a_won = yes
+			}
+			random_character = {
+				limit = {
+					has_flag = is_rider_in_team_b
+					is_rider_in_dragon_duel = yes
+					NOT = { has_flag = is_picked_as_encounter }
+				}
+				set_flag = is_picked_as_encounter
+				set_flag = is_encounter_of_@ROOT
+				ROOT = {
+					set_flag = is_picked_as_encounter
+					set_flag = is_encounter_of_@PREV
+				}
+				random_friend = {
+					limit = { is_dragon_in_dragon_duel = yes }
+					ROOT = {
+						random_friend = {
+							limit = { is_dragon_in_dragon_duel = yes }
+							set_flag = is_picked_as_encounter
+							set_flag = is_encounter_of_@PREVPREV
+							random_character = {
+								limit = { has_flag = is_encounter_of_@ROOT }
+								random_friend = {
+									limit = { is_dragon_in_dragon_duel = yes }
+									set_flag = is_picked_as_encounter
+									set_flag = is_encounter_of_@PREVPREV
+								}
+							}
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					any_character = {
+						has_flag = is_rider_in_team_a
+						is_rider_in_dragon_duel = yes
+						NOT = { has_flag = is_picked_as_encounter }
+					}
+				}
+				random_character = {
+					limit = {
+						has_flag = is_rider_in_team_a
+						is_rider_in_dragon_duel = yes
+						NOT = { has_flag = is_picked_as_encounter }
+					}
+					character_event = { id = dragon.3061 }
+				}
+			}
+			else = {
+				any_character = {
+					limit = { is_rider_in_dragon_duel = yes }
+					character_event = { id = dragon.307 }
 				}
 			}
 		}
+		else_if = {
+			limit = {
+				has_flag = is_rider_in_team_b
+				event_target:leader_a = { has_flag = team_b_won }
+			}
+			random_character = {
+				limit = {
+					has_flag = is_rider_in_team_a
+					is_rider_in_dragon_duel = yes
+					NOT = { has_flag = is_picked_as_encounter }
+				}
+				set_flag = is_picked_as_encounter
+				set_flag = is_encounter_of_@ROOT
+				ROOT = {
+					set_flag = is_picked_as_encounter
+					set_flag = is_encounter_of_@PREV
+				}
+				random_friend = {
+					limit = { is_dragon_in_dragon_duel = yes }
+					ROOT = {
+						random_friend = {
+							limit = { is_dragon_in_dragon_duel = yes }
+							set_flag = is_picked_as_encounter
+							set_flag = is_encounter_of_@PREVPREV
+							random_character = {
+								limit = { has_flag = is_encounter_of_@ROOT }
+								random_friend = {
+									limit = { is_dragon_in_dragon_duel = yes }
+									set_flag = is_picked_as_encounter
+									set_flag = is_encounter_of_@PREVPREV
+								}
+							}
+						}
+					}
+				}
+			}
+			if = {
+				limit = {
+					any_character = {
+						has_flag = is_rider_in_team_b
+						is_rider_in_dragon_duel = yes
+						NOT = { has_flag = is_picked_as_encounter }
+					}
+				}
+				random_character = {
+					limit = {
+						has_flag = is_rider_in_team_b
+						is_rider_in_dragon_duel = yes
+						NOT = { has_flag = is_picked_as_encounter }
+					}
+					character_event = { id = dragon.3061 }
+				}
+			}
+			else = {
+				any_character = {
+					limit = { is_rider_in_dragon_duel = yes }
+					character_event = { id = dragon.307 }
+				}
+			}
+		}
+	}
+}
+
+#	The duel begins
+character_event = {
+	id = dragon.307
+	
+	desc = {
+		trigger = {
+			is_first_round_or_team_a_won = yes
+		}
 		text = EVTDESCAdragon307
+	}
+	
+	desc = {
+		trigger = {
+			event_target:leader_a = { has_flag = team_b_won }
+		}
+		text = EVTDESCBdragon307
 	}
 	
 	is_triggered_only = yes
 	
 	immediate = {
+		random_character = {
+			limit = { has_flag = is_encounter_of_@ROOT }
+			random_friend = {
+				limit = { is_rider_in_dragon_duel = yes }
+				random_character = {
+					limit = { has_flag = is_encounter_of_@PREV }
+					calculate_injury_outcome_dragon_duel = yes
+				}
+			}
+		}
+			
+		calculate_injury_outcome_dragon_duel = yes
+		
+		weird_outcome_fixes = yes
 	}
 	
 	option = {
@@ -2581,9 +2717,19 @@ character_event = {
 			limit = { FROM = { has_flag = is_leader_team_a } }
 			FROM = { set_flag = EVT3071 }
 		}
-		random_character = {
-			limit = { has_flag = is_encounter_of_@FROM }
-			character_event = { id = dragon.3072 }
+		if = {
+			limit = {
+				any_character = { has_flag = is_encounter_of_@FROM }
+			}
+			random_character = {
+				limit = { has_flag = is_encounter_of_@FROM }
+				character_event = { id = dragon.3072 }
+			}
+		}
+		else = {
+			FROM = {
+				character_event = { id = dragon.308 }
+			}
 		}
 	}
 }
@@ -2754,11 +2900,6 @@ character_event = {
 			give_outcome_traits_or_kill = yes
 		}
 		
-		if = {
-			limit = { has_flag = is_leader_team_a }
-			character_event = { id = dragon.309 }
-		}
-		
 		clear_outcome_flags_dragon_duel = yes
 		
 		any_friend = {
@@ -2766,6 +2907,11 @@ character_event = {
 				is_dragon_in_dragon_duel = yes
 			}
 			clear_outcome_flags_dragon_duel = yes
+		}
+		
+		if = {
+			limit = { has_flag = is_leader_team_a }
+			character_event = { id = dragon.309 }
 		}
 	}
 }
@@ -2782,6 +2928,8 @@ character_event = {
 		random_list = {
 			50 = { # Team A wins
 				change_variable = { which = vict_team_a value = 1 }
+				set_flag = team_a_won
+				clr_flag = team_b_won
 				modifier = {
 					factor = 2
 					check_variable = { which = duel_strength_team_a value < 600 }
@@ -2845,6 +2993,8 @@ character_event = {
 			}
 			50 = { # Team B wins
 				change_variable = { which = vict_team_b value = 1 }
+				set_flag = team_b_won
+				clr_flag = team_a_won
 				modifier = {
 					factor = 2
 					check_variable = { which = duel_strength_team_b value < 600 }
@@ -2919,7 +3069,10 @@ character_event = {
 					check_variable = { which = ta value = 3 }
 				}
 				set_flag = team_a_wins
-				character_event = { id = dragon.310 } # End the duel
+				any_character = {
+					limit = { is_rider_in_dragon_duel = yes }
+					character_event = { id = dragon.310 } # End the duel
+				}
 			}
 			else = {
 				any_character = {
@@ -2928,6 +3081,7 @@ character_event = {
 					set_variable = { which = duel_strength_team_b value = 0 }
 					calculate_team_strengths = yes
 				}
+				set_flag = EVT309to306b
 				character_event = { id = dragon.306 }
 			}
 		}
@@ -2938,7 +3092,10 @@ character_event = {
 					check_variable = { which = tb value = 3 }
 				}
 				set_flag = team_b_wins
-				character_event = { id = dragon.310 } # End the duel
+				any_character = {
+					limit = { is_rider_in_dragon_duel = yes }
+					character_event = { id = dragon.310 } # End the duel
+				}
 			}
 			else = {
 				any_character = {
@@ -2947,6 +3104,7 @@ character_event = {
 					set_variable = { which = duel_strength_team_b value = 0 }
 					calculate_team_strengths = yes
 				}
+				set_flag = EVT309to306a
 				character_event = { id = dragon.306 }
 			}
 		}
@@ -2999,9 +3157,9 @@ character_event = {
 		if = {
 			limit = {
 				NOR = {
-					check_variable = { which = dragon_duel_count value == 3 }
-					check_variable = { which = dragon_duel_count value == 4 }
-					check_variable = { which = dragon_duel_count value == 8 }
+					is_variable_equal = { which = dragon_duel_count value = 3 }
+					is_variable_equal = { which = dragon_duel_count value = 7 }
+					is_variable_equal = { which = dragon_duel_count value = 12 }
 				}
 			}
 			custom_tooltip = {
