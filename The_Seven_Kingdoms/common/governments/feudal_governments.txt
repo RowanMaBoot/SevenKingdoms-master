@@ -53,12 +53,12 @@ feudal_governments = {
 			tribal_government
 		}
 		potential = {
+			NOT = { is_special_feudal_government_potential = yes }
 			OR = {
 				controls_religion = no
-				religion_group = eastern_group
 				has_religion_feature = religion_temporal_head
 			}
-			NOT = {	religion_group = eastern_group	}
+			NOT = {	religion_group = eastern_group }
 			# NOT = { is_government_potential = roman_imperial_government }
 			NOT = { is_government_potential = order_government }
 			NAND = { 
@@ -133,6 +133,7 @@ feudal_governments = {
 		}
 		frame_suffix = "_iqta"
 		potential = {
+			NOT = { is_special_feudal_government_potential = yes }
 			OR = {
 				controls_religion = no
 				religion_group = valyrian
@@ -148,14 +149,7 @@ feudal_governments = {
 			}
 			# NOT = { is_government_potential = roman_imperial_government }
 			NOT = { is_government_potential = order_government }
-			NAND = { 
-				tier = EMPEROR
-				primary_title = { has_title_flag = pretender_chinese_empire }
-				OR = {
-					culture_group = valyrian
-					has_character_flag = chinese_imperial_government_preserve
-				}
-			}
+			NOT = { is_china_pretender_potential = yes }
 			is_patrician = no
 		}
 		
@@ -278,13 +272,8 @@ feudal_governments = {
 		}
 		frame_suffix = "_chineseimperial"
 		potential = {
-			tier = EMPEROR
-			primary_title = { has_title_flag = pretender_chinese_empire }
-			OR = {
-				culture_group = valyrian
-				has_character_flag = chinese_imperial_government_preserve #keeps government when player is given culture change opton
-			}
-			is_patrician = no
+			NOT = { is_special_feudal_government_potential = yes }
+			is_china_pretender_potential = yes
 		}
 		
 		color = { 118 255 163 }
