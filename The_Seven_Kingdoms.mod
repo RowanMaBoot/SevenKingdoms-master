@@ -1,7 +1,7 @@
 name = "The Seven Kingdoms | Beta4 | 3.2"
 path = "mod/The_Seven_Kingdoms"
 user_dir = "The_Seven_Kingdoms"
-picture="thumb.jpg"
+picture="thumbnail.png"
 
 replace_path = "history/provinces"
 replace_path = "history/titles"
