@@ -1,0 +1,169 @@
+settlement_decisions = {
+	# Allows building higher level structures.
+	# Randomly assigned. Duke capitals and Kingdom capitals will always started with the highest infrastructure.
+	upgrade_regional_infrastructure = {
+		ai_check_interval = 120
+		filter = owned
+		ai_target_filter = owned
+		is_high_prio = yes
+		
+		from_potential = {
+			is_playable = yes
+			higher_tier_than = BARON 
+		}
+		potential = {
+			holder_scope = {
+				character = FROM
+			}
+			is_capital = yes
+			capital_scope = { location = { province = ROOT } }
+		}
+		allow = {
+			FROM = { 
+				wealth = 400
+			}
+		}
+		effect = {
+			FROM = { 
+				show_scope_change = no
+				wealth = -400
+			}
+			if = {
+				limit = {
+					location = {
+						NOR = {
+							has_province_modifier = tsk_infra_1
+							has_province_modifier = tsk_infra_2
+							has_province_modifier = tsk_infra_3
+							has_province_modifier = tsk_infra_4
+							has_province_modifier = tsk_infra_5
+						}
+					}
+				}
+				location = {
+					add_province_modifier = { name = tsk_infra_1 duration = -1 }
+				}
+			}
+			else_if = {
+				limit = {
+					location = {
+						has_province_modifier = tsk_infra_1
+					}
+				}
+				remove_province_modifier = tsk_infra_1
+				add_province_modifier = { name = tsk_road_2 duration = -1 }
+			}
+			else_if = {
+				limit = {
+					location = {
+						has_province_modifier = tsk_infra_2
+					}
+				}
+				remove_province_modifier = tsk_infra_2
+				add_province_modifier = { name = tsk_infra_3 duration = -1 }
+			}
+			else_if = {
+				limit = {
+					location = {
+						has_province_modifier = tsk_infra_3
+					}
+				}
+				remove_province_modifier = tsk_infra_3
+				add_province_modifier = { name = tsk_infra_4 duration = -1 }
+			}
+			else_if = {
+				limit = {
+					location = {
+						has_province_modifier = tsk_infra_4
+					}
+				}
+				remove_province_modifier = tsk_infra_4
+				add_province_modifier = { name = tsk_infra_5 duration = -1 }
+			}
+		}
+	}
+	# Faster movement and allows for tolls and other road-related tax collection.
+	# Reduces tax income by a %
+	upgrade_roads = {
+		ai_check_interval = 240
+		filter = owned
+		ai_target_filter = owned
+		is_high_prio = yes
+		
+		from_potential = {
+			is_playable = yes
+			higher_tier_than = BARON 
+		}
+		potential = {
+			holder_scope = {
+				character = FROM
+			}
+			is_capital = yes
+			capital_scope = { location = { province = ROOT } }
+			
+		}
+		allow = {
+			FROM = { 
+				wealth = 350
+			}
+		}
+		effect = {
+			FROM = { 
+				show_scope_change = no
+				wealth = -350
+			}
+			if = {
+				limit = {
+					location = {
+						NOR = {
+							has_province_modifier = tsk_road_1
+							has_province_modifier = tsk_road_2
+							has_province_modifier = tsk_road_3
+							has_province_modifier = tsk_road_4
+							has_province_modifier = tsk_road_5
+						}
+					}
+				}
+				location = {
+					add_province_modifier = { name = tsk_road_1 duration = -1 }
+				}
+			}
+			else_if = {
+				limit = {
+					location = {
+						has_province_modifier = tsk_road_1
+					}
+				}
+				remove_province_modifier = tsk_road_1
+				add_province_modifier = { name = tsk_road_2 duration = -1 }
+			}
+			else_if = {
+				limit = {
+					location = {
+						has_province_modifier = tsk_road_2
+					}
+				}
+				remove_province_modifier = tsk_road_2
+				add_province_modifier = { name = tsk_road_3 duration = -1 }
+			}
+			else_if = {
+				limit = {
+					location = {
+						has_province_modifier = tsk_road_3
+					}
+				}
+				remove_province_modifier = tsk_road_3
+				add_province_modifier = { name = tsk_road_4 duration = -1 }
+			}
+			else_if = {
+				limit = {
+					location = {
+						has_province_modifier = tsk_road_4
+					}
+				}
+				remove_province_modifier = tsk_road_4
+				add_province_modifier = { name = tsk_road_5 duration = -1 }
+			}
+		}
+	}
+}
