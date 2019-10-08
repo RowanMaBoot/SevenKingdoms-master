@@ -17,6 +17,7 @@ character_event = { # Great warrior character chance
 	trigger = {
 		any_owned_bloodline = {
 			has_bloodline_flag = bloodline_heroes
+			bloodline_is_active_for = PREV
 			founder = {
 				NOT = {
 					character = ROOT
@@ -371,6 +372,7 @@ character_event = { # Sympathy for founder group
 			has_character_flag = no_sympathy_bloodline
 		}
 		any_owned_bloodline = {
+			bloodline_is_active_for = PREV
 			founder = {
 				NOT = {
 					character = ROOT
@@ -672,6 +674,7 @@ character_event = { # Chance of gaining a personality trait of Founder
 			has_character_flag = had_bloodline_personality_event
 		}
 		any_owned_bloodline = {
+			bloodline_is_active_for = PREV
 			OR = {
 				NOT = {
 					has_bloodline_flag = saintly_bloodline
@@ -2896,7 +2899,7 @@ character_event = {
 					NOT = { age = 16 }
 					AND = { 
 						has_character_flag = flag_forge_bloodline_was_child 
-						NOT = { age = 35 } #Should still be somewhat young.
+						NOT = { age = 45 } #Should still be somewhat young.
 					}
 				}
 			}
@@ -4966,6 +4969,7 @@ narrative_event = {
 				}		
 			}
 		}
+		set_bloodline_founder_religion_flag_effect = yes
 		ai_chance = { 
 			factor = 100
 		}
@@ -5577,7 +5581,7 @@ narrative_event = {
 			}
 		}
 		else_if = { 
-			limit = { religion_group = pagan_group }
+			limit = { religion_group = westerosi_pagan_group }
 			if = { 
 				limit = { is_female = no }
 				create_bloodline = {
@@ -5640,6 +5644,7 @@ narrative_event = {
 				}		
 			}
 		}
+		set_bloodline_founder_religion_flag_effect = yes
 		ai_chance = { 
 			factor = 100
 		}
@@ -6031,6 +6036,7 @@ character_event = {
 	trigger = { 
 		any_owned_bloodline = {
 			has_bloodline_flag = bloodline_murder_child
+			bloodline_is_active_for = PREV
 		}
 		intrigue = 3
 		NOR = { 
@@ -6634,6 +6640,7 @@ character_event = {
 	trigger = {
 		any_owned_bloodline = {
 			has_bloodline_flag = bloodline_murder_stalk 
+			bloodline_is_active_for = PREV
 		}
 		OR = {
 			has_plot = plot_kill_character
@@ -7317,9 +7324,10 @@ character_event = {
 	min_age = 16
 
 	trigger = {
-		piety = 0
+		piety = 50
 		any_owned_bloodline = {
 			has_bloodline_flag = bloodline_knights
+			bloodline_is_active_for = PREV
 			founder = {
 				NOT = {
 					character = ROOT
@@ -7337,7 +7345,7 @@ character_event = {
 			60 = { #Bard
 				character_event = { id = HF.24131 }
 			}
-			60 = {
+			80 = {
 				modifier = {
 					factor = 3
 					ai = yes
@@ -7742,7 +7750,7 @@ character_event = {
 	
 	only_women = yes
 	min_age = 16
-	max_age = 35
+	max_age = 30
 	only_capable = yes
 	prisoner = no
 	
@@ -7764,13 +7772,15 @@ character_event = {
 		liege = {  
 			OR = { 
 				NOT = { religion = ROOT }
-				NOT = { reverse_opinion = { who = ROOT value = 0 } }
+				NOT = { reverse_opinion = { who = ROOT value = -40 } }
+				is_rival = ROOT
 			}
 			any_neighbor_independent_ruler = {  
 				age = 16
 				NOT = { trait = incapable }
 				any_owned_bloodline = { 
 					has_bloodline_flag = bloodline_knights
+					bloodline_is_active_for = PREV
 				}
 				religion = ROOT
 			}
@@ -7780,11 +7790,12 @@ character_event = {
 
 	immediate = {
 		random = {
-			chance = 30 
+			chance = 5 
 			random_neighbor_independent_ruler = {  
 				limit = {  
 					any_owned_bloodline = { 
 						has_bloodline_flag = bloodline_knights
+						bloodline_is_active_for = PREV
 					}
 					religion = ROOT
 				}
@@ -9322,6 +9333,7 @@ character_event = {
 					}
 					any_owned_bloodline = { #Target does not share the culture of the founder, while still being within the same culture group.
 						has_bloodline_flag = bloodline_dynastic_meddling
+						bloodline_is_active_for = PREV
 						founder = {
 							NOT = { culture = event_target:meddling_target }
 							culture_group = event_target:meddling_target
@@ -9423,7 +9435,10 @@ character_event = {
 	immediate = { 
 		#Select founder for scoping purposes.
 		any_owned_bloodline = { #Target does not share the culture of the founder, while still being within the same culture group.
-			limit = { has_bloodline_flag = bloodline_dynastic_meddling }
+			limit = { 
+				has_bloodline_flag = bloodline_dynastic_meddling 
+				bloodline_is_active_for = PREV
+			}
 			founder = {
 				save_event_target_as = scoped_founder
 			}
@@ -14632,6 +14647,7 @@ character_event = {
 		piety = 0
 		any_owned_bloodline = {
 			has_bloodline_flag = bloodline_wandering_artists
+			bloodline_is_active_for = PREV
 		}
 	}
 	
