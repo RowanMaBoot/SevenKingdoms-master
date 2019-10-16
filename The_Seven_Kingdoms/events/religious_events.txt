@@ -3369,7 +3369,7 @@ character_event = {
 	min_age = 16
 	only_capable = yes
 	only_men = yes
-	religion_group = christian
+	religion_group = the_seven_group
 
 	trigger = {
 		is_heretic = no
@@ -3429,7 +3429,7 @@ character_event = {
 	trigger = {
 		has_character_modifier = true_christian_knight
 		OR = {
-			NOT = { religion_group = christian }
+			NOT = { religion_group = the_seven_group }
 			is_heretic = yes 
 			trait = cynical
 			trait = lustful
@@ -3625,28 +3625,43 @@ character_event = {
 			# Always allow them if you already like that religion
 			modifier = {
 				factor = 0
-				FROM = { religion_group = christian }
-				trait = sympathy_christendom
+				FROM = { religion_group = the_seven_group }
+				trait = sympathy_the_seven_group
 			}
 			modifier = {
 				factor = 0
-				FROM = { religion_group = muslim }
-				trait = sympathy_islam
+				FROM = { religion_group = eastern_group }
+				trait = sympathy_eastern_group
 			}
 			modifier = {
 				factor = 0
-				FROM = { religion = moonsingers }
-				trait = sympathy_judaism
+				FROM = { religion_group = westerosi_pagan_group }
+				trait = sympathy_westerosi_pagan_group
 			}
 			modifier = {
 				factor = 0
-				FROM = { religion_group = zoroastrian_group }
-				trait = sympathy_zoroastrianism
+				FROM = { religion_group = drowned_god_group }
+				trait = sympathy_drowned_god_group
 			}
 			modifier = {
 				factor = 0
-				FROM = { religion_group = indian_group }
-				trait = sympathy_indian
+				FROM = { religion_group = valyrian_group }
+				trait = sympathy_valyrian_group
+			}
+			modifier = {
+				factor = 0
+				FROM = { religion_group = eastern_pagan_group }
+				trait = sympathy_eastern_pagan_group
+			}
+			modifier = {
+				factor = 0
+				FROM = { religion_group = other_group }
+				trait = sympathy_other_group
+			}
+			modifier = {
+				factor = 0
+				FROM = { religion_group = far_east_group }
+				trait = sympathy_far_east_group
 			}
 		}
 		
@@ -3786,29 +3801,29 @@ character_event = {
 				NOT = { government = nomadic_government }  # We're already adopting civilized ways...
 				NOT = { government = tribal_government }
 			}
-			modifier = {
-				factor = 0.2
-				OR = {
-					culture = old_saxon
-					culture_group = baltic
-					culture_group = finno_ugric  # The most stubborn pagans
-				}
+			# modifier = {
+				# factor = 0.2
+				# OR = {
+					# culture = old_saxon
+					# culture_group = baltic
+					# culture_group = finno_ugric  # The most stubborn pagans
+				# }
 				
-			}
-			modifier = {
-				factor = 0.2
-				culture_group = east_slavic # Like alcohol
-				FROM = {
-					religion_group = muslim
-				}
-			}
-			modifier = {
-				factor = 0.2
-				culture_group = north_germanic # Vikings do like their alcohol
-				FROM = {
-					religion_group = muslim
-				}
-			}
+			# }
+			# modifier = {
+				# factor = 0.2
+				# culture_group = east_slavic # Like alcohol
+				# FROM = {
+					# religion_group = muslim
+				# }
+			# }
+			# modifier = {
+				# factor = 0.2
+				# culture_group = north_germanic # Vikings do like their alcohol
+				# FROM = {
+					# religion_group = muslim
+				# }
+			# }
 			
 			# Pragmatism
 			modifier = {
@@ -3816,46 +3831,46 @@ character_event = {
 				tier = KING
 				realm_size = 12
 			}
-			modifier = {
-				factor = 5
-				is_reformed_religion = no
-				primary_title = { has_law = tribal_organization_4 }  # Need it to reform government
-				capital_holding = {
-					OR = {
-						AND = {
-							location = {
-								port = yes
-							}
-							OR = {
-								AND = {
-									holding_type = tribal
-									has_building = tb_market_town_4
-								}
-								holding_type = city
-							}
-						}
-						AND = {
-							holding_type = tribal
-							has_building = tb_hillfort_4
-						}
-						holding_type = castle
-					}
-				}
-			}
-			modifier = {
-				factor = 0.2
-				is_reformed_religion = no
-				OR = {
-					AND = {
-						any_realm_title = {
-							count = 3 
-							is_holy_site = ROOT  # Close to reforming own religion instead
-						}
-						religion_authority = 0.4
-					}
-					religion_authority = 0.65 # Just very high authority, doing well
-				}
-			}
+			# modifier = {
+				# factor = 5
+				# is_reformed_religion = no
+				# primary_title = { has_law = tribal_organization_4 }  # Need it to reform government
+				# capital_holding = {
+					# OR = {
+						# AND = {
+							# location = {
+								# port = yes
+							# }
+							# OR = {
+								# AND = {
+									# holding_type = tribal
+									# has_building = tb_market_town_4
+								# }
+								# holding_type = city
+							# }
+						# }
+						# AND = {
+							# holding_type = tribal
+							# has_building = tb_hillfort_4
+						# }
+						# holding_type = castle
+					# }
+				# }
+			# }
+			# modifier = {
+				# factor = 0.2
+				# is_reformed_religion = no
+				# OR = {
+					# AND = {
+						# any_realm_title = {
+							# count = 3 
+							# is_holy_site = ROOT  # Close to reforming own religion instead
+						# }
+						# religion_authority = 0.4
+					# }
+					# religion_authority = 0.65 # Just very high authority, doing well
+				# }
+			# }
 			modifier = {
 				factor = 2
 				any_realm_province = {
@@ -3869,26 +3884,26 @@ character_event = {
 					}
 				}
 			}
-			modifier = {
-				factor = 0.2
-				NOR = {
-					religion = tengri_pagan
-					religion = aztec
-					any_realm_province = {
-						any_neighbor_province = {
-							owner = {
-								top_liege = {
-									NAND = {
-										religion_group = pagan_group
-										is_reformed_religion = no
-									}
-									any_realm_province = { TECH_RECRUITMENT = 4 } # More cocky when pagan homeland attrition effect is active against neighbors
-								}
-							}
-						}
-					}
-				}
-			}
+			# modifier = {
+				# factor = 0.2
+				# NOR = {
+					# religion = tengri_pagan
+					# religion = aztec
+					# any_realm_province = {
+						# any_neighbor_province = {
+							# owner = {
+								# top_liege = {
+									# NAND = {
+										# religion_group = pagan_group
+										# is_reformed_religion = no
+									# }
+									# any_realm_province = { TECH_RECRUITMENT = 4 } # More cocky when pagan homeland attrition effect is active against neighbors
+								# }
+							# }
+						# }
+					# }
+				# }
+			# }
 		}
 		
 		FROM = {
@@ -3945,28 +3960,43 @@ character_event = {
 			}
 			modifier = {
 				factor = 3
-				FROM = { religion_group = christian }
-				trait = sympathy_christendom
+				FROM = { religion_group = the_seven_group }
+				trait = sympathy_the_seven_group
 			}
 			modifier = {
 				factor = 3
-				FROM = { religion_group = muslim }
-				trait = sympathy_islam
+				FROM = { religion_group = eastern_group }
+				trait = sympathy_eastern_group
 			}
 			modifier = {
 				factor = 3
-				FROM = { religion = moonsingers }
-				trait = sympathy_judaism
+				FROM = { religion_group = westerosi_pagan_group }
+				trait = sympathy_westerosi_pagan_group
 			}
 			modifier = {
 				factor = 3
-				FROM = { religion_group = zoroastrian_group }
-				trait = sympathy_zoroastrianism
+				FROM = { religion_group = drowned_god_group }
+				trait = sympathy_drowned_god_group
 			}
 			modifier = {
 				factor = 3
-				FROM = { religion_group = indian_group }
-				trait = sympathy_indian
+				FROM = { religion_group = valyrian_group }
+				trait = sympathy_valyrian_group
+			}
+			modifier = {
+				factor = 3
+				FROM = { religion_group = eastern_pagan_group }
+				trait = sympathy_eastern_pagan_group
+			}
+			modifier = {
+				factor = 3
+				FROM = { religion_group = other_group }
+				trait = sympathy_other_group
+			}
+			modifier = {
+				factor = 3
+				FROM = { religion_group = far_east_group }
+				trait = sympathy_far_east_group
 			}
 			
 			# Personal
@@ -4063,36 +4093,36 @@ character_event = {
 				NOT = { government = nomadic_government }  # We're already adopting civilized ways...
 				NOT = { government = tribal_government }
 			}
-			modifier = {
-				factor = 0.2
-				OR = {
-					culture_group = baltic
-					culture_group = finno_ugric  # The most stubborn pagans
-				}
+			# modifier = {
+				# factor = 0.2
+				# OR = {
+					# culture_group = baltic
+					# culture_group = finno_ugric  # The most stubborn pagans
+				# }
 				
-			}
-			modifier = {
-				factor = 0.2
-				culture_group = east_slavic # Like alcohol
-				FROM = {
-					religion_group = muslim
-				}
-			}
-			modifier = {
-				factor = 0.2
-				culture_group = north_germanic # Vikings do like their alcohol
-				FROM = {
-					religion_group = muslim
-				}
-			}
-			modifier = {
-				factor = 0.2
-				religion = bon
-			}
-			modifier = {
-				factor = 0.2
-				religion = bon_reformed
-			}
+			# }
+			# modifier = {
+				# factor = 0.2
+				# culture_group = east_slavic # Like alcohol
+				# FROM = {
+					# religion_group = muslim
+				# }
+			# }
+			# modifier = {
+				# factor = 0.2
+				# culture_group = north_germanic # Vikings do like their alcohol
+				# FROM = {
+					# religion_group = muslim
+				# }
+			# }
+			# modifier = {
+				# factor = 0.2
+				# religion = bon
+			# }
+			# modifier = {
+				# factor = 0.2
+				# religion = bon_reformed
+			# }
 			
 			# Pragmatism
 			modifier = {
@@ -4100,50 +4130,50 @@ character_event = {
 				tier = KING
 				realm_size = 12
 			}
-			modifier = {
-				factor = 5
-				is_reformed_religion = no
-				primary_title = { has_law = tribal_organization_4 }  # Need it to reform government
-				capital_holding = {
-					OR = {
-						AND = {
-							location = {
-								port = yes
-							}
-							OR = {
-								AND = {
-									holding_type = tribal
-									has_building = tb_market_town_4
-								}
-								holding_type = city
-							}
-						}
-						AND = {
-							holding_type = tribal
-							has_building = tb_hillfort_4
-						}
-						holding_type = castle
-					}
-				}
-			}
-			modifier = {
-				factor = 0
-				is_reformed_religion = yes
-			}
-			modifier = {
-				factor = 0.3
-				is_reformed_religion = no
-				OR = {
-					AND = {
-						any_realm_title = {
-							count = 3 
-							is_holy_site = ROOT  # Close to reforming own religion instead
-						}
-						religion_authority = 0.4
-					}
-					religion_authority = 0.65 # Just very high authority, doing well
-				}
-			}
+			# modifier = {
+				# factor = 5
+				# is_reformed_religion = no
+				# primary_title = { has_law = tribal_organization_4 }  # Need it to reform government
+				# capital_holding = {
+					# OR = {
+						# AND = {
+							# location = {
+								# port = yes
+							# }
+							# OR = {
+								# AND = {
+									# holding_type = tribal
+									# has_building = tb_market_town_4
+								# }
+								# holding_type = city
+							# }
+						# }
+						# AND = {
+							# holding_type = tribal
+							# has_building = tb_hillfort_4
+						# }
+						# holding_type = castle
+					# }
+				# }
+			# }
+			# modifier = {
+				# factor = 0
+				# is_reformed_religion = yes
+			# }
+			# modifier = {
+				# factor = 0.3
+				# is_reformed_religion = no
+				# OR = {
+					# AND = {
+						# any_realm_title = {
+							# count = 3 
+							# is_holy_site = ROOT  # Close to reforming own religion instead
+						# }
+						# religion_authority = 0.4
+					# }
+					# religion_authority = 0.65 # Just very high authority, doing well
+				# }
+			# }
 			modifier = {
 				factor = 2
 				any_realm_province = {
@@ -4157,26 +4187,26 @@ character_event = {
 					}
 				}
 			}
-			modifier = {
-				factor = 0.2
-				NOR = {
-					religion = tengri_pagan
-					religion = aztec
-					any_realm_province = {
-						any_neighbor_province = {
-							owner = {
-								top_liege = {
-									NAND = {
-										religion_group = pagan_group
-										is_reformed_religion = no
-									}
-									any_realm_province = { TECH_RECRUITMENT = 4 } # More cocky when pagan homeland attrition effect is active against neighbors
-								}
-							}
-						}
-					}
-				}
-			}
+			# modifier = {
+				# factor = 0.2
+				# NOR = {
+					# religion = tengri_pagan
+					# religion = aztec
+					# any_realm_province = {
+						# any_neighbor_province = {
+							# owner = {
+								# top_liege = {
+									# NAND = {
+										# religion_group = pagan_group
+										# is_reformed_religion = no
+									# }
+									# any_realm_province = { TECH_RECRUITMENT = 4 } # More cocky when pagan homeland attrition effect is active against neighbors
+								# }
+							# }
+						# }
+					# }
+				# }
+			# }
 
 			# Realm stability
 			modifier = {
