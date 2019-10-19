@@ -7,8 +7,12 @@
 # Merchant Kingdom is a government with the intention of simulating the influence of merchants and other chinaers on a king and his court. (The Arbor)
 
 # feudal_government
-# stepstones_government
 # muslim_government
+# theocratic_feudal_government #Disabled
+# chinese_imperial_government
+# order_government
+# roman_imperial_government #Disabled
+# stepstones_government
 # old_gods_government
 # nights_watch_government
 # merchant_kingdom_government
@@ -23,13 +27,13 @@
 # prince_government
 # winter_government
 # military_command_government
+# dorne_government
 			
 
-# is_all_feudal_government_potential = yes										# All feudal governments, excluding feudal
+# is_all_feudal_government_potential = yes							# All feudal governments, excluding feudal
 # is_special_feudal_government_potential = yes						# All special title specific governments
 
 # Governments cascade, so it picks possible governments from highest to lowest in file.
-
 
 
 feudal_governments = {
@@ -53,14 +57,29 @@ feudal_governments = {
 			tribal_government
 		}
 		potential = {
-			NOT = { is_special_feudal_government_potential = yes }
+			religion_group = the_seven_group
+			NOR = {
+				controls_religion = yes
+				
+				is_government_potential = order_government
+				is_base_feudal_government_potential = yes
+				is_special_feudal_government_potential = yes
+				is_special_other_government_potential = yes
+				is_government_potential = military_command_government
+				
+				#AND = {
+				#	culture_group = valyrian
+				#	religion_group = valyrian_group
+				#}
+				#culture_group = iron_islander
+				#culture_group = ghiscari_group
+				#culture_group = dothraki_group 
+				#culture_group = rhoynish_group
+			}
 			OR = {
 				controls_religion = no
 				has_religion_feature = religion_temporal_head
 			}
-			NOT = {	religion_group = eastern_group }
-			# NOT = { is_government_potential = roman_imperial_government }
-			NOT = { is_government_potential = order_government }
 			NAND = { 
 				culture_group = free_folk
 				OR = {
@@ -70,26 +89,7 @@ feudal_governments = {
 				}
 				higher_tier_than = BARON
 			}
-			NAND = { 
-				tier = EMPEROR
-				primary_title = { has_title_flag = pretender_chinese_empire }
-				OR = {
-					culture_group = valyrian
-					has_character_flag = chinese_imperial_government_preserve
-				}
-			}
-			NOR = {
-				culture_group = iron_islander
-				culture_group = valyrian
-				culture_group = ghiscari_group
-				culture_group = dothraki_group 
-				culture_group = rhoynish_group
-				controls_religion = yes
-				is_base_feudal_government_potential = yes
-				is_special_feudal_government_potential = yes
-				is_special_other_government_potential = yes
-				is_government_potential = military_command_government
-			}
+			is_china_pretender_potential = no
 			is_patrician = no
 		}
 		
@@ -153,14 +153,14 @@ feudal_governments = {
 			is_patrician = no
 		}
 		
-		color = { 10 138 57 }
+		color = { 100 133 140 }
 		
 		uses_decadence = yes
 		uses_piety_for_law_change = yes
 		
 		dukes_called_kings = yes
 		barons_need_dynasty = yes
-		have_gender_laws = no
+		have_gender_laws = yes
 		allows_matrilineal_marriage = no
 		free_retract_vassalage = yes
 
@@ -485,9 +485,16 @@ feudal_governments = {
 			OR = {
 				religion = lady_of_the_rocks
 				religion = black_flag
+				AND = {
+					culture = sistermen
+					OR = {
+						religion = lady_of_the_rocks
+						religion = black_flag
+						religion = lady_of_the_waves
+					}
+				}
 			}
 			NOT = {	religion = rhllor	}
-			# NOT = { is_government_potential = roman_imperial_government }
 			NOT = { is_government_potential = order_government }
 			NAND = { 
 				tier = EMPEROR
@@ -551,20 +558,16 @@ feudal_governments = {
 		}
 		frame_suffix = "_feudal"
 		potential = {
-			NOT = {
-				controls_religion = yes
-			}
+			controls_religion = no
 			OR = {
-				religion = old_gods
+				religion_group = westerosi_pagan_group
 				religion = old_gods_beyond
 				religion = old_gods_beyond_white
 			}
-			NOT = {
-				culture_group = free_folk
-			}
 			NOR = {
 				is_china_pretender_potential = yes
-				is_special_feudal_government_potential = yes						# All special title specific governments
+				is_special_feudal_government_potential = yes
+				culture_group = free_folk						# All special title specific governments
 			}
 			is_patrician = no
 		}
@@ -620,20 +623,20 @@ feudal_governments = {
 			wildling_government
 		}
 		potential = {
-			NOT = {
+			NOR = {
 				controls_religion = yes
+				is_china_pretender_potential = yes
 			}
 			OR = {
 				primary_title = {
 					OR = {
 						title = d_the_wall
+						title = d_brandons_gift
+						title = d_new_gift
 						title = k_the_nights_watch
 					}
 				}
 				trait = black_brother
-			}
-			NOT = {
-				is_china_pretender_potential = yes
 			}
 		}
 		
@@ -1465,12 +1468,13 @@ feudal_governments = {
 		}
 		frame_suffix = "_iron"
 		potential = {
-			culture_group = iron_islander
 			NOT = {
 				controls_religion = yes
 			}
 			OR = {
-				capital_scope = { region = world_the_iron_islands }
+				culture_group = iron_islander
+				religion_group = drowned_god_group
+				#capital_scope = { region = world_the_iron_islands }
 				primary_title = { 
 					OR = {
 						title = e_the_iron_islands
@@ -1494,13 +1498,11 @@ feudal_governments = {
 					}
 				}
 			}
-			NOT = {
-				is_china_pretender_potential = yes
-			}
+			is_china_pretender_potential = no
 			is_patrician = no
 		}
 		
-		color = { 75 80 90 }
+		color = { 75 50 60 }
 		
 		dukes_called_kings = yes
 		barons_need_dynasty = yes
@@ -1537,10 +1539,10 @@ feudal_governments = {
 	prince_government = {
 		preferred_holdings = { CASTLE }
 		allowed_holdings = { 
-				CASTLE
-				CITY
-				FORT
-				HOSPITAL
+			CASTLE
+			CITY
+			FORT
+			HOSPITAL
 		}
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
@@ -1591,9 +1593,7 @@ feudal_governments = {
 					}
 				}
 			}
-			NOT = {
-					is_china_pretender_potential = yes
-			}
+			is_china_pretender_potential = no
 			is_patrician = no
 		}
 			
@@ -1666,10 +1666,18 @@ feudal_governments = {
 		}
 		frame_suffix = "_stark"
 		potential = {
-				NOT = {
-						controls_religion = yes
+			NOT = {
+					controls_religion = yes
+			}
+			OR = {
+				primary_title = { 
+					OR = {
+						title = k_winterfell
+						title = e_the_north
+						title = k_the_north
+					}
 				}
-				OR = {
+				top_liege = {
 					primary_title = { 
 						OR = {
 							title = k_winterfell
@@ -1677,20 +1685,10 @@ feudal_governments = {
 							title = k_the_north
 						}
 					}
-					top_liege = {
-						primary_title = { 
-							OR = {
-								title = k_winterfell
-								title = e_the_north
-								title = k_the_north
-							}
-						}
-					}
 				}
-				NOT = {
-						is_china_pretender_potential = yes
-				}
-				is_patrician = no
+			}
+			is_china_pretender_potential = no
+			is_patrician = no
 		}
 		
 		color = { 195 195 170 }
@@ -1800,9 +1798,9 @@ feudal_governments = {
 	dorne_government = {
 		preferred_holdings = { CASTLE }
 		allowed_holdings = { 
-				CASTLE
-				FORT
-				HOSPITAL
+			CASTLE
+			FORT
+			HOSPITAL
 		}
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
@@ -1848,9 +1846,7 @@ feudal_governments = {
 				}
 			}
 	
-			NOT = {
-				is_china_pretender_potential = yes
-			}
+			is_china_pretender_potential = no
 			is_patrician = no
 		}
 			
