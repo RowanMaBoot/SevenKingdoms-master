@@ -293,7 +293,10 @@ targetted_decisions = {
 		allow = {
 			custom_tooltip = {
 				text = TOOLTIP_TAME_UNTAMED_DRAGON
-				FROM = { has_dragon_rider_trait = no }
+				FROM = {
+					is_dragon_rider = no
+					is_incapable = no
+				}
 				ROOT = { 
 					is_wild_dragon = yes 
 					at_location = ROOT
@@ -337,6 +340,10 @@ targetted_decisions = {
 		}
 		
 		allow = {
+			FROM = {
+				is_adult = yes
+				is_incapable = no
+			}
 		}
 		
 		effect = {
@@ -388,17 +395,14 @@ decisions = {
 		only_playable = yes
 		
 		potential = {
-			OR = {
-				has_artifact = black_dragon_egg
-				has_artifact = blue_dragon_egg
-				has_artifact = green_dragon_egg
-				has_artifact = red_dragon_egg
-				has_artifact = white_dragon_egg
-			}
+			ROOT_has_artifact_dragon_egg = yes
 		}
 		
 		allow = {
 			prisoner = no
+			is_incapable = no
+			is_adult = yes
+			NOT = { is_dragon_rider = yes }
 		}
 		effect = {
 			random_artifact = {

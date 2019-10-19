@@ -248,7 +248,7 @@ character_event = {
 			set_artifact_original_owner = ROOT
 		}
 		if = {
-			limit = { any_friend = { is_dragon_rider = yes } }
+			limit = { trait = tamed_dragon }
 			random_friend = {
 				character_event = { id = dragon.205 }
 			}
@@ -316,7 +316,7 @@ character_event = {
 			limit = { trait = dragon_rider }
 			random_friend = {
 				limit ={
-					is_tamed_dragon = yes
+					trait = dragon_base_trait
 				}
 				remove_trait = tamed_dragon
 				add_trait = wild_dragon
@@ -325,7 +325,7 @@ character_event = {
 		else_if = {
 			limit = { trait = dragon_base_trait }
 			random_friend = {
-				limit = { is_dragon_rider = yes }
+				limit = { trait = dragon_rider }
 				trigger_switch = {
 					on_trigger = trait
 					poor_dragon_rider = {
@@ -347,6 +347,68 @@ character_event = {
 				}
 			}
 		}
+	}
+}
+
+#	Dragon gains personality trait
+character_event = {
+	id = dragon.8
+	
+	#hide_window = yes
+	
+	is_triggered_only = yes
+
+	trigger = {
+		always = no
+		is_dragon = yes
+	}
+	
+	option = {
+		hidden_tooltip = { tsk_remove_non_dragon_traits = yes }
+		random = {
+			chance = 40
+			modifier = {
+				factor = 1.3
+				lifestyle_traits = 0
+			}
+			modifier = {
+				factor = 1.1
+				lifestyle_traits = 1
+			}
+			modifier = {
+				factor = 0.7
+				lifestyle_traits = 2
+			}
+			modifier = {
+				factor = 0.5
+				lifestyle_traits = 3
+			}
+			modifier = {
+				factor = 0.2
+				lifestyle_traits = 4
+			}
+			modifier = {
+				factor = 0.2
+				lifestyle_traits > 4
+			}
+			set_flag = dragon_is_marked_for_personality_event
+		}
+	}
+}
+
+#	Remove non-dragon personality traits
+character_event = {
+	id = dragon.9
+	
+	hide_window = yes
+	
+	trigger = {
+		is_dragon = yes
+		tsk_has_non_dragon_traits = yes
+	}
+	
+	option = {
+		tsk_remove_non_dragon_traits = yes
 	}
 }
 
@@ -392,7 +454,7 @@ character_event = {
 		#Dragon Rider Leveling
 		dragon_rider_leveling = yes
 		
-		add_province_modifier = { name = burnt_land months = 6 stacking = yes }
+		location = { add_province_modifier = { name = burnt_land months = 6 stacking = yes } }
 		
 		change_infamy = {
 			value = 3
@@ -961,7 +1023,7 @@ character_event = {
 		
 		add_trait = dragon_rider
 		if = {
-			limit = { has_dragon_rider_Flags = yes }
+			limit = { has_dragon_rider_flags = yes }
 			trigger_switch = {
 				on_trigger = has_character_flag
 				is_poor_dragon_rider = {
@@ -1024,6 +1086,27 @@ character_event = {
 		chronicle = { 
 			entry = CHRONICLE_TAMED_DRAGON
 			portrait = [targetted_dragon_for_taming.GetID]
+		}
+		if = {
+			limit = {
+				event_target:targetted_dragon_for_taming = { has_flag = is_EVT206_dragon }
+			}
+			custom_tooltip = {
+				name = RENAME_DRAGON
+				event_target:targetted_dragon_for_taming = {
+					dragon_base_trait = {
+						event_target:targetted_dragon_for_taming = {
+							set_name = PREV
+						}
+					}
+					prompt_name = {
+						player = ROOT
+						type = RENAME_CHARACTER_MESSAGE
+						#culture = THIS
+						culture = event_target:targetted_dragon_for_taming
+					}
+				}
+			}
 		}
 	}
 	
@@ -1105,11 +1188,12 @@ character_event = {
 	
 	immediate = {
 		random_artifact = {
-			limit = { is_artifact_equipped = yes }
-			set_artifact_flag = targetted_dragon_egg #Added for ambition
-			original_artifact_owner = {
-				save_event_target_as = dragon_parent
+			limit = {
+				is_artifact_equipped = yes
+				ROOT_artifact_type_is_dragon_egg = yes
 			}
+			set_artifact_flag = targetted_dragon_egg #Added for ambition
+			save_event_target_as = dragon_egg
 		}
 		create_character = {
 			random_traits = no
@@ -1126,14 +1210,20 @@ character_event = {
 			female = no
 			age = 0
 		}
-		new_character = {
-			set_flag = is_hatchling
-			save_event_target_as = hatchling
-			tsk_new_dragons_startup = yes
-			set_father = event_target:dragon_parent
+		event_target:dragon_egg = {
+			original_artifact_owner = {
+				new_character = {
+					set_flag = is_hatchling
+					save_event_target_as = hatchling
+					add_trait = wild_dragon
+					tsk_new_dragons_startup = yes
+					clr_flag = is_hatchling
+					set_father = PREV
+				}
+			}
 		}
 		
-		clear_event_target = dragon_parent
+		clear_event_target = dragon_egg
 		hidden_tooltip = {
 			random_artifact = {
 				limit = { is_artifact_equipped = yes }
@@ -1312,7 +1402,7 @@ character_event = {
 	}
 	
 	mean_time_to_happen = {
-		years = 8
+		years = 200
 		modifier = {
 			factor = 4
 			capital_scope = { de_jure_liege = d_dragonstone }
@@ -1337,6 +1427,7 @@ character_event = {
 				intrigue = 0
 				learning = 0
 			}
+			name = "Wild Dragon"
 			dynasty = NONE
 			religion = dragon_religion
 			culture = dragon_culture
@@ -1346,6 +1437,7 @@ character_event = {
 		new_character = {
 			tsk_new_dragons_startup = yes
 			add_trait = wild_dragon
+			set_flag = is_EVT206_dragon
 			save_event_target_as = targetted_dragon_for_taming
 			ROOT = {
 				random_demesne_province = {
@@ -2071,38 +2163,39 @@ character_event = {
 			limit = { is_tamed_dragon = yes }
 			save_event_target_as = my_dragon
 		}
-		event_target:targetted_dragon_for_taming = { set_variable = { which = dragon_strenght_var_global which = dragon_strenght_var } }
-		random_list = {
-			50 = {
-				set_flag = kills_dragon
-				modifier = {
-					factor = 3
-					culture_group = valyrian
+		event_target:targetted_dragon_for_taming = {
+			random_list = {
+				50 = {
+					ROOT = { set_flag = kills_dragon }
+					modifier = {
+						factor = 3
+						culture_group = valyrian
+					}
+					
+					additive_modifier = {
+						value = 5
+						ROOT = { trait = trained_dragon_rider }
+					}
+					additive_modifier = {
+						value = 10
+						ROOT = { trait = skilled_dragon_rider }
+					}
+					additive_modifier = {
+						value = 15
+						ROOT = { trait = master_dragon_rider }
+					}
+					additive_modifier = {
+						value = 25
+						event_target:my_dragon = { check_variable = { which = dragon_strenght_var which = PREV } }
+					}
+					additive_modifier = {
+						value = -25
+						event_target:my_dragon = { NOT = { check_variable = { which = dragon_strenght_var which = PREV } } }
+					}
 				}
-				
-				additive_modifier = {
-					value = 5
-					trait = trained_dragon_rider
+				50 = {
+					set_flag = killed_by_dragon
 				}
-				additive_modifier = {
-					value = 10
-					trait = skilled_dragon_rider
-				}
-				additive_modifier = {
-					value = 15
-					trait = master_dragon_rider
-				}
-				additive_modifier = {
-					value = 25
-					event_target:my_dragon = { check_variable = { which = dragon_strenght_var which = dragon_strenght_var_global } }
-				}
-				additive_modifier = {
-					value = -25
-					event_target:targetted_dragon_for_taming = { check_variable = { which = dragon_strenght_var which = dragon_strenght_var_global } }
-				}
-			}
-			50 = {
-				set_flag = killed_by_dragon
 			}
 		}
 	}
@@ -3081,7 +3174,7 @@ character_event = {
 					set_variable = { which = duel_strength_team_b value = 0 }
 					calculate_team_strengths = yes
 				}
-				set_flag = EVT309to306b
+				set_flag = EVT309to306a
 				character_event = { id = dragon.306 }
 			}
 		}
@@ -3104,7 +3197,7 @@ character_event = {
 					set_variable = { which = duel_strength_team_b value = 0 }
 					calculate_team_strengths = yes
 				}
-				set_flag = EVT309to306a
+				set_flag = EVT309to306b
 				character_event = { id = dragon.306 }
 			}
 		}
