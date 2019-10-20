@@ -38,6 +38,7 @@ character_event = {
 			}
 			character_event = { id = tsk_birth.1 }
 		}
+		#any_province = { province_event = { id = tsk_startup.5 } } # Disabled for now
 			
 		if = {
 			limit = {
@@ -364,11 +365,43 @@ character_event = {
 	}
 }
 
+# Removes Pregnancy Finishing trait
+province_event = {
+	id = tsk_startup.5
+	
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		trigger_switch = {
+			on_trigger = terrain
+			arctic = { add_province_modifier = { name = terrain_defenderbonus_arctic duration = -1 } }
+			farmlands = { add_province_modifier = { name = terrain_defenderbonus_farmlands duration = -1 } }
+			forest = { add_province_modifier = { name = terrain_defenderbonus_forest duration = -1 } }
+			hills = { add_province_modifier = { name = terrain_defenderbonus_hills duration = -1 } }
+			woods = { add_province_modifier = { name = terrain_defenderbonus_woods duration = -1 } }
+			mountain = { add_province_modifier = { name = terrain_defenderbonus_mountain duration = -1 } }
+			volcanic_mountain = { add_province_modifier = { name = terrain_defenderbonus_volcanic_mountain duration = -1 } }
+			#impassable_mountains = { add_province_modifier = { name = terrain_defenderbonus_impassable_mountains duration = -1 } }
+			steppe = { add_province_modifier = { name = terrain_defenderbonus_steppe duration = -1 } }
+			plains = { add_province_modifier = { name = terrain_defenderbonus_plains duration = -1 } }
+			jungle = { add_province_modifier = { name = terrain_defenderbonus_jungle duration = -1 } }
+			fens = { add_province_modifier = { name = terrain_defenderbonus_fens duration = -1 } }
+			marsh = { add_province_modifier = { name = terrain_defenderbonus_marsh duration = -1 } }
+			desert = { add_province_modifier = { name = terrain_defenderbonus_desert duration = -1 } }
+			barrens = { add_province_modifier = { name = terrain_defenderbonus_barrens duration = -1 } }
+			coastal_desert = { add_province_modifier = { name = terrain_defenderbonus_coastal_desert duration = -1 } }
+			mountain_desert = { add_province_modifier = { name = terrain_defenderbonus_mountain_desert duration = -1 } }
+		}
+	}
+}
+
 # BUG FIXING:
 
 # Removes Pregnancy Finishing trait
 character_event = {
-	id = tsk_startup.4
+	id = tsk_startup.20000
 	
 	hide_window = yes
 	
@@ -403,7 +436,7 @@ character_event = {
 
 # Prevents characters from being bastards if they actually aren't
 character_event = {
-	id = tsk_startup.5
+	id = tsk_startup.20001
 	
 	hide_window = yes
 	is_triggered_only = yes
