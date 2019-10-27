@@ -1844,7 +1844,7 @@ death_suicide_trigger = {
 block_general_event_trigger = {
 	OR = {	
 		is_adult = no
-		is_dragon = yes # To prevent dragons from doing things dragons usually do not do...
+		is_dragon = no # Tp prevent you from getting event RIP.29005 with your dragon
 		trait = incapable
 		prisoner = yes
 		is_inaccessible_trigger = yes
@@ -2275,83 +2275,14 @@ is_widow_or_widower_trigger = {
 }
 	
 FROMs_religion_is_playable_trigger = {
-	#NOR = {
-	#	AND = { #Means you're not allowed to play Muslims
-	#		FROM = { religion = rhllor }
-	#		NOT = { has_dlc = "The Sword of Islam" }
-	#	}
-	#	AND = { #Means you're not allowed to play Jewish
-	#		FROM = { religion = moonsingers }
-	#		NOT = { has_dlc = "Sons of Abraham" }
-	#	}
-	#	AND = { #Means you're not allowed to play (most) Pagans
-	#		FROM = { 
-	#			OR = {
-	#				religion = old_gods_beyond
-	#				religion = old_gods_beyond_white
-	#				religion = drowned_god
-	#				religion = storm_god
-	#				religion = vulture_god
-	#				religion = lady_of_the_waves	   
-	#			}
-	#		}
-	#		NOT = { has_dlc = "The Old Gods" }
-	#	}
-	#}
 }
 
 ROOTs_religion_is_playable_trigger = { #For targeted decision where FROM is the player
-#	NOR = {
-#		AND = { #Means you're not allowed to play Muslims
-#			ROOT = { religion_group = muslim }
-#			NOT = { has_dlc = "The Sword of Islam" }
-#		}
-#		AND = { #Means you're not allowed to play Jewish
-#			ROOT = { religion_group = jewish_group }
-#			NOT = { has_dlc = "Sons of Abraham" }
-#		}
-#		AND = { #Means you're not allowed to play (most) Pagans
-#			ROOT = {
-#				religion_group = pagan_group
-#				NOT = { religion = bon }
-#				NOT = { religion = bon_reformed }
-#			}
-#			NOT = { has_dlc = "The Old Gods" }
-#		}
-#		AND = { #Means you're not allowed to play the Bön religion (Pagan)
-#			ROOT = { 
-#				OR = { 
-#					religion = bon 
-#					religion = bon_reformed
-#				} 
-#			}
-#			NOR = {
-#				has_dlc = "The Old Gods"
-#				has_dlc = "Jade Dragon"
-#			}
-#		}
-#		AND = { #Means you're not allowed to play the Eastern Religions
-#			ROOT = { religion_group = indian_group }
-#			NOT = { 
-#				ROOT = { 
-#					religion = taoist
-#				} 
-#			}
-#			NOT = {	has_dlc = "Rajas of India" }
-#		}
-#		AND = { #Means you're not allowed to play the Zoroastrians
-#			ROOT = { religion_group = zoroastrian_group }
-#			NOT = { has_dlc = "The Old Gods" }
-#		}
-#		AND = { #Means you're not allowed to play the Taoist religion 
-#			ROOT = { religion = taoist }
-#			NOR = { 
-#				has_dlc = "Jade Dragon"
-#				has_dlc = "Rajas of India"
-#			}
-#		}
-#	}
-} 
+}
+
+ROOTs_secret_religion_is_playable_trigger = {
+}
+
 ###Use the actual is_<family member>_of = scope triggers now
 family_of_root_trigger = { #use is_blood_relative_of_root_trigger for all relatives
 	OR = {
@@ -8374,10 +8305,3 @@ can_still_be_marshal_byzantine_trigger = {
 		} 
 	}
 }
-is_single_player_observer_mode = {
-	AND = {
-		multiplayer = no
-		is_local_human_observer = yes
-	}
-}
-
