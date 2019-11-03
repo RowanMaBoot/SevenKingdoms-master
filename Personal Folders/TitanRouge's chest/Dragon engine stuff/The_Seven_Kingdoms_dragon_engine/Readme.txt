@@ -3,7 +3,7 @@ Information:
 #############################
 The dragon events are fired by targetted decisions (right-click on your characters portrait wehn in battle or siege).
 This is an early build expect bugs and blank event screens and an unbalanced experience. 
-All scripts are written from scratch. They aren't ported or copied. All script structures are taken from the wiki and the base game.
+All scripts are written from scratch. They aren't ported or copied. All script structures are taken from the wiki and the vanilla game.
 
 If you have any suggestions or bug reports let me know.
 

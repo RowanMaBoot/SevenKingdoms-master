@@ -692,7 +692,7 @@ character_event = {
 		is_dragon_rider = yes
 		NOT = { 
 			location = {
-				random_province_holding = { 
+				any_province_holding = { 
 					limit = { controlled_by = ROOT }
 					has_holding_modifier = destroyed_holding
 				}
@@ -1092,7 +1092,7 @@ character_event = {
 				event_target:targetted_dragon_for_taming = { has_flag = is_EVT206_dragon }
 			}
 			custom_tooltip = {
-				name = RENAME_DRAGON
+				text = RENAME_DRAGON
 				event_target:targetted_dragon_for_taming = {
 					dragon_base_trait = {
 						event_target:targetted_dragon_for_taming = {
@@ -2532,8 +2532,8 @@ letter_event = {
 				has_game_rule = { name = dragon_duels value = enabled_debugging }
 			}
 			#character_event = { id = dragon.3001 }
-			character_event = { id = dragon.306 }
 		}
+		character_event = { id = dragon.306 }
 	}
 }
 
@@ -2546,6 +2546,19 @@ character_event = {
 	hide_window = yes
 	
 	immediate = {
+	
+		# For some reason event target leader_b gets deleted, so this should fix this issue
+		random_character = {
+			limit = {
+				is_rider_in_dragon_duel = yes
+				has_flag = is_leader_team_b
+			}
+			save_event_target_as = leader_b
+		}
+		if = {
+			limit = { event_target:leader_b = { war_with = PREV } }
+			set_flag = war_with_b
+		}
 		if = {
 			limit = {
 				any_character = {
@@ -2557,17 +2570,6 @@ character_event = {
 				limit = { is_rider_in_dragon_duel = yes }
 				calculate_team_strengths = yes
 			}
-			
-			#if = {
-			#	limit = { event_target:leader_b = { always = no } }
-				random_character = {
-					limit = {
-						is_rider_in_dragon_duel = yes
-						has_flag = is_leader_team_b
-					}
-					save_event_target_as = leader_b
-				}
-			#}
 			
 			change_variable = { which = num_rounds value = 1 }
 			
@@ -2659,6 +2661,11 @@ character_event = {
 						is_rider_in_dragon_duel = yes
 						NOT = { has_flag = is_picked_as_encounter }
 					}
+					any_character = {
+						has_flag = is_rider_in_team_b
+						is_rider_in_dragon_duel = yes
+						NOT = { has_flag = is_picked_as_encounter }
+					}
 				}
 				random_character = {
 					limit = {
@@ -2678,6 +2685,7 @@ character_event = {
 		}
 		else_if = {
 			limit = {
+				always = no
 				has_flag = is_rider_in_team_b
 				event_target:leader_a = { has_flag = team_b_won }
 			}
@@ -2716,6 +2724,11 @@ character_event = {
 				limit = {
 					any_character = {
 						has_flag = is_rider_in_team_b
+						is_rider_in_dragon_duel = yes
+						NOT = { has_flag = is_picked_as_encounter }
+					}
+					any_character = {
+						has_flag = is_rider_in_team_a
 						is_rider_in_dragon_duel = yes
 						NOT = { has_flag = is_picked_as_encounter }
 					}
@@ -2869,7 +2882,7 @@ character_event = {
 #	The Wound/Maim/Kill event | FROM is encounter's dragon, FROMFROM is encounter, FROMFROMFROM is rider's dragon, THIS is encounter, ROOT is rider
 character_event = {
 	id = dragon.308
-	desc = EVTDESAdragon308
+	desc = EVTDESCAdragon308
 	
 	picture = {
 		trigger = {
@@ -2984,27 +2997,30 @@ character_event = {
 		
 		##########################################################
 		
-		give_outcome_traits_or_kill = yes
-		
-		any_friend = {
-			limit = {
-				is_dragon_in_dragon_duel = yes
+		THIS = {
+			give_outcome_traits = yes
+			dragon_duel_kill_effect = yes
+			
+			any_friend = {
+				limit = {
+					is_dragon_in_dragon_duel = yes
+				}
+				give_outcome_traits = yes
 			}
-			give_outcome_traits_or_kill = yes
-		}
-		
-		clear_outcome_flags_dragon_duel = yes
-		
-		any_friend = {
-			limit = {
-				is_dragon_in_dragon_duel = yes
-			}
+			
 			clear_outcome_flags_dragon_duel = yes
-		}
-		
-		if = {
-			limit = { has_flag = is_leader_team_a }
-			character_event = { id = dragon.309 }
+			
+			any_friend = {
+				limit = {
+					is_dragon_in_dragon_duel = yes
+				}
+				clear_outcome_flags_dragon_duel = yes
+			}
+			
+			if = {
+				limit = { has_flag = is_leader_team_a }
+				character_event = { id = dragon.309 }
+			}
 		}
 	}
 }
@@ -3315,11 +3331,11 @@ character_event = {
 		}
 		
 		#Names killed riders
-		if = {
-			limit = { event_target:rider_b_per = { death_reason = death_dragon_duel } }
-			event_target:rider_b_per = { show_portrait = yes }
-			custom_tooltip = { text = CUSTOM_DRAGON_309B }
-		}
+		#if = {
+		#	limit = { }
+		#	event_target:rider_b_per = { show_portrait = yes }
+		#	custom_tooltip = { text = CUSTOM_DRAGON_309B }
+		#}
 	}
 	
 	option = {
