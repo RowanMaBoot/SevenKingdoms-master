@@ -94,7 +94,7 @@ is_valid_dragon_duel_target = {
 		has_flag = gets_killed
 		has_flag = gets_maimed
 	}
-	at_location = event_target:leader_a
+	#at_location = event_target:leader_a
 }
 
 is_first_round_or_team_a_won = {
@@ -105,6 +105,44 @@ is_first_round_or_team_a_won = {
 		}
 	}
 }
+
+ROOT_war_invalid_on_death_trigger = {
+	any_war = {
+		limit = {
+			event_target:leader_b = {
+				OR = {
+					is_primary_defender = THIS
+					is_primary_attacker = THIS
+				}
+			}
+		}
+		OR = {
+			# 00_cb_types
+			using_cb = claim_on_liege
+			using_cb = claim_on_liege_plot
+			using_cb = claim_on_vassal_plot
+			using_cb = invasion
+			using_cb = bid_for_independence
+			using_cb = overthrow_ruler
+			using_cb = weaken_vassal_plot
+			using_cb = cb_faction_independence
+			using_cb = duchy_adventure
+			using_cb = kingdom_adventure
+			using_cb = tributary_cb
+			using_cb = free_tributary_cb
+			using_cb = cb_install_khan
+			using_cb = cb_minor_clan_revolt
+			using_cb = nomad_humiliate_cb
+			# 01_cb_types
+			using_cb = tributary_permanent_cb
+			using_cb = tributary_nomad_cb
+			using_cb = offmap_submission
+			# 02_tsk_custom_cb_types
+			using_cb = tsk_dismantle_high_kingdom_cb
+		}
+	}
+}
+		
 
 tsk_has_non_dragon_traits = {
 	OR = {

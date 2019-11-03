@@ -458,7 +458,7 @@ weird_outcome_fixes = {
 }
 
 #	Continuation of above...
-give_outcome_traits_or_kill = {
+give_outcome_traits = {
 	
 	###Wounded###
 	if = {
@@ -497,8 +497,9 @@ give_outcome_traits_or_kill = {
 			add_trait = dr_maimed
 		}
 	}
-	
-	###Death###
+}
+
+dragon_duel_kill_effect = {
 	if = {
 		limit = {
 			OR = {
@@ -512,27 +513,30 @@ give_outcome_traits_or_kill = {
 		}
 		if = {
 			limit = { has_flag = is_rider_in_team_a }
-			if = {
-				limit = { has_flag = is_leader_team_a }
-				random_character = {
-					limit = { has_flag = is_rider_in_team_a }
-					preferred_limit = {
-						NOR = {
-							has_flag = gets_killed
-							has_flag = gets_maimed
+			hidden_tooltip = {
+				if = {
+					limit = { has_flag = is_leader_team_a }
+					random_character = {
+						limit = { has_flag = is_rider_in_team_a }
+						preferred_limit = {
+							NOR = {
+								has_flag = gets_killed
+								has_flag = gets_maimed
+							}
 						}
+						ROOT = {
+							clr_flag = is_leader_team_a
+							clear_event_target = leader_a
+						}
+						save_event_target_as = leader_a
+						set_flag = is_leader_team_a
+						set_variable = { which = vict_team_a which = ROOT }
+						set_variable = { which = vict_team_b which = ROOT }
+						set_variable = { which = num_team_a which = ROOT }
+						set_variable = { which = num_team_b which = ROOT }
 					}
-					ROOT = {
-						clr_flag = is_leader_team_a
-						clear_event_target = leader_a
-					}
-					save_event_target_as = leader_a
-					set_flag = is_leader_team_a
-					set_variable = { which = vict_team_a which = ROOT }
-					set_variable = { which = vict_team_b which = ROOT }
-					set_variable = { which = num_team_a which = ROOT }
-					set_variable = { which = num_team_b which = ROOT }
 				}
+				event_target:leader_a = { subtract_variable = { which = vict_team_a which = 1 } }
 			}
 			if = {
 				limit = { has_flag = gets_killed }
@@ -558,27 +562,29 @@ give_outcome_traits_or_kill = {
 					}
 				}
 			}
-			event_target:leader_a = { subtract_variable = { which = vict_team_a which = 1 } }
 		}
 		else_if = {
 			limit = { has_flag = is_rider_in_team_b }
-			if = {
-				limit = { has_flag = is_leader_team_b }
-				random_character = {
-					limit = { has_flag = is_rider_in_team_b }
-					preferred_limit = {
-						NOR = {
-							has_flag = gets_killed
-							has_flag = gets_maimed
+			hidden_tooltip = {
+				if = {
+					limit = { has_flag = is_leader_team_b }
+					random_character = {
+						limit = { has_flag = is_rider_in_team_b }
+						preferred_limit = {
+							NOR = {
+								has_flag = gets_killed
+								has_flag = gets_maimed
+							}
 						}
+						ROOT = {
+							clr_flag = is_leader_team_b
+							clear_event_target = leader_b
+						}
+						save_event_target_as = leader_b
+						set_flag = is_leader_team_b
 					}
-					ROOT = {
-						clr_flag = is_leader_team_b
-						clear_event_target = leader_b
-					}
-					save_event_target_as = leader_b
-					set_flag = is_leader_team_b
 				}
+				event_target:leader_a = { subtract_variable = { which = vict_team_b which = 1 } }
 			}
 			if = {
 				limit = { has_flag = gets_killed }
@@ -604,7 +610,6 @@ give_outcome_traits_or_kill = {
 					}
 				}
 			}
-			event_target:leader_a = { subtract_variable = { which = vict_team_b which = 1 } }
 		}
 		character_event = { id = dragon.311 } #
 	}
