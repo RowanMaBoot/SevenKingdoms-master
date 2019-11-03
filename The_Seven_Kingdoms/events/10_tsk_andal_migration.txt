@@ -19,7 +19,7 @@ character_event = {
 	}
 	
 	mean_time_to_happen = {
-		years = 20
+		years = 35
 		modifier = {
 			factor = 1.9
 			capital_scope = { region = world_the_north }
@@ -987,12 +987,7 @@ letter_event = {
 				grant_title = event_target:raiding_adventurer
 			}
         }
-		event_target:selling_province = {
-			show_scope_change = no
-			owner = {
-				event_target:raiding_adventurer = { set_defacto_liege = PREV }
-			}
-		}
+		event_target:raiding_adventurer = { set_defacto_liege = ROOT }
 		
         #Logging for displaced prince...
         if = {
@@ -1368,20 +1363,20 @@ province_event = {
 	
 	trigger = {
 		any_neighbor_province = {
-			owner = { same_realm = FROM }
+			has_owner = yes
+			culture_group = andal
+			NOT = { owner = { same_realm = FROM } }
 		}
-		owner = {
-			any_neighbor_independent_ruler = {
-				any_realm_province = { culture_group = andal }
-			}
-		}
-		NOT = { culture_group = andal }
+		FROM = { NOT = { culture_group = andal } }
 		region = world_westeros
-		NOT = { has_global_flag = andal_invasion_ended }
+		NOR = {
+			culture_group = andal
+			has_global_flag = andal_invasion_ended
+		}
 	}
 	
 	mean_time_to_happen = {
-		years = 15
+		years = 10
 		modifier = {
 			factor = 1.5
 			NOT = { religion_group = the_seven_group }
