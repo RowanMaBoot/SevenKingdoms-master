@@ -58,7 +58,7 @@ character_event = {
 		}
 	}
 
-	option = {
+	immediate = {
 		random_list = {
 			5 = { #No effect
 			}
@@ -2210,6 +2210,73 @@ character_event = {
 			holder_scope = {
 				ROOT = {
 					set_graphical_culture = PREV
+				}
+			}
+		}
+	}
+}
+
+# Written by Rowan - quickie job. Just (always) removes inbred for high valyrians, or significant valyrian houses. Others have a 50% chance to get it.
+# Might be too powerful bloodline wise, as their blood in theory makes you immune to inbreeding.
+
+# Fired on_birth
+character_event = {
+	hide_window = yes
+	id = tsk_birth.1000
+	
+	trigger = {
+		trait = inbred
+		OR = {
+			culture = high_valyrian
+			any_owned_bloodline = { has_bloodline_flag = valyrian_genetics }
+			AND = {
+				OR = {
+					culture = low_valyrian
+					culture = driftmarker
+				}
+				graphical_culture = valyriangfx
+			}
+		}
+	}
+
+	is_triggered_only = yes
+	
+	immediate = {
+		if = {
+			limit = {
+				OR = {
+					culture = high_valyrian
+					any_owned_bloodline = { has_bloodline_flag = valyrian_genetics }
+				}
+			}
+			remove_trait = inbred
+			random_list = {
+				50 = { add_trait = lunatic }
+				25 = { add_trait = arbitrary }
+				25 = { }
+			}
+		}
+		else_if = {
+			limit = {
+				AND = {
+					OR = {
+						culture = low_valyrian
+						culture = driftmarker
+					}
+					graphical_culture = valyriangfx
+				}
+			}
+			random_list = {
+				50 = {
+					remove_trait = inbred
+					random_list = {
+						50 = { add_trait = lunatic }
+						25 = { add_trait = arbitrary }
+						25 = { }
+					}
+				}
+				50 = {
+				
 				}
 			}
 		}
