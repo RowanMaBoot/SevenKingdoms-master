@@ -390,6 +390,13 @@ calculate_injury_outcome_dragon_duel = {
 				factor = 0.8
 				trait = strong
 			}
+			modifier = {
+				factor = 2
+				OR = {
+					trait = wounded
+					trait = dr_wounded
+				}
+			}
 			set_flag = get_maimed
 		}
 		
@@ -536,27 +543,20 @@ dragon_duel_kill_effect = {
 						set_variable = { which = num_team_b which = ROOT }
 					}
 				}
-				event_target:leader_a = { subtract_variable = { which = vict_team_a which = 1 } }
+				event_target:leader_a = {
+					#subtract_variable = { which = vict_team_a which = 1 }
+					subtract_variable = { which = num_team_a which = 1 }
+				}
 			}
 			if = {
 				limit = { has_flag = gets_killed }
-				random_character = {
-					limit = { has_flag = is_rider_in_team_b }
-					preferred_limit = {
-						NOR = {
-							has_flag = gets_killed
-							has_flag = gets_maimed
-						}
-					}
+				persistent_event_target:encounter = {
 					ROOT = {
-						death = { death_reason = death_dragon_duel killer = FROMFROM }
-						random_friend = {
+						death = { death_reason = death_dragon_duel killer = PREV }
+						persistent_event_target:my_dragon = {
 							if = {
-								limit = {
-									is_dragon_in_dragon_duel = yes
-									has_flag = gets_killed
-								}
-								death = { death_reason = death_dragon_duel killer = FROMFROM }
+								limit = { has_flag = gets_killed }
+								death = { death_reason = death_dragon_duel killer = PREVPREV }
 							}
 						}	
 					}
@@ -597,14 +597,11 @@ dragon_duel_kill_effect = {
 						}
 					}
 					ROOT = {
-						death = { death_reason = death_dragon_duel killer = FROMFROM }
-						random_friend = {
+						death = { death_reason = death_dragon_duel killer = PREV }
+						persistent_event_target:my_dragon = {
 							if = {
-								limit = {
-									is_dragon_in_dragon_duel = yes
-									has_flag = gets_killed
-								}
-								death = { death_reason = death_dragon_duel killer = FROMFROM }
+								limit = { has_flag = gets_killed }
+								death = { death_reason = death_dragon_duel killer = PREVPREV }
 							}
 						}	
 					}
@@ -619,14 +616,18 @@ clear_outcome_flags_dragon_duel = {
 	random_character = {
 		limit = { has_flag = is_encounter_of_@PREV }
 		clr_flag = is_encounter_of_@PREV
+		clr_flag = is_picked_as_encounter
 		ROOT = {
 			clr_flag = is_encounter_of_@PREV
+			clr_flag = is_picked_as_encounter
+			clear_persistent_event_target = encounter
 		}
 	}
 	clr_flag = is_picked_as_encounter
 	clr_flag = gets_wounded
 	clr_flag = get_maimed
 	clr_flag = gets_killed
+	clear_persistent_event_target = encounter
 }
 
 complete_flag_variable_target_clear = {

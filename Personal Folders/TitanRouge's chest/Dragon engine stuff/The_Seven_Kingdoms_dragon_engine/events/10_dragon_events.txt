@@ -56,10 +56,9 @@
 
 namespace = dragon
 
-
 ####Basic dragon engine events
 
-#	Initialize dragon stat calculation
+#	Initialize dragon stat calculation and dragon duel counting for riders
 character_event = {
 	id = dragon.0
 
@@ -67,61 +66,68 @@ character_event = {
 	hide_window = yes
 
 	trigger = {
-		is_dragon = yes
+		is_save_game = no
+		OR = {
+			is_dragon = yes
+			has_dragon_rider_trait = yes
+		}
 	}
 	
 	immediate = {
-		# Dragon stat Calculation
-		dragon_stat_calculation = yes
-		dragon_trait = {
-			set_immune_to_pruning = yes
+		# Initialize dragon stat calculation
+		if = {
+			limit = { is_dragon = yes }
+			# Dragon stat Calculation
+			dragon_stat_calculation = yes
+			dragon_trait = {
+				set_immune_to_pruning = yes
+			}
 		}
-		
-		#repeat_event = { id = dragon.0 days = 31 }
+		# Initializes dragon duel counting for riders
+		else_if = {
+			limit = { has_dragon_rider_trait = yes }
+			if = {
+				limit = {
+					trait = poor_dragon_rider
+				}
+				set_variable = { which = dragon_duel_count value = 0 }
+			}
+			else_if = {
+				limit = {
+					trait = trained_dragon_rider
+				}
+				set_variable = { which = dragon_duel_count value = 4 }
+			}
+			else_if = {
+				limit = {
+					trait = skilled_dragon_rider
+				}
+				set_variable = { which = dragon_duel_count value = 8 }
+			}
+			else_if = {
+				limit = {
+					trait = master_dragon_rider
+				}
+				set_variable = { which = dragon_duel_count value = 13 }
+			}
+			character_event = { id = dragon.1 days = 1 }
+		}
 	}
 }
 
-#	Initializes dragon duel counting for riders
+#	Sets persistent event targets | delayed by 1 day on_startup
 character_event = {
 	id = dragon.1
 
 	is_triggered_only = yes
 	hide_window = yes
-
-	trigger = {
-		OR = {
-			trait = poor_dragon_rider
-			trait = trained_dragon_rider
-			trait = skilled_dragon_rider
-			trait = master_dragon_rider
-		}
-	}
 	
 	immediate = {
-		if = {
-			limit = {
-				trait = poor_dragon_rider
-			}
-			set_variable = { which = dragon_duel_count value = 0 }
+		random_friend = {
+			limit = { is_dragon = yes }
+			ROOT = { save_persistent_event_target = { name = my_dragon scope = PREV } }
 		}
-		else_if = {
-			limit = {
-				trait = trained_dragon_rider
-			}
-			set_variable = { which = dragon_duel_count value = 4 }
-		}
-		else_if = {
-			limit = {
-				trait = skilled_dragon_rider
-			}
-			set_variable = { which = dragon_duel_count value = 8 }
-		}
-		else_if = {
-			limit = {
-				trait = master_dragon_rider
-			}
-			set_variable = { which = dragon_duel_count value = 13 }
-		}
+		persistent_event_target:my_dragon = { set_flag = dragon }
 	}
 }
 
@@ -893,7 +899,7 @@ character_event = {
 	
 	immediate = {
 		character_event = { id = dragon.105 }
-		#FROM = { save_event_target_as = won_barony } Doesn't work for some reason
+		#FROM = { save_event_target_as = won_barony } #Doesn't work for some reason
 	}
 }
 
@@ -990,6 +996,7 @@ character_event = {
 				text = TOOLTIP_DRAGON8_A
 				event_target:targetted_dragon_for_taming = {
 					add_friend = ROOT
+					save_persistent_event_target = { name = my_dragon scope = ROOT }
 				}
 				if = {
 					limit = {
@@ -2217,13 +2224,16 @@ character_event = {
 character_event = {
 	id = dragon.300
 	
-	desc = "DEBUG"
-	
 	is_triggered_only = yes
 	
 	hide_window = yes
 	
 	immediate = {
+		
+		set_variable = { which = pos_replies_team_a value = 1 }
+		set_variable = { which = pos_replies_team_b value = 1 }
+		set_variable = { which = inc_replies_team_a value = 1 }
+		set_variable = { which = inc_replies_team_b value = 1 }
 		
 		#### TEAM A ####
 		
@@ -2233,7 +2243,6 @@ character_event = {
 		save_event_target_as = leader_a
 		dragon_riding_skill_calculation = yes
 		event_target:leader_a = { change_variable = { which = duel_strength_team_a which = riding_skill_var } }
-		character_event = { id = dragon.305 days = 1}
 		any_friend = {
 			limit = {
 				is_tamed_dragon = yes
@@ -2259,7 +2268,7 @@ character_event = {
 			dragon_riding_skill_calculation = yes
 			set_flag = is_rider_in_dragon_duel
 			set_flag = is_rider_in_team_a
-			character_event = { id = dragon.301 }
+			#character_event = { id = dragon.301 }
 			any_friend = {
 				limit = {
 					is_tamed_dragon = yes
@@ -2268,6 +2277,19 @@ character_event = {
 				set_flag = is_dragon_in_dragon_duel
 				set_flag = is_dragon_in_team_a
 			}
+		}
+		
+		any_character = {
+			limit = {
+				trait = dragon_rider
+				in_command = yes
+				in_battle = yes
+				is_dragon_rider = yes
+				is_rider_in_dragon_duel = yes
+				has_flag = is_rider_in_team_a
+				NOT = { has_flag = is_leader_team_a }
+			}
+			event_target:leader_a = { change_variable = { which = pos_replies_team_a value = 1 } }
 		}
 		
 		#### TEAM B ####
@@ -2295,11 +2317,25 @@ character_event = {
 			}
 		}
 		
+		any_character = {
+			limit = {
+				trait = dragon_rider
+				in_command = yes
+				in_battle = yes
+				is_dragon_rider = yes
+				is_rider_in_dragon_duel = yes
+				has_flag = is_rider_in_team_b
+			}
+			event_target:leader_a = { change_variable = { which = pos_replies_team_b value = 1 } }
+		}
+		event_target:leader_a = { subtract_variable = { which = pos_replies_team_b value = 1 } } # -1 for leader b who is yet to be chosen below
+		
 		################################################
 		
 		random_character = {
 			limit = {
 				is_rider_in_dragon_duel = yes
+				has_flag = is_rider_in_team_b
 			}
 			preferred_limit = {
 				tier = EMPEROR
@@ -2375,7 +2411,11 @@ character_event = {
 		name = "I will join [From.GetDynName]"
 		
 		set_flag = joins_team_a
-		event_target:leader_a = { change_variable = { which = num_team_a value = 1 } }
+		event_target:leader_a = {
+			change_variable = { which = num_team_a value = 1 }
+			change_variable = { which = inc_replies_team_a value = 1 }
+			character_event = { id = dragon.3041 }
+		}
 		calculate_team_strengths = yes
 	}
 	
@@ -2388,7 +2428,7 @@ character_event = {
 	}
 }
 
-#	Rider D spots Rider A in the air
+#	Leader B spots Leader A in the air
 character_event = {
 	id = dragon.302
 	desc = EVTDESCdragon302
@@ -2403,7 +2443,10 @@ character_event = {
 		name = "What a fool. He is as good as dead!"
 		
 		any_character = {
-			limit = { has_flag = is_rider_in_team_b }
+			limit = {
+				has_flag = is_rider_in_team_b
+				NOT = { has_flag = is_leader_team_b }
+			}
 			character_event = { id = dragon.303 }
 		}
 		event_target:leader_a = { character_event = { id = dragon.304 } }
@@ -2435,7 +2478,10 @@ letter_event = {
 		name = "I will fight!"
 		
 		set_flag = joins_team_b
-		event_target:leader_a = { change_variable = { which = num_team_b value = 1 } }
+		event_target:leader_a = {
+			change_variable = { which = num_team_b value = 1 }
+			change_variable = { which = inc_replies_team_b value = 1 }
+		}
 		calculate_team_strengths = yes
 	}
 	
@@ -2470,6 +2516,27 @@ letter_event = {
 				NOT = { has_flag = is_leader_team_a }
 			}
 			character_event = { id = dragon.301 }
+		}
+		character_event = { id = dragon.3041 }
+	}
+}
+
+#	Tracker: Triggers duel when all replies ahve arrived
+letter_event = {
+	id = dragon.3041
+	
+	is_triggered_only = yes
+	
+	hide_window = yes
+	
+	option = {
+		set_flag = 123456789
+		if = {
+			limit = {
+				is_variable_equal = { which = pos_replies_team_a which = inc_replies_team_a }
+				is_variable_equal = { which = pos_replies_team_b which = inc_replies_team_b }
+			}
+			character_event = { id = dragon.305 }
 		}
 	}
 }
@@ -2533,7 +2600,11 @@ letter_event = {
 			}
 			#character_event = { id = dragon.3001 }
 		}
-		character_event = { id = dragon.306 }
+		#
+		if = {
+			limit = { has_flag = is_leader_team_a }
+			character_event = { id = dragon.306 }
+		}
 	}
 }
 
@@ -2548,13 +2619,13 @@ character_event = {
 	immediate = {
 	
 		# For some reason event target leader_b gets deleted, so this should fix this issue
-		random_character = {
-			limit = {
-				is_rider_in_dragon_duel = yes
-				has_flag = is_leader_team_b
-			}
-			save_event_target_as = leader_b
-		}
+		#random_character = {
+		#	limit = {
+		#		is_rider_in_dragon_duel = yes
+		#		has_flag = is_leader_team_b
+		#	}
+		#	save_event_target_as = leader_b
+		#}
 		if = {
 			limit = { event_target:leader_b = { war_with = PREV } }
 			set_flag = war_with_b
@@ -2573,18 +2644,18 @@ character_event = {
 			
 			change_variable = { which = num_rounds value = 1 }
 			
-			if = {
-				limit = {
-					is_first_round_or_team_a_won = yes
-				}
+			#if = {
+			#	limit = {
+			#		is_first_round_or_team_a_won = yes
+			#	}
 				character_event = { id = dragon.3061 }
-			}
-			else_if = {
-				limit = {
-					has_flag = team_b_won
-				}
-				event_target:leader_b = { character_event = { id = dragon.3061 } }
-			}
+			#}
+			#else_if = {
+			#	limit = {
+			#		has_flag = team_b_won
+			#	}
+			#	event_target:leader_b = { character_event = { id = dragon.3061 } }
+			#}
 			
 			#Only for debugging
 			if = {
@@ -2621,7 +2692,7 @@ character_event = {
 		if = {
 			limit = {
 				has_flag = is_rider_in_team_a
-				is_first_round_or_team_a_won = yes
+				#is_first_round_or_team_a_won = yes
 			}
 			random_character = {
 				limit = {
@@ -2631,27 +2702,11 @@ character_event = {
 				}
 				set_flag = is_picked_as_encounter
 				set_flag = is_encounter_of_@ROOT
+				save_persistent_event_target = { name = encounter scope = ROOT }
 				ROOT = {
 					set_flag = is_picked_as_encounter
 					set_flag = is_encounter_of_@PREV
-				}
-				random_friend = {
-					limit = { is_dragon_in_dragon_duel = yes }
-					ROOT = {
-						random_friend = {
-							limit = { is_dragon_in_dragon_duel = yes }
-							set_flag = is_picked_as_encounter
-							set_flag = is_encounter_of_@PREVPREV
-							random_character = {
-								limit = { has_flag = is_encounter_of_@ROOT }
-								random_friend = {
-									limit = { is_dragon_in_dragon_duel = yes }
-									set_flag = is_picked_as_encounter
-									set_flag = is_encounter_of_@PREVPREV
-								}
-							}
-						}
-					}
+					save_persistent_event_target = { name = encounter scope = PREV }
 				}
 			}
 			if = {
@@ -2678,7 +2733,10 @@ character_event = {
 			}
 			else = {
 				any_character = {
-					limit = { is_rider_in_dragon_duel = yes }
+					limit = {
+						is_rider_in_dragon_duel = yes
+						has_flag = is_leader_team_a
+					}
 					character_event = { id = dragon.307 }
 				}
 			}
@@ -2687,7 +2745,7 @@ character_event = {
 			limit = {
 				always = no
 				has_flag = is_rider_in_team_b
-				event_target:leader_a = { has_flag = team_b_won }
+				#event_target:leader_a = { has_flag = team_b_won }
 			}
 			random_character = {
 				limit = {
@@ -2697,27 +2755,11 @@ character_event = {
 				}
 				set_flag = is_picked_as_encounter
 				set_flag = is_encounter_of_@ROOT
+				save_persistent_event_target = { name = encounter scope = ROOT }
 				ROOT = {
 					set_flag = is_picked_as_encounter
 					set_flag = is_encounter_of_@PREV
-				}
-				random_friend = {
-					limit = { is_dragon_in_dragon_duel = yes }
-					ROOT = {
-						random_friend = {
-							limit = { is_dragon_in_dragon_duel = yes }
-							set_flag = is_picked_as_encounter
-							set_flag = is_encounter_of_@PREVPREV
-							random_character = {
-								limit = { has_flag = is_encounter_of_@ROOT }
-								random_friend = {
-									limit = { is_dragon_in_dragon_duel = yes }
-									set_flag = is_picked_as_encounter
-									set_flag = is_encounter_of_@PREVPREV
-								}
-							}
-						}
-					}
+					save_persistent_event_target = { name = encounter scope = PREV }
 				}
 			}
 			if = {
@@ -2744,7 +2786,10 @@ character_event = {
 			}
 			else = {
 				any_character = {
-					limit = { is_rider_in_dragon_duel = yes }
+					limit = {
+						is_rider_in_dragon_duel = yes
+						has_flag = is_leader_team_a
+					}
 					character_event = { id = dragon.307 }
 				}
 			}
@@ -2770,111 +2815,35 @@ character_event = {
 		text = EVTDESCBdragon307
 	}
 	
-	is_triggered_only = yes
+	major = yes
 	
-	immediate = {
-		random_character = {
-			limit = { has_flag = is_encounter_of_@ROOT }
-			random_friend = {
-				limit = { is_rider_in_dragon_duel = yes }
-				random_character = {
-					limit = { has_flag = is_encounter_of_@PREV }
-					calculate_injury_outcome_dragon_duel = yes
-				}
-			}
-		}
-			
-		calculate_injury_outcome_dragon_duel = yes
-		
-		weird_outcome_fixes = yes
+	major_trigger = {
+		is_rider_in_dragon_duel = yes
 	}
+	
+	is_triggered_only = yes
 	
 	option = {
 		name = EVTOPTAdragon307
 		
 		if = {
-			limit = { has_flag = is_rider_in_team_a }
-			random_friend = {
-				limit = { is_dragon_in_dragon_duel = yes }
-				character_event = { id = dragon.3071 }
-			}
-		}
-	}
-	
-	option = {
-		name = EVTOPTBdragon307
-	
-		trigger = {
-			always = no
-		}
-	}
-}
-
-#	Ping event to get rider's dragon
-character_event = {
-	id = dragon.3071
-	
-	is_triggered_only = yes
-	
-	hide_window = yes
-	
-	immediate = {
-		if = {
-			limit = { FROM = { has_flag = is_leader_team_a } }
-			FROM = { set_flag = EVT3071 }
-		}
-		if = {
 			limit = {
-				any_character = { has_flag = is_encounter_of_@FROM }
+				is_rider_in_dragon_duel = yes
+				has_flag = is_leader_team_a
 			}
-			random_character = {
-				limit = { has_flag = is_encounter_of_@FROM }
-				character_event = { id = dragon.3072 }
-			}
-		}
-		else = {
-			FROM = {
-				character_event = { id = dragon.308 }
-			}
-		}
-	}
-}
-
-#	Ping event to get encounter
-character_event = {
-	id = dragon.3072
-	
-	is_triggered_only = yes
-	
-	hide_window = yes
-	
-	immediate = {
-		if = {
-			limit = { FROMFROM = { has_flag = is_leader_team_a } }
-			FROMFROM = { set_flag = EVT3072 }
-		}
-		random_friend = {
-			limit = { is_dragon_in_dragon_duel = yes }
-			character_event = { id = dragon.3073 }
-		}
-	}
-}
-
-#	Ping event to get encounter's dragon
-character_event = {
-	id = dragon.3073
-	
-	is_triggered_only = yes
-	
-	hide_window = yes
-	
-	immediate = {
-		if = {
-			limit = { FROMFROMFROM = { has_flag = is_leader_team_a } }
-			FROMFROMFROM = { set_flag = EVT3073 }
-		}
-		FROMFROMFROM = {
 			character_event = { id = dragon.308 }
+		}
+	}
+	
+	after = {
+		hidden_tooltip = {
+			persistent_event_target:my_dragon = {
+				calculate_injury_outcome_dragon_duel = yes
+			}
+				
+			calculate_injury_outcome_dragon_duel = yes
+			
+			weird_outcome_fixes = yes
 		}
 	}
 }
@@ -2899,7 +2868,7 @@ character_event = {
 	}
 	desc = { #	Get wounded | Dragon
 		trigger = {
-			any_friend = {
+			persistent_event_target:my_dragon = {
 				is_dragon_in_dragon_duel = yes
 				has_flag = gets_wounded
 			}
@@ -2916,7 +2885,7 @@ character_event = {
 	}
 	desc = { #	Get maimed | Dragon
 		trigger = {
-			any_friend = {
+			persistent_event_target:my_dragon = {
 				is_dragon_in_dragon_duel = yes
 				has_flag = gets_maimed
 			}
@@ -2933,7 +2902,7 @@ character_event = {
 	}
 	desc = { #	Get killed | Dragon
 		trigger = {
-			any_friend = {
+			persistent_event_target:my_dragon = {
 				is_dragon_in_dragon_duel = yes
 				has_flag = gets_killed
 			}
@@ -2942,13 +2911,7 @@ character_event = {
 		text = EVTDESCD2dragon308
 	}
 	
-	show_from_from = yes
-	
-	major = yes
-	
-	major_trigger = {
-		has_flag = is_encounter_of_@ROOT
-	}
+	show_from = yes
 	
 	is_triggered_only = yes
 	
@@ -2962,7 +2925,7 @@ character_event = {
 			trigger = {
 				OR = {
 					has_flag = gets_wounded
-					any_friend = {
+					persistent_event_target:my_dragon = {
 						is_dragon_in_dragon_duel = yes
 						has_flag = gets_wounded
 					}
@@ -2974,7 +2937,7 @@ character_event = {
 			trigger = {
 				OR = {
 					has_flag = gets_maimed
-					any_friend = {
+					persistent_event_target:my_dragon = {
 						is_dragon_in_dragon_duel = yes
 						has_flag = gets_maimed
 					}
@@ -2986,7 +2949,7 @@ character_event = {
 			trigger = {
 				OR = {
 					has_flag = gets_killed
-					any_friend = {
+					persistent_event_target:my_dragon = {
 						is_dragon_in_dragon_duel = yes
 						has_flag = gets_killed
 					}
@@ -2997,30 +2960,58 @@ character_event = {
 		
 		##########################################################
 		
-		THIS = {
+		
+		give_outcome_traits = yes
+		dragon_duel_kill_effect = yes
+		
+		persistent_event_target:my_dragon = {
 			give_outcome_traits = yes
-			dragon_duel_kill_effect = yes
-			
-			any_friend = {
-				limit = {
-					is_dragon_in_dragon_duel = yes
-				}
-				give_outcome_traits = yes
+		}
+		
+		persistent_event_target:encounter = {
+			show_scope_change = no
+			if = {
+				limit = { has_flag = gets_wounded }
+				custom_tooltip = { text = DRAGONDUELGETSWOUNDED }
 			}
+			else_if = {
+				limit = { has_flag = gets_maimed }
+				custom_tooltip = { text = DRAGONDUELGETSMAIMED }
+			}
+			else_if = {
+				limit = {
+					OR = {
+						has_flag = gets_killed
+						persistent_event_target:my_dragon = { has_flag = gets_killed }
+					}
+				}
+				custom_tooltip = { text = DRAGONDUELGETSKILLED }
+			}
+			persistent_event_target:my_dragon = {
+				show_scope_change = no
+				if = {
+					limit = { has_flag = gets_wounded }
+					custom_tooltip = { text = DRAGONDUELGETSWOUNDEDDR }
+				}
+				else_if = {
+					limit = { has_flag = gets_maimed }
+					custom_tooltip = { text = DRAGONDUELGETSMAIMEDDR }
+				}
+			}
+		}
+	}
+	
+	after = {
+		if = {
+			limit = { has_flag = is_leader_team_a }
 			
 			clear_outcome_flags_dragon_duel = yes
 			
-			any_friend = {
-				limit = {
-					is_dragon_in_dragon_duel = yes
-				}
+			persistent_event_target:my_dragon
 				clear_outcome_flags_dragon_duel = yes
 			}
 			
-			if = {
-				limit = { has_flag = is_leader_team_a }
-				character_event = { id = dragon.309 }
-			}
+			character_event = { id = dragon.309 }
 		}
 	}
 }
@@ -3175,7 +3166,7 @@ character_event = {
 			subtract_variable = { which = ta which = tb }
 			if = {
 				limit = {
-					check_variable = { which = ta value = 3 }
+					check_variable = { which = ta value = 2 }
 				}
 				set_flag = team_a_wins
 				any_character = {
@@ -3196,9 +3187,10 @@ character_event = {
 		}
 		else_if = {
 			limit = { check_variable = { which = vict_team_b which = vict_team_a } }
+			subtract_variable = { which = tb which = ta }
 			if = {
 				limit = {
-					check_variable = { which = tb value = 3 }
+					check_variable = { which = tb value = 2 }
 				}
 				set_flag = team_b_wins
 				any_character = {

@@ -99,6 +99,7 @@ narrative_event = {
 			health = 6
 			fertility = 0.8
 			trait = skilled_tactician
+			trait = poor_dragon_rider
 			trait = patient
 			trait = cynical
 			trait = dueling_expert
@@ -136,6 +137,7 @@ narrative_event = {
 		}
 		new_character = {
 			give_nickname = nick_the_dreamer
+			save_event_target_as = daenys
 			set_father = event_target:aenar
 			set_mother = event_target:jaehaera
 			add_spouse = event_target:gaemon
@@ -153,6 +155,7 @@ narrative_event = {
 			health = 5
 			trait = dragon_base_trait
 			trait = dragon_trait
+			trait = tamed_dragon
 			trait = dr_proud
 			trait = dr_wroth
 			trait = dragon13
@@ -180,6 +183,7 @@ narrative_event = {
 			health = 6
 			trait = dragon_base_trait
 			trait = dragon_trait
+			trait = tamed_dragon
 			trait = dr_proud
 			trait = dr_wroth
 			trait = dragon8
@@ -188,12 +192,15 @@ narrative_event = {
 			save_event_target_as = callax
 			add_friend = event_target:gaemon
 			add_artifact = red_dragon_egg
+			set_father = event_target:visenyx
 			new_artifact = {
 				set_name = "Callax' egg"
 				set_artifact_original_owner = PREV
 				transfer_artifact = { from = PREVPREV to = event_target:gaemon }
 			}
 		}
+		event_target:aenar = { save_persistent_event_target = { name = my_dragon scope = event_target:visenyx } }
+		event_target:gaemon = { save_persistent_event_target = { name = my_dragon scope = event_target:callax } }
 	}
 	
 	option = { }
@@ -330,6 +337,22 @@ character_event = {
 			}
 			THIS = {
 				set_player_character = event_target:dragonstone_holder
+			}
+		}
+	}
+	
+	after = {
+		hidden_tooltip = {
+			c_dragonstone = {
+				owner = {
+					any_character = {
+						limit = { dynasty = 1634 }
+						move_character = PREV
+						persistent_event_target:my_dragon = {
+							move_character = PREVPREV
+						}
+					}
+				}
 			}
 		}
 	}
