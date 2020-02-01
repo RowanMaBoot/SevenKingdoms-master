@@ -47,6 +47,7 @@ bastard_nickname_mother_effect = {
 		}	
 	}
 }
+
 bastard_nickname_father_effect = {
 	father_even_if_dead = {
 		location = {
@@ -94,6 +95,7 @@ bastard_nickname_father_effect = {
 		}	
 	}
 }
+
 bastard_nickname_ROOT_effect = {
 	ROOT = {
 		location = {
@@ -147,13 +149,12 @@ bastard_nickname_ROOT_effect = {
 #	High Kimgdom event effects	 #
 ##################################
 
-tsk_location_high_kingdom_claimed_assign_region_effect = {
+tsk_location_high_kingdom_region_effect = {
 	if = {
 		limit = {
 			capital_scope = {
 				region = world_beyond_the_wall
 			}
-			event_target:high_king = { has_flag = high_king_claims_beyond_the_wall }
 		}
 		set_flag = high_kingdom_beyond_the_wall
 	}
@@ -162,7 +163,6 @@ tsk_location_high_kingdom_claimed_assign_region_effect = {
 			capital_scope = {
 				region = world_the_blackwater
 			}
-			event_target:high_king = { has_flag = high_king_claims_blackwater }
 		}
 		set_flag = high_kingdom_blackwater
 	}
@@ -171,7 +171,6 @@ tsk_location_high_kingdom_claimed_assign_region_effect = {
 			capital_scope = {
 				region = world_dorne
 			}
-			event_target:high_king = { has_flag = high_king_claims_dorne }
 		}
 		set_flag = high_kingdom_dorne
 	}
@@ -180,7 +179,6 @@ tsk_location_high_kingdom_claimed_assign_region_effect = {
 			capital_scope = {
 				region = world_the_iron_islands
 			}
-			event_target:high_king = { has_flag = high_king_claims_iron_islands }
 		}
 		set_flag = high_kingdom_iron_islands
 	}
@@ -189,7 +187,6 @@ tsk_location_high_kingdom_claimed_assign_region_effect = {
 			capital_scope = {
 				region = world_the_north
 			}
-			event_target:high_king = { has_flag = high_king_claims_north }
 		}
 		set_flag = high_kingdom_north
 	}
@@ -198,7 +195,6 @@ tsk_location_high_kingdom_claimed_assign_region_effect = {
 			capital_scope = {
 				region = world_the_reach
 			}
-			event_target:high_king = { has_flag = high_king_claims_reach }
 		}
 		set_flag = high_kingdom_reach
 	}
@@ -207,7 +203,6 @@ tsk_location_high_kingdom_claimed_assign_region_effect = {
 			capital_scope = {
 				region = world_the_riverlands
 			}
-			event_target:high_king = { has_flag = high_king_claims_riverlands }
 		}
 		set_flag = high_kingdom_riverlands
 	}
@@ -216,7 +211,6 @@ tsk_location_high_kingdom_claimed_assign_region_effect = {
 			capital_scope = {
 				region = world_the_stormlands
 			}
-			event_target:high_king = { has_flag = high_king_claims_stormlands }
 		}
 		set_flag = high_kingdom_stormlands
 	}
@@ -225,7 +219,6 @@ tsk_location_high_kingdom_claimed_assign_region_effect = {
 			capital_scope = {
 				region = world_the_vale
 			}
-			event_target:high_king = { has_flag = high_king_claims_vale }
 		}
 		set_flag = high_kingdom_vale
 	}
@@ -234,7 +227,6 @@ tsk_location_high_kingdom_claimed_assign_region_effect = {
 			capital_scope = {
 				region = world_the_westerlands
 			}
-			event_target:high_king = { has_flag = high_king_claims_westerlands }
 		}
 		set_flag = high_kingdom_westerlands
 	}
@@ -242,35 +234,37 @@ tsk_location_high_kingdom_claimed_assign_region_effect = {
 
 tsk_high_kingdom_creation_effect = {
 	set_flag = claims_high_kingdom
+	set_flag = high_king_is_@ROOT
 	save_event_target_as = high_king
+	#recalc_succession = yes
+	#save_persistent_event_target = { name = high_king_per scope = ROOT }
 	any_tributary = {
 		set_defacto_liege = ROOT
 		remove_tributary = THIS
 	}
-	recalc_succession = yes
 	any_playable_ruler = {
 		limit = {
 			tsk_location_high_kingdom_claimed_trigger = yes
-			independent = yes
-			is_tributary = no
-			#mercenary = no
 			is_landed = yes
 			higher_tier_than = BARON
 			NOT = { character = ROOT }
 		}
-		character_event = { id = tsk_high_kingdom.2 }
+		if = {
+			limit = {
+				independent = yes
+			}
+			tsk_location_high_kingdom_region_effect = yes
+			#save_persistent_event_target = { name = high_king_per scope = ROOT }
+			set_flag = high_king_is_@ROOT
+			character_event = { id = tsk_high_kingdom.1 }
+		}
 	}
-	any_vassal = {
-		limit = { tier = KING }
-		character_event = { id = tsk_high_kingdom.14 }
-	}
-	character_event = { id = tsk_high_kingdom.14 }
 	character_event = { id = tsk_high_kingdom.0 }
-	character_event = { id = tsk_high_kingdom.8 days = 3 }
-	assign_realm_dependencies = yes
+	character_event = { id = tsk_high_kingdom.2 days = 3 }
 }
 
 clear_high_kingdom_creation_flags = {
+	clr_flag = high_kingdom_beyond_the_wall
 	clr_flag = high_kingdom_blackwater
 	clr_flag = high_kingdom_dorne
 	clr_flag = high_kingdom_iron_islands
@@ -280,23 +274,29 @@ clear_high_kingdom_creation_flags = {
 	clr_flag = high_kingdom_stormlands
 	clr_flag = high_kingdom_vale
 	clr_flag = high_kingdom_westerlands
-	clr_flag = high_king_claims_blackwater
-	clr_flag = high_king_claims_dorne
-	clr_flag = high_king_claims_iron_islands
-	clr_flag = high_king_claims_north
-	clr_flag = high_king_claims_reach
-	clr_flag = high_king_claims_riverlands
-	clr_flag = high_king_claims_stormlands
-	clr_flag = high_king_claims_vale
-	clr_flag = high_king_claims_westerlands
+	clr_flag = claims_beyond_the_wall
+	clr_flag = claims_blackwater
+	clr_flag = claims_dorne
+	clr_flag = claims_iron_islands
+	clr_flag = claims_north
+	clr_flag = claims_reach
+	clr_flag = claims_riverlands
+	clr_flag = claims_stormlands
+	clr_flag = claims_vale
+	clr_flag = claims_westerlands
 	clr_flag = claims_high_kingdom
 	clr_flag = is_opposer
 	clr_flag = is_supporter
-	clr_flag = is_claimant_opposer
-	#clr_flag = accepts_FROM_as_liege # Now used to prevent them from joinig independence factions
+	clr_flag = is_supporter
+	clr_flag = is_none_concerner
+	clr_flag = accepts_FROM_as_liege
 	clr_flag = leading_opposer_claimant
 	clr_flag = leading_opposer_dismantle
 	clr_flag = won_war
-	clr_flag = won_dismantle_war
+	clr_flag = lost_war
+	clr_flag = fights_dismantle_war
 	clr_flag = is_liege_ruler
+	clr_flag = high_king_is_@PREV
+	clr_flag = is_supporter_of_@PREV
+	clr_flag = is_opposer_of_@PREV
 }

@@ -1,0 +1,127 @@
+namespace = tsk_laws
+
+#	
+letter_event = {
+	id = tsk_laws.1
+	desc = EVTDESCTSK_LAWS1
+
+	is_triggered_only = yes
+
+	#hide_window = yes
+
+	immediate = {
+	}
+	
+	option = { #
+		name = EVTOPTATSK_LAWS1
+		
+		remove_special_character_title = lord_marshal
+		remove_special_character_title = lady_marshal
+	}
+}
+
+#	Decentralization lord marshal rank notification
+letter_event = {
+	id = tsk_laws.2
+	desc = EVTDESCTSK_LAWS2
+
+	is_triggered_only = yes
+
+	#hide_window = yes
+
+	immediate = {
+	}
+	
+	option = { #
+		name = EVTOPTATSK_LAWS2
+		
+	}
+}
+
+#	Centralization laws changed - No more king-tier titles notification (vassals)
+letter_event = {
+	id = tsk_laws.3
+	desc = EVTDESCTSK_LAWS3
+
+	is_triggered_only = yes
+
+	#hide_window = yes
+
+	immediate = {
+	}
+	
+	option = { #
+		name = EVTOPTATSK_LAWS3
+		
+		remove_special_character_title = lord_marshal
+		remove_special_character_title = lady_marshal
+		if = {
+			limit = { liege = { has_flag = claims_high_kingdom } }
+			any_vassal = {
+				limit = { higher_tier_than = BARON }
+				set_flag = old_liege_is_@ROOT
+				ROOT = { set_flag = old_vassal_is_@PREV }
+			}
+			any_demesne_title = {
+				limit = { tier = KING }
+				set_flag = former_holder_@ROOT
+				ROOT = { set_flag = former_holder_of_@PREV }
+			}
+		}
+		any_vassal = {
+			limit = { higher_tier_than = COUNT }
+			set_defacto_liege = FROMFROM
+		}
+		any_demesne_title = {
+			limit = { tier = KING }
+			save_event_target_as = old_title
+			destroy_landed_title = THIS
+			event_target:old_title = { add_pressed_claim = ROOT }
+		}
+	}
+}
+
+#	Centralization laws changed - No more king-tier titles notification (liege)
+letter_event = {
+	id = tsk_laws.4
+
+	is_triggered_only = yes
+
+	hide_window = yes
+
+	immediate = {
+	}
+	
+	option = { #
+		name = EVTOPTATSK_LAWS3
+		
+		remove_special_character_title = lord_marshal
+		remove_special_character_title = lady_marshal
+		if = {
+			limit = { liege = { has_flag = claims_high_kingdom } }
+			any_vassal = {
+				limit = {
+					higher_tier_than = BARON
+					lower_tier_than = KING
+				}
+				set_flag = old_liege_is_@ROOT
+				ROOT = { set_flag = old_vassal_is_@PREV }
+			}
+			any_demesne_title = {
+				limit = { tier = KING }
+				set_flag = former_holder_@ROOT
+				ROOT = { set_flag = former_holder_of_@PREV }
+			}
+		}
+		any_vassal = {
+			limit = { higher_tier_than = COUNT }
+			set_defacto_liege = FROMFROM
+		}
+		any_demesne_title = {
+			limit = { tier = KING }
+			save_event_target_as = old_title
+			destroy_landed_title = THIS
+			event_target:old_title = { add_pressed_claim = ROOT }
+		}
+	}
+}

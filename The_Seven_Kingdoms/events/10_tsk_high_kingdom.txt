@@ -1,6 +1,6 @@
 namespace = tsk_high_kingdom
 
-#	
+#	High King decides king tier status in his realm
 character_event = {
 	id = tsk_high_kingdom.0
 	desc = EVTDESCTSK_HIGH_KINGDOM0
@@ -55,30 +55,10 @@ character_event = {
 	}
 }
 
-#	
-letter_event = {
+#	Independent ruler can decide to join the claimant, stay neutral or join the opposers
+character_event = {
 	id = tsk_high_kingdom.1
 	desc = EVTDESCTSK_HIGH_KINGDOM1
-
-	is_triggered_only = yes
-
-	#hide_window = yes
-
-	immediate = {
-	}
-	
-	option = { #
-		name = EVTOPTATSK_HIGH_KINGDOM1
-		
-		remove_special_character_title = lord_marshal
-		remove_special_character_title = lady_marshal
-	}
-}
-
-#	
-character_event = {
-	id = tsk_high_kingdom.2
-	desc = EVTDESCTSK_HIGH_KINGDOM2
 	picture = GFX_evt_diplomat_hf
 
 	is_triggered_only = yes
@@ -86,11 +66,11 @@ character_event = {
 	#hide_window = yes
 
 	immediate = {
-		tsk_location_high_kingdom_claimed_assign_region_effect = yes
+		
 	}
 	
 	option = { # This is none of my concern
-		name = EVTOPTATSK_HIGH_KINGDOM2
+		name = EVTOPTATSK_HIGH_KINGDOM1
 		trigger = {
 		#	always = no
 		}
@@ -122,7 +102,7 @@ character_event = {
 	}
 	
 	option = { # I shall follow him!
-		name = EVTOPTBTSK_HIGH_KINGDOM2
+		name = EVTOPTBTSK_HIGH_KINGDOM1
 		trigger = {
 			#always = no
 			tsk_location_high_kingdom_claimed_trigger = yes
@@ -130,8 +110,11 @@ character_event = {
 		}
 		
 		custom_tooltip = {
-			text = TSKHIGHKINGDOMEVT2CUSTOM1
+			text = TSKHIGHKINGDOMEVT1CUSTOM1
 			set_flag = is_supporter
+			event_target:high_king = {
+				ROOT = { set_flag = is_supporter_of_@PREV }
+			}
 			set_defacto_liege = FROM
 		}
 		
@@ -149,12 +132,15 @@ character_event = {
 				trait = humble
 			}
 			modifier = {
-				factor = 2
+				factor = 1.5
 				event_target:high_king = {
-					OR = {
-						religion_group = ROOT
-						culture_group = ROOT
-					}
+					religion_group = ROOT
+				}
+			}
+			modifier = {
+				factor = 1.5
+				event_target:high_king = {
+					culture_group = ROOT
 				}
 			}
 			modifier = {
@@ -179,15 +165,18 @@ character_event = {
 	}
 	
 	option = { # I will oppose the High King!
-		name = EVTOPTCTSK_HIGH_KINGDOM2
+		name = EVTOPTCTSK_HIGH_KINGDOM1
 		trigger = {
 			tsk_location_high_kingdom_claimed_trigger = yes
 			NOT = { is_vassal_or_below_of = FROM }
 		}
 		
 		custom_tooltip = {
-			text = TSKHIGHKINGDOMEVT2CUSTOM2
+			text = TSKHIGHKINGDOMEVT1CUSTOM2
 			set_flag = is_opposer
+			event_target:high_king = {
+				ROOT = { set_flag = is_opposer_of_@PREV }
+			}
 		}
 		
 		ai_chance = {
@@ -213,7 +202,7 @@ character_event = {
 	}
 	
 	option = { # I should be king!
-		name = EVTOPTDTSK_HIGH_KINGDOM2
+		name = EVTOPTDTSK_HIGH_KINGDOM1
 		trigger = {
 			#always = no
 			#tsk_location_high_kingdom_claimed_trigger = yes
@@ -233,7 +222,7 @@ character_event = {
 		set_flag = is_opposer
 		set_flag = is_claimant_opposer
 		custom_tooltip = {
-			text = TSKHIGHKINGDOMEVT2CUSTOM3
+			text = TSKHIGHKINGDOMEVT1CUSTOM3
 		}
 		
 		ai_chance = {
@@ -250,283 +239,9 @@ character_event = {
 	}
 }
 
-#	
-character_event = {
-	id = tsk_high_kingdom.3
-	desc = EVTDESCTSK_HIGH_KINGDOM3
-	picture = GFX_courier_riding_horse
-
-	is_triggered_only = yes
-	
-	#hide_window = yes
-
-	immediate = {
-	}
-	
-	option = { #
-		name = EVTOPTATSK_HIGH_KINGDOM3
-		
-		any_character = {
-			limit = {
-				has_flag = is_supporter
-			}
-			custom_tooltip = {
-				text = TSKHIGHKINGDOMEVT3CUSTOM
-			}
-		}
-		if = {
-			limit = {
-				any_character = {
-					tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
-					has_flag = leading_opposer_claimant
-				}
-			}
-			reverse_unsafe_war = {
-				target = event_target:leading_opposer
-				casus_belli = claim
-				thirdparty_title = ROOT
-				tier = EMPEROR
-			}
-			any_playable_ruler = {
-				limit = {
-					has_flag = is_opposer
-					NOT = { has_flag = leading_opposer }
-					tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
-				}
-				join_attacker_wars = event_target:leading_opposer
-			}
-		}
-		else_if = {
-			limit = {
-				any_character = {
-					tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
-					has_flag = leading_opposer_dismantle
-				}
-			}
-			reverse_unsafe_war = {
-				target = event_target:leading_opposer
-				casus_belli = tsk_dismantle_high_kingdom_cb
-				thirdparty_title = ROOT
-				tier = EMPEROR
-			}
-			any_playable_ruler = {
-				limit = {
-					has_flag = is_opposer
-					NOT = { has_flag = leading_opposer }
-					tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
-				}
-				join_attacker_wars = event_target:leading_opposer
-			}
-		}
-	}
-}
-
-#	Ping event | event 8 to 4 to 12
-character_event = {
-	id = tsk_high_kingdom.4
-
-	is_triggered_only = yes
-
-	hide_window = yes
-
-	trigger = {
-	}
-
-	immediate = {
-		any_playable_ruler = {
-			limit = {
-				has_flag = is_opposer
-				NOT = { character = ROOT }
-				tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
-			}
-			character_event = { id = tsk_high_kingdom.12 }
-		}
-	}
-	
-	option = { }
-}
-
-#	
-letter_event = {
-	id = tsk_high_kingdom.5
-	desc = EVTDESCTSK_HIGH_KINGDOM5
-
-	is_triggered_only = yes
-	
-	option = { #
-		name = EVTOPTATSK_HIGH_KINGDOM5
-		trigger = {
-			FROM = { NOT = { has_flag = accepts_FROM_as_liege } }
-		}
-	}
-	
-	option = { #
-		name = EVTOPTBTSK_HIGH_KINGDOM5
-		trigger = {
-			FROM = { has_flag = accepts_FROM_as_liege }
-		}
-	}
-}
-
-#	Root/High King loses war
-character_event = {
-	id = tsk_high_kingdom.6
-
-	is_triggered_only = yes
-	
-	hide_window = yes
-	
-	trigger = {
-		ROOT = {
-			has_flag = claims_high_kingdom
-		}
-		FROM = {
-			OR = {
-				has_flag = leading_opposer_claimant
-				has_flag = leading_opposer_dismantle
-			}
-		}
-	}
-
-	immediate = {
-		
-		if = {
-			limit = {
-				FROM = { has_flag = leading_opposer_claimant }
-			}
-			
-			ROOT = {
-				trigger_switch = {
-					on_trigger = has_character_flag
-					high_king_claims_beyond_the_wall = {
-						FROM = { set_flag = high_king_claims_beyond_the_wall }
-					}
-					high_king_claims_blackwater = {
-						FROM = { set_flag = high_king_claims_blackwater }
-					}
-					high_king_claims_dorne = {
-						FROM = { set_flag = high_king_claims_dorne }
-					}
-					high_king_claims_iron_islands = {
-						FROM = { set_flag = high_king_claims_iron_islands }
-					}
-					high_king_claims_north = {
-						FROM = { set_flag = high_king_claims_north }
-					}
-					high_king_claims_reach = {
-						FROM = { set_flag = high_king_claims_reach }
-					}
-					high_king_claims_riverlands = {
-						FROM = { set_flag = high_king_claims_riverlands }
-					}
-					high_king_claims_stormlands = {
-						FROM = { set_flag = high_king_claims_stormlands }
-					}
-					high_king_claims_vale = {
-						FROM = { set_flag = high_king_claims_vale }
-					}
-					high_king_claims_westerlands = {
-						FROM = { set_flag = high_king_claims_westerlands }
-					}
-				}
-				save_event_target_as = loser
-			}
-			FROM = {
-				set_flag = won_war
-				set_flag = succ_claimed_HK
-				
-				save_event_target_as = high_king
-				character_event = { id = tsk_high_kingdom.11 days = 1 }
-				character_event = { id = tsk_high_kingdom.18 days = 3 }
-			}
-		}
-		if = {
-			limit = {
-				FROM = { has_flag = leading_opposer_dismantle }
-			}
-			
-			ROOT = {
-				save_event_target_as = loser
-			}
-			
-			FROM = {
-				set_flag = won_war
-				
-				save_event_target_as = high_king
-				primary_title = {
-					save_event_target_as = old_title
-				}
-				character_event = { id = tsk_high_kingdom.16 days = 1 }
-				character_event = { id = tsk_high_kingdom.18 days = 3 }
-			}
-		}
-	}
-}
-
-#	Root/High King wins war
-character_event = {
-	id = tsk_high_kingdom.7
-
-	is_triggered_only = yes
-	
-	trigger = {
-		ROOT = {
-			has_flag = claims_high_kingdom
-		}
-		FROM = {
-			OR = {
-				has_flag = leading_opposer_claimant
-				has_flag = leading_opposer_dismantle
-			}
-		}
-	}
-	
-	hide_window = yes
-
-	immediate = {
-		
-		if = {
-			limit = {
-				FROM = { has_flag = leading_opposer_claimant }
-			}
-			
-			ROOT = {
-				set_flag = won_claimant_war
-				set_flag = succ_claimed_HK
-					
-				save_event_target_as = high_king
-				character_event = { id = tsk_high_kingdom.11 days = 1 }
-				character_event = { id = tsk_high_kingdom.18 days = 3 }
-			}
-			
-			FROM = {
-				save_event_target_as = loser
-			}
-		}
-		if = {
-			limit = {
-				FROM = { has_flag = leading_opposer_dismantle }
-			}
-			
-			ROOT = {
-				set_flag = won_dismantle_war
-				set_flag = succ_claimed_HK
-				
-				save_event_target_as = high_king
-				character_event = { id = tsk_high_kingdom.17 days = 1 }
-				character_event = { id = tsk_high_kingdom.18 days = 3 }
-			}
-			
-			FROM = {
-				save_event_target_as = loser
-			}
-		}
-	}
-}
-
 #	Choses claimant if there are more than one
 character_event = {
-	id = tsk_high_kingdom.8
+	id = tsk_high_kingdom.2
 
 	is_triggered_only = yes
 
@@ -572,188 +287,41 @@ character_event = {
 				set_flag = leading_opposer_dismantle
 			}
 		}
-		character_event = { id = tsk_high_kingdom.3 }
+		character_event = { id = tsk_high_kingdom.6 }
 	}
 	
 	option = { }
 }
 
-#	Decentralization lord marshal rank notification
-letter_event = {
-	id = tsk_high_kingdom.9
-	desc = EVTDESCTSK_HIGH_KINGDOM9
-
-	is_triggered_only = yes
-
-	#hide_window = yes
-
-	immediate = {
-	}
-	
-	option = { #
-		name = EVTOPTATSK_HIGH_KINGDOM9
-		
-	}
-}
-
-#	Centralization laws changed - No more king-tier lords notification
-letter_event = {
-	id = tsk_high_kingdom.10
-	desc = EVTDESCTSK_HIGH_KINGDOM10
-
-	is_triggered_only = yes
-
-	#hide_window = yes
-
-	immediate = {
-	}
-	
-	option = { #
-		name = EVTOPTATSK_HIGH_KINGDOM10
-		
-		remove_special_character_title = lord_marshal
-		remove_special_character_title = lady_marshal
-		any_vassal = {
-			limit = { higher_tier_than = COUNT }
-			set_defacto_liege = FROMFROM
-		}
-		any_demesne_title = {
-			limit = {
-				tier = KING
-			}
-			save_event_target_as = old_title
-			destroy_landed_title = THIS
-			event_target:old_title = { add_pressed_claim = ROOT }
-		}
-		top_liege = {
-			any_demesne_title = {
-				limit = {
-					tier = KING
-				}
-				save_event_target_as = old_title1
-				destroy_landed_title = THIS
-				event_target:old_title1 = { add_pressed_claim = ROOT }
-			}
-		}
-	}
-}
-
-#	Centralization laws changed - No more king-tier title for top liege
-letter_event = {
-	id = tsk_high_kingdom.10a
+#	Ping event | event 2 to 3 to 4
+character_event = {
+	id = tsk_high_kingdom.3
 
 	is_triggered_only = yes
 
 	hide_window = yes
 
-	immediate = {
-	}
-	
-	option = { #
-		any_demesne_title = {
-			limit = {
-				tier = KING
-			}
-			save_event_target_as = old_title
-			destroy_landed_title = THIS
-			event_target:old_title = { add_pressed_claim = ROOT }
-		}
-	}
-}
-
-#	Claim war over - High King or Opposer wins
-character_event = {
-	id = tsk_high_kingdom.11
-	desc = EVTDESCTSK_HIGH_KINGDOM11
-	picture = GFX_evt_diplomatic_greeting
-
-	is_triggered_only = yes
-
 	trigger = {
-	}
-
-	major = yes
-	
-	major_trigger = {
-		capital_scope = { region = world_westeros_north_south }
 	}
 
 	immediate = {
 		any_playable_ruler = {
 			limit = {
-				OR = {
-					AND = {
-						ROOT = { has_flag = leading_opposer_claimant }
-						has_flag = accepts_FROM_as_liege
-					}
-					AND = {
-						ROOT = { has_flag = claims_high_kingdom }
-						has_flag = is_opposer
-					}
-				}
+				has_flag = is_opposer
+				NOT = { character = ROOT }
 				tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
 			}
-			set_defacto_liege = ROOT
-		}
-		character_event = { id = tsk_high_kingdom.0 days = 1 }
-		character_event = { id = tsk_high_kingdom.18 days = 1 }
-	}
-	
-	option = { # Great!
-		name = EVTOPTATSK_HIGH_KINGDOM11
-		trigger = {
-			THIS = {
-				has_flag = won_war
-				OR = {
-					has_flag = leading_opposer_claimant
-					has_flag = claims_high_kingdom
-				}
-			}
+			character_event = { id = tsk_high_kingdom.4 }
 		}
 	}
 	
-	option = { # I am not done yet.
-		name = EVTOPTBTSK_HIGH_KINGDOM11
-		trigger = {
-			THIS = {
-				NOT = { has_flag = won_war }
-				OR = {
-					has_flag = leading_opposer_claimant
-					has_flag = claims_high_kingdom
-				}
-			}
-		}
-	}
-	
-	option = { # Ok.
-		name = EVTOPTCTSK_HIGH_KINGDOM11
-		trigger = {
-			THIS = {
-				NOR = {
-					AND = {
-						NOT = { has_flag = won_war }
-						OR = {
-							has_flag = leading_opposer_claimant
-							has_flag = claims_high_kingdom
-						}
-					}
-					AND = {
-						has_flag = won_war
-						OR = {
-							has_flag = leading_opposer_claimant
-							has_flag = claims_high_kingdom
-						}
-					}
-				}
-			}		
-		}
-	}
+	option = { }
 }
 
-#
+#	Other opposer are ask to support claimant_opposers claim
 character_event = {
-	id = tsk_high_kingdom.12
-	desc = EVTDESCTSK_HIGH_KINGDOM12
+	id = tsk_high_kingdom.4
+	desc = EVTDESCTSK_HIGH_KINGDOM4
 	picture = GFX_evt_china_diplomatic_incident
 
 	is_triggered_only = yes
@@ -767,111 +335,446 @@ character_event = {
 	}
 	
 	option = { #
-		name = EVTOPTATSK_HIGH_KINGDOM12
+		name = EVTOPTATSK_HIGH_KINGDOM4
 		
 		set_flag = accepts_FROM_as_liege
+		set_flag = supported_claim_on_high_kingdom
 		FROM = { character_event = { id = tsk_high_kingdom.5 } }
 	}
 	
 	option = { #
-		name = EVTOPTBTSK_HIGH_KINGDOM4
+		name = EVTOPTBTSK_HIGH_KINGDOM12
 		
 		FROM = { character_event = { id = tsk_high_kingdom.5 } }
 	}
 }
 
-#	Maintainence for king tier titles after war (High King won)
-character_event = {
-	id = tsk_high_kingdom.13
+#	CLaimant_opposer is notified about other kings' decision
+letter_event = {
+	id = tsk_high_kingdom.5
+	desc = {
+		trigger = { FROM = { NOT = { has_flag = accepts_FROM_as_liege } } }
+		text = EVTDESCATSK_HIGH_KINGDOM5
+	}
+	desc = {
+		trigger = { FROM = { has_flag = accepts_FROM_as_liege } }
+		text = EVTDESCBTSK_HIGH_KINGDOM5
+	}
 
 	is_triggered_only = yes
-
-	trigger = {
-		OR = {
-			has_law = centralization_2
-			has_law = centralization_1
-		}
-		tier = EMPEROR
-		capital_scope = { region = world_westeros_north_south }
-	}	
-
-	hide_window = yes
 	
+	option = { #
+		name = EVTOPTATSK_HIGH_KINGDOM5
+		trigger = {
+			FROM = { NOT = { has_flag = accepts_FROM_as_liege } }
+		}
+	}
+	
+	option = { #
+		name = EVTOPTBTSK_HIGH_KINGDOM5
+		trigger = {
+			FROM = { has_flag = accepts_FROM_as_liege }
+		}
+	}
+}
+
+#	Displays neutral, opposing, allied kings
+character_event = {
+	id = tsk_high_kingdom.6
+	desc = EVTDESCTSK_HIGH_KINGDOM6
+	picture = GFX_courier_riding_horse
+
+	is_triggered_only = yes
+	
+	#hide_window = yes
+
 	immediate = {
-		save_event_target_as = high_king
+	}
+	
+	option = { #
+		name = EVTOPTATSK_HIGH_KINGDOM6
+		
+		any_character = {
+			limit = {
+				has_flag = is_supporter
+			}
+			custom_tooltip = {
+				text = TSKHIGHKINGDOMEVT6CUSTOM
+			}
+		}
 		if = {
 			limit = {
-				primary_title = { has_law = centralization_1 }
-			}
-			any_vassal = {
-				limit = {
-					tier = KING
+				any_character = {
+					tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
+					has_flag = leading_opposer_claimant
 				}
-				character_event = { id = tsk_high_kingdom.9 }
+			}
+			set_flag = fights_claim_war
+			reverse_unsafe_war = {
+				target = event_target:leading_opposer
+				casus_belli = claim
+				thirdparty_title = ROOT
+				tier = EMPEROR
+			}
+			any_playable_ruler = {
+				limit = {
+					has_flag = is_opposer
+					NOT = { has_flag = leading_opposer }
+					tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
+				}
+				join_attacker_wars = event_target:leading_opposer
 			}
 		}
 		else_if = {
 			limit = {
-				primary_title = { has_law = centralization_2 }
-			}
-			any_vassal = {
-				limit = {
-					tier = KING
+				any_character = {
+					tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
+					has_flag = leading_opposer_dismantle
 				}
-				character_event = { id = tsk_high_kingdom.10 }
+			}
+			set_flag = fights_dismantle_war
+			reverse_unsafe_war = {
+				target = event_target:leading_opposer
+				casus_belli = tsk_dismantle_high_kingdom_cb
+				thirdparty_title = ROOT
+				tier = EMPEROR
+			}
+			any_playable_ruler = {
+				limit = {
+					has_flag = is_opposer
+					NOT = { has_flag = leading_opposer }
+					tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
+				}
+				join_attacker_wars = event_target:leading_opposer
 			}
 		}
 	}
 }
 
-#
+#	Dismantle war over - High King won
 character_event = {
-	id = tsk_high_kingdom.14
+	id = tsk_high_kingdom.7
+	desc = EVTDESCTSK_HIGH_KINGDOM7
+	picture = GFX_evt_diplomatic_greeting
 
 	is_triggered_only = yes
 
-	hide_window = yes
-	
+	trigger = {
+		has_flag = claims_high_kingdom
+		has_flag = fights_dismantle_war
+	}
+
+	major = yes
+	major_trigger = {
+		capital_scope = { region = world_westeros_north_south }
+	}
+
 	immediate = {
+		ROOT = { set_flag = won_war }
+		FROM = { set_flag = lost_war }
+		any_independent_ruler = {
+			limit = { has_flag = is_opposer_of_@ROOT }
+			set_flag = lost_war
+		}
+		character_event = { id = tsk_high_kingdom.12 days = 1 }
+	}
+	
+	option = { # Great!
+		name = "Great!"
+		trigger = {
+			has_flag = won_war
+			has_flag = high_king_is_@ROOT
+		}
 		
-		set_flag = is_liege_ruler
-		any_vassal = {
-			if = {
-				limit = {
-					OR = {
-						tier = COUNT
-						tier = DUKE
+		if = {
+			limit = { has_flag = claims_high_kingdom }
+			custom_tooltip = {
+				text = TSKHIGHKINGDOMEVT7CUSTOM
+				any_independent_ruler = {
+					limit = {
+						OR = {
+							has_flag = is_supporter_of_@ROOT
+							has_flag = is_opposer_of_@ROOT
+						}
 					}
-					NOR = {
-						has_flag = is_liege_ruler
-						has_flag = is_vassal
-					}
+					set_defacto_liege = ROOT
 				}
-				set_flag = liege_ruler_is_@PREV #This should mark you with your lieges character ID
-				set_flag = is_vassal
-				PREV = { set_flag = vassal_is_@PREV }
 			}
 		}
+	}
+	
+	option = { # Next time...
+		name = "Next time..."
+		trigger = {
+			has_flag = lost_war
+			has_flag = high_king_is_@ROOT
+		}
+	}
+	
+	option = { # Ok.
+		name = "Ok."
+		trigger = {
+			NOT = { has_flag = high_king_is_@ROOT }
+		}
+	}
+}
+
+#	Dismantle war over - High King lost
+character_event = {
+	id = tsk_high_kingdom.8
+	desc = EVTDESCTSK_HIGH_KINGDOM8
+	picture = GFX_evt_diplomatic_greeting
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_flag = claims_high_kingdom
+		has_flag = fights_dismantle_war
+	}
+	
+	major = yes
+	major_trigger = {
+		capital_scope = { region = world_westeros_north_south }
+	}
+
+	immediate = {
+		ROOT = { set_flag = lost_war }
+		FROM = { set_flag = won_war }
+		any_independent_ruler = {
+			limit = { has_flag = is_opposer_of_@ROOT }
+			set_flag = won_war
+		}
+		character_event = { id = tsk_high_kingdom.12 days = 1 }
+	}
+	
+	option = { # Great!
+		name = "Great!"
+		trigger = {
+			has_flag = won_war
+			has_flag = high_king_is_@ROOT
+		}
+	}
+	
+	option = { # Next time...
+		name = "Next time..."
+		trigger = {
+			has_flag = lost_war
+			has_flag = high_king_is_@ROOT
+		}
+	}
+	
+	option = { # Ok.
+		name = "Ok."
+		trigger = {
+			NOT = { has_flag = high_king_is_@ROOT }
+		}
+	}
+	
+	after = {
 		if = {
-			limit = {
-				any_demesne_title = { tier = KING }
-			}
-			any_demesne_title = {
-				limit = {
-					tier = KING
+			limit = { has_flag = claims_high_kingdom }
+			ROOT = {
+				character_event = { id = tsk_high_kingdom.11 days = 2 }
+				any_realm_lord = {
+					character_event = { id = tsk_high_kingdom.11 }
 				}
-				set_flag = former_holder_@PREV
-				holder_scope = {
-					set_flag = is_former_holder_@PREV
+				if = {
+					limit = { has_flag = claims_beyond_the_wall }
+					destroy_landed_title = e_beyond_the_wall
+				}
+				if = {
+					limit = { has_flag = claims_dorne }
+					destroy_landed_title = e_dorne
+				}
+				if = {
+					limit = { has_flag = claims_blackwater }
+					destroy_landed_title = e_the_dusklands
+				}
+				if = {
+					limit = { has_flag = claims_iron_islands }
+					destroy_landed_title = e_the_iron_islands
+				}
+				if = {
+					limit = { has_flag = claims_north }
+					destroy_landed_title = e_the_north
+				}
+				if = {
+					limit = { has_flag = claims_reach }
+					destroy_landed_title = e_the_reach
+				}
+				if = {
+					limit = { has_flag = claims_riverlands }
+					destroy_landed_title = e_the_riverlands
+				}
+				if = {
+					limit = { has_flag = claims_stormlands }
+					destroy_landed_title = e_the_stormlands
+				}
+				if = {
+					limit = { has_flag = claims_vale }
+					destroy_landed_title = e_the_vale
+				}
+				if = {
+					limit = { has_flag = claims_westerlands }
+					destroy_landed_title = e_the_westerlands
 				}
 			}
 		}
 	}
 }
 
-# Restores status quo when High King lost
+#	Claim war over - High King won
 character_event = {
-	id = tsk_high_kingdom.15
+	id = tsk_high_kingdom.9
+	desc = EVTDESCTSK_HIGH_KINGDOM9
+	picture = GFX_evt_diplomatic_greeting
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_flag = claims_high_kingdom
+		has_flag = fights_claim_war
+	}
+	
+	major = yes
+	major_trigger = {
+		capital_scope = { region = world_westeros_north_south }
+	}
+
+	immediate = {
+		ROOT = { set_flag = won_war }
+		FROM = { set_flag = lost_war }
+		any_independent_ruler = {
+			limit = { has_flag = is_opposer_of_@ROOT }
+			set_flag = lost_war
+		}
+		ROOT = { character_event = { id = tsk_high_kingdom.0 days = 1 } }
+		character_event = { id = tsk_high_kingdom.12 days = 1 }
+	}
+	
+	option = { # Great!
+		name = "Great!"
+		trigger = {
+			has_flag = won_war
+			ROOT = {
+				THIS = { has_flag = high_king_is_@PREV }
+			}
+		}
+		custom_tooltip = {
+			text = TSKHIGHKINGDOMEVT7CUSTOM
+			if = {
+				limit = { has_flag = claims_high_kingdom }
+				any_independent_ruler = {
+					limit = {
+						OR = {
+							has_flag = is_supporter_of_@ROOT
+							has_flag = is_opposer_of_@ROOT
+						}
+					}
+					set_defacto_liege = ROOT
+				}
+			}
+		}
+	}
+	
+	option = { # Next time...
+		name = "Next time..."
+		trigger = {
+			has_flag = lost_war
+			ROOT = {
+				THIS = { has_flag = high_king_is_@PREV }
+			}
+		}
+	}
+	
+	option = { # Ok.
+		name = "Ok."
+		trigger = {
+			ROOT = {
+				THIS = { NOT = { has_flag = high_king_is_@PREV } }
+			}
+		}
+	}
+}
+
+#	Claim war over - High King lost
+character_event = {
+	id = tsk_high_kingdom.10
+	desc = EVTDESCTSK_HIGH_KINGDOM10
+	picture = GFX_evt_diplomatic_greeting
+
+	is_triggered_only = yes
+
+	trigger = {
+		has_flag = claims_high_kingdom
+		has_flag = fights_claim_war
+	}
+	
+	major = yes
+	major_trigger = {
+		capital_scope = { region = world_westeros_north_south }
+	}
+
+	immediate = {
+		ROOT = { set_flag = lost_war }
+		FROM = { set_flag = won_war }
+		any_independent_ruler = {
+			limit = { has_flag = is_opposer_of_@ROOT }
+			set_flag = won_war
+		}
+		FROM = { character_event = { id = tsk_high_kingdom.0 days = 1 } }
+		character_event = { id = tsk_high_kingdom.12 days = 1 }
+	}
+	
+	option = { # Great!
+		name = "Great!"
+		trigger = {
+			has_flag = won_war
+			ROOT = {
+				THIS = { has_flag = high_king_is_@PREV }
+			}
+		}
+		
+		custom_tooltip = {
+			text = TSKHIGHKINGDOMEVT7CUSTOM
+			if = {
+				limit = { has_flag = leading_opposer }
+				any_independent_ruler = {
+					limit = {
+						OR = {
+							has_flag = is_supporter_of_@ROOT
+							has_flag = is_opposer_of_@ROOT
+						}
+					}
+					set_defacto_liege = FROM
+				}
+			}
+		}
+	}
+	
+	option = { # Next time...
+		name = "Next time..."
+		trigger = {
+			has_flag = lost_war
+			ROOT = {
+				THIS = { has_flag = high_king_is_@PREV }
+			}
+		}
+	}
+	
+	option = { # Ok.
+		name = "Ok."
+		trigger = {
+			ROOT = {
+				THIS = { NOT = { has_flag = high_king_is_@PREV } }
+			}
+		}
+	}
+}
+
+# Restores status quo if High King lost
+character_event = {
+	id = tsk_high_kingdom.11
 
 	is_triggered_only = yes
 
@@ -881,170 +784,46 @@ character_event = {
 		any_title = {
 			limit = {
 				has_flag = former_holder_@ROOT
-				ROOT = { has_flag = is_former_holder_@PREV }
+				ROOT = { has_flag = former_holder_of_@PREV }
 			}
 			gain_title = ROOT
+			clr_flag = former_holder_@ROOT
+			ROOT = { clr_flag = former_holder_of_@PREV }
 		}
-		#clr_flag = is_liege_ruler
-		#clr_flag = liege_ruler_is_@FROM
 		any_playable_ruler = {
 			limit = {
-				has_flag = liege_ruler_is_@PREV
-				has_flag = is_vassal
-				ROOT = { has_flag = vassal_is_@PREV }
+				has_flag = old_liege_is_@PREV
+				ROOT = { has_flag = old_vassal_is_@PREV }
 			}
 			set_defacto_liege = PREV
-			clr_flag = is_vassal
-			clr_flag = liege_ruler_is_@FROM
-		}
-		character_event = { id = tsk_high_kingdom.0 days = 1 }
-	}
-}
-
-#	Dismantleing war over - High King lost
-character_event = {
-	id = tsk_high_kingdom.16
-	desc = EVTDESCTSK_HIGH_KINGDOM16
-	picture = GFX_evt_judged_by_ruler
-
-	is_triggered_only = yes
-
-	major = yes
-	
-	immediate = {
-		FROM = {
-			character_event = { id = tsk_high_kingdom.15 days = 2 }
-			any_vassal = { character_event = { id = tsk_high_kingdom.15 days = 2 } }
-			primary_title = {
-				save_event_target_as = old_title
-				destroy_landed_title = THIS
-				event_target:old_title = { add_pressed_claim = ROOT }
-			}
-		}
-		character_event = { id = tsk_high_kingdom.18 days = 1 }
-	}
-	
-	option = { # Great!
-		name = EVTOPTATSK_HIGH_KINGDOM16
-		trigger = {
-			THIS = { has_flag = leading_opposer_dismantle }
-		}
-	}
-	
-	option = { # I will rise again!
-		name = EVTOPTBTSK_HIGH_KINGDOM16
-		trigger = {
-			THIS = { has_flag = claims_high_kingdom }
-		}
-	}
-	
-	option = { # Ok.
-		name = EVTOPTCTSK_HIGH_KINGDOM16
-		trigger = {
-			NOR = {
-				has_flag = leading_opposer_dismantle
-				has_flag = claims_high_kingdom
-			}
-		}
-	}
-}
-
-#	Dismantleing war over - High King won
-character_event = {
-	id = tsk_high_kingdom.17
-	desc = EVTDESCTSK_HIGH_KINGDOM17
-	picture = GFX_evt_diplomatic_greeting
-
-	is_triggered_only = yes
-
-	trigger = {
-		has_flag = won_dismantle_war
-	}
-
-	major = yes
-	
-	major_trigger = {
-		capital_scope = { region = world_westeros_north_south }
-	}
-
-	immediate = {
-		if = {
-			limit = {
-				has_flag = won_dismantle_war
-			}
-			save_event_target_as = high_king
-		}
-		any_character = {
-			limit = {
-				has_flag = is_opposer
-				ROOT = { has_flag = claims_high_kingdom }
-				tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
-			}
-			set_defacto_liege = ROOT
-		}
-		character_event = { id = tsk_high_kingdom.18 days = 1 }
-	}
-	
-	option = { # Great!
-		name = EVTOPTATSK_HIGH_KINGDOM17
-		trigger = {
-			THIS = { has_flag = claims_high_kingdom }
-		}
-	}
-	
-	option = { # We will strike back...someday.
-		name = EVTOPTBTSK_HIGH_KINGDOM17
-		trigger = {
-			THIS = { has_flag = leading_opposer_dismantle }
-		}
-	}
-	
-	option = { # Ok.
-		name = EVTOPTCTSK_HIGH_KINGDOM17
-		trigger = {
-			THIS = {
-				NOR = {
-					has_flag = claims_high_kingdom
-					has_flag = leading_opposer_dismantle
-				}
-			}
+			clr_flag = old_liege_is_@PREV
+			ROOT = { clr_flag = old_vassal_is_@PREV }
 		}
 	}
 }
 
 #	Clear flags
 character_event = {
-	id = tsk_high_kingdom.18
+	id = tsk_high_kingdom.12
 
 	is_triggered_only = yes
 
 	hide_window = yes
 	
 	immediate = {
-		save_event_target_as = high_king
 		any_playable_ruler = {
 			limit = {
-				tsk_location_high_kingdom_claimed_is_region_ruler_trigger = yes
+				has_flag = high_king_is_@ROOT
 			}
 			clear_high_kingdom_creation_flags = yes
 		}
 		clear_high_kingdom_creation_flags = yes
-		any_vassal = {
-			limit = { ROOT = { has_flag = vassal_is_@PREV } }
-			ROOT = { clr_flag = vassal_is_@PREV }
-		}
-		any_title = {
-			limit = { ROOT = { has_flag = is_former_holder_@PREV } }
-			ROOT = { clr_flag = is_former_holder_@PREV }
-		}
 	}
-	
-	option = { }
 }
 
 #	Give necessary flags for heirs
 character_event = {
-	id = tsk_high_kingdom.19
+	id = tsk_high_kingdom.13
 
 	is_triggered_only = yes
 
@@ -1104,6 +883,10 @@ character_event = {
 			current_heir = { set_flag = accepts_FROM_as_liege }
 		}
 		if = {
+			limit = { has_flag = supported_claim_on_high_kingdom }
+			current_heir = { set_flag = supported_claim_on_high_kingdom }
+		}
+		if = {
 			limit = { has_flag = leading_opposer_claimant }
 			current_heir = { set_flag = leading_opposer_claimant }
 		}
@@ -1111,11 +894,6 @@ character_event = {
 			limit = { has_flag = leading_opposer_dismantle }
 			current_heir = { set_flag = leading_opposer_dismantle }
 		}
-		if = {
-			limit = { has_flag = won_war }
-			current_heir = { set_flag = won_war }
-		}
-		
 	}
 	
 	option = { }
