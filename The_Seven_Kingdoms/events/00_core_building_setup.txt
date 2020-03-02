@@ -1,24 +1,29 @@
 namespace = core_building_setup
 # Created by Rowan
 
-###################
-### INFORMATION ###
-###################
-###################
+# core_building_setup.1
+#- First event to fire.
+#- Assigns infrastructure AND buildings to specific provinces per province ID.
+#- Sets a flag manual_prov_assignments_cap for capital holding in province assignment
+#- For provinces where all holdings are touched, manual_prov_assignments_all is flagged
 
-# This event chain assigns infrastructure as well as buildings to every single province on game start
-# The assignment is based on whether or not it is the capital province (which will always be developed the best)
-# and the rank of the owner, wherein higher ranked title holders will have better development.
+# core_building_setup.2
+#- Assigns roads and infrastructure to all non manually defined provinces based on the rank of the owner of the province
+#- secondary / non-primary province titles will be worse than primary title provinces
+#- The roads and infrastructure in question provide the requirements for building additions
 
-# Region also affects the degree in which development is assigned.
+# core_building_setup.3
+#- Assigns buildings to all holdings in all provinces, excluding those with the following flags, based on infrastructure:
+#- manual_prov_assignments_cap
+#- manual_prov_assignments_all
 
 
-#################
-### THE EVENT ###
-#################
-#################
+# TODO:
+# Manually define provinces & assign flag, distribute buildings
+# add extra clauses for different types of holdings
 
-character_event = { 
+
+character_event = {
 	id = core_building_setup.1
 	hide_window = yes
 	is_triggered_only = yes # Triggered from on_startup
@@ -27,384 +32,195 @@ character_event = {
 	only_playable = yes
 	
 	trigger = {
-		NOT = { has_character_flag = core_building_setup_complete }
-		# has_character_flag = core_resource_setup_complete
+		NOT = { has_character_flag = core_manual_infra_setup_complete }
 		has_game_rule = { name = resource_system value = resource_system_enabled }
 	}
 	
 	immediate = {
-		set_character_flag = core_building_setup_complete
+		set_character_flag = core_manual_infra_setup_complete
+		
+		any_demesne_province = {
+			limit = {
+				NOR = {
+					has_province_flag = manual_prov_assignments_cap # Capital holding, the norm, assigned
+					has_province_flag = manual_prov_assignments_all # All holdings, including capital, assigned
+				}
+			}
+			trigger_switch = {
+				on_trigger = province_id
+				# Sunspear
+				429 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_5 duration = -1 }
+					add_building = ca_settlement_7
+				}
+				# Highgarden
+				527 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_5 duration = -1 }
+					add_building = ca_settlement_10
+				}
+				# Duskendale
+				831 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_4 duration = -1 }
+					add_building = ca_settlement_7
+				}
+				# Riverrun
+				1000 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_4 duration = -1 }
+					add_building = ca_settlement_8
+				}
+				# Planky Town
+				444 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_3 duration = -1 }
+					add_building = ca_settlement_7
+				}
+				# Castamere
+				889 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_4 duration = -1 }
+					add_building = ca_settlement_8
+				}
+				# Fairmarket
+				1003 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_3 duration = -1 }
+					add_building = ca_settlement_7
+				}
+				# Oldstones
+				1026 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_4 duration = -1 }
+					add_building = ca_settlement_8
+				}
+				# Blackwater Hill
+				730 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_3 duration = -1 }
+					add_building = ca_settlement_7
+				}
+				# Oldtown
+				544 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_5 duration = -1 }
+					add_building = ca_settlement_10
+				}
+				# Gulltown
+				1072 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_4 duration = -1 }
+					add_building = ca_settlement_8
+				}
+				# Lannisport
+				858 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_4 duration = -1 }
+					add_province_modifier = { name = tsk_road_3 duration = -1 }
+					add_building = ca_settlement_7
+				}
+				# Blackwater Harbour
+				733 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_3 duration = -1 }
+					add_province_modifier = { name = tsk_road_2 duration = -1 }
+					add_building = ca_settlement_7
+				}
+				# Dun Port
+				829 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_4 duration = -1 }
+					add_province_modifier = { name = tsk_road_2 duration = -1 }
+					add_building = ca_settlement_7
+				}
+				# Casterly Rock
+				861 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_5 duration = -1 }
+					add_province_modifier = { name = tsk_road_3 duration = -1 }
+					add_building = ca_settlement_10
+				}
+				# Winterfell
+				1198 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_5 duration = -1 }
+					add_province_modifier = { name = tsk_road_3 duration = -1 }
+					add_building = ca_settlement_10
+				}
+				# Pyke
+				1156 = {
+					add_province_flag = manual_prov_assignments_cap
+					add_province_modifier = { name = tsk_infra_4 duration = -1 }
+					add_province_modifier = { name = tsk_road_1 duration = -1 }
+					add_building = ca_settlement_9
+				}
+			}
+		}
+		
+		character_event = { id = core_building_setup.2 }
+	}
+}
+
+
+character_event = {
+	id = core_building_setup.2
+	hide_window = yes
+	is_triggered_only = yes # Triggered from on_startup
 	
+	# Event should fire for owned provinces of all landed characters.
+	only_playable = yes
+	
+	trigger = {
+		NOT = { has_character_flag = core_infra_setup_complete }
+		has_game_rule = { name = resource_system value = resource_system_enabled }
+	}
+	
+	immediate = {
+		set_character_flag = core_infra_setup_complete
+		
 		trigger_switch = {
 			on_trigger = tier
 			
-			###################################################
-			############## Rank based infrastructure and roads
 			count = {
 				any_demesne_province = {
-					### Assign capital development based on region ###
 					if = {
 						limit = {
-							is_capital = yes 
-						}
-						
-						trigger_switch = {
-							on_trigger = region
-						
-							world_westeros = {
-								trigger_switch = {
-									on_trigger = region
-								
-									world_the_north = {
-										random_list = {
-										30 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_2
-												add_building = ca_recruit_1
-												add_building = ca_barracks_2
-												add_building = ca_far_sus_2
-												add_building = ca_castle_town_1
-											}
-										}
-										70 = { }
-										}
-									}
-									world_the_westerlands = {
-										random_list = {
-										30 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_2
-												add_building = ca_recruit_1
-												add_building = ca_barracks_2
-												add_building = ca_far_sus_1
-												add_building = ca_castle_town_3
-											}
-										}
-										70 = { }
-										}
-									}
-									world_the_stormlands = {
-										random_list = {
-										30 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_3
-												add_building = ca_recruit_1
-												add_building = ca_barracks_2
-												add_building = ca_far_sus_1
-												add_building = ca_castle_town_2
-											}
-										}
-										70 = { }
-										}
-									}
-									world_the_blackwater = {
-										random_list = {
-										30 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_2
-												add_building = ca_recruit_1
-												add_building = ca_barracks_1
-												add_building = ca_far_sus_1
-												add_building = ca_castle_town_1
-											}
-										}
-										70 = { }
-										}
-									}
-									world_the_vale = {
-										random_list = {
-										30 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_2
-												add_building = ca_recruit_1
-												add_building = ca_barracks_1
-												add_building = ca_far_sus_1
-												add_building = ca_castle_town_1
-											}
-										}
-										70 = { }
-										}
-									}
-									world_dorne = {
-										random_list = {
-										30 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_2
-												add_building = ca_recruit_1
-												add_building = ca_barracks_1
-												add_building = ca_far_sus_1
-												add_building = ca_castle_town_1
-											}
-										}
-										70 = { }
-										}
-									}
-									world_the_iron_islands = {
-										random_list = {
-										30 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_2
-												add_building = ca_recruit_1
-												add_building = ca_barracks_1
-												add_building = ca_far_sus_1
-												add_building = ca_castle_town_1
-											}
-										}
-										70 = { }
-										}
-									}
-									world_the_reach = {
-										random_list = {
-										30 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_3
-												add_building = ca_recruit_1
-												add_building = ca_barracks_2
-												add_building = ca_far_sus_2
-												add_building = ca_castle_town_3
-											}
-										}
-										70 = { }
-										}
-									}
-									world_the_riverlands = {
-										random_list = {
-										30 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_2
-												add_building = ca_recruit_1
-												add_building = ca_barracks_1
-												add_building = ca_far_sus_2
-												add_building = ca_castle_town_1
-											}
-										}
-										70 = { }
-										}
-									}
-								}
-							}
-							world_essos = {
-								trigger_switch = {
-									on_trigger = region
-								
-									world_braavos = {
-										random_list = {
-										10 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_1
-												add_building = ca_recruit_1
-												add_building = ca_barracks_1
-												add_building = ca_far_sus_1
-											}
-										}
-										90 = { }
-										}
-									}
-									world_valyria = {
-										random_list = {
-										70 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_3
-												add_building = ca_recruit_1
-												add_building = ca_barracks_2
-												add_building = ca_far_sus_2
-												add_building = ca_castle_town_3
-											}
-										}
-										30 = { }
-										}
-									}
-									world_the_stepstones = {
-										random_list = {
-										10 = {
-											add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											any_province_holding = {
-												add_building = ca_settlement_1
-												add_building = ca_recruit_1
-												add_building = ca_barracks_1
-												add_building = ca_far_sus_1
-											}
-										}
-										90 = { }
-										}
-									}
-								}
+							NOR = {
+								has_province_flag = manual_prov_assignments_cap
+								has_province_flag = manual_prov_assignments_all
 							}
 						}
-					}
-					else_if = {
-						limit = {
-							NOT = { is_capital = yes }
-						}
-					
-						trigger_switch = {
-							on_trigger = region
-
-							world_westeros = {
-								trigger_switch = {
-									on_trigger = region
-								
-									world_the_north = {
-										random_list = {
-											10 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-													add_building = ca_settlement_2
-													add_building = ca_barracks_1
-													add_building = ca_far_sus_2
-												}
-											}
-											90 = { }
-										}
-									}
-									world_the_westerlands = {
-										random_list = {
-											10 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-													add_building = ca_settlement_2
-													add_building = ca_recruit_1
-													add_building = ca_far_sus_2
-												}
-											}
-											90 = { }
-										}
-									}
-									world_the_stormlands = {
-										random_list = {
-											10 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-													add_building = ca_settlement_2
-													add_building = ca_recruit_1
-													add_building = ca_far_sus_1
-													add_building = ca_castle_town_1
-												}
-											}
-											90 = { }
-										}
-									}
-									world_the_blackwater = {
-										random_list = {
-											10 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-													add_building = ca_settlement_2
-													add_building = ca_far_sus_1
-													add_building = ca_castle_town_1
-												}
-											}
-											90 = { }
-										}
-									}
-									world_the_vale = {
-										random_list = {
-											10 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												add_building = ca_settlement_2
-												add_building = ca_barracks_2
-												add_building = ca_far_sus_2
-											}
-											}
-											90 = { }
-										}
-									}
-									world_dorne = {
-										random_list = {
-											10 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												add_building = ca_settlement_2
-												add_building = ca_far_sus_1
-												add_building = ca_castle_town_1
-											}
-											}
-											90 = { }
-										}
-									}
-									world_the_iron_islands = {
-										random_list = {
-											10 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-													add_building = ca_settlement_2
-													add_building = ca_recruit_1
-													add_building = ca_barracks_1
-												}
-											}
-											90 = { }
-										}
-									}
-									world_the_reach = {
-										random_list = {
-											10 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-													add_building = ca_settlement_2
-													add_building = ca_recruit_1
-													add_building = ca_far_sus_2
-													add_building = ca_castle_town_1
-												}
-											}
-											90 = { }
-										}
-									}
-									world_the_riverlands = {
-										random_list = {
-											10 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-													add_building = ca_settlement_2
-													add_building = ca_recruit_1
-													add_building = ca_far_sus_1
-													add_building = ca_castle_town_1
-												}
-											}
-											90 = { }
-										}
-									}
+						# capital province
+						if = {
+							limit = {
+								is_capital = yes 
+							}
+							random_list = {
+								50 = {
+									add_province_modifier = { name = tsk_infra_1 duration = -1 }
+									add_province_modifier = { name = tsk_road_1 duration = -1 }
+								}
+								30 = {
+									add_province_modifier = { name = tsk_infra_1 duration = -1 }
+								}
+								30 = {
 								}
 							}
-							world_essos = {
-								trigger_switch = {
-									on_trigger = region
-									
-									world_braavos = {
-										random_list = {
-											2 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											}
-											98 = { }
-										}
-									}
-									world_valyria = {
-										random_list = {
-											60 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											}
-											40 = { }
-										}
-									}
-									world_the_stepstones = {
-										random_list = {
-											2 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-											}
-											98 = { }
-										}
-									}
+							
+						}
+						# not capital province
+						else_if = {
+							# Do nothing for count
+							random_list = {
+								10 = {
+									add_province_modifier = { name = tsk_infra_1 duration = -1 }
+								}
+								10 = {
+									add_province_modifier = { name = tsk_road_1 duration = -1 }
+								}
+								80 = {
 								}
 							}
 						}
@@ -415,366 +231,38 @@ character_event = {
 				any_demesne_province = {
 					if = {
 						limit = {
-							is_capital = yes 
-						}
-						
-						### Assign capital development based on region ###
-						trigger_switch = {
-						on_trigger = region
-						
-							world_westeros = {
-								trigger_switch = {
-									on_trigger = region
-								
-									world_the_north = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_westerlands = {
-										random_list = {
-											70 = { add_province_modifier = { name = tsk_infra_2 duration = -1 } }
-											30 = { add_province_modifier = { name = tsk_infra_3 duration = -1 } }
-										}
-									}
-									world_the_stormlands = {
-										random_list = {
-											70 = { add_province_modifier = { name = tsk_infra_2 duration = -1 } }
-											30 = { add_province_modifier = { name = tsk_infra_3 duration = -1 } }
-										}
-									}
-									world_the_blackwater = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_vale = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_dorne = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_iron_islands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_reach = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_riverlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-								}
+							NOR = {
+								has_province_flag = manual_prov_assignments_cap
+								has_province_flag = manual_prov_assignments_all
 							}
-							world_essos = {
-								trigger_switch = {
-									on_trigger = region
-								
-									world_braavos = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_valyria = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_stepstones = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
+						}
+						# capital province
+						if = {
+							limit = {
+								is_capital = yes 
+							}
+							random_list = {
+								70 = {
+									add_province_modifier = { name = tsk_infra_3 duration = -1 }
+									add_province_modifier = { name = tsk_road_2 duration = -1 }
+								}
+								30 = {
+									add_province_modifier = { name = tsk_infra_2 duration = -1 }
+									add_province_modifier = { name = tsk_road_2 duration = -1 }
 								}
 							}
 						}
-					}
-					else_if = {
-						limit = {
-							NOT = { is_capital = yes }
-						}
-						
-						### Assign capital development based on region ###
-						trigger_switch = {
-						on_trigger = region
-						
-							world_westeros = {
-								trigger_switch = {
-									on_trigger = region
-								
-									world_the_north = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_westerlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_stormlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_blackwater = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_vale = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_dorne = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_iron_islands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_reach = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_riverlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
+						# not capital province
+						else_if = {
+							# Do nothing for count
+							random_list = {
+								70 = {
+									add_province_modifier = { name = tsk_infra_2 duration = -1 }
+									add_province_modifier = { name = tsk_road_1 duration = -1 }
 								}
-							}
-							world_essos = {
-								trigger_switch = {
-									on_trigger = region
-								
-									world_braavos = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_valyria = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_stepstones = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_2 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_1 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
+								30 = {
+									add_province_modifier = { name = tsk_infra_1 duration = -1 }
+									add_province_modifier = { name = tsk_road_1 duration = -1 }
 								}
 							}
 						}
@@ -783,383 +271,33 @@ character_event = {
 			}
 			king = {
 				any_demesne_province = {
+					# capital province
 					if = {
 						limit = {
-							is_capital = yes
+							is_capital = yes 
 						}
-						
-						trigger_switch = {
-							on_trigger = region
-						
-							world_westeros = {
-								trigger_switch = {
-									on_trigger = region
-									
-									world_the_north = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_westerlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_stormlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_blackwater = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_vale = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_dorne = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_iron_islands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_reach = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_riverlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-								}
+						random_list = {
+							70 = {
+								add_province_modifier = { name = tsk_infra_4 duration = -1 }
+								add_province_modifier = { name = tsk_road_2 duration = -1 }
 							}
-							world_essos = {
-								trigger_switch = {
-									on_trigger = region
-								
-									world_braavos = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_valyria = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_stepstones = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-								}
+							30 = {
+								add_province_modifier = { name = tsk_infra_3 duration = -1 }
+								add_province_modifier = { name = tsk_road_2 duration = -1 }
 							}
 						}
 					}
+					# not capital province
 					else_if = {
-						limit = {
-							NOT = { is_capital = yes }
-						}
-						
-						trigger_switch = {
-							on_trigger = region
-						
-							world_westeros = {
-								trigger_switch = {
-									on_trigger = region
-									
-									world_the_north = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_westerlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_stormlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_blackwater = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_vale = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_dorne = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_iron_islands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_reach = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_riverlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-								}
+						# Do nothing for count
+						random_list = {
+							70 = {
+								add_province_modifier = { name = tsk_infra_3 duration = -1 }
+								add_province_modifier = { name = tsk_road_2 duration = -1 }
 							}
-							world_essos = {
-								trigger_switch = {
-									on_trigger = region
-								
-									world_braavos = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_valyria = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-									world_the_stepstones = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
-											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_3 duration = -1 }
-												any_province_holding = {
-												}
-											}
-										}
-									}
-								}
+							30 = {
+								add_province_modifier = { name = tsk_infra_2 duration = -1 }
+								add_province_modifier = { name = tsk_road_2 duration = -1 }
 							}
 						}
 					}
@@ -1167,188 +305,2363 @@ character_event = {
 			}
 			emperor = {
 				any_demesne_province = {
+					# capital province
 					if = {
 						limit = {
 							is_capital = yes 
 						}
-						
+						random_list = {
+							70 = {
+								add_province_modifier = { name = tsk_infra_5 duration = -1 }
+								add_province_modifier = { name = tsk_road_3 duration = -1 }
+							}
+							30 = {
+								add_province_modifier = { name = tsk_infra_4 duration = -1 }
+								add_province_modifier = { name = tsk_road_3 duration = -1 }
+							}
+						}
+					}
+					# not capital province
+					else_if = {
+						# Do nothing for count
+						random_list = {
+							70 = {
+								add_province_modifier = { name = tsk_infra_4 duration = -1 }
+								add_province_modifier = { name = tsk_road_3 duration = -1 }
+							}
+							30 = {
+								add_province_modifier = { name = tsk_infra_3 duration = -1 }
+								add_province_modifier = { name = tsk_road_3 duration = -1 }
+							}
+						}
+					}
+				}
+			}
+		}
+		character_event = { id = core_building_setup.3 }
+	}
+}
+
+#- The following event assigns buildings
+
+character_event = { 
+	id = core_building_setup.3
+	hide_window = yes
+	is_triggered_only = yes # Triggered from on_startup
+	
+	# Event should fire for owned provinces of all landed characters.
+	only_playable = yes
+	
+	trigger = {
+		has_character_flag = core_infra_setup_complete
+		
+		NOT = { has_character_flag = core_building_setup_complete }
+		has_game_rule = { name = resource_system value = resource_system_enabled }
+	}
+	
+	immediate = {
+		set_character_flag = core_building_setup_complete
+		
+		any_demesne_province = {
+			if = {
+				limit = {
+					NOR = {
+						has_province_flag = manual_prov_assignments_cap
+						has_province_flag = manual_prov_assignments_all
+					}
+					OR = {
+						has_province_modifier = tsk_infra_1
+						has_province_modifier = tsk_infra_2
+						has_province_modifier = tsk_infra_3
+						has_province_modifier = tsk_infra_4
+						has_province_modifier = tsk_infra_5
+					}
+				}
+				
+				trigger_switch = {
+					on_trigger = region
+					
+					# WESTEROS
+					world_westeros = {
 						trigger_switch = {
 							on_trigger = region
-						
-							world_westeros = {
+							
+							# NORTH
+							world_the_north = {
 								trigger_switch = {
-									on_trigger = region
+									on_trigger = has_province_modifier
 									
-									world_the_north = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
 											}
-										}
-									}
-									world_the_westerlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
 											}
-										}
-									}
-									world_the_stormlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
 											}
-										}
-									}
-									world_the_blackwater = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
 												}
 											}
 										}
 									}
-									world_the_vale = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
 											}
-										}
-									}
-									world_dorne = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
 											}
-										}
-									}
-									world_the_iron_islands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
 											}
-										}
-									}
-									world_the_reach = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
 												}
 											}
 										}
 									}
-									world_the_riverlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_2 }
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
 												}
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
 												}
 											}
 										}
 									}
 								}
 							}
-							world_essos = {
+							
+							# WESTERLANDS
+							world_the_westerlands = {
 								trigger_switch = {
-									on_trigger = region
+									on_trigger = has_province_modifier
 									
-									world_braavos = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
 												}
 											}
 										}
 									}
-									world_valyria = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
 												}
 											}
 										}
 									}
-									world_the_stepstones = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
 												}
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
+												}
+											}
+										}
+									}
+								}
+							}
+							
+							# STORMLANDS
+							world_the_stormlands = {
+								trigger_switch = {
+									on_trigger = has_province_modifier
+									
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
+												}
+											}
+										}
+									}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
+												}
+											}
+										}
+									}
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
+												}
+											}
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
+												}
+											}
+										}
+									}
+								}
+							}
+							
+							# BLACKWATER
+							world_the_blackwater = {
+								trigger_switch = {
+									on_trigger = has_province_modifier
+									
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
+												}
+											}
+										}
+									}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
+												}
+											}
+										}
+									}
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
+												}
+											}
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
+												}
+											}
+										}
+									}
+								}
+							}
+							
+							# THE VALE
+							world_the_vale = {
+								trigger_switch = {
+									on_trigger = has_province_modifier
+									
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
+												}
+											}
+										}
+									}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
+												}
+											}
+										}
+									}
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_2 }
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
+												}
+											}
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
+												}
+											}
+										}
+									}
+								}
+							}
+							
+							# DORNE
+							world_dorne = {
+								trigger_switch = {
+									on_trigger = has_province_modifier
+									
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
+												}
+											}
+										}
+									}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
+												}
+											}
+										}
+									}
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_2 }
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
+												}
+											}
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
+												}
+											}
+										}
+									}
+								}
+							}
+							
+							# IRON ISLANDS
+							world_the_iron_islands = {
+								trigger_switch = {
+									on_trigger = has_province_modifier
+									
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
+												}
+											}
+										}
+									}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
+												}
+											}
+										}
+									}
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_2 }
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
+												}
+											}
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
+												}
+											}
+										}
+									}
+								}
+							}
+							
+							# REACH
+							world_the_reach = {
+								trigger_switch = {
+									on_trigger = has_province_modifier
+									
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
+												}
+											}
+										}
+									}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
+												}
+											}
+										}
+									}
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_2 }
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
+												}
+											}
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
+												}
+											}
+										}
+									}
+								}
+							}
+							
+							# RIVERLANDS
+							world_the_riverlands = {
+								trigger_switch = {
+									on_trigger = has_province_modifier
+									
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
+												}
+											}
+										}
+									}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
+												}
+											}
+										}
+									}
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_2 }
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
+												}
+											}
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
 												}
 											}
 										}
@@ -1357,188 +2670,763 @@ character_event = {
 							}
 						}
 					}
-					else_if = {
-						limit = {
-							NOT = { is_capital = yes }
-						}
-						
+					world_essos = {
 						trigger_switch = {
 							on_trigger = region
-						
-							world_westeros = {
+							
+							# BRAAVOS
+							world_braavos = {
 								trigger_switch = {
-									on_trigger = region
+									on_trigger = has_province_modifier
 									
-									world_the_north = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
 											}
-										}
-									}
-									world_the_westerlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
 											}
-										}
-									}
-									world_the_stormlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
 											}
-										}
-									}
-									world_the_blackwater = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
 												}
 											}
 										}
 									}
-									world_the_vale = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
 											}
-										}
-									}
-									world_dorne = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
 											}
-										}
-									}
-									world_the_iron_islands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
 											}
-										}
-									}
-									world_the_reach = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
 												}
 											}
 										}
 									}
-									world_the_riverlands = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_2 }
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
 												}
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
 												}
 											}
 										}
 									}
 								}
 							}
-							world_essos = {
+							
+							# VALYRIA
+							world_valyria = {
 								trigger_switch = {
-									on_trigger = region
+									on_trigger = has_province_modifier
 									
-									world_braavos = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_3 }
+												20 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_2 }
+												10 = { add_building = ca_castle_town_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
 												}
 											}
 										}
 									}
-									world_valyria = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
-												}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												10 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_4 }
+												10 = { add_building = ca_stables_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
 												}
 											}
 										}
 									}
-									world_the_stepstones = {
-										random_list = {
-											70 = {
-												add_province_modifier = { name = tsk_infra_5 duration = -1 }
-												any_province_holding = {
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+												10 = { add_building = ca_settlement_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												20 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_5 }
+												10 = { add_building = ca_smith_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_3 }
+												10 = { add_building = ca_far_sus_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_5 }
+												10 = { add_building = ca_stables_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_6 }
+												10 = { add_building = ca_castle_town_7 }
+												10 = { add_building = ca_castle_town_8 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
 												}
 											}
-											30 = {
-												add_province_modifier = { name = tsk_infra_4 duration = -1 }
-												any_province_holding = {
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_7 }
+												10 = { add_building = ca_settlement_8 }
+												10 = { add_building = ca_settlement_9 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												20 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_4 }
+												10 = { add_building = ca_barracks_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_6 }
+												10 = { add_building = ca_smith_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_4 }
+												10 = { add_building = ca_far_sus_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_6 }
+												10 = { add_building = ca_stables_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_8 }
+												10 = { add_building = ca_settlement_9 }
+												10 = { add_building = ca_settlement_10 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_4 }
+												10 = { add_building = ca_recruit_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_6 }
+												10 = { add_building = ca_barracks_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_6 }
+												10 = { add_building = ca_smith_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_5 }
+												15 = { add_building = ca_far_sus_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_5 }
+												10 = { add_building = ca_stables_6 }
+												10 = { add_building = ca_stables_7 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_6 }
+												10 = { add_building = ca_castle_town_7 }
+												15 = { add_building = ca_castle_town_8 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
+												}
+											}
+										}
+									}
+								}
+							}
+							
+							# STEPSTONES
+							world_the_stepstones = {
+								trigger_switch = {
+									on_trigger = has_province_modifier
+									
+									tsk_infra_1 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_1 }
+												10 = { add_building = ca_settlement_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												20 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_1 }
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = {  }
+													10 = { add_building = ca_port_1 }
+												}
+											}
+										}
+									}
+									tsk_infra_2 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_2 }
+												10 = { add_building = ca_settlement_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_1 }
+												10 = { add_building = ca_recruit_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												10 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_1 }
+												10 = { add_building = ca_smith_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												10 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+												10 = {  }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_1 }
+												10 = { add_building = ca_castle_town_2 }
+												5 = { add_building = ca_castle_town_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_2 }
+												10 = { add_building = ca_walls_3 }
+												10 = { add_building = ca_walls_4 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_1 }
+													10 = { add_building = ca_port_2 }
+												}
+											}
+										}
+									}
+									tsk_infra_3 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_3 }
+												10 = { add_building = ca_settlement_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												10 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_1 }
+												20 = { add_building = ca_barracks_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_2 }
+												10 = { add_building = ca_smith_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_1 }
+												20 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												5 = { add_building = ca_stables_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_3 }
+												10 = { add_building = ca_castle_town_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_4 }
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_2 }
+													10 = { add_building = ca_port_3 }
+												}
+											}
+										}
+									}
+									tsk_infra_4 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_4 }
+												10 = { add_building = ca_settlement_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_2 }
+												20 = { add_building = ca_recruit_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_2 }
+												10 = { add_building = ca_barracks_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_3 }
+												10 = { add_building = ca_smith_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_far_sus_1 }
+												30 = { add_building = ca_far_sus_2 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_1 }
+												10 = { add_building = ca_stables_2 }
+												5 = { add_building = ca_stables_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_castle_town_4 }
+												10 = { add_building = ca_castle_town_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_5 }
+												10 = { add_building = ca_walls_6 }
+												10 = { add_building = ca_walls_7 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_3 }
+													10 = { add_building = ca_port_4 }
+												}
+											}
+										}
+									}
+									tsk_infra_5 = {
+										any_province_holding = {
+											random_list = {
+												10 = { add_building = ca_settlement_5 }
+												10 = { add_building = ca_settlement_6 }
+											}
+											random_list = {
+												10 = { add_building = ca_recruit_3 }
+												10 = { add_building = ca_recruit_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_barracks_3 }
+												10 = { add_building = ca_barracks_4 }
+											}
+											random_list = {
+												10 = { add_building = ca_smith_4 }
+												10 = { add_building = ca_smith_5 }
+											}
+											random_list = {
+												10 = { add_building = ca_far_sus_2 }
+												15 = { add_building = ca_far_sus_3 }
+											}
+											random_list = {
+												10 = { add_building = ca_stables_2 }
+												10 = { add_building = ca_stables_3 }
+												5 = { add_building = ca_stables_4 }
+											}
+											random_list = {
+												5 = { add_building = ca_castle_town_5 }
+												10 = { add_building = ca_castle_town_6 }
+												15 = { add_building = ca_castle_town_7 }
+											}
+											random_list = {
+												10 = { add_building = ca_walls_7 }
+												10 = { add_building = ca_walls_8 }
+												10 = { add_building = ca_walls_9 }
+											}
+											if = {
+												limit = {
+													PREV = {
+														port = yes
+													}
+												}
+												random_list = {
+													10 = { add_building = ca_port_4 }
+													10 = { add_building = ca_port_5 }
 												}
 											}
 										}
