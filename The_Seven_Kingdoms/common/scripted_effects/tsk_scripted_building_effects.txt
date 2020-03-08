@@ -1,481 +1,2234 @@
+# Written by Rowan
+
+# This file governs the effects used for deploying buildings to holdings under the building development on_action event chain.
+# Buildings are awarded with random_list chances, with awareness to their individual requirements.
+# There are three variants of each infra level - low, med and high.
+
+# In the case of low infra, we're assured the L1 settlement with a 25% chance of the L2
 tsk_infra_1_low = {
-}
-tsk_infra_1_mid = {
-	random_list = {
-		10 = { add_building = ca_settlement_1 }
-		10 = { add_building = ca_settlement_2 }
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			75 = { add_building = ca_settlement_1 }
+			25 = { add_building = ca_settlement_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = ca_walls_1 } # Requires settlement1
+			25 = { add_building = ca_walls_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = ca_town_1 } # Requires settlement1
+			25 = { add_building = ca_town_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = ca_barracks_1 } # Requires settlement1
+			25 = { add_building = ca_barracks_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = ca_stables_1 } # Requires settlement1
+			25 = { add_building = ca_stables_2 }
+		}
+		random_list = {
+			50 = { }
+			50 = { add_building = ca_smith_1 } # Requires settlement1
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = ca_far_sus_1 } # Requires settlement1
+			25 = { add_building = ca_far_sus_2 }
+		}
+		random_list = {
+			50 = { }
+			50 = { add_building = ca_castle_chapel_1 } # Requires settlement1
+		}
 	}
-	random_list = {
-		10 = { add_building = ca_recruit_1 }
-		10 = {  }
-	}
-	random_list = {
-		10 = { add_building = ca_barracks_1 }
-		10 = {  }
-	}
-	random_list = {
-		10 = { add_building = ca_smith_1 }
-		10 = {  }
-	}
-	random_list = {
-		10 = { add_building = ca_far_sus_1 }
-		10 = {  }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_stables_1 }
-		# 20 = {  }
-	# }
-	random_list = {
-		10 = { add_building = ca_castle_town_1 }
-		10 = {  }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_walls_1 }
-		# 10 = { add_building = ca_walls_2 }
-		# 10 = { add_building = ca_walls_3 }
-	# }
-	# if = {
-		# limit = {
-			# PREV = {
-				# port = yes
-			# }
-		# }
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			75 = { add_building = ct_settlement_1 }
+			25 = { add_building = ct_settlement_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = ct_walls_1 } # Requires settlement1
+			25 = { add_building = ct_walls_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = ct_market_1 } # Requires settlement1
+			25 = { add_building = ct_market_2 }
+		}
+		random_list = {
+			50 = { }
+			50 = { add_building = ct_recruit_1 } # Requires settlement1
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = ct_barracks_1 } # Requires settlement1
+			25 = { add_building = ct_barracks_2 }
+		}
 		# random_list = {
-			# 10 = {  }
-			# 10 = { add_building = ca_port_1 }
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
 		# }
-	# }
+		random_list = {
+			50 = { }
+			50 = { add_building = ct_smith_1 } # Requires settlement1
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = ct_far_sus_1 } # Requires settlement1
+			25 = { add_building = ct_far_sus_2 }
+		}
+		random_list = {
+			50 = { }
+			50 = { add_building = ct_chapel_1 } # Requires settlement1
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_1 }
+			25 = { add_building = tp_settlement_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = tp_town_1 } # Requires settlement1
+			25 = { add_building = tp_town_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = tp_stables_1 } # Requires settlement1
+			25 = { add_building = tp_stables_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = tp_smith_1 } # Requires settlement1
+			25 = { add_building = tp_smith_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = tp_far_sus_1 } # Requires settlement1
+			25 = { add_building = tp_far_sus_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_1 }
+			25 = { add_building = tb_settlement_2 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = tb_walls_1 }
+			25 = { add_building = tb_walls_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_shrine_1 }
+		}
+	}
 }
+
+tsk_infra_1_med = {
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			75 = { add_building = ca_settlement_2 }
+			25 = { add_building = ca_settlement_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_1 } # Requires settlement1
+			50 = { add_building = ca_walls_2 }
+			25 = { add_building = ca_walls_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_town_1 } # Requires settlement1
+			50 = { add_building = ca_town_2 }
+			25 = { add_building = ca_town_3 }
+		}
+		random_list = {
+			50 = { add_building = ca_barracks_1 } # Requires settlement1
+			50 = { add_building = ca_barracks_2 }
+		}
+		random_list = {
+			50 = { add_building = ca_stables_1 } # Requires settlement1
+			50 = { add_building = ca_stables_2 }
+		}
+		random_list = {
+			50 = { add_building = ca_smith_1 } # Requires settlement1
+			50 = { add_building = ca_smith_2 }
+		}
+		random_list = {
+			50 = { add_building = ca_far_sus_1 } # Requires settlement1
+			50 = { add_building = ca_far_sus_2 }
+		}
+		random_list = {
+			100 = { add_building = ca_castle_chapel_1 } # Requires settlement1
+		}
+	}
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			75 = { add_building = ct_settlement_2 }
+			25 = { add_building = ct_settlement_3 }
+		}
+		random_list = {
+			50 = { add_building = ct_walls_1 } # Requires settlement1
+			25 = { add_building = ct_walls_2 }
+			25 = { add_building = ct_walls_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_1 } # Requires settlement1
+			50 = { add_building = ct_market_2 }
+			25 = { add_building = ct_market_3 }
+		}
+		random_list = {
+			50 = { }
+			50 = { add_building = ct_granary_1 } # Requires settlement1
+		}
+		random_list = {
+			100 = { add_building = ct_recruit_1 } # Requires settlement1
+		}
+		random_list = {
+			50 = { add_building = ct_barracks_1 } # Requires settlement1
+			25 = { add_building = ct_barracks_2 }
+			25 = { add_building = ct_barracks_3 }
+		}
+		# random_list = {
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
+		# }
+		random_list = {
+			75 = { add_building = ct_smith_1}
+			25 = { add_building = ct_smith_2 } # Requires settlement1
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_1 } # Requires settlement1
+			50 = { add_building = ct_far_sus_2 }
+			25 = { add_building = ct_far_sus_3 }
+		}
+		random_list = {
+			50 = { }
+			50 = { add_building = ct_chapel_1 } # Requires settlement1
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_2 }
+			25 = { add_building = tp_settlement_3 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = tp_walls_1 } # Requires settlement2
+			25 = { add_building = tp_walls_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_1 } # Requires settlement1
+			50 = { add_building = tp_town_2 }
+			25 = { add_building = tp_town_3 }
+		}
+		random_list = {
+			25 = { }
+			50 = { add_building = tp_chapterhouse_1 } # Requires settlement1
+			25 = { add_building = tp_chapterhouse_2 }
+		}
+		random_list = {
+			50 = { add_building = tp_stables_1 } # Requires settlement1
+			25 = { add_building = tp_stables_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_1 } # Requires settlement1
+			50 = { add_building = tp_smith_2 }
+			25 = { add_building = tp_smith_3 }
+		}
+		random_list = {
+			50 = { add_building = tp_far_sus_1 } # Requires settlement1
+			25 = { add_building = tp_far_sus_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_2 }
+			25 = { add_building = tb_settlement_3 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_1 }
+			25 = { add_building = tb_walls_2 }
+			25 = { add_building = tb_walls_3 }
+			25 = { add_building = tb_walls_4 }
+		}
+		random_list = {
+			100 = { add_building = tb_shrine_1 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
+}
+
 tsk_infra_1_high = {
-	random_list = {
-		10 = { add_building = ca_settlement_2 }
-		10 = { add_building = ca_settlement_3 }
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			100 = { add_building = ca_settlement_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_2 }
+			75 = { add_building = ca_walls_3 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_3 }
+			50 = { add_building = ca_town_4 }
+		}
+		random_list = {
+			100 = { add_building = ca_recruit_1 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_1 }
+			75 = { add_building = ca_barracks_2 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_1 }
+			75 = { add_building = ca_stables_2 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_2 }
+			75 = { add_building = ca_smith_3 }
+		}
+		random_list = {
+			50 = { add_building = ca_far_sus_1 }
+			50 = { add_building = ca_far_sus_2 }
+		}
+		random_list = {
+			100 = { add_building = ca_castle_chapel_1 }
+		}
 	}
-	random_list = {
-		10 = { add_building = ca_recruit_1 }
-	}
-	random_list = {
-		10 = { add_building = ca_barracks_1 }
-		10 = { add_building = ca_barracks_2 }
-	}
-	random_list = {
-		10 = { add_building = ca_smith_2 }
-		10 = { add_building = ca_smith_3 }
-	}
-	random_list = {
-		10 = { add_building = ca_far_sus_1 }
-		10 = { add_building = ca_far_sus_2 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_stables_3 }
-		# 20 = { add_building = ca_stables_4 }
-	# }
-	random_list = {
-		10 = { add_building = ca_castle_town_2 }
-		10 = { add_building = ca_castle_town_3 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_walls_1 }
-		# 10 = { add_building = ca_walls_2 }
-		# 10 = { add_building = ca_walls_3 }
-	# }
-	# if = {
-		# limit = {
-			# PREV = {
-				# port = yes
-			# }
-		# }
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			75 = { add_building = ct_settlement_2 }
+			25 = { add_building = ct_settlement_3 }
+		}
+		random_list = {
+			50 = { add_building = ct_walls_1 } # Requires settlement1
+			25 = { add_building = ct_walls_2 }
+			25 = { add_building = ct_walls_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_1 } # Requires settlement1
+			50 = { add_building = ct_market_2 }
+			25 = { add_building = ct_market_3 }
+		}
+		random_list = {
+			50 = { }
+			50 = { add_building = ct_granary_1 } # Requires settlement1
+		}
+		random_list = {
+			100 = { add_building = ct_recruit_1 } # Requires settlement1
+		}
+		random_list = {
+			50 = { add_building = ct_barracks_1 } # Requires settlement1
+			25 = { add_building = ct_barracks_2 }
+			25 = { add_building = ct_barracks_3 }
+		}
 		# random_list = {
-			# 10 = { add_building = ca_port_1 }
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
 		# }
-	# }
+		random_list = {
+			75 = { add_building = ct_smith_1}
+			25 = { add_building = ct_smith_2 } # Requires settlement1
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_1 } # Requires settlement1
+			50 = { add_building = ct_far_sus_2 }
+			25 = { add_building = ct_far_sus_3 }
+		}
+		random_list = {
+			50 = { }
+			50 = { add_building = ct_chapel_1 } # Requires settlement1
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_2 }
+			25 = { add_building = tp_settlement_3 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = tp_walls_1 } # Requires settlement2
+			25 = { add_building = tp_walls_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_1 } # Requires settlement1
+			50 = { add_building = tp_town_2 }
+			25 = { add_building = tp_town_3 }
+		}
+		random_list = {
+			25 = { }
+			50 = { add_building = tp_chapterhouse_1 } # Requires settlement1
+			25 = { add_building = tp_chapterhouse_2 }
+		}
+		random_list = {
+			50 = { add_building = tp_stables_1 } # Requires settlement1
+			25 = { add_building = tp_stables_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_1 } # Requires settlement1
+			50 = { add_building = tp_smith_2 }
+			25 = { add_building = tp_smith_3 }
+		}
+		random_list = {
+			50 = { add_building = tp_far_sus_1 } # Requires settlement1
+			25 = { add_building = tp_far_sus_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_2 }
+			25 = { add_building = tb_settlement_3 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_1 }
+			25 = { add_building = tb_walls_2 }
+			25 = { add_building = tb_walls_3 }
+			25 = { add_building = tb_walls_4 }
+		}
+		random_list = {
+			100 = { add_building = tb_shrine_1 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
 }
+
+#----------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------
+#-------------------------------------------------- 2
+#----------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------
+
 tsk_infra_2_low = {
-}
-tsk_infra_2_mid = {
-	random_list = {
-		10 = { add_building = ca_settlement_2 }
-		10 = { add_building = ca_settlement_3 }
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			100 = { add_building = ca_settlement_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_2 }
+			75 = { add_building = ca_walls_3 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_3 }
+			50 = { add_building = ca_town_4 }
+		}
+		random_list = {
+			100 = { add_building = ca_recruit_1 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_1 }
+			75 = { add_building = ca_barracks_2 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_1 }
+			75 = { add_building = ca_stables_2 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_2 }
+			75 = { add_building = ca_smith_3 }
+		}
+		random_list = {
+			50 = { add_building = ca_far_sus_1 }
+			50 = { add_building = ca_far_sus_2 }
+		}
+		random_list = {
+			100 = { add_building = ca_castle_chapel_1 }
+		}
 	}
-	random_list = {
-		10 = { add_building = ca_recruit_1 }
-		10 = { add_building = ca_recruit_2 }
-	}
-	random_list = {
-		10 = { add_building = ca_barracks_1 }
-		10 = { add_building = ca_barracks_2 }
-	}
-	random_list = {
-		10 = { add_building = ca_smith_1 }
-		10 = { add_building = ca_smith_2 }
-	}
-	random_list = {
-		10 = { add_building = ca_far_sus_1 }
-		10 = { add_building = ca_far_sus_2 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_stables_1 }
-		# 5 = { add_building = ca_stables_2 }
-		# 10 = {  }
-	# }
-	random_list = {
-		10 = { add_building = ca_castle_town_1 }
-		10 = { add_building = ca_castle_town_2 }
-		5 = { add_building = ca_castle_town_3 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_walls_2 }
-		# 10 = { add_building = ca_walls_3 }
-		# 10 = { add_building = ca_walls_4 }
-	# }
-	# if = {
-		# limit = {
-			# PREV = {
-				# port = yes
-			# }
-		# }
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			75 = { add_building = ct_settlement_2 }
+			25 = { add_building = ct_settlement_3 }
+		}
+		random_list = {
+			50 = { add_building = ct_walls_1 } # Requires settlement1
+			25 = { add_building = ct_walls_2 }
+			25 = { add_building = ct_walls_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_1 } # Requires settlement1
+			50 = { add_building = ct_market_2 }
+			25 = { add_building = ct_market_3 }
+		}
+		random_list = {
+			50 = { }
+			50 = { add_building = ct_granary_1 } # Requires settlement1
+		}
+		random_list = {
+			100 = { add_building = ct_recruit_1 } # Requires settlement1
+		}
+		random_list = {
+			50 = { add_building = ct_barracks_1 } # Requires settlement1
+			25 = { add_building = ct_barracks_2 }
+			25 = { add_building = ct_barracks_3 }
+		}
 		# random_list = {
-			# 10 = { add_building = ca_port_1 }
-			# 10 = { add_building = ca_port_2 }
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
 		# }
-	# }
+		random_list = {
+			75 = { add_building = ct_smith_1}
+			25 = { add_building = ct_smith_2 } # Requires settlement1
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_1 } # Requires settlement1
+			50 = { add_building = ct_far_sus_2 }
+			25 = { add_building = ct_far_sus_3 }
+		}
+		random_list = {
+			50 = { }
+			50 = { add_building = ct_chapel_1 } # Requires settlement1
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_2 }
+			25 = { add_building = tp_settlement_3 }
+		}
+		random_list = {
+			50 = { }
+			25 = { add_building = tp_walls_1 } # Requires settlement2
+			25 = { add_building = tp_walls_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_1 } # Requires settlement1
+			50 = { add_building = tp_town_2 }
+			25 = { add_building = tp_town_3 }
+		}
+		random_list = {
+			25 = { }
+			50 = { add_building = tp_chapterhouse_1 } # Requires settlement1
+			25 = { add_building = tp_chapterhouse_2 }
+		}
+		random_list = {
+			75 = { add_building = tp_barracks_1 } # Requires settlement1
+			25 = { add_building = tp_barracks_2 }
+		}
+		random_list = {
+			75 = { add_building = tp_stables_1 } # Requires settlement1
+			25 = { add_building = tp_stables_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_1 } # Requires settlement1
+			50 = { add_building = tp_smith_2 }
+			25 = { add_building = tp_smith_3 }
+		}
+		random_list = {
+			50 = { add_building = tp_far_sus_1 } # Requires settlement1
+			25 = { add_building = tp_far_sus_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_2 }
+			25 = { add_building = tb_settlement_3 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_1 }
+			25 = { add_building = tb_walls_2 }
+			25 = { add_building = tb_walls_3 }
+			25 = { add_building = tb_walls_4 }
+		}
+		random_list = {
+			100 = { add_building = tb_shrine_1 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
 }
+
+tsk_infra_2_med = {
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			75 = { add_building = ca_settlement_4 }
+			25 = { add_building = ca_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_4 }
+			75 = { add_building = ca_walls_5 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_4 }
+			25 = { add_building = ca_town_5 }
+			25 = { add_building = ca_town_6 }
+		}
+		random_list = {
+			50 = { add_building = ca_recruit_1 }
+			50 = { add_building = ca_recruit_2 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_1 }
+			50 = { add_building = ca_barracks_2 }
+			25 = { add_building = ca_barracks_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_1 }
+			50 = { add_building = ca_stables_2 }
+			25 = { add_building = ca_stables_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_2 }
+			50 = { add_building = ca_smith_3 }
+			25 = { add_building = ca_smith_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_far_sus_1 }
+			50 = { add_building = ca_far_sus_2 }
+			25 = { add_building = ca_far_sus_3 }
+		}
+		random_list = {
+			75 = { add_building = ca_castle_chapel_1 }
+			25 = { add_building = ca_castle_chapel_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			75 = { add_building = ct_settlement_4 }
+			25 = { add_building = ct_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_3 }
+			50 = { add_building = ct_walls_4 }
+			25 = { add_building = ct_walls_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_2 }
+			50 = { add_building = ct_market_3 }
+			25 = { add_building = ct_market_4 }
+		}
+		random_list = {
+			25 = { add_building = ct_granary_1 } # Requires settlement1
+			75 = { add_building = ct_granary_2 }
+		}
+		random_list = {
+			50 = { add_building = ct_recruit_1 } # Requires settlement1
+			50 = { add_building = ct_recruit_2 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_2 }
+			50 = { add_building = ct_barracks_3 }
+			25 = { add_building = ct_barracks_4 }
+		}
+		# random_list = {
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
+		# }
+		random_list = {
+			25 = { add_building = ct_smith_1 }
+			50 = { add_building = ct_smith_2 }
+			25 = { add_building = ct_smith_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_1 }
+			50 = { add_building = ct_far_sus_2 }
+			25 = { add_building = ct_far_sus_3 }
+		}
+		random_list = {
+			50 = { add_building = ct_chapel_1 }
+			50 = { add_building = ct_chapel_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_4 }
+			25 = { add_building = tp_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tp_walls_2 }
+			50 = { add_building = tp_walls_3 }
+			25 = { add_building = tp_walls_4 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_2 } # Requires settlement1
+			50 = { add_building = tp_town_3 }
+			25 = { add_building = tp_town_4 }
+		}
+		random_list = {
+			25 = { }
+			50 = { add_building = tp_chapterhouse_1 } # Requires settlement1
+			25 = { add_building = tp_chapterhouse_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_barracks_1 } # Requires settlement1
+			50 = { add_building = tp_barracks_2 }
+			25 = { add_building = tp_barracks_3 }
+		}
+		random_list = {
+			75 = { add_building = tp_stables_1 } # Requires settlement1
+			25 = { add_building = tp_stables_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_1 } # Requires settlement1
+			50 = { add_building = tp_smith_2 }
+			25 = { add_building = tp_smith_3 }
+		}
+		random_list = {
+			50 = { add_building = tp_far_sus_1 } # Requires settlement1
+			25 = { add_building = tp_far_sus_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
+}
+
 tsk_infra_2_high = {
-	random_list = {
-		10 = { add_building = ca_settlement_4 }
-		10 = { add_building = ca_settlement_5 }
-		10 = { add_building = ca_settlement_6 }
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			100 = { add_building = ca_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_4 }
+			75 = { add_building = ca_walls_5 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_5 }
+			50 = { add_building = ca_town_6 }
+		}
+		random_list = {
+			25 = { add_building = ca_recruit_1 }
+			75 = { add_building = ca_recruit_2 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_2 }
+			75 = { add_building = ca_barracks_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_2 }
+			75 = { add_building = ca_stables_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_3 }
+			75 = { add_building = ca_smith_4 }
+		}
+		random_list = {
+			50 = { add_building = ca_far_sus_2 }
+			50 = { add_building = ca_far_sus_3 }
+		}
+		random_list = {
+			50 = { add_building = ca_castle_chapel_1 }
+			50 = { add_building = ca_castle_chapel_2 }
+		}
 	}
-	random_list = {
-		10 = { add_building = ca_recruit_2 }
-	}
-	random_list = {
-		10 = { add_building = ca_barracks_2 }
-		10 = { add_building = ca_barracks_3 }
-	}
-	random_list = {
-		10 = { add_building = ca_smith_4 }
-		10 = { add_building = ca_smith_5 }
-	}
-	random_list = {
-		10 = { add_building = ca_far_sus_2 }
-		10 = { add_building = ca_far_sus_3 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_stables_4 }
-		# 10 = { add_building = ca_stables_5 }
-	# }
-	random_list = {
-		10 = { add_building = ca_castle_town_4 }
-		10 = { add_building = ca_castle_town_5 }
-		10 = { add_building = ca_castle_town_6 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_walls_2 }
-		# 10 = { add_building = ca_walls_3 }
-		# 10 = { add_building = ca_walls_4 }
-	# }
-	# if = {
-		# limit = {
-			# PREV = {
-				# port = yes
-			# }
-		# }
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			100 = { add_building = ct_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_4 }
+			75 = { add_building = ct_walls_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_3 }
+			75 = { add_building = ct_market_4 }
+		}
+		random_list = {
+			25 = { add_building = ct_granary_1 } # Requires settlement1
+			75 = { add_building = ct_granary_2 }
+		}
+		random_list = {
+			25 = { add_building = ct_recruit_1 } # Requires settlement1
+			75 = { add_building = ct_recruit_2 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_3 }
+			75 = { add_building = ct_barracks_4 }
+		}
 		# random_list = {
-			# 10 = { add_building = ca_port_1 }
-			# 10 = { add_building = ca_port_2 }
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
 		# }
-	# }
+		random_list = {
+			25 = { add_building = ct_smith_2 }
+			75 = { add_building = ct_smith_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_2 }
+			75 = { add_building = ct_far_sus_3 }
+		}
+		random_list = {
+			50 = { add_building = ct_chapel_1 }
+			50 = { add_building = ct_chapel_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			100 = { add_building = tp_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tp_walls_3 }
+			50 = { add_building = tp_walls_4 } # Requires settlement2
+			25 = { add_building = tp_walls_5 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_2 } # Requires settlement1
+			50 = { add_building = tp_town_3 }
+			25 = { add_building = tp_town_4 }
+		}
+		random_list = {
+			50 = { add_building = tp_chapterhouse_1 } # Requires settlement1
+			50 = { add_building = tp_chapterhouse_2 }
+		}
+		random_list = {
+			50 = { add_building = tp_stables_1 } # Requires settlement1
+			25 = { add_building = tp_stables_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_1 } # Requires settlement1
+			50 = { add_building = tp_smith_2 }
+			25 = { add_building = tp_smith_3 }
+		}
+		random_list = {
+			50 = { add_building = tp_far_sus_1 } # Requires settlement1
+			25 = { add_building = tp_far_sus_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
 }
+
+#----------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------
+#-------------------------------------------------- 3
+#----------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------
+
 tsk_infra_3_low = {
-}
-tsk_infra_3_mid = {
-	random_list = {
-		10 = { add_building = ca_settlement_3 }
-		10 = { add_building = ca_settlement_4 }
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			75 = { add_building = ca_settlement_4 }
+			25 = { add_building = ca_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_4 }
+			75 = { add_building = ca_walls_5 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_4 }
+			25 = { add_building = ca_town_5 }
+			25 = { add_building = ca_town_6 }
+		}
+		random_list = {
+			50 = { add_building = ca_recruit_1 }
+			50 = { add_building = ca_recruit_2 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_1 }
+			50 = { add_building = ca_barracks_2 }
+			25 = { add_building = ca_barracks_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_1 }
+			50 = { add_building = ca_stables_2 }
+			25 = { add_building = ca_stables_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_2 }
+			50 = { add_building = ca_smith_3 }
+			25 = { add_building = ca_smith_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_far_sus_1 }
+			50 = { add_building = ca_far_sus_2 }
+			25 = { add_building = ca_far_sus_3 }
+		}
+		random_list = {
+			75 = { add_building = ca_castle_chapel_1 }
+			25 = { add_building = ca_castle_chapel_2 }
+		}
 	}
-	random_list = {
-		10 = { add_building = ca_recruit_2 }
-		10 = { add_building = ca_recruit_3 }
-	}
-	random_list = {
-		10 = { add_building = ca_barracks_1 }
-		20 = { add_building = ca_barracks_2 }
-	}
-	random_list = {
-		10 = { add_building = ca_smith_2 }
-		10 = { add_building = ca_smith_3 }
-	}
-	random_list = {
-		10 = { add_building = ca_far_sus_1 }
-		20 = { add_building = ca_far_sus_2 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_stables_1 }
-		# 5 = { add_building = ca_stables_2 }
-	# }
-	random_list = {
-		5 = { add_building = ca_castle_town_2 }
-		10 = { add_building = ca_castle_town_3 }
-		10 = { add_building = ca_castle_town_4 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_walls_4 }
-		# 10 = { add_building = ca_walls_5 }
-		# 10 = { add_building = ca_walls_6 }
-	# }
-	# if = {
-		# limit = {
-			# PREV = {
-				# port = yes
-			# }
-		# }
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			75 = { add_building = ct_settlement_4 }
+			25 = { add_building = ct_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_3 }
+			50 = { add_building = ct_walls_4 }
+			25 = { add_building = ct_walls_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_2 }
+			50 = { add_building = ct_market_3 }
+			25 = { add_building = ct_market_4 }
+		}
+		random_list = {
+			25 = { add_building = ct_granary_1 } # Requires settlement1
+			75 = { add_building = ct_granary_2 }
+		}
+		random_list = {
+			50 = { add_building = ct_recruit_1 } # Requires settlement1
+			50 = { add_building = ct_recruit_2 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_2 }
+			50 = { add_building = ct_barracks_3 }
+			25 = { add_building = ct_barracks_4 }
+		}
 		# random_list = {
-			# 10 = { add_building = ca_port_2 }
-			# 10 = { add_building = ca_port_3 }
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
 		# }
-	# }
+		random_list = {
+			25 = { add_building = ct_smith_1 }
+			50 = { add_building = ct_smith_2 }
+			25 = { add_building = ct_smith_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_1 }
+			50 = { add_building = ct_far_sus_2 }
+			25 = { add_building = ct_far_sus_3 }
+		}
+		random_list = {
+			50 = { add_building = ct_chapel_1 }
+			50 = { add_building = ct_chapel_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_5 }
+			25 = { add_building = tp_settlement_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_walls_3 }
+			50 = { add_building = tp_walls_4 }
+			25 = { add_building = tp_walls_5 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_3 }
+			50 = { add_building = tp_town_4 }
+			25 = { add_building = tp_town_5 }
+		}
+		random_list = {
+			50 = { add_building = tp_chapterhouse_1 }
+			50 = { add_building = tp_chapterhouse_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_barracks_1 }
+			25 = { add_building = tp_barracks_2 }
+			50 = { add_building = tp_barracks_3 }
+		}
+		random_list = {
+			50 = { add_building = tp_stables_1 }
+			50 = { add_building = tp_stables_2 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_1 }
+			25 = { add_building = tp_smith_2 }
+			50 = { add_building = tp_smith_3 }
+		}
+		random_list = {
+			50 = { add_building = tp_far_sus_1 }
+			50 = { add_building = tp_far_sus_2 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
 }
+
+tsk_infra_3_med = {
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			75 = { add_building = ca_settlement_6 }
+			25 = { add_building = ca_settlement_7 }
+		}
+		random_list = {
+			50 = { add_building = ca_walls_6 }
+			50 = { add_building = ca_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_7 }
+			50 = { add_building = ca_town_8 }
+		}
+		random_list = {
+			50 = { add_building = ca_recruit_2 }
+			50 = { add_building = ca_recruit_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_2 }
+			50 = { add_building = ca_barracks_3 }
+			25 = { add_building = ca_barracks_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_2 }
+			50 = { add_building = ca_stables_3 }
+			25 = { add_building = ca_stables_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_3 }
+			50 = { add_building = ca_smith_4 }
+			25 = { add_building = ca_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = ca_far_sus_2 }
+			50 = { add_building = ca_far_sus_3 }
+			25 = { add_building = ca_far_sus_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_castle_chapel_1 }
+			50 = { add_building = ca_castle_chapel_2 }
+			25 = { add_building = ca_castle_chapel_3 }
+		}
+	}
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			75 = { add_building = ct_settlement_6 }
+			25 = { add_building = ct_settlement_7 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_5 }
+			50 = { add_building = ct_walls_6 }
+			25 = { add_building = ct_walls_7 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_3 }
+			50 = { add_building = ct_market_4 }
+			25 = { add_building = ct_market_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_granary_1 }
+			50 = { add_building = ct_granary_2 }
+			25 = { add_building = ct_granary_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_recruit_3 }
+			50 = { add_building = ct_recruit_2 }
+			25 = { add_building = ct_recruit_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_4 }
+			50 = { add_building = ct_barracks_4 }
+			25 = { add_building = ct_barracks_5 }
+		}
+		# random_list = {
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
+		# }
+		random_list = {
+			25 = { add_building = ct_smith_3 }
+			50 = { add_building = ct_smith_4 }
+			25 = { add_building = ct_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_2 }
+			25 = { add_building = ct_far_sus_3 }
+			50 = { add_building = ct_far_sus_4 }
+		}
+		random_list = {
+			25 = { add_building = ct_chapel_1 }
+			50 = { add_building = ct_chapel_2 }
+			25 = { add_building = ct_chapel_3 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_6 }
+			25 = { add_building = tp_settlement_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_walls_5 }
+			50 = { add_building = tp_walls_6 }
+			25 = { add_building = tp_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tp_town_5 }
+			25 = { add_building = tp_town_6 }
+			25 = { add_building = tp_town_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_chapterhouse_1 }
+			50 = { add_building = tp_chapterhouse_2 }
+			25 = { add_building = tp_chapterhouse_3 }
+		}
+		random_list = {
+			25 = { add_building = tp_stables_2 }
+			25 = { add_building = tp_stables_3 }
+			50 = { add_building = tp_stables_4 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_3 }
+			50 = { add_building = tp_smith_4 }
+			25 = { add_building = tp_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = tp_far_sus_2 }
+			50 = { add_building = tp_far_sus_3 }
+			25 = { add_building = tp_far_sus_4 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
+}
+
 tsk_infra_3_high = {
-	random_list = {
-		10 = { add_building = ca_settlement_5 }
-		10 = { add_building = ca_settlement_6 }
-		10 = { add_building = ca_settlement_7 }
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			100 = { add_building = ca_settlement_7 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_6 }
+			75 = { add_building = ca_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_7 }
+			50 = { add_building = ca_town_8 }
+		}
+		random_list = {
+			25 = { add_building = ca_recruit_2 }
+			75 = { add_building = ca_recruit_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_3 }
+			75 = { add_building = ca_barracks_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_3 }
+			75 = { add_building = ca_stables_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_4 }
+			75 = { add_building = ca_smith_5 }
+		}
+		random_list = {
+			50 = { add_building = ca_far_sus_3 }
+			50 = { add_building = ca_far_sus_4 }
+		}
+		random_list = {
+			50 = { add_building = ca_castle_chapel_2 }
+			50 = { add_building = ca_castle_chapel_3 }
+		}
 	}
-	random_list = {
-		10 = { add_building = ca_recruit_2 }
-		10 = { add_building = ca_recruit_3 }
-	}
-	random_list = {
-		10 = { add_building = ca_barracks_3 }
-		20 = { add_building = ca_barracks_4 }
-	}
-	random_list = {
-		10 = { add_building = ca_smith_5 }
-		10 = { add_building = ca_smith_6 }
-	}
-	random_list = {
-		10 = { add_building = ca_far_sus_3 }
-		10 = { add_building = ca_far_sus_4 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_stables_5 }
-		# 10 = { add_building = ca_stables_6 }
-	# }
-	random_list = {
-		10 = { add_building = ca_castle_town_6 }
-		10 = { add_building = ca_castle_town_7 }
-		10 = { add_building = ca_castle_town_8 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_walls_4 }
-		# 10 = { add_building = ca_walls_5 }
-		# 10 = { add_building = ca_walls_6 }
-	# }
-	# if = {
-		# limit = {
-			# PREV = {
-				# port = yes
-			# }
-		# }
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			100 = { add_building = ct_settlement_7 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_6 }
+			75 = { add_building = ct_walls_7 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_4 }
+			75 = { add_building = ct_market_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_granary_2 }
+			75 = { add_building = ct_granary_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_recruit_2 }
+			75 = { add_building = ct_recruit_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_4 }
+			75 = { add_building = ct_barracks_5 }
+		}
 		# random_list = {
-			# 10 = { add_building = ca_port_2 }
-			# 10 = { add_building = ca_port_3 }
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
 		# }
-	# }
+		random_list = {
+			25 = { add_building = ct_smith_3 }
+			25 = { add_building = ct_smith_4 }
+			50 = { add_building = ct_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_3 }
+			75 = { add_building = ct_far_sus_4 }
+		}
+		random_list = {
+			50 = { add_building = ct_chapel_2 }
+			50 = { add_building = ct_chapel_3 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_5 }
+			25 = { add_building = tp_settlement_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_walls_5 }
+			50 = { add_building = tp_walls_6 }
+			25 = { add_building = tp_walls_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_7 }
+			75 = { add_building = tp_town_8 }
+		}
+		random_list = {
+			25 = { add_building = tp_chapterhouse_2 }
+			75 = { add_building = tp_chapterhouse_3 }
+		}
+		random_list = {
+			25 = { add_building = tp_stables_3 }
+			75 = { add_building = tp_stables_4 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_4 }
+			75 = { add_building = tp_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = tp_far_sus_3 }
+			75 = { add_building = tp_far_sus_4 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
 }
+
+#----------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------
+#-------------------------------------------------- 4
+#----------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------
+
 tsk_infra_4_low = {
-}
-tsk_infra_4_mid = {
-	random_list = {
-		10 = { add_building = ca_settlement_4 }
-		10 = { add_building = ca_settlement_5 }
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			100 = { add_building = ca_settlement_7 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_4 }
+			25 = { add_building = ca_walls_5 }
+			25 = { add_building = ca_walls_6 }
+			25 = { add_building = ca_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_7 }
+			25 = { add_building = ca_town_7 }
+			25 = { add_building = ca_town_8 }
+		}
+		random_list = {
+			75 = { add_building = ca_recruit_1 }
+			25 = { add_building = ca_recruit_2 }
+			25 = { add_building = ca_recruit_3 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_2 }
+			50 = { add_building = ca_barracks_3 }
+			25 = { add_building = ca_barracks_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_2 }
+			50 = { add_building = ca_stables_3 }
+			25 = { add_building = ca_stables_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_3 }
+			50 = { add_building = ca_smith_4 }
+			25 = { add_building = ca_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = ca_far_sus_2 }
+			50 = { add_building = ca_far_sus_3 }
+			25 = { add_building = ca_far_sus_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_castle_chapel_1 }
+			50 = { add_building = ca_castle_chapel_2 }
+			25 = { add_building = ca_castle_chapel_3 }
+		}
 	}
-	random_list = {
-		10 = { add_building = ca_recruit_2 }
-		20 = { add_building = ca_recruit_3 }
-	}
-	random_list = {
-		10 = { add_building = ca_barracks_2 }
-		10 = { add_building = ca_barracks_3 }
-	}
-	random_list = {
-		10 = { add_building = ca_smith_3 }
-		10 = { add_building = ca_smith_4 }
-	}
-	random_list = {
-		5 = { add_building = ca_far_sus_1 }
-		30 = { add_building = ca_far_sus_2 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_stables_1 }
-		# 10 = { add_building = ca_stables_2 }
-		# 5 = { add_building = ca_stables_3 }
-	# }
-	random_list = {
-		10 = { add_building = ca_castle_town_4 }
-		10 = { add_building = ca_castle_town_5 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_walls_5 }
-		# 10 = { add_building = ca_walls_6 }
-		# 10 = { add_building = ca_walls_7 }
-	# }
-	# if = {
-		# limit = {
-			# PREV = {
-				# port = yes
-			# }
-		# }
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			75 = { add_building = ct_settlement_6 }
+			25 = { add_building = ct_settlement_7 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_6 }
+			75 = { add_building = ct_walls_7 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_4 }
+			75 = { add_building = ct_market_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_granary_2 }
+			75 = { add_building = ct_granary_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_recruit_2 }
+			75 = { add_building = ct_recruit_3 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_4 }
+			75 = { add_building = ct_barracks_5 }
+		}
 		# random_list = {
-			# 10 = { add_building = ca_port_3 }
-			# 10 = { add_building = ca_port_4 }
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
 		# }
-	# }
+		random_list = {
+			25 = { add_building = ct_smith_3 }
+			25 = { add_building = ct_smith_4 }
+			50 = { add_building = ct_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_3 }
+			75 = { add_building = ct_far_sus_4 }
+		}
+		random_list = {
+			50 = { add_building = ct_chapel_2 }
+			50 = { add_building = ct_chapel_3 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_5 }
+			25 = { add_building = tp_settlement_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_walls_5 }
+			50 = { add_building = tp_walls_6 }
+			25 = { add_building = tp_walls_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_7 }
+			75 = { add_building = tp_town_8 }
+		}
+		random_list = {
+			25 = { add_building = tp_chapterhouse_2 }
+			75 = { add_building = tp_chapterhouse_3 }
+		}
+		random_list = {
+			25 = { add_building = tp_stables_3 }
+			75 = { add_building = tp_stables_4 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_4 }
+			75 = { add_building = tp_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = tp_far_sus_3 }
+			75 = { add_building = tp_far_sus_4 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
 }
+
+tsk_infra_4_med = {
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			75 = { add_building = ca_settlement_7 }
+			25 = { add_building = ca_settlement_8 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_7 }
+			50 = { add_building = ca_walls_8 }
+			25 = { add_building = ca_walls_9 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_9 }
+			50 = { add_building = ca_town_10 }
+		}
+		random_list = {
+			25 = { add_building = ca_recruit_3 }
+			75 = { add_building = ca_recruit_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_5 }
+			75 = { add_building = ca_barracks_6 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_5 }
+			75 = { add_building = ca_stables_6 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_5 }
+			75 = { add_building = ca_smith_6 }
+		}
+		random_list = {
+			50 = { add_building = ca_far_sus_4 }
+			50 = { add_building = ca_far_sus_5 }
+		}
+		random_list = {
+			25 = { add_building = ca_castle_chapel_2 }
+			75 = { add_building = ca_castle_chapel_3 }
+		}
+	}
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			25 = { add_building = ct_settlement_8 }
+			75 = { add_building = ct_settlement_9 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_8 }
+			75 = { add_building = ct_walls_9 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_5 }
+			75 = { add_building = ct_market_6 }
+		}
+		random_list = {
+			25 = { add_building = ct_granary_3 }
+			75 = { add_building = ct_granary_4 }
+		}
+		random_list = {
+			25 = { add_building = ct_recruit_3 }
+			75 = { add_building = ct_recruit_4 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_7 }
+			75 = { add_building = ct_barracks_8 }
+		}
+		# random_list = {
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
+		# }
+		random_list = {
+			25 = { add_building = ct_smith_4 }
+			75 = { add_building = ct_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_4 }
+			75 = { add_building = ct_far_sus_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_chapel_2 }
+			75 = { add_building = ct_chapel_3 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_8 }
+			25 = { add_building = tp_settlement_9 }
+		}
+		random_list = {
+			50 = { add_building = tp_walls_6 }
+			50 = { add_building = tp_walls_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_9 }
+			75 = { add_building = tp_town_10 }
+		}
+		random_list = {
+			25 = { add_building = tp_chapterhouse_3 }
+			75 = { add_building = tp_chapterhouse_4 }
+		}
+		random_list = {
+			25 = { add_building = tp_barracks_5 }
+			75 = { add_building = tp_barracks_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_stables_5 }
+			75 = { add_building = tp_stables_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_5 }
+			75 = { add_building = tp_smith_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_far_sus_4 }
+			75 = { add_building = tp_far_sus_5 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
+}
+
 tsk_infra_4_high = {
-	random_list = {
-		10 = { add_building = ca_settlement_7 }
-		10 = { add_building = ca_settlement_8 }
-		10 = { add_building = ca_settlement_9 }
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			25 = { add_building = ca_settlement_8 }
+			75 = { add_building = ca_settlement_9 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_8 }
+			75 = { add_building = ca_walls_9 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_9 }
+			50 = { add_building = ca_town_10 }
+		}
+		random_list = {
+			25 = { add_building = ca_recruit_3 }
+			75 = { add_building = ca_recruit_4 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_5 }
+			75 = { add_building = ca_barracks_6 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_5 }
+			75 = { add_building = ca_stables_6 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_5 }
+			75 = { add_building = ca_smith_6 }
+		}
+		random_list = {
+			50 = { add_building = ca_far_sus_4 }
+			50 = { add_building = ca_far_sus_5 }
+		}
+		random_list = {
+			25 = { add_building = ca_castle_chapel_2 }
+			75 = { add_building = ca_castle_chapel_3 }
+		}
 	}
-	random_list = {
-		10 = { add_building = ca_recruit_3 }
-		20 = { add_building = ca_recruit_4 }
-	}
-	random_list = {
-		10 = { add_building = ca_barracks_4 }
-		10 = { add_building = ca_barracks_5 }
-	}
-	random_list = {
-		10 = { add_building = ca_smith_6 }
-		10 = { add_building = ca_smith_7 }
-	}
-	random_list = {
-		10 = { add_building = ca_far_sus_4 }
-		10 = { add_building = ca_far_sus_5 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_stables_6 }
-		# 10 = { add_building = ca_stables_7 }
-	# }
-	random_list = {
-		10 = { add_building = ca_castle_town_4 }
-		10 = { add_building = ca_castle_town_5 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_walls_5 }
-		# 10 = { add_building = ca_walls_6 }
-		# 10 = { add_building = ca_walls_7 }
-	# }
-	# if = {
-		# limit = {
-			# PREV = {
-				# port = yes
-			# }
-		# }
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			25 = { add_building = ct_settlement_8 }
+			75 = { add_building = ct_settlement_9 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_8 }
+			75 = { add_building = ct_walls_9 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_5 }
+			75 = { add_building = ct_market_6 }
+		}
+		random_list = {
+			25 = { add_building = ct_granary_3 }
+			75 = { add_building = ct_granary_4 }
+		}
+		random_list = {
+			25 = { add_building = ct_recruit_3 }
+			75 = { add_building = ct_recruit_4 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_7 }
+			75 = { add_building = ct_barracks_8 }
+		}
 		# random_list = {
-			# 10 = { add_building = ca_port_3 }
-			# 10 = { add_building = ca_port_4 }
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
 		# }
-	# }
+		random_list = {
+			25 = { add_building = ct_smith_4 }
+			75 = { add_building = ct_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_4 }
+			75 = { add_building = ct_far_sus_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_chapel_2 }
+			75 = { add_building = ct_chapel_3 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_8 }
+			25 = { add_building = tp_settlement_9 }
+		}
+		random_list = {
+			50 = { add_building = tp_walls_6 }
+			50 = { add_building = tp_walls_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_9 }
+			75 = { add_building = tp_town_10 }
+		}
+		random_list = {
+			25 = { add_building = tp_chapterhouse_3 }
+			75 = { add_building = tp_chapterhouse_4 }
+		}
+		random_list = {
+			25 = { add_building = tp_barracks_5 }
+			75 = { add_building = tp_barracks_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_stables_5 }
+			75 = { add_building = tp_stables_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_5 }
+			75 = { add_building = tp_smith_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_far_sus_4 }
+			75 = { add_building = tp_far_sus_5 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
 }
+
+#----------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------
+#-------------------------------------------------- 5
+#----------------------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------------------
+
 tsk_infra_5_low = {
-}
-tsk_infra_5_mid = {
-	random_list = {
-		10 = { add_building = ca_settlement_5 }
-		10 = { add_building = ca_settlement_6 }
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			75 = { add_building = ca_settlement_8 }
+			25 = { add_building = ca_settlement_9 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_6 }
+			25 = { add_building = ca_walls_7 }
+			25 = { add_building = ca_walls_8 }
+			25 = { add_building = ca_walls_9 }
+		}
+		random_list = {
+			25 = { add_building = ca_town_7 }
+			25 = { add_building = ca_town_8 }
+			25 = { add_building = ca_town_9 }
+			25 = { add_building = ca_town_10 }
+		}
+		random_list = {
+			25 = { add_building = ca_recruit_2 }
+			50 = { add_building = ca_recruit_3 }
+			25 = { add_building = ca_recruit_4 }
+		}
+		random_list = {
+			50 = { add_building = ca_barracks_4 }
+			25 = { add_building = ca_barracks_5 }
+			25 = { add_building = ca_barracks_6 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_4 }
+			50 = { add_building = ca_stables_5 }
+			25 = { add_building = ca_stables_6 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_4 }
+			50 = { add_building = ca_smith_5 }
+			25 = { add_building = ca_smith_6 }
+		}
+		random_list = {
+			50 = { add_building = ca_far_sus_4 }
+			50 = { add_building = ca_far_sus_5 }
+		}
+		random_list = {
+			75 = { add_building = ca_castle_chapel_2 }
+			25 = { add_building = ca_castle_chapel_3 }
+		}
 	}
-	random_list = {
-		10 = { add_building = ca_recruit_3 }
-		10 = { add_building = ca_recruit_4 }
-	}
-	random_list = {
-		10 = { add_building = ca_barracks_3 }
-		10 = { add_building = ca_barracks_4 }
-	}
-	random_list = {
-		10 = { add_building = ca_smith_4 }
-		10 = { add_building = ca_smith_5 }
-	}
-	random_list = {
-		10 = { add_building = ca_far_sus_2 }
-		15 = { add_building = ca_far_sus_3 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_stables_2 }
-		# 10 = { add_building = ca_stables_3 }
-		# 5 = { add_building = ca_stables_4 }
-	# }
-	random_list = {
-		5 = { add_building = ca_castle_town_5 }
-		10 = { add_building = ca_castle_town_6 }
-		15 = { add_building = ca_castle_town_7 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_walls_7 }
-		# 10 = { add_building = ca_walls_8 }
-		# 10 = { add_building = ca_walls_9 }
-	# }
-	# if = {
-		# limit = {
-			# PREV = {
-				# port = yes
-			# }
-		# }
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			75 = { add_building = ct_settlement_8 }
+			25 = { add_building = ct_settlement_9 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_6 }
+			25 = { add_building = ct_walls_7 }
+			25 = { add_building = ct_walls_8 }
+			25 = { add_building = ct_walls_9 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_3 }
+			25 = { add_building = ct_market_4 }
+			25 = { add_building = ct_market_5 }
+			25 = { add_building = ct_market_6 }
+		}
+		random_list = {
+			25 = { add_building = ct_granary_1 }
+			25 = { add_building = ct_granary_2 }
+			25 = { add_building = ct_granary_3 }
+			25 = { add_building = ct_granary_4 }
+		}
+		random_list = {
+			50 = { add_building = ct_recruit_2 }
+			25 = { add_building = ct_recruit_3 }
+			25 = { add_building = ct_recruit_4 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_5 }
+			25 = { add_building = ct_barracks_6 }
+			25 = { add_building = ct_barracks_7 }
+			25 = { add_building = ct_barracks_8 }
+		}
 		# random_list = {
-			# 10 = { add_building = ca_port_4 }
-			# 10 = { add_building = ca_port_5 }
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
 		# }
-	# }
+		random_list = {
+			50 = { add_building = ct_smith_3 }
+			25 = { add_building = ct_smith_4 }
+			25 = { add_building = ct_smith_5 }
+		}
+		random_list = {
+			50 = { add_building = ct_far_sus_4 }
+			50 = { add_building = ct_far_sus_5 }
+		}
+		random_list = {
+			75 = { add_building = ct_chapel_2 }
+			25 = { add_building = ct_chapel_3 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_8 }
+			25 = { add_building = tp_settlement_9 }
+		}
+		random_list = {
+			25 = { add_building = tp_walls_4 }
+			25 = { add_building = tp_walls_5 }
+			25 = { add_building = tp_walls_6 }
+			25 = { add_building = tp_walls_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_7 }
+			25 = { add_building = tp_town_8 }
+			25 = { add_building = tp_town_9 }
+			25 = { add_building = tp_town_10 }
+		}
+		random_list = {
+			25 = { add_building = tp_chapterhouse_1 }
+			25 = { add_building = tp_chapterhouse_2 }
+			25 = { add_building = tp_chapterhouse_3 }
+			25 = { add_building = tp_chapterhouse_4 }
+		}
+		random_list = {
+			25 = { add_building = tp_barracks_3 }
+			25 = { add_building = tp_barracks_4 }
+			25 = { add_building = tp_barracks_5 }
+			25 = { add_building = tp_barracks_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_stables_3 }
+			25 = { add_building = tp_stables_4 }
+			25 = { add_building = tp_stables_5 }
+			25 = { add_building = tp_stables_6 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_4 }
+			50 = { add_building = tp_smith_5 }
+			25 = { add_building = tp_smith_6 }
+		}
+		random_list = {
+			50 = { add_building = tp_far_sus_4 }
+			50 = { add_building = tp_far_sus_5 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
 }
+
+tsk_infra_5_med = {
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			75 = { add_building = ca_settlement_9 }
+			25 = { add_building = ca_settlement_10 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_7 }
+			25 = { add_building = ca_walls_8 }
+			25 = { add_building = ca_walls_9 }
+			25 = { add_building = ca_walls_10 }
+		}
+		random_list = {
+			25 = { add_building = ca_town_8 }
+			25 = { add_building = ca_town_9 }
+			25 = { add_building = ca_town_10 }
+			25 = { add_building = ca_town_11 }
+		}
+		random_list = {
+			25 = { add_building = ca_recruit_3 }
+			50 = { add_building = ca_recruit_4 }
+			25 = { add_building = ca_recruit_5 }
+		}
+		random_list = {
+			50 = { add_building = ca_barracks_5 }
+			25 = { add_building = ca_barracks_6 }
+			25 = { add_building = ca_barracks_7 }
+		}
+		random_list = {
+			50 = { add_building = ca_stables_5 }
+			25 = { add_building = ca_stables_6 }
+			25 = { add_building = ca_stables_7 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_5 }
+			50 = { add_building = ca_smith_6 }
+			25 = { add_building = ca_smith_7 }
+		}
+		random_list = {
+			25 = { add_building = ca_far_sus_4 }
+			50 = { add_building = ca_far_sus_5 }
+			25 = { add_building = ca_far_sus_6 }
+		}
+		random_list = {
+			25 = { add_building = ca_castle_chapel_2 }
+			75 = { add_building = ca_castle_chapel_3 }
+		}
+	} # manually adding all of these sucks
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			75 = { add_building = ct_settlement_9 }
+			25 = { add_building = ct_settlement_10 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_7 }
+			25 = { add_building = ct_walls_8 }
+			25 = { add_building = ct_walls_9 }
+			25 = { add_building = ct_walls_10 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_4 }
+			25 = { add_building = ct_market_5 }
+			25 = { add_building = ct_market_6 }
+			25 = { add_building = ct_market_7 }
+		}
+		random_list = {
+			50 = { add_building = ct_granary_3 }
+			25 = { add_building = ct_granary_4 }
+			25 = { add_building = ct_granary_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_recruit_3 }
+			50 = { add_building = ct_recruit_4 }
+			25 = { add_building = ct_recruit_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_6 }
+			25 = { add_building = ct_barracks_7 }
+			25 = { add_building = ct_barracks_8 }
+			25 = { add_building = ct_barracks_9 }
+		}
+		# random_list = {
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
+		# }
+		random_list = {
+			25 = { add_building = ct_smith_3 }
+			50 = { add_building = ct_smith_4 }
+			25 = { add_building = ct_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_4 }
+			25 = { add_building = ct_far_sus_5 }
+			50 = { add_building = ct_far_sus_6 }
+		}
+		random_list = {
+			25 = { add_building = ct_chapel_2 }
+			75 = { add_building = ct_chapel_3 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			75 = { add_building = tp_settlement_9 }
+			25 = { add_building = tp_settlement_10 }
+		}
+		random_list = {
+			25 = { add_building = tp_walls_4 }
+			25 = { add_building = tp_walls_5 }
+			25 = { add_building = tp_walls_6 }
+			25 = { add_building = tp_walls_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_8 }
+			25 = { add_building = tp_town_9 }
+			25 = { add_building = tp_town_10 }
+			25 = { add_building = tp_town_11 }
+		}
+		random_list = {
+			25 = { add_building = tp_chapterhouse_3 }
+			50 = { add_building = tp_chapterhouse_4 }
+			25 = { add_building = tp_chapterhouse_5 }
+		}
+		random_list = {
+			25 = { add_building = tp_barracks_4 }
+			25 = { add_building = tp_barracks_5 }
+			25 = { add_building = tp_barracks_6 }
+			25 = { add_building = tp_barracks_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_stables_4 }
+			25 = { add_building = tp_stables_5 }
+			25 = { add_building = tp_stables_6 }
+			25 = { add_building = tp_stables_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_5 }
+			50 = { add_building = tp_smith_6 }
+			25 = { add_building = tp_smith_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_far_sus_4 }
+			50 = { add_building = tp_far_sus_5 }
+			25 = { add_building = tp_far_sus_6 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
+}
+
 tsk_infra_5_high = {
-	random_list = {
-		10 = { add_building = ca_settlement_8 }
-		10 = { add_building = ca_settlement_9 }
-		10 = { add_building = ca_settlement_10 }
+	if = {
+		limit = { holding_type = castle }
+		random_list = {
+			25 = { add_building = ca_settlement_9 }
+			75 = { add_building = ca_settlement_10 }
+		}
+		random_list = {
+			25 = { add_building = ca_walls_9 }
+			75 = { add_building = ca_walls_10 }
+		}
+		random_list = {
+			50 = { add_building = ca_town_10 }
+			50 = { add_building = ca_town_11 }
+		}
+		random_list = {
+			25 = { add_building = ca_recruit_4 }
+			75 = { add_building = ca_recruit_5 }
+		}
+		random_list = {
+			25 = { add_building = ca_barracks_6 }
+			75 = { add_building = ca_barracks_7 }
+		}
+		random_list = {
+			25 = { add_building = ca_stables_6 }
+			75 = { add_building = ca_stables_7 }
+		}
+		random_list = {
+			25 = { add_building = ca_smith_6 }
+			75 = { add_building = ca_smith_7 }
+		}
+		random_list = {
+			50 = { add_building = ca_far_sus_5 }
+			50 = { add_building = ca_far_sus_6 }
+		}
+		random_list = {
+			100 = { add_building = ca_castle_chapel_3 }
+		}
 	}
-	random_list = {
-		10 = { add_building = ca_recruit_4 }
-		10 = { add_building = ca_recruit_5 }
-	}
-	random_list = {
-		10 = { add_building = ca_barracks_6 }
-		10 = { add_building = ca_barracks_7 }
-	}
-	random_list = {
-		10 = { add_building = ca_smith_6 }
-		10 = { add_building = ca_smith_7 }
-	}
-	random_list = {
-		10 = { add_building = ca_far_sus_5 }
-		15 = { add_building = ca_far_sus_6 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_stables_5 }
-		# 10 = { add_building = ca_stables_6 }
-		# 10 = { add_building = ca_stables_7 }
-	# }
-	random_list = {
-		5 = { add_building = ca_castle_town_6 }
-		10 = { add_building = ca_castle_town_7 }
-		15 = { add_building = ca_castle_town_8 }
-	}
-	# random_list = {
-		# 10 = { add_building = ca_walls_7 }
-		# 10 = { add_building = ca_walls_8 }
-		# 10 = { add_building = ca_walls_9 }
-	# }
-	# if = {
-		# limit = {
-			# PREV = {
-				# port = yes
-			# }
-		# }
+	elif = {
+		limit = { holding_type = city }
+		random_list = {
+			25 = { add_building = ct_settlement_9 }
+			75 = { add_building = ct_settlement_10 }
+		}
+		random_list = {
+			25 = { add_building = ct_walls_9 }
+			75 = { add_building = ct_walls_10 }
+		}
+		random_list = {
+			25 = { add_building = ct_market_6 }
+			75 = { add_building = ct_market_7 }
+		}
+		random_list = {
+			25 = { add_building = ct_granary_4 }
+			75 = { add_building = ct_granary_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_recruit_4 }
+			75 = { add_building = ct_recruit_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_barracks_8 }
+			75 = { add_building = ct_barracks_9 }
+		}
 		# random_list = {
-			# 10 = { add_building = ca_port_4 }
-			# 10 = { add_building = ca_port_5 }
+			# 50 = { }
+			# 50 = { add_building = ct_port_1 }
 		# }
-	# }
+		random_list = {
+			25 = { add_building = ct_smith_4 }
+			75 = { add_building = ct_smith_5 }
+		}
+		random_list = {
+			25 = { add_building = ct_far_sus_5 }
+			75 = { add_building = ct_far_sus_6 }
+		}
+		random_list = {
+			100 = { add_building = ct_chapel_3 }
+		}
+	}
+	elif = {
+		limit = { holding_type = temple }
+		random_list = {
+			25 = { add_building = tp_settlement_9 }
+			75 = { add_building = tp_settlement_10 }
+		}
+		random_list = {
+			50 = { add_building = tp_walls_6 }
+			50 = { add_building = tp_walls_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_town_10 }
+			75 = { add_building = tp_town_11 }
+		}
+		random_list = {
+			25 = { add_building = tp_chapterhouse_4 }
+			75 = { add_building = tp_chapterhouse_5 }
+		}
+		random_list = {
+			25 = { add_building = tp_barracks_6 }
+			75 = { add_building = tp_barracks_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_stables_6 }
+			75 = { add_building = tp_stables_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_smith_6 }
+			75 = { add_building = tp_smith_7 }
+		}
+		random_list = {
+			25 = { add_building = tp_far_sus_5 }
+			75 = { add_building = tp_far_sus_6 }
+		}
+	}
+	elif = {
+		limit = { holding_type = tribal }
+		random_list = {
+			75 = { add_building = tb_settlement_4 }
+			25 = { add_building = tb_settlement_5 }
+		}
+		random_list = {
+			25 = { add_building = tb_walls_4 }
+			25 = { add_building = tb_walls_5 }
+			25 = { add_building = tb_walls_6 }
+			25 = { add_building = tb_walls_7 }
+		}
+		random_list = {
+			50 = { add_building = tb_shrine_1 }
+			50 = { add_building = tb_shrine_2 }
+		}
+		random_list = {
+			50 = {  }
+			50 = { add_building = tb_granary_1 }
+		}
+	}
 }
