@@ -307,7 +307,7 @@ character_event = {
 		
 		if = {
 			limit = {
-				religion_group = christian
+				religion_group = the_seven_group
 				OR = {
 					AND = {
 						is_ruler = yes
@@ -443,8 +443,8 @@ character_event = {
 					if = {
 						limit = {
 							is_close_relative = PREV
-							NOT = { religion = messalian }
-							NOT = { religion = zoroastrian }
+							NOT = { religion_group = valyrian_group }
+							# NOT = { religion = zoroastrian }
 						}
 						add_character_modifier = {
 							name = incestuous_adulteress
@@ -455,8 +455,8 @@ character_event = {
 						limit = {
 							OR = {
 								NOT = { is_close_relative = PREV }
-								religion = messalian
-								religion = zoroastrian
+								religion_group = valyrian_group
+								# religion = zoroastrian
 							}
 						}
 						add_character_modifier = {
@@ -520,7 +520,7 @@ character_event = {
 						limit = { same_sex = PREV }
 						if = {
 							limit = {
-								religion_group = pagan_group
+								religion_group = westerosi_pagan_group
 							}
 							add_character_modifier = {
 								name = known_sodomite_pagan
@@ -529,7 +529,7 @@ character_event = {
 						}
 						if = {
 							limit = {
-								NOT = { religion_group = pagan_group }
+								NOT = { religion_group = westerosi_pagan_group }
 							}
 							add_character_modifier = {
 								name = known_sodomite
@@ -541,8 +541,8 @@ character_event = {
 					if = {
 						limit = {
 							is_close_relative = PREV
-							NOT = { religion = messalian }
-							NOT = { religion = zoroastrian }
+							NOT = { religion_group = valyrian_group }
+							# NOT = { religion = zoroastrian }
 						}
 						add_character_modifier = {
 							name = incestuous_adulterer
@@ -554,13 +554,13 @@ character_event = {
 							is_married = yes
 							OR = {
 								NOT = { is_close_relative = PREV }
-								religion = messalian
-								religion = zoroastrian
+								religion_group = valyrian_group
+								# religion = zoroastrian
 							}
 						}
 						if = {
 							limit = {
-								NOT = { religion_group = pagan_group }
+								NOT = { religion_group = westerosi_pagan_group }
 							}
 							add_character_modifier = {
 								name = adulterer
@@ -1592,9 +1592,9 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = christian }
+		ROOT = { religion_group = the_seven_group }
 		new_character = {
-			religion_group = muslim
+			religion = rhllor
 		}
 	}
 	
@@ -1650,10 +1650,10 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = christian }
+		ROOT = { religion_group = the_seven_group }
 		new_character = {
-			NOT = { religion_group = muslim }
-			NOT = { religion_group = christian }
+			NOT = { religion = rhllor }
+			NOT = { religion_group = the_seven_group }
 		}
 	}
 	
@@ -1709,9 +1709,9 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = christian }
+		ROOT = { religion_group = the_seven_group }
 		new_character = {
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 	}
 	
@@ -1767,9 +1767,9 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = muslim }
+		ROOT = { religion = rhllor }
 		new_character = {
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 	}
 	
@@ -1825,10 +1825,10 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = muslim }
+		ROOT = { religion = rhllor }
 		new_character = {
-			NOT = { religion_group = muslim }
-			NOT = { religion_group = christian }
+			NOT = { religion = rhllor }
+			NOT = { religion_group = the_seven_group }
 		}
 	}
 	
@@ -1884,9 +1884,9 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = muslim }
+		ROOT = { religion = rhllor }
 		new_character = {
-			religion_group = muslim
+			religion = rhllor
 		}
 	}
 	
@@ -1942,9 +1942,9 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = pagan_group }
+		ROOT = { religion_group = westerosi_pagan_group }
 		new_character = {
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 	}
 	
@@ -2000,9 +2000,9 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = pagan_group }
+		ROOT = { religion_group = westerosi_pagan_group }
 		new_character = {
-			religion_group = muslim
+			religion = rhllor
 		}
 	}
 	
@@ -2058,10 +2058,10 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = pagan_group }
+		ROOT = { religion_group = westerosi_pagan_group }
 		new_character = {
-			NOT = { religion_group = muslim }
-			NOT = { religion_group = christian }
+			NOT = { religion = rhllor }
+			NOT = { religion_group = the_seven_group }
 		}
 	}
 	
@@ -2114,8 +2114,8 @@ narrative_event = {
 		trigger = {
 			OR = {
 				new_character = {
-					NOT = { religion_group = christian }
-					NOT = { religion_group = muslim }
+					NOT = { religion_group = the_seven_group }
+					NOT = { religion = rhllor }
 				}
 				has_alternate_start_parameter = { key = religion_names value = random }
 			}
@@ -2125,7 +2125,7 @@ narrative_event = {
 		text = EVTDESC327_MUSLIMS
 		trigger = {
 			new_character = {
-				religion_group = muslim
+				religion = rhllor
 			}
 			NOT = {
 				has_alternate_start_parameter = { key = religion_names value = random }
@@ -2136,7 +2136,7 @@ narrative_event = {
 		text = EVTDESC327_CHRIST
 		trigger = {
 			new_character = {
-				religion_group = christian
+				religion_group = the_seven_group
 			}
 			NOT = {
 				has_alternate_start_parameter = { key = religion_names value = random }
@@ -2151,7 +2151,7 @@ narrative_event = {
 	
 	trigger = {
 		can_call_crusade = yes
-		ROOT = { religion_group = zoroastrian_group }
+		ROOT = { religion_group = valyrian_group }
 	}
 	
 	option = {
@@ -2202,8 +2202,8 @@ narrative_event = {
 		text = EVTDESC328
 		trigger = {
 			new_character = {
-				NOT = { religion_group = christian }
-				NOT = { religion_group = muslim }
+				NOT = { religion_group = the_seven_group }
+				NOT = { religion = rhllor }
 			}
 		}
 	}
@@ -2211,7 +2211,7 @@ narrative_event = {
 		text = EVTDESC328_MUSLIMS
 		trigger = {
 			new_character = {
-				religion_group = muslim
+				religion = rhllor
 			}
 		}
 	}
@@ -2219,7 +2219,7 @@ narrative_event = {
 		text = EVTDESC328_CHRIST
 		trigger = {
 			new_character = {
-				religion_group = christian
+				religion_group = the_seven_group
 			}
 		}
 	}
@@ -2918,13 +2918,13 @@ diploresponse_event = {
 	desc = {
 		text = EVTDESC236
 		trigger = {
-			religion_group = christian
+			religion_group = the_seven_group
 		}
 	}
 	desc = {
 		text = EVTDESC236_NC
 		trigger = {
-			NOT = { religion_group = christian }
+			NOT = { religion_group = the_seven_group }
 		}
 	}
 
@@ -3514,13 +3514,13 @@ character_event = {
 			}
 		}
 		NOR = { 
-			religion_group = muslim 
+			religion = rhllor 
 			has_character_flag = recieved_royal_marriage_aid_duty
 		}
 		OR = {
 			AND = {
-				NOT = { religion = zoroastrian }
-				NOT = { religion = messalian }
+				NOT = { religion_group = valyrian_group }
+				# NOT = { religion = messalian }
 				NOT = { has_religion_feature = religion_holy_family }
 				NOT = { has_religion_feature = religion_feature_zun }
 			}
@@ -4325,8 +4325,8 @@ narrative_event = {
 	trigger = {
 		FROM = {
 			NOR = {
-				religion = catholic
-				religion = fraticelli
+				religion = the_seven
+				# religion = fraticelli
 			}
 		}
 	}
@@ -4335,7 +4335,7 @@ narrative_event = {
 		if = {
 			limit = {
 				religion_group = FROM
-				religion_group = christian
+				religion_group = the_seven_group
 			}
 			sound_effect = crusade_outcome_positive
 		}
@@ -4600,40 +4600,40 @@ narrative_event = {
 		sound = pagan_reformation
 	}
 	picture = { 
-		trigger = { 
-			ROOT = { 
-				OR = { 
-					religion = hellenic_pagan
-					religion = hellenic_pagan_reformed
-				}
-			}
-		} 
+		# trigger = { 
+			# ROOT = { 
+				# OR = { 
+					# religion = hellenic_pagan
+					# religion = hellenic_pagan_reformed
+				# }
+			# }
+		# } 
 		picture = GFX_evt_hellenic_temple
 	}
-	picture = { 
-		trigger = { 
-			ROOT = { 
-				OR = { 
-					religion = west_african_pagan
-					religion = west_african_pagan_reformed
-				}
-			}
-		} 
-		picture = GFX_evt_west_african_ruler
-	}
-	picture = { 
-		trigger = { 
-			ROOT = { 
-				NOR = { 
-					religion = hellenic_pagan
-					religion = hellenic_pagan_reformed
-					religion = west_african_pagan
-					religion = west_african_pagan_reformed
-				}
-			}
-		} 
-		picture = GFX_evt_pagan_reformation
-	}
+	# picture = { 
+		# trigger = { 
+			# ROOT = { 
+				# OR = { 
+					# religion = west_african_pagan
+					# religion = west_african_pagan_reformed
+				# }
+			# }
+		# } 
+		# picture = GFX_evt_west_african_ruler
+	# }
+	# picture = { 
+		# trigger = { 
+			# ROOT = { 
+				# NOR = { 
+					# religion = hellenic_pagan
+					# religion = hellenic_pagan_reformed
+					# religion = west_african_pagan
+					# religion = west_african_pagan_reformed
+				# }
+			# }
+		# } 
+		# picture = GFX_evt_pagan_reformation
+	# }
 	border = "GFX_event_narrative_frame_religion"	
 	
 	is_triggered_only = yes
@@ -4645,108 +4645,108 @@ narrative_event = {
 	
 	immediate = {
 		hidden_tooltip = {
-		if = { #If hellenic reformer owns Rome, Catholic faith loses MA.
-			limit = { 
-				ROOT = { 
-					religion = hellenic_pagan_reformed 
-					completely_controls = c_roma
-				} 
-			}
-			random_playable_ruler = { 
-				limit = { religion = catholic }		
-				religion_authority = {
-					modifier = hellenic_resurgence
-					years = 100
-				}
-			}
-		}
-		if = { #If hellenic reformer owns Constantinople, Orthodox faith loses MA.
-			limit = { 
-				ROOT = { 
-					religion = hellenic_pagan_reformed 
-					completely_controls = c_byzantion
-				} 
-			}
-			random_playable_ruler = { 
-				limit = { religion = orthodox }	
-				religion_authority = {
-					modifier = hellenic_resurgence
-					years = 100
-				}
-			}
-		}
-		if = {
-			limit = { #If religion being reformed is western paganism, other western pagan are emboldened, facilitating a chain reaction of reformation.
-				ROOT = { 
-					NOR = { 
-						religion = hellenic_pagan_reformed #Not that kind of paganism.
-						religion = bon_reformed
-						religion = zun_pagan_reformed
-						religion = aztec_reformed
-					} 
-				}
-			}
-			if = { 
-				limit = { ROOT = { NOT = { religion = norse_pagan_reformed } } }
-				random_playable_ruler = { 
-					limit = { religion = norse_pagan }	
-					religion_authority = {
-						modifier = pagan_revival
-						years = 20
-					}
-				}
-			}
-			if = { 
-				limit = { ROOT = { NOT = { religion = tengri_pagan_reformed } } }
-				random_playable_ruler = { 
-					limit = { religion = tengri_pagan }	
-					religion_authority = {
-						modifier = pagan_revival
-						years = 20
-					}
-				}
-			}
-			if = { 
-				limit = { ROOT = { NOT = { religion = slavic_pagan_reformed } } }
-				random_playable_ruler = { 
-					limit = { religion = slavic_pagan }	
-					religion_authority = {
-						modifier = pagan_revival
-						years = 20
-					}
-				}
-			}
-			if = { 
-				limit = { ROOT = { NOT = { religion = baltic_pagan_reformed } } }
-				random_playable_ruler = { 
-					limit = { religion = baltic_pagan }	
-					religion_authority = {
-						modifier = pagan_revival
-						years = 20
-					}
-				}
-			}
-			if = { 
-				limit = { ROOT = { NOT = { religion = finnish_pagan_reformed } } }
-				random_playable_ruler = { 
-					limit = { religion = finnish_pagan }	
-					religion_authority = {
-						modifier = pagan_revival
-						years = 20
-					}
-				}
-			}
-			if = { 
-				limit = { ROOT = { NOT = { religion = west_african_pagan_reformed } } }
-				random_playable_ruler = { 
-					limit = { religion = west_african_pagan }	
-					religion_authority = {
-						modifier = pagan_revival
-						years = 20
-					}
-				}
-			} 
-		}
+		# if = { #If hellenic reformer owns Rome, Catholic faith loses MA.
+			# limit = { 
+				# ROOT = { 
+					# religion = hellenic_pagan_reformed 
+					# completely_controls = c_roma
+				# } 
+			# }
+			# random_playable_ruler = { 
+				# limit = { religion = catholic }		
+				# religion_authority = {
+					# modifier = hellenic_resurgence
+					# years = 100
+				# }
+			# }
+		# }
+		# if = { #If hellenic reformer owns Constantinople, Orthodox faith loses MA.
+			# limit = { 
+				# ROOT = { 
+					# religion = hellenic_pagan_reformed 
+					# completely_controls = c_byzantion
+				# } 
+			# }
+			# random_playable_ruler = { 
+				# limit = { religion = orthodox }	
+				# religion_authority = {
+					# modifier = hellenic_resurgence
+					# years = 100
+				# }
+			# }
+		# }
+		# if = {
+			# limit = { #If religion being reformed is western paganism, other western pagan are emboldened, facilitating a chain reaction of reformation.
+				# ROOT = { 
+					# NOR = { 
+						# religion = hellenic_pagan_reformed #Not that kind of paganism.
+						# religion = bon_reformed
+						# religion = zun_pagan_reformed
+						# religion = aztec_reformed
+					# } 
+				# }
+			# }
+			# if = { 
+				# limit = { ROOT = { NOT = { religion = norse_pagan_reformed } } }
+				# random_playable_ruler = { 
+					# limit = { religion = norse_pagan }	
+					# religion_authority = {
+						# modifier = pagan_revival
+						# years = 20
+					# }
+				# }
+			# }
+			# if = { 
+				# limit = { ROOT = { NOT = { religion = tengri_pagan_reformed } } }
+				# random_playable_ruler = { 
+					# limit = { religion = tengri_pagan }	
+					# religion_authority = {
+						# modifier = pagan_revival
+						# years = 20
+					# }
+				# }
+			# }
+			# if = { 
+				# limit = { ROOT = { NOT = { religion = slavic_pagan_reformed } } }
+				# random_playable_ruler = { 
+					# limit = { religion = slavic_pagan }	
+					# religion_authority = {
+						# modifier = pagan_revival
+						# years = 20
+					# }
+				# }
+			# }
+			# if = { 
+				# limit = { ROOT = { NOT = { religion = baltic_pagan_reformed } } }
+				# random_playable_ruler = { 
+					# limit = { religion = baltic_pagan }	
+					# religion_authority = {
+						# modifier = pagan_revival
+						# years = 20
+					# }
+				# }
+			# }
+			# if = { 
+				# limit = { ROOT = { NOT = { religion = finnish_pagan_reformed } } }
+				# random_playable_ruler = { 
+					# limit = { religion = finnish_pagan }	
+					# religion_authority = {
+						# modifier = pagan_revival
+						# years = 20
+					# }
+				# }
+			# }
+			# if = { 
+				# limit = { ROOT = { NOT = { religion = west_african_pagan_reformed } } }
+				# random_playable_ruler = { 
+					# limit = { religion = west_african_pagan }	
+					# religion_authority = {
+						# modifier = pagan_revival
+						# years = 20
+					# }
+				# }
+			# } 
+		# }
 		if = {
 			limit = { #Modifier not applied correctly by pagan reformation screen.
 				ROOT = { has_religion_feature = religion_cosmopolitan }
@@ -4776,51 +4776,52 @@ narrative_event = {
 					modifier = dogmatic_religion
 					years = 1000
 				}
-				remove_intermarry = catholic
-				remove_intermarry = orthodox
-				remove_intermarry = miaphysite
-				remove_intermarry = nestorian
-				remove_intermarry = sunni
-				remove_intermarry = shiite
-				remove_intermarry = ibadi
-				remove_intermarry = jewish
-				remove_intermarry = samaritan
-				remove_intermarry = karaite
-				remove_intermarry = hindu
-				remove_intermarry = buddhist
-				remove_intermarry = jain
-				remove_intermarry = taoist
-				remove_intermarry = zoroastrian
-				remove_intermarry = mazdaki
-				remove_intermarry = manichean
-				remove_intermarry = khurmazta
-				remove_intermarry = pagan
-				remove_intermarry = bon
-				remove_intermarry = bon_reformed
-				remove_intermarry = aztec
-				remove_intermarry = aztec_reformed
-				remove_intermarry = norse_pagan
-				remove_intermarry = norse_pagan_reformed
-				remove_intermarry = zun_pagan
-				remove_intermarry = zun_pagan_reformed
-				remove_intermarry = slavic_pagan
-				remove_intermarry = slavic_pagan_reformed
-				remove_intermarry = baltic_pagan
-				remove_intermarry = baltic_pagan_reformed
-				remove_intermarry = west_african_pagan
-				remove_intermarry = west_african_pagan_reformed
-				remove_intermarry = tengri_pagan
-				remove_intermarry = tengri_pagan_reformed
-				remove_intermarry = finnish_pagan
-				remove_intermarry = finnish_pagan_reformed
-				remove_intermarry = hellenic_pagan
-				remove_intermarry = hellenic_pagan_reformed
-				remove_intermarry = pagan_group
-				remove_intermarry = zoroastrian_group
-				remove_intermarry = christian
-				remove_intermarry = muslim
-				remove_intermarry = indian_group
-				remove_intermarry = jewish_group
+				remove_intermarry = the_seven
+				remove_intermarry = the_seven_gods
+				remove_intermarry = the_mother
+				remove_intermarry = the_stranger
+				remove_intermarry = the_smith
+				remove_intermarry = lady_of_the_waves
+				remove_intermarry = vulture_god
+				remove_intermarry = old_gods
+				remove_intermarry = old_gods_beyond
+				remove_intermarry = old_gods_beyond_white
+				remove_intermarry = drowned_god
+				remove_intermarry = storm_god
+				remove_intermarry = rhllor
+				remove_intermarry = moonsingers
+				remove_intermarry = faceless_men
+				remove_intermarry = maiden_of_the_harvest
+				remove_intermarry = bearded_priests_reformed
+				remove_intermarry = bearded_priests
+				remove_intermarry = boashi_reformed
+				remove_intermarry = boashi
+				remove_intermarry = trios
+				remove_intermarry = valyrian
+				remove_intermarry = the_dragon_gods
+				remove_intermarry = the_plundering_dragon
+				remove_intermarry = the_weeping_lady
+				remove_intermarry = lady_of_the_rocks
+				remove_intermarry = black_flag
+				remove_intermarry = dothraki
+				remove_intermarry = rhoynar
+				remove_intermarry = harpy
+				remove_intermarry = yiti_gods
+				remove_intermarry = lion_night
+				remove_intermarry = starry_wisdom
+				remove_intermarry = old_ones
+				remove_intermarry = shadowbinders
+				remove_intermarry = gods_bone_mountains
+				remove_intermarry = gods_nghai
+				remove_intermarry = stone_cow
+				remove_intermarry = the_seven_group
+				remove_intermarry = westerosi_pagan_group
+				remove_intermarry = drowned_god_group
+				remove_intermarry = eastern_group
+				remove_intermarry = valyrian_group
+				remove_intermarry = eastern_pagan_group
+				remove_intermarry = other_group
+				remove_intermarry = far_east_group
 
 			} 
 		}
@@ -4927,151 +4928,151 @@ narrative_event = {
 				character_event = { id = HF.23032 days = 5 } 
 			} 
 		}
-		if = {
-			limit = { #Apply default special features if player doesn't have dlc.
-				NOT = { has_dlc = "Holy Fury" } 
-				ROOT = { religion = norse_pagan_reformed } 
-			}
-			ROOT = { 
-				set_allow_rivermovement = yes 
-				enable_prepared_invasion = yes
-				set_seafaring = yes
-				make_reformer_head_of_religion = yes
-				grant_title_no_opinion = d_drowned_god_reformed
-			} 
-		}
-		if = {
-			limit = { #Apply default special features if player doesn't have dlc.
-				NOT = { has_dlc = "Holy Fury" } 
-				ROOT = { 
-					OR = { 
-						religion = baltic_pagan_reformed 
-						religion = slavic_pagan_reformed 
-					}  
-				} 
-			}
-			ROOT = { 
-				set_unit_modifier = {		
-					garrison_size = 0.2
-					levy_size = 0.2
+		# if = {
+			# limit = { #Apply default special features if player doesn't have dlc.
+				# NOT = { has_dlc = "Holy Fury" } 
+				# ROOT = { religion = norse_pagan_reformed } 
+			# }
+			# ROOT = { 
+				# set_allow_rivermovement = yes 
+				# enable_prepared_invasion = yes
+				# set_seafaring = yes
+				# make_reformer_head_of_religion = yes
+				# grant_title_no_opinion = d_drowned_god_reformed
+			# } 
+		# }
+		# if = {
+			# limit = { #Apply default special features if player doesn't have dlc.
+				# NOT = { has_dlc = "Holy Fury" } 
+				# ROOT = { 
+					# OR = { 
+						# religion = baltic_pagan_reformed 
+						# religion = slavic_pagan_reformed 
+					# }  
+				# } 
+			# }
+			# ROOT = { 
+				# set_unit_modifier = {		
+					# garrison_size = 0.2
+					# levy_size = 0.2
 					
-					key = "DEF_RELIGION"
-				}
-				set_unit_home_modifier = {
-					land_morale = 0.8
-					light_infantry_defensive = 0.8
-					heavy_infantry_defensive = 0.8
-					pikemen_defensive = 0.8
-					light_cavalry_defensive = 0.8
-					knights_defensive = 0.8
-					archers_defensive = 0.8
-					horse_archers_defensive = 0.8
-					camel_cavalry_defensive = 0.8
-					war_elephants_defensive = 0.8
+					# key = "DEF_RELIGION"
+				# }
+				# set_unit_home_modifier = {
+					# land_morale = 0.8
+					# light_infantry_defensive = 0.8
+					# heavy_infantry_defensive = 0.8
+					# pikemen_defensive = 0.8
+					# light_cavalry_defensive = 0.8
+					# knights_defensive = 0.8
+					# archers_defensive = 0.8
+					# horse_archers_defensive = 0.8
+					# camel_cavalry_defensive = 0.8
+					# war_elephants_defensive = 0.8
 					
-					garrison_size = 0.4
+					# garrison_size = 0.4
 					
-					key = "DEF_RELIGION_HOME_TERRITORY"
-				}
-			} 
-		}
-		if = {
-			limit = { #Apply default special features if player doesn't have dlc.
-				NOT = { has_dlc = "Holy Fury" } 
-				ROOT = { 
-					religion = finnish_pagan_reformed 
-				} 
-			}
-			ROOT = { 
-				set_unit_modifier = {		
-					garrison_size = 0.3
-					levy_size = 0.1
+					# key = "DEF_RELIGION_HOME_TERRITORY"
+				# }
+			# } 
+		# }
+		# if = {
+			# limit = { #Apply default special features if player doesn't have dlc.
+				# NOT = { has_dlc = "Holy Fury" } 
+				# ROOT = { 
+					# religion = finnish_pagan_reformed 
+				# } 
+			# }
+			# ROOT = { 
+				# set_unit_modifier = {		
+					# garrison_size = 0.3
+					# levy_size = 0.1
 					
-					key = "DEF_RELIGION"
-				}
-				set_unit_home_modifier = {
-					land_morale = 0.8
-					light_infantry_defensive = 0.8
-					heavy_infantry_defensive = 0.8
-					pikemen_defensive = 0.8
-					light_cavalry_defensive = 0.8
-					knights_defensive = 0.8
-					archers_defensive = 0.8
-					horse_archers_defensive = 0.8
-					camel_cavalry_defensive = 0.8
-					war_elephants_defensive = 0.8
+					# key = "DEF_RELIGION"
+				# }
+				# set_unit_home_modifier = {
+					# land_morale = 0.8
+					# light_infantry_defensive = 0.8
+					# heavy_infantry_defensive = 0.8
+					# pikemen_defensive = 0.8
+					# light_cavalry_defensive = 0.8
+					# knights_defensive = 0.8
+					# archers_defensive = 0.8
+					# horse_archers_defensive = 0.8
+					# camel_cavalry_defensive = 0.8
+					# war_elephants_defensive = 0.8
 					
-					garrison_size = 0.4
+					# garrison_size = 0.4
 					
-					key = "DEF_RELIGION_HOME_TERRITORY"
-				}
-			} 
-		}
-		if = {
-			limit = { #Apply default special features if player doesn't have dlc.
-				NOT = { has_dlc = "Holy Fury" } 
-				ROOT = {
-					OR = { 
-						religion = bon_reformed
-						religion = west_african_pagan_reformed 
-					} 
-				} 
-			}
-			ROOT = { 
-				set_unit_modifier = {		
-					garrison_size = 0.4
+					# key = "DEF_RELIGION_HOME_TERRITORY"
+				# }
+			# } 
+		# }
+		# if = {
+			# limit = { #Apply default special features if player doesn't have dlc.
+				# NOT = { has_dlc = "Holy Fury" } 
+				# ROOT = {
+					# OR = { 
+						# religion = bon_reformed
+						# religion = west_african_pagan_reformed 
+					# } 
+				# } 
+			# }
+			# ROOT = { 
+				# set_unit_modifier = {		
+					# garrison_size = 0.4
 				
-					key = "DEF_RELIGION"
-				}
-				set_unit_home_modifier = {
-					land_morale = 0.8
-					light_infantry_defensive = 0.8
-					heavy_infantry_defensive = 0.8
-					pikemen_defensive = 0.8
-					light_cavalry_defensive = 0.8
-					knights_defensive = 0.8
-					archers_defensive = 0.8
-					horse_archers_defensive = 0.8
-					camel_cavalry_defensive = 0.8
-					war_elephants_defensive = 0.8
+					# key = "DEF_RELIGION"
+				# }
+				# set_unit_home_modifier = {
+					# land_morale = 0.8
+					# light_infantry_defensive = 0.8
+					# heavy_infantry_defensive = 0.8
+					# pikemen_defensive = 0.8
+					# light_cavalry_defensive = 0.8
+					# knights_defensive = 0.8
+					# archers_defensive = 0.8
+					# horse_archers_defensive = 0.8
+					# camel_cavalry_defensive = 0.8
+					# war_elephants_defensive = 0.8
 					
-					garrison_size = 0.4
+					# garrison_size = 0.4
 					
-					key = "DEF_RELIGION_HOME_TERRITORY"
-				}
-			} 
-		}
-		if = {
-			limit = { #Apply default special features if player doesn't have dlc.
-				NOT = { has_dlc = "Holy Fury" } 
-				ROOT = { 
-					religion = zun_pagan_reformed 
-				} 
-			}
-			ROOT = { 
-				set_unit_modifier = {
-					levy_size = 0.3
+					# key = "DEF_RELIGION_HOME_TERRITORY"
+				# }
+			# } 
+		# }
+		# if = {
+			# limit = { #Apply default special features if player doesn't have dlc.
+				# NOT = { has_dlc = "Holy Fury" } 
+				# ROOT = { 
+					# religion = zun_pagan_reformed 
+				# } 
+			# }
+			# ROOT = { 
+				# set_unit_modifier = {
+					# levy_size = 0.3
 					
-					heavy_infantry_offensive = 0.2
-					heavy_infantry_defensive = 0.2
+					# heavy_infantry_offensive = 0.2
+					# heavy_infantry_defensive = 0.2
 					
-					key = "OFF_RELIGION"
-				}
-			} 
-		}
+					# key = "OFF_RELIGION"
+				# }
+			# } 
+		# }
 
 
 		if = {
 			limit = { ai = no }
 			set_character_flag = achievement_new_ways
 		}
-		if = {
-			limit = {
-				ai = no
-				religion = hellenic_pagan_reformed
-			}
-			set_character_flag = achievement_by_jupiter
-		}
+		# if = {
+			# limit = {
+				# ai = no
+				# religion = hellenic_pagan_reformed
+			# }
+			# set_character_flag = achievement_by_jupiter
+		# }
 		any_courtier = {
 			limit = {
 				is_heresy_of = ROOT
@@ -5099,89 +5100,89 @@ narrative_event = {
 				religion = ROOT
 			}
 		}
-		if = {
-			limit = { 
-				OR = {
-					NOT = { has_dlc = "Holy Fury" } 
-					has_religion_feature = religion_temporal_head 
-				} 
-				religion = norse_pagan_reformed 
+		# if = {
+			# limit = { 
+				# OR = {
+					# NOT = { has_dlc = "Holy Fury" } 
+					# has_religion_feature = religion_temporal_head 
+				# } 
+				# religion = norse_pagan_reformed 
 
-			}
-			add_artifact = crown_fylkir
-		}
-		if = {
-			limit = { 
-				has_religion_feature = religion_temporal_head 
-				religion = tengri_pagan_reformed 
+			# }
+			# add_artifact = crown_fylkir
+		# }
+		# if = {
+			# limit = { 
+				# has_religion_feature = religion_temporal_head 
+				# religion = tengri_pagan_reformed 
 
-			}
-			add_artifact = crown_tengri_fylkir
-		}
-		if = {
-			limit = { 
-				has_religion_feature = religion_temporal_head 
-				religion = finnish_pagan_reformed 
+			# }
+			# add_artifact = crown_tengri_fylkir
+		# }
+		# if = {
+			# limit = { 
+				# has_religion_feature = religion_temporal_head 
+				# religion = finnish_pagan_reformed 
 
-			}
-			add_artifact = crown_finnish_fylkir
-		}
-		if = {
-			limit = { 
-				has_religion_feature = religion_temporal_head 
-				religion = west_african_pagan_reformed 
+			# }
+			# add_artifact = crown_finnish_fylkir
+		# }
+		# if = {
+			# limit = { 
+				# has_religion_feature = religion_temporal_head 
+				# religion = west_african_pagan_reformed 
 
-			}
-			add_artifact = crown_west_african_fylkir
-		}
-		if = {
-			limit = { 
-				has_religion_feature = religion_temporal_head 
-				religion = slavic_pagan_reformed 
+			# }
+			# add_artifact = crown_west_african_fylkir
+		# }
+		# if = {
+			# limit = { 
+				# has_religion_feature = religion_temporal_head 
+				# religion = slavic_pagan_reformed 
 
-			}
-			add_artifact = crown_slavic_fylkir
-		}
-		if = {
-			limit = { 
-				has_religion_feature = religion_temporal_head 
-				religion = baltic_pagan_reformed 
+			# }
+			# add_artifact = crown_slavic_fylkir
+		# }
+		# if = {
+			# limit = { 
+				# has_religion_feature = religion_temporal_head 
+				# religion = baltic_pagan_reformed 
 
-			}
-			add_artifact = crown_romuva_fylkir
-		}
-		if = {
-			limit = { 
-				has_religion_feature = religion_temporal_head 
-				religion = zun_pagan_reformed 
+			# }
+			# add_artifact = crown_romuva_fylkir
+		# }
+		# if = {
+			# limit = { 
+				# has_religion_feature = religion_temporal_head 
+				# religion = zun_pagan_reformed 
 
-			}
-			add_artifact = crown_zun_fylkir
-		}
-		if = {
-			limit = { 
-				has_religion_feature = religion_temporal_head 
-				religion = aztec_reformed 
+			# }
+			# add_artifact = crown_zun_fylkir
+		# }
+		# if = {
+			# limit = { 
+				# has_religion_feature = religion_temporal_head 
+				# religion = aztec_reformed 
 
-			}
-			add_artifact = crown_aztec_fylkir
-		}
-		if = {
-			limit = { 
-				has_religion_feature = religion_temporal_head 
-				religion = bon_reformed 
+			# }
+			# add_artifact = crown_aztec_fylkir
+		# }
+		# if = {
+			# limit = { 
+				# has_religion_feature = religion_temporal_head 
+				# religion = bon_reformed 
 
-			}
-			add_artifact = scepter_bon_fylkir
-		}
-		if = {
-			limit = { 
-				has_religion_feature = religion_temporal_head 
-				religion = hellenic_pagan_reformed 
+			# }
+			# add_artifact = scepter_bon_fylkir
+		# }
+		# if = {
+			# limit = { 
+				# has_religion_feature = religion_temporal_head 
+				# religion = hellenic_pagan_reformed 
 
-			}
-			add_artifact = scepter_hellenic_fylkir
-		}
+			# }
+			# add_artifact = scepter_hellenic_fylkir
+		# }
 		# hidden_effect = { reformation_god_names_changes_effect = yes }
 		#Opinion boost to new religious head (if any) and Reformer.
 		if = {
@@ -5195,49 +5196,49 @@ narrative_event = {
 			}
 			religion_head = { opinion = { who = ROOT modifier = opinion_my_reformer years = 50 } }
 		}
-		if = {
-			limit = { religion = norse_pagan_reformed }
-			d_jomsvikings = {
-				religion = norse_pagan_reformed # This Holy Order now changes religion
-			}
-			set_global_flag = norse_reformation
-		}
-		if = {
-			limit = { religion = tengri_pagan_reformed }
-			set_global_flag = tengri_reformation
-		}
-		if = {
-			limit = { religion = baltic_pagan_reformed }
-			set_global_flag = baltic_reformation
-		}
-		if = {
-			limit = { religion = finnish_pagan_reformed }
-			set_global_flag = finnish_reformation
-		}
-		if = {
-			limit = { religion = aztec_reformed }
-			set_global_flag = aztec_reformation
-		}
-		if = {
-			limit = { religion = slavic_pagan_reformed }
-			set_global_flag = slavic_reformation
-		}
-		if = {
-			limit = { religion = west_african_pagan_reformed }
-			set_global_flag = west_african_reformation
-		}
-		if = {
-			limit = { religion = zun_pagan_reformed }
-			set_global_flag = zun_reformation
-		}
-		if = {
-			limit = { religion = bon_reformed }
-			set_global_flag = bon_reformation
-		}
-		if = {
-			limit = { religion = hellenic_pagan_reformed }
-			set_global_flag = hellenic_reformation
-		}
+		# if = {
+			# limit = { religion = norse_pagan_reformed }
+			# d_jomsvikings = {
+				# religion = norse_pagan_reformed # This Holy Order now changes religion
+			# }
+			# set_global_flag = norse_reformation
+		# }
+		# if = {
+			# limit = { religion = tengri_pagan_reformed }
+			# set_global_flag = tengri_reformation
+		# }
+		# if = {
+			# limit = { religion = baltic_pagan_reformed }
+			# set_global_flag = baltic_reformation
+		# }
+		# if = {
+			# limit = { religion = finnish_pagan_reformed }
+			# set_global_flag = finnish_reformation
+		# }
+		# if = {
+			# limit = { religion = aztec_reformed }
+			# set_global_flag = aztec_reformation
+		# }
+		# if = {
+			# limit = { religion = slavic_pagan_reformed }
+			# set_global_flag = slavic_reformation
+		# }
+		# if = {
+			# limit = { religion = west_african_pagan_reformed }
+			# set_global_flag = west_african_reformation
+		# }
+		# if = {
+			# limit = { religion = zun_pagan_reformed }
+			# set_global_flag = zun_reformation
+		# }
+		# if = {
+			# limit = { religion = bon_reformed }
+			# set_global_flag = bon_reformation
+		# }
+		# if = {
+			# limit = { religion = hellenic_pagan_reformed }
+			# set_global_flag = hellenic_reformation
+		# }
 	}
 	}
 
@@ -5711,7 +5712,7 @@ character_event = {
 	is_triggered_only = yes
 	
 	trigger = {
-		NOT = { religion = hindu }
+		NOT = { religion = moonsingers }
 	}
 	
 	immediate = {
@@ -6148,32 +6149,32 @@ narrative_event = {
 					has_landed_title = ROOT
 				}
 			}
-			OR = {
-				AND = {
-					has_global_flag = 4th_crusade_official
-					crusade_target_title = {
-						title = k_thrace
-					}
-					new_character = {
-						religion = FROM
-						has_landed_title = e_byzantium
-					}	
-				}
-				AND = {
-					NOR = {
-						has_global_flag = 4th_crusade_official
-						crusade_target_title = {
-							title = k_thrace
-						}
-						new_character = {
-							has_landed_title = e_byzantium
-						}
-					}
-					new_character = {
-						religion_group = FROM
-					}
-				}
-			}
+			# OR = {
+				# AND = {
+					# has_global_flag = 4th_crusade_official
+					# crusade_target_title = {
+						# title = k_thrace
+					# }
+					# new_character = {
+						# religion = FROM
+						# has_landed_title = e_byzantium
+					# }	
+				# }
+				# AND = {
+					# NOR = {
+						# has_global_flag = 4th_crusade_official
+						# crusade_target_title = {
+							# title = k_thrace
+						# }
+						# new_character = {
+							# has_landed_title = e_byzantium
+						# }
+					# }
+					# new_character = {
+						# religion_group = FROM
+					# }
+				# }
+			# }
 		}
 	}
 
@@ -6181,7 +6182,7 @@ narrative_event = {
 		if = {
 			limit = {
 				FROM = {
-					religion_group = christian
+					religion_group = the_seven_group
 				}
 				has_global_flag = 4th_crusade_official
 			}
