@@ -947,48 +947,34 @@ decisions = {
 								}
 							}
 						}
-					}
-					100 = {
-						add_trait = sympathy_far_east_group
+						100 = {
+							add_trait = sympathy_far_east_group
 						
-						modifier = {
-							factor = 0
-							religion_group = far_east_group
-						}
-						modifier = { # Prioritize getting a sympathy trait that is useful
-							factor = 100
-							OR = {
-								any_demesne_province = {
-									religion_group = far_east_group
-								}
-								any_vassal = {
-									religion_group = far_east_group
-								}
+							modifier = {
+								factor = 0
+								religion_group = far_east_group
 							}
-						}
-						modifier = { # Otherwise try to emulate your liege
-							factor = 5
-							NOR = {
-								any_demesne_province = {
-									NOT = { religion_group = far_east_group }
-								}
-								any_vassal = {
-									NOT = { religion_group = far_east_group }
-								}
-							}
-							any_liege = {
+							modifier = { # Prioritize getting a sympathy trait that is useful
+								factor = 100
 								OR = {
-									AND = {
-										trait = sympathy_far_east_group
-										religion = ROOT
+									any_demesne_province = {
+										religion_group = far_east_group
 									}
-									religion_group = far_east_group
+									any_vassal = {
+										religion_group = far_east_group
+									}
 								}
-							}	
-						}
-						modifier = {
-							factor = 0
-							NOR = {
+							}
+							modifier = { # Otherwise try to emulate your liege
+								factor = 5
+								NOR = {
+									any_demesne_province = {
+										NOT = { religion_group = far_east_group }
+									}
+									any_vassal = {
+										NOT = { religion_group = far_east_group }
+									}
+								}
 								any_liege = {
 									OR = {
 										AND = {
@@ -997,18 +983,32 @@ decisions = {
 										}
 										religion_group = far_east_group
 									}
-								}
-								spouse = {
-									religion_group = far_east_group
-								}
-								any_courtier_or_vassal = {
-									religion_group = far_east_group
-								}
-								any_neighbor_independent_ruler = {
-									religion_group = far_east_group
-								}
-								any_demesne_province = {
-									religion_group = far_east_group
+								}	
+							}
+							modifier = {
+								factor = 0
+								NOR = {
+									any_liege = {
+										OR = {
+											AND = {
+												trait = sympathy_far_east_group
+												religion = ROOT
+											}
+											religion_group = far_east_group
+										}
+									}
+									spouse = {
+										religion_group = far_east_group
+									}
+									any_courtier_or_vassal = {
+										religion_group = far_east_group
+									}
+									any_neighbor_independent_ruler = {
+										religion_group = far_east_group
+									}
+									any_demesne_province = {
+										religion_group = far_east_group
+									}
 								}
 							}
 						}
