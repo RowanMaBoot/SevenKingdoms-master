@@ -1,1 +1,62 @@
-#
+# Rains down in Africa (SETUP)
+character_event = {
+    id = HF.15099
+    is_triggered_only = yes
+    hide_window = yes
+    has_dlc = "Holy Fury"
+    only_playable = yes
+
+    trigger = {
+    	any_realm_province = {
+    		is_land = yes
+	    	region_africa_west_central_or_east_trigger = yes
+	    	has_rain_or_drought_modifier_trigger = no
+    	}
+    }
+
+    immediate = {
+    	any_realm_province = {
+    		limit = {
+	    		is_land = yes
+		    	region_africa_west_central_or_east_trigger = yes
+		    	has_rain_or_drought_modifier_trigger = no
+    		}
+    		# Solid start... Activate this for more sunny weather from the get-go...
+    		add_province_modifier = {
+    			name = africa_light_rain
+    			duration = -1
+    		}
+    		change_rain_effect = yes #Activate this instead, if you want it more random...
+    	}
+    }
+}
+
+
+# Rain development (on 5 year pulse)
+character_event = {
+    id = HF.15100
+    is_triggered_only = yes
+    hide_window = yes
+    has_dlc = "Holy Fury"
+    only_playable = yes
+
+    trigger = {
+        any_demesne_province = {
+            is_land = yes
+            region_africa_west_central_or_east_trigger = yes
+            has_rain_or_drought_modifier_trigger = yes
+        }
+    }
+
+    immediate = {
+            ### Current setup: Runs through all demesne provinces and chain-changes them (based on previous status and neighbor's status)
+            any_demesne_province = { #Change weather...
+                limit = {
+                    is_land = yes
+                    region_africa_west_central_or_east_trigger = yes
+                    NOT = { has_province_modifier = africa_weather_updated }
+                }
+                change_rain_effect = yes
+            }
+    }
+}
