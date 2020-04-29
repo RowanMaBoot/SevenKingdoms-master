@@ -15,29 +15,32 @@ character_event = {
 
 	immediate = {
 		any_character = {
-			limit = {
-				dynasty = none
-				NOT = { any_owned_bloodline = { has_bloodline_flag = special_gfx } }
-				OR = {
-					graphical_culture = valyriangfx
-					graphical_culture = dayneangfx
-					graphical_culture = daynefmgfx
-					graphical_culture = durrandonangfx
-					graphical_culture = durrandonfmgfx
-					graphical_culture = greyjoyangfx
-					graphical_culture = greyjoyfmgfx
-					graphical_culture = lannisterangfx
-					graphical_culture = lannisterfmgfx
-					graphical_culture = starkangfx
-					graphical_culture = starkfmgfx
-					graphical_culture = tullyangfx
-					graphical_culture = tullyfmgfx
-					graphical_culture = yronwoodangfx
-					graphical_culture = yronwoodfmgfx
+			if = {
+				limit = {
+					dynasty = none
+					NOT = { any_owned_bloodline = { has_bloodline_flag = special_gfx } }
+					OR = {
+						graphical_culture = valyriangfx
+						graphical_culture = dayneangfx
+						graphical_culture = daynefmgfx
+						graphical_culture = durrandonangfx
+						graphical_culture = durrandonfmgfx
+						graphical_culture = greyjoyangfx
+						graphical_culture = greyjoyfmgfx
+						graphical_culture = lannisterangfx
+						graphical_culture = lannisterfmgfx
+						graphical_culture = starkangfx
+						graphical_culture = starkfmgfx
+						graphical_culture = tullyangfx
+						graphical_culture = tullyfmgfx
+						graphical_culture = yronwoodangfx
+						graphical_culture = yronwoodfmgfx
+					}
 				}
+				character_event = { id = tsk_birth.1 } #Initiate bloodline specific gfx
 			}
-			character_event = { id = tsk_birth.1 }
 		}
+		character_event = { id = tsk_startup.6 }
 		#any_province = { province_event = { id = tsk_startup.5 } } # Disabled for now
 			
 		if = {
@@ -97,6 +100,8 @@ character_event = {
 	hide_window = yes
 
 	immediate = {
+		set_flag = has_generated_spouse
+		character_event = { id = tsk_startup.4 days = 1 } # Clears startup flag a day later in order to prevent marriage event [ 500 ]
 		if = {
 			limit = {
 				NOT = { is_female = yes }
@@ -365,7 +370,20 @@ character_event = {
 	}
 }
 
-# Removes Pregnancy Finishing trait
+# Assigns custom terrain defender bonuses | disabled
+province_event = {
+	id = tsk_startup.4
+	
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		clr_flag = has_generated_spouse
+	}
+}
+
+# Assigns custom terrain defender bonuses | disabled
 province_event = {
 	id = tsk_startup.5
 	
@@ -393,6 +411,51 @@ province_event = {
 			barrens = { add_province_modifier = { name = terrain_defenderbonus_barrens duration = -1 } }
 			coastal_desert = { add_province_modifier = { name = terrain_defenderbonus_coastal_desert duration = -1 } }
 			mountain_desert = { add_province_modifier = { name = terrain_defenderbonus_mountain_desert duration = -1 } }
+		}
+	}
+}
+
+# Sets right de facto rank for king various titles | 1 = COUNT; 2 = DUKE; 3 = KING
+province_event = {
+	id = tsk_startup.6
+	
+	hide_window = yes
+	
+	is_triggered_only = yes
+	
+	option = {
+		if = {
+			limit = {
+				year = 6500
+			}
+			k_the_eastmarch = { set_variable = { which = de_facto_rank value = 2 } }
+			k_redroost = { set_variable = { which = de_facto_rank value = 2 } }
+			k_kingswood = { set_variable = { which = de_facto_rank value = 2 } }
+			k_the_westmarch = { set_variable = { which = de_facto_rank value = 2 } }
+			k_starpike = { set_variable = { which = de_facto_rank value = 2 } }
+			k_tumbleton = { set_variable = { which = de_facto_rank value = 2 } }
+			k_the_northmarch = { set_variable = { which = de_facto_rank value = 2 } }
+			k_runestone = { set_variable = { which = de_facto_rank value = 3 } }
+			any_title = {
+				limit = {
+					higher_tier_than = DUKE
+					NOR = {
+						is_variable_equal = { which = de_facto_rank value = 1 }
+						is_variable_equal = { which = de_facto_rank value = 2 }
+					}
+				}
+				set_variable = { which = de_facto_rank value = 3 }
+			}
+		}
+		any_playable_ruler = {
+			character_event = { id = tsk_maintenance.1 }
+		}
+		any_playable_ruler = {
+			limit = {
+				emf_needs_coronation = yes
+				#emf_uses_furry_coronation = no
+			}
+			character_event = { id = emf_coronation.1100 }
 		}
 	}
 }
