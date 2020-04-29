@@ -22,34 +22,28 @@ character_event = {
 	hide_window = yes
 
 	immediate = {
-		any_playable_ruler = {
-			limit = {
-				emf_needs_coronation = yes
-				#emf_uses_furry_coronation = no
-			}
-			# Add Crowned traits
-			if = {
-				limit = { emf_uses_the_seven_high_king_coronation = yes }
-				add_trait = the_seven_high_king
-			}
-			else_if = {
-				limit = { emf_uses_the_old_gods_high_king_coronation = yes }
-				add_trait = the_old_gods_high_king
-			}
-			else_if = {
-				limit = { emf_uses_valyrian_coronation = yes }
-				add_trait = valyrian_king
-			}
-			else = {
-				add_trait = emf_crowned
-			}
+		# Add Crowned traits
+		if = {
+			limit = { emf_uses_the_seven_high_king_coronation = yes }
+			add_trait = the_seven_high_king
+		}
+		else_if = {
+			limit = { emf_uses_the_old_gods_high_king_coronation = yes }
+			add_trait = the_old_gods_high_king
+		}
+		else_if = {
+			limit = { emf_uses_valyrian_coronation = yes }
+			add_trait = valyrian_king
+		}
+		else_if = {
+			add_trait = emf_crowned
+		}
 
-			# Initialize Imperial Decay
-			if = {
-				limit = { emf_uses_imperial_decay = yes }
-				primary_title = { set_variable = { which = "imperial_decay_change" value = 0 } }
-				character_event = { id = emf_imperial.1852 }
-			}
+		# Initialize Imperial Decay
+		if = {
+			limit = { emf_uses_imperial_decay = yes }
+			primary_title = { set_variable = { which = "imperial_decay_change" value = 0 } }
+			character_event = { id = emf_imperial.1852 }
 		}
 	}
 }

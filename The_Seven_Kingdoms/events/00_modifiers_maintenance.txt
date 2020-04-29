@@ -6,90 +6,117 @@ namespace = modifiers_maintenance
 
 #Apply triggered modifiers
 character_event = {
-  id = modifiers_maintenance.1
-  hide_window = yes
-  is_triggered_only = yes
-  only_playable = yes
-  
-  immediate = {
-    #Remove all modifiers
-    remove_character_modifier = the_viceroy
-    remove_character_modifier = dragon_rider
-    #Check which to readd
-    if = {
-      limit = { 
-        has_landed_title = e_valyrian_freehold
-        OR = {
-          ai = yes
-          dynasty = 1600
-          dynasty = 1601
-          dynasty = 1602
-          dynasty = 1603
-          dynasty = 1604
-        }
-      }
-      add_character_modifier = { name = the_viceroy duration = -1 }
-      add_character_modifier = { name = dragon_rider duration = -1 }
-      
-      # Fallback. Keeps our character Valyrian if they are ever deposed
-      if = {
-        limit = {
-          NOT = {
-            culture_group = valyrian
-          }
-        }
-        culture = high_valyrian
-        set_graphical_culture = high_valyrian
-        religion = valyrian
-      }
-    }
-  }
+id = modifiers_maintenance.1
+	hide_window = yes
+	is_triggered_only = yes
+	only_playable = yes
+
+	immediate = {
+	#Remove all modifiers
+	remove_character_modifier = the_viceroy
+	remove_character_modifier = dragon_rider
+	#Check which to readd
+	if = {
+		limit = { 
+			has_landed_title = e_valyrian_freehold
+			OR = {
+				ai = yes
+				dynasty = 1600
+				dynasty = 1601
+				dynasty = 1602
+				dynasty = 1603
+				dynasty = 1604
+			}
+		}
+		add_character_modifier = { name = the_viceroy duration = -1 }
+		add_character_modifier = { name = dragon_rider duration = -1 }
+
+		# Fallback. Keeps our character Valyrian if they are ever deposed
+		if = {
+			limit = {
+				NOT = {
+					culture_group = valyrian
+				}
+			}
+			culture = high_valyrian
+			set_graphical_culture = high_valyrian
+			religion = valyrian
+			}
+		}
+	}
 }
 #Unlanded, remove modifiers
 character_event = {
-  id = modifiers_maintenance.2
-  hide_window = yes
-  is_triggered_only = yes
-  
-  immediate = {
-    remove_character_modifier = the_viceroy
-    remove_character_modifier = dragon_rider
-  }
+	id = modifiers_maintenance.2
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		remove_character_modifier = the_viceroy
+		remove_character_modifier = dragon_rider
+	}
 }
 
 # Knightly trait but incorrect religion
 character_event = {
-  id = modifiers_maintenance.3
-  desc = EVTDESC_modifiers_maintenance.3
-  is_triggered_only = yes
+	id = modifiers_maintenance.3
+	desc = EVTDESC_modifiers_maintenance.3
+	is_triggered_only = yes
   
-  trigger = {
-    OR = {
-      AND = {
-        trait = knight
-        NOT = { religion = the_seven }
-      }
-      AND = {
-        trait = red_knight
-        NOT = { religion = rhllor }
-      }
-      AND = {
-        trait = dragon_knight
-        NOT = { religion = valyrian }
-      }
-    }
-  }
+	trigger = {
+		OR = {
+			AND = {
+				trait = knight
+				NOT = { religion = the_seven }
+			}
+			AND = {
+				trait = red_knight
+				NOT = { religion = rhllor }
+			}
+			AND = {
+				trait = dragon_knight
+				NOT = { religion = valyrian }
+			}
+		}
+	}
   
-  immediate = {
-    if = { limit = { trait = knight} remove_trait = knight }
-    if = { limit = { trait = red_knight} remove_trait = red_knight }
-    if = { limit = { trait = dragon_knight} remove_trait = dragon_knight }
-    add_trait = hedge_knight
-  }
+	immediate = {
+		if = { limit = { trait = knight} remove_trait = knight }
+		if = { limit = { trait = red_knight} remove_trait = red_knight }
+		if = { limit = { trait = dragon_knight} remove_trait = dragon_knight }
+		add_trait = hedge_knight
+	}
   
-  option = {
-    name = {
-      text = EVTOPTA_modifiers_maintenance.3 # Curses!
-    }
-  }
+	option = {
+		name = {
+		text = EVTOPTA_modifiers_maintenance.3 # Curses!
+		}
+	}
+}
+
+namespace = tsk_maintenance
+
+# Knightly trait but incorrect religion
+character_event = {
+	id = tsk_maintenance.1
+	is_triggered_only = yes
+	hide_window = yes
+  
+	trigger = {
+		primary_title = {
+			tier = KING
+			is_variable_equal = { which = de_facto_rank value = 2 }
+		}
+	}
+  
+	option = {
+		if = {
+			limit = { female = no }
+			set_special_character_title = lord_marshal
+		}
+		else_if = {
+			limit = { female = yes }
+			set_special_character_title = lady_marshal
+		}
+	}
 }
