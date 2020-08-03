@@ -63,7 +63,10 @@ NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_80 = 2250
 NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_90 = 5000
 NDefines.NCharacter.NATURAL_DEATH_CHANCE_AGE_100 = 9000
 
-NDefines.NCharacter.INFANT_DEATH_CHANCE = 0.10
+NDefines.NCharacter.FERTILITY_BASE_MULT = 0.35
+NDefines.NCharacter.SECONDARY_SPOUSE_FERTILITY_MULT = 0.35
+NDefines.NCharacter.NOT_SPOUSE_FERTILITY_MULT = 0.35
+NDefines.NCharacter.MARRIED_LOVERS_FERTILITY_MULT = 1.75
 
 NDefines.NCharacter.FEMALE_ATTRACTION_CUTOFF = 48
 
@@ -71,27 +74,27 @@ NDefines.NCharacter.FEMALE_ATTRACTION_CUTOFF = 48
 NDefines.NReligion.AUTHORITY_FROM_ORG_RELIGION = 0.3
 
 -- Economy
+
 NDefines.NEconomy.BISHOP_TAX_TO_POPE_FACTOR = 0.15 -- from 0.1
-NDefines.NEconomy.TRADE_POST_COST_INC_DIST = 0.0045
+NDefines.NEconomy.TRADE_POST_COST_INC_DIST = 0.0045 -- from 0.3
+NDefines.NEconomy.TRADETECH_LEVEL_FOR_BASE_TPS = 0 -- from 3
 NDefines.NEconomy.OVER_MAX_DEMESNE_TAX_PENALTY = 0.05 -- reduced penalty from 20%
 
 -- Military
-
-NDefines.NMilitary.MAX_COMMANDERS_DUKE = 5 -- from 4
-NDefines.NMilitary.MAX_COMMANDERS_KING = 7 -- from 6
-NDefines.NMilitary.MAX_COMMANDERS_EMPEROR = 9 -- from 8
 
 NDefines.NMilitary.FRIENDLY_TERRITORY_LEVY_RETURN_PERCENT = 1.0 -- 0.95 -- Reduced from 1.0 to reduce exploiting.
 NDefines.NMilitary.OTHER_TERRITORY_LEVY_RETURN_PERCENT = 0.40 -- Reduced from 0.50 (50% loss) to 0.33 (77% loss) to reduce exploiting.
 
 NDefines.NMilitary.BATTLE_TECH_MULTIPLIER = 0.0 -- Removed
 
+NDefines.NMilitary.CAPITAL_WARSCORE_MULTIPLIER = 2
+
 NDefines.NMilitary.ATTRITION_LEVEL_FACTOR = 0.5 -- Increased from 0.5
 NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_50_OVER = 1.0 -- Increased from 1.0
 NDefines.NMilitary.ATTRITION_LEVEL_FACTOR_100_OVER = 2.0 -- Increased from 2.0
 
-NDefines.NMilitary.ARMY_MOVEMENT_SPEED = 6 -- Originally 3
-NDefines.NMilitary.NAVY_MOVEMENT_SPEED = 18 -- Originally 15, 3x Faster than Foot rather than 5x, due to cost changes.
+NDefines.NMilitary.ARMY_MOVEMENT_SPEED = 5 -- Originally 3
+NDefines.NMilitary.NAVY_MOVEMENT_SPEED = 18 -- Originally 15
 
 NDefines.NMilitary.GALLEYS_MAINTENANCE = 50 -- Reduced from 300
 
@@ -102,59 +105,64 @@ NDefines.NMilitary.LIEGE_LEVY_COST_MULTIPLIER = 0.5 -- Halved from 1.0
 
 NDefines.NMilitary.MIN_LEVY_RAISE_OPINION_THRESHOLD = -33 -- Lowered from 0
 
+NDefines.NMilitary.LOOT_HOLDING_DEST_MIN_SAFE = 999
+NDefines.NMilitary.LOOT_HOLDING_DESTRUCTION_ODDS = 999
+
+NDefines.NMilitary.MIN_RETINUE = 50
+
 NDefines.NMilitary.LIGHT_INFANTRY_MORALE = 2
 NDefines.NMilitary.LIGHT_INFANTRY_MAINTENANCE = 0.70
-NDefines.NMilitary.LIGHT_INFANTRY_PHASE_SKIRMISH_ATTACK = 1
-NDefines.NMilitary.LIGHT_INFANTRY_PHASE_MELEE_ATTACK = 3 -- Buffed, formerly 1
-NDefines.NMilitary.LIGHT_INFANTRY_PHASE_PURSUE_ATTACK = 3 -- Buffed, formerly 2
+NDefines.NMilitary.LIGHT_INFANTRY_PHASE_SKIRMISH_ATTACK = 1.25
+NDefines.NMilitary.LIGHT_INFANTRY_PHASE_MELEE_ATTACK = 1.75
+NDefines.NMilitary.LIGHT_INFANTRY_PHASE_PURSUE_ATTACK = 2
 NDefines.NMilitary.LIGHT_INFANTRY_PHASE_SKIRMISH_DEFENSE = 2
-NDefines.NMilitary.LIGHT_INFANTRY_PHASE_MELEE_DEFENSE = 2 -- Doubled, formerly 1
+NDefines.NMilitary.LIGHT_INFANTRY_PHASE_MELEE_DEFENSE = 1.5
 NDefines.NMilitary.LIGHT_INFANTRY_PHASE_PURSUE_DEFENSE = 2.5
 
 NDefines.NMilitary.HEAVY_INFANTRY_MORALE = 5 -- Buffed, formerly 4
-NDefines.NMilitary.HEAVY_INFANTRY_MAINTENANCE = 2 -- Reduced, formerly 3
+NDefines.NMilitary.HEAVY_INFANTRY_MAINTENANCE = 3
 NDefines.NMilitary.HEAVY_INFANTRY_PHASE_SKIRMISH_ATTACK = 0.25
 NDefines.NMilitary.HEAVY_INFANTRY_PHASE_MELEE_ATTACK = 6
-NDefines.NMilitary.HEAVY_INFANTRY_PHASE_PURSUE_ATTACK = 1 -- Halfed, formerly 2
-NDefines.NMilitary.HEAVY_INFANTRY_PHASE_SKIRMISH_DEFENSE = 5 -- Buffed, formerly 3
+NDefines.NMilitary.HEAVY_INFANTRY_PHASE_PURSUE_ATTACK = 1
+NDefines.NMilitary.HEAVY_INFANTRY_PHASE_SKIRMISH_DEFENSE = 4 -- Buffed, former 3
 NDefines.NMilitary.HEAVY_INFANTRY_PHASE_MELEE_DEFENSE = 4
-NDefines.NMilitary.HEAVY_INFANTRY_PHASE_PURSUE_DEFENSE = 2 -- Reduced, formerly 4
+NDefines.NMilitary.HEAVY_INFANTRY_PHASE_PURSUE_DEFENSE = 4
 
 NDefines.NMilitary.PIKEMEN_MORALE = 6
-NDefines.NMilitary.PIKEMEN_MAINTENANCE = 2
+NDefines.NMilitary.PIKEMEN_MAINTENANCE = 3
 NDefines.NMilitary.PIKEMEN_PHASE_SKIRMISH_ATTACK = 0.1
-NDefines.NMilitary.PIKEMEN_PHASE_MELEE_ATTACK = 5
+NDefines.NMilitary.PIKEMEN_PHASE_MELEE_ATTACK = 4.5
 NDefines.NMilitary.PIKEMEN_PHASE_PURSUE_ATTACK = 0.2
-NDefines.NMilitary.PIKEMEN_PHASE_SKIRMISH_DEFENSE = 3.5
-NDefines.NMilitary.PIKEMEN_PHASE_MELEE_DEFENSE = 8 -- Buffed, formerly 4.5
-NDefines.NMilitary.PIKEMEN_PHASE_PURSUE_DEFENSE = 2
+NDefines.NMilitary.PIKEMEN_PHASE_SKIRMISH_DEFENSE = 4
+NDefines.NMilitary.PIKEMEN_PHASE_MELEE_DEFENSE = 5
+NDefines.NMilitary.PIKEMEN_PHASE_PURSUE_DEFENSE = 1.5
 
 NDefines.NMilitary.LIGHT_CAVALRY_MORALE = 4
-NDefines.NMilitary.LIGHT_CAVALRY_MAINTENANCE = 2 -- Reduced, formerly 3
-NDefines.NMilitary.LIGHT_CAVALRY_PHASE_SKIRMISH_ATTACK = 1.5 -- Nerfed, formerly 2
+NDefines.NMilitary.LIGHT_CAVALRY_MAINTENANCE = 3
+NDefines.NMilitary.LIGHT_CAVALRY_PHASE_SKIRMISH_ATTACK = 2
 NDefines.NMilitary.LIGHT_CAVALRY_PHASE_MELEE_ATTACK = 3
-NDefines.NMilitary.LIGHT_CAVALRY_PHASE_PURSUE_ATTACK = 10 -- Buffed, formerly 6
+NDefines.NMilitary.LIGHT_CAVALRY_PHASE_PURSUE_ATTACK = 6
 NDefines.NMilitary.LIGHT_CAVALRY_PHASE_SKIRMISH_DEFENSE = 4.5
 NDefines.NMilitary.LIGHT_CAVALRY_PHASE_MELEE_DEFENSE = 3
-NDefines.NMilitary.LIGHT_CAVALRY_PHASE_PURSUE_DEFENSE = 7 -- Doubled, formerly 3.5
+NDefines.NMilitary.LIGHT_CAVALRY_PHASE_PURSUE_DEFENSE = 5
 
 NDefines.NMilitary.KNIGHTS_MORALE = 10
-NDefines.NMilitary.KNIGHTS_MAINTENANCE = 4 -- Reduced, formerly 6
+NDefines.NMilitary.KNIGHTS_MAINTENANCE = 6
 NDefines.NMilitary.KNIGHTS_PHASE_SKIRMISH_ATTACK = 0.5
 NDefines.NMilitary.KNIGHTS_PHASE_MELEE_ATTACK = 10
-NDefines.NMilitary.KNIGHTS_PHASE_PURSUE_ATTACK = 6 -- Buffed, formerly 4
-NDefines.NMilitary.KNIGHTS_PHASE_SKIRMISH_DEFENSE = 6 -- Buffed, formerly 4
-NDefines.NMilitary.KNIGHTS_PHASE_MELEE_DEFENSE = 6 -- Buffed, formerly 5
-NDefines.NMilitary.KNIGHTS_PHASE_PURSUE_DEFENSE = 4 -- Reduced, formerly 7.5
+NDefines.NMilitary.KNIGHTS_PHASE_PURSUE_ATTACK = 4
+NDefines.NMilitary.KNIGHTS_PHASE_SKIRMISH_DEFENSE = 6
+NDefines.NMilitary.KNIGHTS_PHASE_MELEE_DEFENSE = 6
+NDefines.NMilitary.KNIGHTS_PHASE_PURSUE_DEFENSE = 5
 
 NDefines.NMilitary.ARCHERS_MORALE = 1
-NDefines.NMilitary.ARCHERS_MAINTENANCE = 1.5 -- Reduced, formerly 2
-NDefines.NMilitary.ARCHERS_PHASE_SKIRMISH_ATTACK = 4 -- Doubled, formerly 2
+NDefines.NMilitary.ARCHERS_MAINTENANCE = 2
+NDefines.NMilitary.ARCHERS_PHASE_SKIRMISH_ATTACK = 2.25
 NDefines.NMilitary.ARCHERS_PHASE_MELEE_ATTACK = 1
 NDefines.NMilitary.ARCHERS_PHASE_PURSUE_ATTACK = 2
-NDefines.NMilitary.ARCHERS_PHASE_SKIRMISH_DEFENSE = 3 -- Doubled, formerly 1.5
-NDefines.NMilitary.ARCHERS_PHASE_MELEE_DEFENSE = 1 -- Halved, formerly 2.0
-NDefines.NMilitary.ARCHERS_PHASE_PURSUE_DEFENSE = 2.5 -- Buffed, formerly 2.0
+NDefines.NMilitary.ARCHERS_PHASE_SKIRMISH_DEFENSE = 1.5
+NDefines.NMilitary.ARCHERS_PHASE_MELEE_DEFENSE = 1.5
+NDefines.NMilitary.ARCHERS_PHASE_PURSUE_DEFENSE = 2.25
 
 -- Technology, removed
 NDefines.NTechnology.DONT_EXECUTE_TECH_BEFORE = 1
@@ -173,10 +181,28 @@ NDefines.NTechnology.BASE_TO_NOMAD_CAPITAL_SPREAD_BONUS = 0.0
 
 -- Graphics
 NDefines.NGraphics.CITY_SPRAWL_AMOUNT = 1.4
+NDefines.NGraphics.NUMBER_OF_DNA_PROPERTIES = 21
 
 -- AI
 NDefines.NAI.RAID_MAX_REALM_SIZE = 48 -- from 24
 NDefines.NAI.RAID_AGGRESSION = 30 -- from 18, then 20, fewer raids
+
+
+NDefines.NEndGame.DYN1_ID = 604
+NDefines.NEndGame.DYN2_ID = 800
+NDefines.NEndGame.DYN3_ID = 180
+NDefines.NEndGame.DYN4_ID = 321
+NDefines.NEndGame.DYN5_ID = 201
+NDefines.NEndGame.DYN6_ID = 1
+NDefines.NEndGame.DYN7_ID = 253
+NDefines.NEndGame.DYN8_ID = 172
+NDefines.NEndGame.DYN9_ID = 602
+NDefines.NEndGame.DYN10_ID = 10005
+NDefines.NEndGame.DYN11_ID = 209
+NDefines.NEndGame.DYN12_ID = 8
+NDefines.NEndGame.DYN13_ID = 738
+NDefines.NEndGame.DYN14_ID = 607
+NDefines.NEndGame.DYN15_ID = 222
 
 -- Ruler Designer
 NDefines.NRulerDesigner.BASE_ATTRIB = 5
