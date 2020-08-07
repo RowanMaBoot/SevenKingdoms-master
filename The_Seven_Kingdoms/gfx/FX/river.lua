@@ -179,7 +179,7 @@ float4 main( VS_OUTPUT In ) : COLOR
 	float vSpecRemove = 1.0f - abs( 0.5f - In.vUV.w ) * 2.0f;
 
 	float vSpecWidth = 70.0f;
-	float vSpecMultiplier = 0.25f;
+	float vSpecMultiplier = 0.55f;
 	float specular = saturate( pow( saturate( dot( H, vSurfaceNormal ) ), vSpecWidth ) * vSpecMultiplier ) * vSpecRemove/*  dot( vWaterSurface, vWaterSurface )*/;
 
 	float2 vDistort = refract( vCamLookAtDir, vSurfaceNormal, 0.66f ).xz;
