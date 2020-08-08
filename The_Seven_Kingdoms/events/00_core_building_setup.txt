@@ -293,7 +293,7 @@ character_event = {
 character_event = {
 	id = core_building_setup.2
 	hide_window = yes
-	is_triggered_only = yes # Triggered from on_startup
+	is_triggered_only = yes # core_building_setup.1
 	
 	# Event should fire for owned provinces of all landed characters.
 	only_playable = yes
@@ -397,33 +397,41 @@ character_event = {
 			}
 			king = {
 				any_demesne_province = {
-					# capital province
 					if = {
 						limit = {
-							is_capital = yes 
-						}
-						random_list = {
-							70 = {
-								add_province_modifier = { name = tsk_infra_4 duration = -1 }
-								add_province_modifier = { name = tsk_road_2 duration = -1 }
-							}
-							30 = {
-								add_province_modifier = { name = tsk_infra_3 duration = -1 }
-								add_province_modifier = { name = tsk_road_2 duration = -1 }
+							NOR = {
+								has_province_flag = manual_prov_assignments_cap
+								has_province_flag = manual_prov_assignments_all
 							}
 						}
-					}
-					# not capital province
-					else_if = {
-						# Do nothing for count
-						random_list = {
-							70 = {
-								add_province_modifier = { name = tsk_infra_3 duration = -1 }
-								add_province_modifier = { name = tsk_road_2 duration = -1 }
+						# capital province
+						if = {
+							limit = {
+								is_capital = yes 
 							}
-							30 = {
-								add_province_modifier = { name = tsk_infra_2 duration = -1 }
-								add_province_modifier = { name = tsk_road_2 duration = -1 }
+							random_list = {
+								70 = {
+									add_province_modifier = { name = tsk_infra_4 duration = -1 }
+									add_province_modifier = { name = tsk_road_2 duration = -1 }
+								}
+								30 = {
+									add_province_modifier = { name = tsk_infra_3 duration = -1 }
+									add_province_modifier = { name = tsk_road_2 duration = -1 }
+								}
+							}
+						}
+						# not capital province
+						else_if = {
+							# Do nothing for count
+							random_list = {
+								70 = {
+									add_province_modifier = { name = tsk_infra_3 duration = -1 }
+									add_province_modifier = { name = tsk_road_2 duration = -1 }
+								}
+								30 = {
+									add_province_modifier = { name = tsk_infra_2 duration = -1 }
+									add_province_modifier = { name = tsk_road_2 duration = -1 }
+								}
 							}
 						}
 					}
@@ -434,30 +442,38 @@ character_event = {
 					# capital province
 					if = {
 						limit = {
-							is_capital = yes 
-						}
-						random_list = {
-							70 = {
-								add_province_modifier = { name = tsk_infra_5 duration = -1 }
-								add_province_modifier = { name = tsk_road_3 duration = -1 }
-							}
-							30 = {
-								add_province_modifier = { name = tsk_infra_4 duration = -1 }
-								add_province_modifier = { name = tsk_road_3 duration = -1 }
+							NOR = {
+								has_province_flag = manual_prov_assignments_cap
+								has_province_flag = manual_prov_assignments_all
 							}
 						}
-					}
-					# not capital province
-					else_if = {
-						# Do nothing for count
-						random_list = {
-							70 = {
-								add_province_modifier = { name = tsk_infra_4 duration = -1 }
-								add_province_modifier = { name = tsk_road_3 duration = -1 }
+						if = {
+							limit = {
+								is_capital = yes 
 							}
-							30 = {
-								add_province_modifier = { name = tsk_infra_3 duration = -1 }
-								add_province_modifier = { name = tsk_road_3 duration = -1 }
+							random_list = {
+								70 = {
+									add_province_modifier = { name = tsk_infra_5 duration = -1 }
+									add_province_modifier = { name = tsk_road_3 duration = -1 }
+								}
+								30 = {
+									add_province_modifier = { name = tsk_infra_4 duration = -1 }
+									add_province_modifier = { name = tsk_road_3 duration = -1 }
+								}
+							}
+						}
+						# not capital province
+						else_if = {
+							# Do nothing for count
+							random_list = {
+								70 = {
+									add_province_modifier = { name = tsk_infra_4 duration = -1 }
+									add_province_modifier = { name = tsk_road_3 duration = -1 }
+								}
+								30 = {
+									add_province_modifier = { name = tsk_infra_3 duration = -1 }
+									add_province_modifier = { name = tsk_road_3 duration = -1 }
+								}
 							}
 						}
 					}
