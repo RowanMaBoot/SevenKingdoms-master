@@ -447,95 +447,364 @@ character_event = {
 
     immediate = {
         capital_scope = { # PREVPREV
-            create_character = {
-                random_traits = yes
-                dynasty = none
-                religion = ROOT
-                culture = ROOT
-                female = no
-                age = 25
-                attributes = {
-                    martial = 5
-                }
-                trait = peasant_leader
-                trait = tough_soldier
-            }
+			location = {
+				create_character = {#leader
+					random_traits = yes
+					dynasty = none
+					religion = ROOT
+					culture = ROOT
+					female = no
+					age = 25
+					attributes = {
+						martial = 5
+					}
+					trait = peasant_leader
+					trait = tough_soldier
+				}
 
-            new_character = { # PREV
-                create_title = {
-                    tier = DUKE
-                    landless = yes
-                    temporary = yes
-                    rebel = yes
-                    culture = ROOT
-                    name = "PEASANT_REVOLT"
-                    holder = THIS
-                }
+				new_character = { #Leader
+					create_title = {
+						tier = DUKE
+						landless = yes
+						temporary = yes
+						rebel = yes
+						culture = ROOT
+						name = "PEASANT_REVOLT"
+						holder = THIS
+					}
 
-                wealth = 500
-                prestige = 100
+					wealth = 500
+					prestige = 100
 
-                spawn_heretic_army_effect = yes
-                
-                if = {
-                    limit = {
-                        has_character_flag  = bribe_offered
-                    }
-                    spawn_heretic_army_effect = yes
-                    clr_character_flag = bribe_offered
-                }
+					#spawn_heretic_army_effect = yes
+					
+					#
+				spawn_unit = { #Leader's Unit
+					province = PREV
+					home = PREV
+					owner = THIS
+					leader = THIS
+					match_character = ROOT
+					match_mult = 0.2
+					#earmark = decadence_revolters
+					reinforces = yes
+					reinforce_rate_multiplier = 0.25
+					
+					#scaled_by_biggest_garrison = 1.0
+					#troops = {
+					#	archers = { 6 6 }
+					#	light_cavalry = { 4 4 }
+					#	light_infantry = { 10 10 }
+					#}
+					attrition = 1.0
+				}
+				create_character = {#Commander1
+					random_traits = yes
+					dynasty = none
+					religion = ROOT
+					culture = ROOT
+					female = no
+					age = 30
+					trait = peasant_leader
+					trait = tough_soldier
+				}
+				new_character = {
+						spawn_unit = {#commander unit 1
+							province = PREVPREV
+							home = PREVPREV
+							owner = PREV
+							#leader = THIS
+							match_character = ROOT
+							match_mult = 0.2
+							attrition = 1.0
+							disband_on_peace = yes
+						}
+					}
+				#
+					if = {
+						limit = {
+							has_character_flag  = bribe_offered
+						}
+						create_character = {
+							random_traits = yes
+							dynasty = none
+							religion = ROOT
+							culture = ROOT
+							female = no
+							age = 23
+							trait = peasant_leader
+							trait = tough_soldier
+						}
+						new_character = {
+							spawn_unit = {#Bribe revolters
+								province = PREVPREV
+								home = PREVPREV
+								owner = PREV
+								#leader = THIS
+								match_character = ROOT
+								#match_settlement = ROOT = {capital_holding}
+								match_mult = 0.1
+								attrition = 1.0
+								#disband_on_peace = yes
+							}
+						}
+						clr_character_flag = bribe_offered
+					}
 
-                if = {
-                    limit = {
-                        has_game_rule = {
-                            name = provincial_revolt_strength
-                            value = powerful
-                        }
-                    }
-                    spawn_heretic_army_effect = yes
-                    wealth = 550
-                }
+					if = {
+						limit = {
+							has_game_rule = {
+								name = provincial_revolt_strength
+								value = powerful
+							}
+						}
+						#spawn_heretic_army_effect = yes
+						create_character = {#Commander1
+							random_traits = yes
+							dynasty = none
+							religion = ROOT
+							culture = ROOT
+							female = no
+							age = 30
+							trait = peasant_leader
+							trait = tough_soldier
+						}
+						new_character = {
+							spawn_unit = {#Bigger revolt army
+								province = PREVPREV
+								home = PREVPREV
+								owner = PREV
+								#leader = THIS
+								match_character = ROOT
+								match_mult = 0.1
+								attrition = 1.0
+								disband_on_peace = yes
+							}
+						}
+						wealth = 550
+					}
 
-                if = {
-                    limit = {
-                        has_game_rule = {
-                            name = provincial_revolt_strength
-                            value = very_powerful
-                        }
-                    }
-                    spawn_heretic_army_effect = yes
-                    spawn_heretic_army_effect = yes
-                    spawn_heretic_army_effect = yes
-                    wealth = 650
-                }
+					if = {
+						limit = {
+							has_game_rule = {
+								name = provincial_revolt_strength
+								value = very_powerful
+							}
+						}
+						#spawn_heretic_army_effect = yes
+						#spawn_heretic_army_effect = yes
+						#spawn_heretic_army_effect = yes
+						create_character = {
+							random_traits = yes
+							dynasty = none
+							religion = ROOT
+							culture = ROOT
+							female = no
+							age = 24
+							trait = peasant_leader
+							trait = tough_soldier
+						}
+						new_character = {
+							spawn_unit = {#Very powerful 1
+								province = PREVPREV
+								home = PREVPREV
+								owner = PREV
+								#leader = THIS
+								match_character = ROOT
+								match_mult = 0.1
+								attrition = 1.0
+								disband_on_peace = yes
+							}
+						}
+						create_character = {
+							random_traits = yes
+							dynasty = none
+							religion = ROOT
+							culture = ROOT
+							female = no
+							age = 35
+							trait = peasant_leader
+							trait = tough_soldier
+						}
+						new_character = {
+							spawn_unit = {#Very powerful 2
+								province = PREVPREV
+								home = PREVPREV
+								owner = PREV
+								#leader = THIS
+								match_character = ROOT
+								match_mult = 0.1
+								attrition = 1.0
+								disband_on_peace = yes
+							}
+						}
+						create_character = {
+							random_traits = yes
+							dynasty = none
+							religion = ROOT
+							culture = ROOT
+							female = no
+							age = 43
+							trait = peasant_leader
+							trait = tough_soldier
+						}
+						new_character = {
+							spawn_unit = {#Very powerful 3
+								province = PREVPREV
+								home = PREVPREV
+								owner = PREV
+								#leader = THIS
+								match_character = ROOT
+								match_mult = 0.1
+								attrition = 1.0
+								disband_on_peace = yes
+							}
+						}
+					
+						wealth = 650
+					}
 
-                if = {
-                    limit = {
-                        has_game_rule = {
-                            name = provincial_revolt_strength
-                            value = extremely_powerful
-                        }
-                    }
-                    spawn_heretic_army_effect = yes
-                    spawn_heretic_army_effect = yes
-                    spawn_heretic_army_effect = yes
-                    spawn_heretic_army_effect = yes
-                    spawn_heretic_army_effect = yes
-                    wealth = 750
-                }
-                ROOT = { # THIS
-                  reverse_war = {
-                      target = PREV # Revolter
-                      casus_belli = peasant_revolt
-                      thirdparty_title = PREVPREV # Province
-                  }
-                  reverse_opinion = {
-                      who = PREV # Revolter
-                      modifier = opinion_evil_tyrant
-                  }
-                }
-            }
-        }
+					if = {
+						limit = {
+							has_game_rule = {
+								name = provincial_revolt_strength
+								value = extremely_powerful
+							}
+						}
+						#spawn_heretic_army_effect = yes
+						#spawn_heretic_army_effect = yes
+						#spawn_heretic_army_effect = yes
+						#spawn_heretic_army_effect = yes
+						#spawn_heretic_army_effect = yes
+						create_character = {
+							random_traits = yes
+							dynasty = none
+							religion = ROOT
+							culture = ROOT
+							female = no
+							age = 23
+							trait = peasant_leader
+							trait = tough_soldier
+						}
+						new_character = {
+							spawn_unit = {#extreme powerful 1
+								province = PREVPREV
+								home = PREVPREV
+								owner = PREV
+								#leader = THIS
+								match_character = ROOT
+								match_mult = 0.1
+								attrition = 1.0
+								disband_on_peace = yes
+							}
+						}
+						create_character = {
+							random_traits = yes
+							dynasty = none
+							religion = ROOT
+							culture = ROOT
+							female = no
+							age = 32
+							trait = peasant_leader
+							trait = tough_soldier
+						}
+						new_character = {
+							spawn_unit = {#extreme powerful 2
+								province = PREVPREV
+								home = PREVPREV
+								owner = PREV
+								#leader = THIS
+								match_character = ROOT
+								match_mult = 0.1
+								attrition = 1.0
+								disband_on_peace = yes
+							}
+						}
+						create_character = {
+							random_traits = yes
+							dynasty = none
+							religion = ROOT
+							culture = ROOT
+							female = no
+							age = 54
+							trait = peasant_leader
+							trait = tough_soldier
+						}
+						new_character = {
+							spawn_unit = {#extreme powerful 3
+								province = PREVPREV
+								home = PREVPREV
+								owner = PREV
+								#leader = THIS
+								match_character = ROOT
+								match_mult = 0.1
+								attrition = 1.0
+								disband_on_peace = yes
+							}
+						}
+						create_character = {
+							random_traits = yes
+							dynasty = none
+							religion = ROOT
+							culture = ROOT
+							female = no
+							age = 23
+							trait = peasant_leader
+							trait = tough_soldier
+						}
+						new_character = {
+							spawn_unit = {#extreme powerful 4
+								province = PREVPREV
+								home = PREVPREV
+								owner = PREV
+								#leader = THIS
+								match_character = ROOT
+								match_mult = 0.1
+								attrition = 1.0
+								disband_on_peace = yes
+							}
+						}
+						create_character = {
+							random_traits = yes
+							dynasty = none
+							religion = ROOT
+							culture = ROOT
+							female = no
+							age = 34
+							trait = peasant_leader
+							trait = tough_soldier
+						}
+						new_character = {
+							spawn_unit = {#extreme powerful 5
+								province = PREVPREV
+								home = PREVPREV
+								owner = PREV
+								#leader = THIS
+								match_character = ROOT
+								match_mult = 0.1
+								attrition = 1.0
+								disband_on_peace = yes
+							}
+						}
+						
+						wealth = 750
+					}
+					
+					ROOT = { # THIS
+					  reverse_war = {
+						  target = PREV # Revolter
+						  casus_belli = peasant_revolt
+						  thirdparty_title = PREVPREV # Province
+					  }
+					  reverse_opinion = {
+						  who = PREV # Revolter
+						  modifier = opinion_evil_tyrant
+					  }
+					}
+				}
+			
+			}
+		}
     }
     
     # Deal with it
