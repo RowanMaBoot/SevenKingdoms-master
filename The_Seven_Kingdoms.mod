@@ -1,4 +1,4 @@
-name = "The Seven Kingdoms: AoP | Beta9"
+name = "The Seven Kingdoms: AoPK | Beta12"
 path = "mod/The_Seven_Kingdoms"
 user_dir = "The_Seven_Kingdoms"
 picture="thumbnail.png"
