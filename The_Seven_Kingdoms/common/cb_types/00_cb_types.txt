@@ -146,18 +146,37 @@ claim = {
 		
 		if = {
 			limit = {
-				#defacto_liege = FROM
-				owner = { num_of_count_titles <= 2 }
-				ROOT = { lower_tier_than = PREV }
-			}
-			usurp_title_plus_barony_if_unlanded = { target = ROOT type = claim }
-		}
-		else_if = {
-			limit = {
-				owner = { lower_tier_than = ROOT }
+				owner = { 
+					num_of_count_titles == 1 #Defender has one county
+					tier = COUNT 			#Defender is count
+				} 
+				ROOT = { higher_tier_than = COUNT } #Attacker is not also count
 			}
 			owner = {
 				set_defacto_liege = ROOT
+			}
+		}
+		else_if = {
+			limit = {
+				owner = {
+					num_of_count_titles_in_realm == 1#Duke/king has only 1 province in realm
+					higher_tier_than = COUNT 		#Defender is not count
+				}
+				ROOT = { higher_tier_than = COUNT } #Attacker is not count, duke can vassalize king
+			}
+			
+			owner = { 
+				save_event_target_as = defenderking 
+				any_title_under = {
+					limit = {
+						NOT = { lower_tier_than = ROOT } #If title is higher tier than root's title, destroy it. ROOT cannot be count.
+					}
+					destroy_landed_title = THIS
+				}
+			}
+			
+			event_target:defenderking = { 
+				set_defacto_liege = ROOT 
 			}
 		}
 		else = {
