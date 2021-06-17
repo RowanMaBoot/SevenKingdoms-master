@@ -81,136 +81,19 @@ targetted_decisions = {
         }
     }
 	
-	adopt_first_men_customs_liege = {
-		only_playable = yes
-		
-		filter = liege
-		ai_target_filter = liege
-		ai_check_interval = 60
-		culture_group = first_men
-		
-		potential = {
-			is_playable = yes
-			FROM = {
-				culture = andal
-			}
-			ROOT = {
-				NOT = { culture = sistermen }
-			}
-		}
-		allow = {
-			FROM = { prestige = 200 }
-		}
-		effect = {
-			FROM = { prestige = -200 }
-			ROOT = {
-				trigger_switch = {
-					on_trigger = culture
-					northmen = { FROM = { culture = northlander } }
-					barrowmen = { FROM = { culture = northlander } }
-					flint_clansmen = { FROM = { culture = northlander } }
-					crannogmen = { FROM = { culture = northlander } }
-					hill_clansmen = { FROM = { culture = northlander } }
-					crackclawmen = { FROM = { culture = blackwatermen } }
-					dusklander = { FROM = { culture = blackwatermen } }
-					stormmen = { FROM = { culture = stormlander } }
-					wendmen = { FROM = { culture = watermen } }
-					hookmen = { FROM = { culture = watermen } }
-					marchmen = { FROM = { culture = marcher } }
-					evenstar = { FROM = { culture = stormlander } }
-					wrathmen = { FROM = { culture = wrathlander } }
-					rainlander = { FROM = { culture = wrathlander } }
-					gatesmen = { FROM = { culture = valemen } }
-					fingermen = { FROM = { culture = lowland_valemen } }
-					old_bronzemen = { FROM = { culture = valemen } }
-					lowlander = { FROM = { culture = lowland_valemen } }
-					mountain_clansmen = { FROM = { culture = lowland_valemen } }
-					bronzemen = { FROM = { culture = valemen } }
-					rivermen = { FROM = { culture = riverlander } }
-					muddish = { FROM = { culture = freymen } }
-					crabmen = { FROM = { culture = riverlander } }
-					westermen = { FROM = { culture = westerlander } }
-					copperlander = { FROM = { culture = cornlander } }
-					cornmen = { FROM = { culture = cornlander } }
-					craggon = { FROM = { culture = westerlander } }
-					fairmen = { FROM = { culture = westerlander } }
-					shieldislander = { FROM = { culture = shieldmen } }
-					manderish = { FROM = { culture = reachmen } }
-					wynemen = { FROM = { culture = wynelander } }
-					north_marcher = {
-						if = {
-							limit = { region = world_goldengrove }
-							FROM = { culture = grovelander }
-						}
-						else = {
-							FROM = { culture = reachmen }
-						}
-					}
-					south_marcher = { FROM = { culture = reachmen } }
-					skagosi = { FROM = { culture = northlander } }
-					torrentine = { FROM = { culture = andal_dornish } }
-					bonemen = { FROM = { culture = andal_dornish } }
-					stonemen = { FROM = { culture = andal_dornish } }
-					tormen = { FROM = { culture = andal_dornish } }
-					spearmen = { FROM = { culture = andal_dornish } }
-					scourgemen = { FROM = { culture = andal_dornish } }
-				}
-			}
-			custom_tooltip = {
-				text = CONVERTTOLIEGESCULTURECOURT
-				hidden_tooltip = {
-					FROM = {
-						any_courtier = {
-							limit = {
-								is_ruler = no
-								liege = { character = FROM }
-								culture_group = andal
-							}
-							culture = FROM
-						}
-					}
-				}
-			}
-		}
-		revoke_allowed = {
-			always = no
-		}
-		ai_will_do = {
-			factor = 1
-			modifier = {
-				factor = 0.3
-			}
-			modifier = {
-				factor = 0.3
-				FROM = {
-					culture_group = andal
-					NOT = { culture = andal }
-				}
-			}
-		}
-	}
-	
 	adopt_first_men_customs = {
 		only_playable = yes
 		ai_check_interval = 24
 		
 		filter = self
 		ai_target_filter = self
-		culture_group = andal
+		culture_group = first_men
 		
 		potential = {
 			is_playable = yes
 			is_nomadic = no
-			capital_scope = {
-				culture_group = first_men
-				NOT = { culture = sistermen }
-			}
-			OR = {
-				independent = yes
-				liege = {
-					NOT = { culture = ROOT }
-				}
-			}
+			year = 6000
+			religion_group = the_seven_group
 			holy_order = no
 			mercenary = no
 			#has_dlc = "Rajas of India"
@@ -302,11 +185,6 @@ targetted_decisions = {
 					is_conquered = yes
 					conquest_culture = ROOT
 				}
-			}
-			modifier = {
-				factor = 0.3
-				culture_group = andal
-				NOT = { culture = andal }
 			}
 			modifier = {
 				factor = 0.3
