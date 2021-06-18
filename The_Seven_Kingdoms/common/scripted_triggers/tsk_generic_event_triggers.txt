@@ -1,15 +1,75 @@
 is_feminist_religion_or_culture = {
 	OR = {
-		culture_group = dornish
-		culture_group = first_men
-		culture_group = iron_islander
+		AND = {
+			culture_group = dornish
+			NOT = {culture = stone_dornish}
+		}
 		culture_group = valyrian
+		culture = lengii
+		religion = the_mother
+		religion = lady_of_the_waves
+		religion = vulture_god
+		religion = rhoynar
+		religion = boashi
+		religion = boashi_reformed
+		religion = summer_islander
+		religion = old_ones
+		religion = shadowbinders
+		religion_group = valyrian_group
+		has_religion_feature = religion_matriarchal
+		has_religion_feature = religion_equal
+		has_religion_feature = religion_feature_bon	#Pretty sure lady of the waves reformed
+		
+		# These ones are moved to lesser woman rights triggers
+		#culture_group = first_men
+		#culture_group = iron_islander 
+		#culture_group = free_folk
+		#religion = rhllor
+		#religion = boashi
+		#religion = starry_wisdom
+		#religion = shadowbinders
+		#religion = yiti_gods
+		#religion = old_gods_beyond
+	}
+	NOT = {has_religion_feature = religion_patriarchal}
+}
+
+# Has female warriors
+is_warrior_women_religion_or_culture = {	#Implement into other code
+	OR = {
+		is_feminist_religion_or_culture = yes
+		culture_group = first_men
+		culture_group = iron_islander 
+		culture_group = dornish
 		culture_group = free_folk
 		religion = rhllor
-		religion = the_mother
-		religion = boashi
-		religion_group = valyrian_group
+		religion = starry_wisdom
+		religion = old_gods_beyond
 	}
+	NOT = {has_religion_feature = religion_patriarchal}
+}
+
+
+# Has female priests
+is_female_religion = {	#Implement
+	OR = {
+		is_feminist_religion_or_culture = yes
+		religion = rhllor
+		religion = starry_wisdom
+		religion = old_gods_beyond
+		religion = shadowbinders
+		#culture_group = valyrian
+		#religion = the_mother
+		#religion = lady_of_the_waves
+		#religion = vulture_god
+		#religion = rhoynar
+		#religion = boashi
+		#religion_group = valyrian_group
+		#has_religion_feature = religion_matriarchal
+		#has_religion_feature = religion_equal
+		#has_religion_feature = religion_feature_bon	#Pretty sure lady of the waves reformed
+	}
+	NOT = {has_religion_feature = religion_patriarchal}
 }
 
 religion_openly_westerosi_pagan_trigger = {

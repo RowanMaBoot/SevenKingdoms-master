@@ -150,3 +150,53 @@ title_lord = {
 
 	message = no
 }
+
+title_missionary = {
+	is_high_prio = no
+    dignity = 0.87
+    realm_in_name = no
+	grant_limit = 1
+	opinion_effect = 0
+	monthly_salary = 0.05
+	monthly_prestige = 0.1
+	monthly_piety = 0.5
+	
+	allowed_to_grant = {
+		any_courtier = { has_character_flag = missionary }
+	}
+	
+	allowed_to_hold = {
+		custom_tooltip = {
+			text = title_administrator_modifier_tt	#Change
+			has_character_flag = missionary
+		}
+		NOT = { trait = in_hiding }
+		NOT = { trait = incapable }
+		prisoner = no
+	}
+
+	revoke_trigger = {
+		always = no
+	}
+	
+	gain_effect = {
+		#if = {
+		#	limit = { has_character_flag = missionary_just_spawned }
+        #    character_event = { id = tsk_missionary_evt.100 days = 10 } 
+        #    clr_character_flag = missionary_just_spawned
+        #    break = yes
+		#}
+        character_event = { id = tsk_missionary_evt.100 days = 10 random = 1 } 	#Get new event id
+	}
+	lose_effect = {
+		clear_delayed_event = { id = tsk_missionary_evt.100 }
+	}
+	retire_effect = {
+		clear_delayed_event = { id = tsk_missionary_evt.100 }	
+	}
+	death_effect = {
+		clear_delayed_event = { id = tsk_missionary_evt.100 }
+	}
+
+	message = yes
+}
