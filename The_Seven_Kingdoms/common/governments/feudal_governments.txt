@@ -50,6 +50,7 @@ feudal_governments = {
 		}
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			muslim_government
+			exotic_government
 			# theocratic_feudal_government
 			chinese_imperial_government
 		}
@@ -124,6 +125,7 @@ feudal_governments = {
 			feudal_government
 			# theocratic_feudal_government
 			chinese_imperial_government
+			exotic_government
 		}
 		free_revoke_on_tiers = {
 			duke
@@ -262,6 +264,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			# theocratic_feudal_government
 		}
 		free_revoke_on_tiers = {
@@ -306,7 +309,67 @@ feudal_governments = {
 		## Modifiers
 		court_size_modifier = 10
 	}
+	
+	exotic_government = {	#Far Eastern
+		preferred_holdings = { CASTLE }
+		allowed_holdings = { 
+			CASTLE
+			TEMPLE
+			FORT
+			HOSPITAL
+		}
+		allowed_holdings_culture = { # Will not get the wrong government type penalty for tribes of the same culture
+			TRIBAL
+		}
+		accepts_liege_governments = { # Gets the wrong religion modifier instead
+			feudal_government
+			muslim_government
+			chinese_imperial_government
+		}
+		free_revoke_on_tiers = {
+			duke
+		}
+		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
+			tribal_government
+		}
+		frame_suffix = "_chineseimperial"
+		potential = {
+			NOT = { is_special_feudal_government_potential = yes }
+			OR = {
+				controls_religion = no
+				religion_group = far_east_group
+				has_religion_feature = religion_temporal_head
+			}
+			OR = {
+				religion_group = far_east_group
+				culture_group = yiti_group
+				culture_group = nghai_group
+				culture_group = lhazareen_group
+				culture_group = qartheen_group
+				culture_group = summer_islander_group
+			}
+			# NOT = { is_government_potential = roman_imperial_government }
+			NOT = { is_government_potential = order_government }
+			NOT = { is_china_pretender_potential = yes }
+			is_patrician = no
+		}
+		
+		color = { 100 133 140 }
+		
+		uses_decadence = yes
+		uses_piety_for_law_change = yes
 
+		can_build_tribal = no
+		
+		ignore_in_vassal_limit_calculation = {
+			tribal_government
+		}
+		capital_move_delay = 600
+		
+		## Modifiers
+		court_size_modifier = 10
+	}
+	
 	order_government = {
 		preferred_holdings = { CASTLE }
 		allowed_holdings = {
@@ -321,6 +384,7 @@ feudal_governments = {
 			theocracy_government
 			# theocratic_feudal_government
 			chinese_imperial_government
+			exotic_government
 		}
 		free_revoke_on_governments = {
 			order_government
@@ -471,6 +535,7 @@ feudal_governments = {
 			muslim_government
 			theocratic_feudal_government
 			chinese_imperial_government
+			exotic_government
 		}
 		free_revoke_on_governments_religion = { # Tribal vassals of other religions can have their titles revoked for free
 			tribal_government
@@ -535,6 +600,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			nights_watch_government
 			merchant_kingdom_government
 			theocratic_kingdom_government
@@ -584,7 +650,7 @@ feudal_governments = {
 			tribal_government
 		}
 		character_modifier = {
-			vassal_opinion = 10
+			vassal_opinion = 5
 			learning = 2
 
 			city_vassal_min_levy = -0.1
@@ -683,6 +749,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			theocratic_kingdom_government
@@ -732,10 +799,10 @@ feudal_governments = {
 		can_build_tribal = no
 
 		character_modifier = {
-			# ai_greed = 10
-			# ai_zeal = -10
-			# ai_honor = -10
-			# ai_ambition = 10
+			#ai_greed = 10
+			#ai_zeal = -10
+			#ai_honor = -10
+			#ai_ambition = 10
 		
 			castle_tax_modifier = 0.1
 		
@@ -768,6 +835,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government
@@ -819,10 +887,10 @@ feudal_governments = {
 		no_vassal_tax = { theocracy_government }
 
 		character_modifier = {
-			# ai_greed = -10
-			# ai_zeal = 10
-			# ai_honor = 10
-			# ai_ambition = -10
+			#ai_greed = -10
+			#ai_zeal = 10
+			#ai_honor = 10
+			#ai_ambition = -10
 		
 			temple_tax_modifier = -0.25
 			temple_vassal_min_levy = -0.25
@@ -855,6 +923,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government
@@ -937,10 +1006,10 @@ feudal_governments = {
 		can_build_tribal = no
 		
 		character_modifier = {
-			# ai_greed = -10
-			# ai_zeal = 5
-			# ai_honor = 10
-			# ai_ambition = 5
+			#ai_greed = -10
+			#ai_zeal = 5
+			#ai_honor = 10
+			#ai_ambition = 5
 		
 			castle_tax_modifier = 0.05
 		
@@ -974,6 +1043,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government
@@ -1077,6 +1147,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government
@@ -1127,10 +1198,10 @@ feudal_governments = {
 		can_build_tribal = no
 		
 		character_modifier = {
-			# ai_greed = -10
-			# ai_zeal = 10
-			# ai_honor = 10
-			# ai_ambition = -10
+			#ai_greed = -10
+			#ai_zeal = 10
+			#ai_honor = 10
+			#ai_ambition = -10
 		
 			castle_tax_modifier = 0.1
 		
@@ -1160,6 +1231,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government
@@ -1212,10 +1284,10 @@ feudal_governments = {
 		can_build_tribal = no
 		
 		character_modifier = {
-			# ai_greed = -10
-			# ai_zeal = 10
-			# ai_honor = 10
-			# ai_ambition = -10
+			#ai_greed = -10
+			#ai_zeal = 10
+			#ai_honor = 10
+			#ai_ambition = -10
 		
 			castle_tax_modifier = 0.08
 		
@@ -1251,6 +1323,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government
@@ -1299,10 +1372,10 @@ feudal_governments = {
 		can_build_tribal = no
 		
 		character_modifier = {
-			# ai_greed = 10
-			# ai_zeal = -10
-			# ai_honor = -10
-			# ai_ambition = 10
+			#ai_greed = 10
+			#ai_zeal = -10
+			#ai_honor = -10
+			#ai_ambition = 10
 		
 			castle_tax_modifier = 0.1
 		
@@ -1339,6 +1412,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government
@@ -1388,10 +1462,10 @@ feudal_governments = {
 		can_build_tribal = no
 		
 		character_modifier = {
-			# ai_greed = 5
-			# ai_zeal = 5
-			# ai_honor = 5
-			# ai_ambition = 5
+			#ai_greed = 5
+			#ai_zeal = 5
+			#ai_honor = 5
+			#ai_ambition = 5
 
 			castle_tax_modifier = -0.05
 		
@@ -1424,6 +1498,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government
@@ -1489,10 +1564,10 @@ feudal_governments = {
 		can_build_tribal = no
 		
 		character_modifier = {
-			# ai_greed = 15
-			# ai_zeal = 5
-			# ai_honor = -10
-			# ai_ambition = 10
+			#ai_greed = 15
+			#ai_zeal = 5
+			#ai_honor = -10
+			#ai_ambition = 10
 		
 			castle_tax_modifier = 0.1
 			temple_tax_modifier = -0.1
@@ -1526,6 +1601,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government
@@ -1586,10 +1662,10 @@ feudal_governments = {
 		can_build_tribal = no
 		
 		character_modifier = {
-			# ai_greed = 5
-			# ai_zeal = -5
-			# ai_honor = -5
-			# ai_ambition = 15
+			#ai_greed = 5
+			#ai_zeal = -5
+			#ai_honor = -5
+			#ai_ambition = 15
 		
 			castle_tax_modifier = 0.1
 		
@@ -1622,6 +1698,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government
@@ -1676,10 +1753,10 @@ feudal_governments = {
 		can_build_tribal = no
 		
 		character_modifier = {
-			# ai_greed = -10
-			# ai_zeal = 10
-			# ai_honor = 10
-			# ai_ambition = -10
+			#ai_greed = -10
+			#ai_zeal = 10
+			#ai_honor = 10
+			#ai_ambition = -10
 			
 			vassal_opinion = 4
 		
@@ -1717,6 +1794,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 				muslim_government
+				exotic_government
 				old_gods_government
 				nights_watch_government
 				merchant_kingdom_government
@@ -1782,6 +1860,7 @@ feudal_governments = {
 		accepts_liege_governments = { # Gets the wrong religion modifier instead
 			feudal_government
 			muslim_government
+			exotic_government
 			old_gods_government
 			nights_watch_government
 			merchant_kingdom_government

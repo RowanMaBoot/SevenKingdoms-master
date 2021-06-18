@@ -1389,7 +1389,7 @@ succession_laws = {
 }
 
 gender_laws = {
-	cognatic_succession = {
+	cognatic_succession = { #Men then women
 		potential = {
 			holder_scope = {
 				NOT = { has_religion_feature = religion_matriarchal }
@@ -1470,7 +1470,7 @@ gender_laws = {
 		}
 	}
 	
-	agnatic_succession = {
+	agnatic_succession = { #Men Only
 		female_dynasty_opinion = -5
 	
 		potential = {
@@ -1509,7 +1509,7 @@ gender_laws = {
 		}
 	}
 	
-	true_cognatic_succession = {
+	true_cognatic_succession = { 	#Eqaulity
 		male_dynasty_opinion = -5
 		
 		potential = { 
@@ -1533,7 +1533,8 @@ gender_laws = {
 						has_religion_feature = religion_feature_bon
 						AND = {
 							has_dlc = "Zeus"
-							ROOT = { holder_scope = { primary_title = { has_law = status_of_women_4 } } }
+							#ROOT = { holder_scope = { primary_title = { has_law = status_of_women_4 } } }
+							ROOT = { gender_equality_trigger = yes }
 							OR = {
 								is_patrician = no
 								liege = {
@@ -1565,30 +1566,16 @@ gender_laws = {
 						is_patrician = yes
 					}
 				}
-				holder_scope = {
-					has_religion_feature = religion_equal
-				}
+				#holder_scope = {
+				#	gender_equality_trigger = yes
+				#}
 			}
 			
 			is_primary_type_title = no
 		}
 		allow = {
-			OR = {
-				holder_scope = {
-					OR = {
-						culture_group = valyrian
-						culture_group = free_folk
-						culture_group = dornish
-						has_religion_feature = religion_equal
-					}
-				}
-				OR = {
-					ROOT = { holder_scope = { primary_title = { has_law = status_of_women_4 } } }
-					has_game_rule = {
-						name = gender
-						value = all
-					}
-				}
+			holder_scope = {
+				gender_equality_trigger = yes
 			}
 		}
 		effect = {
@@ -1622,7 +1609,7 @@ gender_laws = {
 		}	
 	}
 	
-	enatic_succession = {
+	enatic_succession = {			#Women then men
 		male_dynasty_opinion = -10
 		female_dynasty_opinion = 10
 		
@@ -1644,7 +1631,7 @@ gender_laws = {
 		}
 	}
 	
-	enatic_cognatic_succession = {
+	enatic_cognatic_succession = {	#Women
 		male_dynasty_opinion = -10
 		female_dynasty_opinion = 5
 		

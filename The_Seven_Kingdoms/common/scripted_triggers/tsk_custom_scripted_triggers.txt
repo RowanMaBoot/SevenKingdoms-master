@@ -8,74 +8,50 @@ is_knightly_member_trigger = {
 
 is_following_spreadable_religion_trigger = {
   OR = {
-    religion_group = the_seven_group
-    religion = rhllor
-    religion = valyrian
-  }
-}
-
-# Governs religions that are resistant to 
-is_resistant_religion_trigger = {
-  OR = {
-    religion = valyrian
     religion = the_seven
     religion = rhllor
-    religion = drowned_god
-    religion = moonsingers
-    trait = zealous
-    culture = northmen
-    culture = barrowmen
-    culture = flint_clansmen
-    culture = crannogmen
-    culture = hill_clansmen
-    culture = crackclawmen
-    culture = mountain_clansmen
-    culture = sistermen
-    culture = craggon
-    culture = fairmen
-    culture = skagosi
   }
 }
 
-# Sponsors both a whitelist and a blacklist in case of overlap in region defines.
-# Rules can modify what regions are taken into the system, such as Essos.
-is_religion_spread_region_allowed_trigger = {
-  # Will never spread beyond the wall.
-  NOT = {
-    location = {
-      region = world_the_wall
-      region = world_beyond_the_wall
-    }
-  }
-  
-  
-  #
-  OR = {
-    # Will spread everywhere if unrestricted, excluding the wall and beyond
-    has_game_rule = {
-      name = missionary_system
-      value = missionary_system_unrestricted
-    }
-    
-    # Will spread within Essos/Valyria if allowed to
-    AND = {
-      has_game_rule = {
-        name = missionary_system
-        value = missionary_system_valyria
-      }
-      location = {
-        region = world_essos_nosteps
-      }
-    }
-    
-    # Will spread in Westeros.
-    location = {
-      OR = {
-        region = world_westeros_north_south
-      }
-    }
-  }
+# Governs religions that are resistant to  conversion. Makes fewer missionaries come to you.
+is_resistant_religion_trigger = {
+	OR = {
+		#religion = valyrian
+		#religion = drowned_god
+		#religion = moonsingers
+		#trait = zealous
+		#culture = northmen
+		#culture = barrowmen
+		#culture = flint_clansmen
+		#culture = crannogmen
+		#culture = hill_clansmen
+		#culture = crackclawmen
+		#culture = mountain_clansmen
+		#culture = sistermen
+		#culture = craggon
+		#culture = fairmen
+		#culture = skagosi
+		is_following_spreadable_religion_trigger = yes
+		location = {
+			OR = {
+				region = world_the_north_beyond
+				region = world_the_iron_islands
+			}
+		}
+	}
 }
+
+#These cultures do not care about wrong religion and will let missionaries in, but they will spread slower
+is_tolerant_religion_trigger = {
+	OR = {
+		culture = high_valyrian
+		culture = braavosi
+		culture = lorathi
+		#religion = old_gods #idk about this one due to spreading slower
+	}
+	is_resistant_religion_trigger = no
+}
+
 
 educator_is_combat_trained = {
   educator = {
@@ -160,6 +136,13 @@ is_culture_swordsmanship_specialised = {
     culture = clansmen
     culture = dusklander
     culture = mountain_clansmen
+	culture = scourgemen
+	culture = spearmen
+	culture = tormen
+	culture = stonemen
+	culture = bonemen
+	culture = torrentine
+	culture_group = dothraki_group
     culture_group = dornish
     culture_group = free_folk
     culture_group = iron_islander
@@ -192,32 +175,12 @@ ward_is_female_allowed = {
     # The Dornish have no qualms with training different genders.
     # Those of the free cities, such as the Braavosi, care only about coin.
     # Followers of the Mother or Boashi will happily teach a daughter.
-    educator = { 
-      OR = {
-        culture_group = essos_group
-        culture_group = dornish
-        religion = moonsingers
-        religion = faceless_men
-        religion = the_mother
-        religion = boashi
-        religion_group = valyrian_group
-      }
-    }
     educator = {
-      liege = {
-        primary_title = {
-          OR = {
-            has_law = status_of_women_1
-            has_law = status_of_women_2
-            has_law = status_of_women_3
-            has_law = status_of_women_4
-          }
-        }
-      }
-    }
-    has_game_rule = {
-      name = gender
-      value = all
+		OR = {
+			gender_equality_trigger = yes
+			culture_group = essos_group
+			religion = faceless_men
+		}
     }
   }
 }
@@ -695,3 +658,24 @@ tsk_has_special_genetics = {
 		graphical_culture = yronwoodfmgfx
 	}
 }
+
+#Depricated
+#tsk_building_unlootable_trigger = {
+#	OR = {
+#		building = ca_arctic
+#		building = ca_farmlands
+#		building = ca_forest
+#		building = ca_hills
+#		building = ca_woods
+#		building = ca_mountain
+#		building = ca_volcanic_mountain
+#		building = ca_steppe
+#		building = ca_plains
+#		building = ca_jungle
+#		building = ca_fens
+#		building = ca_marsh
+#		building = ca_desert
+#		building = ca_barrens
+#		building = ca_coastal_desert
+#	}
+#}

@@ -948,32 +948,22 @@ change_council_job_potential_trigger = {
 	}
 }
 
-can_be_chancellor_trigger = {
+can_be_chancellor_trigger = { #liege refers to player
 	is_dragon = no
 	OR = {
 		AND = {
 			OR = {
-				AND = { #Patriarchal religions can only hire males. Matriarchal religions can only hire females.																				
+				AND = { #No men at all																				
 					is_female = no
 					NOT = { liege = { has_religion_feature = religion_matriarchal } } 
 				}
-				AND = {
-					is_female = yes 
-						religion = the_mother
-						liege = { religion = the_mother }
-						liege = { has_religion_feature = religion_matriarchal } 
-						liege = { has_religion_feature = religion_equal }  
+				AND = { #When female
+					is_female = yes
+					liege = { is_feminist_religion_or_culture = yes }
+					is_feminist_religion_or_culture = yes
 				}
-				trait = horse # So we can have female glitterhoofs! :D										  
-                AND = {
-					religion = boashi
-					liege = { religion = boashi }
-				}
-				AND = {
-					religion_group = valyrian_group
-					liege = { religion_group = valyrian_group }
-				}
-				AND = {
+				trait = horse # So we can have female glitterhoofs! :D
+				AND = { #Laws for when female
 					liege = {
 						primary_title = {
 							OR = {
@@ -993,10 +983,9 @@ can_be_chancellor_trigger = {
 						}
 						is_landed = yes
 						trait = silent_sister
-							
 					}
 				}
-				OR = {
+				OR = { #Absolute gender equality
 					AND = { 
 						is_female = yes
 						liege = { primary_title = { has_law = status_of_women_4 } } 
@@ -1032,38 +1021,19 @@ can_be_marshal_trigger = {
 	OR = {
 		AND = {
 			OR = {
-				AND = { #Patriarchal religions can only hire males. Matriarchal religions can only hire females.
-					is_female = no 
+				AND = { #No men at all																				
+					is_female = no
 					NOT = { liege = { has_religion_feature = religion_matriarchal } } 
 				}
-				AND = {
-					is_female = yes 
-					OR = { 
-						liege = { has_religion_feature = religion_matriarchal } 
-						liege = { has_religion_feature = religion_equal } 
-					} 
+				AND = { #When female
+					is_female = yes
+					liege = { is_warrior_women_religion_or_culture = yes }
+					is_warrior_women_religion_or_culture = yes
 				}
-				trait = horse # So we can have female glitterhoofs! :D
-				OR = {
-					AND = {
-                        religion = the_mother
-                        liege = { religion = the_mother }
-                    }
-                    AND = {
-                        religion = boashi
-                        liege = { religion = boashi }
-                    }
-                    AND = {
-                        religion_group = valyrian_group
-                        liege = { religion_group = valyrian_group }
-                    }
-				}
-				AND = {
+				AND = { #Laws for when female
 					liege = {
 						primary_title = {
-							OR = {
-								has_law = status_of_women_3
-							}
+							has_law = status_of_women_3
 						}
 					}
 					OR = {
@@ -1076,10 +1046,9 @@ can_be_marshal_trigger = {
 							}
 						}
 						is_landed = yes
-						
 					}
 				}
-				OR = {
+				OR = { #Absolute gender equality
 					AND = { 
 						is_female = yes
 						liege = { primary_title = { has_law = status_of_women_4 } } 
@@ -1116,27 +1085,16 @@ can_be_treasurer_trigger = {
 	OR = {
 		AND = {
 			OR = {
-				AND = { #Patriarchal religions can only hire males. Matriarchal religions can only hire females.
-					is_female = no 
+				AND = { #No men at all																				
+					is_female = no
 					NOT = { liege = { has_religion_feature = religion_matriarchal } } 
 				}
-				AND = {
-					is_female = yes 
-					OR = { 
-						liege = { has_religion_feature = religion_matriarchal } 
-						liege = { has_religion_feature = religion_equal } 
-					} 
+				AND = { #When female
+					is_female = yes
+					liege = { is_feminist_religion_or_culture = yes }
+					is_feminist_religion_or_culture = yes
 				}
-				trait = horse # So we can have female glitterhoofs! :D
-				AND = {
-					religion = boashi
-					liege = { religion = boashi }
-				}
-				AND = {
-					religion_group = valyrian_group
-					liege = { religion_group = valyrian_group }
-				}
-				AND = {
+				AND = { #Laws for when female
 					liege = {
 						primary_title = {
 							OR = {
@@ -1154,12 +1112,11 @@ can_be_treasurer_trigger = {
 								any_consort = { character = ROOT }
 							}
 						}
-						is_landed = yes
 						trait = silent_sister
-						
+						is_landed = yes
 					}
 				}
-				OR = {
+				OR = { #Absolute gender equality
 					AND = { 
 						is_female = yes
 						liege = { primary_title = { has_law = status_of_women_4 } } 
@@ -1193,60 +1150,24 @@ can_be_treasurer_trigger = {
 
 can_be_spymaster_trigger = {
 	is_dragon = no
+	
 	OR = {
 		AND = {
 			OR = {
-				AND = { #Patriarchal religions can only hire males. Matriarchal religions can only hire females.
-					is_female = no 
+				AND = { #No men at all																				
+					is_female = no
 					NOT = { liege = { has_religion_feature = religion_matriarchal } } 
 				}
-				AND = {
-					is_female = yes 
-					OR = { 
-						liege = { has_religion_feature = religion_matriarchal } 
-						liege = { has_religion_feature = religion_equal } 
-					} 
+				AND = { #When female
+					is_female = yes
+					liege = { is_feminist_religion_or_culture = yes }
+					is_feminist_religion_or_culture = yes
 				}
-				trait = horse # So we can have female glitterhoofs! :D
-				liege = { 
-					NOR = {
-						liege = { has_religion_feature = religion_matriarchal } 
-						liege = { has_religion_feature = religion_patriarchal } 
-					}
-					OR = {
-						mother = { character = ROOT }
-						any_spouse = { character = ROOT }
-					}
+				OR = {
+					liege = { mother = { character = PREV }}
+					liege = { any_spouse = { character = PREV }}
 				}
-				AND = {
-					religion_group = westerosi_pagan_group
-					liege = {
-						religion_group = westerosi_pagan_group
-						NOR = {
-							liege = { has_religion_feature = religion_matriarchal } 
-							liege = { has_religion_feature = religion_patriarchal }
-						}
-					}
-				}
-				AND = {
-					religion = the_mother
-					liege = { religion = the_mother }
-				}
-                AND = {
-					religion = boashi
-					liege = { religion = boashi }
-				}
-				AND = {
-					religion_group = valyrian_group
-					liege = {
-						religion_group = valyrian_group
-						NOR = {
-							liege = { has_religion_feature = religion_matriarchal } 
-							liege = { has_religion_feature = religion_patriarchal } 
-						}
-					}
-				}
-				AND = {
+				AND = { #Laws for when female, close family members
 					liege = {
 						primary_title = {
 							OR = {
@@ -1265,12 +1186,11 @@ can_be_spymaster_trigger = {
 								any_consort = { character = ROOT }
 							}
 						}
-						is_landed = yes
 						trait = silent_sister
-						
+						is_landed = yes
 					}
 				}
-				OR = {
+				OR = { #Absolute gender equality
 					AND = { 
 						is_female = yes
 						liege = { primary_title = { has_law = status_of_women_4 } } 
@@ -1285,6 +1205,7 @@ can_be_spymaster_trigger = {
 		}
 		has_character_flag = special_spymaster
 	}
+	
 	
 	independent = no
 	prisoner = no
@@ -1392,33 +1313,16 @@ can_be_councilmember_king_trigger = {
 	}
 	AND = {
 		OR = {
-			AND = { #Patriarchal religions can only hire males. Matriarchal religions can only hire females.
-				is_female = no 
+			AND = { #No men at all																				
+				is_female = no
 				NOT = { liege = { has_religion_feature = religion_matriarchal } } 
 			}
-			AND = {
-				is_female = yes 
-				NOT = { liege = { has_religion_feature = religion_patriarchal } } 
-			}
-			AND = {
-				OR = {
-					AND = {
-                        religion = the_mother
-                        liege = { religion = the_mother }
-                    }
-                    AND = {
-                        religion = boashi
-                        liege = { religion = boashi }
-                    }
-                    AND = {
-                        religion_group = valyrian_group
-                        liege = { religion_group = valyrian_group }
-                    }
-				}
-				liege = { religion = ROOT }
-			}
-			AND = {
+			AND = { #When female
 				is_female = yes
+				liege = { is_feminist_religion_or_culture = yes }
+				is_feminist_religion_or_culture = yes
+			}
+			AND = { #Laws for when female, close family members
 				liege = {
 					primary_title = {
 						OR = {
@@ -1428,9 +1332,19 @@ can_be_councilmember_king_trigger = {
 						}
 					}
 				}
-				is_landed = yes
+				OR = {
+					liege = {
+						OR = {
+							dynasty = ROOT
+							is_close_relative = ROOT
+							any_spouse = { character = ROOT }
+							any_consort = { character = ROOT }
+						}
+					}
+					is_landed = yes
+				}
 			}
-			OR = {
+			OR = { #Absolute gender equality
 				AND = { 
 					is_female = yes
 					liege = { primary_title = { has_law = status_of_women_4 } } 
@@ -1460,58 +1374,51 @@ can_be_councilmember_emperor_trigger = {
 			} 
 		} 
 	}
-	OR = {
-		AND = {
-			OR = {
-				AND = { #Patriarchal religions can only hire males. Matriarchal religions can only hire females.
-					is_female = no 
-					NOT = { liege = { has_religion_feature = religion_matriarchal } } 
+	AND = {
+		OR = {
+			AND = { #No men at all																				
+				is_female = no
+				NOT = { liege = { has_religion_feature = religion_matriarchal } } 
+			}
+			AND = { #When female
+				is_female = yes
+				liege = { is_feminist_religion_or_culture = yes }
+				is_feminist_religion_or_culture = yes
+			}
+			AND = { #Laws for when female, close family members
+				liege = {
+					primary_title = {
+						OR = {
+							has_law = status_of_women_1
+							has_law = status_of_women_2
+							has_law = status_of_women_3
+						}
+					}
 				}
-				AND = {
-					is_female = yes 
-					OR = { 
-						liege = { has_religion_feature = religion_matriarchal } 
-						liege = { has_religion_feature = religion_equal } 
-					} 
-				}													   
-				AND = {
-					religion = the_mother
-					liege = { religion = the_mother }
-				}
-                AND = {
-					religion = boashi
-					liege = { religion = boashi }
-				}
-				AND = {
-					religion_group = valyrian_group
-					liege = { religion_group = valyrian_group }
-				}
-				AND = {
-					is_female = yes   
+				OR = {
 					liege = {
-						primary_title = {
-							OR = {
-								has_law = status_of_women_1
-								has_law = status_of_women_2
-								has_law = status_of_women_3
-							}
+						OR = {
+							dynasty = ROOT
+							is_close_relative = ROOT
+							any_spouse = { character = ROOT }
+							any_consort = { character = ROOT }
 						}
 					}
 					is_landed = yes
 				}
-				OR = {
-					AND = { 
-						is_female = yes
-						liege = { primary_title = { has_law = status_of_women_4 } } 
-					}
-					has_game_rule = {
-						name = gender
-						value = all
-					}
+			}
+			OR = { #Absolute gender equality
+				AND = { 
+					is_female = yes
+					liege = { primary_title = { has_law = status_of_women_4 } } 
+				}
+				has_game_rule = {
+					name = gender
+					value = all
 				}
 			}
-			is_adult = yes
 		}
+		is_adult = yes
 	}
 }
 
@@ -1849,11 +1756,7 @@ block_general_event_trigger = {
 
 gender_equality_trigger = {
 	OR = {
-		# religion = the_mother
-		# religion = boashi
-		# religion_group = valyrian_group
 		is_feminist_religion_or_culture = yes
-		has_religion_feature = religion_equal
 		AND = {
 			is_landed = yes
 			primary_title = { 
@@ -1908,27 +1811,7 @@ female_can_hold_minor_title_trigger = {
 		OR = {
 			custom_tooltip = {
 				text = tooltip_feminist_liege_vanilla_religion
-				AND = {
-					OR = {
-						religion = the_mother
-						religion = boashi
-						religion_group = valyrian_group
-					}
-					liege = { religion = ROOT }
-				}
-			}
-			custom_tooltip = {
-				text = tooltip_feminist_liege_religion_feature
-				AND = {
-					OR = {
-						has_religion_feature = religion_equal
-						has_religion_feature = religion_matriarchal
-					}
-					liege = {
-						has_religion_feature = religion_equal
-						has_religion_feature = religion_matriarchal
-					}
-				}
+				gender_equality_trigger = yes
 			}
 			primary_title = {
 				OR = {
@@ -1971,27 +1854,7 @@ female_can_hold_minor_commander_title_trigger = {
 			}
 			custom_tooltip = {
 				text = tooltip_feminist_liege_vanilla_religion
-				AND = {
-					OR = {
-						religion = the_mother
-						religion = boashi
-						religion_group = valyrian_group
-					}
-					liege = { religion = ROOT }
-				}
-			}
-			custom_tooltip = {
-				text = tooltip_feminist_liege_religion_feature
-				AND = {
-					OR = {
-						has_religion_feature = religion_equal
-						has_religion_feature = religion_matriarchal
-					}
-					liege = {
-						has_religion_feature = religion_equal
-						has_religion_feature = religion_matriarchal
-					}
-				}
+				is_warrior_women_religion_or_culture = yes
 			}
 			primary_title = {
 				has_law = status_of_women_4 
@@ -4356,6 +4219,7 @@ can_be_asked_to_leave_court_trigger = {
 				has_minor_title = title_appointed_regent
 				has_minor_title = title_commander
 				has_minor_title = title_court_physician
+				has_minor_title = title_missionary
 			}
 		}
 
