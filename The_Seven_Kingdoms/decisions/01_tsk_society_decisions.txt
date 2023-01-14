@@ -74,6 +74,7 @@ society_decisions = {
 
 targetted_decisions = {
   knight_target = {
+  	is_high_prio = yes
     filter = court
     ai_target_filter = court
     
@@ -98,8 +99,27 @@ targetted_decisions = {
       }
     }
     allow = {
-      is_combat_trained = yes # Need a reason to Knight them
-      age = 14
+      OR = {
+        AND = {
+          is_female = yes
+          OR = {
+            trait = dueling_skilled
+            trait = dueling_expert
+            trait = dueling_master
+            trait = dueling_legend
+          }
+        }
+        AND = {
+          is_female = no
+          OR = {
+            trait = dueling_adept
+            trait = dueling_skilled
+            trait = dueling_expert
+            trait = dueling_master
+            trait = dueling_legend
+          }
+        }
+      }
       
       scaled_wealth = 0.10
       FROM = {
@@ -162,7 +182,7 @@ targetted_decisions = {
       always = no
     }
     ai_will_do = {
-      factor = 0
+      factor = 1
     }
   }
   
@@ -181,6 +201,7 @@ targetted_decisions = {
       }
     }
     potential = {
+      is_adult = no
       NOR = {
         trait = page
         trait = squire
@@ -193,6 +214,7 @@ targetted_decisions = {
     }
     allow = {
       age = 6
+      martial = 3
       
       FROM = {
         prestige = 50
@@ -229,6 +251,31 @@ targetted_decisions = {
       }
     }
     potential = {
+      OR = {
+        AND = {
+          is_female = yes
+          OR = {
+            trait = dueling_novice
+            trait = dueling_adept
+            trait = dueling_skilled
+            trait = dueling_expert
+            trait = dueling_master
+            trait = dueling_legend
+          }
+        }
+        AND = {
+          is_female = no
+          OR = {
+            age = 14
+            trait = dueling_novice
+            trait = dueling_adept
+            trait = dueling_skilled
+            trait = dueling_expert
+            trait = dueling_master
+            trait = dueling_legend
+          }
+        }
+      }
       NOR = {
         trait = squire
         trait = knight
@@ -238,7 +285,7 @@ targetted_decisions = {
       }
     }
     allow = {
-      age = 10
+      age = 14
       
       FROM = {
         scaled_wealth = 0.10
