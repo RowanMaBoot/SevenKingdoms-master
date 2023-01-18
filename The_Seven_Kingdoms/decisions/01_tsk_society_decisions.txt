@@ -16,300 +16,274 @@
 # Request Knighthood, Rank 1 Onwards
 
 society_decisions = {
-  request_knighthood = {
-    only_playable = yes
-    is_high_prio = yes
+	request_knighthood = {
+    	only_playable = yes
+    	is_high_prio = yes
     
-    potential = {
-      society_member_of = knighthood_the_seven
-      society_rank == 2
-      is_playable = yes
-      block_general_event_trigger = no
-      NOR = {
-        trait = knight
-        trait = red_knight
-        trait = dragon_knight
-        trait = hedge_knight
-        has_character_flag = has_sent_request_for_knighthood
-      }
-    }
-    allow = {
-      scaled_wealth = 0.50
-      society_currency >= 500
-      days_in_society > 730
-    }
-    effect = {
-      # Event for Knighthood
-      hidden_tooltip = {
-        save_event_target_as = knighthood_target
-        set_character_flag = has_sent_request_for_knighthood
-        character_event = { id = TSK_S.4 days = 20 random = 10 } # sends hidden delayed event to self, which then sends request to Leader of the society
-      }
-    }
-    revoke_allowed = {
-      always = no
-    }
-    ai_will_do = {
-      factor = 1
+    	potential = {
+      		society_member_of = knighthood_the_seven
+      		society_rank == 2
+      		is_playable = yes
+      		block_general_event_trigger = no
+      		NOR = {
+        		trait = knight
+        		trait = red_knight
+        		trait = dragon_knight
+        		trait = hedge_knight
+        		has_character_flag = has_sent_request_for_knighthood
+      		}
+    	}
+    	
+    	allow = {
+    		scaled_wealth = 0.50
+    		society_currency >= 500
+    		days_in_society > 730
+		}
+		
+    	effect = {
+    	# Event for Knighthood
+    		hidden_tooltip = {
+        		save_event_target_as = knighthood_target
+        		set_character_flag = has_sent_request_for_knighthood
+        		character_event = { id = TSK_S.4 days = 20 random = 10 } # sends hidden delayed event to self, which then sends request to Leader of the society
+      		}
+    	}
+    	
+    	revoke_allowed = {
+    		always = no
+    	}
+    	
+    	ai_will_do = {
+    		factor = 1
       
-      modifier = {
-        factor = 0
-        NOT = { scaled_wealth = 0.75 }
-      }
+    		modifier = {
+    			factor = 0
+        		NOT = { scaled_wealth = 0.75 }
+      		}
       
-      modifier = {
-        factor = 0.1
-        NOT = { age = 26 }
-      }
+    		modifier = {
+        		factor = 0.1
+        		NOT = { age = 26 }
+      		}
       
-      modifier = {
-        factor = 10
-        age = 40
-      }
-    }
-  }
+    		modifier = {
+        		factor = 10
+        		age = 40
+    		}
+    	}
+	}
 }
 
 # Allows members of the Seven group to Knight members of their court for 300 prestige a piece.
 
 targetted_decisions = {
-  knight_target = {
-  	is_high_prio = yes
-    filter = court
-    ai_target_filter = court
+	knight_target = {
+  		is_high_prio = yes
+    	filter = court
+    	ai_target_filter = court
     
-    from_potential = {
-      prestige = 500
+    	from_potential = {
+    		prestige = 500
+      		OR = {
+        		trait = knight
+        		trait = red_knight
+        		trait = dragon_knight
+        		trait = hedge_knight
+      		}
+    	}
+		potential = {
+      		religion = FROM
+      		NOR = {
+        		trait = knight
+        		trait = red_knight
+        		trait = dragon_knight
+        		trait = hedge_knight
+      		}
+    	}
+    	
+		allow = {
+			OR = {
+        		trait = dueling_skilled
+        		trait = dueling_expert
+        		trait = dueling_master
+        		trait = dueling_legend
+    		}
+    	}
       
-      OR = {
-        trait = knight
-        trait = red_knight
-        trait = dragon_knight
-        trait = hedge_knight
-      }
-    }
-    potential = {
-      religion = FROM
-      
-      NOR = {
-        trait = knight
-        trait = red_knight
-        trait = dragon_knight
-        trait = hedge_knight
-      }
-    }
-    allow = {
-      OR = {
-        AND = {
-          is_female = yes
-          OR = {
-            trait = dueling_skilled
-            trait = dueling_expert
-            trait = dueling_master
-            trait = dueling_legend
-          }
-        }
-        AND = {
-          is_female = no
-          OR = {
-            trait = dueling_adept
-            trait = dueling_skilled
-            trait = dueling_expert
-            trait = dueling_master
-            trait = dueling_legend
-          }
-        }
-      }
-      
-      scaled_wealth = 0.10
-      FROM = {
-        prestige = 300
-      }
-    }
+		scaled_wealth = 0.10
+      	FROM = {
+        	prestige = 300
+      	}
     
-    effect = {
-      FROM = { prestige = -300 }
+    	effect = {
+      		FROM = { prestige = -300 }
+      		# Assign 'The Young Ser' to characters 17 and below.
+      		if = {
+        		limit = { NOT = { age = 18 } }
+        		random_list = {
+          			100 = { }
+          			5 = { give_nickname = nick_the_young_ser }
+        		}
+      		}
       
-      # Assign 'The Young Ser' to characters 17 and below.
-      if = {
-        limit = { NOT = { age = 18 } }
-        random_list = {
-          100 = { }
-          5 = { give_nickname = nick_the_young_ser }
-        }
-      }
+      		# Remove prestige for naming a woman a Knight
+      		trigger_switch = {
+        		on_trigger = is_female
+        		yes = { FROM = { prestige = -200 } }
+        		no = {  }
+      		}
       
-      # Remove prestige for naming a woman a Knight
-      trigger_switch = {
-        on_trigger = is_female
-        
-        yes = { FROM = { prestige = -200 } }
-        no = {  }
-      }
+      		# Add some prestige back if they have appropriate traits
+      		trigger_switch = {
+        		on_trigger = trait
+        		page = { FROM = { prestige = 100 } }
+        		squire = { FROM = { prestige = 150 } }
+      		}
       
-      # Add some prestige back if they have appropriate traits
-      trigger_switch = {
-        on_trigger = trait
+      		# Award trait based on whether or not FROM is a hedge or not.
+			if = {
+        		limit = {
+          			NOT = { FROM = { trait = hedge_knight } }
+        		}
         
-        page = { FROM = { prestige = 100 } }
-        squire = { FROM = { prestige = 150 } }
-      }
-      
-      # Award trait based on whether or not FROM is a hedge or not.
-      if = {
-        limit = {
-          NOT = { FROM = { trait = hedge_knight } }
-        }
-        
-        trigger_switch = {
-          on_trigger = religion
-          
-          the_seven = { add_trait = knight }
-          rhllor = { add_trait = red_knight }
-          valyrian = { add_trait = dragon_knight }
-        }
-      }
-      else_if = {
-        limit = {
-          FROM = { trait = hedge_knight }
-        }
-        
-        add_trait = hedge_knight
-      }
-      give_minor_title = title_generic_ser
-    }
-    revoke_allowed = {
-      always = no
-    }
-    ai_will_do = {
-      factor = 1
-    }
-  }
+    			trigger_switch = {
+          			on_trigger = religion
+          			the_seven = { add_trait = knight }
+          			rhllor = { add_trait = red_knight }
+          			valyrian = { add_trait = dragon_knight }
+        		}
+			}
+		
+			else_if = {
+				limit = {
+          			FROM = { trait = hedge_knight }
+        		}
+				add_trait = hedge_knight
+			}
+			give_minor_title = title_generic_ser
+		}
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+      		factor = 1
+		}
+	}
   
-  name_page_target = {
-    filter = court
-    ai_target_filter = court
+	name_page_target = {
+    	filter = court
+    	ai_target_filter = court
     
-    from_potential = {
-      prestige = 50
-      
-      OR = {
-        trait = knight
-        trait = red_knight
-        trait = dragon_knight
-        trait = hedge_knight
-      }
-    }
-    potential = {
-      is_adult = no
-      NOR = {
-        trait = page
-        trait = squire
-        trait = knight
-        trait = red_knight
-        trait = dragon_knight
-        trait = hedge_knight
-      }
-      
-    }
-    allow = {
-      age = 6
-      martial = 3
-      
-      FROM = {
-        prestige = 50
-      }
-    }
+    	from_potential = {
+      		prestige = 50
+      		OR = {
+        		trait = knight
+        		trait = red_knight
+        		trait = dragon_knight
+        		trait = hedge_knight
+      		}
+    	}
+    	
+		potential = {
+      		is_adult = no
+      		NOR = {
+        		trait = page
+        		trait = squire
+        		trait = knight
+        		trait = red_knight
+        		trait = dragon_knight
+        		trait = hedge_knight
+			}
+    	}
+    	
+    	allow = {
+      		age = 6
+      		FROM = {
+        		prestige = 50
+      		}
+    	}
     
-    effect = {
-      FROM = {
-        prestige = -50
-      }
-      
-      add_trait = page
-    }
-    revoke_allowed = {
-      always = no
-    }
-    ai_will_do = {
-      factor = 0
-    }
-  }
+    	effect = {
+      		FROM = {
+        		prestige = -50
+      		}
+      		add_trait = page
+    	}
+    	
+		revoke_allowed = {
+      		always = no
+    	}
+    	ai_will_do = {
+      		factor = 0
+    	}
+	}
   
-  name_squire_target = {
-    filter = court
-    ai_target_filter = court
+	name_squire_target = {
+  		is_high_prio = yes
+    	filter = court
+    	ai_target_filter = court
+
+    	from_potential = {
+      		prestige = 100
+      		OR = {
+        		trait = knight
+        		trait = red_knight
+        		trait = dragon_knight
+        		trait = hedge_knight
+      		}
+    	}
+    	
+		potential = {
+    		NOT = {
+				dynasty = none
+			}
+			OR = {
+        		AND = {
+          			is_female = yes
+          			child_personality_martial_trigger = yes
+        			trait = dueling_adept
+        		}
+        		AND = {
+          			is_female = no
+         			child_personality_martial_trigger = yes
+          			OR = {
+            			trait = dueling_novice
+            			trait = dueling_adept
+          			}
+        		}
+			}
+			NOR = {
+        		trait = squire
+        		trait = knight
+        		trait = red_knight
+        		trait = dragon_knight
+        		trait = hedge_knight
+      		}
+		}
+		
+		allow = {
+			child_personality_martial_trigger = yes
+			FROM = {
+        		scaled_wealth = 0.10
+        		prestige = 75
+      		}
+    	}
     
-    from_potential = {
-      prestige = 100
-      
-      OR = {
-        trait = knight
-        trait = red_knight
-        trait = dragon_knight
-        trait = hedge_knight
-      }
-    }
-    potential = {
-      OR = {
-        AND = {
-          is_female = yes
-          OR = {
-            trait = dueling_novice
-            trait = dueling_adept
-            trait = dueling_skilled
-            trait = dueling_expert
-            trait = dueling_master
-            trait = dueling_legend
-          }
-        }
-        AND = {
-          is_female = no
-          OR = {
-            age = 14
-            trait = dueling_novice
-            trait = dueling_adept
-            trait = dueling_skilled
-            trait = dueling_expert
-            trait = dueling_master
-            trait = dueling_legend
-          }
-        }
-      }
-      NOR = {
-        trait = squire
-        trait = knight
-        trait = red_knight
-        trait = dragon_knight
-        trait = hedge_knight
-      }
-    }
-    allow = {
-      age = 14
-      
-      FROM = {
-        scaled_wealth = 0.10
-        prestige = 75
-      }
-    }
-    
-    effect = {      
-      FROM = { prestige = -100 }
-      
-      # If they are already a page, add back some of the lost prestige
-      trigger_switch = {
-        on_trigger = trait
-        
-        page = { FROM = { prestige = 50 } }
-      }
-      
-      add_trait = squire
-    }
-    revoke_allowed = {
-      always = no
-    }
-    ai_will_do = {
-      factor = 0
-    }
-  }
+		effect = {      
+      		FROM = { prestige = -100 }
+      		# If they are already a page, add back some of the lost prestige
+      		trigger_switch = {
+        		on_trigger = trait
+        		page = { FROM = { prestige = 50 } }
+      		}
+      		add_trait = squire
+    	}
+    	
+		revoke_allowed = {
+      		always = no
+    	}
+		ai_will_do = {
+			factor = 1
+		}
+	}
 }
