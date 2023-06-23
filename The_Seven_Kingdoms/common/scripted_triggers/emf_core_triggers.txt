@@ -3,15 +3,28 @@
 
 #### EMF CORE PROPERTIES TRIGGERS ####
 
+# considered "Good Enough Peace" for the realm for the purposes of tracking whether and how long since a realm/ruler has had
+# relatively uninterrupted peace. currently only used for the 'See The Realm Prosper' ambition.
 emf_has_primary_peace = {
-	OR = {
-		war = no
-		NOT = {
-			# Only consider wars in which we're primary defender/attacker
-			any_war = {
-				OR = {
-					defender = { character = PREV }
-					attacker = { character = PREV }
+	custom_tooltip = {
+		text = TT_HAS_PRIMARY_PEACE
+		hidden_tooltip = {
+			NOT = {
+				any_war = {
+					OR = {
+						attacker = { character = PREV }
+						AND = {
+							defender = { character = PREV }
+							NOR = {
+								using_cb = peasant_revolt
+								using_cb = heretic_revolt
+								using_cb = cb_minor_clan_revolt
+								using_cb = liberation_revolt
+								#using_cb = emf_revolt_religious
+								#using_cb = emf_decadence_revolt
+							}
+						}
+					}
 				}
 			}
 		}
