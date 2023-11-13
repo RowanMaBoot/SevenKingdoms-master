@@ -3628,64 +3628,45 @@ character_event = {
 		#################################################
 		# Feast duel feast_events.txt starts with 72030 #
 		#################################################
-		#Hacky: copy results back to forms expected in series, in the future maybe separate events
 		if = {
-			limit = {
-				has_character_flag = feast_duelist
-				has_character_flag = flag_killed_opponent
-			}
-			
+			limit = { has_character_flag = feast_duelist }
+
 			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Feast of [feast_duel_host.GetTitledName])"
-			set_character_flag = killed_opponent
-		}
-		if = {
-			limit = {
-				has_character_flag = feast_duelist
-				has_character_flag = flag_wounded_opponent
-			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Feast of [feast_duel_host.GetTitledName])"
-			set_character_flag = wounded_opponent
-		}
-		if = {
-			limit = {
-				has_character_flag = feast_duelist
-				has_character_flag = flag_maimed_opponent
-			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Feast of [feast_duel_host.GetTitledName])"
-			set_character_flag = maimed_opponent
-		}
-		#Hacky stuff done
-		if = {
-			limit = {
-				has_character_flag = feast_duelist
-				OR = {
-					has_character_flag = flag_spared_opponent
-					FROM = { has_character_flag = ran_away_from_duel }
-				}
-			}
-			
-			character_event = { id = DuelEngine.911 } #Nothing happened
 			clr_character_flag = feast_duelist
 			FROM = { clr_character_flag = feast_duelist }
 			FROMFROM = { clr_character_flag = feast_duelist }
-		}
-		if = {
-			limit = {
-				has_character_flag = feast_duelist
-				OR = {
-					has_character_flag = flag_killed_opponent
-					has_character_flag = flag_wounded_opponent
-					has_character_flag = flag_maimed_opponent
-				}
+
+			# Hacky: copy results back to forms expected in series, in the future maybe separate events
+			trigger_switch = {
+				on_trigger = has_character_flag
+
+				flag_killed_opponent = { set_character_flag = killed_opponent }
+				flag_wounded_opponent = { set_character_flag = wounded_opponent }
+				flag_maimed_opponent = { set_character_flag = maimed_opponent }
 			}
-			
-			character_event = { id = DuelEngine.912 } #Liege reacts
-			clr_character_flag = feast_duelist
-			FROM = { clr_character_flag = feast_duelist }
-			FROMFROM = { clr_character_flag = feast_duelist }
+			# Hacky stuff done
+
+			if = {
+				limit = {
+					OR = {
+						has_character_flag = flag_spared_opponent
+						FROM = { has_character_flag = ran_away_from_duel }
+					}
+				}
+				character_event = { id = DuelEngine.911 } # Nothing happened
+			}
+			else_if = {
+				limit = {
+					OR = {
+						has_character_flag = flag_killed_opponent
+						has_character_flag = flag_wounded_opponent
+						has_character_flag = flag_maimed_opponent
+					}
+				}
+				character_event = { id = DuelEngine.912 } # Liege reacts
+			}
 		}
+
 		# End of feast_events block
 		#############################
 
@@ -3693,35 +3674,34 @@ character_event = {
 		# Rivals duel friends_rivals_events.txt starts with 100410 #
 		############################################################
 		if = {
-			limit = {
-				has_character_flag = duel_rival
-				OR = {
-					has_character_flag = flag_spared_opponent
-					FROM = { has_character_flag = ran_away_from_duel }
-				}
-			}
-			
+			limit = { has_character_flag = duel_rival }
+
 			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Rivals)"
-			character_event = { id = DuelEngine.913 } #Nothing happened
 			clr_character_flag = duel_rival
 			FROM = { clr_character_flag = duel_rival }
 			FROMFROM = { clr_character_flag = duel_rival }
-		}
-		if = {
-			limit = {
-				has_character_flag = duel_rival
-				OR = {
-					has_character_flag = flag_wounded_opponent
-					has_character_flag = flag_maimed_opponent
-					has_character_flag = flag_killed_opponent
+
+			if = {
+				limit = {
+					OR = {
+						has_character_flag = flag_spared_opponent
+						FROM = { has_character_flag = ran_away_from_duel }
+					}
 				}
+
+				character_event = { id = DuelEngine.913 } # Nothing happened
 			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Rivals)"
-			character_event = { id = DuelEngine.914 } #Killed, wounded, or maimed rival
-			clr_character_flag = duel_rival
-			FROM = { clr_character_flag = duel_rival }
-			FROMFROM = { clr_character_flag = duel_rival }
+			else_if = {
+				limit = {
+					OR = {
+						has_character_flag = flag_wounded_opponent
+						has_character_flag = flag_maimed_opponent
+						has_character_flag = flag_killed_opponent
+					}
+				}
+
+				character_event = { id = DuelEngine.914 } # Killed, wounded, or maimed rival
+			}
 		}
 		# End of friends_rivals_events block
 		#############################
@@ -3735,37 +3715,38 @@ character_event = {
 					has_character_flag = tournament_cheater_duel_accuser
 					has_character_flag = tournament_cheater_duel_accused
 				}
-				OR = {
-					has_character_flag = flag_spared_opponent
-					FROM = { has_character_flag = ran_away_from_duel }
-				}
 			}
-			
+
 			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Rivals at Tourney)"
-			character_event = { id = DuelEngine.918 } #No wound etc. = clean win for accused
 			clr_character_flag = duel_rival
-			FROM = { clr_character_flag = duel_rival }
-			FROMFROM = { clr_character_flag = duel_rival }
-		}
-		if = {
-			limit = {
-				OR = {
-					has_character_flag = tournament_cheater_duel_accuser
-					has_character_flag = tournament_cheater_duel_accused
+
+			if = {
+				limit = {
+					OR = {
+						has_character_flag = flag_spared_opponent
+						FROM = { has_character_flag = ran_away_from_duel }
+					}
 				}
-				OR = {
-					has_character_flag = flag_wounded_opponent
-					has_character_flag = flag_maimed_opponent
-					has_character_flag = flag_killed_opponent
-				}
+
+				character_event = { id = DuelEngine.918 } # No wound etc. = clean win for accused
+				FROM = { clr_character_flag = duel_rival }
+				FROMFROM = { clr_character_flag = duel_rival }
 			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Rivals at Tourney)"
-			character_event = { id = DuelEngine.923 } #Killed, wounded, or maimed rival
-			clr_character_flag = duel_rival
-			#winner's flags used to give proper flavour text so not cleared here
-			FROM = { clr_character_flag = tournament_cheater_duel_accuser }
-			FROM = { clr_character_flag = tournament_cheater_duel_accused }
+			else_if = {
+				limit = {
+					OR = {
+						has_character_flag = flag_wounded_opponent
+						has_character_flag = flag_maimed_opponent
+						has_character_flag = flag_killed_opponent
+					}
+				}
+
+				character_event = { id = DuelEngine.923 } # Killed, wounded, or maimed rival
+
+				# Winner's flags used to give proper flavour text so not cleared here
+				FROM = { clr_character_flag = tournament_cheater_duel_accuser }
+				FROM = { clr_character_flag = tournament_cheater_duel_accused }
+			}
 		}
 		# End of friends_rivals_events block
 		#############################
@@ -3774,44 +3755,32 @@ character_event = {
 		# Regency duel regency_events.txt starts with 61215 #
 		#####################################################
 		if = {
-			limit = {
-				has_character_flag = duelist_courtier
-				OR = {
-					has_character_flag = flag_spared_opponent
-					has_character_flag = flag_wounded_opponent
-					FROM = { has_character_flag = ran_away_from_duel }
+			limit = { has_character_flag = duelist_courtier }
+
+			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Regency)"
+			clr_character_flag = duelist_courtier
+			FROM = { clr_character_flag = duelist_courtier }
+			FROMFROM = { clr_character_flag = duelist_courtier }
+
+			if = {
+				limit = {
+					OR = {
+						has_character_flag = flag_spared_opponent
+						has_character_flag = flag_wounded_opponent
+						FROM = { has_character_flag = ran_away_from_duel }
+					}
 				}
+
+				character_event = { id = DuelEngine.913 } # Nothing happened or just wounded
 			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Regency)"
-			character_event = { id = DuelEngine.913 } #Nothing happened or just wounded
-			clr_character_flag = duelist_courtier
-			FROM = { clr_character_flag = duelist_courtier }
-			FROMFROM = { clr_character_flag = duelist_courtier }
-		}
-		if = {
-			limit = {
-				has_character_flag = duelist_courtier
-				has_character_flag = flag_maimed_opponent
+			else_if = {
+				limit = { has_character_flag = flag_maimed_opponent }
+				character_event = { id = DuelEngine.916 } # Maimed
 			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Regency)"
-			character_event = { id = DuelEngine.916 } #Maimed
-			clr_character_flag = duelist_courtier
-			FROM = { clr_character_flag = duelist_courtier }
-			FROMFROM = { clr_character_flag = duelist_courtier }
-		}
-		if = {
-			limit = {
-				has_character_flag = duelist_courtier
-				has_character_flag = flag_killed_opponent
+			else_if = {
+				limit = { has_character_flag = flag_killed_opponent }
+				character_event = { id = DuelEngine.917 } # Killed
 			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Regency)"
-			character_event = { id = DuelEngine.917 } #Killed
-			clr_character_flag = duelist_courtier
-			FROM = { clr_character_flag = duelist_courtier }
-			FROMFROM = { clr_character_flag = duelist_courtier }
 		}
 		# End of regency_events block
 		#############################
@@ -3825,27 +3794,29 @@ character_event = {
 					has_character_flag = tourny_duel_defender
 					has_character_flag = tourny_duel_agressor
 				}
+
 				OR = {
 					has_character_flag = flag_spared_opponent
 					FROM = { has_character_flag = ran_away_from_duel }
 				}
 			}
-			
 			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason:  Tournament)"
-			#character_event = { id = joust.20 } #Draw
+			# character_event = { id = joust.20 } # Draw
 		}
+
 		if = {
 			limit = {
 				has_character_flag = duel_rival
+
 				OR = {
 					has_character_flag = flag_wounded_opponent
 					has_character_flag = flag_maimed_opponent
 					has_character_flag = flag_killed_opponent
 				}
 			}
-			
+
 			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Tournament)"
-			#character_event = { id = joust.21 } #Killed, wounded, or maimed rival
+			# character_event = { id = joust.21 } # Killed, wounded, or maimed rival
 		}
 		# Flags for this are cleared in the followup events since I use them to track of agressor/defender
 		# End of Tournament rival duel block
@@ -3854,110 +3825,116 @@ character_event = {
 		##################################################################
 		# Holmgang duel oldgods_holmgang_events.txt starts with TOG.5004 #
 		##################################################################
-		if = {
-			limit = {
-				has_character_flag = holmgang_challenger
-				has_character_flag = flag_spared_opponent
-				FROM = { has_character_flag = flag_wounded_opponent }
-			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang)"
-			character_event = { id = TOG.5005 } #Wins (Scarred)
 
-		}
+		# TODO: Requires rework, doesn't call all possible outcomes
+		# 5002 calls outcomes (challenger):
+		# - Wins:
+		#		5005 Wins (Scarred)
+		#		5006 Wins (Scarred, Opponent Dies)
+		#		5007 Wins
+		#		5008 Wins (Opponent Dies)
+		#		5009 Wins (Opponent Flees)
+		#		5012 Loses (Wounded)
+		# - Draws:
+		#		5005 Wins (Scarred)
+		#		5010 Draw (Both Wounded)
+		#		5012 Loses (Wounded)
+		# - Losses:
+		#		5005 Wins (Scarred)
+		#		5011 Loses (Flees in Disgrace)
+		#		5012 Loses (Wounded)
+		#		5013 Loses (Maimed)
+		#		5014 Loses (Dies)
+		#
+		# 5005, 5007 calls 5027, 5028
+		# 5006, 5008 calls 5029
+		# 5009 calls 5026
+		# 5010 calls 5025
+		# 5011 calls 5024
+		# 5012, 5013 calls 5020, 5022
+		# 5014 calls 5021, 5023
+
 		if = {
-			limit = {
-				has_character_flag = holmgang_challenger
-				has_character_flag = flag_spared_opponent
-				NOT = {
-					FROM = { has_character_flag = flag_wounded_opponent }
+			limit = { has_character_flag = holmgang_challenger }
+
+			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang)"
+
+			if = {
+				limit = { has_character_flag = flag_spared_opponent }
+
+				if = {
+					limit = { FROM = { has_character_flag = flag_wounded_opponent } }
+					character_event = { id = TOG.5005 } # Wins (Scarred)
+				}
+				else = {
+					character_event = { id =  TOG.5007 } # Wins
 				}
 			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang)"
-			character_event = { id =  TOG.5007 } #Wins
-		}
-		if = {
-			limit = {
-				has_character_flag = holmgang_challenger
-				has_character_flag = flag_killed_opponent
-				OR = {
-					FROM = { has_character_flag = flag_wounded_opponent }
-					FROM = { has_character_flag = flag_maimed_opponent }
+			else_if = {
+				limit = { has_character_flag = flag_killed_opponent }
+
+				if = {
+					limit = {
+						FROM = {
+							OR = {
+								has_character_flag = flag_wounded_opponent
+								has_character_flag = flag_maimed_opponent
+							}
+						}
+					}
+					character_event = { id =  TOG.5006 } # Wins (Scarred, Opponent Dies)
+				}
+				else = {
+					character_event = { id =  TOG.5008 } # Wins (Opponent Dies)
 				}
 			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang)"
-			character_event = { id =  TOG.5006 } #Wins (Scarred, Opponent Dies)
+			else_if = {
+				limit = { FROM = { has_character_flag = ran_away_from_duel } }
+
+				log = "Duel Engine: [From.GetTitledName] fled the duel"
+				character_event = { id =  TOG.5009 } # Wins (Opponent Flees)
+			}
 		}
-		if = {
-			limit = {
-				has_character_flag = holmgang_challenger
-				has_character_flag = flag_killed_opponent
-				NOR = {
-					FROM = { has_character_flag = flag_wounded_opponent }
-					FROM = { has_character_flag = flag_maimed_opponent }
+		else_if = {
+			limit = { has_character_flag = holmgang_target }
+
+			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang)"
+
+			if = {
+				limit = { has_character_flag = flag_spared_opponent }
+
+				if = {
+					limit = {
+						FROM = {
+							OR = {
+								has_character_flag = flag_wounded_opponent
+								has_character_flag = flag_maimed_opponent
+							}
+						}
+					}
+
+					character_event = { id =  TOG.5021 } # Wins (Scarred, Opponent Dies) Opponent
+				}
+				else = {
+					character_event = { id =  TOG.5022 } # Wins (Opponent)
+					FROM = { character_event = { id =  TOG.5012 } } # Loses (Wounded)
 				}
 			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang)"
-			character_event = { id =  TOG.5008 } #Wins (Opponent Dies)
-		}
-		if = {
-			limit = {
-				has_character_flag = holmgang_challenger
-				FROM = { has_character_flag = ran_away_from_duel }
-			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang, Flight)"
-			character_event = { id =  TOG.5009 } #Wins (Opponent Flees)
-		}
-		if = {
-			limit = {
-				has_character_flag = holmgang_target
-				has_character_flag = flag_spared_opponent
-				NOR = {
-					FROM = { has_character_flag = flag_wounded_opponent }
-					FROM = { has_character_flag = flag_maimed_opponent }
+			else_if = {
+				limit = {
+					has_character_flag = flag_killed_opponent
+					NOT = { FROM = { has_character_flag = flag_wounded_opponent } }
 				}
+				character_event = { id =  TOG.5023 } # Wins (Opponent Dies) Opponent
 			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang)"
-			character_event = { id =  TOG.5022 } #Wins Opponent
-			FROM = { character_event = { id =  TOG.5012 } } #Loses (Wounded)
-		}
-		if = {
-			limit = {
-				has_character_flag = holmgang_target
-				has_character_flag = flag_killed_opponent
-				OR = {
-					FROM = { has_character_flag = flag_wounded_opponent }
-					FROM = { has_character_flag = flag_maimed_opponent }
+			if = {
+				limit = {
+					FROM = { has_character_flag = ran_away_from_duel }
 				}
+
+				character_event = { id =  TOG.5024 } # Wins (Opponent Flees) Opponent
+				FROM = { character_event = { id =  TOG.5011 } } # Loses (Flees in Disgrace)
 			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang)"
-			character_event = { id =  TOG.5021 } # Wins (Scarred, Opponent Dies) Opponent
-		}
-		if = {
-			limit = {
-				has_character_flag = holmgang_target
-				has_character_flag = flag_killed_opponent
-				NOT = { FROM = { has_character_flag = flag_wounded_opponent } }
-			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang)"
-			character_event = { id =  TOG.5023 } # Wins (Opponent Dies) Opponent
-		}
-		if = {
-			limit = {
-				has_character_flag = holmgang_target
-				FROM = { has_character_flag = ran_away_from_duel }
-			}
-			
-			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Holmgang)"
-			character_event = { id =  TOG.5024 } # Wins (Opponent Flees) Opponent
-			FROM = { character_event = { id =  TOG.5011 } } #Loses (Flees in Disgrace)
 		}
 		# Flags are cleared by vanilla output events
 		# End of oldgods_holmgang_events block
@@ -3976,28 +3953,38 @@ character_event = {
 		# Special Context Flag Cleanup
 		#############################
 		clr_character_flag = flag_duel_friendly
-		FROM = { clr_character_flag = flag_duel_friendly }
 		clr_character_flag = flag_duel_to_the_death
-		FROM = { clr_character_flag = flag_duel_to_the_death }
 		clr_character_flag = flag_duel_tourney
-		FROM = { clr_character_flag = flag_duel_tourney }
+
+		FROM = {
+			clr_character_flag = flag_duel_friendly
+			clr_character_flag = flag_duel_to_the_death
+			clr_character_flag = flag_duel_tourney
+		}
+
 		#############################
 		# Clear kill/mercy flags
+		#############################
+
 		clr_character_flag = flag_killed_opponent
-		FROM = { clr_character_flag = flag_killed_opponent }
 		clr_character_flag = ran_away_from_duel
-		FROM = { clr_character_flag = ran_away_from_duel }
 		clr_character_flag = left_opponent
-		FROM = { clr_character_flag = left_opponent }
 		clr_character_flag = flag_wounded_opponent
-		FROM = { clr_character_flag = flag_wounded_opponent }
 		clr_character_flag = flag_maimed_opponent
-		FROM = { clr_character_flag = flag_maimed_opponent }
 		clr_character_flag = flag_spared_opponent
-		FROM = { clr_character_flag = flag_spared_opponent }
+
+		FROM = {
+			clr_character_flag = flag_killed_opponent
+			clr_character_flag = ran_away_from_duel
+			clr_character_flag = left_opponent
+			clr_character_flag = flag_wounded_opponent
+			clr_character_flag = flag_maimed_opponent
+			clr_character_flag = flag_spared_opponent
+		}
+
 		if = {
 			limit = {
-				not = {
+				NOT = {
 					trait = dueling_legend
 				}
 			}
@@ -4009,58 +3996,55 @@ character_event = {
 	}
 }
 
-character_event = { #Collects output from the duel engine - Tourney joust flavour
+# Collects output from the duel engine - Tourney joust flavour
+character_event = {
 	id = DuelEngine.902
-	desc = "EVTDESC_DuelEngine_902"
+	desc = EVTDESC_DuelEngine_902
 	picture = GFX_evt_joust
 
 	is_triggered_only = yes
 
 	option = {
-		name = "EVTOPTA_DuelEngine_901"
+		name = EVTOPTA_DuelEngine_901
 
 		#####################
 		# Tournament Jousts #
 		#####################
 
 		if = {
-			limit = {
-				has_character_flag = tournament_fighter
-				has_character_flag = flag_spared_opponent
+			limit = { has_character_flag = tournament_fighter }
+
+			if = {
+				limit = { has_character_flag = flag_spared_opponent }
+
+				# character_event = { id = 70110 } #Clean win
+				clr_character_flag = tournament_fighter
+				FROM = { clr_character_flag = tournament_fighter }
 			}
-			#character_event = { id = 70110 } #Clean win
-			clr_character_flag = tournament_fighter
-			FROM = { clr_character_flag = tournament_fighter }
-		}
-		if = {
-			limit = {
-				has_character_flag = tournament_fighter
-				has_character_flag = flag_wounded_opponent
+			else_if = {
+				limit = { has_character_flag = flag_wounded_opponent }
+
+				# FROM = { character_event = { id = 70011 } }
+				# character_event = { id = 70110 } #Wounded loser
+				clr_character_flag = tournament_fighter
+				FROM = { clr_character_flag = tournament_fighter }
 			}
-			#FROM = { character_event = { id = 70011 } }
-			#character_event = { id = 70110 } #Wounded loser
-			clr_character_flag = tournament_fighter
-			FROM = { clr_character_flag = tournament_fighter }
-		}
-		if = {
-			limit = {
-				has_character_flag = tournament_fighter
-				has_character_flag = flag_maimed_opponent
+			else_if = {
+				limit = { has_character_flag = flag_maimed_opponent }
+
+				# FROM = { character_event = { id = 70010 } }
+				# character_event = { id = 70110 } #Maimed loser
+				clr_character_flag = tournament_fighter
+				FROM = { clr_character_flag = tournament_fighter }
 			}
-			#FROM = { character_event = { id = 70010 } }
-			#character_event = { id = 70110 } #Maimed loser
-			clr_character_flag = tournament_fighter
-			FROM = { clr_character_flag = tournament_fighter }
-		}
-		if = {
-			limit = {
-				has_character_flag = tournament_fighter
-				has_character_flag = flag_killed_opponent
+			else_if = {
+				limit = { has_character_flag = flag_killed_opponent }
+
+				# FROM = { character_event = { id = 70009 } }
+				# character_event = { id = 70110 } #Killed loser
+				clr_character_flag = tournament_fighter
+				FROM = { clr_character_flag = tournament_fighter }
 			}
-			#FROM = { character_event = { id = 70009 } }
-			#character_event = { id = 70110 } #Killed loser
-			clr_character_flag = tournament_fighter
-			FROM = { clr_character_flag = tournament_fighter }
 		}
 
 		# End of tournament jousts block
@@ -4079,68 +4063,82 @@ character_event = { #Collects output from the duel engine - Tourney joust flavou
 		FROM = { character_event = { id = emf_cta.11 } }
 		if = {
 			limit = { has_focus = focus_war }
+
 			random = {
 				chance = 25
 				character_event = { id = WoL.11200 }
 			}
 		}
 
-
 		#############################
 		# Special Context Flag Cleanup
 		#############################
 		clr_character_flag = flag_duel_friendly
-		FROM = { clr_character_flag = flag_duel_friendly }
 		clr_character_flag = flag_duel_to_the_death
-		FROM = { clr_character_flag = flag_duel_to_the_death }
 		clr_character_flag = flag_duel_tourney
-		FROM = { clr_character_flag = flag_duel_tourney }
+
+		FROM = {
+			clr_character_flag = flag_duel_friendly
+			clr_character_flag = flag_duel_to_the_death
+			clr_character_flag = flag_duel_tourney
+		}
+
 		#############################
 		#############################
 		# Clear kill/mercy flags
 		clr_character_flag = flag_killed_opponent
-		FROM = { clr_character_flag = flag_killed_opponent }
 		clr_character_flag = flag_wounded_opponent
-		FROM = { clr_character_flag = flag_wounded_opponent }
 		clr_character_flag = flag_maimed_opponent
-		FROM = { clr_character_flag = flag_maimed_opponent }
 		clr_character_flag = flag_spared_opponent
-		FROM = { clr_character_flag = flag_spared_opponent }
+
+		FROM = {
+			clr_character_flag = flag_killed_opponent
+			clr_character_flag = flag_wounded_opponent
+			clr_character_flag = flag_maimed_opponent
+			clr_character_flag = flag_spared_opponent
+		}
 	}
 }
 
-
 # DuelEngine.903	Something broke, cancel everything
-
 character_event = {
 	id = DuelEngine.903
-	desc = "EVTDESC_DuelEngine_903"
+	desc = EVTDESC_DuelEngine_903
 	picture = GFX_evt_battle
 
 	is_triggered_only = yes
 
-	option = {
-		name = OK
-
+	immediate = {
 		#############################
 		# Special Context Flag Cleanup
 		#############################
 		clr_character_flag = flag_duel_friendly
-		FROM = { clr_character_flag = flag_duel_friendly }
 		clr_character_flag = flag_duel_to_the_death
-		FROM = { clr_character_flag = flag_duel_to_the_death }
 		clr_character_flag = flag_duel_tourney
-		FROM = { clr_character_flag = flag_duel_tourney }
+
+		FROM = {
+			clr_character_flag = flag_duel_friendly
+			clr_character_flag = flag_duel_to_the_death
+			clr_character_flag = flag_duel_tourney
+		}
+
 		#############################
 		# Clear kill/mercy flags
 		clr_character_flag = flag_killed_opponent
-		FROM = { clr_character_flag = flag_killed_opponent }
 		clr_character_flag = flag_wounded_opponent
-		FROM = { clr_character_flag = flag_wounded_opponent }
 		clr_character_flag = flag_maimed_opponent
-		FROM = { clr_character_flag = flag_maimed_opponent }
 		clr_character_flag = flag_spared_opponent
-		FROM = { clr_character_flag = flag_spared_opponent }
+
+		FROM = {
+			clr_character_flag = flag_killed_opponent
+			clr_character_flag = flag_wounded_opponent
+			clr_character_flag = flag_maimed_opponent
+			clr_character_flag = flag_spared_opponent
+		}
+	}
+
+	option = {
+		name = OK
 	}
 }
 
@@ -4148,248 +4146,321 @@ character_event = {
 # OUTPUT HELPER EVENTS
 ###
 
-#feast battle results
+# Ffeast battle results
 character_event = {
 	id = DuelEngine.911
 	desc = EVTDESC_DuelEngine_911
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA_DuelEngine_911
-		hidden_tooltip = { FROM = { character_event = { id = 72034 } } } #Nothing happened
+
+		hidden_effect = {
+			FROM = { character_event = { id = 72034 } } # Nothing happened
+		}
 	}
 }
+
 character_event = {
 	id = DuelEngine.912
 	picture = GFX_evt_battle
-	desc = "EVTDESC_DuelEngine_901"
+	desc = EVTDESC_DuelEngine_901
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA_DuelEngine_912
-		hidden_tooltip = { FROM = { character_event = { id = 72033 } } } #Liege reacts
+
+		hidden_effect = {
+			FROM = { character_event = { id = 72033 } } # Liege reacts
+		}
 	}
 }
 
-#rival duel results
+# Rival duel results
 character_event = {
 	id = DuelEngine.913
 	desc = EVTDESC_DuelEngine_911
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA_DuelEngine_913
-		#draw
+		# Draw
 	}
 }
 character_event = {
 	id = DuelEngine.914
-	desc = "EVTDESC_DuelEngine_901"
+	desc = EVTDESC_DuelEngine_901
 	picture = GFX_evt_battle
-	is_triggered_only = yes
 
+	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTC100415
-		hidden_tooltip = { FROMFROM = { character_event = { id = DuelEngine.915 } } } #Loser was wounded
+
+		hidden_effect = {
+			FROMFROM = { character_event = { id = DuelEngine.915 } } # Loser was wounded
+		}
 	}
 }
+
 character_event = {
 	id = DuelEngine.915
 	desc = EVTDESC100415
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA100415
+
 		opinion = {
-			modifier = opinion_revenge_seeker
+			name = opinion_revenge_seeker
 			who = FROM
 			years = 50
 		}
 	}
 }
-#regency battle
+
+# Regency battle
 character_event = {
 	id = DuelEngine.916
-	desc = "EVTDESC_DuelEngine_901"
+	desc = EVTDESC_DuelEngine_901
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA_DuelEngine_901
-		hidden_tooltip = {
-			IF = {
+
+		hidden_effect = {
+			if = {
 				limit = { FROM = { has_minor_title = title_regent } }
-				#FROM = { character_event = { id = 61226 } }
-				#FROMFROM = { character_event = { id = 61230 } }
+
+				# FROM = { character_event = { id = 61226 } }
+				# FROMFROM = { character_event = { id = 61230 } }
 			}
-			IF = {
-				limit = { FROMFROM = { has_minor_title = title_regent } }
-				#FROM = { character_event = { id = 61229 } }
-				#FROMFROM = { character_event = { id = 61227 } }
+			else = {
+				# FROM = { character_event = { id = 61229 } }
+				# FROMFROM = { character_event = { id = 61227 } }
 			}
 		}
 	}
 }
+
 character_event = {
 	id = DuelEngine.917
-	desc = "EVTDESC_DuelEngine_901"
+	desc = EVTDESC_DuelEngine_901
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA_DuelEngine_901
-		hidden_tooltip = {
-			IF = {
+
+		hidden_effect = {
+			if = {
 				limit = { FROM = { has_minor_title = title_regent } }
-				#FROM = { character_event = { id = 61225 } }
+				# FROM = { character_event = { id = 61225 } }
 			}
-			IF = {
-				limit = { FROMFROM = { has_minor_title = title_regent } }
-				#FROM = { character_event = { id = 61228 } }
+			else = {
+				# FROM = { character_event = { id = 61228 } }
 			}
 		}
 	}
 }
-#tournament cheat duel results
-character_event = { #hidden selector to pick proper flavour text
+
+# Tournament cheat duel results
+# Hidden selector to pick proper flavour text
+character_event = {
 	id = DuelEngine.918
 	desc = EVTDESC_DuelEngine_911
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 	hide_from = yes
 
 	option = {
 		name = EVTOPTA_DuelEngine_913
+
 		trigger = { FROM = { has_character_flag = tournament_cheater_duel_accused } }
+
 		FROM = { character_event = { id = DuelEngine.919 } }
 		FROMFROM = { character_event = { id = DuelEngine.920 } }
 	}
+
 	option = {
 		name = EVTOPTA_DuelEngine_913
+
 		trigger = { FROM = { has_character_flag = tournament_cheater_duel_accuser } }
+
 		FROM = { character_event = { id = DuelEngine.921 } }
 		FROMFROM = { character_event = { id = DuelEngine.922 } }
 	}
 }
-character_event = { #accused beat accuser
+
+# Accused beat accuser
+character_event = {
 	id = DuelEngine.919
 	desc = EVTDESC100428
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTB100428
+
 		prestige = 10
 		clr_character_flag = tournament_cheater_duel_accused
 	}
 }
-character_event = { #accuser lost to accused
+
+# Accuser lost to accused
+character_event = {
 	id = DuelEngine.920
 	desc = EVTDESC_DuelEngine_920
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA100428
 	}
 }
-character_event = { #accuser beat cheater
+
+# Accuser beat cheater
+character_event = {
 	id = DuelEngine.921
 	desc = EVTDESC_DuelEngine_920
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA_DuelEngine_921
+
 		prestige = 10
 		clr_character_flag = tournament_cheater_duel_accuser
 	}
 }
-character_event = { #cheater lost to accused
+
+# Cheater lost to accused
+character_event = {
 	id = DuelEngine.922
 	desc = EVTDESC100428
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA100428
 	}
 }
-character_event = { #hidden selector to pick proper flavour text
+
+# Hidden selector to pick proper flavour text
+character_event = {
 	id = DuelEngine.923
-	desc = "EVTDESC_DuelEngine_901"
+	desc = EVTDESC_DuelEngine_901
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA_DuelEngine_913
+
 		trigger = { FROM = { has_character_flag = tournament_cheater_duel_accused } }
+
 		FROM = { character_event = { id = DuelEngine.924 } }
+
 		FROMFROM = {
+			show_scope_change = no
+
 			character_event = { id = DuelEngine.925 }
+
 			opinion = {
-				modifier = opinion_revenge_seeker
+				name = opinion_revenge_seeker
 				who = FROM
 				years = 50
 			}
 		}
 	}
+
 	option = {
 		name = EVTOPTA_DuelEngine_913
+
 		trigger = { FROM = { has_character_flag = tournament_cheater_duel_accuser } }
+
 		FROM = { character_event = { id = DuelEngine.926 } }
+
 		FROMFROM = {
+			show_scope_change = no
+
 			character_event = { id = DuelEngine.927 }
+
 			opinion = {
-				modifier = opinion_revenge_seeker
+				name = opinion_revenge_seeker
 				who = FROM
 				years = 50
 			}
 		}
 	}
 }
-character_event = { #accused beat accuser
+
+# Accused beat accuser
+character_event = {
 	id = DuelEngine.924
 	desc = EVTDESC100428
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTC100428
+
 		prestige = 10
 		clr_character_flag = tournament_cheater_duel_accused
 	}
 }
-character_event = { #accuser lost to accused
+
+# Accuser lost to accused
+character_event = {
 	id = DuelEngine.925
 	desc = EVTDESC_DuelEngine_920
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA100428
 	}
 }
-character_event = { #accuser beat cheater
+
+# Accuser beat cheater
+character_event = {
 	id = DuelEngine.926
 	desc = EVTDESC_DuelEngine_920
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {
 		name = EVTOPTA_DuelEngine_926
+
 		prestige = 10
 		clr_character_flag = tournament_cheater_duel_accuser
 	}
 }
-character_event = { #cheater lost to accused
+
+# Cheater lost to accused
+character_event = {
 	id = DuelEngine.927
 	desc = EVTDESC100428
 	picture = GFX_evt_battle
+
 	is_triggered_only = yes
 
 	option = {

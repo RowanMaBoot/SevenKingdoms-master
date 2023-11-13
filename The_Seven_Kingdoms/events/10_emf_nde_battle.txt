@@ -16,64 +16,51 @@ namespace = DuelEngine
 # DuelEngine.512	Opponent Imprisoned
 
 character_event = { # Battlefield Duel Start
-	id = DuelEngine.500
-	desc = "EVTDESC_DuelEngine_500"
-	border = "GFX_event_normal_frame_war"
-	picture = GFX_evt_battle
+    id = DuelEngine.500
+    desc = EVTDESC_DuelEngine_500
+    border = GFX_event_normal_frame_war
+    picture = GFX_evt_battle
 
-	 is_triggered_only = yes
+    is_triggered_only = yes # on_combat_pulse (random_events)
 
-	weight_multiplier = { #on_action, multiplies with chance there
-		days = 1
-		modifier = {
-			factor = 0
-			# Disabled for multiplayer due to bug report from Lord of Pain, should theoretically be disabled also
-			# for non-battlefield duels in multiplayer
-			multiplayer = yes
-		}
-		modifier = {
-			factor = 1.5
-			trait = dueling_adept
-		}
-		modifier = {
-			factor = 1.75
-			trait = dueling_skilled
-		}
-		modifier = {
-			factor = 2
-			trait = dueling_expert
-		}
-		modifier = {
-			factor = 2.5
-			trait = dueling_master
-		}
-		modifier = {
-			factor = 3
-			trait = dueling_legend
-		}
-		modifier = {
-			factor = 3
-			trait = duelist
-		}
-		modifier = {
-			factor = 1.5
-			trait = brave
-		}
-		modifier = {
-			factor = 0.5
-			trait = craven
-		}
-		#modifier = {
-		#	factor = 0
-		#	OR = {
-		#		religion = jain
-		#		religion = cathar
-		#	}
-		#}
-		modifier = {
-			factor = 5
-			is_playable = yes #Want to give the player a little more fun
-		}
+    weight_multiplier = { #on_action, multiplies with chance there
+        days = 1
+        modifier = {
+            factor = 1.5
+	    trait = dueling_adept
+        }
+        modifier = {
+            factor = 1.75
+	    trait = dueling_skilled
+        }
+        modifier = {
+            factor = 2
+	    trait = dueling_expert
+	}
+	modifier = {
+		factor = 2.5
+		trait = dueling_master
+	}
+	modifier = {
+		factor = 3
+		trait = dueling_legend
+        }
+        modifier = {
+            factor = 3
+            trait = duelist
+        }
+        modifier = {
+            factor = 1.5
+            trait = brave
+        }
+        modifier = {
+            factor = 0.5
+            trait = craven
+        }
+        modifier = {
+            factor = 5
+            is_playable = yes #Want to give the player a little more fun
+        }
 		modifier = {
 			factor = 5
 			OR = {
@@ -85,73 +72,31 @@ character_event = { # Battlefield Duel Start
 	}
 
 	trigger = {
-		# Avoid crossing targets
-		NOT = { has_character_modifier = battlefield_fight }
-		OR = {
-			AND = {
-				liege = { war = yes }
-				war = no
-			}
-			AND = {
-				war = yes
-				liege = {
-					OR = {
-						war = no
-						character = ROOT
-					}
-				}
-			}
+		always = no # Disabled for now
+
+		# Does not play well with others
+		has_game_rule = {
+			name = multiplayer_compatibility
+			value = no
 		}
-		OR = {
-			AND = {
-				is_ruler = yes
-				war = yes
-				any_playable_ruler = {
-					war_with = ROOT
-					OR = {
-						AND = {
-							in_battle = yes
-							at_location = ROOT
-							prisoner = no
-							is_alive = yes
-							NOT = { character = ROOT }
-							NOT = { has_character_modifier = battlefield_fight }
-						}
-						any_realm_character = {
-							in_battle = yes
-							at_location = ROOT
-							prisoner = no
-							is_alive = yes
-							NOT = { character = ROOT }
-							NOT = { has_character_modifier = battlefield_fight }
-						}
-					}
-				}
-			}
-			AND = {
-				war = no
-				liege = {
-					any_playable_ruler = {
-						war_with = PREV
-						OR = {
-							AND = {
-								in_battle = yes
-								at_location = ROOT
-								prisoner = no
-								is_alive = yes
-								NOT = { character = ROOT }
-								NOT = { has_character_modifier = battlefield_fight }
-							}
-							any_realm_character = {
-								in_battle = yes
-								at_location = ROOT
-								prisoner = no
-								is_alive = yes
-								NOT = { character = ROOT }
-								NOT = { has_character_modifier = battlefield_fight }
-							}
-						}
-					}
+
+		# Avoid crossing targets
+		NOT = {
+			has_character_modifier = battlefield_fight
+		}
+
+		location = {
+			# Find a war participating character
+			any_province_character = {
+				war_with = ROOT
+				in_battle = yes
+				prisoner = no
+				is_alive = yes
+				NOT = { has_character_modifier = battlefield_fight }
+
+				OR = {
+					is_ruler = yes
+					ROOT = { is_ruler = yes }
 				}
 			}
 		}
@@ -162,429 +107,298 @@ character_event = { # Battlefield Duel Start
 			name = battlefield_fight
 			duration = 20
 		}
-		# Target lock
-		if = {
-			limit = {
-				war = yes
-				liege = {
-					OR = {
-						war = no
-						character = ROOT
-					}
-				}
-			}
-			random_playable_ruler = {
+
+		save_event_target_as = battlefield_duel_combatant_1
+
+		# Target Lock
+		location = {
+			# Find a war participating character
+			random_province_character = {
 				limit = {
 					war_with = ROOT
+					in_battle = yes
+					prisoner = no
+					is_alive = yes
+					NOT = { has_character_modifier = battlefield_fight }
+
 					OR = {
-						AND = {
-							in_battle = yes
-							at_location = ROOT
-							prisoner = no
-							is_alive = yes
-							NOT = { character = ROOT }
-							NOT = { has_character_modifier = battlefield_fight }
-						}
-						any_realm_character = {
-							in_battle = yes
-							at_location = ROOT
-							prisoner = no
-							is_alive = yes
-							NOT = { character = ROOT }
-							NOT = { has_character_modifier = battlefield_fight }
-						}
+						is_ruler = yes
+						ROOT = { is_ruler = yes }
 					}
 				}
-				if = {
-					limit = {
-						in_battle = yes
-						at_location = ROOT
-						prisoner = no
-						is_alive = yes
-						NOT = { character = ROOT }
-						NOT = { has_character_modifier = battlefield_fight }
-					}
-					add_character_modifier = {
-						name = battlefield_fight
-						duration = 20
-					}
-					opinion = { who = ROOT modifier = opinion_battle_duel_target }
-					reverse_opinion = { who = ROOT modifier = opinion_battle_duel_target }
+
+				show_portrait = yes
+				save_event_target_as = battlefield_duel_combatant_2
+
+				add_character_modifier = {
+					name = battlefield_fight
+					duration = 20
 				}
-				if = {
-					limit = { NOT = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } } }
-					random_realm_character = {
-						limit = {
-							in_battle = yes
-							at_location = ROOT
-							prisoner = no
-							is_alive = yes
-							NOT = { character = ROOT }
-							NOT = { has_character_modifier = battlefield_fight }
-						}
-						add_character_modifier = {
-							name = battlefield_fight
-							duration = 20
-						}
-						opinion = { who = ROOT modifier = opinion_battle_duel_target }
-						reverse_opinion = { who = ROOT modifier = opinion_battle_duel_target }
-					}
-				}
-			}
-		}
-		if = {
-			limit = {
-				war = no
-				liege = { war = yes }
-			}
-			liege = {
-				random_playable_ruler = {
-					limit = {
-						war_with = PREV
-						OR = {
-							AND = {
-								in_battle = yes
-								at_location = ROOT
-								prisoner = no
-								is_alive = yes
-								NOT = { character = ROOT }
-								NOT = { has_character_modifier = battlefield_fight }
-							}
-							any_realm_character = {
-								in_battle = yes
-								at_location = ROOT
-								prisoner = no
-								is_alive = yes
-								NOT = { character = ROOT }
-								NOT = { has_character_modifier = battlefield_fight }
-							}
-						}
-					}
-					if = {
-						limit = {
-							in_battle = yes
-							at_location = ROOT
-							prisoner = no
-							is_alive = yes
-							NOT = { character = ROOT }
-							NOT = { has_character_modifier = battlefield_fight }
-						}
-						add_character_modifier = {
-							name = battlefield_fight
-							duration = 20
-						}
-						opinion = { who = ROOT modifier = opinion_battle_duel_target }
-						reverse_opinion = { who = ROOT modifier = opinion_battle_duel_target }
-					}
-					if = {
-						limit = { NOT = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } } }
-						random_realm_character = {
-							limit = {
-								in_battle = yes
-								at_location = ROOT
-								prisoner = no
-								is_alive = yes
-								NOT = { character = ROOT }
-								NOT = { has_character_modifier = battlefield_fight }
-							}
-							add_character_modifier = {
-								name = battlefield_fight
-								duration = 20
-							}
-							opinion = { who = ROOT modifier = opinion_battle_duel_target }
-							reverse_opinion = { who = ROOT modifier = opinion_battle_duel_target }
-						}
-					}
-				}
+
+				log = "DEBUG.DUEL_ENGINE selected [This.GetBestName] as battlefield_duel_combatant_2"
+				character_event = { id = DuelEngine.501 }
 			}
 		}
 	}
 
-	option = {
-		name = "EVTOPTA_DuelEngine_500"
-		if = {
-			limit = {
-				war = yes
-				liege = {
-					OR = {
-						war = no
-						character = ROOT
-					}
-				}
-			}
-			random_playable_ruler = {
-				limit = {
-					war_with = ROOT
-					OR = {
-						has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target }
-						any_realm_character = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } }
-					}
-				}
-				if = {
-					limit = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } }
-					hidden_tooltip = { character_event = { id = DuelEngine.501 } }
-				}
-				random_realm_character = {
-					limit = {
-						has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target }
-						NOT = { character = PREV }
-					}
-					hidden_tooltip = { character_event = { id = DuelEngine.501 } }
-				}
-			}
-		}
-		if = {
-			limit = {
-				war = no
-				liege = { war = yes }
-			}
-			liege = {
-				random_playable_ruler = {
-					limit = {
-						war_with = PREV
-						OR = {
-							has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target }
-							any_realm_character = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } }
-						}
-					}
-					if = {
-						limit = { has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target } }
-						hidden_tooltip = { character_event = { id = DuelEngine.501 } }
-					}
-					random_realm_character = {
-						limit = {
-							has_opinion_modifier = { who = ROOT modifier = opinion_battle_duel_target }
-							NOT = { character = PREV }
-						}
-						hidden_tooltip = { character_event = { id = DuelEngine.501 } }
-					}
-				}
-			}
-		}
+	option  = {
+		name = EVTOPTA_DuelEngine_500
 	}
 }
 
 character_event = {
 	id = DuelEngine.501
-	desc = "EVTDESC_DuelEngine_501"
+	desc = EVTDESC_DuelEngine_501
 	picture = GFX_evt_battle
-	border = "GFX_event_normal_frame_war"
+	border = GFX_event_normal_frame_war
+
 	is_triggered_only = yes
 
-	immediate = {
-		# Remove targeting information
-		remove_opinion = { who = FROM modifier = opinion_battle_duel_target }
-		reverse_remove_opinion = { who = FROM modifier = opinion_battle_duel_target }
-	}
-
 	option = {
-		name = "EVTOPTA_DuelEngine_501"
-		FROM = { character_event = { id = DuelEngine.502 tooltip = "EVTTOOLTIP_DuelEngine_502" } }
+		name = EVTOPTA_DuelEngine_501
+
+		log = "DEBUG.DUEL_ENGINE [battlefield_duel_combatant_2.GetBestName] decided to fight [battlefield_duel_combatant_1.GetBestName]"
+
+		event_target:battlefield_duel_combatant_1 = {
+			show_scope_change = no
+
+			character_event = {
+				id = DuelEngine.502
+				tooltip = EVTTOOLTIP_DuelEngine_502
+			}
+		}
+
 		ai_chance = {
 			factor = 100
-			modifier = {
+
+			mult_modifier = {
 				factor = 3
 				trait = dueling_novice
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 5
 				trait = dueling_adept
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 6
 				trait = dueling_skilled
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 7
 				trait = dueling_expert
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 9
 				trait = dueling_master
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 10
 				trait = dueling_legend
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 3
 				trait = duelist
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 10
 				trait = brave
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 5
 				trait = proud
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 1.5
 				trait = wroth
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 1.5
-				is_strong_trigger = yes
+				trait = strong
+			}
+
+			mult_modifier = {
+				factor = 1.25
+				trait = robust
 			}
 		}
 	}
 
 	option = {
-		name = "EVTOPTB_DuelEngine_501"
-		hidden_tooltip = { FROM = { character_event = { id = DuelEngine.503 } } }
-		if = {
-			limit = {
-				FROM = {
-					NOT = { trait = dueling_novice }
-					NOT = { trait = dueling_adept }
-					NOT = { trait = dueling_skilled }
-					NOT = { trait = dueling_expert }
-					NOT = { trait = dueling_master }
-					NOT = { trait = dueling_legend }
-				}
-				NOT = { trait = craven }
-			}
-			random = {
-				chance = 25
-				add_trait = craven
+		name = EVTOPTB_DuelEngine_501
+
+		log = "DEBUG.DUEL_ENGINE [battlefield_duel_combatant_2.GetBestName] decided to run from [battlefield_duel_combatant_1.GetBestName]"
+
+		hidden_effect = {
+			event_target:battlefield_duel_combatant_1 = {
+				character_event = { id = DuelEngine.503 }
 			}
 		}
-		if = {
-			limit = {
-				FROM = {
-					OR = {
-						trait = dueling_novice
-						trait = dueling_adept
-					}
-				}
-				NOT = { trait = craven }
+
+		random = {
+			chance = 5 # Base chance if opponent is dueling_legend
+
+			additive_modifier = {
+				value = 5
+				event_target:battlefield_duel_combatant_1 = { trait = dueling_master }
 			}
-			random = {
-				chance = 20
-				add_trait = craven
+
+			additive_modifier = {
+				value = 10
+				event_target:battlefield_duel_combatant_1 = { trait = dueling_expert }
 			}
-		}
-		if = {
-			limit = {
-				FROM = {
-					OR = {
+
+			additive_modifier = {
+				value = 15
+				event_target:battlefield_duel_combatant_1 = { trait = dueling_skilled }
+			}
+
+			additive_modifier = {
+				value = 20
+				event_target:battlefield_duel_combatant_1 = {
+					NOR = {
 						trait = dueling_skilled
 						trait = dueling_expert
+						trait = dueling_master
+						trait = dueling_legend
 					}
 				}
-				NOT = { trait = craven }
 			}
-			random = {
-				chance = 15
-				add_trait = craven
-			}
+
+			add_trait_fully_craven_effect = yes
 		}
-		if = {
-			limit = {
-				FROM = {
-					trait = dueling_master
-				}
-				NOT = { trait = craven }
-			}
-			random = {
-				chance = 10
-				add_trait = craven
-			}
-		}
-		if = {
-			limit = {
-				FROM = {
-					trait = dueling_legend
-				}
-				NOT = { trait = craven }
-			}
-			random = {
-				chance = 5
-				add_trait = craven
-			}
-		}
+
 		morale = -0.1
+
 		ai_chance = {
 			factor = 100
-			modifier = {
+
+			mult_modifier = {
 				factor = 2
-				FROM = { trait = dueling_novice }
+				event_target:battlefield_duel_combatant_1 = { trait = dueling_novice }
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 3
-				FROM = { trait = dueling_adept }
+				event_target:battlefield_duel_combatant_1 = { trait = dueling_adept }
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 4
-				FROM = { trait = dueling_skilled }
+				event_target:battlefield_duel_combatant_1 = { trait = dueling_skilled }
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 5
-				FROM = { trait = dueling_expert }
+				event_target:battlefield_duel_combatant_1 = { trait = dueling_expert }
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 5.5
-				FROM = { trait = dueling_master }
+				event_target:battlefield_duel_combatant_1 = { trait = dueling_master }
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 6
-				FROM = { trait = dueling_legend }
+				event_target:battlefield_duel_combatant_1 = { trait = dueling_legend }
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 3
-				FROM = { trait = duelist }
+				event_target:battlefield_duel_combatant_1 = { trait = duelist }
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 2
-				FROM = { is_strong_trigger = yes }
+				event_target:battlefield_duel_combatant_1 = { trait = strong }
 			}
-			modifier = {
+
+			mult_modifier = {
+				factor = 1.5
+				event_target:battlefield_duel_combatant_1 = { trait = robust }
+			}
+
+			mult_modifier = {
 				factor = 10
 				trait = craven
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 2
 				trait = paranoid
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 2
-				is_weak_trigger = yes
+				trait = weak
 			}
-			modifier = {
+
+			mult_modifier = {
+				factor = 1.5
+				trait = feeble
+			}
+
+			mult_modifier = {
 				factor = 2
 				trait = dwarf
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 2
 				trait = hunchback
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 2
 				trait = leper
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 2
-				has_injury_trigger = yes
-				NOT = { trait = lunatic }
-				NOT = { trait = brave }
-				NOT = { trait = proud }
-				NOT = { trait = wroth }
+
+				trait = wounded
+
+				NOR = {
+					trait = lunatic
+					trait = brave
+					trait = proud
+					trait = wroth
+				}
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 4
+
 				is_maimed_trigger = yes
-				NOT = { trait = lunatic }
-				NOT = { trait = brave }
-				NOT = { trait = proud }
-				NOT = { trait = wroth }
+
+				NOR = {
+					trait = lunatic
+					trait = brave
+					trait = proud
+					trait = wroth
+				}
 			}
-			modifier = {
+
+			mult_modifier = {
 				factor = 10
+
 				trait = blinded
-				NOT = { trait = lunatic }
-				NOT = { trait = brave }
-				NOT = { trait = proud }
-				NOT = { trait = wroth }
+
+				NOR = {
+					trait = lunatic
+					trait = brave
+					trait = proud
+					trait = wroth
+				}
 			}
 		}
 	}
