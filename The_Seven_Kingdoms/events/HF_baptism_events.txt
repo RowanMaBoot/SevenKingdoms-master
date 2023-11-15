@@ -1,1 +1,1612 @@
-#
+# Written by Flavio
+
+namespace=HF
+
+######################################################
+# Baby Baptism (only for first current_heir, delayed fired on birth via HFP.20403 for Christian rulers with available notable baptizer)
+# on_birth event will check which of the parents has greater authority and send this event to the more powerful one.
+character_event = {
+	id = HF.20100
+	desc = {
+		text = EVTDESCAHF20100
+		trigger = {
+			is_female = yes
+		}
+	}
+	desc = {
+		text = EVTDESCBHF20100
+		trigger = {
+			is_female = no
+		}
+	}
+	picture = GFX_evt_birth
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+
+	trigger = { 
+		has_dlc = "Holy Fury"
+		religion_group = the_seven
+		higher_tier_than = DUKE
+		NOT = { trait = incapable }
+		OR = { #Must qualify for at least one of the special options.
+			AND = { 
+				society_member_of = the_satanists
+				has_society_currency_medium_trigger = yes
+			}
+			AND = {
+				NOT = { trait = excommunicated }
+				spouse = { NOT = { trait = excommunicated } }
+				religion_head = { 
+					is_alive = yes 
+					NOT = { block_general_event_trigger = yes }
+					has_landed_title = k_papal_state
+				}
+			}
+			AND = {
+				NOT = { trait = excommunicated }
+				spouse = { NOT = { trait = excommunicated } }
+				any_realm_character = { 
+					is_theocracy = yes 
+					top_liege = { character = ROOT }
+					religion = ROOT
+					NOT = { block_general_event_trigger = yes }
+					OR = { 
+						higher_tier_than = BARON  
+						has_minor_title = title_cardinal
+						any_claim = { title = k_papal_state } #Antipope
+					}
+					NOT = { has_landed_title = k_papal_state }
+				}
+			}
+		}
+		NOT = { #Only once per family, unless the baptized heir died in the meantime. Otherwise Ultimogeniture rulers would get to baptize all of their children.
+			any_child = {
+				is_alive = yes 
+				OR = { 
+					trait = baptized_by_satan
+					trait = baptized_by_pope
+					trait = baptized_by_bishop 
+				} 
+			} 
+		}
+		ROOT = { current_heir = { character = FROM } } 
+	}
+
+	immediate = { 
+		FROM = { save_event_target_as = baptizing_child } 
+		set_character_flag = flag_baptizing_child #Avoid using both the event and the targetted decision at the same time.
+		hidden_tooltip = { 
+			if = { 
+				limit = { 
+					religion = the_seven
+					rightful_religious_head_scope = { 
+						has_landed_title = k_papal_state 
+					}
+				} 
+				rightful_religious_head_scope = { save_event_target_as = scoped_pope }
+			}
+			if = { 
+				limit = { 
+					society_member_of = the_satanists
+					has_society_currency_medium_trigger = yes
+				} 
+				random_society_member = { 
+					limit = { 
+						society_rank = {
+							rank == 4
+							society = the_satanists
+						}
+					}
+					save_event_target_as = scoped_satanist 
+				}
+			}
+			if = { 
+				limit = { 
+					any_realm_character = { 
+						is_theocracy = yes 
+						top_liege = { character = ROOT }
+						religion = ROOT
+						NOT = { block_general_event_trigger = yes }
+						OR = { 
+							higher_tier_than = BARON  
+							has_minor_title = title_cardinal
+							any_claim = { title = k_papal_state } #Antipope
+						}
+						NOT = { has_landed_title = k_papal_state }
+					}
+				} 
+				random_realm_character = { 
+					limit = { 
+						is_theocracy = yes 
+						top_liege = { character = ROOT }
+						religion = ROOT
+						NOT = { block_general_event_trigger = yes }
+						OR = { 
+							higher_tier_than = BARON  
+							has_minor_title = title_cardinal
+							any_claim = { title = k_papal_state } #Antipope
+						}
+						NOT = { has_landed_title = k_papal_state }
+						NOT = { has_landed_title = k_orthodox }
+					}
+					save_event_target_as = scoped_bishop
+				}
+			}
+		}
+	}
+
+	option = { #Satanist Baptism
+		name = EVTOPTZHF20100
+		custom_tooltip = { text = tooltip_HF20100_Z }
+		trigger = { 
+			society_member_of = the_satanists
+			has_society_currency_medium_trigger = yes
+		}
+		show_portrait = scoped_satanist
+		detract_society_currency_medium_effect = yes
+		event_target:scoped_satanist = { save_event_target_as = scoped_baptizer }
+		event_target:baptizing_child = { set_character_flag = flag_baptized_by_satan }
+		hidden_tooltip = {
+			if = { 
+				limit = { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						is_adult = yes
+						society_member_of = the_satanists
+						NOR =  { 
+							is_father = FROM
+							is_mother = FROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+						}
+					}
+				} 
+				character_event = { id = HF.20101 } #Godfather pick
+			}
+			else = { character_event = { id = HF.20103 } } #Skip to baptism if no potential godparents are available.
+		}
+		ai_chance = {
+			factor = 100 
+			modifier = { #If the true heir can still come, don't waste your only chance to give him the trait.
+				factor = 0.1
+				NOT = { age = 40 }
+				NOT = { spouse = { age = 40 } }
+				FROM = { is_female = yes }
+				OR = { 
+					has_law = agnatic_succession 
+					has_law = cognatic_succession 
+				}
+			}
+			modifier = { #If the true heir can still come, don't waste your only chance to give him the trait.
+				factor = 0.1
+				NOT = { age = 40 }
+				NOT = { spouse = { age = 40 } }
+				FROM = { is_female = no }
+				OR = { 
+					has_law = enatic_succession 
+					has_law = enatic_cognatic_succession 
+				}
+			}
+		}
+	}
+	option = { #Papal Baptism
+		name = {
+			text = EVTOPTAHF20100_A 
+			trigger = { 
+				rightful_religious_head_scope = { has_landed_title = k_papal_state }
+			}
+		}
+		custom_tooltip = { text = tooltip_HF20100_A }
+		trigger = { event_target:scoped_pope = { is_alive = yes } }
+		show_portrait = scoped_pope
+		trigger = { 
+			religion_head = { 
+				is_alive = yes 
+				NOT = { block_general_event_trigger = yes }
+				has_landed_title = k_papal_state
+			}
+		}
+		scaled_wealth = { value = -1.0 min = -250 max = -500 }
+		tiered_piety_negative_effect = yes
+		event_target:scoped_pope = { save_event_target_as = scoped_baptizer }
+		event_target:baptizing_child = { set_character_flag = flag_baptized_by_pope }
+		hidden_tooltip = {
+			if = { 
+				limit = { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						is_adult = yes
+						religion = ROOT
+						NOR =  { 
+							is_father = FROM
+							is_mother = FROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+						}
+					}
+				} 
+				character_event = { id = HF.20101 } #Godfather pick
+			}
+			else = { character_event = { id = HF.20103 } } #Skip to baptism if no potential godparents are available.
+		}
+		ai_chance = {
+			factor = 100 
+			modifier = {
+				factor = 1.7
+				trait = zealous
+			}
+			modifier = {
+				factor = 0
+				trait = cynical
+			}
+			modifier = {
+				factor = 0.5
+				trait = greedy
+			}
+			modifier = {
+				factor = 0.01
+				society_member_of = the_satanists
+			}
+			modifier = { #If the true heir can still come, don't waste your only chance to give him the trait.
+				factor = 0.1
+				NOT = { age = 40 }
+				NOT = { spouse = { age = 40 } }
+				FROM = { is_female = yes }
+				OR = { 
+					has_law = agnatic_succession 
+					has_law = cognatic_succession 
+				}
+			}
+			modifier = { #If the true heir can still come, don't waste your only chance to give him the trait.
+				factor = 0.1
+				NOT = { age = 40 }
+				NOT = { spouse = { age = 40 } }
+				FROM = { is_female = no }
+				OR = { 
+					has_law = enatic_succession 
+					has_law = enatic_cognatic_succession 
+				}
+			}
+		}
+	}
+	option = { #No, just regular baptism.
+		name = EVTOPTCHF20100
+		custom_tooltip = { text = tooltip_HF20100_C }
+		clr_character_flag = flag_baptizing_child #Avoid using both the event and the targetted decision at the same time.
+		ai_chance = { 
+			factor = 10
+			modifier = {
+				factor = 10
+				trait = cynical
+			}
+			modifier = {
+				factor = 5
+				trait = greedy
+			}
+		}
+	}
+}
+
+# Pick the godparent for the child's baptism.
+character_event = {
+	id = HF.20101
+	desc = {
+		text = EVTDESCAHF20101
+		trigger = {
+			event_target:baptizing_child = { has_character_flag = flag_baptized_by_satan }
+		}
+		picture = GFX_evt_sacrifice
+	}
+	desc = {
+		text = EVTDESCBHF20101
+		trigger = {
+			event_target:baptizing_child = { NOT = { has_character_flag = flag_baptized_by_satan } }
+		}
+		picture = GFX_evt_icon
+	}
+	picture = GFX_evt_birth
+	border = GFX_event_normal_frame_religion
+	show_from_from = yes #Baby
+	
+	is_triggered_only = yes
+
+	immediate = { #Possible picks for godparents
+		if = { 
+			limit = { event_target:baptizing_child = { NOT = { has_character_flag = flag_baptized_by_satan } } } 
+			#Search for powerful vassal (prioritizing relatives).
+			#Search for a well liked vassal (prioritizing relatives).
+			#Then for any vassal (prioritizing relatives).
+			#Then for any courtier (prioritizing relatives).
+
+			if = { #Check for any powerful vassal.
+				limit =  { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						is_powerful_vassal = yes
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+						}
+					} 
+				}
+				random_realm_character = {
+					limit = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						is_powerful_vassal = yes
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						dynasty = FROMFROM
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+						}
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						reverse_opinion = { who = ROOT value = 20 }
+						higher_tier_than = COUNT
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						reverse_opinion = { who = ROOT value = 20 }
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						reverse_opinion = { who = ROOT value = 0 }
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+					}
+					save_event_target_as = godfather_option_1
+				}
+			}
+
+			if = { #Check for a liked vassal.
+				limit =  { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						reverse_opinion =  { who = ROOT value = 20 }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+						}
+					} 
+				}
+				random_realm_character = {
+					limit = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						reverse_opinion = { who = ROOT value = 20 }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+						}
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						is_powerful_vassal = yes
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						higher_tier_than = BARON
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+					}
+					save_event_target_as = godfather_option_2
+				}
+			}
+			if = { #Check for any vassal.
+				limit =  { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+							character = event_target:godfather_option_2
+						}
+					} 
+				}
+				random_realm_character = {
+					limit = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+							character = event_target:godfather_option_2
+						}
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						is_powerful_vassal = yes
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+					}
+					save_event_target_as = godfather_option_3
+				}
+			}
+			if = { #Check for any courtier.
+				limit =  { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = no
+						is_adult = yes
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+							character = event_target:godfather_option_2
+							character = event_target:godfather_option_3
+						}
+					} 
+				}
+				random_realm_character = {
+					limit = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = no
+						is_adult = yes
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+							character = event_target:godfather_option_2
+							character = event_target:godfather_option_3
+						}
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						reverse_opinion = { who = ROOT value = 50 }
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						reverse_opinion = { who = ROOT value = 20 }
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						reverse_opinion = { who = ROOT value = 20 }
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+					}
+					save_event_target_as = godfather_option_4
+				}
+			}
+		} #Close regular if
+
+		if = { 
+			limit = { event_target:baptizing_child = { has_character_flag = flag_baptized_by_satan } } 
+			#Same as above, but check for society membership rather than religion.
+
+			if = { #Check for any powerful vassal.
+				limit =  { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						is_powerful_vassal = yes
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						society_member_of = the_satanists
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+						}
+					} 
+				}
+				random_realm_character = {
+					limit = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						is_powerful_vassal = yes
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						society_member_of = the_satanists
+						dynasty = FROMFROM
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+						}
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						reverse_opinion = { who = ROOT value = 20 }
+						higher_tier_than = COUNT
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						reverse_opinion = { who = ROOT value = 20 }
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						reverse_opinion = { who = ROOT value = 0 }
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+					}
+					save_event_target_as = godfather_option_1
+				}
+			}
+
+			if = { #Check for a liked vassal.
+				limit =  { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						reverse_opinion =  { who = ROOT value = 20 }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						society_member_of = the_satanists
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+						}
+					} 
+				}
+				random_realm_character = {
+					limit = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						reverse_opinion = { who = ROOT value = 20 }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						society_member_of = the_satanists
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+						}
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						is_powerful_vassal = yes
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						higher_tier_than = BARON
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+					}
+					save_event_target_as = godfather_option_2
+				}
+			}
+			if = { #Check for any vassal.
+				limit =  { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						society_member_of = the_satanists
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+							character = event_target:godfather_option_2
+						}
+					} 
+				}
+				random_realm_character = {
+					limit = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = yes
+						is_adult = yes
+						society_member_of = the_satanists
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+							character = event_target:godfather_option_2
+						}
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						is_powerful_vassal = yes
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+					}
+					save_event_target_as = godfather_option_3
+				}
+			}
+			if = { #Check for any courtier.
+				limit =  { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = no
+						is_adult = yes
+						society_member_of = the_satanists
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+							character = event_target:godfather_option_2
+							character = event_target:godfather_option_3
+						}
+					} 
+				}
+				random_realm_character = {
+					limit = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						religion = ROOT
+						is_ruler = no
+						is_adult = yes
+						society_member_of = the_satanists
+						NOR =  { 
+							is_father = FROMFROM
+							is_mother = FROMFROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+							character = event_target:godfather_option_1
+							character = event_target:godfather_option_2
+							character = event_target:godfather_option_3
+						}
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						reverse_opinion = { who = ROOT value = 50 }
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+						reverse_opinion = { who = ROOT value = 20 }
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						reverse_opinion = { who = ROOT value = 20 }
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+						is_evil_trigger = no
+					}
+					preferred_limit = { 
+						dynasty = FROMFROM
+					}
+					save_event_target_as = godfather_option_4
+				}
+			}
+		} #Close satanist if
+	}
+
+	option = { #Pick 1 will be the godparent.
+		name = EVTOPTAHF20101
+		trigger = { event_target:godfather_option_1 = { is_alive = yes } } 
+		show_portrait = event_target:godfather_option_1
+		event_target:godfather_option_1 = { 
+			show_scope_change = no
+			if = { 
+				limit = { is_female = no }
+				opinion = { 
+					who = FROMFROM
+					modifier = opinion_godfather
+					years = 30
+				} 
+			}
+			if = { 
+				limit = { is_female = yes }
+				opinion = { 
+					who = FROMFROM
+					modifier = opinion_godmother
+					years = 30
+				} 
+			}
+			hidden_tooltip = { character_event = { id = HF.20102 } } #Notify
+		}
+		ai_chance = {
+			factor = 100
+			modifier = { 
+				factor = 0.1
+				is_rival = event_target:godfather_option_1
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_1 = { trait = lunatic }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_1 = { trait = possessed }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_1 = { trait = cruel }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_1 = { trait = envious }
+			}
+			modifier = { 
+				factor = 1.75
+				is_friend = event_target:godfather_option_1
+			}
+			modifier = { 
+				factor = 1.75
+				is_lover = event_target:godfather_option_1
+			}
+			modifier = { 
+				factor = 1.75
+				is_close_relative = event_target:godfather_option_1
+			}
+		}
+	}
+	option = { #Pick 2 will be the godparent.
+		name = EVTOPTBHF20101
+		trigger = { event_target:godfather_option_2 = { is_alive = yes } } 
+		show_portrait = event_target:godfather_option_2
+		event_target:godfather_option_2 = { 
+			show_scope_change = no
+			if = { 
+				limit = { is_female = no }
+				opinion = { 
+					who = FROMFROM
+					modifier = opinion_godfather
+					years = 30
+				} 
+			}
+			if = { 
+				limit = { is_female = yes }
+				opinion = { 
+					who = FROMFROM
+					modifier = opinion_godmother
+					years = 30
+				} 
+			}
+			hidden_tooltip = { character_event = { id = HF.20102 } } #Notify
+		}
+		ai_chance = {
+			factor = 50
+			modifier = { 
+				factor = 0.1
+				is_rival = event_target:godfather_option_2
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_2 = { trait = lunatic }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_2 = { trait = possessed }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_2 = { trait = cruel }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_2 = { trait = envious }
+			}
+			modifier = { 
+				factor = 1.75
+				is_friend = event_target:godfather_option_2
+			}
+			modifier = { 
+				factor = 1.75
+				is_lover = event_target:godfather_option_2
+			}
+			modifier = { 
+				factor = 1.75
+				is_close_relative = event_target:godfather_option_2
+			}
+		}
+	}
+	option = { #Pick 3 will be the godparent.
+		name = EVTOPTCHF20101
+		trigger = { event_target:godfather_option_3 = { is_alive = yes } } 
+		show_portrait = event_target:godfather_option_3
+		event_target:godfather_option_3 = { 
+			show_scope_change = no
+			if = { 
+				limit = { is_female = no }
+				opinion = { 
+					who = FROMFROM
+					modifier = opinion_godfather
+					years = 30
+				} 
+			}
+			if = { 
+				limit = { is_female = yes }
+				opinion = { 
+					who = FROMFROM
+					modifier = opinion_godmother
+					years = 30
+				} 
+			}
+			hidden_tooltip = { character_event = { id = HF.20102 } } #Notify
+		}
+		ai_chance = {
+			factor = 10
+			modifier = { 
+				factor = 0.1
+				is_rival = event_target:godfather_option_3
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_3 = { trait = lunatic }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_3 = { trait = possessed }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_3 = { trait = cruel }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_3 = { trait = envious }
+			}
+			modifier = { 
+				factor = 1.75
+				is_friend = event_target:godfather_option_3
+			}
+			modifier = { 
+				factor = 1.75
+				is_lover = event_target:godfather_option_3
+			}
+			modifier = { 
+				factor = 1.75
+				is_close_relative = event_target:godfather_option_3
+			}
+		}
+	}
+	option = { #Pick 4 will be the godparent.
+		name = EVTOPTDHF20101
+		trigger = { event_target:godfather_option_4 = { is_alive = yes } } 
+		show_portrait = event_target:godfather_option_4
+		event_target:godfather_option_4 = { 
+			show_scope_change = no
+			if = { 
+				limit = { is_female = no }
+				opinion = { 
+					who = FROMFROM
+					modifier = opinion_godfather
+					years = 30
+				} 
+			}
+			if = { 
+				limit = { is_female = yes }
+				opinion = { 
+					who = FROMFROM
+					modifier = opinion_godmother
+					years = 30
+				} 
+			}
+			hidden_tooltip = { character_event = { id = HF.20102 } } #Notify
+		}
+		ai_chance = {
+			factor = 10
+			modifier = { 
+				factor = 0.1
+				is_rival = event_target:godfather_option_4
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_4 = { trait = lunatic }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_4 = { trait = possessed }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_4 = { trait = cruel }
+			}
+			modifier = { 
+				factor = 0.25
+				event_target:godfather_option_4 = { trait = envious }
+			}
+			modifier = { 
+				factor = 1.75
+				is_friend = event_target:godfather_option_4
+			}
+			modifier = { 
+				factor = 1.75
+				is_lover = event_target:godfather_option_4
+			}
+			modifier = { 
+				factor = 1.75
+				is_close_relative = event_target:godfather_option_4
+			}
+		}
+	}
+	after = { 
+		clear_event_target = godfather_option_1
+		clear_event_target = godfather_option_2
+		clear_event_target = godfather_option_3
+		clear_event_target = godfather_option_4
+		character_event = { id = HF.20103 } #Actual baptism.
+	}
+}
+
+#New Godfather notified of baptism.
+character_event = {
+	id = HF.20102
+	desc = {
+		text = EVTDESCAHF20102
+		trigger = {
+			event_target:baptizing_child = { has_character_flag = flag_baptized_by_satan }
+		}
+		picture = GFX_evt_sacrifice
+	}
+	desc = {
+		text = EVTDESCBHF20102
+		trigger = {
+			event_target:baptizing_child = { NOT = { has_character_flag = flag_baptized_by_satan } }
+		}
+		picture = GFX_evt_icon
+	}
+	picture = GFX_evt_birth
+	border = GFX_event_normal_frame_religion
+	show_from_from_from = yes #Baby
+	
+	is_triggered_only = yes
+
+	option = { #Good.
+		name = EVTOPTAHF20102
+		tiered_prestige_reward_effect = yes
+		tooltip = { 
+			if = { 
+				limit = { is_female = no }
+				opinion = { 
+					who = FROMFROM
+					modifier = opinion_godfather
+					years = 30
+				} 
+			}
+			if = { 
+				limit = { is_female = yes }
+				opinion = { 
+					who = FROMFROM
+					modifier = opinion_godmother
+					years = 30
+				} 
+			}
+		}
+	}
+}
+
+#Parent: Baptism itself happens.
+character_event = {
+	id = HF.20103
+	desc = {
+		text = EVTDESCAHF20103
+		trigger = {
+			event_target:baptizing_child = { has_character_flag = flag_baptized_by_satan }
+		}
+		picture = GFX_evt_sacrifice
+	}
+	desc = {
+		text = EVTDESCBHF20103
+		trigger = {
+			#NOT = { rightful_religious_head_scope = { has_landed_title = k_orthodox } }
+			event_target:baptizing_child = { 
+				has_character_flag = flag_baptized_by_pope 
+				NOR = {
+					has_character_flag = demon_child_non_pagan
+					has_character_flag = demon_child
+				}
+			}
+		}
+		picture = GFX_evt_pope
+	}
+	desc = {
+		text = EVTDESCBHF20103_CURSED
+		trigger = {
+			event_target:baptizing_child = { 
+				has_character_flag = flag_baptized_by_pope 
+				OR = {
+					has_character_flag = demon_child_non_pagan
+					has_character_flag = demon_child
+				}
+			}
+		}
+		picture = GFX_evt_pope
+	}
+	desc = {
+		text = EVTDESCCHF20103
+		trigger = {
+			event_target:baptizing_child = { has_character_flag = flag_baptized_by_bishop }
+		}
+		picture = GFX_evt_bishop
+	}
+	picture = GFX_evt_bishop
+	border = GFX_event_normal_frame_religion
+	show_from_from_from = yes #Baby
+	
+	is_triggered_only = yes
+
+	option = { #Good.
+		name = {
+			text = EVTOPTAHF20103
+			trigger = {
+				NOT = {
+					event_target:baptizing_child = { 
+						has_character_flag = flag_baptized_by_pope 
+						OR = {
+							has_character_flag = demon_child_non_pagan
+							has_character_flag = demon_child
+						}
+					}
+				}
+			}
+		}
+		name = {
+			text = EVTOPTAHF20103_CURSED
+			trigger = {
+				event_target:baptizing_child = { 
+					has_character_flag = flag_baptized_by_pope 
+					OR = {
+						has_character_flag = demon_child_non_pagan
+						has_character_flag = demon_child
+					}
+				}
+			}
+		}
+		show_portrait = scoped_baptizer
+		clr_character_flag = flag_baptizing_child #Avoid using both the event and the targetted decision at the same time.
+		event_target:baptizing_child = { 
+			if = { 
+				limit = { has_character_flag = flag_baptized_by_satan }
+				save_persistent_event_target = { name = baptizing_satanist_per scope = event_target:scoped_baptizer }
+				custom_tooltip = { text = tooltip_gain_baptized_by_satan }
+				hidden_tooltip = { add_trait = baptized_by_satan }
+				clr_character_flag = flag_baptized_by_satan
+				event_target:scoped_satanist = {
+					show_scope_change = no
+					opinion = { 
+						modifier = opinion_baptized
+						who = event_target:baptizing_child 
+						years = 20
+					}
+				}
+			}
+			if = { 
+				limit = { 
+					has_character_flag = flag_baptized_by_pope 
+					religion = the_seven
+				}
+				save_persistent_event_target = { name = baptizing_pope_per scope = event_target:scoped_baptizer }
+				custom_tooltip = { text = tooltip_gain_baptized_by_pope }
+				hidden_tooltip = { add_trait = baptized_by_pope }
+				clr_character_flag = flag_baptized_by_pope
+				event_target:scoped_pope = {
+					show_scope_change = no
+					opinion = { 
+						modifier = opinion_baptized
+						who = event_target:baptizing_child 
+						years = 20
+					}
+				}
+			}
+			hidden_tooltip = { character_event = { id = HF.20104 } } #Child notified
+		}
+		if = { 
+			limit = { 
+				OR = { 
+					event_target:baptizing_child = { NOT = { trait = baptized_by_satan } }
+					spouse = { society_member_of = the_satanists }
+				} 
+			}
+			hidden_tooltip = { spouse = { character_event = { id = HF.20105 } } } #Spouse notified
+	 	}
+	}
+}
+
+#Child: Baptism has happened.
+character_event = {
+	id = HF.20104
+	desc = {
+		text = EVTDESCAHF20104
+		trigger = {
+			event_target:baptizing_child = { trait = baptized_by_satan }
+		}
+		picture = GFX_evt_sacrifice
+	}
+	desc = {
+		text = EVTDESCBHF20104
+		trigger = {
+			event_target:baptizing_child = { trait = baptized_by_pope }
+			NOR = {
+				has_character_flag = demon_child_non_pagan
+				has_character_flag = demon_child
+			}
+		}
+		picture = GFX_evt_pope
+	}
+	desc = {
+		text = EVTDESCBHF20104_CURSED
+		trigger = {
+			event_target:baptizing_child = { trait = baptized_by_pope }
+			OR = {
+				has_character_flag = demon_child_non_pagan
+				has_character_flag = demon_child
+			}
+		}
+		picture = GFX_evt_pope
+	}
+	desc = {
+		text = EVTDESCCHF20104
+		trigger = {
+			event_target:baptizing_child = { trait = baptized_by_bishop }
+		}
+		picture = GFX_evt_bishop
+	}
+	picture = GFX_evt_bishop
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+
+	option = { #Guh.
+		name = {
+			text = EVTOPTAHF20104
+			trigger = {
+				NOT = {
+					event_target:baptizing_child = { 
+						trait = baptized_by_pope 
+						OR = {
+							has_character_flag = demon_child_non_pagan
+							has_character_flag = demon_child
+						}
+					}
+				}
+			}
+		}
+		name = {
+			text = EVTOPTAHF20104_CURSED
+			trigger = {
+				event_target:baptizing_child = { 
+					trait = baptized_by_pope 
+					OR = {
+						has_character_flag = demon_child_non_pagan
+						has_character_flag = demon_child
+					}
+				}
+			}
+		}
+		if = {
+			limit = { trait = baptized_by_satan }
+			add_trait = baptized_by_satan
+			hidden_tooltip = { FROM = { character_event = { id = HF.20106 days = 5600 random = 200 } } } #Initiate to satanists.
+		}
+		if = {
+			limit = { trait = baptized_by_pope }
+			add_trait = baptized_by_pope
+		}
+		if = {
+			limit = { 
+				trait = baptized_by_pope 
+				OR = {
+					has_character_flag = demon_child_non_pagan
+					has_character_flag = demon_child
+				}
+			}
+			add_scarred_tiered_effect = yes
+		}
+	}
+}
+#Spouse: Baptism has happened.
+character_event = {
+	id = HF.20105
+	desc = {
+		text = EVTDESCAHF20103
+		trigger = {
+			event_target:baptizing_child = { trait = baptized_by_satan }
+		}
+		picture = GFX_evt_sacrifice
+	}
+	desc = {
+		text = EVTDESCBHF20103
+		trigger = {
+			event_target:baptizing_child = { trait = baptized_by_pope }
+		}
+		picture = GFX_evt_pope
+	}
+	picture = GFX_evt_bishop
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+
+	option = { #Good.
+		name = EVTOPTAHF20103
+	}
+}
+#Parent: Child has grown enough to be introduced properly to Satanists.
+character_event = {
+	id = HF.20106
+	desc = EVTDESCAHF20106
+	picture = GFX_evt_sacrifice
+	border = GFX_event_normal_frame_religion
+
+
+	trigger = {
+		NOT = { trait = incapable }
+		society_member_of = the_satanists
+		FROM = { 
+			religion = ROOT
+			is_alive = yes
+			NOR = { 
+				trait = incapable 
+				society_member_of = the_satanists
+			}
+			is_within_diplo_range = ROOT
+		}
+	}
+	
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTAHF20106
+		FROM = { 
+			join_society = the_satanists
+			hidden_tooltip = { FROM = { character_event = { id = HF.20107 } } }
+		}
+	}
+}
+
+#Child: introduced to Satanists at a young age.
+character_event = {
+	id = HF.20107
+	desc = EVTDESCAHF20107
+	picture = GFX_evt_sacrifice
+	border = GFX_event_normal_frame_religion
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTAHF20107
+		tooltip = { join_society = the_satanists }
+	}
+}
+
+######################################################
+# Baby Baptism 
+# second version of the event, firing from targetted-decision, hooks back into the previous chain.
+character_event = {
+	id = HF.20108
+	desc = EVTDESCAHF20108
+	picture = GFX_evt_birth
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+
+	immediate = { 
+		FROM = { save_event_target_as = baptizing_child } 
+		hidden_tooltip = { 
+			if = { 
+				limit = { 
+					religion = the_seven 
+					rightful_religious_head_scope = { 
+						has_landed_title = k_papal_state 
+					}
+				} 
+				rightful_religious_head_scope = { save_event_target_as = scoped_pope }
+			}
+			if = { 
+				limit = { 
+					society_member_of = the_satanists
+					has_society_currency_major_trigger = yes
+				} 
+				random_society_member = { 
+					limit = { 
+						society_rank = {
+							rank == 4
+							society = the_satanists
+						}
+					}
+					save_event_target_as = scoped_satanist 
+				}
+			}
+			if = { 
+				limit = { 
+					any_realm_character = { 
+						is_theocracy = yes 
+						top_liege = { character = ROOT }
+						religion = ROOT
+						NOT = { block_general_event_trigger = yes }
+						OR = { 
+							higher_tier_than = BARON  
+							has_minor_title = title_cardinal
+							any_claim = { title = k_papal_state } #Antipope
+						}
+						NOT = { has_landed_title = k_papal_state }
+					}
+				} 
+				random_realm_character = { 
+					limit = { 
+						is_theocracy = yes 
+						top_liege = { character = ROOT }
+						religion = ROOT
+						NOT = { block_general_event_trigger = yes }
+						OR = { 
+							higher_tier_than = BARON  
+							has_minor_title = title_cardinal
+							any_claim = { title = k_papal_state } #Antipope
+						}
+						NOT = { has_landed_title = k_papal_state }
+					}
+					save_event_target_as = scoped_bishop
+				}
+			}
+		}
+	}
+
+	option = { #Satanist Baptism
+		name = EVTOPTZHF20100
+		custom_tooltip = { text = tooltip_HF20100_Z }
+		trigger = { 
+			society_member_of = the_satanists
+			has_society_currency_major_trigger = yes
+		}
+		show_portrait = scoped_satanist
+		detract_society_currency_medium_effect = yes
+		event_target:scoped_satanist = { save_event_target_as = scoped_baptizer }
+		event_target:baptizing_child = { set_character_flag = flag_baptized_by_satan }
+		hidden_tooltip = {
+			if = { 
+				limit = { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						is_adult = yes
+						society_member_of = the_satanists
+						NOR =  { 
+							is_father = FROM
+							is_mother = FROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+						}
+					}
+				} 
+				character_event = { id = HF.20101 } #Godfather pick
+			}
+			else = { character_event = { id = HF.20103 } } #Skip to baptism if no potential godparents are available.
+		}
+		ai_chance = {
+			factor = 100 
+			modifier = { #If the true heir can still come, don't waste your only chance to give him the trait.
+				factor = 0.1
+				NOT = { age = 40 }
+				NOT = { spouse = { age = 40 } }
+				FROM = { is_female = yes }
+				OR = { 
+					has_law = agnatic_succession 
+					has_law = cognatic_succession 
+				}
+			}
+			modifier = { #If the true heir can still come, don't waste your only chance to give him the trait.
+				factor = 0.1
+				NOT = { age = 40 }
+				NOT = { spouse = { age = 40 } }
+				FROM = { is_female = no }
+				OR = { 
+					has_law = enatic_succession 
+					has_law = enatic_cognatic_succession 
+				}
+			}
+		}
+	}
+	option = { #Papal Baptism
+		name = {
+			text = EVTOPTAHF20100_A 
+			trigger = { 
+				rightful_religious_head_scope = { has_landed_title = k_papal_state }
+			}
+		}
+		custom_tooltip = { text = tooltip_HF20100_A }
+		trigger = { event_target:scoped_pope = { is_alive = yes } }
+		show_portrait = scoped_pope
+		trigger = { 
+			religion_head = { 
+				is_alive = yes 
+				NOT = { block_general_event_trigger = yes }
+				has_landed_title = k_papal_state
+			}
+		}
+		scaled_wealth = { value = -2.0 min = -350 max = -750 }
+		tiered_piety_negative_effect = yes
+		event_target:scoped_pope = { save_event_target_as = scoped_baptizer }
+		event_target:baptizing_child = { set_character_flag = flag_baptized_by_pope }
+		hidden_tooltip = {
+			if = { 
+				limit = { 
+					any_realm_character = { 
+						top_liege = { character = ROOT } 
+						NOT =  { trait = incapable }
+						is_theocracy = no
+						is_adult = yes
+						religion = ROOT
+						NOR =  { 
+							is_father = FROM
+							is_mother = FROM
+							has_any_opinion_modifier = opinion_godfather 
+							has_any_opinion_modifier = opinion_godmother
+						}
+					}
+				} 
+				character_event = { id = HF.20101 } #Godfather pick
+			}
+			else = { character_event = { id = HF.20103 } } #Skip to baptism if no potential godparents are available.
+		}
+		ai_chance = {
+			factor = 100 
+			modifier = {
+				factor = 1.7
+				trait = zealous
+			}
+			modifier = {
+				factor = 0
+				trait = cynical
+			}
+			modifier = {
+				factor = 0.5
+				trait = greedy
+			}
+			modifier = {
+				factor = 0.01
+				society_member_of = the_satanists
+			}
+			modifier = { #If the true heir can still come, don't waste your only chance to give him the trait.
+				factor = 0.1
+				NOT = { age = 40 }
+				NOT = { spouse = { age = 40 } }
+				FROM = { is_female = yes }
+				OR = { 
+					has_law = agnatic_succession 
+					has_law = cognatic_succession 
+				}
+			}
+			modifier = { #If the true heir can still come, don't waste your only chance to give him the trait.
+				factor = 0.1
+				NOT = { age = 40 }
+				NOT = { spouse = { age = 40 } }
+				FROM = { is_female = no }
+				OR = { 
+					has_law = enatic_succession 
+					has_law = enatic_cognatic_succession 
+				}
+			}
+		}
+	}
+	option = { #No, just regular baptism.
+		name = EVTOPTCHF20108
+		custom_tooltip = { text = tooltip_HF20100_C }
+		clr_character_flag = flag_baptizing_child
+		ai_chance = { 
+			factor = 0
+		}
+	}
+}
