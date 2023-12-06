@@ -86,8 +86,25 @@ claim = {
 					is_pretender = yes # Checks vs ROOT character
 					holder_scope = { has_regent = yes }
 					AND = {
-						ROOT = { OR = { is_female = no has_law = status_of_women_4 } }
-						holder_scope ={ AND = { is_female = yes NOR = { has_law = status_of_women_4 has_game_rule = { name = gender value = all } } } }
+						ROOT = { 
+							OR = { 
+								is_female = no 
+								has_law = status_of_women_4
+								has_religion_feature = religion_matriarchal
+								has_religion_feature = religion_equal
+							} 
+						}
+						holder_scope = { 
+							AND = { 
+								is_female = yes 
+								NOR = { 
+									has_religion_feature = religion_matriarchal
+									has_religion_feature = religion_equal
+									has_law = status_of_women_4 
+									has_game_rule = { name = gender value = all } 
+								} 
+							} 
+						}
 					}
 					is_contested = yes # Is already being contested in some form of Claim or Succession War
 				}
@@ -127,7 +144,6 @@ claim = {
 	}
 
 	on_success_title = {
-	
 		hidden_tooltip = {
 			ROOT = {
 				clr_character_flag = claimant_adventurer
@@ -192,6 +208,7 @@ claim = {
 		}
 		
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_attacker = {
@@ -200,12 +217,14 @@ claim = {
 		}
 		
 		FROM = {
+			show_scope_change = no
 			prestige = -100
 		}
 	}
 
 	on_fail_title = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 			hidden_tooltip = {
 				disband_event_forces = yes
@@ -213,6 +232,7 @@ claim = {
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_defender = {
@@ -231,6 +251,7 @@ claim = {
 		}
 		
 		ROOT = {
+			show_scope_change = no
 			prestige = -150
 			transfer_scaled_wealth = {
 				to = FROM
@@ -244,6 +265,7 @@ claim = {
 			ROOT = { imprison = FROM }
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 150
 		}
 		any_defender = {
@@ -281,9 +303,10 @@ claim = {
 	}
 
 	on_reverse_demand_title = {
-		any_claim = {
-			remove_claim = ROOT
-		}
+		#any_claim = { #Does not work.
+			#remove_claim = ROOT
+		#}
+		ROOT = { show_scope_change = no remove_claim = PREV }
 		ROOT = {
 			hidden_tooltip = {
 				disband_event_forces = yes
@@ -292,33 +315,23 @@ claim = {
 		}
 	}
 	
-	# on_attacker_leader_death = {
-		# if = {
-			# limit = {
-				# ROOT = { has_character_flag = EoD_prophet_attacker }
-			# }
-			# FROM = { narrative_event = { id = RIP.15116 } }
-		# }
-		# if = {
-			# limit = {
-				# ROOT = { 
-					# OR = {
-						# has_character_flag = claimant_adventurer
-						# has_character_flag = EoD_prophet_attacker
-					# }
-				# }
-			# }
-			# ROOT = {
-				# hidden_tooltip = {
-					# disband_event_forces = yes
-					# clr_character_flag = claimant_adventurer
-					# clr_character_flag = EoD_prophet_attacker
-				# }
-			# }
-			# end_war = invalid
-		# }
+	on_attacker_leader_death = {
+		if = {
+			limit = {
+				ROOT = { 
+					has_character_flag = claimant_adventurer
+				}
+			}
+			ROOT = {
+				hidden_tooltip = {
+					disband_event_forces = yes
+					clr_character_flag = claimant_adventurer
+				}
+			}
+			end_war = invalid
+		}
 
-	# }
+	}
 
 	attacker_ai_victory_worth = {
 		factor = -1 # always accept
@@ -361,10 +374,17 @@ other_claim = {
 	can_use_title = {
 		OR = {
 			ROOT = { is_female = no }
-			# AND = {
-				# NOT = { ROOT = { religion_group = muslim } }
+			AND = {
+				NOT = { ROOT = { has_religion_feature = religion_patriarchal } }
 				NOT = { succ_law_title = { has_law = agnatic_succession } }
-			# }
+			}
+		}
+		OR = {
+			ROOT = { is_female = yes }
+			AND = {
+				NOT = { ROOT = { has_religion_feature = religion_matriarchal } }
+				NOT = { succ_law_title = { has_law = enatic_succession } }
+			}
 		}
 		OR = {
 			FROM = {
@@ -462,6 +482,7 @@ other_claim = {
 			}
 		}
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_attacker = {
@@ -469,6 +490,7 @@ other_claim = {
 			hidden_tooltip = { participation_scaled_prestige = 100 }
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = -100
 		}
 	}
@@ -595,7 +617,6 @@ other_claim = {
 						move_character = ROOT 
 					}
 				}
-			
 				# If we were erroneously vassalized, break free
 				if = {
 					limit = {
@@ -692,15 +713,19 @@ other_claim = {
 
 	on_fail_title = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			FROM = {
+				show_scope_change = no
 				prestige = -100
 			}
 		}
 		
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_defender = {
@@ -716,10 +741,12 @@ other_claim = {
 			value = 4.0
 		}
 		ROOT = {
+			show_scope_change = no
 			prestige = -150
 			imprison = FROM
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 150
 		}
 		any_defender = {
@@ -729,9 +756,7 @@ other_claim = {
 	}
 
 	on_reverse_demand_title = {
-		any_claim = {
-			remove_claim = PREV
-		}
+		ROOT = { show_scope_change = no remove_claim = PREV }
 	}
 
 	attacker_ai_victory_worth = {
@@ -1808,7 +1833,9 @@ claim_all = {
 
 	on_add = {
 		ROOT = {
+			show_scope_change = no
 			any_claim = {
+				show_scope_change = no
 				limit = {
 					holder_scope = {
 						OR = {
@@ -1832,7 +1859,9 @@ claim_all = {
 
 	on_success = {
 		ROOT = {
+			show_scope_change = no
 			any_claim = {
+				show_scope_change = no
 				limit = {
 					holder_scope = {
 						OR = {
@@ -1885,6 +1914,7 @@ claim_all = {
 			# }
 		}
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_attacker = {
@@ -1895,9 +1925,11 @@ claim_all = {
 
 	on_fail = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -150
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 75
 		}
 		any_defender = {
@@ -1908,12 +1940,14 @@ claim_all = {
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
 				value = 4.0
 			}
 			any_claim = {
+				show_scope_change = no
 				limit = {
 					holder_scope = {
 						OR = {
@@ -1923,7 +1957,7 @@ claim_all = {
 					}
 					ROOT = { has_strong_claim = PREV }
 				}
-				remove_claim = ROOT
+				ROOT = { show_scope_change = no remove_claim = PREV }
 			}
 			hidden_effect = {
 				if = { #Makes Freehold have a chance of leaving Expanionist policy...
@@ -1948,6 +1982,7 @@ claim_all = {
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 200
 			# if = {
 				# limit = { 
@@ -2101,9 +2136,11 @@ change_seniority_succession_law = {
 
 	on_fail = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 		}
 		any_defender = {
@@ -2126,10 +2163,12 @@ change_seniority_succession_law = {
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			prisoner = FROM
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 			hidden_tooltip = { 
 				if = { 
@@ -2276,6 +2315,7 @@ change_primogeniture_succession_law = {
 		}
 		
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 			hidden_tooltip = {
 				disband_event_forces = faction_revolters
@@ -2296,9 +2336,11 @@ change_primogeniture_succession_law = {
 
 	on_fail = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 		}
 		any_defender = {
@@ -2322,10 +2364,12 @@ change_primogeniture_succession_law = {
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			prisoner = FROM
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 			hidden_tooltip = { 
 				if = { 
