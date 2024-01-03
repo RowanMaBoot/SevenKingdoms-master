@@ -168,21 +168,32 @@ is_culture_swordsmanship_favoured = {
 #
 
 ward_is_female_allowed = {
-  is_female = yes
-  OR = {
-    is_combat_trained = yes # Has some pre-existing combat training, or a pre-disposition for combat training.
-    
-    # The Dornish have no qualms with training different genders.
-    # Those of the free cities, such as the Braavosi, care only about coin.
-    # Followers of the Mother or Boashi will happily teach a daughter.
-    educator = {
-		OR = {
-			gender_equality_trigger = yes
-			culture_group = essos_group
-			religion = faceless_men
+	is_female = yes
+	OR = {
+		is_combat_trained = yes # Has some pre-existing combat training, or a pre-disposition for combat training.
+		# The Dornish have no qualms with training different genders.
+		# Those of the free cities, such as the Braavosi, care only about coin.
+		# Followers of the Mother or Boashi will happily teach a daughter.
+		# Skilled Female Warrior may teach their ward some skills
+		educator = {
+			OR = {
+				gender_equality_trigger = yes
+				culture_group = essos_group
+				religion = faceless_men
+				educator = {
+					AND = {
+						is_female = yes
+						OR = {
+							trait = dueling_skilled
+   							trait = dueling_expert
+     						trait = dueling_master
+							trait = dueling_legend
+						}
+					}
+				}
+			}
 		}
-    }
-  }
+	}
 }
 
 # These traits are for the Ward, or characters who have x or lower skill.
