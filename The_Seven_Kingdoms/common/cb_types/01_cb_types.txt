@@ -3433,7 +3433,7 @@ offmap_submission = {
 								opinion_effect = no
 							}
 						}
-						set_government_type = china_government
+						set_government_type = chinese_imperial_government
 						random_list = { #Give a temple name
 							1 = { set_name = Aginarys }
 						}
@@ -3876,12 +3876,12 @@ dismantle_pretender_china_cb = {
 						}
 						narrative_event = { id = JD.60209 }
 					}
-					any_courtier = { death = { death_reason = death_executed_by_china_emperor } }
+					any_courtier = { death = { death_reason = death_executed_by_chinese_emperor } }
 					primary_title = {
 						activate_title = { title = THIS status = no }
 						destroy_landed_title = THIS
 					}
-					death = { death_reason = death_executed_by_china_emperor }
+					death = { death_reason = death_executed_by_chinese_emperor }
 				}
 			}
 		}
@@ -4024,7 +4024,7 @@ force_open_china_cb = {
 			participation_scaled_prestige = 1000
 			add_grace_massive_effect = yes
 			add_character_modifier = {
-				modifier = china_favored_in_trade
+				modifier = chinese_favored_in_trade
 				inherit = yes
 				years = 25
 			}
@@ -4059,6 +4059,7 @@ force_open_china_cb = {
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -300
 			transfer_scaled_wealth = {
 				to = FROM
@@ -4251,6 +4252,7 @@ invasion_of_china_cb = {
 	max_defender_occupation_score = 50
 	max_attacker_battle_score = 100
 	capturing_defender_is_complete_victory = no
+	third_party_portrait = event_target:invasion_of_china_claimant
 
 	# attacker_unoccupied_warscore = yes - If attacker completely unoccupied, attacker will get ticking warscore. Only works if no title is targetted
 	# defender_unoccupied_warscore = yes - If defender completely unoccupied, defender will get ticking warscore. Only works if no title is targetted
@@ -4276,6 +4278,7 @@ invasion_of_china_cb = {
 			custom_tooltip = {
 				text = invasion_of_china_success_tt
 				hidden_effect = {
+					remove_character_modifier = china_raid_active
 					event_target:invasion_of_china_claimant = {
 						betrothed = { break_betrothal = PREV }
 						spouse = {
@@ -4320,7 +4323,7 @@ invasion_of_china_cb = {
 						}
 						ROOT = {
 							if = {
-								limit = { government = china_government }
+								limit = { government = chinese_imperial_government }
 								offmap_china = { set_offmap_flag = rename_override }
 								primary_title = {
 									trigger_switch = {
@@ -4399,7 +4402,7 @@ invasion_of_china_cb = {
 			participation_scaled_prestige = 5000
 			set_offmap_currency = { offmap = offmap_china value = 5000 }
 			wealth = 10000
-			add_character_modifier = { name = china_favored_in_trade inherit = yes years = 50 }
+			add_character_modifier = { name = chinese_favored_in_trade inherit = yes years = 50 }
 			if = {
 				limit = { NOT = { has_artifact = jade_dragon } }
 				add_artifact = jade_dragon
