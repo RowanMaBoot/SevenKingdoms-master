@@ -2523,6 +2523,7 @@ change_feudal_elective_succession_law = {
 			}
 		}
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 			hidden_tooltip = {
 				disband_event_forces = faction_revolters
@@ -2538,14 +2539,16 @@ change_feudal_elective_succession_law = {
 	}
 	
 	on_success_title = {
-		succession_w_cooldown = feudal_elective
+		add_law_w_cooldown = succ_feudal_elective
 	}
 
 	on_fail = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 		}
 		any_defender = {
@@ -2568,10 +2571,12 @@ change_feudal_elective_succession_law = {
 	
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			prisoner = FROM
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 			hidden_tooltip = { 
 				if = { 
@@ -2672,9 +2677,11 @@ invasion = {
 
 	on_success = {
 		ROOT = {
+			show_scope_change = no
 			prestige = 200
 		}
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_prestige = 200
 		}
 		any_attacker = {
@@ -2726,6 +2733,7 @@ invasion = {
 		}
 		
 		FROM = {
+			show_scope_change = no
 			prestige = -200
 		}
 	}
@@ -2889,12 +2897,15 @@ invasion = {
 
 	on_fail = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = 100
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_defender = {
@@ -2905,6 +2916,7 @@ invasion = {
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
@@ -2912,6 +2924,7 @@ invasion = {
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = 200
 			participation_scaled_prestige = 200
 			# if = {
@@ -2933,9 +2946,7 @@ invasion = {
 	}
 
 	on_reverse_demand_title = {
-		any_claim = {
-			remove_claim = ROOT
-		}
+		ROOT = { show_scope_change = no remove_claim = PREV }
 	}
 
 	on_attacker_leader_death = {
@@ -2986,12 +2997,24 @@ tribal_invasion = {
 	}
 	
 	on_add = {
-		ROOT = { prestige = -500 }
+		ROOT = { show_scope_change = no prestige = -500 }
 		if = {
 			limit = { defender = { is_offmap_governor = offmap_china } }
 			attacker = {  
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes 
+			}
+		}
+		if = {
+			limit = { 
+				attacker = { 
+					any_owned_bloodline = {
+						has_bloodline_flag = bloodline_great_conquerors
+					} 
+				} 
+			}
+			attacker = {  
+				set_character_flag = flag_declared_bloodline_invasion
 			}
 		}
 	}
@@ -3009,7 +3032,7 @@ tribal_invasion = {
 				}
 			}
 			is_nomadic = no
-			# OR = {
+			OR = {
 				# AND = {
 					# has_dlc = "Horse Lords"
 					# higher_tier_than = COUNT
@@ -3062,7 +3085,19 @@ tribal_invasion = {
 						num_of_titles = 2
 					}
 				}
-			# }
+				AND = {
+					has_character_flag = is_child_of_destiny
+					any_owned_bloodline = {
+						has_bloodline_flag = founder_invasions
+					}
+				}
+				AND = {
+					NOT = { has_character_flag = flag_declared_bloodline_invasion }
+					any_owned_bloodline = {
+						has_bloodline_flag = bloodline_great_conquerors
+					}
+				}
+			}
 		}
 		
 		ROOT = {
@@ -3098,6 +3133,7 @@ tribal_invasion = {
 
 	on_success = {
 		ROOT = {
+			show_scope_change = no
 			prestige = 200
 			participation_scaled_prestige = 200
 		}
@@ -3106,6 +3142,7 @@ tribal_invasion = {
 			hidden_tooltip = { participation_scaled_prestige = 200 }
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = -200
 		}
 		hidden_tooltip = {
@@ -3169,6 +3206,7 @@ tribal_invasion = {
 
 	on_fail = {
 		FROM = {
+			show_scope_change = no
 			prestige = 100
 			
 			hidden_tooltip = {
@@ -3192,12 +3230,14 @@ tribal_invasion = {
 			hidden_tooltip = { participation_scaled_prestige = 100 }
 		}
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 		}
 	}
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
@@ -3205,6 +3245,7 @@ tribal_invasion = {
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = 200
 			hidden_tooltip = {
 				if = {
@@ -4427,13 +4468,23 @@ excommunicated_ruler = {
 			}
 		}
 		ROOT = {
+			NOT = { excommunicated_for = ROOT }
 			mercenary = no
 		}
 	}
 
 	is_valid = {
 		FROM = {
-			excommunicated_for = ROOT
+			custom_tooltip = {
+				text = tooltip_is_excommunicated_for
+				hidden_tooltip = {
+					excommunicated_for = ROOT
+				}
+			}
+		}
+		OR = { 
+			ROOT = { has_character_flag = flag_excommunicated_for_coronation }
+			ROOT = { NOT = { excommunicated_for = ROOT } }
 		}
 	}
 
@@ -6793,6 +6844,7 @@ muslim_invasion = {
 
 	on_success = {
 		ROOT = {
+			show_scope_change = no
 			prestige = 200
 			hidden_tooltip = {
 				if = {
@@ -6834,6 +6886,7 @@ muslim_invasion = {
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = -200
 		}
 	}
@@ -6849,10 +6902,12 @@ muslim_invasion = {
 						is_crusade = no # Even if the title holder is not participating in the war, gain holdings occupied by all Crusade participants
 						type = invasion
 					}
-					
 					if = {
 						limit = {
-							has_nickname = no
+							OR = {
+								this_has_lame_nickname_trigger = yes
+								has_nickname = no
+							}
 						}
 						random_list = {
 							10 = { give_nickname = nick_the_holy }
@@ -6870,33 +6925,43 @@ muslim_invasion = {
 
 	on_fail = {
 		FROM = {
+			show_scope_change = no
 			prestige = 100
 		}
 		FROM = {
-			# if = {
-				# limit = {
-					# has_dlc = "Legacy of Rome"
-					# OR = { 
-						# has_landed_title = e_byzantium
-						# has_landed_title = e_roman_empire
-					# }
-					# religion_group = christian
-				# }
-				# hidden_tooltip = { character_event = { id = LoR.30 days = 12 } }
-			# }
-			
-			if = {
-				limit = {
-					has_nickname = no
-				}
-				random_list = {
-					10 = { give_nickname = nick_the_holy }
-					10 = { give_nickname = nick_the_glorious }
-					10 = { give_nickname = nick_the_lionheart }
-					10 = { give_nickname = nick_the_great }
-					10 = { give_nickname = nick_the_hammer }
-					10 = { give_nickname = nick_the_magnificent }
-					10 = { give_nickname = nick_the_avenger }
+			show_scope_change = no
+			#if = {
+			#	limit = {
+			#		has_dlc = "Legacy of Rome"
+			#		OR = { 
+			#			has_landed_title = e_byzantium
+			#			has_landed_title = e_roman_empire
+			#		}
+			#			OR = { 
+			#				religion_group = christian
+			#				religion = hellenic_pagan
+			#				religion = hellenic_pagan_reformed
+			#			}
+			#	}
+			#	hidden_tooltip = { character_event = { id = LoR.30 days = 12 } }
+			#}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							this_has_lame_nickname_trigger = yes
+							has_nickname = no
+						}
+					}
+					random_list = {
+						10 = { give_nickname = nick_the_holy }
+						10 = { give_nickname = nick_the_glorious }
+						10 = { give_nickname = nick_the_lionheart }
+						10 = { give_nickname = nick_the_great }
+						10 = { give_nickname = nick_the_hammer }
+						10 = { give_nickname = nick_the_magnificent }
+						10 = { give_nickname = nick_the_avenger }
+					}
 				}
 			}
 			participation_scaled_prestige = 100
@@ -6906,26 +6971,39 @@ muslim_invasion = {
 			hidden_tooltip = { participation_scaled_prestige = 100 }
 		}
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 		}
 	}
 	
 	on_invalidation = {
 		ROOT = {
+			show_scope_change = no
 			piety = 1000
 		}
 	}
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
 				value = 4.0
 			}
-			decadence = 10
+			if = {
+				limit = {
+					NOT = {
+						any_liege = {
+							dynasty = PREV
+						}
+					}
+				}
+				decadence = 10
+			}
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = 200
 			hidden_tooltip = {
 				if = {
@@ -6935,29 +7013,38 @@ muslim_invasion = {
 					change_variable = { which = strengthen_religion value = 1 }
 				}
 			}
-			# if = {
-				# limit = { 
-					# has_dlc = "Legacy of Rome"
-					# OR = { 
-						# has_landed_title = e_byzantium
-						# has_landed_title = e_roman_empire
-					# }
-					# religion_group = christian
-				# }
-				# hidden_tooltip = { character_event = { id = LoR.30 days = 12 } }
-			# }
-			if = {
-				limit = {
-					has_nickname = no
-				}
-				random_list = {
-					10 = { give_nickname = nick_the_holy }
-					10 = { give_nickname = nick_the_glorious }
-					10 = { give_nickname = nick_the_lionheart }
-					10 = { give_nickname = nick_the_great }
-					10 = { give_nickname = nick_the_hammer }
-					10 = { give_nickname = nick_the_magnificent }
-					10 = { give_nickname = nick_the_avenger }
+			#if = {
+			#	limit = { 
+			#		has_dlc = "Legacy of Rome"
+			#		OR = { 
+			#			has_landed_title = e_byzantium
+			#			has_landed_title = e_roman_empire
+			#		}
+			#			OR = { 
+			#				religion_group = christian
+			#				religion = hellenic_pagan
+			#				religion = hellenic_pagan_reformed
+			#			}
+			#	}
+			#	hidden_tooltip = { character_event = { id = LoR.30 days = 12 } }
+			#}
+			hidden_effect = {
+				if = {
+					limit = {
+						OR = {
+							this_has_lame_nickname_trigger = yes
+							has_nickname = no
+						}
+					}
+					random_list = {
+						10 = { give_nickname = nick_the_holy }
+						10 = { give_nickname = nick_the_glorious }
+						10 = { give_nickname = nick_the_lionheart }
+						10 = { give_nickname = nick_the_great }
+						10 = { give_nickname = nick_the_hammer }
+						10 = { give_nickname = nick_the_magnificent }
+						10 = { give_nickname = nick_the_avenger }
+					}
 				}
 			}
 			participation_scaled_prestige = 200
@@ -7147,7 +7234,6 @@ cb_faction_independence = {
 	on_fail = {
 		ROOT = {
 			prestige = -50
-#			prisoner = FROM
 			add_character_modifier = {
 				name = faction_independence_ultimatum_timer
 				hidden = yes
@@ -7420,7 +7506,7 @@ cb_faction_independence = {
 embargo_cb = {
 	name = CB_NAME_EMBARGO
 	war_name = WAR_NAME_EMBARGO
-	sprite = 11
+	sprite = 19
 	truce_days = 3650
 	
 	is_permanent = yes
@@ -7632,10 +7718,9 @@ embargo_cb = {
 seize_trade_post = {
 	name = CB_NAME_SEIZE_TRADE_POST
 	war_name = WAR_NAME_SEIZE_TRADE_POST
-	sprite = 1
+	sprite = 18
 	truce_days = 1825
 	is_permanent = yes
-#	check_all_titles = yes
 	check_all_trade_posts = yes
 	can_ask_to_join_war = no
 	att_ticking_war_score_multiplier = 5.0
@@ -9037,18 +9122,25 @@ kingdom_adventure = { # Used mainly for Muslims adventuring into India
 					ROOT = { 
 						save_event_target_as = nickname_receiver
 					}
-					random_list = {
-						5 = { give_nickname = nick_the_victorious }
-						5 = { give_nickname = nick_the_conqueror }
-						5 = { give_nickname = nick_the_dragon }
-						10 = { give_nickname = nick_the_rel_group }
-						10 = { give_nickname = nick_the_tiger }
-						10 = { give_nickname = nick_the_world_burner }
-						10 = { 
-							give_nickname = nick_the_scourge_of_god
-							modifier = {
-								factor = 0
-								event_target:nickname_target = { religion = ROOT }
+					if = {
+						limit = {
+							NOT = {
+								has_character_flag = is_child_of_destiny
+							}
+						}
+						random_list = {
+							5 = { give_nickname = nick_the_victorious }
+							5 = { give_nickname = nick_the_conqueror }
+							5 = { give_nickname = nick_the_dragon }
+							10 = { give_nickname = nick_the_rel_group }
+							10 = { give_nickname = nick_the_tiger }
+							10 = { give_nickname = nick_the_world_burner }
+							10 = { 
+								give_nickname = nick_the_scourge_of_god
+								modifier = {
+									factor = 0
+									event_target:nickname_target = { religion = ROOT }
+								}
 							}
 						}
 					}
@@ -9064,7 +9156,51 @@ kingdom_adventure = { # Used mainly for Muslims adventuring into India
 	on_success_title = {
 		custom_tooltip = {
 			text = other_invasion_succ_tip
-			hidden_tooltip = {				
+			hidden_tooltip = {
+			
+				if = { # Special stuff for player Child of Destiny (AI Children do not have this flag)
+					limit = {
+						ROOT = { has_character_flag = child_of_destiny_outwards_focus }
+					}
+					FROM = { # Ensure that the Child of Destiny always gets one County in the targeted Kingdom (mainly useful when testing with yesmen, but can also happen in rare occurences where the target is imprisoned)
+						random_realm_title = {
+							limit = {
+								tier = COUNT
+								de_jure_liege_or_above = PREVPREV
+							}
+							usurp_title = { target = ROOT type = host }
+						}
+					}
+					ROOT = {
+						liege = { save_event_target_as = old_liege_target}
+						if = { # Abandon all old titles if you were a vassal
+							limit = {
+								independent = no
+							}
+							any_demesne_title = {
+								limit = {
+									NOR = {
+										title = PREVPREV
+										de_jure_liege_or_above = PREVPREV
+									}
+								}
+								grant_title = event_target:old_liege_target
+							}
+							any_vassal = {
+								limit = {
+									capital_scope = {
+										NOR = {
+											title = PREVPREVPREV
+											de_jure_liege_or_above = PREVPREVPREV
+										}
+									}
+								}
+								set_defacto_liege = event_target:old_liege_target
+							}
+						}
+					}
+				}
+				
 				FROM = { # The adventurer takes ANY demesne title, including the targeted Kingdom, within the area of the targeted kingdom
 					any_demesne_title = {
 						limit = {
@@ -9096,28 +9232,53 @@ kingdom_adventure = { # Used mainly for Muslims adventuring into India
 							}
 						}
 					}
-					ROOT = {
-						create_title = {
-							tier = KING
-							landless = no
-							temporary = no
-							custom_created = yes
-							culture = ROOT
-							holder = ROOT
-							name = "EASTERN_KINGDOM"
-							base_title = PREV
-							copy_title_laws = yes
+					if = {
+						limit = {
+							ROOT = {
+								NOT = {
+									has_character_flag = is_child_of_destiny
+								}
+							}
+						}
+						ROOT = {
+							create_title = {
+								tier = KING
+								landless = no
+								temporary = no
+								custom_created = yes
+								culture = ROOT
+								holder = ROOT
+								name = "EASTERN_KINGDOM"
+								base_title = PREV
+								copy_title_laws = yes
+							}
+						}
+					}
+					else = {
+						ROOT = {
+							save_event_target_as = target_name
+							create_title = {
+								tier = KING
+								landless = no
+								temporary = no
+								custom_created = yes
+								culture = ROOT
+								holder = ROOT
+								name = "DESTINY_KINGDOM"
+								base_title = PREV
+								copy_title_laws = yes
+							}
+							capital_scope = {
+								county = {
+									save_event_target_as = coa_target
+								}
+							}
+							primary_title = {
+								set_coa = event_target:coa_target
+							}
 						}
 					}
 				}
-				# if = {
-					# limit = {
-						# ROOT = { has_character_flag = rum_creator }
-					# }
-					# k_rum = {
-						# grant_title = ROOT
-					# }
-				# }
 				
 				ROOT = { # Preserve Vassals under the targeted kingdom
 					vassalize_or_take_under_title = { # Take all vassals held by the target under the title
@@ -9126,6 +9287,24 @@ kingdom_adventure = { # Used mainly for Muslims adventuring into India
 						type = host
 					}
 					set_defacto_liege = ROOT # Always go Independent
+				}
+				
+				hidden_effect = {
+					if = {
+						limit = {
+							ROOT = {
+								has_character_flag = is_child_of_destiny
+							}
+						}
+						ROOT = {
+							any_demesne_title = {
+								limit = {
+									higher_tier_than = COUNT
+								}
+								add_law = succ_primogeniture
+							}
+						}
+					}
 				}
 			}
 		}
@@ -9144,6 +9323,14 @@ kingdom_adventure = { # Used mainly for Muslims adventuring into India
 					limit = {
 						NOT = { has_character_flag = rum_creator }
 					}
+				}
+				else_if = {
+					limit = {
+						has_character_flag = is_child_of_destiny
+					}
+					character_event = { id = HF.303 days = 3 }
+				}
+				else = {
 					capital_scope = {
 						reverse_culture = ROOT
 					}
@@ -9164,6 +9351,19 @@ kingdom_adventure = { # Used mainly for Muslims adventuring into India
 					}
 				}
 				
+				if = { # Give bloodline to Child of Destiny
+					limit = {
+						has_character_flag = is_child_of_destiny
+						higher_real_tier_than = DUKE
+						NOT = {
+							any_owned_bloodline = {
+								has_bloodline_flag = created_bloodline
+							}
+						}
+					}
+					character_event = { id = HF.304 days = 14 }
+				}
+				
 				# Special case: Sultanate of Rum might start yet another war
 				# if = {
 					# limit = {
@@ -9176,6 +9376,13 @@ kingdom_adventure = { # Used mainly for Muslims adventuring into India
 					# }
 				# }
 			}
+		}
+	}
+	
+	on_invalidation = {
+		ROOT = {
+			clr_character_flag = child_of_destiny_made_player_choice
+			clr_character_flag = child_of_destiny_adventure
 		}
 	}
 
@@ -9196,10 +9403,25 @@ kingdom_adventure = { # Used mainly for Muslims adventuring into India
 			hidden_tooltip = {
 				disband_event_forces = yes
 				clr_character_flag = duchy_adventurer
+				if = {
+					limit = {
+						has_character_flag = is_child_of_destiny
+					}
+					remove_trait = disinherited
+				}
 			}
 		}
 	
 		ROOT = { prestige = -100 }
+		
+		if = {
+			limit = {
+				ROOT = {
+					has_character_flag = is_child_of_destiny
+				}
+			}
+			set_global_flag = child_of_destiny_invasion_fail@ROOT
+		}
 	}
 
 	on_reverse_demand = {
@@ -9221,7 +9443,22 @@ kingdom_adventure = { # Used mainly for Muslims adventuring into India
 			hidden_tooltip = {
 				disband_event_forces = yes
 				clr_character_flag = duchy_adventurer
+				if = {
+					limit = {
+						has_character_flag = is_child_of_destiny
+					}
+					remove_trait = disinherited
+				}
 			}
+		}
+		
+		if = {
+			limit = {
+				ROOT = {
+					has_character_flag = is_child_of_destiny
+				}
+			}
+			set_global_flag = child_of_destiny_invasion_reverse_demand@ROOT
 		}
 	}
 	
@@ -11113,6 +11350,7 @@ other_dejure_county_claim = {
 				modifier = pressed_my_claim 
 				who = PREV
 			}
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_attacker = {
@@ -11134,6 +11372,7 @@ other_dejure_county_claim = {
 			}
 
 			holder_scope = {
+				show_scope_change = no
 				set_defacto_liege = ROOT
 			}
 		}
@@ -11147,9 +11386,10 @@ other_dejure_county_claim = {
 					}
 				}
 			}
-
+			show_scope_change = no
 			usurp_title_plus_barony_if_unlanded = { target = ROOT type = claim }
 			any_de_jure_vassal_title = { # take all baronies under the one we're fighting for
+				show_scope_change = no
 				limit = {
 					has_holder = yes
 					NOT = {
@@ -11171,9 +11411,11 @@ other_dejure_county_claim = {
 	on_fail = {
 		prestige = -50
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 		}
 		any_defender = {
@@ -11182,16 +11424,18 @@ other_dejure_county_claim = {
 		}
 	}
 
-	on_reverse_demand = {
+	on_reverse_demand = { #Attacker lost
 		prestige = -100
 		transfer_scaled_wealth = {
 			to = FROM
 			value = 4.0
 		}
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_defender = {
@@ -12986,6 +13230,7 @@ tributary_cb = {
 		# Chance to surrender early
 		ROOT = { save_event_target_as = tribute_war_suzerain }
 		FROM = {
+			show_scope_change = no
 			save_event_target_as = tribute_war_target
 			set_character_flag = surrender_tributary_cb
 			character_event = { id = JD.2500 days = 5 tooltip = surrender_tributary_tt }
@@ -13001,6 +13246,7 @@ tributary_cb = {
 
 	on_success = {
 		FROM = {
+			show_scope_change = no
 			save_event_target_as = target_loser
 			prestige = -100
 			custom_tooltip = {
@@ -13016,6 +13262,7 @@ tributary_cb = {
 		}
 
 		ROOT = {
+			show_scope_change = no
 			prestige = 200
 			make_tributary = { who = FROM percentage = 0.4 }
 		}
@@ -13075,15 +13322,18 @@ tributary_cb = {
 
 	on_fail = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = 100
 		}
 	}
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
@@ -13092,6 +13342,7 @@ tributary_cb = {
 		}
 
 		FROM = {
+			show_scope_change = no
 			prestige = 200
 		}
 	}
@@ -13400,10 +13651,12 @@ free_tributary_cb = {
 
 	on_success = {
 		FROM = {
+			show_scope_change = no
 			prestige = -100
 		}
 
 		ROOT = {
+			show_scope_change = no
 			prestige = 100
 			if = {
 				limit = {
@@ -13442,15 +13695,18 @@ free_tributary_cb = {
 
 	on_fail = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = 100
 		}
 	}
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 			transfer_scaled_wealth = {
 				to = FROM
@@ -13459,6 +13715,7 @@ free_tributary_cb = {
 		}
 
 		FROM = {
+			show_scope_change = no
 			prestige = 100
 		}
 	}
@@ -13713,16 +13970,19 @@ cb_install_khan = {
 
 	on_fail = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 	}
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			prisoner = FROM
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 			hidden_tooltip = { 
 				if = { 
@@ -13778,7 +14038,6 @@ nomad_dispute = {
 	hostile_against_others = yes
 	is_permanent = yes
 	check_all_titles = yes
-	press_claim = yes
 	can_ask_to_join_war = no
 	
 	allow_distant = yes
@@ -13835,6 +14094,7 @@ nomad_dispute = {
 		usurp_title_plus_barony_if_unlanded = { target = ROOT type = invasion }
 		
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 			participation_scaled_piety = 50
 		}
@@ -13849,9 +14109,11 @@ nomad_dispute = {
 
 	on_fail_title = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 		}
 		any_defender = {
@@ -13862,6 +14124,7 @@ nomad_dispute = {
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
@@ -13869,6 +14132,7 @@ nomad_dispute = {
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 			participation_scaled_piety = 50
 		}
@@ -14007,6 +14271,7 @@ cb_liberate_nomad_duchy = {
 	
 	on_success = {
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_prestige = 200
 			if = {
 				limit = {
@@ -14028,7 +14293,7 @@ cb_liberate_nomad_duchy = {
 			}
 		}
 		
-		FROM = { prestige = -200 }
+		FROM = { show_scope_change = no prestige = -200 }
 	}
 
 	on_success_title = {
@@ -14048,13 +14313,15 @@ cb_liberate_nomad_duchy = {
 	}
 
 	on_fail = {
-		ROOT = { 
+		ROOT = {
+			show_scope_change = no
 			prestige = -200
 		}
 	}
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			transfer_scaled_wealth = {
 				to = FROM
 				value = 4.0
@@ -14103,13 +14370,35 @@ cb_liberate_nomad_duchy = {
 	ai_will_do = {
 		factor = 1
 		modifier = {
-			factor = 0.1
+			factor = 0
+			ROOT = {
+				NOT = {
+					is_tribal = yes
+				}
+			}
 			NOT = {
 				any_direct_de_jure_vassal_title = {
 					any_direct_de_jure_vassal_title = {
 						OR = {
 							holding_type = castle
 							holding_type = city
+						}
+					}
+				}
+			}
+		}
+		modifier = {
+			factor = 0
+			ROOT = {
+				is_tribal = yes
+			}
+			NOT = {
+				any_direct_de_jure_vassal_title = {
+					any_direct_de_jure_vassal_title = {
+						OR = {
+							holding_type = castle
+							holding_type = city
+							holding_type = tribal
 						}
 					}
 				}
@@ -14276,6 +14565,7 @@ nomad_subjugation = {
 	is_permanent = yes
 	can_ask_to_join_war = yes
 	allowed_to_target_tributaries = no
+	defender_unoccupied_warscore = yes
 	
 	can_use_gui = {
 	#higher_tier_than between ROOT and FROM would be better but its tooltip doesn't say anything about comparing character tiers
@@ -15127,7 +15417,6 @@ nomad_expansion = {
 					subjugate_or_take_under_title = {
 						title = PREV
 						enemy = FROM
-#						same_religion = yes # Only vassalize rulers of my religion
 					}
 				}
 			}

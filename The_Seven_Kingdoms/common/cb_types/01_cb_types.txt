@@ -342,9 +342,11 @@ dejure_duchy_claim = { # New1
 
 	on_fail_title = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 		}
 		any_defender = {
@@ -355,6 +357,7 @@ dejure_duchy_claim = { # New1
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
@@ -362,6 +365,7 @@ dejure_duchy_claim = { # New1
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_defender = {
@@ -422,7 +426,13 @@ force_vassalization = { # New2
 				}
 				ROOT = {
 					show_scope_change = no
-					prestige = 250
+					OR = { 
+						prestige = 250
+						custom_tooltip = { 
+							text = tooltip_antagonize_vassalize_claim 
+							hidden_tooltip = { has_opinion_modifier = { who = FROM modifier = opinion_antagonize_vassalize_claim } } 
+						}
+					}
 				}
 			}
 			conditional_tooltip = {
@@ -431,7 +441,13 @@ force_vassalization = { # New2
 				}
 				ROOT = {
 					show_scope_change = no
-					prestige = 750
+					OR = { 
+						prestige = 1000
+						custom_tooltip = { 
+							text = tooltip_antagonize_vassalize_claim 
+							hidden_tooltip = { has_opinion_modifier = { who = FROM modifier = opinion_antagonize_vassalize_claim } } 
+						}
+					}
 				}
 			}
 			conditional_tooltip = {
@@ -440,7 +456,13 @@ force_vassalization = { # New2
 				}
 				ROOT = {
 					show_scope_change = no
-					prestige = 2000
+					OR = { 
+						prestige = 2500
+						custom_tooltip = { 
+							text = tooltip_antagonize_vassalize_claim 
+							hidden_tooltip = { has_opinion_modifier = { who = FROM modifier = opinion_antagonize_vassalize_claim } } 
+						}
+					}
 				}
 			}
 		}
@@ -450,7 +472,8 @@ force_vassalization = { # New2
 		FROM = {
 			if = {
 				limit = {
-					tier = COUNT
+					tier = COUNT					
+					NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = opinion_antagonize_vassalize_claim } } 
 				}
 				ROOT = {
 					prestige = -250
@@ -459,17 +482,27 @@ force_vassalization = { # New2
 			if = {
 				limit = {
 					tier = DUKE
+					NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = opinion_antagonize_vassalize_claim } } 
 				}
 				ROOT = {
-					prestige = -750
+					prestige = -1000
 				}
 			}
 			if = {
 				limit = {
 					tier = KING
+					NOT = { reverse_has_opinion_modifier = { who = ROOT modifier = opinion_antagonize_vassalize_claim } } 
 				}
 				ROOT = {
-					prestige = -1000
+					prestige = -2500
+				}
+			}
+			if = {
+				limit = {
+					reverse_has_opinion_modifier = { who = ROOT modifier = opinion_antagonize_vassalize_claim }
+				}
+				ROOT = {
+					remove_opinion = { who = ROOT modifier = opinion_antagonize_vassalize_claim }
 				}
 			}
 		}
@@ -524,6 +557,7 @@ force_vassalization = { # New2
 
 	on_success = {
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_attacker = {
@@ -531,6 +565,7 @@ force_vassalization = { # New2
 			hidden_tooltip = { participation_scaled_prestige = 100 }
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = -100
 			set_defacto_liege = ROOT
 		}
@@ -538,6 +573,7 @@ force_vassalization = { # New2
 	
 	on_fail = {
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 		}
 		any_defender = {
@@ -548,12 +584,14 @@ force_vassalization = { # New2
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			transfer_scaled_wealth = {
 				to = FROM
 				value = 2.0
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_defender = {
@@ -3922,7 +3960,7 @@ dismantle_pretender_china_cb = {
 				value = 5.0
 				min = 500
 			}
-			offmap_power = { set_offmap_tmp_flag = pretender_china_empire_war_cooldown }
+			offmap_power = { set_offmap_tmp_flag = pretender_chinese_empire_war_cooldown }
 		}
 		FROM = {
 			piety = 200
@@ -4066,10 +4104,13 @@ force_open_china_cb = {
 				value = 5.0
 				min = 500
 			}
-			add_character_modifier = {
-				modifier = angered_china_modifier
-				inherit = yes
-				years = 50
+			custom_tooltip = {
+				text = angered_china_tt #Scripter! Update this is you change the value below.
+				add_character_modifier = {
+					modifier = angered_china_modifier
+					inherit = yes
+					years = 50
+				}
 			}
 		}
 		FROM = {
