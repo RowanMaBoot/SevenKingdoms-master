@@ -817,10 +817,12 @@ great_realm_conflict = { # New3
 
 	on_fail_title = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -1500
 			piety = -750
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 		}
 		any_defender = {
@@ -831,6 +833,7 @@ great_realm_conflict = { # New3
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -3000
 			piety = -1500
 			transfer_scaled_wealth = {
@@ -839,6 +842,7 @@ great_realm_conflict = { # New3
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 3000
 		}
 		any_defender = {
@@ -1051,9 +1055,11 @@ ducal_county_conquest = { # New4
 
 	on_fail_title = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 		}
 		any_defender = {
@@ -1064,6 +1070,7 @@ ducal_county_conquest = { # New4
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
@@ -1071,6 +1078,7 @@ ducal_county_conquest = { # New4
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_defender = {
@@ -1450,8 +1458,20 @@ liberate_religion = { # New6
 	
 	on_add = {
 		hidden_tooltip = {
-			ROOT = {
-				set_character_flag = used_liberate_opportunity
+			if = { 
+				limit = {
+					NOT = {
+						ROOT = {
+							any_owned_bloodline = {  
+								has_bloodline_flag = bloodline_religious_liberation
+								bloodline_is_active_for = PREV
+							}
+						}
+					}
+				}
+				ROOT = {
+					set_character_flag = used_liberate_opportunity
+				}
 			}
 		}
 		if = {
@@ -1464,16 +1484,31 @@ liberate_religion = { # New6
 	}
 
 	can_use = {
-		has_dlc = "Jade Dragon"
+		OR = {
+			has_dlc = "Holy Fury" 
+			has_dlc = "Jade Dragon"
+		}
 		ROOT = {
-			NOT = {
-				has_game_rule = {
-					name = jade_dragon_cbs
-					value = off
+			OR = {
+				any_owned_bloodline = {  
+					has_bloodline_flag = bloodline_religious_liberation
+					bloodline_is_active_for = PREV
+				}
+				NOT = {
+					has_game_rule = {
+						name = jade_dragon_cbs
+						value = off
+					}
 				}
 			}
 			independent = yes
-			has_character_flag = had_liberate_opportunity
+			OR = {
+				any_owned_bloodline = {  
+					has_bloodline_flag = bloodline_religious_liberation
+					bloodline_is_active_for = PREV
+				}
+				has_character_flag = had_liberate_opportunity
+			}
 			NOT = {
 				has_character_flag = used_liberate_opportunity
 			}
@@ -1614,6 +1649,7 @@ liberate_religion = { # New6
 		}
 		
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_piety = 500
 			participation_scaled_prestige = 250
 			if = {
@@ -1627,8 +1663,8 @@ liberate_religion = { # New6
 				years = 20
 			}
 		}
-		FROM = { piety = -100 }
-		FROM = { prestige = -50 }
+		FROM = { show_scope_change = no piety = -100 }
+		FROM = { show_scope_change = no prestige = -50 }
 	}
 
 	on_success_title = {
@@ -1813,13 +1849,21 @@ liberate_religion = { # New6
 
 	on_fail = {
 		ROOT = { 
+			show_scope_change = no
 			piety = -125 
 			prestige = -250
+		}
+	}
+	
+	on_invalidation = {
+		ROOT = {
+			clr_character_flag = used_liberate_opportunity
 		}
 	}
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			transfer_scaled_wealth = {
 				to = FROM
 				value = 4.0
@@ -1828,6 +1872,7 @@ liberate_religion = { # New6
 			prestige = -500
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_piety = 200
 			participation_scaled_prestige = 100
 			if = {
@@ -2191,6 +2236,7 @@ unjust_conquest = { # New7
 						}
 					}
 					rightful_religious_head_scope = {
+						show_scope_change = no
 						opinion = {
 							who = ROOT
 							modifier = opinion_declared_unjust_conquest
@@ -2346,6 +2392,32 @@ unjust_conquest = { # New7
 				}
 			}
 		}
+		OR = {
+			is_shattered_world = no
+			AND = {
+				is_shattered_world = yes
+				has_alternate_start_setting = {
+					setting = shattered_cbs
+					option = on_limited
+				}
+				total_years_played = 25
+			}
+			AND = {
+				is_shattered_world = yes
+				has_alternate_start_setting = {
+					setting = shattered_cbs
+					option = on_long
+				}
+				total_years_played = 100
+			}
+			AND = {
+				is_shattered_world = yes
+				has_alternate_start_setting = {
+					setting = shattered_cbs
+					option = off
+				}
+			}
+		}
 	}
 
 	can_use_title = {
@@ -2437,6 +2509,7 @@ unjust_conquest = { # New7
 		add_pressed_claim = FROM
 		
 		ROOT = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_attacker = {
@@ -2447,9 +2520,11 @@ unjust_conquest = { # New7
 
 	on_fail_title = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 50
 		}
 		any_defender = {
@@ -2460,6 +2535,7 @@ unjust_conquest = { # New7
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
@@ -2467,6 +2543,7 @@ unjust_conquest = { # New7
 			}
 		}
 		FROM = {
+			show_scope_change = no
 			participation_scaled_prestige = 100
 		}
 		any_defender = {
@@ -2719,6 +2796,7 @@ tributary_permanent_cb = { # New8
 		# Chance to surrender early
 		ROOT = { save_event_target_as = tribute_war_suzerain }
 		FROM = {
+			show_scope_change = no
 			save_event_target_as = tribute_war_target
 			set_character_flag = surrender_tributary_permanent_cb
 			character_event = { id = JD.2500 days = 5 tooltip = surrender_tributary_tt }
@@ -2734,6 +2812,7 @@ tributary_permanent_cb = { # New8
 
 	on_success = {
 		FROM = {
+			show_scope_change = no
 			save_event_target_as = target_loser
 			prestige = -100
 			custom_tooltip = {
@@ -2754,6 +2833,7 @@ tributary_permanent_cb = { # New8
 		}
 
 		ROOT = {
+			show_scope_change = no
 			prestige = 200
 			make_tributary = { who = FROM tributary_type = permanent }
 		}
@@ -2813,15 +2893,18 @@ tributary_permanent_cb = { # New8
 
 	on_fail = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = 100
 		}
 	}
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
@@ -2830,6 +2913,7 @@ tributary_permanent_cb = { # New8
 		}
 
 		FROM = {
+			show_scope_change = no
 			prestige = 200
 		}
 	}
@@ -3008,6 +3092,7 @@ tributary_nomad_cb = { # New9
 		# Chance to surrender early
 		ROOT = { save_event_target_as = tribute_war_suzerain }
 		FROM = {
+			show_scope_change = no
 			save_event_target_as = tribute_war_target
 			set_character_flag = surrender_tributary_nomad_cb
 			character_event = { id = JD.2500 days = 5 tooltip = surrender_tributary_tt }
@@ -3023,6 +3108,7 @@ tributary_nomad_cb = { # New9
 
 	on_success = {
 		FROM = {
+			show_scope_change = no
 			transfer_scaled_wealth = {
 				to = ROOT
 				value = 2.0
@@ -3030,6 +3116,7 @@ tributary_nomad_cb = { # New9
 		}
 	
 		FROM = {
+			show_scope_change = no
 			save_event_target_as = target_loser
 			prestige = -100
 			custom_tooltip = {
@@ -3045,6 +3132,7 @@ tributary_nomad_cb = { # New9
 		}
 
 		ROOT = {
+			show_scope_change = no
 			prestige = 200
 			make_tributary = { who = FROM tributary_type = nomadic }
 		}
@@ -3104,15 +3192,18 @@ tributary_nomad_cb = { # New9
 
 	on_fail = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -100
 		}
 		FROM = {
+			show_scope_change = no
 			prestige = 100
 		}
 	}
 
 	on_reverse_demand = {
 		ROOT = {
+			show_scope_change = no
 			prestige = -200
 			transfer_scaled_wealth = {
 				to = FROM
@@ -3121,6 +3212,7 @@ tributary_nomad_cb = { # New9
 		}
 
 		FROM = {
+			show_scope_change = no
 			prestige = 200
 		}
 	}
@@ -4449,8 +4541,8 @@ invasion_of_china_cb = {
 				add_artifact = jade_dragon
 			}
 			if = {
-				limit = { NOT = { has_artifact = china_dragon_amulet } }
-				add_artifact = china_dragon_amulet
+				limit = { NOT = { has_artifact = chinese_dragon_amulet } }
+				add_artifact = chinese_dragon_amulet
 			}
 			if = {
 				limit = { NOT = { has_artifact = water_clock } }
@@ -4502,10 +4594,13 @@ invasion_of_china_cb = {
 					narrative_event = { id = JD.60403 }
 				}
 			}
-			add_character_modifier = {
-				modifier = angered_china_modifier
-				inherit = yes
-				years = 50
+			custom_tooltip = {
+				text = angered_china_tt #Scripter! Update this is you change the value below.
+				add_character_modifier = {
+					modifier = angered_china_modifier
+					inherit = yes
+					years = 50
+				}
 			}
 		}
 		clear_global_event_target = invasion_of_china_claimant
@@ -4552,10 +4647,13 @@ invasion_of_china_cb = {
 					}
 				}
 			}
-			add_character_modifier = {
-				modifier = angered_china_modifier
-				inherit = yes
-				years = 50
+			custom_tooltip = {
+				text = angered_china_tt #Scripter! Update this is you change the value below.
+				add_character_modifier = {
+					modifier = angered_china_modifier
+					inherit = yes
+					years = 50
+				}
 			}
 		}
 		FROM = {
@@ -4591,5 +4689,139 @@ invasion_of_china_cb = {
 
 	ai_will_do = {
 		factor = 0
+	}
+}
+
+# Impious Saint induced Catholic Civil War
+depose_impious_pope = {
+	name = CB_NAME_DEPOSE_IMPIOUS_POPE
+	war_name = WAR_NAME_DEPOSE_IMPIOUS_POPE
+	sprite = 29
+	truce_days = 0
+	is_permanent = yes
+	allow_whitepeace = no
+	
+	defender_unoccupied_warscore = yes
+	
+	allowed_to_target_tributaries = no
+	
+	sort_priority = 750
+	
+	can_use = {
+		always = no #Can only be initiated through special means
+	}
+	
+	is_valid = {
+		FROM = {
+			trait = bad_priest_the_seven
+			hidden_tooltip = {
+				religion = the_seven
+				has_landed_title = k_papal_state
+			}
+			independent = yes
+		}
+	}
+
+	on_success = {
+		custom_tooltip = {
+			text = depose_impious_pope_cb_win_TT
+			any_attacker = {
+				piety = 100
+			}
+		}
+		FROM = {
+			show_scope_change = no
+			abdicate = yes
+		}
+
+		FROM = {
+			show_scope_change = no
+			religion_authority = {
+				modifier = depose_impious_pope_modifier
+			}
+		}
+
+		hidden_tooltip = {
+			any_defender = {
+				set_character_flag = impious_papal_defender
+			}
+			any_playable_ruler = {
+				limit = {
+					religion = the_seven
+				}
+				narrative_event = { id = HF.40094 }
+			}
+			ROOT = {
+				narrative_event = { id = HF.40094 }
+			}
+			k_papal_state = {
+				owner = {
+					save_event_target_as = current_pope
+					reverse_imprison = FROM
+				}
+			}
+			any_attacker = {
+				reverse_opinion = {
+					modifier = opinion_grateful
+					who = event_target:current_pope
+					years = 10
+				}
+			}
+		}
+	}
+
+	on_reverse_demand = {
+		custom_tooltip = {
+			text = depose_impious_pope_cb_lose_TT
+			any_attacker = {
+				add_trait = excommunicated
+				piety = -100
+			}
+		}
+
+		FROM = {
+			show_scope_change = no
+			religion_authority = {
+				modifier = failed_to_depose_impious_pope_modifier
+			}
+		}
+
+		hidden_tooltip = {
+			any_defender = {
+				set_character_flag = impious_papal_defender
+			}
+			any_playable_ruler = {
+				limit = {
+					religion = the_seven
+				}
+				narrative_event = { id = HF.40095 }
+			}
+			ROOT = {
+				narrative_event = { id = HF.40095 }
+			}
+		}
+
+	}
+
+	on_attacker_leader_death = {
+		if = { limit = { has_global_flag = pre_catholic_civil_war }
+			end_war = invalid
+		}
+	}
+
+	attacker_ai_victory_worth = {
+		factor = -1 # always accept
+	}
+	
+	attacker_ai_defeat_worth = {
+		factor = 100
+	}
+
+	defender_ai_victory_worth = {
+		factor = -1 # always accept
+	}
+	
+	defender_ai_defeat_worth = {
+		factor = 100
 	}
 }
