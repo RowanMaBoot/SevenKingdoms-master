@@ -168,8 +168,21 @@ claim = {
 				} 
 				ROOT = { higher_tier_than = COUNT } #Attacker is not also count
 			}
-			owner = {
-				set_defacto_liege = ROOT
+			if = {
+				limit  = {
+					ROOT = {
+						any_demesne_title = {
+							tier = count
+						}
+					}
+				}
+				# ROOT is not an adventurer
+				owner = {
+					set_defacto_liege = ROOT
+				}
+			}
+			else = {
+				usurp_title_plus_barony_if_unlanded = { target = ROOT type = claim }
 			}
 		}
 		else_if = {
@@ -190,11 +203,24 @@ claim = {
 					destroy_landed_title = THIS
 				}
 			}
-			
-			event_target:defenderking = { 
-				set_defacto_liege = ROOT 
+			if = {
+				limit  = {
+					ROOT = {
+						any_demesne_title = {
+							tier = count
+						}
+					}
+				}
+				# ROOT is not an adventurer
+				event_target:defenderking = { 
+					set_defacto_liege = ROOT 
+				}
+			}
+			else = {
+				usurp_title_plus_barony_if_unlanded = { target = ROOT type = claim }
 			}
 		}
+		
 		else = {
 			usurp_title_plus_barony_if_unlanded = { target = ROOT type = claim }
 		}
