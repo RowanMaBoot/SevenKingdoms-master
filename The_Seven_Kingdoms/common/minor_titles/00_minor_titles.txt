@@ -177,7 +177,6 @@ title_male_consort = {
 }
 
 # Commander, granted via its own interaction, so very special
-# Commander, granted via its own interaction, so very special
 title_commander = {
 	is_high_prio = yes
 	
@@ -213,9 +212,11 @@ title_commander = {
 		NOT = { is_inaccessible_trigger = yes }
 		NOT = { has_character_modifier = refusing_to_lead }
 		OR = { 
+			NOT = { liege = { has_law = succ_byzantine_elective } }  #Either not Imperial...
 			higher_real_tier_than = BARON #...Or potential commander is vassal...
 			NOT = { #...Or there are no valid vassal candidates that can be commanders.
 				custom_tooltip = { 
+					text = tooltip_byzantine_empire_can_appoint_commanders
 					liege = { 
 						any_vassal = { 
 							higher_real_tier_than = BARON
