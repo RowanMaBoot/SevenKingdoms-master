@@ -118,3 +118,569 @@ character_event = {
 		train_combat_skill = yes		
 	}
 }
+# Knighthood setup event
+character_event = {
+	id = EBE.5
+	desc = EVTDESCEBF5
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAEBF5
+		trigger = {
+			AND = {
+				event_target:knight = {
+					religion_group = the_seven_group
+				}
+				event_target:squire = {
+					religion_group = the_seven_group
+				}
+			}
+		}
+		event_target:knight = { character_event = { id = EBE.6 } }
+		event_target:squire = { character_event = { id = EBE.6 } }
+	}
+	option = {
+		name = EVTOPTBEBF5
+		trigger = {
+			AND = {
+				event_target:knight = {
+					religion_group = the_seven_group
+				}
+				event_target:squire = {
+					NOT = {
+						religion_group = the_seven_group
+					}
+				}
+			}
+		}
+		event_target:knight = { character_event = { id = EBE.7 } }
+		event_target:squire = { character_event = { id = EBE.7 } }
+	}
+	option = {
+		name = EVTOPTCEBF5
+		trigger = {
+			AND = {
+				event_target:knight = {
+					religion = rhllor
+				}
+				event_target:squire = {
+					religion = rhllor
+				}
+			}
+		}
+		event_target:knight = { character_event = { id = EBE.8 } }
+		event_target:squire = { character_event = { id = EBE.8 } }
+	}
+	option = {
+		name = EVTOPTCEBF5
+		trigger = {
+			AND = {
+				event_target:knight = {
+					religion = rhllor
+				}
+				event_target:squire = {
+					NOT = {
+						religion = rhllor
+					}
+				}
+			}
+		}
+		event_target:knight = { character_event = { id = EBE.9 } }
+		event_target:squire = { character_event = { id = EBE.9 } }
+	}
+	option = {
+		name = EVTOPTCEBF5
+		trigger = {
+			AND = {
+				event_target:knight = {
+					religion_group = valyrian_group
+				}
+				event_target:squire = {
+					religion_group = valyrian_group
+				}
+			}
+		}
+		event_target:knight = { character_event = { id = EBE.10 } }
+		event_target:squire = { character_event = { id = EBE.10 } }
+	}
+	option = {
+		name = EVTOPTCEBF5
+		trigger = {
+			AND = {
+				event_target:knight = {
+					religion_group = valyrian_group
+				}
+				event_target:squire = {
+					NOT = {
+						religion_group = valyrian_group
+					}
+				}
+			}
+		}
+		event_target:knight = { character_event = { id = EBE.11 } }
+		event_target:squire = { character_event = { id = EBE.11 } }
+	}
+	option = {
+		name = EVTOPTCEBF5
+		trigger = {
+			event_target:knight = {
+				OR = {
+					NOT = {
+						religion_group = valyrian_group
+						religion_group = the_seven_group
+						religion = rhllor
+					}
+				}
+			}
+		}
+		event_target:knight = { character_event = { id = EBE.12 } }
+		event_target:squire = { character_event = { id = EBE.12 } }
+	}
+}
+# Knighthood The Seven
+long_character_event = {
+	id = EBE.6
+	desc = EVTDESCEBF4
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAEBF4
+		add_trait = knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+	}
+	option = {
+		name = EVTOPTAEBF4
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = squire }
+			}
+		}
+		prestige = 100
+	}
+	option = {
+		name = EVTOPTAEBF4
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = page }
+			}
+		}
+		prestige = -250
+	}
+	option = {
+		name = EVTOPTAEBF4
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { 
+					NOR = {
+						trait = page
+						trait = squire
+					}
+				}
+			}
+		}
+		prestige = -500
+	}
+}
+# Knighthood The Seven for infidels
+long_character_event = {
+	id = EBE.7
+	desc = EVTDESCEBF4
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAEBF4
+		add_trait = knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+	}
+	option = {
+		name = EVTOPTAEBF4
+		trigger = {
+			ROOT = {
+				OR = {
+					trait = knight
+        			trait = red_knight
+        			trait = dragon_knight
+        			trait = hedge_knight 
+        		}
+        	}
+		}
+		prestige = -2500
+	}
+}
+# Knighthood Rhllor
+long_character_event = {
+	id = EBE.8
+	desc = EVTDESCEBF8
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAEBF5
+		add_trait = red_knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+		random_list = {
+			99 = { }
+			1 = { give_nickname = nick_the_red_knight }
+		}	
+	}
+	option = {
+		name = EVTOPTAEBF6
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = squire }
+			}
+		}
+		prestige = 100
+	}
+	option = {
+		name = EVTOPTAEBF6
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = page }
+			}
+		}
+		prestige = -250
+	}
+	option = {
+		name = EVTOPTAEBF6
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { 
+					NOR = {
+						trait = page
+						trait = squire
+					}
+				}
+			}
+		}
+		prestige = -500
+	}
+}
+# Knighthood Rhllor  for infidels
+long_character_event = {
+	id = EBE.9
+	desc = EVTDESCEBF8
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAEBF5
+		add_trait = red_knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+	}
+	option = {
+		name = EVTOPTAEBF6
+		trigger = {
+			ROOT = {
+				OR = {
+					trait = knight
+        			trait = red_knight
+        			trait = dragon_knight
+        			trait = hedge_knight 
+        		}
+        	}
+		}
+		prestige = -2500
+	}
+}
+# Knighthood Valyrian
+long_character_event = {
+	id = EBE.10
+	desc = EVTDESCEBF8
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAEBF5
+		add_trait = dragon_knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+		random_list = {
+			99 = { }
+			1 = { give_nickname = nick_the_dragon_knight }
+		}
+	}
+	option = {
+		name = EVTOPTAEBF7
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = squire }
+			}
+		}
+		prestige = 100
+	}
+	option = {
+		name = EVTOPTAEBF7
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = page }
+			}
+		}
+		prestige = -250
+	}
+	option = {
+		name = EVTOPTAEBF7
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { 
+					NOR = {
+						trait = page
+						trait = squire
+					}
+				}
+			}
+		}
+		prestige = -500
+	}
+}
+# Knighthood Valyrian for infidels
+long_character_event = {
+	id = EBE.11
+	desc = EVTDESCEBF8
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAEBF5
+		add_trait = dragon_knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+	}
+	option = {
+		name = EVTOPTAEBF7
+		trigger = {
+			ROOT = {
+				OR = {
+					trait = knight
+        			trait = red_knight
+        			trait = dragon_knight
+        			trait = hedge_knight 
+        		}
+        	}
+		}
+		prestige = -2500
+	}
+}
+# Knighthood Everyone else
+long_character_event = {
+	id = EBE.12
+	desc = EVTDESCEBF8
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAEBF5
+		add_trait = knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+		random_list = {
+			99 = { }
+			1 = { give_nickname = nick_the_knight }
+		}
+	}
+	option = {
+		name = EVTOPTAEBF5
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = squire }
+			}
+		}
+		prestige = 100
+	}
+	option = {
+		name = EVTOPTAEBF5
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = page }
+			}
+		}
+		prestige = -250
+	}
+	option = {
+		name = EVTOPTAEBF5
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { 
+					NOR = {
+						trait = page
+						trait = squire
+					}
+				}
+			}
+		}
+		prestige = -500
+	}
+}

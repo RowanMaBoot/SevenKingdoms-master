@@ -92,13 +92,12 @@ targetted_decisions = {
       		}
     	}
 		potential = {
-      		religion = FROM
       		NOR = {
         		trait = knight
         		trait = red_knight
         		trait = dragon_knight
         		trait = hedge_knight
-      		}
+    		}
     	}
     	
 		allow = {
@@ -110,56 +109,27 @@ targetted_decisions = {
     		}
 			FROM = {
 				scaled_wealth = 0.10
-				prestige = 300
+				prestige = 500
+				OR = {
+      				religion = ROOT
+      				prestige = 2500
+      			}
 			}
       	}
     
     	effect = {
-      		FROM = { prestige = -300 }
+      		FROM = { save_event_target_as = knight }
+      		save_event_target_as = squire
+      		event_target:squire = { character_event = { id = EBE.5 } }
+      		give_minor_title = title_generic_ser
       		# Assign 'The Young Ser' to characters 17 and below.
-      		if = {
-        		limit = { NOT = { age = 18 } }
-        		random_list = {
-          			100 = { }
-          			5 = { give_nickname = nick_the_young_ser }
-        		}
-      		}
-      
-      		# Remove prestige for naming a woman a Knight
-      		trigger_switch = {
-        		on_trigger = is_female
-        		yes = { FROM = { prestige = -200 } }
-        		no = {  }
-      		}
-      
-      		# Add some prestige back if they have appropriate traits
-      		trigger_switch = {
-        		on_trigger = trait
-        		page = { FROM = { prestige = 100 } }
-        		squire = { FROM = { prestige = 150 } }
-      		}
-      
-      		# Award trait based on whether or not FROM is a hedge or not.
 			if = {
-        		limit = {
-          			NOT = { FROM = { trait = hedge_knight } }
-        		}
-        
-    			trigger_switch = {
-          			on_trigger = religion
-          			the_seven = { add_trait = knight }
-          			rhllor = { add_trait = red_knight }
-          			valyrian = { add_trait = dragon_knight }
-        		}
+				limit = { NOT = { age = 18 } }
+				random_list = {
+					95 = { }
+					5 = { give_nickname = nick_the_young_ser }
+				}
 			}
-		
-			else_if = {
-				limit = {
-          			FROM = { trait = hedge_knight }
-        		}
-				add_trait = hedge_knight
-			}
-			give_minor_title = title_generic_ser
 		}
 		revoke_allowed = {
 			always = no
