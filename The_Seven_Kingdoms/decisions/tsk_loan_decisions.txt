@@ -1,0 +1,128 @@
+tsk_repay_loan = {
+	ai_check_interval = 3
+	
+	potential = {
+		tsk_is_in_bank_debt_trigger = yes
+	}
+	
+	allow = {
+		tsk_can_repay_bank_debt_trigger = yes
+	}
+	
+	effect = {
+		if = {
+			limit = {
+				has_character_modifier = tsk_in_debt_bank_1
+				wealth >= 250
+			}
+			remove_character_modifier = tsk_in_debt_bank_1
+			wealth = -250
+		}
+		else_if = {
+			limit = {
+				has_character_modifier = tsk_in_debt_bank_2
+				wealth >= 1000
+			}
+			remove_character_modifier = tsk_in_debt_bank_2
+			wealth = -1000
+		}
+		else_if = {
+			limit = {
+				has_character_modifier = tsk_in_debt_bank_3
+				wealth >= 2000
+			}
+			remove_character_modifier = tsk_in_debt_bank_3
+			wealth = -2000
+		}
+	}
+	
+	ai_will_do = {
+		factor = 10
+	}
+}
+
+tsk_request_loan = {
+	ai_check_interval = 12
+	
+	potential = {
+		# Currently the AI may not take this decision
+		ai = no
+		yearly_income > 15
+	}
+	
+	allow = {
+		OR = {
+			# AI Specific Criteria. For example, if the AI has not taken a loan and is very negative on gold but has a significant income
+			AND = {
+				ai = yes
+				yearly_income	> 50
+				NOT = {
+					tsk_is_in_bank_debt_trigger = yes
+				}
+			}
+			# Player criteria
+			AND = {
+				yearly_income > 20
+				NOT = {
+					tsk_is_in_bank_debt_trigger = yes
+				}
+			}
+		}
+	}
+	
+	effect = {
+		character_event = { id = tsk_bank_loan.0003 }
+	}
+	
+	ai_will_do = {
+		factor = 1
+		
+		modifier = {
+			factor 0.005
+		}
+		modifier = {
+			factor 0
+			wealth >= 300
+		}
+		modifier = {
+			factor 0.7
+			wealth <= -100
+		}
+		modifier = {
+			factor 0.8
+			wealth <= -150
+		}
+		modifier = {
+			factor 0.9
+			wealth <= -200
+		}
+		modifier = {
+			factor 1
+			wealth <= -250
+		}
+		modifier = {
+			factor 1.1
+			wealth <= -300
+		}
+		modifier = {
+			factor 1.5
+			wealth <= -500
+		}
+		modifier = {
+			factor 2
+			wealth <= -750
+		}
+		modifier = {
+			factor 4
+			wealth <= -1000
+		}
+		modifier = {
+			factor 8
+			wealth <= -1250
+		}
+		modifier = {
+			factor 12
+			wealth <= -1500
+		}
+	}
+}
