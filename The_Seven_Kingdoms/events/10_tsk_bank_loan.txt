@@ -71,4 +71,126 @@ character_event = {
 	}
 }
 
-# Repay your loan
+##################
+# Creditor Comes Knocking Chain
+
+# Placeholder. Possible chain for having the bank visit, with the possiblity of using diplomacy and stewardship for positive outcomes, just flavour, or a low chance of bad things - such as being flagged for forced collection
+character_event = {
+	id = tsk_bank_loan.0010
+	desc = EVTDESC_tsk_bank_loan.0010
+	picture = GFX_evt_battle
+	border = GFX_event_normal_frame_religion
+	
+	trigger = {
+		# tsk_is_in_bank_debt_trigger = yes
+		always = no
+	}
+	
+	mean_time_to_happen = {
+		months = 12
+	}
+
+	# Allow them Entry
+	option = {
+		name = EVTOPTA_tsk_bank_loan.0010
+	}
+	# Refuse them Entry
+	option = {
+		name = EVTOPTB_tsk_bank_loan.0010
+	}
+}
+
+##################
+# Creditor Protects Interests Chain
+
+# If you are losing a war, and in debt, the creditor may commit a small number of troops/mercenaries
+character_event = {
+	id = tsk_bank_loan.0020
+	desc = EVTDESC_tsk_bank_loan.0020
+	picture = GFX_evt_large_army
+	border = GFX_event_normal_frame_religion
+	
+	trigger = {
+		tsk_is_in_bank_debt_trigger = yes
+		war = yes
+		OR = {
+			any_war = {
+				is_primary_war_attacker = yes
+				war_score <= -50
+			}
+			any_war = {
+				is_primary_war_defender = yes
+				war_score >= 50
+			}
+		}
+	}
+	
+	mean_time_to_happen = {
+		months = 3
+		modifier = {
+			factor = 1.0
+			has_character_modifier = tsk_in_debt_bank_1
+		}
+		modifier = {
+			factor = 0.6
+			has_character_modifier = tsk_in_debt_bank_2
+		}
+		modifier = {
+			factor = 0.4
+			has_character_modifier = tsk_in_debt_bank_3
+		}
+	}
+
+	# Excellent!
+	option = {
+		name = EVTOPTA_tsk_bank_loan.0020
+		set_character_flag = creditor_support_given
+		character_event = { id = tsk_bank_loan.0021 }
+	}
+}
+
+character_event = {
+	id = tsk_bank_loan.0021
+	desc = EVTDESC_tsk_bank_loan.0021
+	picture = GFX_evt_large_army
+	border = GFX_event_normal_frame_religion
+	
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_tsk_bank_loan.0021 # Anything is something..
+		tsk_spawn_creditor_army_helpers = yes
+	}
+}
+
+# Silent Flag Clean-up
+character_event = {
+	id = tsk_bank_loan.0029
+	hide_window = yes
+	
+	trigger = {
+		has_character_flag = creditor_support_given
+		had_character_flag = { flag = creditor_support_given days = 1095 } # 3 Years
+	}
+	
+	mean_time_to_happen = {
+		days = 3650 # 10 Years MTTH, influenced by debt. 
+		
+		modifier = {
+			factor = 1
+			has_character_modifier = tsk_in_debt_bank_1
+		}
+		modifier = {
+			factor = 0.6
+			has_character_modifier = tsk_in_debt_bank_2
+		}
+		modifier = {
+			factor = 0.4
+			has_character_modifier = tsk_in_debt_bank_3
+		}
+	}
+
+	immediate = {
+		clr_character_flag = creditor_support_given
+	}
+}
