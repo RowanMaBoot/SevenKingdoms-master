@@ -1,0 +1,279 @@
+namespace = tsk_cc		
+###################################
+
+#tsk_cc.1 Starks expel Ironborn Reavers
+
+narrative_event = {
+	id = tsk_cc.1
+	title = "EVTtitletsk_cc.1"
+	desc = "EVTDESCtsk_cc.1"
+	picture = GFX_stark_kingdom
+
+	is_triggered_only = yes
+
+	immediate = {
+		c_bear_island = { add_claim = ROOT }
+		d_bear_island = { add_claim = ROOT }
+		k_orkmont = {
+			holder_scope = {
+				character_event = { id = tsk_cc.11 } 					
+			}
+		}
+	}
+
+	
+	option = {
+	name = EVTOPTAtsk_cc.1
+		ai_chance = {
+			factor = 10
+		}
+		k_orkmont = {
+			reverse_unsafe_war = {
+				target = ROOT
+				casus_belli = claim
+				thirdparty_title = d_bear_island
+			}
+		}
+	}
+}
+
+character_event = {
+	id = tsk_cc.11
+	desc = "EVTDESCtsk_cc.11"
+	picture = GFX_evt_reaving2
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk_cc.11
+	}
+}
+
+character_event = {
+	id = tsk_cc.111
+	desc = "EVTDESCtsk_cc.111"
+	picture = GFX_stark_kingdom
+	
+	only_independent = yes
+	culture = northmen
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_landed_title = k_winterfell
+		completely_controls = d_bear_island
+		NOT = { has_global_flag = BI_conquered }
+	}
+	
+	immediate = {
+		set_global_flag = BI_conquered
+	}
+
+	option = {
+		name = EVTOPTAtsk_cc.111
+		if = {
+			limit = {
+				c_99241 = {
+					is_alive = yes
+				}
+			}
+			c_99241 = {
+				c_bear_island = {
+					gain_title = { target = PREV }
+				}
+				c_bearstone = {
+					gain_title = { target = PREV }
+				}
+				c_woodfoot_watch = {
+					gain_title = { target = PREV }
+				}
+				c_bearwood = {
+					gain_title = { target = PREV }
+				}
+				d_bear_island = {
+					gain_title = { target = PREV }
+				}
+			}
+		}
+		if = {
+			limit = {
+				AND = {
+					c_99241 = { #JEOR
+						is_alive = no
+					}
+					c_99243 = { #JORAH
+						is_alive = yes
+					}
+				}
+			}
+			c_99243 = {
+				c_bear_island = {
+					gain_title = { target = PREV }
+				}
+				c_bearstone = {
+					gain_title = { target = PREV }
+				}
+				c_woodfoot_watch = {
+					gain_title = { target = PREV }
+				}
+				c_bearwood = {
+					gain_title = { target = PREV }
+				}
+				d_bear_island = {
+					gain_title = { target = PREV }
+				}
+			}
+		}
+		if = {
+			limit = {
+				AND = {
+					c_99241 = { #JEOR
+						is_alive = no
+					}
+					c_99243 = { #JORAH
+						is_alive = no
+					}
+					c_99244 = { #MORGAN
+						is_alive = yes
+					}
+				}
+			}
+			c_99244 = {
+				c_bear_island = {
+					gain_title = { target = PREV }
+				}
+				c_bearstone = {
+					gain_title = { target = PREV }
+				}
+				c_woodfoot_watch = {
+					gain_title = { target = PREV }
+				}
+				c_bearwood = {
+					gain_title = { target = PREV }
+				}
+				d_bear_island = {
+					gain_title = { target = PREV }
+				}
+			}
+		}
+	}
+	
+	option = {
+		name = EVTOPTBtsk_cc.111
+	}
+}
+
+#tsk_cc.2 Starks subjugate Greystarks
+
+narrative_event = {
+	id = tsk_cc.2
+	title = "EVTtitletsk_cc.2"
+	desc = "EVTDESCtsk_cc.2"
+	picture = GFX_stark_kingdom
+
+	is_triggered_only = yes
+
+	immediate = {
+		c_the_white_knife = { add_claim = ROOT }
+		d_the_white_knife = { add_claim = ROOT }
+		k_the_white_knife = { add_claim = ROOT }
+	}
+
+	
+	option = {
+	name = EVTOPTAtsk_cc.2
+		ai_chance = {
+			factor = 10
+		}
+		k_the_white_knife = {
+			reverse_unsafe_war = {
+				target = ROOT
+				casus_belli = claim
+				thirdparty_title = k_the_white_knife
+			}
+		}
+		k_the_white_knife = {
+			holder_scope = {
+				character_event = { id = tsk_cc.22 } 					
+			}
+		}
+	}
+}
+
+character_event = {
+	id = tsk_cc.22
+	desc = "EVTDESCtsk_cc.22"
+	picture = GFX_stark_kingdom
+	
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTAtsk_cc.22
+		k_the_dreadlands = {
+			holder_scope = {
+				character_event = { id = tsk_cc.222 } 					
+			}
+		}
+	}
+}
+
+character_event = {
+	id = tsk_cc.222
+	desc = "EVTDESCtsk_cc.222"
+	picture = GFX_stark_kingdom
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk_cc.222
+		k_the_white_knife = {
+			holder_scope = {
+				if = {
+					limit = {
+						is_primary_war_defender = yes
+						independent = yes
+					}
+					ROOT = {
+						join_defender_wars = PREV
+					}
+				}
+			}
+		}
+	}
+}
+
+character_event = {
+	id = tsk_cc.2222
+	desc = "EVTDESCtsk_cc.2222"
+	picture = GFX_stark_kingdom
+	
+	only_independent = yes
+	culture = northmen
+	
+	is_triggered_only = yes
+	
+	trigger = {
+		has_landed_title = k_winterfell
+		has_landed_title = k_the_white_knife
+		NOT = { has_global_flag = WK_conquered }
+	}
+	
+	immediate = {
+		set_global_flag = WK_conquered
+		destroy_landed_title = k_the_white_knife
+	}
+
+	option = {
+		name = EVTOPTAtsk_cc.2222
+		prestige = 100
+		custom_tooltip = {
+			name = dreadfort_subjugation
+			k_the_dreadlands = {
+				reverse_unsafe_war = {
+					target = ROOT
+					casus_belli = empire_subjugation
+				}
+			}
+		}
+	}
+}
