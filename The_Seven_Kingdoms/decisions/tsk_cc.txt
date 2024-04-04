@@ -100,4 +100,47 @@ decisions = {
 			}
 		}   
 	}
+
+	tsk_cc3_dec = {
+		is_high_prio = yes
+		#ai = no
+		potential = {
+			has_landed_title = k_winterfell
+			has_global_flag = WK_conquered
+			NOT = { has_global_flag = TN_conquered }
+			war = no
+		}
+		allow = {
+			prestige = 800
+			age = 16
+			war = no
+			prisoner = no
+			is_incapable = no
+			completely_controls = k_winterfell
+		}
+
+		effect = {
+			ROOT = { character_event = { id = tsk_cc.3 } }
+			#d_bear_island = { de_jure_liege = k_winterfell }
+			k_the_neck = {
+				holder_scope = {
+					IF = {
+						limit = {
+							NOT = {
+								character = ROOT
+							}
+						}
+						opinion = { modifier = opinion_furious who = ROOT years = 20 }
+					}
+				}
+			}
+		}
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 0
+				trait = craven
+			}
+		}   
+	}
 }

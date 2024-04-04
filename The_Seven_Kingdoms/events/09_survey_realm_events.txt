@@ -835,8 +835,105 @@ character_event = {
 #Character stumbles on an "abandoned" bandit camp
 character_event = {
 	id = VIETnam.55
-	desc = "EVTDESC1000109071"
 	picture = GFX_evt_battle
+	desc = {
+		trigger = {
+			is_landed = yes
+		}
+		text = "EVTDESC1000109071"
+		picture = GFX_evt_battle
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_north
+			}
+		}
+		text = "EVTDESC1000109071N"
+		picture = GFX_wolfswood
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_beyond_the_wall
+			}
+		}
+		text = "EVTDESC1000109071NW"
+		picture = GFX_wolf_attack
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+		}
+		text = "EVTDESC1000109071BB"
+		picture = GFX_evt_boatcoast
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_dorne
+			}
+		}
+		text = "EVTDESC1000109071D"
+		picture = GFX_dorne_ambush
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_iron_islands
+			}
+		}
+		text = "EVTDESC1000109071II"
+		picture = GFX_evt_scorpio_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+		}
+		text = "EVTDESC1000109071S"
+		picture = GFX_hunt_party
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_reach
+			}
+		}
+		text = "EVTDESC1000109071R"
+		picture = GFX_evt_melee
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+		}
+		text = "EVTDESC1000109071RI"
+		picture = GFX_evt_lakeside
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_vale
+			}
+		}
+		text = "EVTDESC1000109071V"
+		picture = GFX_evt_ambush
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_westerlands
+			}
+		}
+		text = "EVTDESC1000109071W"
+		picture = GFX_evt_battlecharge
+	}
+	border = GFX_event_normal_frame_war
 	hide_from = yes
 	
 	is_triggered_only = yes
@@ -852,30 +949,37 @@ character_event = {
 		}
 		prestige = 25
 		random_list = {
-			70 = {}
-			10 = { change_martial = 1 }
+			60 = {}
+			10 = {
+				modifier = {
+					factor = 5
+					combat_rating >= 71
+				}
+				change_martial = 1 
+			}
 			15 = {
 				modifier = {
-					factor = 0
-					OR = {
-						trait = wounded
-						is_maimed_trigger = yes
-					}
+					factor = 1.5
+					combat_rating <= 70
 				}
 				add_trait = wounded
 				hidden_tooltip = { character_event = { id = 38280 } }
 			}
-			4 = {
+			10 = {
 				modifier = {
-					factor = 0
-					can_be_maimed_trigger = no
+					factor = 1.5
+					combat_rating <= 50
 				}
 				add_maimed_trait_effect = yes
 				hidden_tooltip = { character_event = { id = 38281 } }
 			}
-			1 = {
+			5 = {
+				modifier = {
+					factor = 5
+					combat_rating <= 30
+				}
 				death = {
-					death_reason = death_accident
+					death_reason = death_battle
 				}
 			}
 		}		
@@ -889,7 +993,7 @@ character_event = {
 		}
 		random_list = {
 			70 = {}
-			12 = { change_martial = 1 }
+			12 = { add_trait = craven }
 			5 = {
 				modifier = {
 					factor = 0
@@ -911,7 +1015,7 @@ character_event = {
 			}
 			1 = {
 				death = {
-					death_reason = death_accident
+					death_reason = death_battle
 				}
 			}
 		}
@@ -1306,8 +1410,105 @@ character_event = {
 # Minor Outpost Falling into Disrepair
 character_event = {
 	id = VIETnam.48
-	desc = "EVTDESC1000109063"
 	picture = GFX_evt_castle_construction
+	desc = {
+		trigger = {
+			is_landed = yes
+		}
+		text = "EVTDESC1000109063"
+		picture = GFX_evt_castle_construction
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_north
+			}
+		}
+		text = "EVTDESC1000109063N"
+		picture = GFX_north_keep
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_beyond_the_wall
+			}
+		}
+		text = "EVTDESC1000109063NW"
+		picture = GFX_wild_keep
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+		}
+		text = "EVTDESC1000109063BB"
+		picture = GFX_evt_cancer_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_dorne
+			}
+		}
+		text = "EVTDESC1000109063D"
+		picture = GFX_dorne_keep
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_iron_islands
+			}
+		}
+		text = "EVTDESC1000109063II"
+		picture = GFX_evt_reaving
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+		}
+		text = "EVTDESC1000109063S"
+		picture = GFX_storm_keep
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_reach
+			}
+		}
+		text = "EVTDESC1000109063R"
+		picture = GFX_march_government
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+		}
+		text = "EVTDESC1000109063RI"
+		picture = GFX_evt_cancer_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_vale
+			}
+		}
+		text = "EVTDESC1000109063V"
+		picture = GFX_vale_keep
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_westerlands
+			}
+		}
+		text = "EVTDESC1000109063W"
+		picture = GFX_west_keep
+	}
+	border = GFX_event_normal_frame_economy
 	hide_from = yes
 	
 	is_triggered_only = yes
@@ -1606,8 +1807,197 @@ character_event = {
 # Character visits a religious site
 character_event = {
 	id = VIETnam.53
-	desc = "EVTDESC1000109068"
 	picture = GFX_evt_knight_kneeling
+	desc = {
+		trigger = {
+			is_landed = yes
+		}
+		text = "EVTDESC1000109068"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_north
+			}
+			OR = {
+				religion = old_gods
+				religion = old_gods_beyond
+				religion = old_gods_beyond_white
+			}
+		}
+		text = "EVTDESC1000109068NOG"
+		picture = GFX_evt_winter
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_north
+			}
+			religion_group = the_seven_group
+		}
+		text = "EVTDESC1000109068NS"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_beyond_the_wall
+			}
+		}
+		text = "EVTDESC1000109068NW"
+		picture = GFX_evt_winter
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+			religion = old_gods
+		}
+		text = "EVTDESC1000109068BBOG"
+		picture = GFX_evt_idealistic
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+			religion_group = the_seven_group
+		}
+		text = "EVTDESC1000109068BBS"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_dorne
+			}
+			religion_group = westerosi_pagan_group
+		}
+		text = "EVTDESC1000109068DOG"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_dorne
+			}
+			religion_group = the_seven_group
+		}
+		text = "EVTDESC1000109068DS"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_iron_islands
+			}
+		}
+		text = "EVTDESC1000109068II"
+		picture = GFX_evt_scorpio_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+			religion = old_gods
+		}
+		text = "EVTDESC1000109068OG"
+		picture = GFX_evt_pisces_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+			religion_group = the_seven_group
+		}
+		text = "EVTDESC1000109068S"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_reach
+			}
+			religion = old_gods
+		}
+		text = "EVTDESC1000109068ROG"
+		picture = GFX_evt_pisces_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_reach
+			}
+			religion_group = the_seven_group
+		}
+		text = "EVTDESC1000109068RS"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+			religion = old_gods
+		}
+		text = "EVTDESC1000109068RIOG"
+		picture = GFX_evt_idealistic
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+			religion_group = the_seven_group
+		}
+		text = "EVTDESC1000109068RIS"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_vale
+			}
+			religion_group = westerosi_pagan_group
+		}
+		text = "EVTDESC1000109068VOG"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_vale
+			}
+			religion_group = the_seven_group
+		}
+		text = "EVTDESC1000109068VS"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_westerlands
+			}
+			religion = old_gods
+		}
+		text = "EVTDESC1000109068WOG"
+		picture = GFX_evt_knight_kneeling
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_westerlands
+			}
+			religion_group = the_seven_group
+		}
+		text = "EVTDESC1000109068WS"
+		picture = GFX_evt_knight_kneeling
+	}
+	border = GFX_event_normal_frame_religion
 	hide_from = yes
 	
 	is_triggered_only = yes
@@ -2150,8 +2540,105 @@ character_event = {
 # Character finds bandits disguised as his soldiers
 character_event = {
 	id = VIETnam.61
-	desc = "EVTDESC1000109083"
 	picture = GFX_evt_melee
+	desc = {
+		trigger = {
+			is_landed = yes
+		}
+		text = "EVTDESC1000109083"
+		picture = GFX_evt_melee
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_north
+			}
+		}
+		text = "EVTDESC1000109083N"
+		picture = GFX_evt_thewall
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_beyond_the_wall
+			}
+		}
+		text = "EVTDESC1000109083NW"
+		picture = GFX_evt_duel3
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+		}
+		text = "EVTDESC1000109083BB"
+		picture = GFX_evt_duel5
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_dorne
+			}
+		}
+		text = "EVTDESC1000109083D"
+		picture = GFX_evt_leader
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_iron_islands
+			}
+		}
+		text = "EVTDESC1000109083II"
+		picture = GFX_ironborn_government
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+		}
+		text = "EVTDESC1000109083S"
+		picture = GFX_evt_warrior_banners
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_reach
+			}
+		}
+		text = "EVTDESC1000109083R"
+		picture = GFX_evt_noble
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+		}
+		text = "EVTDESC1000109083RI"
+		picture = GFX_evt_noble
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_vale
+			}
+		}
+		text = "EVTDESC1000109083V"
+		picture = GFX_evt_small_town
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_westerlands
+			}
+		}
+		text = "EVTDESC1000109083W"
+		picture = GFX_evt_wafrica_gold
+	}
+	border = GFX_event_normal_frame_intrigue
 	hide_from = yes
 	
 	is_triggered_only = yes
@@ -2163,6 +2650,46 @@ character_event = {
 	option = { #Arrest them
 		name = "EVTOPTA1000109083"
 		prestige = 10
+		random = {
+			chance = 10
+			add_trait = wounded
+			hidden_tooltip = {
+				character_event = {
+					id = 38280 #Notify Wounded
+				}
+			}
+		}
+	}
+	option = { # Execute
+		name = {
+			text = "EVTOPTA1000109083ES"
+			trigger = { 
+				religion_group = the_seven_group
+			}
+		}
+		name = {
+			text = "EVTOPTA1000109083ED"
+			trigger = { 
+				religion_group = drowned_god_group
+			}
+		}
+		name = {
+			text = "EVTOPTA1000109083EOG"
+			trigger = { 
+				OR = {
+					religion = old_gods
+					religion = old_gods_beyond
+					religion = old_gods_beyond_white
+				}		
+			}
+		}
+		name = {
+			text = "EVTOPTA1000109083EE"
+			trigger = { 
+				religion_group = eastern_group
+			}
+		}
+		piety = 10
 		random = {
 			chance = 10
 			add_trait = wounded
@@ -2523,8 +3050,105 @@ character_event = {
 # Character sees peasants working
 character_event = {
 	id = VIETnam.70
-	desc = "EVTDESC1000109092"
 	picture = GFX_evt_autumn_harvest
+	desc = {
+		trigger = {
+			is_landed = yes
+		}
+		text = "EVTDESC1000109092"
+		picture = GFX_evt_autumn_harvest
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_north
+			}
+		}
+		text = "EVTDESC1000109092N"
+		picture = GFX_evt_winter
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_beyond_the_wall
+			}
+		}
+		text = "EVTDESC1000109092NW"
+		picture = GFX_evt_winter2
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+		}
+		text = "EVTDESC1000109092BB"
+		picture = GFX_merchant_kingdom
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_dorne
+			}
+		}
+		text = "EVTDESC1000109092D"
+		picture = GFX_evt_cancer_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_iron_islands
+			}
+		}
+		text = "EVTDESC1000109092II"
+		picture = GFX_evt_reaving
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+		}
+		text = "EVTDESC1000109092S"
+		picture = GFX_evt_capricorn_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_reach
+			}
+		}
+		text = "EVTDESC1000109092R"
+		picture = GFX_evt_pisces_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+		}
+		text = "EVTDESC1000109092RI"
+		picture = GFX_evt_small_town
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_vale
+			}
+		}
+		text = "EVTDESC1000109092V"
+		picture = GFX_evt_leo_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_westerlands
+			}
+		}
+		text = "EVTDESC1000109092W"
+		picture = GFX_evt_small_town
+	}
+	border = GFX_event_normal_frame_diplomacy
 	hide_from = yes
 	
 	is_triggered_only = yes
@@ -2535,12 +3159,21 @@ character_event = {
 	
 	option = { #Piety option
 		name = "EVTOPTA1000109092"
-		piety = 3
+		random_list = {
+			80 = { piety = 10 }
+			10 = { change_learning = 1 }
+			10 = { change_diplomacy = 1 }
+		}	
 	}
 	
 	option = { #Prestige option
 		name = "EVTOPTB1000109092"
-		prestige = 3
+		scaled_wealth = -0.2
+		random_list = {
+			80 = { prestige = 10 }
+			10 = { change_intrigue = 1 }
+			10 = { change_stewardship = 1 }
+		}	
 	}
 }
 

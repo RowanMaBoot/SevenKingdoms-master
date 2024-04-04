@@ -277,3 +277,115 @@ character_event = {
 		}
 	}
 }
+
+#tsk_cc.3 Starks subjugate the Neck
+
+narrative_event = {
+	id = tsk_cc.3
+	title = "EVTtitletsk_cc.3"
+	desc = "EVTDESCtsk_cc.3"
+	picture = GFX_stark_kingdom
+
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTAtsk_cc.3
+		ai_chance = {
+			factor = 10
+		}
+		k_the_neck = {
+			reverse_unsafe_war = {
+				target = ROOT
+				casus_belli = empire_subjugation
+			}
+		}
+		k_the_neck = {
+			holder_scope = {
+				character_event = { id = tsk_cc.33 } 					
+			}
+		}
+	}
+}
+
+character_event = {
+	id = tsk_cc.33
+	desc = "EVTDESCtsk_cc.33"
+	picture = GFX_stark_kingdom
+	
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTAtsk_cc.33
+	}
+}
+
+character_event = {
+	id = tsk_cc.333
+	desc = "EVTDESCtsk_cc.333"
+	picture = GFX_stark_kingdom
+	
+	only_independent = yes
+	culture = northmen
+	
+	trigger = {
+		NOT = { has_global_flag = TN_conquered }
+		has_landed_title = k_winterfell
+		any_vassal = { 
+			has_landed_title = d_greywater_watch
+		}	
+	}
+	
+	mean_time_to_happen = {
+		days = 1
+	}
+	
+	immediate = {
+		set_global_flag = TN_conquered
+	}
+
+	option = {
+		name = EVTOPTAtsk_cc.333
+		
+		trigger = {
+			ROOT = { is_married = no }
+		}
+		custom_tooltip = {
+			name = crannog_marriage
+			d_greywater_watch = {
+				holder_scope = {
+					ROOT = {
+						create_character = {
+							age = 16
+							random_traits = no
+							female = yes
+							religion = PREV
+							culture = PREV
+							dynasty = PREV
+							add_trait = charismatic_negotiator
+							add_trait = patient
+							add_trait = zealous
+							add_trait = hunter
+							add_trait = proud
+							add_trait = temperate
+							attributes = {
+								martial = 2
+								diplomacy = 8
+								stewardship = 4
+								intrigue = 4
+								learning = 5
+							}
+						}
+						new_character = {
+							set_father = PREVPREV
+							add_spouse = ROOT
+						}
+					}
+				}
+			}
+		}
+	}
+
+	option = {
+		name = EVTOPTBtsk_cc.333
+	}
+}
