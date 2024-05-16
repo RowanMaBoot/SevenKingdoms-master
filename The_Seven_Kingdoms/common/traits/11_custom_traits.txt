@@ -236,6 +236,25 @@ sociopath = {
         trusting
         envious
     }
+	
+	is_visible = { 
+		OR = {
+			# People are aware of their own condition
+			character = FROM
+			# Location awareness
+			AND = {
+				location = { any_province_character = { character = FROM } }
+				OR = {
+					trait = sociopath
+					trait = genius
+					trait = shrewd
+					intrigue > 15
+				}
+			}
+			intrigue > 20
+			has_opinion_modifier = { who = FROM modifier = opinion_sociopath_aware }
+		}
+	}
     
     intrigue = 3
     diplomacy = 2
