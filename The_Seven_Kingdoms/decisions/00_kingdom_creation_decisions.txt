@@ -294,6 +294,7 @@ decisions = {
 				has_landed_title = e_the_stormlands
 				has_landed_title = e_dorne
 			}
+			NOT = { has_global_flag = westeros_formed }
 		}
 		allow = {
 			war = no
@@ -303,7 +304,7 @@ decisions = {
 				custom_tooltip = {
 					text = create_iron_throne_allow
 					hidden_tooltip = {
-						any_realm_title = {
+						any_demesne_title = {
 							count = 4
 							higher_tier_than = DUKE
 							OR = {
@@ -336,24 +337,16 @@ decisions = {
 				hidden_tooltip = {
 					any_demesne_title = {
 						limit = {
-							OR = {
-								title = e_the_north
-								title = e_the_riverlands
-								title = e_the_vale
-								title = e_the_iron_islands
-								title = e_the_westerlands
-								title = e_the_dusklands
-								title = e_the_reach
-								title = e_the_stormlands
-								title = e_dorne
-								title = e_the_wynelands
-							}
+							real_tier = EMPEROR
+							NOT = { title = e_iron_throne}
 						}
 						destroy_landed_title = THIS
 					}
 				}
 			}
 			recalc_succession = yes
+			character_event = { id = EBE.13 }
+			set_global_flag = westeros_formed
 		}
 		ai_will_do = {
 			factor = 100

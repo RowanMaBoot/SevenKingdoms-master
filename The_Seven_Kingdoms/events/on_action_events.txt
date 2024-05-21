@@ -3508,48 +3508,45 @@ character_event = {
 	
 	trigger = {
 		NOT = { has_flag = has_generated_spouse }
-		new_character = {
-			NOR = {
-				has_character_modifier = jd_prince
-				has_character_modifier = jd_princess
-			}
-		}
-		NOR = { 
-			religion = rhllor 
-			has_character_flag = recieved_royal_marriage_aid_duty
+		NOR = {
+			religion = lady_of_the_waves
+			religion = vulture_god
+			religion = old_gods_beyond
+			religion = old_gods_beyond_white
+			religion = storm_god
 		}
 		OR = {
-			AND = {
-				NOT = { religion_group = valyrian_group }
-				# NOT = { religion = messalian }
-				NOT = { has_religion_feature = religion_holy_family }
-				NOT = { has_religion_feature = religion_feature_zun }
-			}
-			NOT = { new_character = { is_close_relative = FROM } }
-		}
-		OR = {
-			FROM = { character = ROOT }
-			AND = {
-				FROM = {
-					dynasty = ROOT
-					is_primary_heir = ROOT
-				}
-				new_character = {
-					NOT = { character = ROOT }
-				}
+			character = FROM #Dowry for self
+			FROM = { #Dowry for son, grandson, or heir if not elective
+				OR = {
+					is_child_of = ROOT
+					father_even_if_dead = { is_child_of = ROOT }
+					mother_even_if_dead = { is_child_of = ROOT }
+					AND = {
+						is_primary_heir = ROOT
+						ROOT = { primary_title = { NOT = { is_theocracy = yes } } }
+					}
+				}				
 			}
 		}
 	}
 	
 	immediate = {
-		set_character_flag = recieved_royal_marriage_aid_duty
+		FROM = {
+			set_character_flag = recieved_royal_marriage_aid_duty
+			add_character_modifier = {
+				name = married_1
+				duration = 30
+			}
+		}
 	}
 	
 	option = {
 		name = EVTOPTA500
 		scaled_wealth = {
 			value = 0.5
-			min = 10
+			min = 20
+			max = 50
 		}
 	}
 	option = {

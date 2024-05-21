@@ -1,0 +1,4482 @@
+# -*- ck2.events -*-
+
+namespace = emf_wedding
+
+#######################################
+# WEDDING EVENTS
+# Written by Rylock
+#######################################
+
+###SETUP EVENTS
+character_event = {
+	id = emf_wedding.1
+	
+	is_triggered_only = yes
+	hide_window = yes
+	
+	immediate = {
+		if = {
+			limit = { 
+				ROOT = {
+					has_character_flag = recieved_royal_marriage_aid_duty
+					# ai = no
+				}
+			}
+			set_flag = planning_wedding
+			add_character_modifier = {
+				name = holding_large_feast
+				duration = 60
+			}
+			character_event = { id = emf_wedding.1200 }
+			# Pre-wedding flavor
+			character_event = { id = emf_wedding.1202 days = 1 }
+			letter_event = { id = emf_wedding.1203 days = 3 }
+			long_character_event = { id = emf_wedding.1215 days = 30 } # wedding start
+			emf_do_not_disturb = yes
+		}
+		else_if = {
+			limit = {
+				ROOT = {
+					any_close_relative = {
+						has_character_flag = recieved_royal_marriage_aid_duty
+					}
+				}
+			}
+			ROOT = {
+				set_flag = planning_wedding
+				set_character_flag = helding_heir_wedding
+				add_character_modifier = {
+					name = holding_large_feast
+					duration = 60
+				}
+				character_event = { id = emf_wedding.1200 }
+				# Pre-wedding flavor
+				character_event = { id = emf_wedding.1202 days = 1 }
+				letter_event = { id = emf_wedding.1203 days = 3 }
+				long_character_event = { id = emf_wedding.1215 days = 30 } # wedding start
+				emf_do_not_disturb = yes
+			}
+		}
+	}
+
+	option = {
+		name = OK		
+	}
+}
+
+### WEDDING EVENTS
+
+# Ruler begins planning the wedding
+character_event = {
+	id = emf_wedding.1200
+	picture = GFX_evt_marriage
+
+	desc = {
+		text = EVTDESC_emf_wedding_1200_seven
+		trigger = {
+			FROM = { 
+				religion_group = the_seven_group 
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1200_seven_heir
+		trigger = {
+			FROM = { 
+				religion_group = the_seven_group 
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+
+	desc = {
+		text = EVTDESC_emf_wedding_1200_old_gods
+		trigger = {
+			FROM = {
+				religion = old_gods
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1200_old_gods_heir
+		trigger = {
+			FROM = {
+				religion = old_gods
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1200_drowned_god
+		trigger = {
+			FROM = { 
+				religion_group = drowned_god_group 
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1200_drowned_god_heir
+		trigger = {
+			FROM = { 
+				religion_group = drowned_god_group 
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1200_valyrian
+		trigger = {
+			FROM = { 
+				religion_group = valyrian_group 
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1200_valyrian_heir
+		trigger = {
+			FROM = { 
+				religion_group = valyrian_group 
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1200_eastern
+		trigger = {
+			FROM = { 
+				religion_group = eastern_group 
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1200_eastern_heir
+		trigger = {
+			FROM = { 
+				religion_group = eastern_group 
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1200_common
+		trigger = {
+			FROM = {
+				NOR = {
+					religion_group = the_seven_group
+					religion = old_gods 
+					religion_group = eastern_group
+					religion_group = valyrian_group
+					religion_group = drowned_god_group
+				}
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1200_common_heir
+		trigger = {
+			FROM = {
+				has_character_flag = helding_heir_wedding
+				NOR = {
+					religion_group = the_seven_group
+					religion = old_gods 
+					religion_group = eastern_group
+					religion_group = valyrian_group
+					religion_group = drowned_god_group
+				}
+			}
+		}
+	}
+
+	is_triggered_only = yes
+	hide_from = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1200
+		custom_tooltip = { text = send_invitations }
+		hidden_tooltip = {
+			# Clear out old opinion modifiers, just in case
+			any_opinion_modifier_target = {
+				limit = { reverse_has_opinion_modifier = { who = ROOT modifier = attending_wedding } }
+				reverse_remove_opinion = { who = ROOT modifier = attending_wedding }
+				remove_opinion = { who = ROOT modifier = attending_wedding }
+			}
+			any_opinion_modifier_target = {
+				limit = { reverse_has_opinion_modifier = { who = ROOT modifier = declined_wedding } }
+				reverse_remove_opinion = { who = ROOT modifier = declined_wedding }
+			}
+
+			# Send out invitations
+			any_vassal = {
+				limit = {
+					age = 14
+					prisoner = no
+					#war = no
+					in_command = no
+					NOT = { character = FROM }
+					NOT = { is_married = FROM }
+					higher_tier_than = BARON
+				}
+				set_character_flag = invite_sent
+				letter_event = { id = emf_wedding.1201 }
+			}
+			if = {
+				limit = { tier = EMPEROR }
+				any_realm_lord = {
+					limit = {
+						tier = COUNT
+						NOT = { has_character_flag = invite_sent } 
+						NOT = { liege = { character = ROOT } }
+						religion = ROOT
+						age = 15
+						prisoner = no
+						#war = no
+						in_command = no
+						NOT = { character = FROM }
+						NOT = { is_married = FROM }
+					}
+					set_character_flag = invite_sent
+					letter_event = { id = emf_wedding.1201 }
+				}
+			}
+			FROM = {	
+				if = {
+					limit = { 
+						father = { 
+							is_alive = yes
+							NOT = { dynasty = PREV }
+							NOT = { character = PREV }
+							NOT = { is_married = PREV }
+							NOT = { character = ROOT }
+							NOT = { liege = { character = ROOT } }
+							NOT = { has_character_flag = invite_sent } 
+						} 
+					}
+					father = {
+						set_character_flag = invite_sent
+						letter_event = { id = emf_wedding.1201 }
+					}	
+				}
+				if = {
+					limit = { 
+						mother = { 
+							is_alive = yes
+							NOT = { dynasty = PREV }
+							NOT = { character = PREV }
+							NOT = { is_married = PREV }
+							NOT = { character = ROOT }
+							NOT = { liege = { character = ROOT } }
+							NOT = { has_character_flag = invite_sent } 
+						} 
+					}
+					mother = {
+						set_character_flag = invite_sent
+						letter_event = { id = emf_wedding.1201 }
+					}	
+				}
+				any_dynasty_member = {
+					limit = {
+						is_close_relative = PREV
+						is_alive = yes
+						age = 15
+						NOT = { character = PREV }
+						NOT = { is_married = PREV }
+						NOT = { character = ROOT }	
+						NOT = { liege = { character = ROOT } }					
+						NOT = { has_character_flag = invite_sent }							
+					}
+					set_character_flag = invite_sent
+					letter_event = { id = emf_wedding.1201 }
+				}
+				spouse = {
+					if = {
+						limit = { 
+							father = { 
+								is_alive = yes
+								NOT = { dynasty = PREV }
+								NOT = { character = PREV }
+								NOT = { is_married = PREV }
+								NOT = { character = ROOT }
+								NOT = { liege = { character = ROOT } }
+								NOT = { has_character_flag = invite_sent } 
+							} 
+						}
+						father = {
+							set_character_flag = invite_sent
+							letter_event = { id = emf_wedding.1201 }
+						}	
+					}
+					if = {
+						limit = { 
+							mother = { 
+								is_alive = yes
+								NOT = { dynasty = PREV }
+								NOT = { character = PREV }
+								NOT = { is_married = PREV }
+								NOT = { character = ROOT }
+								NOT = { liege = { character = ROOT } }
+								NOT = { has_character_flag = invite_sent } 
+							} 
+						}
+						mother = {
+							set_character_flag = invite_sent
+							letter_event = { id = emf_wedding.1201 }
+						}	
+					}
+					any_dynasty_member = {
+						limit = {
+							is_close_relative = PREV
+							is_alive = yes
+							age = 15
+							NOT = { character = PREV }
+							NOT = { is_married = PREV }
+							NOT = { character = ROOT }	
+							NOT = { liege = { character = ROOT } }						
+							NOT = { has_character_flag = invite_sent }							
+						}
+						set_character_flag = invite_sent
+						letter_event = { id = emf_wedding.1201 }
+					}
+				}
+			}
+			any_courtier = {
+				limit = { 
+					is_ruler = no
+					age = 14
+					NOT = { dynasty = none }
+					NOT = { trait = ill }
+					NOT = { trait = incapable }
+					NOT = { is_inaccessible_trigger = yes }
+					prisoner = no
+					NOT = { has_character_flag = invite_sent }
+					NOT = { character = FROM }
+					NOT = { is_married = FROM }
+				}
+				set_character_flag = invite_sent
+				letter_event = { id = emf_wedding.1201 }
+			}
+			# Look for priest to perform ceremony
+		}
+	}
+}
+
+# Invitation to the wedding
+letter_event = {
+	id = emf_wedding.1201
+	desc = EVTDESC_emf_wedding_1201
+
+	is_triggered_only = yes
+	
+	trigger = {
+		NOT = { war_with = FROM }
+		NOT = { any_liege = { war_with = FROM } }
+	}
+	
+	immediate = { clr_character_flag = invite_sent }
+
+	option = {
+		name = EVTOPTA_emf_wedding_1201 # I will attend
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 0.1
+				is_inaccessible_trigger = yes
+			}
+			modifier = {
+				factor = 0
+				OR = {
+					is_ill = yes
+					is_pregnant = yes
+				}
+			}
+			modifier = {
+				factor = 0.5
+				trait = paranoid
+			}
+			modifier = {
+				factor = 0.5
+				trait = shy
+			}
+			modifier = {
+				factor = 0.5
+				trait = cynical
+			}
+			modifier = {
+				factor = 0.5
+				trait = slothful
+			}
+			modifier = {
+				factor = 1.5
+				trait = diligent
+			}
+			modifier = {
+				factor = 1.5
+				trait = zealous
+			}
+			modifier = {
+				factor = 5
+				trait = gregarious
+			}
+			modifier = {
+				factor = 10
+				is_close_relative = FROM
+			}
+			modifier = {
+				factor = 2
+				OR = {
+					dynasty = FROM
+					is_allied_with = FROM
+					has_non_aggression_pact_with = FROM
+					is_theocracy = yes
+				}
+			}
+			modifier = {
+				factor = 2
+				opinion = { who = FROM value = 25 }
+			}
+			modifier = {
+				factor = 4
+				opinion = { who = FROM value = 50 }
+			}
+			modifier = {
+				factor = 8
+				opinion = { who = FROM value = 75 }
+			}
+			modifier = {
+				factor = 0.75
+				NOT = { opinion = { who = FROM value = 0 } }
+			}
+			modifier = {
+				factor = 0.75
+				NOT = { opinion = { who = FROM value = -25 } }
+			}
+			modifier = {
+				factor = 0.5
+				NOT = { opinion = { who = FROM value = -50 } }
+			}
+			modifier = {
+				factor = 0.25
+				NOT = { opinion = { who = FROM value = -75 } }
+			}
+		}
+		FROM = { custom_tooltip = { text = accept_invitation } }
+		hidden_tooltip = {
+			if = {
+				limit = { NOT = { has_opinion_modifier = { who = FROM modifier = attending_wedding } } }
+				reverse_opinion = { who = FROM modifier = attending_wedding months = 12 }
+				opinion = { who = FROM modifier = attending_wedding months = 12 }
+				emf_do_not_disturb = yes
+				end_inaccessibility_effect = yes
+			}
+			any_spouse = {
+				limit = {
+					is_ill = no
+					is_pregnant = no
+					is_ruler = no
+					war = no
+					NOT = { is_inaccessible_trigger = yes }
+					emf_can_disturb = yes
+					NOT = { has_opinion_modifier = { who = FROM modifier = attending_wedding } }
+				}
+				reverse_opinion = { who = FROM modifier = attending_wedding months = 12 }
+				opinion = { who = FROM modifier = attending_wedding months = 12 }
+				emf_do_not_disturb = yes
+			}
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1201 # I will not attend
+		ai_chance = {
+			factor = 20
+		}
+		reverse_opinion = { who = FROM modifier = declined_wedding months = 60 }
+		opinion = { who = FROM modifier = declined_wedding months = 12 }
+		FROM = { custom_tooltip = { text = decline_invitation } }
+	}
+	option = {
+		name = EVTOPTC_emf_wedding_1201 # Send an envoy in my stead
+		trigger = {
+			war = no
+			emf_can_disturb = yes
+			NOT = { same_realm = FROM }
+			is_ruler = yes
+		}
+		ai_chance = {
+			factor = 40
+		}
+		reverse_opinion = { who = FROM modifier = declined_wedding months = 60 }
+		opinion = { who = FROM modifier = declined_wedding months = 12 }
+		FROM = { custom_tooltip = { text = decline_invitation } }
+	}
+	option = {
+		name = EVTOPTD_emf_wedding_1201 # I am at war
+		trigger = {
+			war = yes
+		}
+		FROM = { custom_tooltip = { text = decline_invitation } }
+	}
+	option = {
+		name = EVTOPTE_emf_wedding_1201 # I am too busy
+		trigger = {
+			emf_can_disturb = no
+		}
+		FROM = { custom_tooltip = { text = decline_invitation } }
+	}
+}
+
+#Food Prep
+character_event = {
+	id = emf_wedding.1202
+	desc = "EVTDESC72003"
+	picture = GFX_evt_council
+
+	only_rulers = yes
+	capable_only = yes
+	prisoner = no
+	
+	is_triggered_only = yes	
+
+	option = {
+		name = "EVTOPTA72003" #Spend lavishly on food
+		#trigger = { NOT = { trait = temperate } }
+		#gain_weight_small_effect = yes
+		#weight_trait_check_effect = yes
+		ai_chance = {
+
+			factor = 30
+
+			modifier = {
+				factor = 0.5
+				trait = greedy
+			}
+			modifier = {
+				factor = 3
+				trait = gluttonous
+			}
+			modifier = {
+				factor = 0.1
+				trait = temperate
+			}
+			modifier = {
+				factor = 2
+				primary_title = { higher_tier_than = DUKE }
+			}
+		}
+		character_event = { id = emf_wedding.72020 days = 50 }
+		scaled_wealth = { value = -0.5 min = -50 max = -500 }	
+		prestige = 20
+	}
+
+	option = {
+		name = "EVTOPTB72003" #Spend medium on food
+		ai_chance = {
+			factor = 30
+
+			modifier = {
+				factor = 0.5
+				NOT = { trait = greedy }
+			}
+			modifier = {
+				factor = 2
+				NOT = { trait = gluttonous }
+			}
+			modifier = {
+				factor = 2
+				primary_title = { tier = DUKE }
+			}
+		}
+		character_event = { id = emf_wedding.72021 days = 50 }
+		scaled_wealth = { value = -0.25 min = -25 max = -250 }	
+		prestige = 10
+	}
+
+	option = {
+		name = "EVTOPTC72003" #Spend low on food
+		trigger = { NOT = { trait = gluttonous } }
+		ai_chance = {
+			factor = 30
+
+			modifier = {
+				factor = 2.5
+				trait = greedy
+			}
+			modifier = {
+				factor = 0.1
+				trait = gluttonous
+			}
+			modifier = {
+				factor = 2
+				primary_title = { tier = COUNT }
+			}
+		}
+		character_event = { id = emf_wedding.72022 days = 50 }
+		scaled_wealth = { value = -0.1 min = -10 max = -100 }	
+		prestige = 5
+	}
+}
+
+#Ball Prep
+letter_event = {
+	id = emf_wedding.1203
+	
+	is_triggered_only = yes
+	hide_window = yes
+	
+	option = {
+		name = "OK"
+		hidden_tooltip = {
+			random_list = {
+				14 = { #Jongleurs seek your patronage
+					character_event = { id = 72000 days = 5 }
+				}
+				14 = { #Minstrel seeks your patronage
+					character_event = { id = 72001 days = 5 }
+				}
+				14 = { #Musicians seek your patronage
+					character_event = { id = 72002 days = 5 }
+				}
+				14 = { #Fire-eaters seek your patronage
+					character_event = { id = 72006 days = 5 }
+				}
+				14 = { #Conjurer seeks your patronage
+					character_event = { id = 72007 days = 5 }
+				}
+				14 = { #Acrobats seek your patronage
+					character_event = { id = 72009 days = 5 }
+				}
+				14 = { #Travelling Dancers seek your patronage
+					character_event = { id = 72120 days = 5 }
+				}
+				2 = { #fallback
+					character_event = { id = 72002 days = 5 }
+				}
+			}
+			random_list = {
+				33 = { #Castle problems
+					modifier = {
+						factor = 0
+						NOT = {
+							any_courtier = {
+								has_job_title = job_treasurer
+							}
+						}
+					}
+					character_event = { id = 72004 days = 15 }
+				}
+				33 = { #Highway Robber Band
+					modifier = {
+						factor = 0
+						NOR = {
+							any_courtier = {
+								has_job_title = job_marshal
+							}
+							any_demesne_province = {
+								has_province_modifier = highway_robber_band
+							}
+						}
+					}
+					character_event = { id = 72005 days = 15 }
+				}
+				33 = { #Hunt for boars for winter feast
+					modifier = {
+						factor = 0
+						NOT = {
+							any_courtier = {
+								has_job_title = job_marshal
+							}
+						}
+					}
+					character_event = { id = 72008 days = 15 }
+				}
+				1 = { #fallback
+					modifier = {
+						factor = 0
+						NOT = {
+							any_courtier = {
+								has_job_title = job_treasurer
+							}
+						}
+					}
+					character_event = { id = 72004 days = 15 }
+				}
+			}
+		}
+	}
+}
+
+# Wedding cancelled due to war
+character_event = {
+	id = emf_wedding.1211
+	desc = EVTDESC_emf_wedding_1211
+	picture = GFX_evt_council
+
+	only_playable = yes
+	min_age = 16
+	war = yes
+
+	trigger = {
+		OR = {
+			has_flag = planning_wedding
+			has_flag = holding_wedding
+		}
+	}
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	option = {
+		name = CURSES
+		if = {
+			limit = { has_flag = planning_wedding }
+			scaled_wealth = 0.8
+		}
+		hidden_tooltip = {
+			clr_flag = do_not_disturb
+			clr_flag = planning_wedding
+			clr_flag = holding_wedding
+			clr_flag = has_priest_to_perform_wedding
+			clr_flag = asked_about_wedding
+			clr_flag = wedding_event
+			clr_flag = wedding_lover
+			clr_flag = wedding_duel
+			clr_flag = wedding_poetry
+			clr_flag = wedding_friend
+			clr_flag = wedding_rival
+			clr_flag = wedding_toast
+			clr_flag = wedding_badmouth
+			clr_flag = wedding_drunkard
+			clr_flag = wedding_lunatic
+			clr_flag = helding_heir_wedding
+			clr_character_flag = feast_jongleur
+			clr_character_flag = feast_musicians
+			clr_character_flag = feast_minstrel
+			clr_character_flag = feast_fireeaters
+			clr_character_flag = feast_conjurer
+			clr_character_flag = castle_problems
+			clr_character_flag = feast_boar_hunt
+			clr_flag = host_feast_started
+			any_opinion_modifier_target = {
+				limit = {
+					is_alive = yes
+					reverse_has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+				}
+				remove_opinion = { who = ROOT modifier = attending_wedding }
+				reverse_remove_opinion = { who = ROOT modifier = attending_wedding }
+				letter_event = { id = emf_wedding.1212 }
+			}
+		}
+	}
+}
+
+# Receive notification about cancellation of wedding due to war
+letter_event = {
+	id = emf_wedding.1212
+	desc = EVTDESC_emf_wedding_1212
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1212
+		hidden_tooltip = {
+			clr_flag = do_not_disturb
+			clr_flag = wedding_event
+			if = {
+				limit = {
+					FROM = {
+						NOR = {
+							trait = emf_crowned
+							trait = emf_crowned_by_pope
+							trait = the_old_gods_high_king
+							trait = the_seven_high_king
+						}
+					}
+					has_opinion_modifier = { who = FROM modifier = opinion_performed_wedding }
+				}
+				remove_opinion = { who = FROM modifier = opinion_performed_wedding }
+				reverse_remove_opinion = { who = FROM modifier = opinion_performed_wedding }
+			}
+		}
+	}
+}
+
+# Ruler dies, the wedding must be canceled
+character_event = {
+	id = emf_wedding.1213
+	desc = EVTDESC_emf_wedding_1213
+	picture = GFX_evt_death
+
+	is_triggered_only = yes
+
+	trigger = {
+		OR = {
+			has_flag = planning_wedding
+			has_flag = holding_wedding
+		}
+	}
+
+	immediate = {
+		remove_character_modifier = holding_wedding
+		clr_character_flag = do_not_disturb
+		if = {
+			limit = { tier = EMPEROR } 
+			wealth = 150
+		}
+		if = {
+			limit = { tier = KING } 
+			wealth = 75
+		}
+		
+		hidden_tooltip = {
+			clr_flag = planning_wedding
+			clr_flag = holding_wedding
+			clr_flag = has_priest_to_perform_wedding
+			clr_flag = asked_about_wedding
+			clr_flag = wedding_event
+			clr_flag = wedding_lover
+			clr_flag = wedding_duel
+			clr_flag = wedding_poetry
+			clr_flag = wedding_friend
+			clr_flag = wedding_rival
+			clr_flag = wedding_toast
+			clr_flag = wedding_badmouth
+			clr_flag = wedding_drunkard
+			clr_flag = wedding_lunatic
+			clr_flag = helding_heir_wedding
+			clr_character_flag = feast_jongleur
+			clr_character_flag = feast_musicians
+			clr_character_flag = feast_minstrel
+			clr_character_flag = feast_fireeaters
+			clr_character_flag = feast_conjurer
+			clr_character_flag = castle_problems
+			clr_character_flag = feast_boar_hunt
+			clr_flag = host_feast_started
+			any_opinion_modifier_target = {
+				limit = {
+					is_alive = yes
+					reverse_has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+				}
+				remove_opinion = { who = ROOT modifier = attending_wedding }
+				reverse_remove_opinion = { who = ROOT modifier = attending_wedding }
+				letter_event = { id = emf_wedding.1214 }
+			}
+		}
+	}
+
+	option = {
+		name = CURSES
+	}
+}
+
+# Receive notification about cancellation of wedding due to ruler's death
+letter_event = {
+	id = emf_wedding.1214
+	desc = EVTDESC_emf_wedding_1214
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1212
+		hidden_tooltip = {
+			clr_flag = do_not_disturb
+			clr_flag = wedding_event
+		}
+	}
+}
+
+
+### THE WEDDING
+
+# The wedding begins
+long_character_event = {
+	id = emf_wedding.1215
+	title = EVTNAME_emf_wedding_1215
+	picture = GFX_evt_feast
+	border = GFX_event_long_frame_religion
+
+	desc = {
+		text = EVTDESC_emf_wedding_1215_septon
+		picture = GFX_evt_seven_wedding
+		trigger = {
+			FROM = { 
+				religion_group = the_seven_group
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1215_septon_heir
+		picture = GFX_evt_seven_wedding
+		trigger = {
+			FROM = { 
+				religion_group = the_seven_group 
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+
+	desc = {
+		text = EVTDESC_emf_wedding_1215_old_gods
+		picture = GFX_evt_old_gods_wedding
+		trigger = {
+			FROM = {
+				religion = old_gods
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1215_old_gods_heir
+		picture = GFX_evt_old_gods_wedding
+		trigger = {
+			FROM = {
+				religion = old_gods
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1215_valyrian
+		picture = GFX_evt_valyrian_wedding
+		trigger = {
+			FROM = { 
+				religion_group = valyrian_group 
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1215_valyrian_heir
+		picture = GFX_evt_valyrian_wedding
+		trigger = {
+			FROM = { 
+				religion_group = valyrian_group 
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1215_rhllor
+		picture = GFX_evt_lol
+		trigger = {
+			FROM = { 
+				religion = rhllor 
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1215_rhllor_heir
+		picture = GFX_evt_lol
+		trigger = {
+			FROM = { 
+				religion = rhllor 
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1215_drowned
+		picture = GFX_ironborn_kingdom
+		trigger = {
+			FROM = { 
+				religion_group = drowned_god_group 
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1215_drowned_heir
+		picture = GFX_ironborn_kingdom
+		trigger = {
+			FROM = { 
+				religion_group = drowned_god_group 
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1215_common
+		trigger = {
+			FROM = {
+				NOR = {
+					religion_group = the_seven_group
+					religion = old_gods 
+					religion_group = eastern_group
+					religion_group = valyrian_group
+					religion_group = drowned_god_group
+				}
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1215_common_heir
+		trigger = {
+			FROM = {
+				has_character_flag = helding_heir_wedding
+				NOR = {
+					religion_group = the_seven_group
+					religion = old_gods 
+					religion_group = eastern_group
+					religion_group = valyrian_group
+					religion_group = drowned_god_group
+				}
+			}
+		}
+	}
+
+	major = yes
+	is_triggered_only = yes
+	hide_from = yes
+	show_ROOT = yes
+
+	trigger = {
+		has_flag = planning_wedding
+	}
+
+	major_trigger = {
+		OR = {
+			character = FROM
+			has_opinion_modifier = { who = FROM modifier = attending_wedding }
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1215
+		trigger = { character = FROM }
+		prestige = 100
+
+		#pf_tradition_plus2_effect = yes
+
+		hidden_tooltip = {
+			long_character_event = { id = emf_wedding.1216 days = 1 } # the feast begins
+		}
+
+		if = {
+			limit = { ai = no }
+			chronicle = {
+				entry = CHRONICLE_NORMAL_WEDDING
+				portrait = [Root.GetID]
+				picture = GFX_evt_wedding
+			}
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1215
+		trigger = {
+			NOT = { character = FROM }
+			has_opinion_modifier = { who = FROM modifier = attending_wedding }
+		}
+	}
+	option = {
+		name = EVTOPTC_emf_wedding_1215
+		trigger = {
+			NOT = { character = FROM }
+			NOT = { has_opinion_modifier = { who = FROM modifier = attending_wedding } }
+		}
+	}
+}
+
+# The wedding feast follows
+long_character_event = {
+	id = emf_wedding.1216
+	picture = GFX_evt_feast
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1216
+		trigger = {
+			FROM = { 
+				NOT = { has_character_flag = helding_heir_wedding }
+			}
+		}
+	}
+	
+	desc = {
+		text = EVTDESC_emf_wedding_1216_heir
+		trigger = {
+			FROM = { 
+				has_character_flag = helding_heir_wedding
+			}
+		}
+	}
+
+	major = yes
+	is_triggered_only = yes
+
+	trigger = {
+		has_flag = planning_wedding
+	}
+
+	major_trigger = {
+		OR = {
+			character = FROM
+			has_opinion_modifier = { who = FROM modifier = attending_wedding }
+		}
+	}
+
+	immediate = {
+		set_flag = holding_wedding
+		clr_flag = planning_wedding
+		set_character_flag = host_feast_started
+		character_event = { id = emf_wedding.1275 days = 30 } # wedding feast ends
+		character_event = { id = emf_wedding.1250 days = 3 } # wedding events
+		character_event = { id = emf_wedding.1251 } # wedding events
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1216
+		trigger = { character = FROM }
+		if = { #display select guests to player
+			limit = { war = no }
+			any_opinion_modifier_target = {
+				limit = {		
+					NOT = { character = ROOT }
+					has_opinion_modifier = {
+						modifier = attending_wedding
+						who = ROOT
+					}
+					OR = {
+						is_ruler = yes
+						has_opinion_modifier = {
+							modifier = attending_wedding
+							who = ROOT
+						}
+						NOT = { liege = { character = ROOT } }
+					}
+				}
+				set_character_flag = guest_feast_started
+				custom_tooltip = { text = is_attending_wedding }
+			}
+		}
+		if = { #display select guests to player
+			limit = { war = no }
+			any_opinion_modifier_target = {
+				limit = {		
+					NOT = { character = ROOT }
+					has_opinion_modifier = {
+						modifier = declined_wedding
+						who = ROOT
+					}
+					OR = {
+						is_ruler = yes
+						has_opinion_modifier = {
+							modifier = declined_wedding
+							who = ROOT
+						}
+						NOT = { liege = { character = ROOT } }
+					}
+				}
+				custom_tooltip = { text = is_declining_wedding }
+			}
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1216
+		trigger = {
+			NOT = { character = FROM }
+			has_opinion_modifier = { who = FROM modifier = attending_wedding }
+		}
+	}
+}
+
+# Ruler gets along with host at the wedding
+character_event = {
+	id = emf_wedding.1217
+	desc = EVTDESC_emf_wedding_1217
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1217
+		set_flag = wedding_event
+		FROM = {
+			set_flag = wedding_friend
+			character_event = { id = emf_wedding.1218 tooltip = become_wedding_friends }
+		}
+	}
+}
+
+character_event = {
+	id = emf_wedding.1218
+	desc = EVTDESC_emf_wedding_1218
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1217
+		random_list = {
+			50 = {
+				add_friend = FROM
+			}
+			25 = {
+				opinion = { who = FROM modifier = wedding_friends multiplier = 2 months = 120 }
+				hidden_tooltip = { reverse_opinion = { who = FROM modifier = wedding_friends multiplier = 2 months = 120 } }
+			}
+			25 = {
+				opinion = { who = FROM modifier = wedding_friends months = 60 }
+				hidden_tooltip = { reverse_opinion = { who = FROM modifier = wedding_friends months = 60 } }
+			}
+		}
+	}
+}
+
+# Ruler argues with host over claim
+character_event = {
+	id = emf_wedding.1219
+	desc = EVTDESC_emf_wedding_1219
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	immediate = {
+		random_claim = {
+			limit = {
+				ROOT = { has_strong_claim = PREV }
+				holder = FROM
+			}
+			save_event_target_as = argue_title
+			break = yes
+		}
+		random_claim = {
+			limit = { holder = FROM }
+			save_event_target_as = argue_title
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1219
+		set_flag = wedding_event
+		FROM = {
+			set_flag = wedding_rival
+			character_event = { id = emf_wedding.1220 tooltip = become_wedding_rivals }
+		}
+	}
+}
+
+character_event = {
+	id = emf_wedding.1220
+	desc = EVTDESC_emf_wedding_1220
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1220
+		random_list = {
+			50 = {
+				add_rival = FROM
+			}
+			25 = {
+				opinion = { who = FROM modifier = wedding_rivals multiplier = 2 months = 120 }
+				hidden_tooltip = { reverse_opinion = { who = FROM modifier = wedding_rivals multiplier = 2 months = 120 } }
+			}
+			25 = {
+				opinion = { who = FROM modifier = wedding_rivals months = 60 }
+				hidden_tooltip = { reverse_opinion = { who = FROM modifier = wedding_rivals months = 60 } }
+			}
+		}
+	}
+}
+
+# The Duel - character notified that enemy is present
+character_event = {
+	id = emf_wedding.1222
+	desc = EVTDESC_emf_wedding_1222
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	immediate = {
+		FROM = {
+			random_opinion_modifier_target = {
+				limit = {
+					has_opinion_modifier = { who = PREV modifier = attending_wedding }
+					war = no
+					is_adult = yes
+					is_female = no
+					prisoner = no
+					is_foe = ROOT
+					NOR = {
+						is_incapable = yes
+						has_injury_trigger = yes
+						is_maimed_trigger = yes
+						has_flag = wedding_event
+					}
+				}
+				save_event_target_as = challenge_target
+			}
+		}
+	}
+
+	option = {
+		name = EVTOPTA72030 # Challenge to a duel
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0.5
+				trait = kind
+			}
+			modifier = {
+				factor = 0.5
+				trait = humble
+			}
+			modifier = {
+				factor = 0.5
+				trait = content
+			}
+			modifier = {
+				factor = 0.5
+				trait = patient
+			}
+			modifier = {
+				factor = 0.5
+				trait = slothful
+			}
+		}
+		set_flag = wedding_event
+		event_target:challenge_target = {
+			character_event = { id = emf_wedding.1223 tooltip = EVTTOOLTIP72031 }
+		}
+	}
+	option = {
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 0
+				OR = {
+					trait = drunkard
+					trait = possessed
+					trait = lunatic
+					trait = wroth
+					trait = cruel
+					trait = duelist
+				}
+			}
+			modifier = {
+				factor = 0.5
+				trait = brave
+			}
+			modifier = {
+				factor = 0.5
+				trait = proud
+			}
+		}
+		name = EVTOPTB72030 # No challenge
+		prestige = -20
+	}
+}
+
+# The Duel - the challenge is made
+character_event = {
+	id = emf_wedding.1223
+	desc = EVTDESC72031
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA72031 # Accept the duel
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 0
+				trait = craven
+			}
+			modifier = {
+				factor = 0.5
+				trait = kind
+			}
+			modifier = {
+				factor = 0.5
+				trait = humble
+			}
+			modifier = {
+				factor = 0.5
+				trait = content
+			}
+			modifier = {
+				factor = 0.5
+				trait = patient
+			}
+			modifier = {
+				factor = 0.5
+				trait = slothful
+			}
+		}
+		set_flag = wedding_event
+		FROMFROM = {
+			set_flag = wedding_duel
+			character_event = { id = emf_wedding.1225 tooltip = ask_permission_to_duel }
+		}
+	}
+	option = {
+		name = EVTOPTB72031 # Refuse
+		ai_chance = {
+			factor = 30
+			modifier = {
+				factor = 0
+				OR = {
+					trait = drunkard
+					trait = possessed
+					trait = lunatic
+					trait = wroth
+					trait = cruel
+					trait = duelist
+				}
+				NOT = { trait = craven }
+			}
+			modifier = {
+				factor = 0.5
+				trait = brave
+			}
+			modifier = {
+				factor = 0.5
+				trait = proud
+			}
+		}
+		prestige = -20
+		hidden_tooltip = {
+			FROM = { character_event = { id = emf_wedding.1224 } }
+		}
+	}
+}
+
+# The Duel - the challenged refuses the duel
+character_event = {
+	id = emf_wedding.1224
+	desc = EVTDESC_emf_wedding_1224
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1224
+		prestige = 20
+	}
+}
+
+# The Duel - the host is asked for permission to hold the duel
+character_event = {
+	id = emf_wedding.1225
+	desc = EVTDESC_emf_wedding_1225
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	immediate = {
+		clr_flag = wedding_event
+		set_flag = wedding_event
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1225 # Absolutely not!
+		trigger = { NOT = { diplomacy = 12 } }
+		ai_chance = {
+			factor = 30
+		}
+		FROM = { character_event = { id = emf_wedding.1226 days = 1 tooltip = refused_duel } }
+		FROMFROM = { character_event = { id = emf_wedding.1226 days = 1 tooltip = refused_duel } }
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1225 # Talk them out of it
+		trigger = { diplomacy = 12 }
+		ai_chance = {
+			factor = 30
+		}
+		tooltip_info = diplomacy
+		FROM = { character_event = { id = emf_wedding.1227 days = 1 tooltip = talked_out_of_duel } }
+		FROMFROM = { character_event = { id = emf_wedding.1227 days = 1 tooltip = talked_out_of_duel } }
+	}
+	option = {
+		name = EVTOPTC_emf_wedding_1225 # Let them fight
+		ai_chance = {
+			factor = 70
+			modifier = {
+				factor = 5
+				OR = {
+					trait = impaler
+					trait = duelist
+					trait = cruel
+					trait = lunatic
+					trait = possessed
+				}
+			}
+			modifier = {
+				factor = 2
+				trait = arbitrary
+			}
+			modifier = {
+				factor = 0.5
+				trait = zealous
+			}
+			modifier = {
+				factor = 0.5
+				trait = kind
+			}
+			modifier = {
+				factor = 0.5
+				trait = just
+			}
+			modifier = {
+				factor = 0.75
+				trait = temperate
+			}
+			modifier = {
+				factor = 0.75
+				trait = charitable
+			}
+			modifier = {
+				factor = 0.75
+				trait = proud
+			}
+		}
+		custom_tooltip = { text = let_the_duel_begin }
+		hidden_tooltip = {
+			FROMFROM = {
+				character_event = { id = emf_wedding.1228 days = 1 }
+			}
+		}
+	}
+}
+
+# The Duel - the host refuses to let them fight
+character_event = {
+	id = emf_wedding.1226
+	desc = EVTDESC_emf_wedding_1226
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1226
+		prestige = -20
+		opinion = {
+			who = FROM
+			modifier = opinion_insulted
+			months = 60
+		}
+	}
+}
+
+# The Duel - the host diplomatically talks them out of fighting
+character_event = {
+	id = emf_wedding.1227
+	desc = EVTDESC_emf_wedding_1227
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1226
+		prestige = -20
+		opinion = {
+			who = FROM
+			modifier = opinion_impressed
+			months = 60
+		}
+	}
+}
+
+# The Duel - ping event to start duel
+character_event = {
+	id = emf_wedding.1228
+
+	hide_window = yes
+	is_triggered_only = yes
+	hide_from = yes
+
+	immediate = {
+		set_flag = wedding_duelist
+		save_event_target_as = combatant_1
+		FROMFROM = {
+			character_event = { id = emf_wedding.1229 }
+		}
+	}
+}
+
+# The Duel - start duel, call engine
+character_event = {
+	id = emf_wedding.1229
+
+	hide_window = yes
+	is_triggered_only = yes
+	hide_from = yes
+
+	immediate = {
+		set_flag = wedding_duelist
+        clr_flag = flag_duel_no_backsies
+		save_event_target_as = combatant_2
+        if = {
+            limit = { trait = craven }
+            random = {
+                chance = 20
+            }
+        }
+        pacifists_lose_piety_effect = yes
+        if = { #If they previously offended you, this rectifies that.
+            limit = { event_target:combatant_1 = { has_opinion_modifier = { who = ROOT modifier = grievously_offended } } }
+            event_target:combatant_1 = { remove_opinion = { who = ROOT modifier = grievously_offended } }
+        }
+        if = {
+            limit = { #Warriors like a warrior who acts like one...
+                is_member_of_any_warrior_lodge_trigger = yes
+            }
+            add_legend_progress_trivial_effect = yes
+        }
+        event_target:combatant_1 = { character_event = { id = DuelEngine.0 days = 1 } }
+        set_flag = add_duel_xp
+        clr_flag = punish_declining
+	}
+}
+
+# The Duel - loser is alive
+character_event = {
+	id = emf_wedding.1230
+	picture = GFX_evt_battle
+
+	major = yes
+	is_triggered_only = yes
+
+	desc = {
+		text = EVTDESC_emf_wedding_1229
+		trigger = {
+			FROMFROM = {
+				NOR = {
+					has_injury_trigger = yes
+					is_maimed_trigger = yes
+				}
+			}
+		}
+	}
+
+	desc = {
+		text = EVTDESC_emf_wedding_1230
+		trigger = {
+			FROMFROM = {
+				OR = {
+					has_injury_trigger = yes
+					is_maimed_trigger = yes
+				}
+			}
+		}
+	}
+
+	major_trigger = {
+		OR = {
+			character = FROM
+			character = FROMFROM
+			character = event_target:wedding_duel_host
+			has_opinion_modifier = { who = event_target:wedding_duel_host modifier = attending_wedding }
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1229 # There, it is done
+		trigger = { character = event_target:wedding_duel_host }
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1229 # He must have cheated!
+		trigger = { character = FROMFROM }
+		if = {
+			limit = { NOT = { trait = scarred } }
+			random = {
+				chance = 30
+				add_trait = scarred
+			}
+		}
+		if = {
+			limit = { NOT = { is_rival = FROM } }
+			add_rival = FROM
+		}
+		opinion = {
+			who = event_target:wedding_duel_host
+			modifier = opinion_grateful
+			months = 60
+		}
+	}
+	option = {
+		name = EVTOPTC_emf_wedding_1229 # Victory is mine!
+		trigger = { character = FROM }
+		prestige = 200
+		if = {
+			limit = { NOT = { trait = scarred } }
+			random = {
+				chance = 30
+				add_trait = scarred
+			}
+		}
+		opinion = {
+			who = event_target:wedding_duel_host
+			modifier = opinion_grateful
+			months = 60
+		}
+	}
+	option = {
+		name = EVTOPTD_emf_wedding_1228 # How scandalous!
+		trigger = {
+			NOR = {
+				character = FROM
+				character = FROMFROM
+				character = event_target:wedding_duel_host
+			}
+			has_opinion_modifier = { who = event_target:wedding_duel_host modifier = attending_wedding }
+		}
+	}
+}
+
+# The Duel - loser is killed
+character_event = {
+	id = emf_wedding.1231
+	desc = EVTDESC_emf_wedding_1231
+	picture = GFX_evt_battle
+
+	major = yes
+	is_triggered_only = yes
+	hide_from = yes
+
+	major_trigger = {
+		OR = {
+			character = FROM
+			character = FROMFROM
+			character = event_target:wedding_duel_host
+			has_opinion_modifier = { who = event_target:wedding_duel_host modifier = attending_wedding }
+		}
+	}
+
+	immediate = {
+		log = "emf_wedding.1231: [FromFrom.GetBestName] ([FromFrom.GetID]) has been killed by [From.GetBestName] ([From.GetID]) during a duel at [wedding_duel_host.GetBestName]'s wedding"
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1228 # Most unfortunate
+		trigger = { character = event_target:wedding_duel_host }
+		opinion = {
+			who = FROM
+			modifier = opinion_disappointed
+			months = 60
+		}
+		hidden_tooltip = {
+			any_character = {
+				limit = {
+					has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+					NOT = { character = FROM }
+					NOT = { character = FROMFROM }
+				}
+				opinion = { who = event_target:wedding_duel_host modifier = wedding_duel months = 24 }
+				opinion = { who = FROM modifier = wedding_duel multiplier = 2 months = 24 }
+			}
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1228 # The bastard killed me!
+		trigger = { character = FROMFROM }
+	}
+	option = {
+		name = EVTOPTC_emf_wedding_1228 # Ha! He had it coming!
+		trigger = { character = FROM }
+		prestige = 100
+		piety = -50
+		if = {
+			limit = { NOT = { trait = scarred } }
+			random = {
+				chance = 30
+				add_trait = scarred
+			}
+		}
+		if = {
+			limit = { FROMFROM = { character = event_target:challenge_target } }
+			if = {
+				limit = {
+					NOT = { trait = kinslayer }
+					NOT = { religion_group = eastern_group }
+					dynasty = FROMFROM
+				}
+				add_trait = kinslayer
+			}
+			hidden_tooltip = {
+				FROMFROM = {
+					if = {
+						limit = {
+							mother = {
+								NOT = { character = PREVPREV }
+								NOT = { is_mother = PREVPREV }
+							}
+						}
+						mother = {
+							opinion = {
+								who = PREVPREV
+								modifier = opinion_killed_close_kin
+								months = 1200
+							}
+							add_rival = PREVPREV
+						}
+					}
+					if = {
+						limit = {
+							father = {
+								NOT = { character = PREVPREV }
+								NOT = { is_father = PREVPREV }
+							}
+						}
+						father = {
+							opinion = {
+								who = PREVPREV
+								modifier = opinion_killed_close_kin
+								months = 1200
+							}
+							add_rival = PREVPREV
+						}
+					}
+					any_child = {
+						limit = {
+							NOT = { character = PREVPREV }
+							NOT = { is_child_of = PREVPREV }
+						}
+						opinion = {
+							who = PREVPREV
+							modifier = opinion_killed_close_kin
+							months = 1200
+						}
+						add_rival = PREVPREV
+					}
+					any_sibling = {
+						limit = {
+							NOT = { character = PREVPREV }
+							NOT = { sibling = PREVPREV }
+						}
+						opinion = {
+							who = PREVPREV
+							modifier = opinion_killed_close_kin
+							months = 1200
+						}
+					}
+				}
+			}
+		}
+		opinion = {
+			who = event_target:wedding_duel_host
+			modifier = opinion_grateful
+			months = 60
+		}
+	}
+	option = {
+		name = EVTOPTD_emf_wedding_1228 # How scandalous!
+		trigger = {
+			NOR = {
+				character = FROM
+				character = FROMFROM
+				character = event_target:wedding_duel_host
+			}
+			has_opinion_modifier = { who = event_target:wedding_duel_host modifier = attending_wedding }
+		}
+	}
+}
+
+# Wife/husband is upset that lover attends the wedding
+character_event = {
+	id = emf_wedding.1232
+	desc = EVTDESC_emf_wedding_1232
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	trigger = {
+		prisoner = no
+		is_incapable = no
+		FROM = {
+			any_lover = {
+				has_opinion_modifier = { who = PREV modifier = attending_wedding }
+				NOR = {
+					is_married = PREV
+					is_consort = PREV
+					has_flag = wedding_event
+				}
+			}
+		}
+	}
+
+	immediate = {
+		FROM = {
+			random_lover = {
+				limit = {
+					has_opinion_modifier = { who = PREV modifier = attending_wedding }
+					NOR = {
+						is_married = PREV
+						is_consort = PREV
+						has_flag = wedding_event
+					}
+				}
+				save_event_target_as = lover_wedding
+			}
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1232
+		set_flag = wedding_event
+		event_target:lover_wedding = {
+			set_flag = wedding_event
+			reverse_opinion = {
+				who = ROOT
+				modifier = opinion_outraged
+				months = 60
+			}
+		}
+		FROM = {
+			character_event = { id = emf_wedding.1233 tooltip = lover_at_wedding }
+		}
+	}
+}
+
+character_event = {
+	id = emf_wedding.1233
+	desc = EVTDESC_emf_wedding_1233
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1233
+		prestige = -20
+		reverse_opinion = {
+			who = FROM
+			modifier = opinion_outraged
+			months = 60
+		}
+	}
+}
+
+# Poet puts on a show at the wedding
+character_event = {
+	id = emf_wedding.1234
+	desc = EVTDESC_emf_wedding_1234
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1234 # I'll do it!
+		set_flag = wedding_event
+		FROM = {
+			set_flag = wedding_poetry
+			random_list = {
+				40 = {
+					modifier = {
+						factor = 2.0
+						diplomacy = 15
+					}
+					modifier = {
+						factor = 1.5
+						NOT = { diplomacy = 15 }
+						diplomacy = 8
+					}
+					character_event = { id = emf_wedding.1235 tooltip = wedding_poetry_good }
+				}
+				60 = {
+					modifier = {
+						factor = 0.3
+						diplomacy = 15
+					}
+					modifier = {
+						factor = 0.65
+						NOT = { diplomacy = 15 }
+						diplomacy = 8
+					}
+					character_event = { id = emf_wedding.1236 tooltip = wedding_poetry_bad }
+				}
+			}
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1234 # I'd rather not risk it
+		trigger = { ai = no }
+		random = {
+			chance = 30
+			add_trait = depressed
+		}
+	}
+}
+
+# The poetry goes over well
+character_event = {
+	id = emf_wedding.1235
+	desc = EVTDESC_emf_wedding_1235
+	picture = GFX_evt_feast
+
+	major = yes
+	is_triggered_only = yes
+
+	major_trigger = {
+		OR = {
+			character = ROOT
+			character = FROM
+			has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1235
+		trigger = { character = ROOT }
+		prestige = 50
+		opinion = {
+			who = FROM
+			modifier = opinion_approves
+			months = 60
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1235
+		trigger = { character = FROM }
+		prestige = 50
+		change_diplomacy = 1
+	}
+	option = {
+		name = EVTOPTC_emf_wedding_1235
+		trigger = {
+			NOT = { character = ROOT }
+			NOT = { character = FROM }
+			has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+		}
+	}
+}
+
+# The poetry goes over poorly
+character_event = {
+	id = emf_wedding.1236
+	desc = EVTDESC_emf_wedding_1236
+	picture = GFX_evt_feast
+
+	major = yes
+	is_triggered_only = yes
+
+	major_trigger = {
+		OR = {
+			character = ROOT
+			character = FROM
+			has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1236
+		trigger = { character = ROOT }
+		prestige = -20
+		opinion = {
+			who = FROM
+			modifier = opinion_disapprove
+			months = 60
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1236
+		trigger = { character = FROM }
+		prestige = -50
+		add_trait = depressed
+	}
+	option = {
+		name = EVTOPTC_emf_wedding_1236
+		trigger = {
+			NOT = { character = ROOT }
+			NOT = { character = FROM }
+			has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+		}
+	}
+}
+
+# Ruler gives a toast at the wedding
+character_event = {
+	id = emf_wedding.1237
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_flag = wedding_event
+		FROM = {
+			set_flag = wedding_toast
+			character_event = { id = emf_wedding.1238 }
+		}
+	}
+}
+
+character_event = {
+	id = emf_wedding.1238
+	desc = EVTDESC_emf_wedding_1238
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+	major = yes
+
+	major_trigger = {
+		OR = {
+			character = ROOT
+			has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+		}
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1238
+		trigger = { character = ROOT }
+		prestige = 10
+		opinion = {
+			who = FROM
+			modifier = opinion_pleased
+			months = 24
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1238
+		trigger = { NOT = { character = ROOT } }
+	}
+}
+
+# A dance with the host?
+character_event = {
+	id = emf_wedding.1239
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_flag = wedding_event
+		FROM = {
+			set_flag = wedding_lover
+			character_event = { id = emf_wedding.1240 }
+		}
+	}
+}
+
+character_event = {
+	id = emf_wedding.1240
+	desc = EVTDESC_emf_wedding_1240
+	picture = GFX_evt_lovers
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1240 # Pursue him/her
+		add_lover = FROM
+		unprotected_sex_effect = yes
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1240 # A dance is more than enough
+		trigger = { ai = no }
+		reverse_opinion = {
+			who = FROM
+			modifier = opinion_spurned
+			months = 60
+		}
+	}
+}
+
+# A homosexual guest is interested in the host
+character_event = {
+	id = emf_wedding.1241
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_flag = wedding_event
+		FROM = {
+			set_flag = wedding_lover
+			character_event = { id = emf_wedding.1242 }
+		}
+	}
+}
+
+character_event = {
+	id = emf_wedding.1242
+	desc = EVTDESC_emf_wedding_1240
+	picture = GFX_evt_lovers
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1240 # Pursue him/her
+		add_lover = FROM
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1240 # Not interested
+		trigger = { ai = no }
+		reverse_opinion = {
+			who = FROM
+			modifier = opinion_spurned
+			months = 60
+		}
+	}
+}
+
+# Guest is badmouthing the host
+character_event = {
+	id = emf_wedding.1243
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_flag = wedding_event
+		FROM = {
+			set_flag = wedding_badmouth
+			character_event = { id = emf_wedding.1244 }
+		}
+	}
+}
+
+character_event = {
+	id = emf_wedding.1244
+	desc = EVTDESC_emf_wedding_1244
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTA_emf_wedding_1244 # Endure it
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				trait = patient
+			}
+			modifier = {
+				factor = 2
+				trait = kind
+			}
+			modifier = {
+				factor = 1.5
+				trait = craven
+			}
+		}
+		prestige = -20
+		if = {
+			limit = { NOT = { trait = patient } }
+			random = {
+				chance = 20
+				add_trait = patient
+			}
+		}
+		opinion = {
+			who = FROM
+			modifier = opinion_insulted
+			months = 60
+		}
+	}
+	option = {
+		name = EVTOPTB_emf_wedding_1244 # This cannot be endured
+		ai_chance = {
+			factor = 50
+			modifier = {
+				factor = 2
+				trait = wroth
+			}
+			modifier = {
+				factor = 2
+				trait = cruel
+			}
+			modifier = {
+				factor = 1.5
+				trait = brave
+			}
+		}
+		if = {
+			limit = { NOT = { trait = wroth } }
+			random = {
+				chance = 20
+				add_trait = wroth
+			}
+		}
+		random_list = {
+			20 = {
+				reverse_opinion = { who = FROM modifier = opinion_impressed months = 24 }
+			}
+			40 = {
+				reverse_opinion = { who = FROM modifier = opinion_furious months = 60 }
+				hidden_tooltip = { opinion = { who = FROM modifier = opinion_insulted months = 60 } }
+			}
+			40 = {
+				add_rival = FROM
+			}
+		}
+	}
+}
+
+# Guest overindulges and makes a spectacle of themselves
+character_event = {
+	id = emf_wedding.1245
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_flag = wedding_event
+		prestige = -20
+		FROM = {
+			set_flag = wedding_drunkard
+			character_event = { id = emf_wedding.1246 }
+		}
+	}
+}
+
+character_event = {
+	id = emf_wedding.1246
+	desc = EVTDESC_emf_wedding_1246
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+	major = yes
+	show_ROOT = yes
+
+	major_trigger = {
+		OR = {
+			character = ROOT
+			has_opinion_modifier = { who = FROM modifier = attending_wedding }
+		}
+		NOT = { character = FROM }
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1246
+		opinion = { who = FROM modifier = opinion_feast_scandal months = 24 }
+	}
+}
+
+# Lunatic guest makes a spectacle of themselves
+character_event = {
+	id = emf_wedding.1247
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	immediate = {
+		set_flag = wedding_event
+		prestige = -20
+		FROM = {
+			set_flag = wedding_lunatic
+			character_event = { id = emf_wedding.1248 }
+		}
+	}
+}
+
+character_event = {
+	id = emf_wedding.1248
+	desc = EVTDESC_emf_wedding_1248
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+	major = yes
+	show_ROOT = yes
+
+	major_trigger = {
+		OR = {
+			character = ROOT
+			has_opinion_modifier = { who = FROM modifier = attending_wedding }
+		}
+		NOT = { character = FROM }
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1246
+		trigger = { character = ROOT }
+		opinion = {
+			who = FROM
+			modifier = opinion_feast_scandal
+			multiplier = 2
+			months = 24
+		}
+		reverse_opinion = {
+			who = FROM
+			modifier = opinion_insulted
+			months = 60
+		}
+	}
+	option = {
+		name = OK
+		trigger = {
+			NOT = { character = ROOT }
+		}
+		opinion = { who = FROM modifier = opinion_feast_scandal months = 24 }
+	}
+}
+
+# Main event manager for host
+character_event = {
+	id = emf_wedding.1250
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	war = no
+	has_character_flag = holding_wedding
+
+	trigger = {
+		always = yes
+	}
+
+	immediate = {
+		repeat_event = { id = emf_wedding.1250 days = 3 }
+		random_list = {
+			10 = { # Possible duel
+				modifier = {
+					factor = 0
+					has_flag = wedding_duel
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						any_opinion_modifier_target = {
+							reverse_has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							higher_tier_than = BARON
+							OR = {
+								martial = 8
+								trait = duelist
+								trait = lunatic
+								trait = possessed
+							}
+							NOR = {
+								trait = craven
+								has_injury_trigger = yes
+								is_maimed_trigger = yes
+								has_flag = wedding_event
+							}
+							ROOT = {
+								any_opinion_modifier_target = {
+									has_opinion_modifier = { who = PREV modifier = attending_wedding }
+									war = no
+									is_adult = yes
+									this_can_duel_with_prevprev_trigger = yes
+									prisoner = no
+									is_foe = PREVPREV
+									NOR = {
+										is_incapable = yes
+										has_injury_trigger = yes
+										is_maimed_trigger = yes
+										has_flag = wedding_event
+									}
+								}
+							}
+						}
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_opinion_modifier_target = {
+					limit = {
+						reverse_has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						higher_tier_than = BARON
+						OR = {
+							martial > 5
+							trait = duelist
+							trait = lunatic
+							trait = possessed
+						}
+						NOR = {
+							trait = craven
+							has_injury_trigger = yes
+							is_maimed_trigger = yes
+							has_flag = wedding_event
+						}
+						ROOT = {
+							any_opinion_modifier_target = {
+								has_opinion_modifier = { who = PREV modifier = attending_wedding }
+								war = no
+								is_adult = yes
+								this_can_duel_with_prevprev_trigger = yes
+								prisoner = no
+								is_foe = PREVPREV
+								NOR = {
+									is_incapable = yes
+									has_injury_trigger = yes
+									is_maimed_trigger = yes
+									has_flag = wedding_event
+								}
+							}
+						}
+					}
+					character_event = { id = emf_wedding.1222 }
+				}
+			}
+			10 = { # Ruler gets along with host at wedding
+				modifier = {
+					factor = 0
+					has_flag = wedding_friend
+					NOT = { had_flag = { flag = wedding_friend days = 10 } }
+				}
+				modifier = {
+					factor = 0
+					num_of_friends = 5
+				}
+				modifier = {
+					factor = 0.5
+					trait = shy
+				}
+				modifier = {
+					factor = 0.5
+					trait = paranoid
+				}
+				modifier = {
+					factor = 2.0
+					trait = gregarious
+				}
+				modifier = {
+					factor = 1.5
+					trait = drunkard
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						any_opinion_modifier_target = {
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							same_sex = ROOT
+							is_ruler = yes
+							is_adult = yes
+							war = no
+							prisoner = no
+							opinion = { who = ROOT value = 0 }
+							reverse_opinion = { who = ROOT value = 0 }
+							NOR = {
+								is_incapable = yes
+								is_friend = ROOT
+								num_of_friends = 5
+								has_flag = wedding_event
+							}
+						}
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_opinion_modifier_target = {
+					limit = {
+						higher_tier_than = COUNT
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						same_sex = ROOT
+						is_ruler = yes
+						is_adult = yes
+						war = no
+						prisoner = no
+						opinion = { who = ROOT value = 0 }
+						reverse_opinion = { who = ROOT value = 0 }
+						NOR = {
+							trait = shy
+							trait = paranoid
+							is_incapable = yes
+							is_friend = ROOT
+							num_of_friends = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1217 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						higher_tier_than = COUNT
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						same_sex = ROOT
+						is_ruler = yes
+						is_adult = yes
+						war = no
+						prisoner = no
+						opinion = { who = ROOT value = 0 }
+						reverse_opinion = { who = ROOT value = 0 }
+						NOR = {
+							is_incapable = yes
+							is_friend = ROOT
+							num_of_friends = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1217 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						same_sex = ROOT
+						is_ruler = yes
+						is_adult = yes
+						war = no
+						prisoner = no
+						opinion = { who = ROOT value = 0 }
+						reverse_opinion = { who = ROOT value = 0 }
+						NOR = {
+							trait = shy
+							trait = paranoid
+							is_incapable = yes
+							is_friend = ROOT
+							num_of_friends = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1217 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						same_sex = ROOT
+						is_ruler = yes
+						is_adult = yes
+						war = no
+						prisoner = no
+						opinion = { who = ROOT value = 0 }
+						reverse_opinion = { who = ROOT value = 0 }
+						NOR = {
+							is_incapable = yes
+							is_friend = ROOT
+							num_of_friends = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1217 }
+					break = yes
+				}
+			}
+			10 = { # Ruler argues with host over claim
+				modifier = {
+					factor = 0
+					has_flag = wedding_rival
+					NOT = { had_flag = { flag = wedding_rival days = 10 } }
+				}
+				modifier = {
+					factor = 0
+					num_of_rivals = 5
+				}
+				modifier = {
+					factor = 2
+					any_courtier_or_vassal = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						war = no
+						prisoner = no
+						any_claim = { holder = ROOT }
+						NOR = {
+							trait = content
+							trait = charitable
+							trait = kind
+						}
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_ruler = yes
+						is_adult = yes
+						war = no
+						prisoner = no
+						any_claim = { holder = ROOT }
+						OR = {
+							NOT = { is_close_relative = ROOT }
+							NOT = { opinion = { who = ROOT value = 20 } }
+						}
+						OR = {
+							trait = envious
+							trait = wroth
+							trait = drunkard
+						}
+						NOR = {
+							trait = content
+							trait = charitable
+							trait = kind
+							is_incapable = yes
+							is_rival = ROOT
+							num_of_rivals = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1219 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_ruler = no
+						is_adult = yes
+						war = no
+						prisoner = no
+						any_claim = { holder = ROOT }
+						OR = {
+							NOT = { is_primary_heir = ROOT }
+							NOT = { opinion = { who = ROOT value = 60 } }
+						}
+						NOR = {
+							trait = content
+							#trait = charitable
+							trait = kind
+							is_incapable = yes
+							#is_rival = ROOT
+							#num_of_rivals = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1219 }
+					break = yes
+				}
+			}
+			10 = { # Wife/husband is upset that lover attends the wedding
+				modifier = {
+					factor = 0
+					NOT = {
+						any_lover = {
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							NOR = {
+								is_married = ROOT
+								is_consort = ROOT
+								has_flag = wedding_event
+							}
+						}
+					}
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						any_spouse = {
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							NOT = { has_flag = wedding_event }
+						}
+					}
+				}
+				modifier = {
+					factor = 2.0
+					any_spouse = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						NOT = { has_flag = wedding_event }
+						trait = wroth
+					}
+				}
+				modifier = {
+					factor = 2.0
+					any_spouse = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						NOT = { has_flag = wedding_event }
+						trait = proud
+					}
+				}
+				modifier = {
+					factor = 0.5
+					any_spouse = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						NOT = { has_flag = wedding_event }
+						trait = patient
+					}
+				}
+				modifier = {
+					factor = 0.5
+					any_spouse = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						NOT = { has_flag = wedding_event }
+						trait = humble
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_spouse = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						NOT = { has_flag = wedding_event }
+						OR = {
+							trait = wroth
+							trait = proud
+						}
+					}
+					character_event = { id = emf_wedding.1232 }
+					break = yes
+				}
+				random_spouse = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						NOT = { has_flag = wedding_event }
+					}
+					character_event = { id = emf_wedding.1232 }
+					break = yes
+				}
+			}
+			10 = { # Poet puts on a show at the wedding
+				modifier = {
+					factor = 0
+					has_flag = wedding_poetry
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						any_opinion_modifier_target = {
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							is_adult = yes
+							prisoner = no
+							war = no
+							trait = poet
+							opinion = { who = ROOT value = 0 }
+							NOR = {
+								is_incapable = yes
+								trait = depressed
+								trait = stressed
+								trait = humble
+								trait = shy
+								has_flag = wedding_event
+							}
+						}
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						trait = poet
+						opinion = { who = ROOT value = 0 }
+						NOR = {
+							is_incapable = yes
+							trait = depressed
+							trait = stressed
+							trait = humble
+							trait = shy
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1234 }
+				}
+			}
+			10 = { # Ruler gives a toast at the wedding
+				modifier = {
+					factor = 0
+					has_flag = wedding_toast
+					NOT = { had_flag = { flag = wedding_toast days = 10 } }
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						any_opinion_modifier_target = {
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							is_adult = yes
+							prisoner = no
+							war = no
+							ai = yes
+							diplomacy = 8
+							opinion = { who = ROOT value = 0 }
+							NOR = {
+								trait = shy
+								trait = envious
+								trait = cruel
+								has_flag = wedding_event
+							}
+						}
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_opinion_modifier_target = {
+					limit = {
+						higher_tier_than = COUNT
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						ai = yes
+						diplomacy = 8
+						opinion = { who = ROOT value = 0 }
+						OR = {
+							trait = gregarious
+							trait = humble
+							trait = kind
+						}
+						NOR = {
+							trait = shy
+							trait = envious
+							trait = cruel
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1237 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						ai = yes
+						diplomacy = 8
+						opinion = { who = ROOT value = 0 }
+						OR = {
+							trait = gregarious
+							trait = humble
+							trait = kind
+						}
+						NOR = {
+							trait = shy
+							trait = envious
+							trait = cruel
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1237 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						higher_tier_than = COUNT
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						ai = yes
+						diplomacy = 8
+						opinion = { who = ROOT value = 0 }
+						NOR = {
+							trait = shy
+							trait = envious
+							trait = cruel
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1237 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						ai = yes
+						diplomacy = 8
+						opinion = { who = ROOT value = 0 }
+						NOR = {
+							trait = shy
+							trait = envious
+							trait = cruel
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1237 }
+					break = yes
+				}
+			}
+			10 = { # A dance with the host?
+				modifier = {
+					factor = 0
+					has_flag = wedding_lover
+				}
+				modifier = {
+					factor = 2.0
+					trait = lustful
+				}
+				modifier = {
+					factor = 2.0
+					trait = hedonist
+				}
+				modifier = {
+					factor = 0
+					trait = just
+				}
+				modifier = {
+					factor = 0
+					is_married = yes
+					trait = chaste
+				}
+				modifier = {
+					factor = 0.5
+					is_married = yes
+				}
+				modifier = {
+					factor = 0
+					has_lover = yes
+					OR = {
+						NOT = { trait = lustful }
+						num_of_lovers = 5
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						trait = infirm
+						is_incapable = yes
+						trait = celibate
+						trait = eunuch
+						trait = homosexual
+						trait = chaste
+					}
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						any_opinion_modifier_target = {
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							ai = yes
+							is_adult = yes
+							prisoner = no
+							war = no
+							is_pregnant = no
+							reverse_opinion = { who = ROOT value = 0 }
+							opinion = { who = ROOT value = 0 }
+							OR = {
+								is_married = no
+								trait = lustful
+								trait = hedonist
+							}
+							OR = {
+								has_lover = no
+								trait = lustful
+								trait = hedonist
+							}
+							NOR = {
+								same_sex = ROOT
+								is_married = ROOT
+								is_lover = ROOT
+								is_consort = ROOT
+								is_former_lover = ROOT
+								is_rival = ROOT
+								is_close_relative = ROOT
+								trait = infirm
+								trait = celibate
+								trait = eunuch
+								trait = hunchback
+								trait = dwarf
+								trait = ugly
+								trait = homosexual
+								trait = chaste
+								trait = blinded
+								trait = inbred
+								trait = imbecile
+								age = 40
+								num_of_lovers = 5
+								has_flag = wedding_event
+							}
+						}
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						ai = yes
+						is_adult = yes
+						prisoner = no
+						war = no
+						is_pregnant = no
+						reverse_opinion = { who = ROOT value = 0 }
+						opinion = { who = ROOT value = 0 }
+						OR = {
+							trait = lustful
+							trait = hedonist
+							trait = fair
+						}
+						OR = {
+							is_married = no
+							trait = lustful
+							trait = hedonist
+						}
+						OR = {
+							has_lover = no
+							trait = lustful
+							trait = hedonist
+						}
+						NOR = {
+							same_sex = ROOT
+							is_married = ROOT
+							is_lover = ROOT
+							is_consort = ROOT
+							is_former_lover = ROOT
+							is_rival = ROOT
+							is_close_relative = ROOT
+							trait = infirm
+							trait = celibate
+							trait = eunuch
+							trait = hunchback
+							trait = dwarf
+							trait = ugly
+							trait = homosexual
+							trait = chaste
+							trait = blinded
+							trait = inbred
+							trait = imbecile
+							age = 20
+							num_of_lovers = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1239 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						ai = yes
+						is_adult = yes
+						prisoner = no
+						war = no
+						is_pregnant = no
+						reverse_opinion = { who = ROOT value = 0 }
+						opinion = { who = ROOT value = 0 }
+						OR = {
+							trait = lustful
+							trait = hedonist
+							trait = fair
+						}
+						OR = {
+							is_married = no
+							trait = lustful
+							trait = hedonist
+						}
+						OR = {
+							has_lover = no
+							trait = lustful
+							trait = hedonist
+						}
+						NOR = {
+							same_sex = ROOT
+							is_married = ROOT
+							is_lover = ROOT
+							is_consort = ROOT
+							is_former_lover = ROOT
+							is_rival = ROOT
+							is_close_relative = ROOT
+							trait = infirm
+							trait = celibate
+							trait = eunuch
+							trait = hunchback
+							trait = dwarf
+							trait = ugly
+							trait = homosexual
+							trait = chaste
+							trait = blinded
+							trait = inbred
+							trait = imbecile
+							age = 40
+							num_of_lovers = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1239 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						ai = yes
+						is_adult = yes
+						prisoner = no
+						war = no
+						is_pregnant = no
+						reverse_opinion = { who = ROOT value = 0 }
+						opinion = { who = ROOT value = 0 }
+						OR = {
+							is_married = no
+							trait = lustful
+							trait = hedonist
+						}
+						OR = {
+							has_lover = no
+							trait = lustful
+							trait = hedonist
+						}
+						NOR = {
+							same_sex = ROOT
+							is_married = ROOT
+							is_lover = ROOT
+							is_consort = ROOT
+							is_former_lover = ROOT
+							is_rival = ROOT
+							is_close_relative = ROOT
+							trait = infirm
+							trait = celibate
+							trait = eunuch
+							trait = hunchback
+							trait = dwarf
+							trait = ugly
+							trait = homosexual
+							trait = chaste
+							trait = blinded
+							trait = inbred
+							trait = imbecile
+							age = 40
+							num_of_lovers = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1239 }
+					break = yes
+				}
+			}
+			10 = { # A homosexual guest is interested in the host
+				modifier = {
+					factor = 0
+					has_flag = wedding_lover
+				}
+				modifier = {
+					factor = 2.0
+					trait = lustful
+				}
+				modifier = {
+					factor = 2.0
+					trait = hedonist
+				}
+				modifier = {
+					factor = 0
+					has_lover = yes
+					OR = {
+						NOT = { trait = lustful }
+						num_of_lovers = 5
+					}
+				}
+				modifier = {
+					factor = 0
+					OR = {
+						trait = infirm
+						is_incapable = yes
+						trait = celibate
+						trait = eunuch
+						NOT = { trait = homosexual }
+						trait = chaste
+					}
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						any_opinion_modifier_target = {
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							ai = yes
+							is_adult = yes
+							prisoner = no
+							war = no
+							is_pregnant = no
+							trait = homosexual
+							same_sex = ROOT
+							reverse_opinion = { who = ROOT value = 0 }
+							opinion = { who = ROOT value = 0 }
+							OR = {
+								is_married = no
+								trait = lustful
+								trait = hedonist
+							}
+							OR = {
+								has_lover = no
+								trait = lustful
+								trait = hedonist
+							}
+							NOR = {
+								is_married = ROOT
+								is_lover = ROOT
+								is_consort = ROOT
+								is_former_lover = ROOT
+								is_rival = ROOT
+								is_close_relative = ROOT
+								trait = infirm
+								trait = celibate
+								trait = eunuch
+								trait = hunchback
+								trait = dwarf
+								trait = ugly
+								trait = chaste
+								trait = blinded
+								trait = inbred
+								trait = imbecile
+								age = 40
+								num_of_lovers = 5
+								has_flag = wedding_event
+							}
+						}
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						ai = yes
+						is_adult = yes
+						prisoner = no
+						war = no
+						is_pregnant = no
+						reverse_opinion = { who = ROOT value = 0 }
+						opinion = { who = ROOT value = 0 }
+						trait = homosexual
+						same_sex = ROOT
+						OR = {
+							trait = lustful
+							trait = hedonist
+							trait = fair
+						}
+						OR = {
+							is_married = no
+							trait = lustful
+							trait = hedonist
+						}
+						OR = {
+							has_lover = no
+							trait = lustful
+							trait = hedonist
+						}
+						NOR = {
+							is_married = ROOT
+							is_lover = ROOT
+							is_consort = ROOT
+							is_former_lover = ROOT
+							is_rival = ROOT
+							is_close_relative = ROOT
+							trait = infirm
+							trait = celibate
+							trait = eunuch
+							trait = hunchback
+							trait = dwarf
+							trait = ugly
+							trait = chaste
+							trait = blinded
+							trait = inbred
+							trait = imbecile
+							age = 20
+							num_of_lovers = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1241 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						ai = yes
+						is_adult = yes
+						prisoner = no
+						war = no
+						is_pregnant = no
+						reverse_opinion = { who = ROOT value = 0 }
+						opinion = { who = ROOT value = 0 }
+						trait = homosexual
+						same_sex = ROOT
+						OR = {
+							trait = lustful
+							trait = hedonist
+							trait = fair
+						}
+						OR = {
+							is_married = no
+							trait = lustful
+							trait = hedonist
+						}
+						OR = {
+							has_lover = no
+							trait = lustful
+							trait = hedonist
+						}
+						NOR = {
+							is_married = ROOT
+							is_lover = ROOT
+							is_consort = ROOT
+							is_former_lover = ROOT
+							is_rival = ROOT
+							is_close_relative = ROOT
+							trait = infirm
+							trait = celibate
+							trait = eunuch
+							trait = hunchback
+							trait = dwarf
+							trait = ugly
+							trait = chaste
+							trait = blinded
+							trait = inbred
+							trait = imbecile
+							age = 40
+							num_of_lovers = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1241 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						ai = yes
+						is_adult = yes
+						prisoner = no
+						war = no
+						is_pregnant = no
+						reverse_opinion = { who = ROOT value = 0 }
+						opinion = { who = ROOT value = 0 }
+						trait = homosexual
+						same_sex = ROOT
+						OR = {
+							is_married = no
+							trait = lustful
+							trait = hedonist
+						}
+						OR = {
+							has_lover = no
+							trait = lustful
+							trait = hedonist
+						}
+						NOR = {
+							is_married = ROOT
+							is_lover = ROOT
+							is_consort = ROOT
+							is_former_lover = ROOT
+							is_rival = ROOT
+							is_close_relative = ROOT
+							trait = infirm
+							trait = celibate
+							trait = eunuch
+							trait = hunchback
+							trait = dwarf
+							trait = ugly
+							trait = chaste
+							trait = blinded
+							trait = inbred
+							trait = imbecile
+							age = 40
+							num_of_lovers = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1241 }
+					break = yes
+				}
+			}
+			10 = { # Guest is badmouthing the host
+				modifier = {
+					factor = 0
+					has_flag = wedding_badmouth
+					NOT = { had_flag = { flag = wedding_badmouth days = 10 } }
+				}
+				modifier = {
+					factor = 0
+					num_of_rivals = 5
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						any_opinion_modifier_target = {
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							is_adult = yes
+							prisoner = no
+							war = no
+							ai = yes
+							OR = {
+								trait = cruel
+								trait = envious
+								trait = deceitful
+								trait = wroth
+								trait = arbitrary
+							}
+							NOR = {
+								opinion = { who = ROOT value = 20 }
+								num_of_rivals = 5
+								has_flag = wedding_event
+							}
+						}
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_opinion_modifier_target = {
+					limit = {
+						higher_tier_than = COUNT
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						ai = yes
+						OR = {
+							trait = cruel
+							trait = lunatic
+							trait = possessed
+						}
+						OR = {
+							trait = cruel
+							trait = envious
+							trait = deceitful
+							trait = wroth
+						}
+						NOR = {
+							opinion = { who = ROOT value = 0 }
+							num_of_rivals = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1243 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						ai = yes
+						OR = {
+							trait = cruel
+							trait = lunatic
+							trait = possessed
+						}
+						OR = {
+							trait = cruel
+							trait = envious
+							trait = deceitful
+							trait = wroth
+						}
+						NOR = {
+							opinion = { who = ROOT value = 0 }
+							num_of_rivals = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1243 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						ai = yes
+						OR = {
+							trait = cruel
+							trait = envious
+							trait = deceitful
+							trait = wroth
+						}
+						NOR = {
+							opinion = { who = ROOT value = 0 }
+							num_of_rivals = 5
+							has_flag = wedding_event
+						}
+					}
+					character_event = { id = emf_wedding.1243 }
+					break = yes
+				}
+			}
+			10 = { # Guest overindulges and makes a spectacle of themselves
+				modifier = {
+					factor = 0
+					has_flag = wedding_drunkard
+				}
+				modifier = {
+					factor = 8
+					trait = drunkard
+				}
+				modifier = {
+					factor = 4
+					trait = hedonist
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						any_opinion_modifier_target = {
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							is_adult = yes
+							prisoner = no
+							war = no
+							OR = {
+								trait = drunkard
+								trait = depressed
+								trait = imbecile
+								trait = inbred
+							}
+							NOT = { has_flag = wedding_event }
+						}
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_opinion_modifier_target = {
+					limit = {
+						higher_tier_than = COUNT
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						OR = {
+							trait = drunkard
+							trait = depressed
+							trait = imbecile
+							trait = inbred
+						}
+						NOT = { has_flag = wedding_event }
+					}
+					character_event = { id = emf_wedding.1245 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						is_ruler = yes
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						OR = {
+							trait = drunkard
+							trait = depressed
+							trait = imbecile
+							trait = inbred
+						}
+						NOT = { has_flag = wedding_event }
+					}
+					character_event = { id = emf_wedding.1245 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						OR = {
+							trait = drunkard
+							trait = depressed
+							trait = imbecile
+							trait = inbred
+						}
+						NOT = { has_flag = wedding_event }
+					}
+					character_event = { id = emf_wedding.1245 }
+					break = yes
+				}
+			}
+			10 = { # Lunatic guest makes a spectacle of themselves
+				modifier = {
+					factor = 0
+					has_flag = wedding_lunatic
+				}
+				modifier = {
+					factor = 0
+					NOT = {
+						any_opinion_modifier_target = {
+							has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+							is_adult = yes
+							prisoner = no
+							war = no
+							OR = {
+								trait = lunatic
+								trait = possessed
+							}
+							NOT = { has_flag = wedding_event }
+						}
+					}
+				}
+				clr_flag = wedding_event
+				set_flag = wedding_event
+				random_opinion_modifier_target = {
+					limit = {
+						higher_tier_than = COUNT
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						OR = {
+							trait = lunatic
+							trait = possessed
+						}
+						NOT = { has_flag = wedding_event }
+					}
+					character_event = { id = emf_wedding.1247 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						is_ruler = yes
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						OR = {
+							trait = lunatic
+							trait = possessed
+						}
+						NOT = { has_flag = wedding_event }
+					}
+					character_event = { id = emf_wedding.1247 }
+					break = yes
+				}
+				random_opinion_modifier_target = {
+					limit = {
+						has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+						is_adult = yes
+						prisoner = no
+						war = no
+						OR = {
+							trait = lunatic
+							trait = possessed
+						}
+						NOT = { has_flag = wedding_event }
+					}
+					character_event = { id = emf_wedding.1247 }
+					break = yes
+				}
+			}
+			100 = { # No event
+				modifier = {
+					factor = 0.5
+					NOT = { has_flag = wedding_event }
+				}
+				modifier = {
+					factor = 0.5
+					had_flag = { flag = wedding_event days = 6 }
+				}
+				modifier = {
+					factor = 0.5
+					had_flag = { flag = wedding_event days = 12 }
+				}
+				modifier = {
+					factor = 0.5
+					had_flag = { flag = wedding_event days = 18 }
+				}
+			}
+		}
+	}
+}
+
+# Secondary event manager
+character_event = {
+	id = emf_wedding.1251
+
+	hide_window = yes
+	is_triggered_only = yes
+
+	war = no
+	has_character_flag = holding_wedding
+
+	immediate = {
+		random_list = { #Response events
+			14 = { #Jongleurs entertain guest (liege)
+				modifier = {
+					factor = 0
+					NOR = {
+						has_character_flag = feast_jongleur
+						any_vassal = {
+							war = no
+							in_command = no
+							has_character_flag = guest_feast_started
+						}
+					}
+				}
+				character_event = { id = 72063 days = 2 }
+			}
+			14 = { #Ministrel entertain the guests (liege)
+				modifier = {
+					factor = 0
+					NOR = {
+						has_character_flag = feast_minstrel
+						any_vassal = {
+							war = no
+							in_command = no
+							has_character_flag = guest_feast_started
+						}
+					}
+				}
+				character_event = { id = 72065 days = 2 }
+			}
+			14 = { #Musicians entertain the guests (liege)
+				modifier = {
+					factor = 0
+					NOR = {
+						has_character_flag = feast_musicians
+						any_vassal = {
+							war = no
+							in_command = no
+							has_character_flag = guest_feast_started
+						}
+					}
+				}
+				character_event = { id = 72067 days = 2 }
+			}
+			14 = { #Fire-eaters entertain the guests (liege)
+				modifier = {
+					factor = 0
+					NOR = {
+						has_character_flag = feast_fireeaters
+						any_vassal = {
+							war = no
+							in_command = no
+							has_character_flag = guest_feast_started
+						}
+					}
+				}
+				character_event = { id = 72069 days = 2 }
+			}
+			14 = { #Conjurer entertain the guests (liege)
+				modifier = {
+					factor = 0
+					NOR = {
+						has_character_flag = feast_conjurer
+						any_vassal = {
+							war = no
+							in_command = no
+							has_character_flag = guest_feast_started
+						}
+					}
+				}
+				character_event = { id = 72071 days = 2 }
+			}
+			14 = { #Dancers entertain the guests (liege)
+				modifier = {
+					factor = 0
+					NOR = {
+						has_character_flag = feast_dancers
+						any_vassal = {
+							war = no
+							in_command = no
+							has_character_flag = guest_feast_started
+						}
+					}
+				}
+				character_event = { id = 4165 days = 2 }
+			}
+			14 = { #Acrobats entertain the guests (liege)
+				modifier = {
+					factor = 0
+					NOR = {
+						has_character_flag = feast_acrobats
+						any_vassal = {
+							war = no
+							in_command = no
+							has_character_flag = guest_feast_started
+						}
+					}
+				}
+				character_event = { id = 4160 days = 2 }
+			}
+			2 = { #fallback
+				modifier = {
+					factor = 0
+					NOR = {
+						has_character_flag = feast_musicians
+						any_vassal = {
+							war = no
+							in_command = no
+							has_character_flag = guest_feast_started
+						}
+					}
+				}
+				character_event = { id = 72067 days = 2 }
+			}
+		}
+	}
+}
+
+#Lavish Spending
+character_event = {
+	id = emf_wedding.72020
+	picture = GFX_evt_feast
+
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_north
+			}
+		}
+		text = "EVTDESC72020N"
+		picture = GFX_road_north
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+		}
+		text = "EVTDESC72020BB"
+		picture = GFX_evt_cancer_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_dorne
+			}
+		}
+		text = "EVTDESC72020D"
+		picture = GFX_evt_ride_into_desert
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_iron_islands
+			}
+		}
+		text = "EVTDESC72020II"
+		picture = GFX_ironborn_kingdom
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+		}
+		text = "EVTDESC72020S"
+		picture = GFX_evt_autumn_harvest
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_reach
+			}
+		}
+		text = "EVTDESC72020R"
+		picture = GFX_evt_banquet
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+		}
+		text = "EVTDESC72020RI"
+		picture = GFX_evt_cancer_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_vale
+			}
+		}
+		text = "EVTDESC72020V"
+		picture = GFX_evt_leo_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_westerlands
+			}
+		}
+		text = "EVTDESC72020W"
+		picture = GFX_evt_vain
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_essos
+			}
+		}
+		text = "EVTDESC72020"
+		picture = GFX_evt_marriage
+	}
+	border = GFX_event_normal_frame_diplomacy
+
+	is_triggered_only = yes
+
+	option = {
+		name = "LAVISH72020"
+		if = { #display select guests to player
+			limit = { war = no }
+			any_opinion_modifier_target = {
+				limit = {
+					has_opinion_modifier = {
+						modifier = attending_wedding
+						who = ROOT
+					}
+				}
+				random_list = {
+					50 = {
+						modifier = {
+							factor = 0
+							OR = {
+								trait = temperate
+								trait = is_malnourished
+								trait = shy
+								trait = envious
+								trait = paranoid
+							}
+						}
+						hidden_tooltip = {
+							opinion = {
+								modifier = opinion_happy
+								who = FROM
+								years = 10
+							}
+							reverse_opinion = {
+								modifier = opinion_approves
+								who = FROM
+								years = 10
+							}
+						}
+						custom_tooltip = { text = approves_of_wedding }
+					}	
+					50 = {
+						modifier = {
+							factor = 0
+							OR = {
+								trait = drunkard
+								trait = hedonist
+								trait = is_fat
+								trait = gregarious
+								trait = kind
+								opinion = { who = FROM value = 20 }
+							}
+						}
+						hidden_tooltip = {
+							opinion = {
+								modifier = opinion_irritated
+								who = FROM
+								years = 10
+							}
+							reverse_opinion = {
+								modifier = opinion_disapprove
+								who = FROM
+								years = 10
+							}
+						}
+						custom_tooltip = { text = disapproves_of_wedding }				
+					}
+				}
+			}
+		}
+	}
+}
+
+#Average Spending
+character_event = {
+	id = emf_wedding.72021
+	picture = GFX_evt_feast
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_north
+			}
+		}
+		text = "EVTDESC72021N"
+		picture = GFX_road_north
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+		}
+		text = "EVTDESC72021BB"
+		picture = GFX_evt_cancer_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_dorne
+			}
+		}
+		text = "EVTDESC72021D"
+		picture = GFX_evt_ride_into_desert
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_iron_islands
+			}
+		}
+		text = "EVTDESC72021II"
+		picture = GFX_ironborn_kingdom
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+		}
+		text = "EVTDESC72021S"
+		picture = GFX_evt_autumn_harvest
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_reach
+			}
+		}
+		text = "EVTDESC72021R"
+		picture = GFX_evt_banquet
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+		}
+		text = "EVTDESC72021RI"
+		picture = GFX_evt_cancer_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_vale
+			}
+		}
+		text = "EVTDESC72021V"
+		picture = GFX_evt_leo_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_westerlands
+			}
+		}
+		text = "EVTDESC72021W"
+		picture = GFX_evt_vain
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_essos
+			}
+		}
+		text = "EVTDESC72021"
+		picture = GFX_evt_marriage
+	}
+	border = GFX_event_normal_frame_diplomacy
+
+	is_triggered_only = yes
+
+	option = {
+		name = "AVERAGE72021"
+		trigger = { character = FROM }
+		if = { #display select guests to player
+			limit = { war = no }
+			any_opinion_modifier_target = {
+				limit = {
+					NOT = { character = ROOT }
+					has_opinion_modifier = {
+						modifier = attending_wedding
+						who = ROOT
+					}
+					OR = {
+						is_ruler = yes
+						has_opinion_modifier = {
+							modifier = attending_wedding
+							who = ROOT
+						}
+						NOT = { liege = { character = ROOT } }
+					}
+				}
+				random = {
+					chance = 50
+					
+					modifier = {
+						factor = 2
+						opinion = { who = FROM value = 20 }
+					}
+					custom_tooltip = { text = approves_of_wedding }
+					opinion = {
+						modifier = opinion_happy
+						who = FROM
+						years = 10
+					}
+					reverse_opinion = {
+						modifier = opinion_approves
+						who = FROM
+						years = 10
+					}
+				}
+				random = {
+					chance = 50
+					
+					modifier = {
+						factor = 2
+						NOT = { opinion = { who = FROM value = 20 } }
+					}
+					custom_tooltip = { text = disapproves_of_wedding }
+					opinion = {
+						modifier = opinion_irritated
+						who = FROM
+						years = 10
+					}
+					reverse_opinion = {
+						modifier = opinion_disapprove
+						who = FROM
+						years = 10
+					}
+				}
+			}
+		}
+	}
+}
+
+#Budget Spending
+character_event = {
+	id = emf_wedding.72022
+	picture = GFX_evt_feast
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_north
+			}
+		}
+		text = "EVTDESC72022N"
+		picture = GFX_road_north
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+		}
+		text = "EVTDESC72022BB"
+		picture = GFX_evt_cancer_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_dorne
+			}
+		}
+		text = "EVTDESC72022D"
+		picture = GFX_evt_ride_into_desert
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_iron_islands
+			}
+		}
+		text = "EVTDESC72022II"
+		picture = GFX_ironborn_kingdom
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+		}
+		text = "EVTDESC72022S"
+		picture = GFX_evt_autumn_harvest
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_reach
+			}
+		}
+		text = "EVTDESC72022R"
+		picture = GFX_evt_banquet
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+		}
+		text = "EVTDESC72022RI"
+		picture = GFX_evt_cancer_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_vale
+			}
+		}
+		text = "EVTDESC72022V"
+		picture = GFX_evt_leo_season
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_westerlands
+			}
+		}
+		text = "EVTDESC72022W"
+		picture = GFX_evt_vain
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_essos
+			}
+		}
+		text = "EVTDESC72022"
+		picture = GFX_evt_marriage
+	}
+	border = GFX_event_normal_frame_diplomacy
+
+	is_triggered_only = yes
+
+	option = {
+		name = "BUDGET72022"
+		trigger = { character = FROM }
+		if = { #display select guests to player
+			limit = { war = no }
+			any_opinion_modifier_target = {
+				limit = {
+					NOT = { character = ROOT }
+					has_opinion_modifier = {
+						modifier = attending_wedding
+						who = ROOT
+					}
+					OR = {
+						is_ruler = yes
+						has_opinion_modifier = {
+							modifier = attending_wedding
+							who = ROOT
+						}
+						NOT = { liege = { character = ROOT } }
+					}
+				}
+				random = {
+					chance = 50
+					
+					modifier = {
+						factor = 2
+						OR = {
+							trait = humble
+							trait = temperate
+							trait = kind
+							opinion = { who = FROM value = 80 }
+						}
+					}
+
+					custom_tooltip = { text = approves_of_wedding }
+					opinion = {
+						modifier = opinion_happy
+						who = FROM
+						years = 10
+					}
+					reverse_opinion = {
+						modifier = opinion_approves
+						who = FROM
+						years = 10
+					}
+				}
+				random = {
+					chance = 50
+					
+					modifier = {
+						factor = 2
+						NOR = {
+							trait = drunkard
+							trait = hedonist
+							trait = is_fat
+							trait = gregarious
+							trait = arbitrary
+						}
+					}
+					custom_tooltip = { text = disapproves_of_wedding }
+					opinion = {
+						modifier = opinion_irritated
+						who = FROM
+						years = 10
+					}
+					reverse_opinion = {
+						modifier = opinion_disapprove
+						who = FROM
+						years = 10
+					}
+				}
+			}
+		}
+	}
+}
+
+# The wedding feast ends
+character_event = {
+	id = emf_wedding.1275
+	desc = EVTDESC_emf_wedding_1275
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+	
+	trigger = {
+		always = yes
+	}
+
+	immediate = {
+		clr_flag = holding_wedding
+	}
+
+	option = {
+		name = EVTOPTA_emf_wedding_1275
+		prestige = 100
+		pf_court_plus2_effect = yes
+		hidden_tooltip = {
+			clr_flag = do_not_disturb
+			clr_flag = has_priest_to_perform_wedding
+			clr_flag = asked_about_wedding
+			clr_flag = wedding_event
+			clr_flag = wedding_lover
+			clr_flag = wedding_duel
+			clr_flag = wedding_poetry
+			clr_flag = wedding_friend
+			clr_flag = wedding_rival
+			clr_flag = wedding_toast
+			clr_flag = wedding_badmouth
+			clr_flag = wedding_drunkard
+			clr_flag = wedding_lunatic
+			clr_flag = helding_heir_wedding
+			clr_character_flag = feast_jongleur
+			clr_character_flag = feast_musicians
+			clr_character_flag = feast_minstrel
+			clr_character_flag = feast_fireeaters
+			clr_character_flag = feast_conjurer
+			clr_character_flag = lavishly_food
+			clr_character_flag = medium_food
+			clr_character_flag = low_food
+			clr_character_flag = castle_problems
+			clr_character_flag = feast_boar_hunt
+			clr_flag = host_feast_started
+			any_opinion_modifier_target = {
+				limit = {
+					is_alive = yes
+					reverse_has_opinion_modifier = { who = ROOT modifier = attending_wedding }
+				}
+				remove_opinion = { who = ROOT modifier = attending_wedding }
+				reverse_remove_opinion = { who = ROOT modifier = attending_wedding }
+				character_event = { id = emf_wedding.1276 }
+			}
+		}
+	}
+}
+
+# clear flags
+character_event = {
+	id = emf_wedding.1276
+	desc = EVTDESC_emf_wedding_1275
+	picture = GFX_evt_feast
+
+	is_triggered_only = yes
+
+	option = {
+		name = EVTOPTB_emf_wedding_1275
+		clr_flag = do_not_disturb
+		clr_flag = wedding_event
+		clr_flag = guest_feast_started
+		clr_character_flag = feast_jongleur
+		clr_character_flag = feast_musicians
+		clr_character_flag = feast_minstrel
+		clr_character_flag = feast_fireeaters
+		clr_character_flag = feast_conjurer
+		clr_character_flag = lavishly_food
+		clr_character_flag = medium_food
+		clr_character_flag = low_food
+		clr_character_flag = castle_problems
+		clr_character_flag = feast_boar_hunt
+		opinion = { who = FROM modifier = opinion_attended_ceremony years = 5 }
+		reverse_opinion = { who = FROM modifier = opinion_attended_ceremony years = 5 }
+	}
+}

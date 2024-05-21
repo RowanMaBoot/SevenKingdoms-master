@@ -292,6 +292,7 @@ character_event = {
 			OR = {
 				# Court duels: feast/regency?
 				has_character_flag = coronation_duelist
+				has_character_flag = wedding_duelist
 				has_character_flag = feast_duelist
 				has_character_flag = duelist_courtier
 			}
@@ -449,6 +450,7 @@ character_event = {
 			OR = {
 				# Court duels: feast/regency?
 				has_character_flag = coronation_duelist
+				has_character_flag = wedding_duelist
 				has_character_flag = feast_duelist
 				has_character_flag = duelist_courtier
 			}
@@ -3622,6 +3624,34 @@ character_event = {
 			}
 			else = {
 				character_event = { id = emf_coronation.1230 }
+			}
+		}
+		
+		# CK2+ Wedding duels
+		if = {
+			limit = { has_character_flag = wedding_duelist }
+
+			random_opinion_modifier_target = {
+				limit = {
+					reverse_has_opinion_modifier = {
+						name = attending_wedding
+						who = ROOT
+					}
+				}
+
+				save_event_target_as = wedding_duel_host
+			}
+
+			log = "Duel Engine: [Root.GetTitledName] defeats [From.GetTitledName] in duel (Reason: Wedding of [wedding_duel_host.GetTitledName])"
+			FROM = { clr_character_flag = wedding_duelist }
+			FROMFROM = { clr_character_flag = wedding_duelist }
+
+			if = {
+				limit = { has_character_flag = flag_killed_opponent }
+				character_event = { id = emf_wedding.1231 }
+			}
+			else = {
+				character_event = { id = emf_wedding.1230 }
 			}
 		}
 
