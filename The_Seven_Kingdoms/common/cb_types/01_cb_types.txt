@@ -287,31 +287,32 @@ dejure_duchy_claim = { # New1
 	on_success_title = {
 		if = {
 			limit = {
-				holder_scope = {
-					lower_tier_than = ROOT
-					is_patrician = no
-					#NOT = {
-					#	num_of_count_titles = 2
-					#}
+				FROM = {
+					holder_scope = {
+						is_patrician = no
+						NOT = {
+							culture_group = free_folk
+						}
+					}
 				}
 			}
-
-			holder_scope = {
-				set_defacto_liege = ROOT
+			ROOT = {
+				vassalize_or_take_under_title = {
+					title = PREV
+					enemy = FROM
+				}
 			}
 		}
 		else_if = {
 			limit = {
-				holder_scope = {
-					OR = {
-						higher_tier_than = count
-						num_of_count_titles = 2
-						is_patrician = yes
+				FROM = {
+					holder_scope = {
+						is_patrician = no
+						culture_group = free_folk
 					}
 				}
 			}
-
-			usurp_title_plus_barony_if_unlanded = { target = ROOT type = claim }
+			usurp_title_only = { target = ROOT }
 			any_de_jure_vassal_title = { #
 				limit = {
 					has_holder = yes

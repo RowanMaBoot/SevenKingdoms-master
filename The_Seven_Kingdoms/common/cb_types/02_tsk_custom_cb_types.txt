@@ -677,24 +677,23 @@ empire_subjugation = {
 				#	ROOT = { usurp_title = { target = PREV type = invasion } }
 				#	add_pressed_claim = PREV
 				#}
-				set_defacto_liege = ROOT
 			}
 		}
 	}
 	
 	on_success_title = {
-		ROOT = {
-			vassalize_or_take_under_title = {
-				title = PREV
-				enemy = FROM
-			}
+		usurp_title = {
+			target = ROOT
+			type = invasion
 		}
-		FROM = {
-			any_demesne_title = {
-				limit = { tier = KING }
-				destroy_landed_title = THIS
-			}
-		}
+		destroy_landed_title = THIS
+		#FROM = {
+			#any_demesne_title = {
+				#limit = { tier = KING }
+				#destroy_landed_title = THIS
+			#}
+			#set_defacto_liege = ROOT
+		#}
 	}
 	
 	on_fail = {
@@ -879,7 +878,8 @@ tsk_subjugation = {
 			#has_claim = PREV
 		}
 		FROM = {
-			NOT = {
+			NOR = {
+				religion_group = ROOT
 				is_liege_or_above_of = ROOT
 			}
 		}

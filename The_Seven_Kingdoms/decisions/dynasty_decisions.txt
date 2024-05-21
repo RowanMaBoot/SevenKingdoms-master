@@ -1482,5 +1482,172 @@ targetted_decisions = {
 			}			
 		}
 	}
-	
+
+	wedding_0 = {
+		ai_target_filter = court_including_me
+		filter = court_including_me
+		is_high_prio = yes
+		only_playable = yes
+		diplomacy_icon = GFX_marry_courtier
+		
+		from_potential = {
+			is_playable = yes
+			OR = {			
+				higher_tier_than = COUNT
+				# rules_in_active_region_trigger = yes #optimisation	
+			}
+		}
+		potential = {
+			dynasty = FROM
+			OR = { 
+				ai = no 
+				is_primary_heir = yes
+			}
+			age = 14
+			is_married = yes
+			has_character_flag = recieved_royal_marriage_aid_duty
+			has_character_modifier = married_1		
+			spouse = {
+				age = 14
+				OR = {
+					NOT = { age = 16 }
+					NOT = { has_regent = yes }
+				}	
+				OR = {
+					is_female = no
+					is_main_spouse = yes
+				}
+			}
+			OR = {
+				NOT = { age = 16 }
+				NOT = { has_regent = yes }
+			}	
+			OR = {
+				is_female = no
+				is_main_spouse = yes
+			}
+			OR = {
+				character = FROM
+				AND = {		
+					is_ruler = no		
+					liege = { character = FROM }
+					OR = {
+						is_child_of = FROM
+						father_even_if_dead = { is_child_of = FROM is_ruler = no }
+						mother_even_if_dead = { is_child_of = FROM is_ruler = no }
+						AND = {
+							is_primary_heir = FROM
+							FROM = { primary_title = { NOT = { has_elective_law_trigger = yes } } }
+						}	
+					}				
+				}
+			}	
+		}
+		allow = {
+			FROM = {
+				capital_holding = { is_occupied = no }
+				prisoner = no
+				NOT = { is_inaccessible_trigger = yes }
+				NOT = { has_character_modifier = holding_wedding }
+				#prestige = 50
+				custom_tooltip = {
+					text = IS_NOT_BUSY
+					hidden_tooltip = {
+						emf_can_disturb = yes
+						NOT = { is_inaccessible_trigger = yes }
+					}
+				}
+			}	
+		}
+		effect = {
+			custom_tooltip = { text = TOOLTIPWEDDING_0 }
+			FROM = {
+				add_character_modifier = {
+					name = wedding_1
+					duration = 60
+				}
+				character_event = { id = emf_wedding.1 } #set host scope
+			}
+		}
+
+		ai_will_do = {
+			factor = 1
+			
+			modifier = {
+				factor = 0
+				FROM = {
+					any_realm_character = {
+						ai = yes
+					}
+				}
+			}
+
+			modifier = {
+				factor = 1.5
+				FROM = {
+					OR = {
+						has_character_modifier = married_1
+						current_heir = {
+							has_character_modifier = married_1
+							dynasty = FROM
+							liege = { character = FROM }
+							is_ruler = no	
+						}					
+					}	
+				}
+			}
+
+			modifier = {
+				factor = 0
+				FROM = {
+					OR = {
+						AND = {
+							higher_tier_than = DUKE
+							NOT = { wealth = 100 }
+						}
+						AND = {
+							tier = DUKE
+							NOT = { wealth = 50 }
+						}						
+					}	
+					OR = {
+						stewardship = 9
+						trait = temperate
+						NOT = { 
+							OR = {
+								trait = gluttonous 
+								trait = hedonist
+								trait = slothful
+							}	
+						}	
+					}	
+				}
+			}
+			
+			modifier = {
+				factor = 0.5
+				FROM = {
+					OR = {
+						trait = shy
+						trait = greedy
+						trait = temperate
+						trait = humble
+					}	
+				}
+			}
+			
+			modifier = {
+				factor = 5
+				FROM = {
+					OR = {
+						trait = gregarious
+						trait = charitable
+						trait = gluttonous 
+						trait = hedonist
+						trait = proud
+					}
+				}
+			}
+		}
+	}
 }
