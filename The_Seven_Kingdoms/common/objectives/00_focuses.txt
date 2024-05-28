@@ -92,6 +92,7 @@ focus_business = {
 		is_adult = yes
 		NOT = { trait = incapable }
 		prisoner = no
+		has_tribal_or_nomadic_government_trigger = no
 	}
 	
 	# AI Pick chance
@@ -165,16 +166,13 @@ focus_seduction = {
 		NOT = { trait = incapable }
 		NOT = { trait = celibate }
 		NOT = { trait = eunuch }
+		NOT = { trait = chaste }
 	}
 	
 	# AI Pick chance
 	chance = {
 		factor = 50
-		
-		modifier = {
-			factor = 0
-			trait = chaste
-		}
+
 		modifier = {
 			factor = 0
 			has_game_rule = {
@@ -419,7 +417,7 @@ focus_hunting = {
 			trait = infirm
 		}
 		modifier = {
-			factor = 0.2
+			factor = 0.5
 			is_female = yes
 		}
 		modifier = {
@@ -437,6 +435,10 @@ focus_hunting = {
 		modifier = {
 			factor = 2.0
 			trait = falconer
+		}
+		modifier = {
+			factor = 5.0
+			is_female = no
 		}
 	}
 	
@@ -458,8 +460,7 @@ focus_hunting = {
 	
 	# MODIFIERS
 	martial = 1
-    combat_rating = 2
-    health = 0.25
+    health = 0.5
 }
 
 focus_war = {
@@ -482,7 +483,7 @@ focus_war = {
 		factor = 100
 		
 		modifier = {
-			factor = 0.1
+			factor = 0.2
 			is_female = yes
 		}
 		
@@ -550,8 +551,8 @@ focus_war = {
 	}
 	
 	# MODIFIERS
-	martial = 3
-    combat_rating = 1
+	martial = 2
+    combat_rating = 5
 }
 
 focus_carousing = {
@@ -573,7 +574,7 @@ focus_carousing = {
 	chance = {
 		factor = 100
 		modifier = {
-			factor = 0.25
+			factor = 0.1
 			trait = shy
 		}
 		modifier = {
@@ -640,42 +641,18 @@ focus_family = {
 	# AI Pick chance
 	chance = {
 		factor = 100
+
 		modifier = {
-			factor = 0.01
-			NOT = {
-				any_sibling = {
-					always = yes
-				}
-			}
-			NOT = {
-				any_child = {
-					always = yes
-				}
-			}
+			factor = 0.2
+			trait = paranoid
 		}
 		modifier = {
-			factor = 0.25
-			trait = ambitious
+			factor = 0.3
+			trait = cruel
 		}
 		modifier = {
-			factor = 0.5
-			NOT = { age = 25 }
-		}
-		modifier = {
-			factor = 0.75
-			is_female = no
-		}
-		modifier = {
-			factor = 0.75
+			factor = 1.5
 			trait = gregarious
-		}
-		modifier = {
-			factor = 0.75
-			trait = proud
-		}
-		modifier = {
-			factor = 1.25
-			trait = humble
 		}
 		modifier = {
 			factor = 1.5
@@ -684,10 +661,6 @@ focus_family = {
 		modifier = {
 			factor = 1.5
 			trait = craven
-		}
-		modifier = {
-			factor = 1.5
-			trait = shy
 		}
 		modifier = {
 			factor = 2.0
@@ -703,7 +676,15 @@ focus_family = {
 		}
 		modifier = {
 			factor = 3.0
+			trait = patient
+		}
+		modifier = {
+			factor = 3.0
 			is_female = yes
+		}
+		modifier = {
+			factor = 6.0
+			num_of_children <= 2			
 		}
 	}
 	
@@ -725,8 +706,8 @@ focus_family = {
 	
 	# MODIFIERS
 	diplomacy = 1
-	health = 0.50
-	fertility = 0.15
+	health = 1
+	fertility = 0.25
 }
 
 focus_scholarship = {
