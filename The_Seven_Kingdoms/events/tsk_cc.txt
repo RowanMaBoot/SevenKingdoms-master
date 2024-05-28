@@ -267,7 +267,7 @@ character_event = {
 		name = EVTOPTAtsk_cc.2222
 		prestige = 100
 		custom_tooltip = {
-			name = dreadfort_subjugation
+			text = dreadfort_subjugation
 			k_the_dreadlands = {
 				reverse_unsafe_war = {
 					target = ROOT
@@ -350,7 +350,7 @@ character_event = {
 			ROOT = { is_married = no }
 		}
 		custom_tooltip = {
-			name = crannog_marriage
+			text = crannog_marriage
 			d_greywater_watch = {
 				holder_scope = {
 					ROOT = {
@@ -387,5 +387,205 @@ character_event = {
 
 	option = {
 		name = EVTOPTBtsk_cc.333
+	}
+}
+
+#New wonder building
+long_character_event = {
+	id = tsk_cc.4
+	title = "EVTtitletsk_cc.4"
+	desc = "EVTDESCtsk_cc.4"
+	picture = "GFX_evt_castle_construction"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTAtsk_cc.4" 
+		wealth = -350
+		1070 = {
+			set_province_flag = eyrie_hhigh
+			add_province_modifier = { name = eyrie_works duration = -1	}
+		}		
+	}
+}
+
+#New wonder stage
+character_event = {
+	id = tsk_cc.44
+	desc = "EVTDESCtsk_cc.44"
+	picture = "GFX_evt_castle_construction"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTAtsk_cc.44"
+		wealth = -1250
+		1070 = {
+			set_province_flag = eyrie_3
+			clr_province_flag = eyrie_hhigh
+			add_province_modifier = { name = eyrie_works duration = -1	}
+		}
+	}
+}
+
+#Castle holding
+character_event = {
+	id = tsk_cc.444
+	desc = "EVTDESCtsk_cc.444"
+	picture = "GFX_evt_castle_construction"
+	
+	is_triggered_only = yes
+
+	option = {
+		name = "EVTOPTAtsk_cc.444" 
+		wealth = -600	
+		1070 = {
+			set_province_flag = eyrie_cbuilding
+			clr_province_flag = eyrie_3
+			add_province_modifier = { name = eyrie_works duration = -1	}
+		}		
+	}
+}
+	
+character_event = {
+	id = tsk_cc.41
+	desc = "EVTDESCtsk_cc.41"
+	picture = "GFX_evt_castle_construction"
+	
+	ai = no
+	age = 16
+	
+	trigger = {
+		has_landed_title = c_mountain_of_the_moon
+		NOT = { has_character_flag = worked_eyrie }
+		1070 = {
+			has_province_modifier = eyrie_works
+		}
+	}
+	
+	mean_time_to_happen = {
+		years = 2
+	}
+	
+	option = { #extra funds
+		name = "EVTOPTAtsk_cc.41" 
+		
+		trigger = {
+			ROOT = {
+				wealth = 100
+			}
+			1070 = 	{
+				NOT = {
+					has_province_modifier = eyrie_funds 
+				}
+			}
+		}
+		
+		wealth = -100
+		1070 = {
+			add_province_modifier = { name = eyrie_funds duration = -1 }
+		}
+	}
+
+	option = { #extra men
+		name = "EVTOPTBtsk_cc.41" 
+		
+		trigger = {
+			1070 = 	{
+				NOT = {
+					has_province_modifier = eyrie_men 
+				}
+			}
+		}
+		
+		wealth = -50
+		1070 = {
+			add_province_modifier = { name = eyrie_men duration = -1 }
+		}
+	}
+	
+	option = { #prisoners/low-lifes/low-quality materials
+		name = "EVTOPTCtsk_cc.41" 
+
+		wealth = -25
+		prestige = -250
+		1070 = {
+			add_province_modifier = { name = eyrie_poor duration = -1 }
+		}
+	}
+}
+
+character_event = {
+	id = tsk_cc.42
+	desc = "EVTDESCtsk_cc.42"
+	picture = "GFX_evt_castle_construction"
+	
+	ai = no
+	age = 16
+	
+	trigger = {
+		has_landed_title = c_mountain_of_the_moon
+		1070 = {
+			has_province_modifier = eyrie_works
+			has_province_modifier = eyrie_men
+			has_province_modifier = eyrie_funds
+		}
+	}
+	
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	immediate = {
+		ROOT = {
+			set_character_flag = worked_eyrie
+		}
+		1070 = {
+			remove_province_modifier = eyrie_works
+			remove_province_modifier = eyrie_men
+			remove_province_modifier = eyrie_funds
+			remove_province_modifier = eyrie_poor
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAtsk_cc.42" 
+
+		ROOT = {
+			if = {
+				limit = {
+					1070 = {
+						has_province_flag = eyrie_hhigh
+					}
+				}
+				random_demesne_wonder = {
+					add_wonder_upgrade = upgrade_eyrie_hall
+				}
+			}
+			if = {
+				limit = {
+					1070 = {
+						has_province_flag = eyrie_3
+					}
+				}
+				random_demesne_wonder = {
+					add_wonder_stage = 1
+				}
+			}
+			if = {
+				limit = {
+					1070 = {
+						has_province_flag = eyrie_cbuilding
+					}
+				}
+				b_mountain_of_the_moon = {
+					add_building = ca_eyrie
+				}
+				1070 = {
+					add_province_modifier = { name = eyrie_completed duration = -1 }
+					clr_province_flag = eyrie_cbuilding
+				}
+			}
+		}
 	}
 }
