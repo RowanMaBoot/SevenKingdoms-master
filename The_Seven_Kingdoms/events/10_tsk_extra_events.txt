@@ -1,0 +1,2037 @@
+###################################
+#
+# The Seven Kingdoms Extra Events
+# - Written by Andrew42
+#
+# Event IDs 
+# Bloodline events
+#			tsk_extra.100 # Mudd gets strong
+#			tsk_extra.101 # Dayne combat skill improvements
+# Misc events
+#			tsk_extra.200 # Purchase Valyrian Steel
+#			tsk_extra.201 # Upgrade Combat Skill
+# Knighthood events
+#			tsk_extra.300 # Knighthood setup
+#			tsk_extra.301 # Knighthood The Seven
+#			tsk_extra.302 # Knighthood The Seven for infidels
+#			tsk_extra.303 # Knighthood Rhllor
+#			tsk_extra.304 # Knighthood Rhllor for infidels
+#			tsk_extra.305 # Knighthood Valyrian
+#			tsk_extra.306 # Knighthood Valyrian for infidels
+#			tsk_extra.307 # Knighthood Everyone else
+# Westeros events
+#			tsk_extra.400 # A Unified Westeros
+#			tsk_extra.401-404 # Choosing a capital
+#			tsk_extra.405 # Golden Age
+#			tsk_extra.406-407 # Direct towards growth
+#			tsk_extra.408-409 # Direct towards a Palace
+#
+###################################
+
+namespace = tsk_extra
+
+#Mudd gets strong
+character_event = {
+	id = tsk_extra.100
+	desc = EVTDESC_extra.100
+	
+	min_age = 8
+	is_triggered_only = yes
+	trigger = {
+		any_owned_bloodline = { has_bloodline_flag = bloodline_strong }
+		NOR = {
+			trait = strong
+			has_character_flag = flag_secret_bastard
+		}
+	}
+	
+	option = {
+		name = EVTOPTA_extra.100
+		prestige = 15
+		add_trait = strong		
+	}
+}
+
+#Dayne upgrades combat skill
+character_event = {
+	id = tsk_extra.101
+	desc = EVTDESC_extra.101
+	
+	is_triggered_only = yes
+	trigger = {
+		any_owned_bloodline = { has_bloodline_flag = bloodline_combat_skill }
+		is_female = no
+		NOR = {
+			trait = dueling_legend
+			has_character_flag = flag_secret_bastard
+		}
+	}
+	option = {
+		name = EVTOPTA_extra.101l
+		prestige = 15
+		train_combat_skill = yes		
+	}
+}
+
+#Purchase Valyrian Steel
+character_event = {
+	id = tsk_extra.200
+	desc = EVTDESC_extra.200
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.200
+		trigger = { NOT = { has_global_flag = anger_exists } }
+		add_artifact = anger
+		set_global_flag = anger_exists
+	}
+	option = {
+		name = EVTOPTB_extra.200
+		trigger = { NOT = { has_global_flag = black_death_exists } }
+		add_artifact = black_death
+		set_global_flag = black_death_exists
+	}
+	option = {
+		name = EVTOPTC_extra.200
+		trigger = { NOT = { has_global_flag = concession_exists } }
+		add_artifact = concession
+		set_global_flag = concession_exists
+	}
+	option = {
+		name = EVTOPTD_extra.200
+		trigger = { NOT = { has_global_flag = kingmaker_exists } }
+		add_artifact = kingmaker
+		set_global_flag = kingmaker_exists
+	}
+	option = {
+		name = EVTOPTE_extra.200
+		trigger = { NOT = { has_global_flag = rage_exists } }
+		add_artifact = rage
+		set_global_flag = rage_exists
+	}
+}
+
+# Upgrade Combat Skill
+character_event = {
+	id = tsk_extra.201
+	desc = EVTDESC_extra.101
+	picture = GFX_evt_duel0
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.101
+		prestige = 15
+		train_combat_skill = yes		
+	}
+}
+# Knighthood setup event
+character_event = {
+	id = tsk_extra.300
+	desc = EVTDESC_extra.300
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.300
+		trigger = {
+			AND = {
+				event_target:knight = { religion_group = the_seven_group }
+				event_target:squire = { religion_group = the_seven_group }
+			}
+		}
+		event_target:knight = { character_event = { id = tsk_extra.301 } }
+		event_target:squire = { character_event = { id = tsk_extra.301 } }
+	}
+	option = {
+		name = EVTOPTA_extra.300
+		trigger = {
+			AND = {
+				event_target:knight = { religion_group = the_seven_group }
+				event_target:squire = { NOT = { religion_group = the_seven_group } }
+			}
+		}
+		event_target:knight = { character_event = { id = tsk_extra.302 } }
+		event_target:squire = { character_event = { id = tsk_extra.302 } }
+	}
+	option = {
+		name = EVTOPTA_extra.300
+		trigger = {
+			AND = {
+				event_target:knight = { religion = rhllor }
+				event_target:squire = { religion = rhllor }
+			}
+		}
+		event_target:knight = { character_event = { id = tsk_extra.303 } }
+		event_target:squire = { character_event = { id = tsk_extra.303 } }
+	}
+	option = {
+		name = EVTOPTA_extra.300
+		trigger = {
+			AND = {
+				event_target:knight = { religion = rhllor }
+				event_target:squire = { NOT = { religion = rhllor } }
+			}
+		}
+		event_target:knight = { character_event = { id = tsk_extra.304 } }
+		event_target:squire = { character_event = { id = tsk_extra.304 } }
+	}
+	option = {
+		name = EVTOPTA_extra.300
+		trigger = {
+			AND = {
+				event_target:knight = { religion_group = valyrian_group }
+				event_target:squire = { religion_group = valyrian_group }
+			}
+		}
+		event_target:knight = { character_event = { id = tsk_extra.305 } }
+		event_target:squire = { character_event = { id = tsk_extra.305 } }
+	}
+	option = {
+		name = EVTOPTA_extra.300
+		trigger = {
+			AND = {
+				event_target:knight = { religion_group = valyrian_group }
+				event_target:squire = { NOT = { religion_group = valyrian_group } }
+			}
+		}
+		event_target:knight = { character_event = { id = tsk_extra.306 } }
+		event_target:squire = { character_event = { id = tsk_extra.306 } }
+	}
+	option = {
+		name = EVTOPTA_extra.300
+		trigger = {
+			event_target:knight = {
+				NOR = {
+					religion_group = valyrian_group
+					religion_group = the_seven_group
+					religion = rhllor
+				}
+			}
+		}
+		event_target:knight = { character_event = { id = tsk_extra.307 } }
+		event_target:squire = { character_event = { id = tsk_extra.307 } }
+	}
+}
+# Knighthood The Seven
+long_character_event = {
+	id = tsk_extra.301
+	desc = EVTDESC_extra.301
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.301
+		add_trait = knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+	}
+	option = {
+		name = EVTOPTA_extra.301
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = squire }
+			}
+		}
+		prestige = 100
+	}
+	option = {
+		name = EVTOPTA_extra.301
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = page }
+			}
+		}
+		prestige = -250
+	}
+	option = {
+		name = EVTOPTA_extra.301
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { 
+					NOR = {
+						trait = page
+						trait = squire
+					}
+				}
+			}
+		}
+		prestige = -500
+	}
+}
+# Knighthood The Seven for infidels
+long_character_event = {
+	id = tsk_extra.302
+	desc = EVTDESC_extra.301
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.301
+		add_trait = knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+	}
+	option = {
+		name = EVTOPTA_extra.301
+		trigger = {
+			ROOT = {
+				OR = {
+					trait = knight
+        			trait = red_knight
+        			trait = dragon_knight
+        			trait = hedge_knight 
+        		}
+        	}
+		}
+		prestige = -2500
+	}
+}
+# Knighthood Rhllor
+character_event = {
+	id = tsk_extra.303
+	desc = EVTDESC_extra.303
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.303
+		add_trait = red_knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+		random_list = {
+			99 = { }
+			1 = { give_nickname = nick_the_red_knight }
+		}	
+	}
+	option = {
+		name = EVTOPTB_extra.303
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = squire }
+			}
+		}
+		prestige = 100
+	}
+	option = {
+		name = EVTOPTB_extra.303
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = page }
+			}
+		}
+		prestige = -250
+	}
+	option = {
+		name = EVTOPTB_extra.303
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { 
+					NOR = {
+						trait = page
+						trait = squire
+					}
+				}
+			}
+		}
+		prestige = -500
+	}
+}
+# Knighthood Rhllor  for infidels
+character_event = {
+	id = tsk_extra.304
+	desc = EVTDESC_extra.303
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.303
+		add_trait = red_knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+	}
+	option = {
+		name = EVTOPTB_extra.303
+		trigger = {
+			ROOT = {
+				OR = {
+					trait = knight
+        			trait = red_knight
+        			trait = dragon_knight
+        			trait = hedge_knight 
+        		}
+        	}
+		}
+		prestige = -2500
+	}
+}
+# Knighthood Valyrian
+character_event = {
+	id = tsk_extra.305
+	desc = EVTDESC_extra.303
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.303
+		add_trait = dragon_knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+		random_list = {
+			99 = { }
+			1 = { give_nickname = nick_the_dragon_knight }
+		}
+	}
+	option = {
+		name = EVTOPTB_extra.305
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = squire }
+			}
+		}
+		prestige = 100
+	}
+	option = {
+		name = EVTOPTB_extra.305
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = page }
+			}
+		}
+		prestige = -250
+	}
+	option = {
+		name = EVTOPTB_extra.305
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { 
+					NOR = {
+						trait = page
+						trait = squire
+					}
+				}
+			}
+		}
+		prestige = -500
+	}
+}
+# Knighthood Valyrian for infidels
+character_event = {
+	id = tsk_extra.306
+	desc = EVTDESC_extra.303
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.303
+		add_trait = dragon_knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+	}
+	option = {
+		name = EVTOPTB_extra.305
+		trigger = {
+			ROOT = {
+				OR = {
+					trait = knight
+        			trait = red_knight
+        			trait = dragon_knight
+        			trait = hedge_knight 
+        		}
+        	}
+		}
+		prestige = -2500
+	}
+}
+# Knighthood Everyone else
+character_event = {
+	id = tsk_extra.307
+	desc = EVTDESC_extra.303
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.303
+		add_trait = knight
+		trigger = {
+			NOT = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+        	}
+		}
+		random_list = {
+			99 = { }
+			1 = { give_nickname = nick_the_knight }
+		}
+	}
+	option = {
+		name = EVTOPTA_extra.301
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = squire }
+			}
+		}
+		prestige = 100
+	}
+	option = {
+		name = EVTOPTA_extra.301
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { trait = page }
+			}
+		}
+		prestige = -250
+	}
+	option = {
+		name = EVTOPTA_extra.301
+		trigger = {
+			AND = {
+				ROOT = {
+					OR = {
+						trait = knight
+        				trait = red_knight
+        				trait = dragon_knight
+        				trait = hedge_knight 
+        			} 
+        		}
+				event_target:squire = { 
+					NOR = {
+						trait = page
+						trait = squire
+					}
+				}
+			}
+		}
+		prestige = -500
+	}
+}
+character_event = {
+	id = tsk_extra.400
+	desc = EVTDESC_extra.400
+	picture = GFX_westeros
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.400
+		any_landed_title = {
+    		limit = {
+        		real_tier = KING
+            	capital_scope = { region = world_westeros_only }
+    		}
+    		de_jure_liege = e_iron_throne
+    	}
+    	ROOT = { character_event = { id = tsk_extra.401 } }
+	}
+}
+character_event = {
+	id = tsk_extra.401
+	desc = EVTDESC_extra.401
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.401
+		set_character_flag = page_1
+		hidden_tooltip = { character_event = { id = tsk_extra.402 } }
+	}
+	option = {
+		name = EVTOPTB_extra.401
+		hidden_tooltip = { character_event = { id = tsk_extra.403 } }
+	}
+	option = {
+		name = EVTOPTC_extra.401
+		set_character_flag = page_1
+		hidden_tooltip = { character_event = { id = tsk_extra.404 } }
+	}
+	option = {
+		name = EVTOPTD_extra.401
+		hidden_tooltip = { character_event = { id = tsk_extra.405 } }
+	}
+}
+character_event = {
+	id = tsk_extra.402
+	desc = EVTDESC_extra.402
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.402
+		trigger = {
+			AND = {
+				has_character_flag = page_1
+				NOT = { capital_scope = { province_id = 527 } }
+				c_highgarden = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 527 }
+		hidden_tooltip = {
+			c_highgarden = { 
+				holder_scope = {
+					b_highgarden = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_highgarden = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_highgarden } }
+			d_highgarden = { usurp_title = { target = ROOT type = invasion } }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = c_highgarden } }
+			c_highgarden = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTB_extra.402
+		trigger = {
+			AND = {
+				has_character_flag = page_1
+				NOT = { capital_scope = { province_id = 643 } }
+				c_storms_end = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 643 }
+		hidden_tooltip = {
+			c_storms_end = { 
+				b_storms_end = {
+					b_highgarden = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id =  tsk_extra.405 days = 1 }
+		}
+		b_storms_end = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_storms_end } }
+			d_storms_end = { usurp_title = { target = ROOT type = invasion } }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = c_storms_end } }
+			c_storms_end = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTC_extra.402
+		trigger = {
+			AND = {
+				has_character_flag = page_1
+				NOT = { capital_scope = { province_id = 861 } }
+				c_casterly_rock = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 861 }
+		hidden_tooltip = {
+			c_casterly_rock = { 
+				holder_scope = {
+					b_casterly_rock = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_casterly_rock = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_casterly_rock } }
+			d_casterly_rock = { usurp_title = { target = ROOT type = invasion } }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = c_casterly_rock } }
+			c_casterly_rock = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_1
+	}
+	option = {
+		name = "MORE" 
+		trigger = { 
+			has_character_flag = page_1
+		}	
+		clr_character_flag = page_1
+		set_character_flag = page_2
+		hidden_tooltip = { character_event = { id =  tsk_extra.402 } }
+	}
+	option = {
+		name = EVTOPTD_extra.402
+		trigger = {
+			AND = {
+				has_character_flag = page_2
+				NOT = { capital_scope = { province_id = 1070 } }
+				c_mountain_of_the_moon = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 1070 }
+		hidden_tooltip = {
+			c_mountain_of_the_moon = { 
+				holder_scope = {
+					b_mountain_of_the_moon = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_mountain_of_the_moon = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_the_eyrie } }
+			d_the_eyrie = { usurp_title = { target = ROOT type = invasion } }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = c_mountain_of_the_moon } }
+			c_mountain_of_the_moon = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_2
+	}
+	option = {
+		name = EVTOPTE_extra.402
+		trigger = {
+			AND = {
+				has_character_flag = page_2
+				NOT = { capital_scope = { province_id = 1026 } }
+				c_oldstones = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 1026 }
+		hidden_tooltip = {
+			c_oldstones = { 
+				holder_scope = {
+					b_oldstones = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_oldstones = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_oldstones } }
+			d_oldstones = { usurp_title = { target = ROOT type = invasion } }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = c_oldstones } }
+			c_oldstones = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_2
+	}
+	option = {
+		name = EVTOPTF_extra.402
+		trigger = {
+			AND = {
+				has_character_flag = page_2
+				NOT = { capital_scope = { province_id = 1198 } }
+				c_winterfell = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 1198 }
+		hidden_tooltip = {
+			c_winterfell = { 
+				holder_scope = {
+					b_winterfell = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_winterfell = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_winterfell } }
+			d_winterfell = { usurp_title = { target = ROOT type = invasion } }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = c_winterfell } }
+			c_winterfell = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_2
+	}
+	option = {
+		name = EVTOPTG_extra.402
+		trigger = { has_character_flag = page_2 }
+		hidden_tooltip = { character_event = { id = tsk_extra.401} }
+		clr_character_flag = page_2
+	}
+}
+character_event = {
+	id = tsk_extra.403
+	desc = EVTDESC_extra.403
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.403
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 544 } }
+				c_oldtown = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 544 }
+		hidden_tooltip = {
+			c_oldtown = { 
+				holder_scope = {
+					b_oldtown = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_oldtown = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_oldtown } }
+			d_oldtown = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_oldtown } }
+			c_oldtown = { gain_title = { target = ROOT type = invasion } }
+		}	
+	}
+	option = {
+		name = EVTOPTB_extra.403
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 858 } }
+				c_lannisport = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 858 }
+		hidden_tooltip = {
+			c_lannisport = { 
+				holder_scope = {
+					b_lannisport = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_lannisport = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_casterly_rock } }
+			d_casterly_rock = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_lannisport } }
+			c_lannisport = { gain_title = { target = ROOT type = invasion } }
+		}	
+	}
+	option = {
+		name = EVTOPTC_extra.403
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 1072 } }
+				c_gulltown = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 1072 }
+		hidden_tooltip = {
+			c_gulltown = { 
+				holder_scope = {
+					b_gull_keep = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_gull_keep = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_gulltown } }
+			d_gulltown = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_gulltown } }
+			c_gulltown = { gain_title = { target = ROOT type = invasion } }
+		}	
+	}
+	option = {
+		name = EVTOPTD_extra.403
+		hidden_tooltip = { character_event = { id = tsk_extra.401 } }
+	}
+}
+character_event = {
+	id = tsk_extra.404
+	desc = EVTDESC_extra.404
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 1319 } }
+				has_character_flag = page_1
+				religion = old_gods
+				c_fist_of_the_first_men = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 1319 }
+		hidden_tooltip = {
+			c_fist_of_the_first_men = { 
+				holder_scope = {
+					b_fist_of_the_first_men = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }	
+		}
+		b_fist_of_the_first_men = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_southern_peaks } }
+			d_southern_peaks = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_fist_of_the_first_men } }
+			c_fist_of_the_first_men = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTB_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 1313 } }
+				has_character_flag = page_1
+				religion = old_gods
+				c_hardhome = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 1313 }
+		hidden_tooltip = {
+			c_hardhome = { 
+				holder_scope = {
+					b_hardhome = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }	
+		}
+		b_hardhome = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_hardhome } }
+			d_hardhome = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_hardhome } }
+			c_hardhome = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTC_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 1198 } }
+				has_character_flag = page_1
+				religion = old_gods
+				c_winterfell = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 1198 }
+		hidden_tooltip = {
+			c_winterfell = { 
+				holder_scope = {
+					b_winterfell = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }	
+		}
+		b_winterfell = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_winterfell } }
+			d_winterfell = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_winterfell } }
+			c_winterfell = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTD_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 1204 } }
+				has_character_flag = page_1
+				religion_group = the_seven_group
+				c_the_white_knife = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 1204 }
+		hidden_tooltip = {
+			c_the_white_knife = { 
+				holder_scope = {
+					b_new_castle = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }	
+		}
+		b_new_castle = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_the_white_knife } }
+			d_the_white_knife = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_the_white_knife } }
+			c_the_white_knife = { gain_title = { target = ROOT type = invasion } }
+		}	
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTE_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 544 } }
+				has_character_flag = page_1
+				religion_group = the_seven_group
+				c_oldtown = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 544 }
+		hidden_tooltip = {
+			c_oldtown = { 
+				holder_scope = {
+					b_oldtown = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }	
+		}
+		b_oldtown = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_oldtown } }
+			d_oldtown = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_oldtown } }
+			c_oldtown = { gain_title = { target = ROOT type = invasion } }
+		}	
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTF_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 1026 } }
+				religion = old_gods
+				has_character_flag = page_2
+				c_oldstones = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 1026 }
+		hidden_tooltip = {
+			c_oldstones = { 
+				holder_scope = {
+					b_oldstones = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }	
+		}
+		b_oldstones = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_oldstones } }
+			d_oldstones = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_oldstones } }
+			c_oldstones = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_2
+	}
+	option = {
+		name = EVTOPTG_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 965 } }
+				has_character_flag = page_1
+				religion_group = the_seven_group
+				c_patricks_hill = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 965 }
+		hidden_tooltip = {
+			c_patricks_hill = { 
+				holder_scope = {
+					b_the_east_tower = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }	
+		}
+		b_the_east_tower = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_the_twins } }
+			d_the_twins = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_patricks_hill } }
+			c_patricks_hill = { gain_title = { target = ROOT type = invasion } }
+		}	
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTH_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 994 } }
+				has_character_flag = page_2
+				religion = old_gods
+				c_wendish_town = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 994 }
+		hidden_tooltip = {
+			c_wendish_town = { 
+				holder_scope = {
+					b_wendish_town = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}	
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_wendish_town = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_wayfarers_rest } }
+			d_wayfarers_rest = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_wendish_town } }
+			c_wendish_town = { gain_title = { target = ROOT type = invasion } }
+		}	
+		clr_character_flag = page_2
+	}
+	option = {
+		name = EVTOPTI_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 67 } }
+				has_character_flag = page_1
+				religion = rhllor
+				c_eastern_lorath = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 67 }
+		hidden_tooltip = {
+			c_eastern_lorath = { 
+				holder_scope = {
+					b_lorrico = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }	
+		}
+		b_lorrico = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_lorath } }
+			d_lorath = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_eastern_lorath } }
+			c_eastern_lorath = { gain_title = { target = ROOT type = invasion } }
+		}	
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTJ_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 111 } }
+				has_character_flag = page_2
+				religion_group = the_seven_group
+				c_andalos = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 111 }
+		hidden_tooltip = {
+			c_andalos = { 
+				holder_scope = {
+					b_andalos = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}	
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_andalos = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_andalos } }
+			d_andalos = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_andalos } }
+			c_andalos = { gain_title = { target = ROOT type = invasion } }
+		}	
+		clr_character_flag = page_2
+	}
+	option = {
+		name = EVTOPTK_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 344 } }
+				has_character_flag = page_1
+				OR = {
+					religion = rhllor
+					religion_group = valyrian_group
+				}
+				c_lys = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 344 }
+		hidden_tooltip = {
+			c_lys = { 
+				holder_scope = {
+					b_the_silver_palace = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }	
+		}
+		b_the_silver_palace = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_lys } }
+			d_lys = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_lys } }
+			c_lys = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_1	
+	}
+	option = {
+		name = EVTOPTL_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 242 } }
+				has_character_flag = page_1
+				OR = {
+					religion = rhllor
+					religion_group = valyrian_group
+				}
+				c_myr = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 242 }
+		hidden_tooltip = {
+			c_myr = { 
+				holder_scope = {
+					b_myr = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }	
+		}
+		b_myr = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_myr } }
+			d_myr = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_myr } }
+			c_myr = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_1	
+	}
+	option = {
+		name = EVTOPTM_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 157 } }
+				has_character_flag = page_1
+				religion_group = valyrian_group
+				c_pentos = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 157 }
+		hidden_tooltip = {
+			c_pentos = { 
+				holder_scope = {
+					b_pentos = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_pentos = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_pentos } }
+			d_pentos = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_pentos } }
+			c_pentos = { gain_title = { target = ROOT type = invasion } }
+		}	
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTN_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 167 } }
+				has_character_flag = page_2
+				religion = rhllor
+				c_red_temple = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 167 }
+		hidden_tooltip = {
+			c_red_temple = { 
+				holder_scope = {
+					b_red_temple = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_red_temple = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_the_red_temple } }
+			d_the_red_temple = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_red_temple } }
+			c_red_temple = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_2	
+	}
+	option = {
+		name = EVTOPTO_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 295 } }
+				has_character_flag = page_2
+				religion_group = valyrian_group
+				c_little_tyrosh = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 295 }
+		hidden_tooltip = {
+			c_little_tyrosh = { 
+				holder_scope = {
+					b_little_tyrosh = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_little_tyrosh = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_tyrosh } }
+			d_tyrosh = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_little_tyrosh } }
+			c_little_tyrosh = { gain_title = { target = ROOT type = invasion } }
+		}	
+		clr_character_flag = page_2
+	}
+	option = {
+		name = EVTOPTP_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 733 } }
+				has_character_flag = page_2
+				religion_group = the_seven_group
+				c_blackwater_harbour = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 733 }
+		hidden_tooltip = {
+			c_blackwater_harbour = { 
+				holder_scope = {
+					b_blackwater_harbour = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_blackwater_harbour = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_south_blackwater_bay } }
+			d_south_blackwater_bay = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_blackwater_harbour } }
+			c_blackwater_harbour = { gain_title = { target = ROOT type = invasion } }
+		}	
+		clr_character_flag = page_1
+	}
+	option = {
+		name = EVTOPTQ_extra.404
+		trigger = {
+			AND = {
+				NOT = { capital_scope = { province_id = 797 } }
+				has_character_flag = page_2
+				OR = {
+					religion = rhllor
+					religion_group = valyrian_group
+				}
+				c_dragonstone = {
+					holder_scope = {
+						OR = {
+							character = ROOT
+							any_liege = { character = ROOT }
+						}
+					}
+				}
+			}
+		}
+		e_iron_throne = { set_preferred_capital = 797 }
+		hidden_tooltip = {
+			c_dragonstone = { 
+				holder_scope = {
+					b_dragonstone = { 
+						usurp_title = PREV  
+						province_capital = yes
+					} 
+				}	
+			}
+			character_event = { id = tsk_extra.405 days = 1 }
+		}
+		b_dragonstone = {
+			gain_title = ROOT
+			ROOT = { capital = PREV }
+		}
+		if = {
+			limit = { NOT = { has_landed_title = d_dragonstone } }
+			d_dragonstone = { usurp_title = { target = ROOT type = invasion } }
+		}	
+		if = {
+			limit = { NOT = { has_landed_title = c_dragonstone } }
+			c_dragonstone = { gain_title = { target = ROOT type = invasion } }
+		}
+		clr_character_flag = page_2
+	}
+	option = {
+		name = "MORE" 
+		trigger = { 
+			has_character_flag = page_1
+		}	
+		clr_character_flag = page_1
+		set_character_flag = page_2
+		hidden_tooltip = { character_event = { id = tsk_extra.404 } }
+	}
+	option = {
+		name = EVTOPTQR_extra.404
+		trigger = { has_character_flag = page_2 }
+		hidden_tooltip = { character_event = { id = tsk_extra.401 } }
+		clr_character_flag = page_2
+	}
+}
+character_event = {
+	id = tsk_extra.405
+	desc = EVTDESC_extra.405
+	
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.405
+		set_character_flag = grow_capital
+		set_global_flag = extra_growth
+		character_event = { id = tsk_extra.406 }
+	}
+	option = {
+		name = EVTOPTB_extra.405
+		trigger = { capital_scope = { has_wonder = no } }
+		set_global_flag = extra_opulance
+		character_event = { id = tsk_extra.408 }
+	}
+}
+character_event = {
+	id = tsk_extra.406
+	desc = EVTDESC_extra.406
+	only_independent = yes
+	is_triggered_only = yes
+	trigger = { primary_title = { title = e_iron_throne } }
+	
+	option = {
+		name = EVTOPTA_extra.406
+		trigger = { has_character_flag = grow_capital }
+		capital_scope = { any_province_holding = { tsk_infra_1_low = yes } }
+		clr_character_flag = grow_capital
+		set_global_flag = extra_infra_1
+		set_character_flag = golden_age
+		ROOT = { character_event = { id = tsk_extra.406 months = 1 } }
+	}
+	option = {
+		name = EVTOPTA_extra.406
+		trigger = { has_global_flag = extra_infra_1 }
+		capital_scope = { any_province_holding = { tsk_infra_1_high = yes } }
+		clr_global_flag = extra_infra_1
+		set_global_flag = extra_infra_2
+		set_character_flag = golden_age
+		ROOT = { character_event = { id = tsk_extra.406 months = 100 } }
+	}
+	option = {
+		name = EVTOPTA_extra.406
+		trigger = { has_global_flag = extra_infra_2 }
+		capital_scope = { any_province_holding = { tsk_infra_2_low = yes } }
+		clr_global_flag = extra_infra_2
+		set_global_flag = extra_infra_3
+		set_character_flag = golden_age
+		ROOT = { character_event = { id = tsk_extra.406 months = 100 } }
+	}
+	option = {
+		name = EVTOPTA_extra.406
+		trigger = { has_global_flag = extra_infra_3 }
+		capital_scope = { any_province_holding = { tsk_infra_2_high = yes } }
+		clr_global_flag = extra_infra_3
+		set_global_flag = extra_infra_4
+		set_character_flag = golden_age
+		ROOT = { character_event = { id = tsk_extra.406 months = 100 } }
+	}
+	option = {
+		name = EVTOPTA_extra.406
+		trigger = { has_global_flag = extra_infra_4 }
+		capital_scope = { any_province_holding = { tsk_infra_3_low = yes } }
+		clr_global_flag = extra_infra_4
+		set_global_flag = extra_infra_5
+		set_character_flag = golden_age
+		ROOT = { character_event = { id = tsk_extra.406 months = 100 } }
+	}
+	option = {
+		name = EVTOPTA_extra.406
+		trigger = { has_global_flag = extra_infra_5 }
+		capital_scope = { any_province_holding = { tsk_infra_3_high = yes } }
+		clr_global_flag = extra_infra_5
+		set_global_flag = extra_infra_6
+		set_character_flag = golden_age
+		ROOT = { character_event = { id = tsk_extra.406 months = 100 } }
+	}
+	option = {
+		name = EVTOPTA_extra.406
+		trigger = { has_global_flag = extra_infra_6 }
+		capital_scope = { any_province_holding = { tsk_infra_4_low = yes } }
+		clr_global_flag = extra_infra_6
+		set_global_flag = extra_infra_7
+		set_character_flag = golden_age
+		ROOT = { character_event = { id = tsk_extra.406 months = 100 } }
+	}
+	option = {
+		name = EVTOPTA_extra.406
+		trigger = { has_global_flag = extra_infra_7 }
+		capital_scope = { any_province_holding = { tsk_infra_4_high = yes } }
+		clr_global_flag = extra_infra_7
+		set_global_flag = extra_infra_8
+		set_character_flag = golden_age
+		ROOT = { character_event = { id = tsk_extra.406 months = 100 } }
+	}
+	option = {
+		name = EVTOPTA_extra.406
+		trigger = { has_global_flag = extra_infra_8 }
+		capital_scope = { any_province_holding = { tsk_infra_5_low = yes } }
+		clr_global_flag = extra_infra_8
+		set_global_flag = extra_infra_9
+		set_character_flag = golden_age
+		ROOT = { character_event = { id = tsk_extra.406 months = 100 } }
+	}
+	option = {
+		name = EVTOPTA_extra.406
+		trigger = { has_global_flag = extra_infra_9 }
+		capital_scope = { any_province_holding = { tsk_infra_5_high = yes } }
+		clr_global_flag = extra_infra_9
+		clr_global_flag = extra_growth
+		ROOT = { character_event = { id = tsk_extra.407 days = 1 } }
+	}
+}
+character_event = {
+	id = tsk_extra.407
+	desc = EVTDESC_extra.407
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.407
+		ROOT = { give_nickname = nick_the_magnificent }
+	}
+}
+character_event = {
+	id = tsk_extra.408
+	desc = EVTDESC_extra.408
+	only_independent = yes
+	is_triggered_only = yes
+	trigger = { primary_title = { title = e_iron_throne } }
+	
+	option = {
+		name = EVTOPTA_extra.408
+		trigger = { capital_scope = { has_wonder = no } }
+		capital_scope = { add_wonder = wonder_palace }
+		ROOT = { character_event = { id = tsk_extra.408 months = 60 } }
+		set_character_flag = golden_age
+	}
+	option = {
+		name = EVTOPTA_extra.408
+		trigger = { capital_scope = { wonder = { wonder_stage < 3 } } }
+		capital_scope = { wonder = { add_wonder_stage = 1 } }
+		set_character_flag = golden_age
+		ROOT = { character_event = { id = tsk_extra.408 months = 60 } }
+	}
+	option = {
+		name = EVTOPTA_extra.408
+		trigger = { capital_scope = { wonder = { wonder_stage == 3 } } }
+		capital_scope = { wonder = { add_wonder_stage = 1 } }
+		clr_global_flag = extra_opulance
+		ROOT = { character_event = { id = tsk_extra.409 days = 1 } }
+	}
+}
+character_event = {
+	id = tsk_extra.409
+	desc = EVTDESC_extra.409
+	is_triggered_only = yes
+	
+	option = {
+		name = EVTOPTA_extra.409
+		ROOT = { give_nickname = nick_the_builder }
+	}
+}
