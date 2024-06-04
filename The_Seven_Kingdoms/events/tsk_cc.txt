@@ -453,7 +453,7 @@ character_event = {
 	picture = "GFX_evt_castle_construction"
 	
 	ai = no
-	age = 16
+	min_age = 16
 	
 	trigger = {
 		has_landed_title = c_mountain_of_the_moon
@@ -521,7 +521,7 @@ character_event = {
 	picture = "GFX_evt_castle_construction"
 	
 	ai = no
-	age = 16
+	min_age = 16
 	
 	trigger = {
 		has_landed_title = c_mountain_of_the_moon
@@ -586,6 +586,129 @@ character_event = {
 					clr_province_flag = eyrie_cbuilding
 				}
 			}
+		}
+	}
+}
+
+#Ten Towers
+character_event = {
+	id = tsk_cc.6
+	desc = "EVTDESCtsk_cc.6"
+	picture = "GFX_ironborn_kingdom"
+	
+	only_playable = yes
+	culture_group = iron_islander
+	
+	trigger = {
+		NOT = { has_global_flag = harlaw_tt }
+		has_landed_title = c_ten_towers
+		ROOT = {
+			current_heir = {
+				OR = {
+					trait = ill
+					trait = pneumonic
+					trait = infirm
+					trait = incapable
+					trait = has_tuberculosis
+					trait = has_typhoid_fever
+					trait = has_typhus
+					trait = has_bubonic_plague
+					trait = has_measles
+					trait = has_small_pox
+					trait = sickly
+				}
+			}
+		}
+	}
+	
+	immediate = {
+		set_global_flag = harlaw_tt
+	}
+	
+	mean_time_to_happen = { 
+		days = 1
+	}
+	
+	option = {
+		name = "EVTOPTAtsk_cc.6"
+		ai_chance = {
+			factor = 50
+		}
+		
+		ROOT = {
+			current_heir = {
+				death = {
+					death_reason = death_poor_health
+				}
+				save_event_target_as = tt_heir
+			}
+			random_list = {
+				25 = {
+					wealth = 25
+				}
+				25 = {
+					wealth = 50
+				}
+				25 = {
+					add_trait = diligent
+				}
+				25 = {
+					add_trait = ambitious
+				}
+			}
+		}
+		c_ten_towers = {
+			holder_scope = {
+				long_character_event = { id = tsk_cc.66 days = 365 }
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTBtsk_cc.6"
+		ai_chance = {
+			factor = 50
+		}
+		
+		ROOT = {
+			current_heir = {
+				death = {
+					death_reason = death_poor_health
+				}
+				save_event_target_as = tt_heir
+			}
+			random_list = {
+				25 = {
+					add_trait = stressed
+				}
+				25 = {
+					add_trait = depressed
+				}
+				25 = {
+					add_trait = cynical
+				}
+				25 = {
+					add_trait = drunkard
+				}
+			}
+		}
+	}
+}
+
+long_character_event = {
+	id = tsk_cc.66
+	desc = "EVTDESCtsk_cc.66"
+	picture = "GFX_evt_castle_construction"
+	
+	is_triggered_only = yes
+	portrait = event_target:tt_heir
+	
+	option = {
+		name = "EVTOPTAtsk_cc.66"
+
+		wealth = -50
+		1171 = {
+			add_province_modifier = { name = tt_foundantions duration = 3650 }
 		}
 	}
 }

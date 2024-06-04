@@ -1,0 +1,47 @@
+targetted_decisions = {
+	nights_watch_command = {
+		ai_target_filter = none
+		filter = sub_realm
+		#diplomacy_icon = GFX_decision_nightswatch
+		
+		from_potential = {
+			is_ruler = yes
+			trait = black_brother
+			has_landed_title = k_the_nights_watch
+			demesne_size = 2
+		}
+		potential = {
+			is_liege_or_above = FROM	
+			is_ruler = no
+			trait = black_brother
+			OR = {
+				martial = 10
+				stewardship = 10
+				learning = 10
+				intrigue = 10
+				diplomacy = 10
+				opinion = { who = ROOT value >= 50 }
+			}
+		}
+		allow = {
+			is_female = no
+			trait = black_brother
+			FROM = { NOT = { has_character_flag = granting_command } }
+			age = 16
+			is_incapable = no
+			prisoner = no
+			is_ruler = no
+		}
+		effect = {
+			FROM = {
+				ROOT = { save_event_target_as = nights_watch_commander }
+				set_character_flag = granting_command
+				character_event = { id = nights_watch.5 }
+			}
+		}
+		ai_check_interval = 6
+		ai_will_do = {
+			factor = 100
+		}
+	}
+}

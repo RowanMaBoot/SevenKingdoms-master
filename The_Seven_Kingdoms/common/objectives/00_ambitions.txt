@@ -2282,3 +2282,114 @@ obj_see_the_realm_prosper = {
 	}
 }
 
+obj_invade_realm = {
+	type = character
+
+	allow = {
+		independent = yes
+		prisoner = no
+		is_adult = yes
+		is_incapable = no
+		is_tribal = no
+		NOT = { capital_scope = { region = world_essos } }
+		NOT = { has_character_flag = obj_invade_realm_fail }
+		NOT = { has_character_flag = obj_invade_realm_succ }
+		tsk_holds_high_kingdom = yes
+		prestige = 3000
+		trait = ambitious
+		OR = {
+			martial = 20
+			diplomacy = 20
+		}
+		OR = {
+			trait = shrewd
+			trait = genius
+			trait = quick
+		}
+	}
+	chance = {
+		factor = 50
+		
+		modifier = {
+			factor = 0
+			pacifist = yes
+			NOT = { trait = cynical }
+		}
+		modifier = {
+			factor = 0
+			NOT = { prestige = 1000 }
+		}		
+		modifier = {
+			factor = 1.5
+			trait = envious
+		}
+		modifier = {
+			factor = 0.1
+			trait = humble
+		}
+		modifier = {
+			factor = 0.1
+			trait = just
+		}
+		modifier = {
+			factor = 10.0
+			trait = ambitious
+		}
+		modifier = {
+			factor = 2.0
+			trait = greedy
+		}
+		modifier = {
+			factor = 0.5
+			trait = honourable
+		}
+		modifier = {
+			factor = 2.0
+			trait = sociopath
+		}
+		modifier = {
+			factor = 2.0
+			trait = proud
+		}
+	}
+	creation_effect = {
+		set_character_flag = obj_invade_realm_conquistador
+	}
+	success = {
+		custom_tooltip = {
+			text = obj_invade_realm_SUCCESS
+			hidden_tooltip = { any_vassal = { has_character_flag = obj_invade_realm_invaded } }
+		}
+	}
+	abort = {
+		OR = {	
+			trait = incapable
+			is_ruler = no
+			independent = no
+			AND = {
+				war = no
+				had_character_flag = { flag = obj_invade_realm_conquistador days = 1825 }
+			}
+			NOT = { real_tier = EMPEROR }
+		}
+	}
+	abort_effect = {
+		clr_character_flag = obj_invade_realm_conquistador
+		set_character_flag = obj_invade_realm_fail
+	}
+	effect = {
+		prestige = 500
+		if = {
+			limit = { has_nickname = no }
+			give_nickname = nick_the_conqueror
+		}
+		clr_character_flag = obj_invade_realm_conquistador
+		set_character_flag = obj_invade_realm_succ
+		any_vassal = {
+			limit = {
+				has_character_flag = obj_invade_realm_invaded
+			}
+			clr_character_flag = obj_invade_realm_invaded
+		}
+	}
+}

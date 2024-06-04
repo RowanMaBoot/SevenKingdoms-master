@@ -3,6 +3,8 @@ namespace = nights_watch
 # nights_watch.1 - hands out the black_brother trait to rulers (baron and up)
 # nights_watch.2 - expels children and spouses from the NW
 # nights_watch.3 - randomises culture and religion of characters on gaining titles in the NW
+# nights_watch.4 - call the northern lords to the Wall defense
+# nights_watch.5 - handing out commands
 
 # Insignificant impact, fired on new holder and twice a year.
 character_event = {
@@ -12,7 +14,7 @@ character_event = {
     is_triggered_only = yes
     
     # This should prevent it from firing for our barons
-    only_playable = yes
+    #only_playable = yes
     
     trigger = {
         OR = {
@@ -40,13 +42,17 @@ character_event = {
     }
     
     immediate = {
+		set_character_flag = no_court_invites
         if = {
             limit = {
-                NOT = {
-                    trait = black_brother
-                }
+				is_female = no
+				age = 16
+				is_tribal = no
+                NOT = { trait = black_brother }
+				NOT = { liege = { is_tribal = yes } }
             }
             add_trait = black_brother
+			set_character_flag = no_court_invites
         }
         if = {
             limit = {
@@ -54,7 +60,65 @@ character_event = {
             }
             remove_spouse = spouse
         }
-    }
+		if = {
+			limit = {
+				trait = black_brother
+				is_pretender = yes
+			}
+			any_claim = {
+				remove_claim = PREV
+			}
+		}
+		if = {
+			limit = {
+				is_ruler = no
+				trait = black_brother
+				NOT = { liege = { has_landed_title = k_the_nights_watch } }
+				NOT = { liege = { trait = black_brother } }
+			}
+			k_the_nights_watch = {
+				holder_scope = { ROOT = { move_character = PREV } }
+			}
+		}	
+		any_realm_lord = {
+			if = {
+				limit = { 
+					trait = black_brother
+					NOR = {
+						has_landed_title = c_easttown
+						has_landed_title = c_moles_town
+						has_landed_title = c_northtown
+						has_landed_title = c_queenscrown
+						has_landed_title = c_westtown
+					}
+				}
+				set_government_type = nights_watch_government
+				primary_title = { succession = appointment }
+				recalc_succession = yes
+			}
+			if = {
+				limit = {
+					OR = {
+						has_landed_title = c_easttown
+						has_landed_title = c_moles_town
+						has_landed_title = c_northtown
+						has_landed_title = c_queenscrown
+						has_landed_title = c_westtown
+					}
+					tsk_is_nights_watch_trigger = yes
+				}
+				holder_scope = {
+					remove_trait = black_brother
+					set_government_type = tribal_government
+					primary_title = { succession = gavelkind }
+					recalc_succession = yes
+					culture = hill_clansmen
+					set_graphical_culture = hill_clansmen
+					religion = old_gods
+				}
+			}
+		}
+	}
 }
 
 # Court cleanup
@@ -262,4 +326,203 @@ character_event = {
             10 = { }
         }
     }
+}
+
+character_event = {
+    id = nights_watch.4
+	desc = "EVTDESCnights_watch.4"
+	picture = GFX_evt_thewall
+    
+    is_triggered_only = yes
+	
+	portrait = event_target:NW_lord_commander
+	
+	option = {
+		name = "EVTOPTAnights_watch.4"
+		ai_chance = {
+			factor = 80
+			modifier = {
+				factor = 100
+				OR = {
+					trait = honourable
+					trait = just
+				}
+			}
+		}
+		join_defender_wars = event_target:NW_lord_commander
+		add_character_modifier = { name = answered_NW duration = 3650 }
+	}
+
+	option = {
+		name = "EVTOPTBnights_watch.4"
+		ai_chance = {
+			factor = 20
+			modifier = {
+				factor = 100
+				OR = {
+					trait = craven
+					trait = sociopath
+				}
+			}
+		}
+		prestige = -100
+		piety = -50
+		add_character_modifier = { name = ignored_NW duration = -1 }
+	}
+}
+
+character_event = {
+    id = nights_watch.5
+	desc = "EVTDESCnights_watch.5"
+	picture = GFX_evt_thewall
+	
+	portrait = event_target:nights_watch_commander
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTAnights_watch.5"
+		
+		trigger = {
+			has_landed_title = c_shadow_tower
+		}
+	
+		c_shadow_tower = {
+			grant_title = event_target:nights_watch_commander
+		}
+		FROM = {
+			set_defacto_liege = ROOT
+			set_government_type = nights_watch_government
+			primary_title = { succession = appointment }
+			recalc_succession = yes
+		}
+		clr_character_flag = granting_command
+	}
+	
+	option = {
+		name = "EVTOPTBnights_watch.5"
+		
+		trigger = {
+			has_landed_title = c_greyguard
+		}
+		
+		c_greyguard = {
+			grant_title = event_target:nights_watch_commander
+		}
+		FROM = {
+			set_defacto_liege = ROOT
+			set_government_type = nights_watch_government
+			primary_title = { succession = appointment }
+			recalc_succession = yes
+		}
+		clr_character_flag = granting_command
+	}
+	
+	option = {
+		name = "EVTOPTCnights_watch.5"
+		
+		trigger = {
+			has_landed_title = c_nightfort
+		}
+		
+		c_nightfort = {
+			grant_title = event_target:nights_watch_commander
+		}
+		FROM = {
+			set_defacto_liege = ROOT
+			set_government_type = nights_watch_government
+			primary_title = { succession = appointment }
+			recalc_succession = yes
+		}
+		clr_character_flag = granting_command
+	}
+	
+	option = {
+		name = nextpage
+		trigger = {
+			OR = {
+				has_landed_title = c_rimegate
+				has_landed_title = c_greenguard
+				has_landed_title = c_eastwatch_by_the_sea
+			}
+		}
+		hidden_tooltip = { character_event = { id = nights_watch.55 } }
+	}
+}
+
+character_event = {
+    id = nights_watch.55
+	desc = "EVTDESCnights_watch.55"
+	picture = GFX_evt_thewall
+	
+	portrait = event_target:nights_watch_commander
+	is_triggered_only = yes
+	
+	option = {
+		name = "EVTOPTAnights_watch.55"
+		
+		trigger = {
+			has_landed_title = c_rimegate
+		}
+	
+		c_rimegate = {
+			grant_title = event_target:nights_watch_commander
+		}
+		FROM = {
+			set_defacto_liege = ROOT
+			set_government_type = nights_watch_government
+			primary_title = { succession = appointment }
+			recalc_succession = yes
+		}
+		clr_character_flag = granting_command
+	}
+	
+	option = {
+		name = "EVTOPTBnights_watch.55"
+		
+		trigger = {
+			has_landed_title = c_greenguard
+		}
+	
+		c_greenguard = {
+			grant_title = event_target:nights_watch_commander
+		}
+		FROM = {
+			set_defacto_liege = ROOT
+			set_government_type = nights_watch_government
+			primary_title = { succession = appointment }
+			recalc_succession = yes
+		}
+		clr_character_flag = granting_command
+	}
+	
+	option = {
+		name = "EVTOPTCnights_watch.55"
+		
+		trigger = {
+			has_landed_title = c_eastwatch_by_the_sea
+		}
+	
+		c_eastwatch_by_the_sea = {
+			grant_title = event_target:nights_watch_commander
+		}
+		FROM = {
+			set_defacto_liege = ROOT
+			set_government_type = nights_watch_government
+			primary_title = { succession = appointment }
+			recalc_succession = yes
+		}
+		clr_character_flag = granting_command
+	}
+	
+	option = {
+		name = firstpage
+		trigger = {
+			OR = {
+				has_landed_title = c_shadow_tower
+				has_landed_title = c_greyguard
+				has_landed_title = c_nightfort
+			}
+		}
+		hidden_tooltip = { character_event = { id = nights_watch.5 } }
+	}
 }

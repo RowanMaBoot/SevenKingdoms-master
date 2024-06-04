@@ -577,9 +577,15 @@ succession_laws = {
 							show_scope_change = no
 							primary_title = {
 								show_scope_change = no
-								OR = {
-									has_law = ze_administration_laws_1
-									has_law = ze_administration_laws_2
+								custom_tooltip = {
+									text = westerosi_values
+									hidden_tooltip = {
+										OR = {
+											has_law = ze_administration_laws_1
+											has_law = ze_administration_laws_2
+											region = world_westeros_only
+										}
+									}
 								}
 							}
 						}
@@ -1207,18 +1213,41 @@ succession_laws = {
 	succ_appointment = {
 		potential = {
 			holder_scope = {
-				is_feudal = yes
 				independent = no
-				any_liege = {
-					holy_order = yes
+				OR = {
+					is_military_command_trigger = yes	
+					government = nights_watch_government	
+					AND = {
+						any_liege = { holy_order = yes }
+						OR = {
+							is_feudal = yes
+							is_tribal = yes
+						}						
+					}
+					AND = {
+						NOT = { holder_scope = { government = confucian_bureaucracy } }
+						NOT = { holder_scope = { government = chinese_imperial_government } }
+					}
 				}
 				is_merchant_republic = no
+				is_nomadic = no
 			}
-			NOT = { holder_scope = { government = confucian_bureaucracy } }
-			NOT = { holder_scope = { government = chinese_imperial_government } }
 		}
 		effect = {
 			succession = appointment
+		}
+		default_selection = {
+			factor = 0
+			additive_modifier = { 
+				value = 10
+				holder_scope = { 
+					OR = {
+						government = nights_watch_government
+						is_military_command_trigger = yes	
+						any_liege = { holy_order = yes }
+					}	
+				}
+			}
 		}
 		revoke_allowed = {
 			always = no

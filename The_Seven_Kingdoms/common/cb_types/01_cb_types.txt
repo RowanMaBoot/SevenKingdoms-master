@@ -288,11 +288,9 @@ dejure_duchy_claim = { # New1
 		if = {
 			limit = {
 				FROM = {
-					holder_scope = {
-						is_patrician = no
-						NOT = {
-							culture_group = free_folk
-						}
+					is_patrician = no
+					NOT = {
+						culture_group = free_folk
 					}
 				}
 			}
@@ -306,13 +304,11 @@ dejure_duchy_claim = { # New1
 		else_if = {
 			limit = {
 				FROM = {
-					holder_scope = {
-						is_patrician = no
-						culture_group = free_folk
-					}
+					is_patrician = no
+					culture_group = free_folk
 				}
 			}
-			usurp_title_only = { target = ROOT }
+			usurp_title_only = { target = ROOT type = claim }
 			any_de_jure_vassal_title = { #
 				limit = {
 					has_holder = yes
@@ -326,12 +322,7 @@ dejure_duchy_claim = { # New1
 						}
 					}
 				}
-				vassalize_or_take_under_title = {
-					title = PREV
-					enemy = FROM
-					#anti_nomad = yes # Vassalize non-nomadic rulers
-					type = claim
-				}
+				set_defacto_liege = ROOT
 			}
 		}
 		ROOT = { participation_scaled_prestige = 100 }
@@ -419,52 +410,81 @@ force_vassalization = { # New2
 	defender_unoccupied_warscore = yes
 	
 	can_use_gui = {
-		FROM = {
+		ROOT = {
 			show_scope_change = no
 			conditional_tooltip = {
 				trigger = { 
-					tier = COUNT
+					FROM = { tier = COUNT }
 				}
-				ROOT = {
-					show_scope_change = no
-					OR = { 
-						prestige = 250
-						custom_tooltip = { 
-							text = tooltip_antagonize_vassalize_claim 
-							hidden_tooltip = { has_opinion_modifier = { who = FROM modifier = opinion_antagonize_vassalize_claim } } 
-						}
+				OR = { 
+					prestige = 250
+					custom_tooltip = { 
+						text = tooltip_antagonize_vassalize_claim 
+						hidden_tooltip = { has_opinion_modifier = { who = FROM modifier = opinion_antagonize_vassalize_claim } } 
 					}
 				}
 			}
 			conditional_tooltip = {
 				trigger = { 
-					tier = DUKE
+					FROM = { tier = DUKE }
 				}
-				ROOT = {
-					show_scope_change = no
-					OR = { 
-						prestige = 1000
-						custom_tooltip = { 
-							text = tooltip_antagonize_vassalize_claim 
-							hidden_tooltip = { has_opinion_modifier = { who = FROM modifier = opinion_antagonize_vassalize_claim } } 
-						}
+				OR = { 
+					prestige = 1000
+					custom_tooltip = { 
+						text = tooltip_antagonize_vassalize_claim 
+						hidden_tooltip = { has_opinion_modifier = { who = FROM modifier = opinion_antagonize_vassalize_claim } } 
 					}
 				}
 			}
 			conditional_tooltip = {
 				trigger = { 
-					tier = KING
+					FROM = { tier = KING }
 				}
-				ROOT = {
-					show_scope_change = no
-					OR = { 
-						prestige = 2500
-						custom_tooltip = { 
-							text = tooltip_antagonize_vassalize_claim 
-							hidden_tooltip = { has_opinion_modifier = { who = FROM modifier = opinion_antagonize_vassalize_claim } } 
-						}
+				OR = { 
+					prestige = 2500
+					custom_tooltip = { 
+						text = tooltip_antagonize_vassalize_claim 
+						hidden_tooltip = { has_opinion_modifier = { who = FROM modifier = opinion_antagonize_vassalize_claim } } 
 					}
 				}
+			}
+			OR = {
+				religion = FROM
+				culture_group = FROM
+				de_jure_vassal_or_below	= FROM
+			}
+		}	
+		FROM = {
+			NOT = { realm_size = 31 }
+		}
+	}
+	
+	can_use = {
+		has_dlc = "Jade Dragon"
+		ROOT = {
+			NOT = {
+				has_game_rule = {
+					name = jade_dragon_cbs
+					value = off
+				}
+			}
+			higher_tier_than = count
+			NOT = { same_realm = FROM }
+			NOT = { is_liege_or_above = FROM }
+			mercenary = no
+			is_nomadic = no
+		}
+		
+		FROM = {
+			lower_tier_than = ROOT		
+			in_revolt = no
+			is_nomadic = no
+			controls_religion = no
+			holy_order = no
+			#dejure vassal or bordering
+			OR = {
+				capital_scope = { de_jure_liege_or_above = ROOT }
+				shares_realm_border_with = ROOT
 			}
 		}
 	}
@@ -513,39 +533,6 @@ force_vassalization = { # New2
 				sound_effect = china_angered_emperor
 				detract_grace_super_huge_effect = yes
 			}
-		}
-	}
-	
-	can_use = {
-		has_dlc = "Jade Dragon"
-		ROOT = {
-			NOT = {
-				has_game_rule = {
-					name = jade_dragon_cbs
-					value = off
-				}
-			}
-			higher_tier_than = count
-			NOT = { same_realm = FROM }
-			NOT = { is_liege_or_above = FROM }
-			mercenary = no
-			is_nomadic = no
-		}
-		
-		FROM = {
-			lower_tier_than = ROOT
-			NOT = {
-				realm_size = 31
-			}
-			in_revolt = no
-			is_nomadic = no
-			controls_religion = no
-			holy_order = no
-			OR = {
-				religion = ROOT
-				culture_group = ROOT
-			}
-			shares_realm_border_with = ROOT
 		}
 	}
 	
@@ -1522,6 +1509,7 @@ liberate_religion = { # New6
 				religion = ROOT
 			}
 		}
+		FROM = { NOT = { tsk_is_nights_watch_trigger = yes } }
 	}
 	
 	can_use_title = {
@@ -2695,8 +2683,9 @@ tributary_permanent_cb = { # New8
 		FROM = {
 			is_nomadic = no
 			higher_tier_than = BARON
-			NOT = {
+			NOR = {
 				is_offmap_governor = yes
+				tsk_is_nights_watch_trigger = yes
 			}
 			NAND = {
 				holy_order = yes

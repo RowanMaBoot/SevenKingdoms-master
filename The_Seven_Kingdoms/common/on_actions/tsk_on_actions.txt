@@ -25,9 +25,10 @@ on_yearly_pulse = {
 		# nights_watch.2 # TSK remove unwanted characters from the night's watch
 		#Maintenance				
 		tsk.0116 # Gives Knight Minor Title
-		tsk.0124 # Assigns priest trait
+		tsk.0124 # Assigns priest traits
 	}
 }
+
 
 #character
 on_bi_yearly_pulse = {
@@ -51,29 +52,37 @@ on_bi_yearly_pulse = {
 
 #character
 on_five_year_pulse = {
-	effect = {
-		IF = {
-			limit = {
-				AND = {
-					has_global_flag = extra_growth
-					e_iron_throne = { holder_scope = { NOT = { has_character_flag = golden_age } } }
-				}
-			}
-			character_event = { id = tsk_extra.406 months = 100 } 
-		}
-		IF = {
-			limit = {
-				AND = {
-					has_global_flag = extra_opulance
-					e_iron_throne = { holder_scope = { NOT = { has_character_flag = golden_age } } }
-				}
-			}
-			character_event = { id = tsk_extra.408 months = 60 } 
-		}
-	}
-	events = {
-		tsk_extra.100 # Mudd gets strong
-	}
+    effect = {
+        IF = {
+            limit = {
+                AND = {
+                    has_global_flag = extra_growth
+                    e_iron_throne = { holder_scope = { NOT = { has_character_flag = golden_age } } }
+                }
+            }
+            character_event = { id = tsk_extra.406 months = 100 } 
+        }
+        IF = {
+            limit = {
+                AND = {
+                    has_global_flag = extra_opulance
+                    e_iron_throne = { holder_scope = { NOT = { has_character_flag = golden_age } } }
+                }
+            }
+            character_event = { id = tsk_extra.408 months = 60 } 
+        }
+    }
+    events = {
+        tsk_extra.100 # Mudd gets strong
+    }
+}
+
+#character
+on_adolescence_pulse = {
+    random_events = {    
+        50 = tsk_extra.101 #Dayne upgrades combat skill
+        50 = 0
+    }
 }
 
 on_combat_pulse = {
@@ -103,12 +112,6 @@ on_death = {
 	}	  
 }
 
-on_adolescence_pulse = {
-	random_events = {	
-		50 = tsk_extra.101 #Dayne upgrades combat skill
-		50 = 0
-	}
-}
 on_create_title = {
 	events = {
 		tsk_dynamic_coa.0 # Sets dynamic flags
@@ -185,4 +188,3 @@ on_war_ended_defeat = {
 		tsk_high_kingdom.10 # Claim war over - High King lost
 	}
 } 
-

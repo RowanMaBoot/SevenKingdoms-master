@@ -201,6 +201,51 @@ targetted_decisions = {
 			}
 		}
 	}
+	
+	invade_realm = {
+	    only_playable = yes
+	    is_high_prio = yes
+		
+		filter = independent_rulers
+		ai_target_filter = independent_rulers
+		ai_check_interval = 12
+
+	    diplomacy_icon = GFX_duel_decision
+		
+		from_potential = {
+			has_character_flag = obj_invade_realm_conquistador
+		}
+		
+		potential = {
+			shares_realm_border_with = FROM
+			higher_real_tier_than = DUKE
+			tsk_same_kingdom = no
+		}
+		
+		allow = {
+			FROM = {
+				prestige = 3000
+				NOT = { de_jure_vassal_or_below = ROOT }
+			}
+		}
+		
+		effect = {
+			FROM = {
+				unsafe_war = {
+					target = ROOT
+					casus_belli = empire_subjugation
+				}
+			}
+			ROOT = { set_character_flag = obj_invade_realm_invaded }
+		}
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+			factor = 1
+		}
+	}
+
 }
 
 # decisions = {
