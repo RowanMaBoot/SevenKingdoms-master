@@ -13,8 +13,7 @@ character_event = {
     hide_window = yes
     is_triggered_only = yes
     
-    # This should prevent it from firing for our barons
-    #only_playable = yes
+    min_age = 16
     
     trigger = {
         OR = {
@@ -52,6 +51,7 @@ character_event = {
 				NOT = { liege = { is_tribal = yes } }
             }
             add_trait = black_brother
+			add_trait = cannot_marry
 			set_character_flag = no_court_invites
         }
         if = {
@@ -60,26 +60,6 @@ character_event = {
             }
             remove_spouse = spouse
         }
-		if = {
-			limit = {
-				trait = black_brother
-				is_pretender = yes
-			}
-			any_claim = {
-				remove_claim = PREV
-			}
-		}
-		if = {
-			limit = {
-				is_ruler = no
-				trait = black_brother
-				NOT = { liege = { has_landed_title = k_the_nights_watch } }
-				NOT = { liege = { trait = black_brother } }
-			}
-			k_the_nights_watch = {
-				holder_scope = { ROOT = { move_character = PREV } }
-			}
-		}	
 		any_realm_lord = {
 			if = {
 				limit = { 
@@ -128,161 +108,22 @@ character_event = {
     id = nights_watch.2
     
     hide_window = yes
+	only_playable = yes
     is_triggered_only = yes
     
     trigger = {
-        liege = {
-            trait = black_brother
-        }
-        NOT = {
-            trait = black_brother
-        }
-        is_ruler = no
+        tsk_is_nights_watch_trigger = yes
+		is_landed = yes
     }
     
-    immediate = {
-        if = {
-            limit = {
-                spouse = {
-                    trait = black_brother
-                }
-                remove_spouse = spouse
-            }
-        }
-        if = {
-            limit = {
-                age = 13
-                is_female = no
-            }
-            add_trait = black_brother
-            break = yes
-        }
-        if = {
-            limit = {
-                OR = {
-                    is_female = yes
-                    NOT = {
-                        age = 13
-                    }
-                }
-            }
-            father = {
-                if = {
-                    limit = {
-                        is_alive = yes
-                    }
-                    if = {
-                        limit = {
-                            is_ruler = yes
-                        }
-                        ROOT = {
-                            move_character = PREV
-                        }
-                        break = yes
-                    }
-                    if = {
-                        limit = {
-                            NOT = {
-                                is_ruler = yes
-                                ROOT = {
-                                    mother = {
-                                        is_alive = yes
-                                        is_ruler = yes
-                                    }
-                                }
-                            }
-                        }
-                        liege = {
-                            ROOT = {
-                                move_character = PREV
-                            }
-                        }
-                        break = yes
-                    }
-                }
-            }
-            mother = {
-                if = {
-                    limit = {
-                        is_alive = yes
-                    }
-                    if = {
-                        limit = {
-                            is_ruler = yes
-                        }
-                        ROOT = {
-                            move_character = PREV
-                        }
-                        break = yes
-                    }
-                    if = {
-                        limit = {
-                            NOT = {
-                                is_ruler = yes
-                            }
-                        }
-                        liege = {
-                            ROOT = {
-                                move_character = PREV
-                            }
-                        }
-                        break = yes
-                    }
-                }
-            }
-            if = {
-                limit = {
-                    NOT = {
-                        dynasty = NONE
-                    }
-                }
-                if = {
-                    limit = {
-                        dynasty_head = {
-                            NOT = {
-                                character = ROOT
-                            }
-                            is_alive = yes
-                            is_ruler = yes
-                        }
-                    }
-                    dynasty_head = {
-                        ROOT = {
-                            move_character = PREV
-                        }
-                    }
-                    break = yes
-                }
-                if = {
-                    limit = {
-                        random_dynasty_member = {
-                            is_alive = yes
-                            is_ruler = yes
-                        }
-                    }
-                    random_dynasty_member = {
-                        ROOT = {
-                            move_character = PREV
-                        }
-                    }
-                    break = yes
-                }
-            }
-            random_independent_ruler = {
-                limit = {
-                    NOR = {
-                        has_landed_title = d_the_wall
-                        has_landed_title = k_the_nights_watch
-                    } 
-                }
-                random_realm_lord = {
-                    ROOT = {
-                        move_character = PREV
-                    }
-                }
-            }
-        }
-    }
+	immediate = {
+		any_courtier = {
+			limit = {
+				tsk_is_not_nights_watch_trigger = yes
+			}
+			death = { death_reason = death_murder_unknown }
+		}
+	}
 }
 
 
@@ -524,5 +365,58 @@ character_event = {
 			}
 		}
 		hidden_tooltip = { character_event = { id = nights_watch.5 } }
+	}
+}
+
+character_event = {
+    id = nights_watch.999
+    
+    hide_window = yes
+    is_triggered_only = yes
+
+	immediate = {
+		if = {
+			limit = {
+				is_ruler = yes
+			}
+			current_heir = { save_event_target_as = wealthtransfer_nw }
+		}
+		else_if = {
+			limit = {
+				is_ruler = no
+			}
+			host = { save_event_target_as = wealthtransfer_nw }
+		}
+		banish = yes
+	}
+	
+	option = {
+		if = {
+			limit = {
+				is_in_society = yes
+			}
+			leave_society = yes
+		}
+		if = {
+			limit = {
+				is_ruler = no
+			}
+			transfer_scaled_wealth = {
+				to = event_target:wealthtransfer_nw
+				value = all
+			}
+		}
+		any_spouse = { remove_spouse = PREV }	
+		any_consort = { remove_consort = PREV }
+		add_trait = black_brother		
+		set_character_flag = no_court_invites
+		any_claim = {
+			remove_claim = PREV
+		}
+		k_the_nights_watch = {
+			holder_scope = {
+				ROOT = { move_character = PREV }
+			}
+		}
 	}
 }

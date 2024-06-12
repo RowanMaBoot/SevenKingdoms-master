@@ -515,6 +515,10 @@ action_inquisition = {
 	attribute = learning
 	
 	potential = {
+		FROM = { 
+			NOT = { trait = black_brother } 
+			#NOT = { religion_group = westerosi_pagan_group } 
+		}
 	}
 	
 	trigger = {
@@ -626,6 +630,7 @@ action_build_zeal = {
 
 	#Opening this to all religions to give something for chaplain to do
 	potential = {
+		NOT = { trait = black_brother }
 	}
 
 	trigger = {
@@ -644,6 +649,10 @@ action_hunt_heretics = {
 
 	potential = {
 		has_dlc = Mystics
+		FROM = { 
+			NOT = { trait = black_brother } 
+			NOT = { religion_group = westerosi_pagan_group } 
+		}
 	}
 	
 	liege_modifier = apostate_liege_mod
@@ -653,21 +662,28 @@ action_hunt_heretics = {
 	events = { MNM.70100 }
 }
 
-# Lord Spiritual (Muslim only)
-#action_charity = {
-#	attribute = learning
+action_charity = {
+	attribute = learning
 	
-#	potential = {
-#		FROM = { religion_group = muslim }
-#	}
+	potential = {
+		FROM = { 
+			OR = {
+				trait = black_brother
+				religion = old_gods
+			}
+			NOT = { culture_group = free_folk }
+		}
+	}
 	
-#	trigger = {
-#		any_province_lord = {
-#			character = FROM
-#		}
-#	}
+	trigger = {
+		any_province_lord = {
+			character = FROM
+		}
+		num_of_settlements = 1
+	}
 	
-#	local_revolt_risk = -0.01
-#	
-#	events = { 20040 20043 20048 20050 }
-#}
+	local_revolt_risk = -0.005
+	attribute_cap = 20
+	
+	events = { 20040 20043 20048 20050 }
+}

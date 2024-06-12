@@ -1,14 +1,15 @@
 targetted_decisions = {
 	nights_watch_command = {
-		ai_target_filter = none
-		filter = sub_realm
-		#diplomacy_icon = GFX_decision_nightswatch
+		ai_target_filter = realm
+		filter = realm
+		diplomacy_icon = GFX_decision_nightswatch
 		
 		from_potential = {
 			is_ruler = yes
 			trait = black_brother
 			has_landed_title = k_the_nights_watch
 			demesne_size = 2
+			any_demesne_title = { has_title_flag = nw_title }
 		}
 		potential = {
 			is_liege_or_above = FROM	
@@ -17,9 +18,9 @@ targetted_decisions = {
 			OR = {
 				martial = 10
 				stewardship = 10
-				learning = 10
 				intrigue = 10
 				diplomacy = 10
+				is_lowborn = no
 				opinion = { who = ROOT value >= 50 }
 			}
 		}
@@ -39,9 +40,130 @@ targetted_decisions = {
 				character_event = { id = nights_watch.5 }
 			}
 		}
-		ai_check_interval = 6
 		ai_will_do = {
 			factor = 100
 		}
 	}
+	
+	banish_nw = {
+		ai_target_filter = court
+		filter = court
+		is_high_prio = yes
+		only_rulers = yes
+		diplomacy_icon = GFX_decision_nightswatch
+
+		
+		from_potential = {
+			is_ruler = yes
+			capital_scope = { region = world_westeros_only }
+			war = no
+		}
+	
+		potential = {
+			prisoner = yes
+			host = { character = FROM }
+			OR = {
+				is_liege_or_above = FROM
+				AND = {
+					lower_tier_than = FROM
+					NOT = { war_with = FROM }
+				}
+			}	
+			is_female = no
+			age = 16
+			NOT = { trait = black_brother }
+			OR = {
+				is_any_kinslayer_trigger = yes
+				trait = excommunicated
+				reverse_opinion = { who = FROM value < -50 }
+				FROM = { ROOT = { tsk_imprisoned_criminal = yes } }
+			}
+		}
+		allow = {
+			custom_tooltip = {
+				text = banishnwcond
+				FROM = {
+					OR = {
+						has_regent = no
+						wealth > 4
+					}
+				}
+				prisoner = yes
+				c_castle_black = { holder_scope = { trait = black_brother } }
+			}
+		}
+		effect = {
+			FROM = {
+				if = {
+					limit = {
+						religion_group = westerosi_pagan_group
+					}
+					wealth = -5
+					piety = 20
+					prestige = 20
+				}
+				else_if = {
+					limit = {
+						NOT = { religion_group = westerosi_pagan_group }
+					}
+					wealth = -5
+				}
+			}
+			hidden_tooltip = { character_event = { id = nights_watch.999 } }
+		}
+		
+		ai_check_interval = 2
+		ai_will_do = {
+			factor = 1
+			
+			modifier = {
+				factor = 100
+				FROM = {
+					OR = {
+						culture_group = first_men
+						religion_group = westerosi_pagan_group
+					}
+				}
+			}
+			modifier = {
+				factor = 4
+				any_claim = { holder_scope = { character = FROM } }
+				NOT = { is_child_of = FROM }
+				NOT = { is_grandchild_of = FROM }
+			}
+			modifier = {
+				factor = 2
+				is_pretender = yes
+				FROM = {
+					OR = {
+						is_pretender = yes
+						is_primary_heir = yes
+					}
+				}
+				any_pretender_title = {
+					OR = {
+						current_heir = { character = FROM }
+						FROM = { any_pretender_title = { title = PREVPREV } }
+					}
+				}			
+			}						
+			modifier = {
+				factor = 0.2
+				FROM = { trait = cruel }
+			}
+			modifier = {
+				factor = 0.5
+				FROM = { trait = sociopath }
+			}
+			modifier = {
+				factor = 2
+				FROM = { trait = honourable }
+			}
+			modifier = {
+				factor = 2
+				FROM = { trait = just }
+			}
+		}
+	}
+
 }
