@@ -89,12 +89,17 @@ character_event = {
 				}
 				holder_scope = {
 					remove_trait = black_brother
+					remove_trait = nw_steward
+					remove_trait = nw_ranger
+					remove_trait = nw_builder
 					set_government_type = tribal_government
 					primary_title = { succession = gavelkind }
 					recalc_succession = yes
 					culture = hill_clansmen
 					set_graphical_culture = hill_clansmen
 					religion = old_gods
+					health = 8
+					fertility = 0.8
 				}
 			}
 		}
@@ -102,8 +107,6 @@ character_event = {
 }
 
 # Court cleanup
-# Sends females and children away to relatives, or if lacking, other realms.
-# Split off into second event, so it can be fired less frequently
 character_event = {
     id = nights_watch.2
     
@@ -127,44 +130,137 @@ character_event = {
 }
 
 
-# nights_watch.3 - randomises culture and religion of characters on gaining titles in the NW
+# nights_watch.3 - randomises the order of a NW brother
 character_event = {
     id = nights_watch.3
     
     hide_window = yes
     is_triggered_only = yes
-    
-    only_playable = yes
+	only_men = yes
     
     trigger = {
-        NOT = { has_character_flag = NW_randomised }
-        OR = {
-            trait = black_brother
-            any_liege = {
-                primary_title = {
-                    OR = {
-                        title = d_the_wall
-                        title = k_the_nights_watch
-                    }
-                }
-            }
-        }
+        trait = black_brother
+		any_liege = { trait = black_brother }
+        NOR = {
+            trait = nw_ranger
+			trait = nw_builder
+			trait = nw_steward
+		}
     }
     
     immediate = {
-        set_character_flag = NW_randomised
-        
-        random_list = {
-            10 = { }
-            10 = { }
-            10 = { }
-            10 = { }
-            10 = { }
-            10 = { }
-            10 = { }
-            10 = { }
-            10 = { }
-            10 = { }
+	
+        random_list = { #Rangers
+            33 = {
+				modifier = {
+					factor = 0
+					martial <= 9
+				}
+				modifier = {
+					factor = 0
+					tsk_cant_work_trigger = yes
+				}
+				modifier = {
+					factor = 0.5
+					trait = craven
+				}
+				modifier = {
+					factor = 5
+					martial = 12
+				}
+				modifier = {
+					factor = 4
+					is_strong_trigger = yes
+				}
+				modifier = {
+					factor = 3
+					OR = { 	
+						trait = misguided_warrior
+						trait = tough_soldier
+						trait = skilled_tactician
+						trait = brilliant_strategist
+					}
+				}
+				modifier = {
+					factor = 3
+					OR = { 	
+						trait = dueling_novice
+						trait = dueling_adept
+						trait = dueling_skilled
+						trait = dueling_expert
+						trait = dueling_master
+						trait = dueling_legend
+					}
+				}
+				modifier = {
+					factor = 2
+					father_even_if_dead = { higher_tier_than = COUNT }				
+				}
+				modifier = {
+					factor = 1.5
+					trait = hunter
+				}
+				modifier = {
+					factor = 1.5
+					trait = brave
+				}
+				modifier = {
+					factor = 1.5
+					trait = tall
+				}
+				modifier = {
+					factor = 1.5
+					trait = burly
+				}
+				add_trait = nw_ranger
+			}
+            33 = { #Builders
+				modifier = {
+					factor = 0
+					stewardship <= 9
+				}
+				modifier = {
+					factor = 0
+					tsk_cant_work_trigger = yes
+				}
+				modifier = {
+					factor = 0.5
+					trait = slothful
+				}
+				modifier = {
+					factor = 5
+					stewardship = 12
+				}
+				modifier = {
+					factor = 1.5
+					has_virtue_trigger = yes
+				}
+				modifier = {
+					factor = 3
+					OR = { 	
+						trait = indulgent_wastrel
+						trait = thrifty_clerk
+						trait = fortune_builder
+						trait = midas_touched
+					}
+				}
+				add_trait = nw_builder
+			}
+            33 = { #Stewards
+				modifier = {
+					factor = 0.5
+					is_dumb_trigger = yes
+				}
+				modifier = {
+					factor = 5
+					is_smart_trigger = yes
+				}
+				modifier = {
+					factor = 2
+					father_even_if_dead = { higher_tier_than = COUNT }				
+				}
+				add_trait = nw_steward
+			}
         }
     }
 }
@@ -187,6 +283,7 @@ character_event = {
 				OR = {
 					trait = honourable
 					trait = just
+					is_smart_trigger = yes
 				}
 			}
 		}
@@ -203,6 +300,7 @@ character_event = {
 				OR = {
 					trait = craven
 					trait = sociopath
+					is_dumb_trigger = yes
 				}
 			}
 		}
@@ -408,6 +506,7 @@ character_event = {
 		}
 		any_spouse = { remove_spouse = PREV }	
 		any_consort = { remove_consort = PREV }
+		any_lover = { remove_lover = PREV }
 		add_trait = black_brother		
 		set_character_flag = no_court_invites
 		any_claim = {

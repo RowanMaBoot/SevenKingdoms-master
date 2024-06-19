@@ -95,6 +95,7 @@ succession_laws = {
 				}
 				is_merchant_republic = no
 				is_patrician = no
+				NOT = { tsk_is_nights_watch_trigger = yes }
 				OR = {
 					independent = yes
 					NOT = {
@@ -187,6 +188,7 @@ succession_laws = {
 				}
 				is_merchant_republic = no
 				is_patrician = no
+				NOT = { tsk_is_nights_watch_trigger = yes }
 				OR = {
 					independent = yes
 					NOT = {
@@ -293,6 +295,7 @@ succession_laws = {
 				}
 				is_merchant_republic = no
 				is_patrician = no
+				NOT = { tsk_is_nights_watch_trigger = yes }
 				OR = {
 					independent = yes
 					NOT = {
@@ -382,7 +385,7 @@ succession_laws = {
 						NOT = { title = PREVPREV }
 					}
 				}
-				
+				NOT = { tsk_is_nights_watch_trigger = yes }
 				OR = {
 					NOT = { religion_group = westerosi_pagan_group }
 					is_reformed_religion = yes
@@ -524,6 +527,7 @@ succession_laws = {
 			holder_scope = {
 				is_merchant_republic = no
 				is_patrician = no
+				NOT = { tsk_is_nights_watch_trigger = yes }
 			}
 			OR = {
 				holder_scope = { # Viceroyalties can always have primogeniture if not muslim
@@ -695,7 +699,7 @@ succession_laws = {
 				}
 				is_merchant_republic = no
 				is_patrician = no
-				
+				NOT = { tsk_is_nights_watch_trigger = yes }
 				OR = {
 					NOT = { religion_group = westerosi_pagan_group }
 					is_reformed_religion = yes
@@ -794,7 +798,7 @@ succession_laws = {
 				}
 				is_merchant_republic = no
 				is_patrician = no
-				
+				NOT = { tsk_is_nights_watch_trigger = yes }
 				OR = {
 					is_reformed_religion = yes
 					has_law = succession_voting_power_1
@@ -867,6 +871,7 @@ succession_laws = {
 			}
 			NOT = { holder_scope = { government = confucian_bureaucracy } }
 			NOT = { holder_scope = { government = chinese_imperial_government } }
+			NOT = { tsk_is_nights_watch_trigger = yes }
 
 		}
 		allow = {
@@ -905,6 +910,7 @@ succession_laws = {
 				}
 				is_merchant_republic = no
 				is_patrician = no
+				NOT = { tsk_is_nights_watch_trigger = yes }
 				OR = {
 					any_owned_bloodline = {
 						has_bloodline_flag = bloodline_tanistry
@@ -1019,7 +1025,7 @@ succession_laws = {
 						}
 					}
 				}
-				
+				NOT = { tsk_is_nights_watch_trigger = yes }
 				is_merchant_republic = no
 				is_patrician = no
 				OR = {
@@ -1154,6 +1160,7 @@ succession_laws = {
 				is_republic = no
 				is_merchant_republic = no
 				is_nomadic = no
+				NOT = { tsk_is_nights_watch_trigger = yes }
 			}
 			OR = {
 				holder_scope = { # Viceroyalties can always have turkish succession if muslim
@@ -1311,6 +1318,7 @@ succession_laws = {
 			}
 			NOT = { holder_scope = { government = confucian_bureaucracy } }
 			NOT = { holder_scope = { government = chinese_imperial_government } }
+			NOT = { tsk_is_nights_watch_trigger = yes }
 		}
 		
 		effect = {
@@ -1375,6 +1383,7 @@ succession_laws = {
 			}
 			NOT = { holder_scope = { government = confucian_bureaucracy } }
 			NOT = { holder_scope = { government = chinese_imperial_government } }
+			NOT = { tsk_is_nights_watch_trigger = yes }
 		}
 		effect = {
 			succession = patrician_elective
@@ -1410,6 +1419,32 @@ succession_laws = {
 			# This succession type generates a character of China's culture and religion
 			# They have decent (4-10) stats, and good (7-11) stewardship, and will always have a Stewardship education
 			# The offmap power defined in the top liege's government is used to determine the culture and religion. Will not function if this isn't defined
+		}
+		revoke_allowed = {
+			always = no
+		}			
+	}
+	
+	nights_watch_succession = {
+		potential = {
+			title = k_the_nights_watch
+			holder_scope = {
+				tsk_is_nights_watch_trigger = yes
+			}
+		}
+		allow = {
+		}
+		default_selection = {
+			factor = 10
+		}
+		ai_will_do = {
+			factor = 1
+		}
+		effect = {
+			succession = {
+				base_type = feudal_elective
+				voting_rules = nights_watch_succession
+			}
 		}
 		revoke_allowed = {
 			always = no
