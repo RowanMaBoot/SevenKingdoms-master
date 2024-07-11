@@ -17163,11 +17163,11 @@ nights_watch_succession = {
 			NOR = {
 				has_landed_title = c_shadow_tower
 				has_landed_title = c_eastwatch
-				prestige = 350
-				martial = 14
-				stewardship = 14
-				diplomacy = 14
-				intrigue = 14
+				prestige >= 350
+				martial >= 14
+				stewardship >= 14
+				diplomacy >= 14
+				intrigue >= 14
 				father_even_if_dead = { higher_tier_than = BARON }
 			}
 		}
@@ -17203,11 +17203,11 @@ nights_watch_succession = {
 			OR = {
 				has_landed_title = c_shadow_tower
 				has_landed_title = c_eastwatch
-				prestige = 350
-				martial = 14
-				stewardship = 14
-				diplomacy = 14
-				intrigue = 14
+				prestige >= 350
+				martial >= 14
+				stewardship >= 14
+				diplomacy >= 14
+				intrigue >= 14
 				father_even_if_dead = { higher_tier_than = BARON }
 			}
 		}
@@ -17477,77 +17477,113 @@ nights_watch_succession = {
 		}
 		#Prestige
 		additive_modifier = {
-			value = -10
-			localisation_key = tooltip_elector_nwelecp
-			FROM = { NOT = { prestige = 0 } }
+			value = -20
+			localisation_key = tooltip_feudal_elector_vote_prestige_negative
+
+			FROM = {
+				NOT = { character = ROOT }
+				prestige < -1000
+			}
 		}
+
+		additive_modifier = {
+			value = -15
+			localisation_key = tooltip_feudal_elector_vote_prestige_negative
+
+			FROM = {
+				NOT = { character = ROOT }
+				prestige >= -1000
+				prestige < -500
+			}
+		}
+
+		additive_modifier = {
+			value = -10
+			localisation_key = tooltip_feudal_elector_vote_prestige_negative
+
+			FROM = {
+				NOT = { character = ROOT }
+				prestige >= -500
+				prestige < -250
+			}
+		}
+
 		additive_modifier = {
 			value = -5
-			localisation_key = tooltip_elector_nwelecp
-			FROM = { 
-				prestige = 0
-				NOT = { prestige = 40 } 
+			localisation_key = tooltip_feudal_elector_vote_prestige_negative
+
+			FROM = {
+				NOT = { character = ROOT }
+				prestige >= -250
+				prestige < 0
 			}
 		}
+
 		additive_modifier = {
 			value = 5
-			localisation_key = tooltip_elector_nwelecp
-			FROM = { 
-				prestige = 200 
-				NOT = { prestige = 300 }
+			localisation_key = tooltip_feudal_elector_vote_prestige_positive
+
+			FROM = {
+				NOT = { character = ROOT }
+				prestige >= 250
+				prestige < 500
 			}
 		}
+
 		additive_modifier = {
 			value = 10
-			localisation_key = tooltip_elector_nwelecp
-			FROM = { 
-				prestige = 300
-				NOT = { prestige = 400 }
+			localisation_key = tooltip_feudal_elector_vote_prestige_positive
+
+			FROM = {
+				NOT = { character = ROOT }
+				prestige >= 500
+				prestige < 1000
 			}
 		}
+
 		additive_modifier = {
 			value = 15
-			localisation_key = tooltip_elector_nwelecp
-			FROM = { 
-				prestige = 400 
-				NOT = { prestige = 500 }
+			localisation_key = tooltip_feudal_elector_vote_prestige_positive
+
+			FROM = {
+				NOT = { character = ROOT }
+				prestige >= 1000
 			}
-		}
-		additive_modifier = {
-			value = 20
-			localisation_key = tooltip_elector_nwelecp
-			FROM = { prestige = 500 }
 		}
 		
 		#Status
 		additive_modifier = {
-			value = -50
-			localisation_key = tooltip_elector_NWpoorLC
+			value = -10
+			localisation_key = tooltip_feudal_elector_vote_martial_score_negative
+
+			FROM = { martial < 5 }
+		}
+
+		additive_modifier = {
+			value = 5
+			localisation_key = tooltip_feudal_elector_vote_martial_score
+
 			FROM = {
-				martial <= 9
-				stewardship <= 9
-				diplomacy <= 9
+				martial >= 10
+				martial < 15
 			}
 		}
+
 		additive_modifier = {
-			value = 20
-			localisation_key = tooltip_elector_NWokLC
+			value = 10
+			localisation_key = tooltip_feudal_elector_vote_martial_score
+
 			FROM = {
-				OR = {
-					martial = 10
-					stewardship = 10
-					diplomacy = 10
-				}
+				martial >= 15
+				martial < 20
 			}
 		}
+
 		additive_modifier = {
-			value = 50
-			localisation_key = tooltip_elector_NWgoodLC
-			FROM = {
-				martial = 12
-				stewardship = 12
-				diplomacy = 12
-			}
+			value = 15
+			localisation_key = tooltip_feudal_elector_vote_martial_score
+
+			FROM = { martial >= 20 }
 		}		
 		
 		##########################   Raw Opinion bonus towards Candidate   ##########################
@@ -17578,129 +17614,155 @@ nights_watch_succession = {
 			FROM = { same_society_as = ROOT }
 		}	
 		# Opinion
+
 		additive_modifier = {
-			value = 45
-			localisation_key = tooltip_feudal_elector_vote_opinion_positive		
-			opinion = { who = FROM value = 90 }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = 40
-			localisation_key = tooltip_feudal_elector_vote_opinion_positive	
-			opinion = { who = FROM value = 80 }
-			NOT = { opinion = { who = FROM value = 90 } }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = 35
-			localisation_key = tooltip_feudal_elector_vote_opinion_positive			
-			opinion = { who = FROM value = 70 }
-			NOT = { opinion = { who = FROM value = 80 } }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = 30
-			localisation_key = tooltip_feudal_elector_vote_opinion_positive			
-			opinion = { who = FROM value = 60 }
-			NOT = { opinion = { who = FROM value = 70 } }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = 25
-			localisation_key = tooltip_feudal_elector_vote_opinion_positive		
-			opinion = { who = FROM value = 50 }
-			NOT = { opinion = { who = FROM value = 60 } }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = 20
-			localisation_key = tooltip_feudal_elector_vote_opinion_positive	
-			opinion = { who = FROM value = 40 }
-			NOT = { opinion = { who = FROM value = 50 } }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = 15
-			localisation_key = tooltip_feudal_elector_vote_opinion_positive		
-			opinion = { who = FROM value = 30 }
-			NOT = { opinion = { who = FROM value = 40 } }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = 10
-			localisation_key = tooltip_feudal_elector_vote_opinion_positive		
-			opinion = { who = FROM value = 20 }
-			NOT = { opinion = { who = FROM value = 30 } }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = 5
-			localisation_key = tooltip_feudal_elector_vote_opinion_positive		
-			opinion = { who = FROM value = 10 }
-			NOT = { opinion = { who = FROM value = 20 } }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = -5
-			localisation_key = tooltip_feudal_elector_vote_opinion_negative		
-			NOT = { opinion = { who = FROM value = -10 } }
-			opinion = { who = FROM value = -20 }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = -10
-			localisation_key = tooltip_feudal_elector_vote_opinion_negative	
-			NOT = { opinion = { who = FROM value = -20 } }
-			opinion = { who = FROM value = -30 }
-			NOT = { character = FROM }
-		}
-		additive_modifier = {
-			value = -15
+			value = -100
 			localisation_key = tooltip_feudal_elector_vote_opinion_negative
-			NOT = { opinion = { who = FROM value = -30 } }
-			opinion = { who = FROM value = -40 }
-			NOT = { character = FROM }
+
+			NOR = {
+				character = FROM # But not if it's me
+				is_rival = FROM # Special case, above
+			}
+
+			opinion = {
+				who = FROM
+				value < -75
+			}
 		}
+
 		additive_modifier = {
-			value = -20
-			localisation_key = tooltip_feudal_elector_vote_opinion_negative	
-			NOT = { opinion = { who = FROM value = -40 } }
-			opinion = { who = FROM value = -50 }
-			NOT = { character = FROM }
+			value = -50
+			localisation_key = tooltip_feudal_elector_vote_opinion_negative
+
+			NOR = {
+				character = FROM # But not if it's me
+				is_rival = FROM # Special case, above
+			}
+
+			opinion = {
+				who = FROM
+				value < -50
+			}
+
+			opinion = {
+				who = FROM
+				value >= -75
+			}
 		}
-		additive_modifier = {
-			value = -25
-			localisation_key = tooltip_feudal_elector_vote_opinion_negative	
-			NOT = { opinion = { who = FROM value = -50 } }
-			opinion = { who = FROM value = -60 }
-			NOT = { character = FROM }
-		}
+
 		additive_modifier = {
 			value = -30
 			localisation_key = tooltip_feudal_elector_vote_opinion_negative
-			NOT = { opinion = { who = FROM value = -60 } }
-			opinion = { who = FROM value = -70 }
-			NOT = { character = FROM }
+
+			NOR = {
+				character = FROM # But not if it's me
+				is_rival = FROM # Special case, above
+			}
+
+			opinion = {
+				who = FROM
+				value < -25
+			}
+
+			opinion = {
+				who = FROM
+				value >= -50
+			}
 		}
+
 		additive_modifier = {
-			value = -35
-			localisation_key = tooltip_feudal_elector_vote_opinion_negative		
-			NOT = { opinion = { who = FROM value = -70 } }
-			opinion = { who = FROM value = -80 }
-			NOT = { character = FROM }
+			value = -15
+			localisation_key = tooltip_feudal_elector_vote_opinion_negative
+
+			NOR = {
+				character = FROM # But not if it's me
+				is_rival = FROM # Special case, above
+			}
+
+			opinion = {
+				who = FROM
+				value < 0
+			}
+
+			opinion = {
+				who = FROM
+				value >= -25
+			}
 		}
+
 		additive_modifier = {
-			value = -40
-			localisation_key = tooltip_feudal_elector_vote_opinion_negative	
-			NOT = { opinion = { who = FROM value = -80 } }
-			opinion = { who = FROM value = -90 }
-			NOT = { character = FROM }
+			value = 15
+			localisation_key = tooltip_feudal_elector_vote_opinion_positive
+
+			NOR = {
+				character = FROM # But not if it's me
+				is_rival = FROM # Special case, above
+			}
+
+			opinion = {
+				who = FROM
+				value < -25
+			}
+
+			opinion = {
+				who = FROM
+				value >= 0
+			}
 		}
+
 		additive_modifier = {
-			value = -45
-			localisation_key = tooltip_feudal_elector_vote_opinion_negative		
-			NOT = { opinion = { who = FROM value = -90 } }
-			NOT = { character = FROM }
+			value = 30
+			localisation_key = tooltip_feudal_elector_vote_opinion_positive
+
+			NOR = {
+				character = FROM # But not if it's me
+				is_rival = FROM # Special case, above
+			}
+
+			opinion = {
+				who = FROM
+				value < 50
+			}
+
+			opinion = {
+				who = FROM
+				value >= 25
+			}
+		}
+
+		additive_modifier = {
+			value = 50
+			localisation_key = tooltip_feudal_elector_vote_opinion_positive
+
+			NOR = {
+				character = FROM # But not if it's me
+				is_rival = FROM # Special case, above
+			}
+
+			opinion = {
+				who = FROM
+				value < 75
+			}
+
+			opinion = {
+				who = FROM
+				value >= 50
+			}
+		}
+
+		additive_modifier = {
+			value = 70
+			localisation_key = tooltip_feudal_elector_vote_opinion_positive
+
+			NOR = {
+				character = FROM # But not if it's me
+				is_rival = FROM # Special case, above
+			}
+
+			opinion = {
+				who = FROM
+				value >= 75
+			}
 		}
 	}
 	
