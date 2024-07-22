@@ -1326,11 +1326,13 @@ tsk_freefolk_invasion = {
 								capital_scope = { region = world_the_north }
 								independent = yes
 							}
-							NOT = { war_with = ROOT_FROM }	
-							NOT = { ROOT_FROM = { any_current_enemy = { war_with = PREVPREV } } }
-							NOT = { has_character_modifier = ignored_NW }
-							NOT = { any_liege = { war_with = ROOT_FROM } }
-							NOT = { any_liege = { ROOT_FROM = { any_current_enemy = { war_with = PREVPREV } } } }
+							NOR = {
+								war_with = ROOT_FROM
+								ROOT_FROM = { any_current_enemy = { war_with = PREVPREV } }
+								has_character_modifier = ignored_NW
+								any_liege = { war_with = ROOT_FROM }
+								any_liege = { ROOT_FROM = { any_current_enemy = { war_with = PREVPREV } } }
+							}
 						}
 						character_event = { id = nights_watch.4 days = 15 }
 					}
@@ -1622,8 +1624,10 @@ wilidling_conquest = {
 						is_liege_or_above = FROM
 						AND = {
 							is_liege_or_above = ROOT
-							NOT = { culture = ROOT }
-							NOT = { religion = ROOT }
+							NOR = { 
+								culture = ROOT
+								religion = ROOT
+							}
 						}
 					}
 				}
