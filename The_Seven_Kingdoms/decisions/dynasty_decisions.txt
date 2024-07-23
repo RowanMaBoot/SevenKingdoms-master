@@ -1490,6 +1490,8 @@ targetted_decisions = {
 		only_playable = yes
 		diplomacy_icon = GFX_marry_courtier
 		
+		ai = no 
+		
 		from_potential = {
 			is_playable = yes
 			higher_tier_than = COUNT
@@ -1497,32 +1499,15 @@ targetted_decisions = {
 		}
 		potential = {
 			dynasty = FROM
-			OR = { 
-				ai = no 
-				is_primary_heir = yes
-			}
-			age = 14
+			is_primary_heir = yes
+			age = 16
 			is_married = yes
+			NOT = { has_regent = yes }
 			has_character_flag = recieved_royal_marriage_aid_duty
 			has_character_modifier = married_1		
 			spouse = {
-				age = 14
-				OR = {
-					NOT = { age = 16 }
-					NOT = { has_regent = yes }
-				}	
-				OR = {
-					is_female = no
-					is_main_spouse = yes
-				}
-			}
-			OR = {
-				NOT = { age = 16 }
+				age = 16
 				NOT = { has_regent = yes }
-			}	
-			OR = {
-				is_female = no
-				is_main_spouse = yes
 			}
 			OR = {
 				character = FROM
