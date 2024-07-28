@@ -30,6 +30,7 @@
 #			tsk.0143 # Remove Septon title from High Septon
 #			tsk.0144 # Durrandon Opening/Conversion Event
 #			tsk.0145 # Arryn AOPK Opening
+#			tsk.0150 # War Council
 #
 ###################################
 
@@ -1497,5 +1498,407 @@ long_character_event = {
 	
 	option = {
 		name = EVTOPTAtsk.0147 # They will kneel!
+	}
+}
+
+#on_war_started event: war council
+character_event = {
+	id = tsk.0150
+	picture = GFX_evt_battle
+	desc = {
+		trigger = {
+			is_landed = yes
+		}
+		text = "EVTDESCtsk.0150"
+		picture = GFX_evt_battle
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_north
+			}
+		}
+		text = "EVTDESCtsk.0150N"
+		picture = GFX_evt_winter
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_blackwater
+			}
+		}
+		text = "EVTDESCtsk.0150BB"
+		picture = GFX_evt_boatcoast
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_dorne
+			}
+		}
+		text = "EVTDESCtsk.0150D"
+		picture = GFX_dorne_ambush
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_iron_islands
+			}
+		}
+		text = "EVTDESCtsk.0150II"
+		picture = GFX_evt_reaving2
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_stormlands
+			}
+		}
+		text = "EVTDESCtsk.0150S"
+		picture = GFX_storm_kingdom
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_reach
+			}
+		}
+		text = "EVTDESCtsk.0150R"
+		picture = GFX_evt_highgarden
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_riverlands
+			}
+		}
+		text = "EVTDESCtsk.0150RI"
+		picture = GFX_evt_riverrun
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_vale
+			}
+		}
+		text = "EVTDESCtsk.0150V"
+		picture = GFX_evt_arryn2
+	}
+	desc = {
+		trigger = {
+			capital_scope = {
+				region = world_the_westerlands
+			}
+		}
+		text = "EVTDESCtsk.0150W"
+		picture = GFX_evt_grand_army
+	}
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+
+	option = { #Fortify focus
+		name = "EVTOPTAtsk.0150"
+		if = {
+			limit = {
+				martial <= 15
+				NOT = { capital_scope = { region = world_the_north } }
+				NOT = { capital_scope = { region = world_dorne } }
+				tsk_great_castles = no
+			}
+			add_character_modifier = { name = fort_focus duration = 400 }		
+		}
+		if = {
+			limit = {
+				martial = 16
+				NOT = { capital_scope = { region = world_the_north } }
+				NOT = { capital_scope = { region = world_dorne } }
+				tsk_great_castles = no
+			}
+			add_character_modifier = { name = fort_focus2 duration = 400 }		
+		}
+		if = {
+			limit = {
+				capital_scope = { region = world_the_north }
+			}
+			add_character_modifier = { name = fort_focus3 duration = 400 }
+		}
+		if = {
+			limit = {
+				capital_scope = { region = world_dorne }
+			}
+			add_character_modifier = { name = fort_focus4 duration = 400 }
+		}
+		if = {
+			limit = {
+				tsk_great_castles = yes
+			}
+			add_character_modifier = { name = fort_focus5 duration = 400 }
+		}
+	}
+
+	option = { #March focus
+		name = "EVTOPTBtsk.0150"
+		if = {
+			limit = {
+				martial <= 15
+				NOT = { capital_scope = { region = world_the_westerlands } }
+				NOT = { capital_scope = { region = world_the_reach } }
+			}
+			add_character_modifier = { name = rec_focus duration = 400 }
+			capital_scope = {
+				ROOT = {
+					spawn_unit = {
+						owner = ROOT
+						province = ROOT
+
+						troops = {
+							archers = { 75 75 }
+							light_infantry = { 250 250 }
+							heavy_infantry = { 150 150 }
+							light_cavalry = { 25 25 }
+						}
+
+						attrition = 1.0
+						is_looter = no
+						merge = yes
+						disband_on_peace = yes
+						reinforces = yes
+						reinforce_rate_multiplier = 0.2
+						maintenance_multiplier = 0.2
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				martial = 16
+				NOT = { capital_scope = { region = world_the_westerlands } }
+				NOT = { capital_scope = { region = world_the_reach } }
+			}
+			add_character_modifier = { name = rec_focus2 duration = 400 }
+			capital_scope = {
+				ROOT = {
+					spawn_unit = {
+						owner = ROOT
+						province = PREV
+
+						troops = {
+							archers = { 50 50 }
+							light_infantry = { 400 400 }
+							heavy_infantry = { 300 300 }
+							light_cavalry = { 50 50 }
+						}
+
+						attrition = 1.0
+						is_looter = no
+						merge = yes
+						disband_on_peace = yes
+						reinforces = yes
+						reinforce_rate_multiplier = 0.2
+						maintenance_multiplier = 0.2
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				capital_scope = { region = world_the_westerlands }
+			}
+			add_character_modifier = { name = rec_focus3 duration = 400 }
+			capital_scope = {
+				ROOT = {
+					spawn_unit = {
+						owner = ROOT
+						province = PREV
+
+						troops = {
+							archers = { 150 150 }
+							light_infantry = { 350 350 }
+							heavy_infantry = { 350 350 }
+							heavy_cavalry = { 150 150 }
+						}
+
+						attrition = 1.0
+						is_looter = no
+						merge = yes
+						disband_on_peace = yes
+						reinforce_rate_multiplier = 0.2
+						maintenance_multiplier = 0.3
+					}
+				}
+			}
+		}
+		if = {
+			limit = {
+				capital_scope = { region = world_the_reach }
+			}
+			add_character_modifier = { name = rec_focus4 duration = 400 }
+			capital_scope = {
+				ROOT = {
+					spawn_unit = {
+						owner = ROOT
+						province = PREV
+
+						troops = {
+							heavy_infantry = { 650 650 }
+							light_cavalry = { 100 100 }
+							heavy_cavalry = { 250 250 }
+						}
+
+						attrition = 1.0
+						is_looter = no
+						merge = yes
+						disband_on_peace = yes
+						reinforce_rate_multiplier = 0.2
+						maintenance_multiplier = 0.3
+					}
+				}
+			}
+		}		
+	}
+	
+	option = { #Siege focus
+		name = "EVTOPTCtsk.0150"
+		if = {
+			limit = {
+				martial <= 15
+			}
+			add_character_modifier = { name = siege_focus duration = 400 }		
+		}
+		if = {
+			limit = {
+				martial = 16
+			}
+			add_character_modifier = { name = siege_focus2 duration = 400 }		
+		}
+	}
+	option = { #Second page
+		name = "EVTOPTDtsk.0150"
+
+		character_event = { id = tsk.0151 }		
+	}
+}
+
+character_event = {
+	id = tsk.0151
+	desc = EVTDESCtsk.0151
+	picture = GFX_evt_battle
+	border = GFX_event_normal_frame_war
+
+	is_triggered_only = yes
+	
+	option = { #Navy focus
+		name = "EVTOPTAtsk.0151"
+		if = {
+			limit = {
+				martial <= 15
+				NOT = { capital_scope = { region = world_the_iron_islands } }
+				NOT = { capital_scope = { region = world_the_blackwater } }
+			}
+			add_character_modifier = { name = navy_focus3 duration = 400 }
+			spawn_fleet = {
+				province = closest
+				owner = ROOT
+				disband_on_peace = yes
+
+				troops = {
+					galleys = { 20 20 }
+				}
+			}	
+		}
+		if = {
+			limit = {
+				martial = 16
+				NOT = { capital_scope = { region = world_the_iron_islands } }
+				NOT = { capital_scope = { region = world_the_blackwater } }
+			}
+			add_character_modifier = { name = navy_focus4 duration = 400 }
+			spawn_fleet = {
+				province = closest
+				owner = ROOT
+				disband_on_peace = yes
+
+				troops = {
+					galleys = { 25 25 }
+				}
+			}	
+		}
+		if = {
+			limit = {
+				capital_scope = { region = world_the_iron_islands }
+			}
+			spawn_fleet = {
+				province = closest
+				owner = ROOT
+				disband_on_peace = yes
+
+				troops = {
+					galleys = { 40 40 }
+				}
+			}
+			add_character_modifier = { name = navy_focus duration = 400 }
+		}
+		if = {
+			limit = {
+				capital_scope = { region = world_the_blackwater }
+			}
+			spawn_fleet = {
+				province = closest
+				owner = ROOT
+				disband_on_peace = yes
+
+				troops = {
+					galleys = { 30 30 }
+				}
+			}
+			add_character_modifier = { name = navy_focus2 duration = 400 }
+		}
+	}
+
+	option = { #Combat focus
+		name = "EVTOPTBtsk.0151"
+		if = {
+			limit = {
+				martial <= 15
+				NOT = { capital_scope = { region = world_the_riverlands } }
+				NOT = { capital_scope = { region = world_the_stormlands } }
+				NOT = { capital_scope = { region = world_the_vale } }
+			}
+			add_character_modifier = { name = comb_focus duration = 400 }	
+		}
+		if = {
+			limit = {
+				martial = 16
+				NOT = { capital_scope = { region = world_the_riverlands } }
+				NOT = { capital_scope = { region = world_the_stormlands } }
+				NOT = { capital_scope = { region = world_the_vale } }
+			}
+			add_character_modifier = { name = comb_focus2 duration = 400 }	
+		}
+		if = {
+			limit = {
+				capital_scope = { region = world_the_riverlands }
+			}
+			add_character_modifier = { name = comb_focus3 duration = 400 }	
+		}
+		if = {
+			limit = {
+				capital_scope = { region = world_the_stormlands }
+			}
+			add_character_modifier = { name = comb_focus4 duration = 400 }	
+		}
+		if = {
+			limit = {
+				capital_scope = { region = world_the_vale }
+			}
+			add_character_modifier = { name = comb_focus5 duration = 400 }	
+		}
+	}
+
+	option = { #First page
+		name = "EVTOPTCtsk.0151"
+
+		character_event = { id = tsk.0151 }		
 	}
 }
