@@ -1499,7 +1499,10 @@ targetted_decisions = {
 		}
 		potential = {
 			dynasty = FROM
-			is_primary_heir = yes
+			OR = {
+				is_primary_heir = yes
+				character = FROM
+			}
 			age = 16
 			is_married = yes
 			NOT = { has_regent = yes }
@@ -1508,22 +1511,6 @@ targetted_decisions = {
 			spouse = {
 				age = 16
 				NOT = { has_regent = yes }
-			}
-			OR = {
-				character = FROM
-				AND = {		
-					is_ruler = no		
-					liege = { character = FROM }
-					OR = {
-						is_child_of = FROM
-						father_even_if_dead = { is_child_of = FROM is_ruler = no }
-						mother_even_if_dead = { is_child_of = FROM is_ruler = no }
-						AND = {
-							is_primary_heir = FROM
-							FROM = { primary_title = { NOT = { has_elective_law_trigger = yes } } }
-						}	
-					}				
-				}
 			}	
 		}
 		allow = {
