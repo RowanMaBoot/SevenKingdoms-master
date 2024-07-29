@@ -2,7 +2,7 @@ namespace = nights_watch
 
 # nights_watch.1 - hands out the black_brother trait to rulers (baron and up)
 # nights_watch.2 - expels children and spouses from the NW
-# nights_watch.3 - randomises culture and religion of characters on gaining titles in the NW
+# nights_watch.3 - randomizes culture and religion of characters on gaining titles in the NW
 # nights_watch.4 - call the northern lords to the Wall defense
 # nights_watch.5 - handing out commands
 
@@ -16,6 +16,7 @@ character_event = {
     min_age = 16
     
     trigger = {
+		NOT = { has_character_flag = no_court_invites }
         OR = {
             is_married = yes
             NOT = {
@@ -41,7 +42,6 @@ character_event = {
     }
     
     immediate = {
-		set_character_flag = no_court_invites
         if = {
             limit = {
 				is_female = no
@@ -51,14 +51,15 @@ character_event = {
                 NOT = { trait = black_brother }
             }
             add_trait = black_brother
-			add_trait = cannot_marry
 			set_character_flag = no_court_invites
         }
         if = {
             limit = {
                 is_married = yes
+				trait = black_brother
             }
             remove_spouse = spouse
+			set_character_flag = no_court_invites
         }
 		any_realm_lord = {
 			if = {
@@ -75,6 +76,7 @@ character_event = {
 				set_government_type = nights_watch_government
 				primary_title = { succession = appointment }
 				recalc_succession = yes
+				set_character_flag = no_court_invites
 			}
 			if = {
 				limit = {
@@ -98,9 +100,23 @@ character_event = {
 					culture = hill_clansmen
 					set_graphical_culture = hill_clansmen
 					religion = old_gods
+					set_character_flag = no_court_invites
 					health = 8
 					fertility = 0.8
-				}
+					create_character = {
+						age = 16
+						female = yes
+						religion = old_gods
+						culture = hill_clansmen
+						dynasty = none
+						random_traits = yes
+						fertility = 0.8
+						health = 8
+					}
+					new_character = {
+						add_spouse = PREV
+					}	
+				}			
 			}
 		}
 	}
@@ -116,13 +132,12 @@ character_event = {
     
     trigger = {
         tsk_is_nights_watch_trigger = yes
-		is_landed = yes
     }
     
 	immediate = {
 		any_courtier = {
 			limit = {
-				tsk_is_nights_watch_trigger = no
+				tsk_is_purgeable_nights_watch_trigger = yes
 			}
 			death = { death_reason = death_murder_unknown }
 		}
@@ -406,7 +421,7 @@ character_event = {
 		c_rimegate = {
 			grant_title = event_target:nights_watch_commander
 		}
-		FROM = {
+		FROMFROM = {
 			set_defacto_liege = ROOT
 			set_government_type = nights_watch_government
 			primary_title = { succession = appointment }
@@ -425,7 +440,7 @@ character_event = {
 		c_greenguard = {
 			grant_title = event_target:nights_watch_commander
 		}
-		FROM = {
+		FROMFROM = {
 			set_defacto_liege = ROOT
 			set_government_type = nights_watch_government
 			primary_title = { succession = appointment }
@@ -444,7 +459,7 @@ character_event = {
 		c_eastwatch_by_the_sea = {
 			grant_title = event_target:nights_watch_commander
 		}
-		FROM = {
+		FROMFROM = {
 			set_defacto_liege = ROOT
 			set_government_type = nights_watch_government
 			primary_title = { succession = appointment }
