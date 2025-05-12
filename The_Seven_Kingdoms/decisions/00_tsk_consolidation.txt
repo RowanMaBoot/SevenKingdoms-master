@@ -1,6 +1,7 @@
 # Consolidate the Realm
 # Original decisions by charts / strachkvas (700 lines)
 # Consolidated and rewritten into a single decision by Rowan / N0body.
+# Reworked by Andrew42
 
 # Decision should check for your current held Empire or the Empire-region you fall into.
 # Based on held Empire, you will have the ability to consolidate your realm, destroying lesser Kingdoms in favour of
@@ -17,40 +18,41 @@ decisions = {
         potential = {
             independent = yes
             NOT = { tsk_is_nights_watch_trigger = yes }
-            OR = {
+
+            OR = { # appears if the character holds at least one unconsolidated empire of the Seven Kingdoms
                 AND = {
                     has_landed_title = e_the_north
-                    NOT = { has_global_flag = north_consolidated }
+                    e_the_north = { NOT = { has_flag = consolidated } }
                 }
                 AND = {
                     has_landed_title = e_the_vale
-                    NOT = { has_global_flag = vale_consolidated }
+                    e_the_vale = { NOT = { has_flag = consolidated } }
                 }
                 AND = {
                     has_landed_title = e_the_riverlands
-                    NOT = { has_global_flag = riverlands_consolidated }
+                    e_the_riverlands = { NOT = { has_flag = consolidated } }
                 }
                 AND = {
                     has_landed_title = e_the_westerlands
-                    NOT = { has_global_flag = westerlands_consolidated }
+                    e_the_westerlands = { NOT = { has_flag = consolidated } }
                 }
                 AND = {
                     has_landed_title = e_the_stormlands
-                    NOT = { has_global_flag = stormlands_consolidated }
+                    e_the_stormlands = { NOT = { has_flag = consolidated } }
                 }
                 AND = {
                     has_landed_title = e_the_reach
-                    NOT = { has_global_flag = reach_consolidated }
+                    e_the_reach = { NOT = { has_flag = consolidated } }
                 }
                 AND = {
                     has_landed_title = e_dorne
-                    NOT = { has_global_flag = dorne_consolidated }
+                    e_dorne = { NOT = { has_flag = consolidated } }
                 }
                 AND = {
                     has_landed_title = e_the_iron_islands
-                    NOT = { has_global_flag = iron_islands_consolidated }
+                    e_the_iron_islands = { NOT = { has_flag = consolidated } }
                 }
-                NOT = { has_global_flag = westeros_formed }
+                NOT = { has_global_flag = westeros_formed } # Hide completely once Westeros is formed
             }
         }
         
@@ -86,9 +88,7 @@ decisions = {
             if = {
                 limit = {
                     completely_controls = e_the_north
-                    NOT = {
-                        has_global_flag = north_consolidated
-                    }
+                    e_the_north = { NOT = { has_flag = consolidated } }
                 }
                 e_the_north = {
 					any_landed_title = {
@@ -108,15 +108,13 @@ decisions = {
             			grant_title = ROOT
         			}
     			}
-                set_global_flag = north_consolidated
+                e_the_north = { set_flag = consolidated }
                 prestige = 2000
             }
             if = {
                 limit = {
                     completely_controls = e_the_vale
-                    NOT = {
-                        has_global_flag = vale_consolidated
-                    }
+                    e_the_vale = { NOT = { has_flag = consolidated } }
                 }
                 e_the_vale = {
 					any_landed_title = {
@@ -136,15 +134,13 @@ decisions = {
             			grant_title = ROOT
         			}
     			}
-                set_global_flag = vale_consolidated
+                e_the_vale = { set_flag = consolidated }
                 prestige = 2000
             }
             if = {
                 limit = {
                     completely_controls = e_the_riverlands
-                    NOT = {
-                        has_global_flag = riverlands_consolidated
-                    }
+                    e_the_riverlands = { NOT = { has_flag = consolidated } }
                 }
                 e_the_riverlands = {
 					any_landed_title = {
@@ -164,15 +160,13 @@ decisions = {
             			grant_title = ROOT
         			}
     			}
-                set_global_flag = riverlands_consolidated
+                e_the_riverlands = { set_flag = consolidated }
                 prestige = 2000
             }
             if = {
                 limit = {
                     completely_controls = e_the_westerlands
-                    NOT = {
-                        has_global_flag = westerlands_consolidated
-                    }
+                    e_the_westerlands = { NOT = { has_flag = consolidated } }
                 }
                 e_the_westerlands = {
 					any_landed_title = {
@@ -192,15 +186,13 @@ decisions = {
             			grant_title = ROOT
         			}
     			}
-                set_global_flag = westerlands_consolidated
+                e_the_westerlands = { set_flag = consolidated }
                 prestige = 2000
             }
             if = {
                 limit = {
                     completely_controls = e_the_stormlands
-                    NOT = {
-                        has_global_flag = stormlands_consolidated
-                    }
+                    e_the_stormlands = { NOT = { has_flag = consolidated } }
                 }
                 e_the_stormlands = {
 					any_landed_title = {
@@ -220,15 +212,13 @@ decisions = {
             			grant_title = ROOT
         			}
     			}                
-                set_global_flag = stormlands_consolidated
+                e_the_stormlands = { set_flag = consolidated }
                 prestige = 2000
             }
             if = {
                 limit = {
                     completely_controls = e_the_reach
-                    NOT = {
-                        has_global_flag = reach_consolidated
-                    }
+                    e_the_reach = { NOT = { has_flag = consolidated } }
                 }
                 e_the_reach = {
 					any_landed_title = {
@@ -248,13 +238,13 @@ decisions = {
             			grant_title = ROOT
         			}
     			} 
-                set_global_flag = reach_consolidated
+                e_the_reach = { set_flag = consolidated }
                 prestige = 2000
             }
 			if = {
     			limit = {
         			completely_controls = e_dorne
-        			NOT = { has_global_flag = dorne_consolidated }
+        			e_dorne = { NOT = { has_flag = consolidated } }
     			}
 				e_dorne = {
 					any_landed_title = {
@@ -274,13 +264,13 @@ decisions = {
             			grant_title = ROOT
         			}
     			}
-    		set_global_flag = dorne_consolidated
-    		prestige = 2000
+    			e_dorne = { set_flag = consolidated }
+            	prestige = 2000
 			}
 			if = {
     			limit = {
         			completely_controls = e_the_iron_islands
-        			NOT = { has_global_flag = iron_islands_consolidated }
+        			e_the_iron_islands = { NOT = { has_flag = consolidated } }
     			}
 				e_the_iron_islands = {
 					any_landed_title = {
@@ -300,9 +290,10 @@ decisions = {
             			grant_title = ROOT
         			}
     			}
-    		set_global_flag = iron_islands_consolidated
-    		prestige = 2000
+    			e_the_iron_islands = { set_flag = consolidated }
+            	prestige = 2000
 			}
+			hidden_effect = { reload_character_gui = ROOT }
         }
     }
 }
