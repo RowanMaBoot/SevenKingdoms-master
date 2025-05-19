@@ -548,3 +548,86 @@ character_event = {
 		log = "BastardError: [This.GetID]"
 	}
 }
+
+# Fix for NW succ
+character_event = {
+	id = tsk_startup.20002
+	
+	hide_window = yes
+	is_triggered_only = yes
+	only_rulers = yes
+	
+	immediate = {
+		if = {
+			limit = { 
+				primary_title = { title = k_the_nights_watch }
+				trait = black_brother					
+			}
+			primary_title = { current_heir = { save_event_target_as = NW_heir } }
+			if = {
+				limit = {
+					OR = {
+						ai = no
+						any_demesne_title = { NOT = { current_heir = { character = event_target:NW_heir } } } 
+					}	
+				}
+				e_rebels = {
+					holder_scope = {
+						event_target:NW_heir = {
+							if = {
+								limit = { is_ruler = yes } 
+								if = {
+									limit = { ai = no }
+									set_player_character = ROOT
+								}
+								abdicate_to = ROOT
+							}
+							if = {
+								limit = { NOT = { liege = { character = ROOT } } }
+								move_character = ROOT
+							}	
+							ROOT = {
+								any_demesne_title = { succession = nights_watch_succession }
+								any_courtier = {
+									limit = {
+										liege = { character = ROOT }
+										is_ruler = no
+										NOT = { character = event_target:NW_heir } 
+									}
+									move_character = PREVPREVPREV
+									character_event = { id = nights_watch.889 days = 1 }
+								}
+								recalc_succession = yes
+								if = {
+									limit = { current_heir = { character = event_target:NW_heir } }
+								}	
+								else = {
+									any_demesne_title = { succession = nights_watch_succession }
+									any_demesne_title = {
+										add_law = {
+											law = nights_watch_succession
+											cooldown = no
+											opinion_effect = no
+										}		
+									}
+									k_the_nights_watch = {
+										add_law = {
+											law = nights_watch_succession
+											cooldown = no
+											opinion_effect = no
+										}	
+									}	
+									recalc_succession = yes
+									set_player_character = event_target:NW_heir
+									transfer_scaled_wealth = { to = event_target:NW_heir value = all }
+									abdicate_to = event_target:NW_heir						
+								}
+							}				
+						}
+					}
+				}	
+			}	
+			event_target:NW_heir = { character_event = { id = nights_watch.6 days = 1 } }	
+		}
+	}
+}

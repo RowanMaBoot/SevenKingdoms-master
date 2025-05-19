@@ -4,7 +4,10 @@ namespace = nights_watch
 # nights_watch.2 - expels children and spouses from the NW
 # nights_watch.3 - randomizes culture and religion of characters on gaining titles in the NW
 # nights_watch.4 - call the northern lords to the Wall defense
-# nights_watch.5 - handing out commands
+# nights_watch.5/55 - handing out commands
+# nights_watch.6/7 - Inform the realm of new LC
+# nights_watch.888/889 - TSK NW gov/elective setup
+# nights_watch.999 - Exile gold fix
 
 # Insignificant impact, fired on new holder and twice a year.
 character_event = {
@@ -51,6 +54,7 @@ character_event = {
                 NOT = { trait = black_brother }
             }
             add_trait = black_brother
+			add_trait = disinherited
 			set_character_flag = no_court_invites
         }
         if = {
@@ -478,6 +482,88 @@ character_event = {
 			}
 		}
 		hidden_tooltip = { character_event = { id = nights_watch.5 } }
+	}
+}
+
+#Winner setup
+character_event = {
+	id = nights_watch.6
+	
+	hide_window = yes
+	is_triggered_only = yes
+	
+	immediate = {
+		any_player = {
+			limit = { 
+				NOT = { has_landed_title = k_the_nights_watch }
+				capital_scope = { region = world_westeros_only }
+			}
+			character_event = { id = nights_watch.7 days = 1 }
+		}
+	}
+}
+
+#Inform the realm of new LC
+character_event = {
+	id = nights_watch.7
+	title = "EVTnights_watch.7"
+	desc = "EVTDESCnights_watch.7"
+	picture = GFX_evt_thewall
+
+	is_triggered_only = yes
+	
+	option = {
+		name = "OK"
+	}
+}
+
+character_event = { # TSK NW gov/elective setup
+    id = nights_watch.888
+
+    hide_window = yes
+	is_triggered_only = yes
+	
+    trigger = {
+		ROOT = {
+			has_landed_title = k_the_nights_watch
+		}
+	}
+
+	immediate = {
+		set_government_type = nights_watch_government	
+		any_demesne_title = { succession = nights_watch_succession }
+		any_demesne_title = {
+			add_law = {
+				law = nights_watch_succession
+				cooldown = no
+				opinion_effect = no
+			}		
+		}
+		recalc_succession = yes
+	}
+}
+
+character_event = { # Work around for succession
+	id = nights_watch.889
+	
+	is_triggered_only = yes
+	hide_window = yes
+	
+	immediate = {
+		event_target:NW_heir = { 
+			if = {
+				limit = { is_ruler = yes }
+				ROOT = { move_character = PREV }
+			}	
+			if = {
+				limit = { is_ruler = no }
+				liege = { ROOT = { move_character = PREV } }
+			}
+		}
+	}
+
+	option = {
+		name = OK
 	}
 }
 
