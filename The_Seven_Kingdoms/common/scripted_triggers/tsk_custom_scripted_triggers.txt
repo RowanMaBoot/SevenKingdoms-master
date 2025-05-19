@@ -125,6 +125,37 @@ is_educator_and_ward_legend = {
   trait = dueling_legend
 }
 
+can_lead_troops = {
+	OR = {
+		AND = {
+			martial = 10
+			is_female = no
+		}
+		AND = {
+			is_combat_trained = yes
+			is_female = no
+		}
+		AND = {
+			martial = 8
+			is_female = no
+			liege = { is_close_relative = ROOT }
+		}
+		AND = {
+			is_combat_trained = yes
+			martial = 12
+			is_female = yes
+			OR = {
+				liege = { is_close_relative = ROOT }
+				liege = { female_warrior_culture_trigger = yes }
+			}
+		}
+	}
+	is_adult = yes
+	prisoner = no
+	NOT = { trait = incapable }
+	NOT = { is_inaccessible_trigger = yes }
+	NOT = { has_character_modifier = refusing_to_lead }
+}
 #
 
 # Cultures that produce very good or even legendary fighters on a regular basis
@@ -675,6 +706,18 @@ tsk_same_kingdom = {
 		AND = {
 			FROM = { capital_scope = { region = world_the_north } }
 			ROOT = { capital_scope = { region = world_the_north } }
+		}
+		AND = {
+			FROM = { capital_scope = { region = world_the_stormlands } }
+			ROOT = { capital_scope = { region = world_the_stormlands } }
+		}
+		AND = {
+			FROM = { capital_scope = { region = world_the_reach } }
+			ROOT = { capital_scope = { region = world_the_reach } }
+		}
+		AND = {
+			FROM = { capital_scope = { region = world_the_vale } }
+			ROOT = { capital_scope = { region = world_the_vale } }
 		}
 		AND = {
 			FROM = { capital_scope = { region = world_the_riverlands } }

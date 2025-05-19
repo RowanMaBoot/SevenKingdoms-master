@@ -308,6 +308,198 @@ targetted_decisions = {
 			always = no
 		}
 	}
+	
+	dyn_stab_bastard = {
+	    only_playable = yes
+	    is_high_prio = yes
+		diplomacy_icon = GFX_decision_legit_bastard
+		filter = self
+		ai_target_filter = self
+		ai_check_interval = 12
+
+		potential = {
+			is_dynasty_with_special_coa = yes
+			NOT = {
+				any_dynasty_member = { 
+					AND = {
+						is_female = no
+						is_alive = yes
+						
+					}
+				}
+			}
+			age = 32
+			NOT = { trait = black_brother }
+			holy_order = no
+			mercenary = no
+		}
+
+		allow = {
+		}
+
+		effect = {
+			prestige = -200
+			piety = -250
+			custom_tooltip = {
+				text = BRINGBASTARDSONTOCOURT
+				hidden_tooltip = {
+					create_character = {
+						age = 16
+						dynasty = ROOT
+						trait = legit_bastard
+						#trait = disinherited
+						random_traits = no
+						trait = tough_soldier
+						trait = dueling_skilled
+						trait = diligent
+						trait = robust
+						trait = humble
+						martial = 7
+						diplomacy = 2
+						female = no
+						health = 8
+						fertility = 2
+						culture = ROOT
+						religion = ROOT
+						genetic_father = ROOT
+					}
+					new_character = {
+						set_character_flag = no_court_invites
+						if = {
+							limit = { ROOT = { is_female = no } }
+							set_father = ROOT
+							ROOT = { 
+								any_owned_bloodline = {
+									limit = { NOT = { is_bloodline_member_of = new_character } }
+									add_bloodline_member = new_character				
+								}
+							}
+						}
+						if = {
+							limit = { ROOT = { is_female = yes } }
+							set_mother = ROOT
+							ROOT = { 
+								any_owned_bloodline = {
+									limit = { NOT = { is_bloodline_member_of = new_character } }
+									add_bloodline_member = new_character				
+								}
+							}
+						}
+					}
+					recalc_succession = yes
+				}
+			}
+		}
+		revoke_allowed = {
+			always = no
+		}
+		ai_will_do = {
+			factor = 100
+			modifier = {
+				factor = 0
+				FROM = {
+					OR = {
+						trait = honourable
+						trait = just
+						spouse = {
+							age <= 35
+						}
+					}
+				}
+			}
+		}
+	}
+	
+	dyn_stab_relative = {
+	    only_playable = yes
+	    is_high_prio = yes
+		
+		filter = close_relatives
+		ai_target_filter = close_relatives
+		ai_check_interval = 12
+
+		from_potential = {
+			is_dynasty_with_special_coa = yes
+			capital_scope = {
+				region = world_westeros_only
+			}
+			OR = {
+				is_sick_or_injured_trigger = yes
+				has_infertile_trait_trigger = yes
+				war = yes
+				age = 40
+			}
+			NOT = {
+				any_dynasty_member = { 
+					AND = {
+						is_female = no
+						is_alive = yes
+						
+					}
+				}
+			}
+			NOT = { trait = black_brother }
+			holy_order = no
+			mercenary = no
+		}
+		
+		potential = {
+			is_female = no
+			age <= 14
+			NOR = { 
+				trait = black_brother
+				is_sick_or_injured_trigger = yes
+				has_infertile_trait_trigger = yes
+			}
+			mercenary = no
+			FROM = {
+				is_blood_relative_of_root_trigger = yes
+			}
+			liege = {
+				current_heir = {
+					NOR = {
+						character = ROOT
+						is_father = ROOT
+					}
+				}
+			}
+		}
+
+		allow = {
+		}
+		
+		effect = {
+			if = {
+				limit = {
+					trait = bastard
+				}
+				add_trait = legit_bastard
+			}
+			if = {
+				limit = { NOT = { FROM = { shares_any_bloodline_with = ROOT } } }
+				FROM = { 
+					any_owned_bloodline = {
+						limit = { NOT = { is_bloodline_member_of = ROOT } }
+						add_bloodline_member = ROOT				
+					}
+				}
+			}
+			dynasty = FROM
+			move_character = FROM
+			give_nickname = nick_the_heir
+			ROOT = {
+				any_dynasty_member = {
+					limit = {
+						is_ruler = yes
+					}
+					recalc_succession = yes
+				}
+			}
+			FROM = {
+				recalc_succession = yes
+			}
+		}
+	}
 }
 
 # decisions = {

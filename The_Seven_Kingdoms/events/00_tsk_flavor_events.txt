@@ -1902,3 +1902,422 @@ character_event = {
 		character_event = { id = tsk.0151 }		
 	}
 }
+
+character_event = {
+	id = tsk.0990
+
+	hide_window = yes
+	is_triggered_only = yes
+	only_rulers = yes
+	
+	trigger = {
+		ROOT = {
+			is_dynasty_with_special_coa = yes
+			capital_scope = {
+				region = world_westeros_only
+			}
+			NOT = {
+				any_dynasty_member = { 
+					AND = {
+						is_female = no
+						is_alive = yes
+						
+					}
+				}
+			}
+		}
+	}
+
+	immediate = {
+		random_neighbor_independent_ruler = {
+			limit = {
+				OR = {
+					culture_group = ROOT
+					religion = ROOT
+					ai = no
+				}
+			}
+			create_character = {
+				age = 16
+				dynasty = ROOT
+				trait = legit_bastard
+				trait = disinherited
+				random_traits = no
+				trait = tough_soldier
+				trait = dueling_skilled
+				trait = ambitious
+				trait = gregarious
+				trait = proud
+				martial = 5
+				diplomacy = 4
+				female = no
+				health = 8
+				fertility = 2
+				culture = ROOT
+				religion = ROOT
+			}
+			new_character = {
+				set_character_flag = no_court_invites
+				set_character_flag = dyn_claimant
+				if = {
+					limit = { ROOT = { is_female = no } }
+					ROOT = { 
+						any_owned_bloodline = {
+							limit = { NOT = { is_bloodline_member_of = new_character } }
+							add_bloodline_member = new_character				
+						}
+					}
+				}
+				if = {
+					limit = { ROOT = { is_female = yes } }
+					ROOT = { 
+						any_owned_bloodline = {
+							limit = { NOT = { is_bloodline_member_of = new_character } }
+							add_bloodline_member = new_character				
+						}
+					}
+				}
+			}
+			ROOT = {
+				any_demesne_title = {
+					add_claim = new_character
+				}
+			}
+		}
+	}
+}
+
+character_event = {
+	id = tsk.0991
+	desc = EVTDESCtsk.0991
+	picture = GFX_evt_noble
+	border = GFX_event_normal_frame_diplomacy
+	
+	only_rulers = yes
+	
+	trigger = {
+		war = no
+		independent = yes
+		is_abroad = no
+		any_courtier = {
+			has_character_flag = dyn_claimant
+		}
+	}
+	
+	mean_time_to_happen = {
+		years = 2
+		
+		modifier = {
+			factor = 0.5
+			trait = ambitious
+		}
+		modifier = {
+			factor = 0.6
+			trait = diligent
+		}
+		modifier = {
+			factor = 2
+			trait = content
+		}
+		modifier = {
+			factor = 1.5
+			trait = slothful
+		}
+	}
+	
+	option = {
+		name = "EVTOPTAtsk.0991" #Accept
+		
+		ai_chance = {
+			factor = 50
+
+			modifier = {
+				factor = 0.1
+				trait = craven
+			}			
+			modifier = {
+				factor = 3
+				trait = brave
+			}
+			modifier = {
+				factor = 3
+				trait = ambitious
+			}
+		}
+		
+		any_courtier = {
+			limit = {
+				has_character_flag = dyn_claimant
+			}
+			save_event_target_as = claimant_heard
+		}
+		character_event = { id = tsk.0992 }
+	}
+
+	option = {
+		name = "EVTOPTBtsk.0991" #Turn him down
+		
+		ai_chance = {
+			factor = 50
+
+			modifier = {
+				factor = 2
+				trait = craven
+			}			
+			modifier = {
+				factor = 0.1
+				trait = shy
+			}
+			modifier = {
+				factor = 0.5
+				trait = content
+			}
+		}
+		
+		random_neighbor_independent_ruler = {
+			ROOT = {
+				any_courtier = {
+					limit = {
+						has_character_flag = dyn_claimant
+					}
+					move_character = PREVPREV
+				}
+			}
+		}
+	}
+}
+
+character_event = {
+	id = tsk.0992
+	desc = EVTDESCtsk.0992
+	picture = GFX_evt_noble
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+	immediate = {
+		event_target:claimant_heard = {
+			any_claim = {
+				holder_scope = {
+					save_event_target_as = title_holder
+				}
+			}
+		}
+	}
+
+	
+	option = {
+		name = "EVTOPTAtsk.0992" #Press his claims
+		
+		ai_chance = {
+			factor = 99
+		}
+		
+		wealth = 150
+		capital_scope = {
+			ROOT = {
+				spawn_unit = {
+					owner = ROOT
+					province = PREV
+					troops = {
+						archers = { 200 200 }
+						light_infantry = { 500 500 }
+						heavy_infantry = { 300 300 }
+						light_cavalry = { 200 200 }
+						heavy_cavalry = { 100 100 }
+					}
+					earmark = merc_warriors
+					attrition = 1.0
+					disband_on_peace = yes
+					maintenance_multiplier = 0
+				}
+			}
+		}
+		event_target:claimant_heard = {
+			unsafe_war = {
+				target = event_target:title_holder
+				casus_belli = claim_all
+				thirdparty = ROOT
+			}
+			opinion = {
+				modifier = pressed_my_claim 
+				who = ROOT
+				multiplier = 2
+			}
+		}
+	}
+	
+	option = {
+		name = "EVTOPTBtsk.0991" #Turn him down
+		
+		ai_chance = {
+			factor = 1
+		}
+		
+		random_neighbor_independent_ruler = {
+			ROOT = {
+				any_courtier = {
+					limit = {
+						has_character_flag = dyn_claimant
+					}
+					move_character = PREVPREV
+				}
+			}
+		}
+	}
+}
+
+character_event = {
+	id = tsk.0993
+	desc = EVTDESCtsk.0993
+	picture = GFX_evt_noble
+	border = GFX_event_normal_frame_war
+
+	only_rulers = yes
+
+	mean_time_to_happen = {
+		days = 1
+	}
+
+	trigger = {
+		has_character_flag = dyn_claimant
+	}
+	
+	immediate = {
+		clr_character_flag = dyn_claimant
+		ROOT = {
+			set_defacto_liege = THIS
+		}
+	}
+
+	option = {
+		name = "EVTOPTAtsk.0993" #Honor the deal
+		ai_chance = { factor = 80 }
+
+		any_neighbor_independent_ruler = {
+			limit = {
+				reverse_has_opinion_modifier = {
+					who = ROOT
+					modifier = pressed_my_claim
+				}
+			}
+			character_event = { id = tsk.0994 days = 7 }
+		}
+	}
+
+	option = {
+		name = "EVTOPTBtsk.0993" #Dishonor the deal
+		ai_chance = { factor = 20 }
+		
+		wealth = 200
+		capital_scope = {
+			ROOT = {
+				spawn_unit = {
+					owner = ROOT
+					province = PREV
+					troops = {
+						archers = { 300 300 }
+						light_infantry = { 1000 1000 }
+						heavy_infantry = { 800 800 }
+						light_cavalry = { 300 300 }
+						heavy_cavalry = { 200 200 }
+					}
+					attrition = 1.0
+					maintenance_multiplier = 0
+				}
+			}
+		}
+
+		any_neighbor_independent_ruler = {
+			limit = {
+				reverse_has_opinion_modifier = {
+					who = ROOT
+					modifier = pressed_my_claim
+				}
+			}
+			character_event = { id = tsk.0995 days = 14 }
+		}
+	}
+}
+
+character_event = {
+	id = tsk.0994
+	desc = EVTDESCtsk.0994
+	picture = GFX_evt_noble
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+	immediate = { 
+		disband_event_forces = merc_warriors
+	}
+
+	option = {
+		name = "EVTOPTAtsk.0994" #Great News!
+		
+		if = {
+			limit = {
+				higher_tier_than = FROM
+			}
+			set_defacto_vassal = FROM
+		}
+		if = {
+			limit = {
+				real_tier = FROM
+			}
+			make_tributary = {
+				who = FROM
+				tributary_type = march
+			}
+		}
+		if = {
+			limit = {
+				lower_real_tier_than = FROM
+			}
+			make_tributary = {
+				who = FROM
+				tributary_type = march
+			}
+		}
+		prestige = 200
+	}
+}
+
+character_event = {
+	id = tsk.0995
+	desc = EVTDESCtsk.0995
+	picture = GFX_evt_noble
+	border = GFX_event_normal_frame_war
+	
+	is_triggered_only = yes
+	
+	immediate = { 
+		disband_event_forces = merc_warriors
+	}
+
+	option = {
+		name = "EVTOPTAtsk.0995" #This means war!
+		
+		ROOT = {
+			unsafe_war = {
+				target = FROM
+				casus_belli = high_kingdom_subjugation
+			}
+		}
+	}
+
+	option = {
+		name = "EVTOPTBtsk.0995" #Back down with claims
+		FROM = {
+			any_demesne_title = {
+				add_claim = ROOT
+			}
+		}
+		
+		prestige = -500
+		add_character_modifier = {
+			name = publicly_humiliated
+			years = 5
+		}
+	}
+}
